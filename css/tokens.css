@@ -1,0 +1,94 @@
+/* Design Tokens - Auto-generated */
+/* Do not edit directly - modify tokens.json instead */
+
+/* === PRIMITIVES === */
+:root {
+  --primitive-color-espresso-600: #2A1E14;
+  --primitive-color-espresso-700: #1F160E;
+  --primitive-color-espresso-800: #140D08;
+  --primitive-color-espresso-900: #0E0905;
+  --primitive-color-ink-500: #75624F;
+  --primitive-color-ink-700: #5B4A3B;
+  --primitive-color-ink-900: #1D140D;
+  --primitive-color-parchment-50: #FFFAF0;
+  --primitive-color-parchment-100: #FBF4E4;
+  --primitive-color-parchment-200: #F6EEDC;
+  --primitive-color-parchment-300: #EFE3C8;
+  --primitive-color-kraft-200: #E5CEB3;
+  --primitive-color-kraft-400: #D0B78F;
+  --primitive-color-kraft-500: #C9A470;
+  --primitive-color-kraft-700: #8C6A3E;
+  --primitive-color-gold-300: #E2B765;
+  --primitive-color-gold-500: #C8963E;
+  --primitive-color-gold-600: #A87526;
+  --primitive-color-gold-800: #7A5414;
+  --primitive-color-clay-500: #A4561A;
+  --primitive-color-elephant-500: #5F6467;
+  --primitive-color-green-500: #2F9E5B;
+  --primitive-color-whatsapp-500: #15803D;
+  --primitive-color-red-500: #C2413B;
+  --primitive-color-white: #FFFFFF;
+  --primitive-radius-sm: 10px;
+  --primitive-radius-md: 16px;
+  --primitive-radius-lg: 24px;
+  --primitive-radius-xl: 32px;
+  --primitive-radius-full: 9999px;
+  --primitive-duration-fast: 180ms;
+  --primitive-duration-normal: 320ms;
+  --primitive-duration-slow: 650ms;
+}
+
+/* === SEMANTIC === */
+:root {
+  --color-background: #F6EEDC;
+  --color-surface: #FFFAF0;
+  --color-surface-2: #FBF4E4;
+  --color-foreground: #1D140D;
+  --color-muted-foreground: #5B4A3B;
+  --color-subtle-foreground: #75624F;
+  --color-primary: #C8963E;
+  --color-primary-light: #E2B765;
+  --color-primary-ink: #7A5414;
+  --color-primary-foreground: #140D08;
+  --color-kraft: #C9A470;
+  --color-kraft-light: #E5CEB3;
+  --color-kraft-dark: #8C6A3E;
+  --color-accent: #A4561A;
+  --color-night: #140D08;
+  --color-night-2: #1F160E;
+  --color-success: #2F9E5B;
+  --color-destructive: #C2413B;
+  --color-whatsapp: #15803D;
+  --color-primary-display: #A87526;
+}
+
+/* === COMPONENTS === */
+:root {
+
+}
+
+/* === DARK MODE === */
+:root[data-theme="dark"] {
+  --color-background: #120C07;
+  --color-surface: #1C140D;
+  --color-surface-2: #231910;
+  --color-foreground: #F4EAD6;
+  --color-muted-foreground: #CBB9A0;
+  --color-subtle-foreground: #9C8A73;
+  --color-primary-ink: #E2B765;
+  --color-primary-display: #E2B765;
+  --color-accent: #D98A4E;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --color-background: #120C07;
+    --color-surface: #1C140D;
+    --color-surface-2: #231910;
+    --color-foreground: #F4EAD6;
+    --color-muted-foreground: #CBB9A0;
+    --color-subtle-foreground: #9C8A73;
+    --color-primary-ink: #E2B765;
+    --color-primary-display: #E2B765;
+    --color-accent: #D98A4E;
+  }
+}

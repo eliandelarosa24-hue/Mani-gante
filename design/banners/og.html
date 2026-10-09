@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>OG banners</title>
+<style>
+@font-face { font-family: Fraunces; src: url(../fonts/fraunces-latin-wght-normal.woff2) format("woff2"); font-weight: 100 900; }
+@font-face { font-family: Fraunces; src: url(../fonts/fraunces-latin-wght-italic.woff2) format("woff2"); font-weight: 100 900; font-style: italic; }
+@font-face { font-family: Manrope; src: url(../fonts/manrope-latin-500-normal.woff2); font-weight: 500; }
+@font-face { font-family: Manrope; src: url(../fonts/manrope-latin-800-normal.woff2); font-weight: 800; }
+@font-face { font-family: Caveat; src: url(../fonts/caveat-latin-700-normal.woff2); font-weight: 700; }
+body { margin: 0; background: #333; display: grid; gap: 40px; padding: 40px; justify-content: center; }
+.banner { width: 1200px; height: 630px; position: relative; overflow: hidden; font-family: Manrope, sans-serif; }
+.grain::after { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .14; mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+
+/* A · Fotográfico editorial */
+#editorial { background: #140d08; color: #fff; }
+#editorial .photo { position: absolute; inset: 0; background: url(../../assets/img/g7-1600.webp) 70% 60% / cover; }
+#editorial .shade { position: absolute; inset: 0; background: linear-gradient(90deg, rgba(20,13,8,.96) 0%, rgba(20,13,8,.75) 46%, rgba(20,13,8,.1) 100%), linear-gradient(0deg, rgba(20,13,8,.8), transparent 40%); }
+#editorial .copy { position: absolute; left: 96px; top: 92px; width: 640px; }
+.kick { font-size: 15px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #e2b765; display: flex; gap: 12px; align-items: center; }
+.kick::before { content: ""; width: 30px; height: 1.5px; background: currentColor; }
+#editorial h1 { font-family: Fraunces, serif; font-weight: 380; font-size: 112px; line-height: .9; letter-spacing: -.035em; margin: 26px 0 26px; }
+#editorial h1 em { color: #e2b765; font-weight: 360; }
+#editorial p { font-size: 24px; color: rgba(255,255,255,.8); margin: 0; font-weight: 500; }
+#editorial .brand { position: absolute; left: 96px; bottom: 64px; display: flex; gap: 14px; align-items: center; font-family: Fraunces, serif; font-weight: 700; font-size: 26px; letter-spacing: .05em; }
+.brand img { width: 54px; height: 54px; border-radius: 50%; box-shadow: 0 0 0 2px #c8963e; }
+.brand span { color: #c8963e; }
+#editorial .bags { position: absolute; right: 70px; bottom: 54px; display: flex; align-items: flex-end; }
+#editorial .bags svg { width: 128px; filter: drop-shadow(0 20px 26px rgba(0,0,0,.5)); margin-left: -26px; }
+#editorial .bags svg:nth-child(2) { width: 150px; transform: translateY(-6px); z-index: 1; }
+#editorial .note { position: absolute; right: 120px; bottom: 300px; font-family: Caveat, cursive; font-weight: 700; font-size: 38px; color: #e2b765; transform: rotate(-6deg); }
+
+/* B · Kraft artesanal */
+#kraft { background: linear-gradient(135deg, #d9b886, #c39762 60%, #b48a55); color: #1d140d; }
+#kraft::before { content: ""; position: absolute; left: 0; right: 0; top: 34px; border-top: 2px dashed rgba(90,62,36,.35); }
+#kraft .copy { position: absolute; left: 90px; top: 96px; width: 600px; }
+#kraft .kick { color: #5a3e24; }
+#kraft h1 { font-family: Fraunces, serif; font-weight: 420; font-size: 100px; line-height: .92; letter-spacing: -.03em; margin: 24px 0 24px; }
+#kraft h1 em { color: #7a2f12; }
+#kraft p { font-size: 23px; color: #3a2a1c; margin: 0; font-weight: 500; }
+#kraft .pill { display: inline-flex; margin-top: 34px; padding: 14px 26px; border-radius: 99px; background: #140d08; color: #f4ead6; font-weight: 800; font-size: 20px; }
+#kraft .bags { position: absolute; right: 90px; top: 50px; width: 470px; height: 500px; }
+#kraft .bags svg { position: absolute; width: 190px; filter: drop-shadow(0 26px 26px rgba(60,35,10,.35)); }
+#kraft .stamp { position: absolute; right: 36px; bottom: 26px; width: 112px; color: #5a3e24; transform: rotate(-12deg); }
+#kraft .brand { position: absolute; left: 90px; bottom: 56px; display: flex; gap: 14px; align-items: center; font-family: Fraunces, serif; font-weight: 700; font-size: 24px; letter-spacing: .05em; }
+</style></head>
+<body>
+<div class="banner grain" id="editorial">
+  <div class="photo"></div><div class="shade"></div>
+  <div class="copy">
+    <div class="kick">Maní confitado a mano · Temuco</div>
+    <h1>El gigante de los <em>antojos</em></h1>
+    <p>28 sabores en lotes chicos. Reserva en segundos y recíbelo en el campus INACAP.</p>
+  </div>
+  <div class="note">stock en vivo</div>
+  <div class="bags" id="edBags"></div>
+  <div class="brand"><img src="../../assets/img/icon-192.png" alt=""><b>MANI<span>-</span>GANTE</b></div>
+</div>
+
+<div class="banner grain" id="kraft">
+  <div class="copy">
+    <div class="kick">Hecho a mano · lotes chicos</div>
+    <h1>28 sabores para tu <em>antojo</em></h1>
+    <p>Elige, arma tu caja o reserva para mañana. Directo al campus INACAP Temuco.</p>
+    <span class="pill">manigante.netlify.app</span>
+  </div>
+  <div class="bags" id="krBags"></div>
+  <div class="stamp" id="krStamp"></div>
+</div>
+
+<script type="module">
+import { bag, stamp } from "../../js/art.mjs";
+edBags.innerHTML = [["#F2A93B","celofan"],["#6B4636","doypack"],["#D93B4A","celofan"]].map(([c,f]) => bag(c, f)).join("");
+const pos = [[0, 150, -8, "#D93B4A", "celofan"], [150, 40, 4, "#8FAE6B", "doypack"], [290, 170, 10, "#F2A93B", "celofan"], [120, 260, -3, "#315EA8", "doypack"]];
+krBags.innerHTML = pos.map(([x, y, r, c, f]) => bag(c, f).replace("<svg", `<svg style="left:${x}px;top:${y}px;transform:rotate(${r}deg)"`)).join("");
+krStamp.innerHTML = stamp();
+krStamp.querySelector("svg").style.animation = "none";
+</script>
+</body></html>

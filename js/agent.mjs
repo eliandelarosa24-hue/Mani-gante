@@ -190,7 +190,7 @@ function localAnswer(question) {
     if (f.available) renderAction({ kind: "add_to_cart", items: [{ id: f.id, name: f.name, qty: 1 }] });
   } else if (has(t, "disponib", "hay", "stock", "queda", "sabores", "catalogo", "menu")) {
     answer = `Hoy hay *${available.length} sabores* disponibles. Los más pedidos: ${available.filter((f) => f.topVentas).map((f) => f.name).join(", ")}.${catalog.some((f) => !f.available) ? `\nAgotados por ahora: ${catalog.filter((f) => !f.available).map((f) => f.name).join(", ")}.` : ""}\nAdemás tenemos maní japonés: ${JAPANESE.map((j) => j.short).join(", ")}.`;
-    renderAction({ kind: "link", url: "#catalogo", label: "Ver catálogo completo" });
+    renderAction({ kind: "link", url: "#tienda", label: "Ir a la tienda" });
   } else if (has(t, "recomien", "sugier", "cual", "mejor", "favorit", "rico")) {
     const tops = available.filter((f) => f.topVentas).slice(0, 3);
     answer = `Si es tu primera vez, parte con los favoritos: ${tops.map((f) => `*${f.name}* (${f.notes.toLowerCase().replace(/\.$/, "")})`).join(", ")}. Si eres más de chocolate, el Chocolate Menta no falla.`;

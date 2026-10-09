@@ -6,7 +6,15 @@ Sitio web de MANI-GANTE (maní confitado artesanal, Temuco) con:
 - **Carrito** con barra de progreso de la promo de viernes y pedido inmediato por WhatsApp.
 - **Reservas inteligentes**: el cliente elige día, hora y punto de encuentro. Solo se muestran los horarios en que Jorge está en el campus, se valida el stock en vivo y se abre WhatsApp con la reserva lista (con código `MG-XXXX`).
 - **"El Gigante", el asistente con IA (Claude)**: responde dudas 24/7, consulta el stock en tiempo real, dice si Jorge está en el campus, recomienda sabores, agrega productos al carrito y **crea reservas** que terminan en WhatsApp.
-- Modo claro/oscuro, diseño responsive, imágenes WebP optimizadas, SEO (Open Graph, datos estructurados, sitemap) y accesibilidad.
+- **v2 · experiencia de tienda premium artesanal**:
+  - Cada sabor se ilustra como **su bolsa real** (doypack kraft o celofán) con el maní de su color en la ventana; cambia en vivo según el formato.
+  - **Vista rápida** de cada sabor con formato, cantidad y sugerencias de "va bien con".
+  - **Encuentra tu sabor**: test de 3 preguntas que recomienda 3 sabores disponibles.
+  - **Arma tu caja**: cajas de 3, 6 o 10 bolsas que se llenan espacio por espacio (o con "Sorpréndeme").
+  - **El oficio**: historia del confitado en 4 capítulos que cambian la foto al hacer scroll.
+  - Carrito como **boleta de papel**, reserva como **ticket** con código y código de barras, historia en **polaroids**, opiniones como **nota manuscrita**, tarjetas de pago realistas y página 404 propia.
+  - Textura de papel (grano), sello "Hecho a mano" giratorio y notas manuscritas de Jorge.
+- Modo claro/oscuro, diseño responsive, contraste AA verificado, objetivos táctiles de 44 px, imágenes WebP, SEO (Open Graph, datos estructurados, sitemap) y animaciones que respetan "reducir movimiento".
 
 ## Estructura
 
@@ -20,7 +28,18 @@ netlify/functions/agent.mjs Agente de IA (Claude + herramientas)  → POST /api/
 netlify/functions/reserve.mjs Reservas del formulario           → POST /api/reserve
 netlify/lib/                Stock en vivo y avisos automáticos
 apps-script/Code.gs         Apps Script para guardar reservas en Google Sheets
+js/art.mjs                  Ilustraciones generativas (bolsas, maní, sello)
+js/motion.mjs               Animaciones (GSAP + ScrollTrigger, opcionales)
+docs/brand-guidelines.md    Guía de marca: paleta, tipografía y voz
+design/tokens.json          Tokens de diseño (primitivo → semántico → componente)
+css/tokens.css              Generado desde design/tokens.json
+design/banners/og.html      Fuente de las imágenes para compartir (assets/banners/og/)
 ```
+
+### Cambiar colores de la marca
+
+Edita `design/tokens.json` y regenera `css/tokens.css` (generador del skill *design-system*), luego ejecuta
+`python3 design/build-tokens.py css/tokens.css` para activar el modo oscuro. También puedes editar `css/tokens.css` a mano.
 
 ## Cambios del día a día
 
