@@ -1,0 +1,12 @@
+{
+  "name": "mani-gante",
+  "private": true,
+  "type": "module",
+  "description": "MANI-GANTE · sitio web + agente de IA (Netlify)",
+  "scripts": {
+    "dev": "netlify dev"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.133.0"
+  }
+}
