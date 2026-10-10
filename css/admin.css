@@ -3,7 +3,7 @@
 :root[data-theme="dark"] { color-scheme: dark; }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 [hidden] { display: none !important; }
-body { font-family: "Manrope", "Manrope Fallback", system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.5; }
+body { font-family: "Instrument Sans", "Instrument Fallback", system-ui, sans-serif; background: var(--bg); color: var(--text); font-size: 15px; line-height: 1.5; }
 button, input, select { font: inherit; color: inherit; }
 :focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; border-radius: 8px; }
 code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
@@ -15,12 +15,12 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
 .a-tools .a-field input { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); color: #f4ead6; }
 .a-main { max-width: 1240px; margin: 0 auto; padding: clamp(16px, 3vw, 32px); display: grid; gap: 20px; }
 .a-login { max-width: 420px; margin: 10vh auto; display: grid; gap: 14px; padding: 32px; border-radius: 24px; background: var(--surface); box-shadow: var(--elevation-raised); }
-.a-login h1 { font-family: "Fraunces", Georgia, serif; font-weight: 450; font-size: 2rem; }
+.a-login h1 { font-family: "Bodoni Moda", "Bodoni Fallback", Georgia, serif; font-weight: 450; font-size: 2rem; }
 .a-login form { display: grid; gap: 12px; }
 .a-error { color: var(--color-destructive); font-weight: 700; }
 .a-card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: clamp(16px, 2.4vw, 24px); box-shadow: var(--elevation-card); display: grid; gap: 14px; min-width: 0; align-content: start; }
 .a-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
-.a-card h2 { font-family: "Fraunces", Georgia, serif; font-weight: 500; font-size: 1.35rem; }
+.a-card h2 { font-family: "Bodoni Moda", "Bodoni Fallback", Georgia, serif; font-weight: 500; font-size: 1.35rem; }
 .a-sub { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--subtle); margin-top: 6px; }
 .a-help { color: var(--muted); font-size: .86rem; }
 .a-grid2 { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px; align-items: start; }
@@ -41,7 +41,7 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
 .a-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
 .a-kpi { padding: 18px 20px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--elevation-card); display: grid; }
 .a-kpi span { font-size: .74rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--subtle); }
-.a-kpi strong { font-family: "Fraunces", Georgia, serif; font-weight: 450; font-size: 2.2rem; line-height: 1.1; }
+.a-kpi strong { font-family: "Bodoni Moda", "Bodoni Fallback", Georgia, serif; font-weight: 450; font-size: 2.2rem; line-height: 1.1; }
 .a-kpi small { color: var(--muted); }
 .a-chip { font-size: .78rem; font-weight: 700; padding: 6px 12px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--line); }
 .a-chip[data-tone="good"] { border-color: var(--color-status-good); }

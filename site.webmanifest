@@ -1,5 +1,5 @@
 {
-  "name": "MANI-GANTE · El Gigante de los Antojos",
+  "name": "MANI-GANTE · Para gente gánster y elegante",
   "short_name": "MANI-GANTE",
   "description": "Maní confitado a mano en Temuco. Stock en vivo, arma tu caja y reserva en el campus INACAP.",
   "lang": "es-CL",
@@ -7,8 +7,8 @@
   "scope": "/",
   "display": "standalone",
   "orientation": "portrait",
-  "background_color": "#140d08",
-  "theme_color": "#140d08",
+  "background_color": "#0d0b09",
+  "theme_color": "#0d0b09",
   "categories": ["food", "shopping"],
   "icons": [
     { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },

@@ -1,5 +1,7 @@
 // ============================================================
-// Voz de marca: Jorge es dominicano y vive hace 8 años en Chile.
+// Voz de marca · Casa Mani-Gante, "para gente gánster y elegante".
+// Jorge es dominicano y vive hace 8 años en Chile. Tono de película de gánsteres con clase
+// (familia, trato, lealtad), nunca violento ni de drogas.
 // Cercana y cálida, mezcla suave de dominicano ("chévere", "dímelo", "mi pana")
 // y chileno de campus ("al tiro", "bacán", "el bajón"). Máximo 1 emoji por mensaje.
 // Todos los textos de feedback salen de aquí para que suenen igual en toda la web.
@@ -7,25 +9,25 @@
 const pick = (arr) => arr[Math.floor(Math.random() * arr.length)];
 
 export const VOICE = {
-  added: (name) => pick([`${name} a la boleta. ¡Chévere!`, `Listo, ${name} va contigo`, `${name} agregado, buena elección`]),
-  addedMany: (n) => `${n} sabores a la boleta, ¡bacán!`,
-  removedSoldOut: (names) => `Se nos acabó ${names}. Lo saqué de tu boleta, tranquilo.`,
-  boxFull: () => "Tu caja ya está llena. Toca un espacio para cambiarlo.",
-  boxAdded: (name) => `${name} a la boleta. Quedó preciosa esa caja.`,
+  added: (name) => pick([`${name} a la cuenta. ¡Chévere!`, `${name} ya es de la familia`, `Elegante. ${name} va contigo`]),
+  addedMany: (n) => `${n} cómplices a la cuenta, ¡bacán!`,
+  removedSoldOut: (names) => `Se nos escapó ${names}. Lo saqué de tu cuenta, tranquilo.`,
+  boxFull: () => "Tu maletín ya está lleno. Toca un compartimiento para cambiarlo.",
+  boxAdded: (name) => `${name} a la cuenta. Ese maletín quedó de jefe.`,
   copied: (label) => `${label}: datos copiados`,
   linkCopied: () => "Link copiado, mándaselo a tu pana",
   orderSaved: () => "Pedido guardado. Lo encuentras en Mis pedidos.",
-  orderShared: () => "Link de tu pedido copiado. Al abrirlo, la boleta vuelve tal cual.",
+  orderShared: () => "Link de tu pedido copiado. Al abrirlo, la cuenta vuelve tal cual.",
   orderRestored: (n) => `Recuperé tu pedido: ${n} bolsas te esperan`,
-  welcomeBack: (n) => `Tu boleta te esperó: ${n} bolsas listas. ¿Lo cerramos?`,
+  welcomeBack: (n) => `La casa te guardó la cuenta: ${n} bolsas. ¿Cerramos el trato?`,
   alertOk: (name) => `Listo, te aviso apenas vuelva ${name}`,
-  reserveOk: (code) => `Reserva ${code} lista. Solo falta mandársela a Jorge.`,
+  reserveOk: (code) => `Cita ${code} lista. Solo falta mandársela al Jefe.`,
   networkError: () => "Uy, se cayó la conexión. Intenta de nuevo en un ratito.",
   sending: () => "Enviando…",
   reviewOk: () => "¡Gracias! Tu nota le llegó a Jorge",
-  emptyCart: "Tu boleta está vacía todavía. Elige un sabor, arma tu caja o dímelo y te recomiendo.",
-  emptySearch: "Ese sabor no lo tengo (todavía). ¿Le preguntas al Gigante?",
+  emptyCart: "La cuenta está limpia todavía. Elige a uno de los más buscados, arma tu maletín o dímelo y te recomiendo.",
+  emptySearch: "Ese no está fichado (todavía). ¿Le preguntas al consigliere?",
   emptyHistory: "Aún no tienes pedidos guardados en este dispositivo. Cuando reserves o pidas, quedan aquí.",
-  friday: (toNext, free) => free > 0 ? `Llevas ${free} bolsa${free > 1 ? "s" : ""} gratis por ser viernes. Jorge la aplica al confirmar.` : `Viernes de antojo: te faltan ${toNext} para la bolsa gratis`,
+  friday: (toNext, free) => free > 0 ? `Llevas ${free} bolsa${free > 1 ? "s" : ""} gratis por ser viernes. El Jefe la aplica al confirmar.` : `Una oferta que no podrás rechazar: te faltan ${toNext} para la bolsa gratis`,
   away: (msg) => msg || "Hoy Jorge no está en el campus. Puedes reservar para cuando vuelva.",
 };

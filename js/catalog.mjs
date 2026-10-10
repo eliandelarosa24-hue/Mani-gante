@@ -6,15 +6,17 @@
 
 // Versión del catálogo: súbela cada vez que cambies precios, sabores o reglas.
 // El panel admin y el agente la muestran; el historial queda en CATALOG_CHANGELOG.
-export const CATALOG_VERSION = "2026.10.2";
+export const CATALOG_VERSION = "2026.10.3";
 export const CATALOG_CHANGELOG = [
+  { version: "2026.10.3", date: "2026-10-10", note: "Identidad Casa Mani-Gante: alias y número de ficha por sabor, formatos El Clásico y La Reserva, eslogan 'Para gente gánster y elegante'." },
   { version: "2026.10.2", date: "2026-10-09", note: "Capacidad por bloque de reserva, sabores nuevos marcados, alérgenos y promo de viernes como regla." },
   { version: "2026.10.1", date: "2026-10-09", note: "Catálogo unificado para web y agente IA." },
 ];
 
 export const BUSINESS = {
   name: "MANI-GANTE",
-  tagline: "El Gigante de los Antojos",
+  tagline: "Para gente gánster y elegante",
+  house: "Casa Mani-Gante",
   founder: "Jorge",
   whatsapp: "56958174288",
   instagram: "https://www.instagram.com/mani_gant",
@@ -29,8 +31,8 @@ export const BUSINESS = {
 
 // Formatos de empaque. Los sabores "premium" (coberturas) tienen precio fijo.
 export const FORMATS = {
-  celofan: { id: "celofan", name: "Antojo Clásico", detail: "Bolsa celofán · consumo individual", price: 1000 },
-  doypack: { id: "doypack", name: "Reserva del Gigante", detail: "Doypack hermético · más frescura", price: 1500 },
+  celofan: { id: "celofan", name: "El Clásico", detail: "Bolsa celofán · para el día", price: 1000 },
+  doypack: { id: "doypack", name: "La Reserva", detail: "Doypack hermético · más frescura", price: 1500 },
 };
 export const PREMIUM_PRICE = 1500;
 
@@ -104,12 +106,27 @@ const RAW_FLAVORS = [
   ["cappuccino", "Cappuccino", "#7B4B33", "Café", false, true, false, "Espresso con leche, ideal para estudiar."],
 ];
 
+// Alias de cada sabor (la "ficha" de Los Más Buscados). Jorge puede cambiarlos cuando quiera.
+export const ALIASES = {
+  maracuya: "La Tropical", "chocolate-menta": "El Fresco", "chirimoya-alegre": "La Alegre", sandia: "La Veraniega",
+  frutilla: "La Clásica", cereza: "Doña Cereza", arandano: "El Morado", "arandano-azul": "Blue", naranja: "La Mecánica",
+  pistacho: "El Elegante", whisky: "Don Whisky", frambuesa: "La Perfumada", coco: "El Caribeño", "pasa-el-ron": "El Abuelo",
+  "pina-colada": "La Vacacionista", nutella: "El Italiano", mix: "El Indeciso", mocaccino: "El Nocturno", miel: "La Dorada",
+  "platano-c-cobertura-de-chocolate": "El Platanero", "naranja-c-cobertura-de-chocolate": "La Doble Vida", "chocolate-dubai": "El Jeque",
+  "lucuma-manjar-c-chocolate-blanco": "La Patrona", "frutilla-c-cobertura-de-chocolate": "La Seductora", "leche-con-platano": "El Nene",
+  "frutos-del-bosque": "La Silvestre", "natural-rojo": "El Original", cappuccino: "El Desvelado",
+  "mani-japones-salado": "El Serio", "mani-japones-barbecue": "El Ahumado", "mani-japones-habanero": "El Bravo",
+  "mani-japones-merken": "El Sureño", "mani-japones-mix": "La Pandilla",
+};
+
 export const FLAVORS = RAW_FLAVORS.map(
   ([id, name, color, category, topVentas, available, premium, notes], index) => ({
     id, name, color, category, topVentas, available, premium, notes,
     line: "confitado",
     order: index + 1,
     isNew: false,
+    alias: ALIASES[id] || "",
+    no: String(index + 1).padStart(2, "0"),
   }),
 );
 
@@ -132,6 +149,8 @@ export const JAPANESE = [
   line: "japones",
   order: 100 + index,
   isNew: true,
+  alias: ALIASES[id] || "",
+  no: `J${index + 1}`,
 }));
 
 // Sabores marcados como "nuevo" en la tienda (además de toda la línea japonesa).

@@ -1,32 +1,44 @@
-/* Design Tokens - Auto-generated */
-/* Do not edit directly - modify tokens.json instead */
-
+/* Casa Mani-Gante · Design tokens v4 — GENERADO por design/build-tokens.mjs desde design/tokens.json. No editar a mano. */
 /* === PRIMITIVES === */
 :root {
-  --primitive-color-espresso-600: #2A1E14;
-  --primitive-color-espresso-700: #1F160E;
-  --primitive-color-espresso-800: #140D08;
-  --primitive-color-espresso-900: #0E0905;
-  --primitive-color-ink-500: #75624F;
-  --primitive-color-ink-700: #5B4A3B;
-  --primitive-color-ink-900: #1D140D;
-  --primitive-color-parchment-50: #FFFAF0;
-  --primitive-color-parchment-100: #FBF4E4;
-  --primitive-color-parchment-200: #F6EEDC;
-  --primitive-color-parchment-300: #EFE3C8;
-  --primitive-color-kraft-200: #E5CEB3;
-  --primitive-color-kraft-400: #D0B78F;
-  --primitive-color-kraft-500: #C9A470;
+  --primitive-color-noir-500: #2A231D;
+  --primitive-color-noir-600: #1E1915;
+  --primitive-color-noir-700: #161210;
+  --primitive-color-noir-800: #120F0C;
+  --primitive-color-noir-900: #0D0B09;
+  --primitive-color-noir-950: #080706;
+  --primitive-color-ivory-50: #FBF7EF;
+  --primitive-color-ivory-100: #F7F1E6;
+  --primitive-color-ivory-200: #F3ECDF;
+  --primitive-color-ivory-300: #F2EADB;
+  --primitive-color-ivory-400: #EEE5D5;
+  --primitive-color-ivory-500: #E6DBC8;
+  --primitive-color-smoke-300: #BFB3A1;
+  --primitive-color-smoke-500: #968A78;
+  --primitive-color-smoke-600: #6B5E4F;
+  --primitive-color-smoke-700: #4E4337;
+  --primitive-color-smoke-900: #17120E;
+  --primitive-color-champagne-200: #E8CE98;
+  --primitive-color-champagne-300: #DDBB7C;
+  --primitive-color-champagne-400: #D9B676;
+  --primitive-color-champagne-500: #D2AE6D;
+  --primitive-color-champagne-600: #B08A45;
+  --primitive-color-champagne-700: #82601F;
+  --primitive-color-champagne-800: #6E5220;
+  --primitive-color-velvet-300: #E2687C;
+  --primitive-color-velvet-500: #8C2338;
+  --primitive-color-velvet-700: #6E1A2C;
+  --primitive-color-velvet-800: #7A1E31;
+  --primitive-color-velvet-900: #4A0F1C;
+  --primitive-color-felt-300: #4FB386;
+  --primitive-color-felt-700: #1E6B4A;
+  --primitive-color-felt-900: #123D2C;
+  --primitive-color-kraft-300: #D8BC8E;
+  --primitive-color-kraft-500: #B8935F;
   --primitive-color-kraft-700: #8C6A3E;
-  --primitive-color-gold-300: #E2B765;
-  --primitive-color-gold-500: #C8963E;
-  --primitive-color-gold-600: #A87526;
-  --primitive-color-gold-800: #7A5414;
-  --primitive-color-clay-500: #A4561A;
-  --primitive-color-elephant-500: #5F6467;
-  --primitive-color-green-500: #2F9E5B;
-  --primitive-color-whatsapp-500: #15803D;
-  --primitive-color-red-500: #C2413B;
+  --primitive-color-red-300: #E06A60;
+  --primitive-color-red-600: #B3332B;
+  --primitive-color-whatsapp-600: #15803D;
   --primitive-color-white: #FFFFFF;
   --primitive-radius-sm: 10px;
   --primitive-radius-md: 16px;
@@ -54,20 +66,20 @@
   --primitive-font-size-lg: 1.375rem;
   --primitive-font-size-xl: 1.75rem;
   --primitive-font-size-2xl: clamp(1.75rem, 3vw, 2.4rem);
-  --primitive-font-size-3xl: clamp(2.3rem, 5.4vw, 4.3rem);
-  --primitive-font-size-4xl: clamp(3rem, 9vw, 7.5rem);
-  --primitive-font-size-hero: clamp(3.4rem, 10vw, 8.6rem);
+  --primitive-font-size-3xl: clamp(2.6rem, 6vw, 5.2rem);
+  --primitive-font-size-4xl: clamp(3.4rem, 10vw, 9rem);
+  --primitive-font-size-hero: clamp(3.6rem, 11.5vw, 11rem);
   --primitive-leading-tight: 0.92;
   --primitive-leading-snug: 1.1;
   --primitive-leading-normal: 1.6;
-  --primitive-tracking-display: -0.035em;
+  --primitive-tracking-display: -0.03em;
   --primitive-tracking-heading: -0.02em;
   --primitive-tracking-body: 0;
-  --primitive-tracking-label: 0.14em;
-  --primitive-elevation-1: 0 1px 2px rgba(60,35,12,.08), 0 2px 6px -1px rgba(60,35,12,.06);
-  --primitive-elevation-2: 0 2px 4px rgba(60,35,12,.06), 0 12px 24px -8px rgba(90,55,20,.18);
-  --primitive-elevation-3: 0 4px 8px rgba(60,35,12,.06), 0 24px 48px -16px rgba(90,55,20,.28);
-  --primitive-elevation-4: 0 8px 16px rgba(40,22,8,.12), 0 40px 90px -24px rgba(40,22,8,.5);
+  --primitive-tracking-label: 0.22em;
+  --primitive-elevation-1: 0 1px 2px rgba(0,0,0,.45), 0 0 0 1px rgba(210,174,109,.08);
+  --primitive-elevation-2: 0 2px 6px rgba(0,0,0,.5), 0 18px 36px -14px rgba(0,0,0,.8), 0 0 0 1px rgba(210,174,109,.12);
+  --primitive-elevation-3: 0 6px 14px rgba(0,0,0,.55), 0 34px 64px -18px rgba(0,0,0,.85), 0 0 0 1px rgba(210,174,109,.16);
+  --primitive-elevation-4: 0 12px 24px rgba(0,0,0,.6), 0 60px 120px -24px rgba(0,0,0,.95), 0 0 0 1px rgba(210,174,109,.22);
   --primitive-easing-out: cubic-bezier(.22, 1, .36, 1);
   --primitive-easing-back: cubic-bezier(.34, 1.56, .64, 1);
   --primitive-easing-in-out: cubic-bezier(.65, 0, .35, 1);
@@ -79,83 +91,72 @@
   --primitive-z-agent: 80;
   --primitive-z-toast: 260;
   --primitive-z-grain: 200;
+  --primitive-font-family-display: 'Bodoni Moda', 'Bodoni Fallback', 'Didot', Georgia, serif;
+  --primitive-font-family-deco: 'Big Shoulders', 'Arial Narrow', 'Roboto Condensed', sans-serif;
+  --primitive-font-family-body: 'Instrument Sans', 'Instrument Fallback', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --primitive-font-family-script: 'Pinyon Script', 'Snell Roundhand', cursive;
 }
 
-/* === SEMANTIC === */
+/* === SEMANTIC · tema Noche (identidad de la marca, por defecto) === */
 :root {
-  --color-background: #F6EEDC;
-  --color-surface: #FFFAF0;
-  --color-surface-2: #FBF4E4;
-  --color-foreground: #1D140D;
-  --color-muted-foreground: #5B4A3B;
-  --color-subtle-foreground: #75624F;
-  --color-primary: #C8963E;
-  --color-primary-light: #E2B765;
-  --color-primary-ink: #7A5414;
-  --color-primary-foreground: #140D08;
-  --color-kraft: #C9A470;
-  --color-kraft-light: #E5CEB3;
-  --color-kraft-dark: #8C6A3E;
-  --color-accent: #A4561A;
-  --color-night: #140D08;
-  --color-night-2: #1F160E;
-  --color-success: #2F9E5B;
-  --color-destructive: #C2413B;
-  --color-whatsapp: #15803D;
-  --color-primary-display: #A87526;
-  --color-ring: #C8963E;
-  --color-grain-opacity: 0.06;
-  --color-chart-mark: #A87526;
+  --color-background: var(--primitive-color-noir-900);
+  --color-surface: var(--primitive-color-noir-700);
+  --color-surface-2: var(--primitive-color-noir-600);
+  --color-foreground: var(--primitive-color-ivory-300);
+  --color-muted-foreground: var(--primitive-color-smoke-300);
+  --color-subtle-foreground: var(--primitive-color-smoke-500);
+  --color-primary: var(--primitive-color-champagne-500);
+  --color-primary-light: var(--primitive-color-champagne-200);
+  --color-primary-ink: var(--primitive-color-champagne-300);
+  --color-primary-foreground: var(--primitive-color-noir-900);
+  --color-primary-display: var(--primitive-color-champagne-400);
+  --color-velvet: var(--primitive-color-velvet-700);
+  --color-velvet-2: var(--primitive-color-velvet-500);
+  --color-velvet-deep: var(--primitive-color-velvet-900);
+  --color-accent: var(--primitive-color-velvet-300);
+  --color-felt: var(--primitive-color-felt-900);
+  --color-kraft: var(--primitive-color-kraft-500);
+  --color-kraft-light: var(--primitive-color-kraft-300);
+  --color-kraft-dark: var(--primitive-color-kraft-700);
+  --color-night: var(--primitive-color-noir-950);
+  --color-night-2: var(--primitive-color-noir-800);
+  --color-paper: var(--primitive-color-ivory-100);
+  --color-paper-ink: var(--primitive-color-smoke-900);
+  --color-paper-muted: #5E5244;
+  --color-success: var(--primitive-color-felt-300);
+  --color-destructive: var(--primitive-color-red-300);
+  --color-whatsapp: var(--primitive-color-whatsapp-600);
+  --color-ring: var(--primitive-color-champagne-300);
+  --color-grain-opacity: 0.07;
+  --color-chart-mark: #B5822F;
   --color-status-good: #0CA30C;
   --color-status-warning: #FAB219;
   --color-status-critical: #D03B3B;
-  --elevation-card: 0 1px 2px rgba(60,35,12,.08), 0 2px 6px -1px rgba(60,35,12,.06);
-  --elevation-raised: 0 2px 4px rgba(60,35,12,.06), 0 12px 24px -8px rgba(90,55,20,.18);
-  --elevation-overlay: 0 4px 8px rgba(60,35,12,.06), 0 24px 48px -16px rgba(90,55,20,.28);
-  --elevation-modal: 0 8px 16px rgba(40,22,8,.12), 0 40px 90px -24px rgba(40,22,8,.5);
+  --elevation-card: var(--primitive-elevation-1);
+  --elevation-raised: var(--primitive-elevation-2);
+  --elevation-overlay: var(--primitive-elevation-3);
+  --elevation-modal: var(--primitive-elevation-4);
 }
 
-/* === COMPONENTS === */
-:root {
-
-}
-
-/* === DARK MODE === */
-:root[data-theme="dark"] {
-  --color-background: #120C07;
-  --color-surface: #1C140D;
-  --color-surface-2: #211810;
-  --color-foreground: #F4EAD6;
-  --color-muted-foreground: #CBB9A0;
-  --color-subtle-foreground: #9C8A73;
-  --color-primary-ink: #E2B765;
-  --color-primary-display: #E2B765;
-  --color-accent: #D98A4E;
-  --color-kraft: #A8875A;
-  --color-grain-opacity: 0.035;
-  --color-chart-mark: #B5822F;
-  --elevation-card: 0 1px 2px rgba(0,0,0,.4), 0 0 0 1px rgba(244,234,214,.05);
-  --elevation-raised: 0 2px 4px rgba(0,0,0,.4), 0 14px 30px -10px rgba(0,0,0,.7), 0 0 0 1px rgba(244,234,214,.06);
-  --elevation-overlay: 0 4px 10px rgba(0,0,0,.45), 0 28px 56px -16px rgba(0,0,0,.8), 0 0 0 1px rgba(244,234,214,.07);
-  --elevation-modal: 0 10px 20px rgba(0,0,0,.5), 0 50px 100px -20px rgba(0,0,0,.9), 0 0 0 1px rgba(226,183,101,.12);
-}
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) {
-    --color-background: #120C07;
-    --color-surface: #1C140D;
-    --color-surface-2: #211810;
-    --color-foreground: #F4EAD6;
-    --color-muted-foreground: #CBB9A0;
-    --color-subtle-foreground: #9C8A73;
-    --color-primary-ink: #E2B765;
-    --color-primary-display: #E2B765;
-    --color-accent: #D98A4E;
-    --color-kraft: #A8875A;
-    --color-grain-opacity: 0.035;
-    --color-chart-mark: #B5822F;
-    --elevation-card: 0 1px 2px rgba(0,0,0,.4), 0 0 0 1px rgba(244,234,214,.05);
-    --elevation-raised: 0 2px 4px rgba(0,0,0,.4), 0 14px 30px -10px rgba(0,0,0,.7), 0 0 0 1px rgba(244,234,214,.06);
-    --elevation-overlay: 0 4px 10px rgba(0,0,0,.45), 0 28px 56px -16px rgba(0,0,0,.8), 0 0 0 1px rgba(244,234,214,.07);
-    --elevation-modal: 0 10px 20px rgba(0,0,0,.5), 0 50px 100px -20px rgba(0,0,0,.9), 0 0 0 1px rgba(226,183,101,.12);
-  }
+/* === LIGHT · variante Marfil === */
+:root[data-theme="light"] {
+  --color-background: var(--primitive-color-ivory-200);
+  --color-surface: var(--primitive-color-ivory-50);
+  --color-surface-2: var(--primitive-color-ivory-400);
+  --color-foreground: var(--primitive-color-smoke-900);
+  --color-muted-foreground: var(--primitive-color-smoke-700);
+  --color-subtle-foreground: var(--primitive-color-smoke-600);
+  --color-primary: var(--primitive-color-champagne-600);
+  --color-primary-ink: var(--primitive-color-champagne-800);
+  --color-primary-display: var(--primitive-color-champagne-700);
+  --color-accent: var(--primitive-color-velvet-800);
+  --color-success: var(--primitive-color-felt-700);
+  --color-destructive: var(--primitive-color-red-600);
+  --color-ring: var(--primitive-color-champagne-800);
+  --color-grain-opacity: 0.05;
+  --color-chart-mark: #A87526;
+  --elevation-card: 0 1px 2px rgba(23,18,14,.08), 0 0 0 1px rgba(110,82,32,.12);
+  --elevation-raised: 0 2px 6px rgba(23,18,14,.08), 0 18px 34px -14px rgba(23,18,14,.28), 0 0 0 1px rgba(110,82,32,.14);
+  --elevation-overlay: 0 6px 14px rgba(23,18,14,.1), 0 30px 60px -18px rgba(23,18,14,.35), 0 0 0 1px rgba(110,82,32,.16);
+  --elevation-modal: 0 12px 24px rgba(23,18,14,.14), 0 50px 100px -24px rgba(23,18,14,.5), 0 0 0 1px rgba(110,82,32,.2);
 }

@@ -1,8 +1,27 @@
-# MANI-GANTE · El Gigante de los Antojos
+# Casa MANI-GANTE · Para gente gánster y elegante
 
 Sitio de MANI-GANTE (maní confitado artesanal, Temuco). Es estático, con módulos ES nativos y **sin build step**, más Netlify Functions para la IA, las reservas, el stock y el panel de Jorge.
 
-> Versión **v3 · catálogo 2026.10.2**. Todo el detalle de las 50 mejoras está en [`CHANGELOG.md`](CHANGELOG.md).
+> Versión **v4 · catálogo 2026.10.3**: identidad nueva **"La Casa"**, un speakeasy de los años 20 con alma dominicana.
+> - Por qué es así: [`docs/identidad-casa.md`](docs/identidad-casa.md) (investigación y referencias).
+> - Cómo se usa: [`docs/brand-guidelines.md`](docs/brand-guidelines.md).
+> - Historial completo: [`CHANGELOG.md`](CHANGELOG.md).
+
+**El recorrido**
+1. **La puerta** (solo en la primera visita).
+2. **El salón**, con la bolsa Nº 01 y la roseta guilloché.
+3. **La Bolsa de hoy**: el stock en vivo.
+4. Los capítulos:
+   - I · La receta
+   - II · Los más buscados (fichas con número y alias)
+   - III · El maletín
+   - IV · La cita (invitación con lacre)
+   - V · El Jefe (El Diario de la Casa)
+   - VI · Las pruebas
+   - VII · El trato (mesa de fieltro)
+   - VIII · La letra chica
+   - IX · La familia habla
+5. **El Gigante**, el consigliere con IA, acompaña todo el recorrido.
 
 ## Qué hace
 
@@ -13,7 +32,7 @@ Sitio de MANI-GANTE (maní confitado artesanal, Temuco). Es estático, con módu
   - "va bien con" y alérgenos;
   - "Reservar este sabor" y "Preguntarle al Gigante";
   - enlace a la ficha indexable `/sabor/:id`.
-- **Boleta (carrito)**:
+- **La cuenta de la casa (carrito)**:
   - persistente: si vuelves, tu pedido te espera;
   - se comparte por link (`?pedido=`) y sugiere qué más llevar;
   - promo de viernes gamificada;
@@ -55,10 +74,11 @@ css/styles.css              Componentes del sitio (todos usan tokens)
 css/fonts.css               @font-face locales + fallbacks con ajuste métrico
 css/pages.css · admin.css   Ficha de sabor / blog / 404 · panel de Jorge
 js/catalog.mjs              ⭐ Fuente única de verdad: sabores, precios, horario, reglas, promos, alérgenos, versión
-js/app.mjs                  Tienda (catálogo, boleta, reservas, quiz, caja, historial…)
+js/app.mjs                  Tienda (fichas, cuenta, citas, interrogatorio, maletín, historial, la Bolsa…)
 js/voice.mjs                Textos de marca (voz de Jorge) para toasts y estados vacíos
 js/ui.mjs                   Toasts, foco atrapado y sello "Hecho a mano"
-js/art.mjs · tilt.mjs       Bolsas generativas · micro-interacción de papel
+js/art.mjs · tilt.mjs       Bolsas con anilla, roseta guilloché, monograma · inclinación de las fichas
+js/door.mjs                 La puerta (intro de speakeasy, primera visita)
 js/ticket.mjs · history.mjs Ticket PNG/.ics · historial y carrito compartido
 js/i18n.mjs · analytics.mjs Traducciones · eventos y Web Vitals
 js/agent.mjs · motion.mjs   Widget del Gigante · animaciones GSAP (se cargan bajo demanda)
@@ -68,7 +88,7 @@ netlify/lib/*.mts           Lógica de negocio en TypeScript + Zod (Netlify la c
 assets/fonts · vendor · og  Fuentes OFL, GSAP, imágenes OG por sabor
 sw.js · site.webmanifest    PWA
 apps-script/Code.gs         Reservas → Sheets y webhook de stock (pushStock)
-design/tokens.json          Tokens (primitivo → semántico → componente) + build-tokens.py
+design/tokens.json          Tokens (primitivo → semántico Noche → variante Marfil) + build-tokens.mjs
 docs/brand-guidelines.md    Marca: paleta, tipografía, voz, elevación, procesos
 docs/design-system.md       Componentes (listos para pasar a Storybook/MDX)
 scripts/seo.mjs             Regenera JSON-LD del index desde catalog.mjs
@@ -92,7 +112,9 @@ tests/                      Playwright (tienda, API, accesibilidad) + servidor l
 
 ### Cambiar colores o espaciados de la marca
 
-Edita `design/tokens.json`, regenera `css/tokens.css` con el generador del skill *design-system* y luego ejecuta `python3 design/build-tokens.py css/tokens.css`. Ese post-proceso agrega el modo oscuro pensado aparte.
+Edita `design/tokens.json` y ejecuta `node design/build-tokens.mjs`, que regenera `css/tokens.css` sin dependencias. El tema **Noche** es el de la marca y **Marfil** es la variante clara.
+
+Para regenerar las imágenes para compartir (una por sabor y las de la casa), ejecuta `node tests/serve.mjs . 8787` y luego `node scripts/og.mjs`.
 
 ## Publicar en Netlify
 

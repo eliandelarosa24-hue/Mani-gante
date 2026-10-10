@@ -2,7 +2,7 @@ import {
   BUSINESS, FORMATS, FLAVORS, JAPANESE, COMBOS, FAQ, NUTRITION, CATEGORY_ORDER, RESERVATION_RULES, STOCK_API_URL, ALLERGENS,
   mergeRemoteStock, formatCLP, unitPrice, slug, campusStatus, reservableDays, buildReservation, whatsappLink, fridayPromo, isNewFlavor,
 } from "./catalog.mjs";
-import { bag, peanuts as swatch, stamp } from "./art.mjs";
+import { bag, peanuts as swatch, stamp, guilloche, monogram } from "./art.mjs";
 import { VOICE } from "./voice.mjs";
 import { toast, trapFocus, stampMoment } from "./ui.mjs";
 import { track } from "./analytics.mjs";
@@ -62,7 +62,7 @@ const gridJp = $("#gridJp");
 function cardHTML(f) {
   const qty = state.cart.get(f.id) || 0;
   const [main, sub] = splitName(f.name);
-  const badge = !f.available ? `<span class="badge out">Agotado</span>` : isNewFlavor(f) ? `<span class="badge new">Nuevo</span>` : f.topVentas ? `<span class="badge">Top ventas</span>` : "";
+  const badge = !f.available ? `<span class="badge out">Agotado</span>` : isNewFlavor(f) ? `<span class="badge new">Recién llegado</span>` : f.topVentas ? `<span class="badge">Más buscado</span>` : "";
   const premium = f.premium ? `<span class="badge premium">Precio fijo</span>` : "";
   const control = !f.available
     ? `<button class="add-btn ghost" type="button" data-alert="${f.id}"><svg><use href="#i-bell"/></svg>Avísame</button>`
@@ -71,8 +71,9 @@ function cardHTML(f) {
       : `<button class="add-btn" type="button" data-inc="${f.id}" aria-label="Agregar ${esc(f.name)}"><svg><use href="#i-plus"/></svg>Agregar</button>`;
   const fmt = formatOf(f);
   return `<article class="card${f.available ? "" : " soldout"}${qty ? " in-cart" : ""}" data-id="${f.id}" data-tilt style="--c:${f.color}">
-    <button class="card-art" type="button" data-quick="${f.id}" aria-label="Ver detalle de ${esc(f.name)}">${badge}${premium}${bag(f.color, fmt, { label: "" })}<span class="paper-sheen" aria-hidden="true"></span><span class="quick-hint" aria-hidden="true"><svg><use href="#i-eye"/></svg></span></button>
+    <button class="card-art" type="button" data-quick="${f.id}" aria-label="Ver detalle de ${esc(f.name)}">${badge}${premium}${bag(f.color, fmt, { label: "", num: f.no })}<span class="card-no" aria-hidden="true">Ficha Nº ${esc(f.no || "")}</span><span class="paper-sheen" aria-hidden="true"></span><span class="quick-hint" aria-hidden="true"><svg><use href="#i-eye"/></svg></span></button>
     <h3>${esc(main)}${sub ? `<small>c/ ${esc(sub)}</small>` : ""}</h3>
+    ${f.alias ? `<em class="card-alias">alias «${esc(f.alias)}»</em>` : ""}
     <p>${esc(f.notes || "")}</p>
     <div class="card-foot"><span class="price">${formatCLP(unitPrice(f, fmt))}</span>${control}</div>
   </article>`;
@@ -83,7 +84,7 @@ function filtered() {
   const { available: onlyAv, top, new: onlyNew } = state.filters;
   return state.catalog.filter((f) =>
     (state.category === "todos" || slug(f.category) === state.category)
-    && (!q || slug(`${f.name} ${f.category} ${f.notes}`).includes(q))
+    && (!q || slug(`${f.name} ${f.category} ${f.notes} ${f.alias || ""}`).includes(q))
     && (!onlyAv || f.available) && (!top || f.topVentas) && (!onlyNew || isNewFlavor(f)));
 }
 function renderCatalog() {
@@ -91,7 +92,7 @@ function renderCatalog() {
   grid.innerHTML = list.map(cardHTML).join("");
   const empty = $("#empty");
   empty.hidden = list.length > 0;
-  if (!list.length) empty.innerHTML = `${bag("#C8963E", "doypack", { cls: "bag empty-bag" })}<span>${VOICE.emptySearch}</span> <button type="button" data-open-agent>Preguntarle al Gigante</button>`;
+  if (!list.length) empty.innerHTML = `${bag("#C8963E", "doypack", { cls: "bag empty-bag" })}<span>${VOICE.emptySearch}</span> <button type="button" data-open-agent>Consultar al consigliere</button>`;
   gridJp.innerHTML = state.japanese.map(cardHTML).join("");
   window.dispatchEvent(new CustomEvent("mg:catalog"));
 }
@@ -194,7 +195,7 @@ async function syncStock({ quiet = false } = {}) {
   $(".hero-card")?.classList.remove("is-loading"); $(".hero-card")?.removeAttribute("aria-busy");
   const backNow = state.catalog.filter((f) => f.available && before.get(f.id) === false);
   pruneCart();
-  renderChips(); renderCatalog(); renderHero(); renderCart(); renderReserveItems(); renderPalette();
+  renderChips(); renderCatalog(); renderMarquees(); renderHero(); renderCart(); renderReserveItems(); renderPalette();
   if (backNow.length && quiet) toast(`Volvió ${backNow.map((f) => f.name).join(", ")}`, { tone: "alert", color: backNow[0].color });
 }
 $("#syncRetry").addEventListener("click", () => syncStock());
@@ -307,7 +308,7 @@ function renderPromo(bags) {
     ribbon.hidden = !fp.active;
     if (fp.active) {
       const pct = bags === 0 ? 0 : fp.free > 0 && bags % fp.group === 0 ? 100 : ((bags % fp.group) / fp.group) * 100;
-      ribbon.innerHTML = `<span class="ribbon-label">Viernes de antojo</span><span class="ribbon-text">${bags ? VOICE.friday(fp.toNext, fp.free) : "Compra 4 y la 5ª va gratis, solo hoy"}</span><span class="ribbon-bar" role="progressbar" aria-label="Avance hacia la bolsa gratis" aria-valuemin="0" aria-valuemax="${fp.group}" aria-valuenow="${bags % fp.group}"><i style="width:${pct}%"></i></span>`;
+      ribbon.innerHTML = `<span class="ribbon-label">Viernes de la casa</span><span class="ribbon-text">${bags ? VOICE.friday(fp.toNext, fp.free) : "Una oferta que no podrás rechazar: compra 4 y la 5ª va gratis"}</span><span class="ribbon-bar" role="progressbar" aria-label="Avance hacia la bolsa gratis" aria-valuemin="0" aria-valuemax="${fp.group}" aria-valuenow="${bags % fp.group}"><i style="width:${pct}%"></i></span>`;
     }
     document.body.classList.toggle("has-ribbon", fp.active);
   }
@@ -410,6 +411,7 @@ function renderQuick() {
   $("#qvArt").style.setProperty("--c", f.color);
   $("#qvCat").textContent = f.line === "japones" ? "Maní japonés" : f.category;
   $("#qvName").textContent = f.name;
+  const qa = $("#qvAlias"); if (qa) qa.textContent = f.alias ? `alias «${f.alias}» · Ficha Nº ${f.no}` : "";
   $("#qvNotes").textContent = f.notes || "";
   const st = $("#qvStatus");
   st.className = `quick-status${f.available ? "" : " out"}`;
@@ -536,7 +538,7 @@ function renderQuiz(step = 0) {
   const prog = `<div class="quiz-progress" aria-hidden="true">${QUIZ.map((_, i) => `<i class="${i <= step ? "on" : ""}"></i>`).join("")}<i class="${step >= QUIZ.length ? "on" : ""}"></i></div>`;
   if (step < QUIZ.length) {
     const s = QUIZ[step];
-    body.innerHTML = `${prog}<p class="eyebrow" style="justify-content:center">Paso ${step + 1} de ${QUIZ.length}</p><h2 class="quiz-q" id="quizTitle">${s.q}</h2>
+    body.innerHTML = `${prog}<p class="eyebrow" style="justify-content:center">El interrogatorio · pregunta ${step + 1} de ${QUIZ.length}</p><h2 class="quiz-q" id="quizTitle">${s.q}</h2>
       <div class="quiz-opts">${s.opts.map((o) => `<button type="button" class="quiz-opt" data-v="${o.v}">${swatch(o.color)}<span>${o.label}</span><small>${o.hint}</small></button>`).join("")}</div>
       ${step > 0 ? `<button class="link quiz-back" type="button" id="quizBack">← Atrás</button>` : ""}`;
     body.querySelector(".quiz-opts").addEventListener("click", (e) => {
@@ -551,9 +553,9 @@ function renderQuiz(step = 0) {
   const fmt = quizAns.moment === "regalo" ? "doypack" : "celofan";
   store.set("mg-quiz", { ans: quizAns, picks: picks.map((f) => f.id), at: Date.now() });
   track("quiz_complete", { taste: quizAns.taste });
-  body.innerHTML = `${prog}<p class="eyebrow" style="justify-content:center">Tu selección</p><h2 class="quiz-q" id="quizTitle">Estos son <em>para ti</em></h2>
+  body.innerHTML = `${prog}<p class="eyebrow" style="justify-content:center">Caso cerrado</p><h2 class="quiz-q" id="quizTitle">Tus <em>cómplices</em> ideales</h2>
     <div class="quiz-result">${picks.map((f) => `<div class="quiz-pick">${bag(f.color, f.line === "japones" ? "celofan" : fmt)}<strong>${esc(f.name.replace("Maní Japonés ", "Japonés "))}</strong><small>${esc(f.notes)}</small></div>`).join("")}</div>
-    ${fmt === "doypack" ? `<p class="muted" style="margin-bottom:18px">Para regalo te sugerimos la <strong>Reserva del Gigante</strong> (doypack hermético).</p>` : ""}
+    ${fmt === "doypack" ? `<p class="muted" style="margin-bottom:18px">Para regalo te sugerimos la <strong>La Reserva</strong> (doypack hermético).</p>` : ""}
     <div class="quiz-actions"><button class="btn btn-gold btn-lg" type="button" id="quizAdd"><svg><use href="#i-bag"/></svg> Agregar los ${picks.length}</button><button class="btn btn-ghost" style="margin:0" type="button" id="quizShare">Compartir resultado</button><button class="link" type="button" id="quizAgain">Volver a empezar</button></div>`;
   $("#quizAdd").addEventListener("click", () => {
     addItems(picks.map((f) => ({ id: f.id, qty: 1 })), { format: fmt });
@@ -613,8 +615,8 @@ function renderBox() {
   $("#boxCount").textContent = `${filled.length} / ${box.size.bags}`;
   $("#boxName").textContent = box.size.name;
   $("#boxAdd").disabled = filled.length === 0;
-  $("#boxAdd").lastChild.textContent = filled.length === box.size.bags ? " Agregar caja" : ` Agregar ${filled.length || ""} a la boleta`;
-  if (filled.length === box.size.bags && !box.celebrated) { box.celebrated = true; stampMoment($(".box-stage"), "CAJA COMPLETA · HECHA A TU GUSTO · "); }
+  $("#boxAdd").lastChild.textContent = filled.length === box.size.bags ? " Agregar maletín" : ` Agregar ${filled.length || ""} a la cuenta`;
+  if (filled.length === box.size.bags && !box.celebrated) { box.celebrated = true; stampMoment($(".box-stage"), "MALETÍN COMPLETO · A TU GUSTO · "); }
   if (filled.length < box.size.bags) box.celebrated = false;
 }
 function renderPalette() {
@@ -669,11 +671,39 @@ function renderHero() {
 $("#heroTop").addEventListener("click", (e) => {
   const b = e.target.closest("[data-inc]"); if (b) changeQty(b.dataset.inc, +1, { from: b.querySelector(".swatch") });
 });
+// La Bolsa de hoy: ticker con el stock en vivo (▲ en circulación · ▼ agotado)
+let tickerSig = "";
 function renderMarquees() {
-  const names = [...FLAVORS, ...JAPANESE].map((f) => `<span>${esc(f.name)}</span>`).join("");
-  $("#marqueeTrack").innerHTML = names + names;
-  const words = ["Hecho a mano", "Lotes chicos", "Directo al campus", "Stock en vivo", "28 sabores", "Temuco"].map((w) => `<span>${w}</span>`).join("");
-  $("#footerMarquee").innerHTML = (words + words) + (words + words);
+  const all = [...state.catalog, ...state.japanese];
+  const sig = all.map((f) => `${f.id}:${f.available ? 1 : 0}`).join();
+  if (sig !== tickerSig) {
+    tickerSig = sig;
+    const items = all.map((f) => `<span class="tk ${f.available ? "up" : "down"}"><b>${esc(f.name.replace("Maní Japonés ", "Japonés "))}</b><i>${f.available ? "▲" : "▼"}</i><em>${f.available ? "en circulación" : "agotado"}</em></span>`).join("");
+    $("#marqueeTrack").innerHTML = items + items;
+  }
+  if (!$("#footerMarquee").childElementCount) {
+    const words = ["Para gente gánster y elegante", "Hecho a mano en Temuco", "Receta de la casa", "Lotes chicos", "Directo al campus"].map((w) => `<span>${w}</span>`).join("");
+    $("#footerMarquee").innerHTML = words + words + words + words;
+  }
+}
+// Arte de la casa: bolsa del salón, roseta guilloché y monograma del lacre
+const heroFlavor = FLAVORS[0];
+if ($("#heroBag")) $("#heroBag").innerHTML = bag(heroFlavor.color, "doypack", { num: heroFlavor.no });
+$$("[data-guilloche]").forEach((el) => { el.innerHTML = guilloche(); });
+$$("[data-monogram]").forEach((el) => { el.innerHTML = monogram(); });
+// Foco de luz que sigue al puntero en las salas oscuras
+if (!reduceMotion && matchMedia("(pointer: fine)").matches) {
+  $$(".hero, .reserve").forEach((room) => {
+    let raf = 0;
+    room.addEventListener("pointermove", (e) => {
+      cancelAnimationFrame(raf);
+      raf = requestAnimationFrame(() => {
+        const r = room.getBoundingClientRect();
+        room.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
+        room.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+      });
+    });
+  });
 }
 $$("[data-stamp]").forEach((el) => { el.innerHTML = stamp(el.dataset.stamp || undefined); });
 
@@ -856,12 +886,12 @@ function recoverCart() {
   if (fromUrl?.items.length) {
     state.cart.clear();
     addItems(fromUrl.items, { format: fromUrl.format });
-    toast(VOICE.orderRestored(cartTotals().bags), { tone: "info", action: { label: "Ver boleta", onClick: openCart } });
+    toast(VOICE.orderRestored(cartTotals().bags), { tone: "info", action: { label: "Ver la cuenta", onClick: openCart } });
     return;
   }
   const at = store.get("mg-cart-at", 0);
   const { bags } = cartTotals();
-  if (bags && Date.now() - at > 30 * 60 * 1000) setTimeout(() => toast(VOICE.welcomeBack(bags), { tone: "info", action: { label: "Ver boleta", onClick: openCart } }), 2500);
+  if (bags && Date.now() - at > 30 * 60 * 1000) setTimeout(() => toast(VOICE.welcomeBack(bags), { tone: "info", action: { label: "Ver la cuenta", onClick: openCart } }), 2500);
 }
 
 // ============================================================
@@ -983,11 +1013,12 @@ const sectionObserver = new IntersectionObserver((entries) => entries.forEach((e
 ["oficio", "tienda", "caja", "reservar", "historia"].forEach((id) => { const s = document.getElementById(id); if (s) sectionObserver.observe(s); });
 
 const themeBtn = $("#themeToggle");
-const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
+const isDark = () => document.documentElement.dataset.theme !== "light"; // Noche es el tema de la casa
 const paintThemeIcon = () => { themeBtn.querySelector("use").setAttribute("href", isDark() ? "#i-sun" : "#i-moon"); themeBtn.setAttribute("aria-label", isDark() ? "Cambiar a modo claro" : "Cambiar a modo oscuro"); };
 themeBtn.addEventListener("click", () => {
   const next = isDark() ? "light" : "dark";
-  document.documentElement.dataset.theme = next; store.set("mg-theme", next); paintThemeIcon();
+  if (next === "light") document.documentElement.dataset.theme = "light"; else delete document.documentElement.dataset.theme;
+  store.set("mg-theme", next); paintThemeIcon();
   track("theme", { theme: next });
 });
 paintThemeIcon();
@@ -1009,6 +1040,7 @@ document.addEventListener("click", (e) => {
   e.preventDefault(); e.stopPropagation();
   openAgent();
 }, true);
+if (document.documentElement.classList.contains("door-on")) import("./door.mjs");
 const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1200));
 idle(() => import("./motion.mjs"));
 idle(() => loadAgent(), { timeout: 6000 });

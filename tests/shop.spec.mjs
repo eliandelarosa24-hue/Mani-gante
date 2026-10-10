@@ -94,3 +94,26 @@ test("ficha de sabor indexable con schema Product", async ({ page }) => {
   const ld = await page.locator('script[type="application/ld+json"]').first().textContent();
   expect(JSON.parse(ld)["@type"]).toBe("Product");
 });
+
+test("la puerta: solo en la primera visita, accesible y se abre", async ({ page }) => {
+  await page.addInitScript(() => Object.defineProperty(navigator, "webdriver", { get: () => false }));
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/");
+  await expect(page.locator("#door")).toBeVisible();
+  await expect(page.locator("#doorEnter")).toBeFocused();
+  await expect(page.locator("main")).toHaveJSProperty("inert", true);
+  await page.locator("#doorEnter").click();
+  await expect(page.locator("html")).not.toHaveClass(/door-on/, { timeout: 4000 });
+  await expect(page.locator("main")).toHaveJSProperty("inert", false);
+  await page.reload();
+  await expect(page.locator("#door")).toBeHidden();
+});
+
+test("identidad: fichas con alias, la Bolsa en vivo y eslogan", async ({ page }) => {
+  await page.goto("/");
+  await expect(page.locator("#heroTitle")).toContainText("gánster");
+  await expect(page.locator('#grid .card[data-id="maracuya"] .card-alias')).toHaveText("alias «La Tropical»");
+  await expect(page.locator("#marqueeTrack .tk.down").first()).toBeAttached();
+  await page.locator("#search").fill("jeque");
+  await expect(page.locator("#grid .card")).toHaveCount(1);
+});

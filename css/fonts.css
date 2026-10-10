@@ -1,9 +1,13 @@
-/* Fuentes alojadas en el sitio (sin Google Fonts): más rápidas, privadas y con todos los ejes.
-   Fraunces "full" incluye opsz, SOFT y WONK. Licencias OFL en assets/fonts/. */
-@font-face { font-family: "Fraunces"; src: url("../assets/fonts/fraunces-latin-full-normal.woff2") format("woff2-variations"), url("../assets/fonts/fraunces-latin-full-normal.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
-@font-face { font-family: "Fraunces"; src: url("../assets/fonts/fraunces-latin-full-italic.woff2") format("woff2-variations"), url("../assets/fonts/fraunces-latin-full-italic.woff2") format("woff2"); font-weight: 100 900; font-style: italic; font-display: swap; }
-@font-face { font-family: "Manrope"; src: url("../assets/fonts/manrope-latin-wght-normal.woff2") format("woff2-variations"), url("../assets/fonts/manrope-latin-wght-normal.woff2") format("woff2"); font-weight: 200 800; font-style: normal; font-display: swap; }
-@font-face { font-family: "Caveat"; src: url("../assets/fonts/caveat-latin-wght-normal.woff2") format("woff2-variations"), url("../assets/fonts/caveat-latin-wght-normal.woff2") format("woff2"); font-weight: 400 700; font-style: normal; font-display: swap; }
-/* Ajuste métrico del respaldo para minimizar el salto de diseño (CLS) mientras carga la fuente. */
-@font-face { font-family: "Fraunces Fallback"; src: local("Georgia"); size-adjust: 104%; ascent-override: 92%; descent-override: 24%; }
-@font-face { font-family: "Manrope Fallback"; src: local("Arial"); size-adjust: 103%; ascent-override: 100%; descent-override: 28%; }
+/* Casa Mani-Gante · fuentes autoalojadas (OFL, licencias en assets/fonts/)
+   Bodoni Moda   → titulares de lujo editorial (ejes opsz 6–96 + wght 400–900)
+   Big Shoulders → números, etiquetas y la Bolsa: nació de los carteles de Chicago de los años 20
+   Instrument Sans → texto corrido, legible y moderno
+   Pinyon Script → la firma del Jefe (solo en tamaños grandes) */
+@font-face { font-family: "Bodoni Moda"; src: url("../assets/fonts/bodoni-moda.woff2") format("woff2-variations"), url("../assets/fonts/bodoni-moda.woff2") format("woff2"); font-weight: 400 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Bodoni Moda"; src: url("../assets/fonts/bodoni-moda-italic.woff2") format("woff2-variations"), url("../assets/fonts/bodoni-moda-italic.woff2") format("woff2"); font-weight: 400 900; font-style: italic; font-display: swap; }
+@font-face { font-family: "Big Shoulders"; src: url("../assets/fonts/big-shoulders.woff2") format("woff2-variations"), url("../assets/fonts/big-shoulders.woff2") format("woff2"); font-weight: 100 900; font-style: normal; font-display: swap; }
+@font-face { font-family: "Instrument Sans"; src: url("../assets/fonts/instrument-sans.woff2") format("woff2-variations"), url("../assets/fonts/instrument-sans.woff2") format("woff2"); font-weight: 400 700; font-stretch: 75% 100%; font-style: normal; font-display: swap; }
+@font-face { font-family: "Pinyon Script"; src: url("../assets/fonts/pinyon-script.woff2") format("woff2"); font-weight: 400; font-style: normal; font-display: swap; }
+/* Respaldo con ajuste métrico para minimizar el salto (CLS) mientras carga la fuente real. */
+@font-face { font-family: "Bodoni Fallback"; src: local("Didot"), local("Bodoni 72"), local("Georgia"); size-adjust: 96%; ascent-override: 96%; descent-override: 26%; }
+@font-face { font-family: "Instrument Fallback"; src: local("Arial"); size-adjust: 100%; ascent-override: 96%; descent-override: 25%; }

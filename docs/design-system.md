@@ -1,4 +1,4 @@
-# MANI-GANTE · Design system v3
+# Casa MANI-GANTE · Design system v4
 
 Componentes del sitio documentados para pasarlos tal cual a **Storybook (CSF) o MDX**. Cada ficha incluye:
 - **Anatomía**: el HTML mínimo;
@@ -59,7 +59,7 @@ Capas z: nav 50 · fab 60 · scrim 70 · drawer 75 · agente 80 · grano 200 · 
   - `.quick-info` contiene `.quick-status`, formatos, `.quick-buy`, `.quick-notes`, alérgenos y `.quick-ctas`.
 - **A11y:** `<dialog>` nativo con foco inicial en el título y `Esc` para cerrar. El toggle de foto/ilustración usa `aria-pressed`.
 
-## Boleta (drawer) · `.drawer`
+## La cuenta de la casa (drawer) · `.drawer.paper-room`
 - **Anatomía:** `.drawer-head`, `.drawer-promo` (cinta de viernes), `.drawer-body` (líneas + `.upsell`), `.drawer-foot` (`.pay-pick`, total, CTA de WhatsApp) y `.drawer-links` (compartir e historial).
 - **A11y:** `role="dialog"` + `aria-modal`; `trapFocus()` de `js/ui.mjs`; el resto de la página queda `inert`; al cerrar, el foco vuelve al disparador.
 
@@ -73,7 +73,7 @@ Capas z: nav 50 · fab 60 · scrim 70 · drawer 75 · agente 80 · grano 200 · 
 ## Toast · `.toast`
 - **API:** `toast(text, { tone: "success"|"info"|"alert"|"error", color, action: { label, onClick } })` en `js/ui.mjs`.
 - **Textos:** siempre desde `js/voice.mjs`.
-- **A11y:** `role="status"` (en `error` usa `alert`); en móvil aparece arriba para no tapar la boleta.
+- **A11y:** `role="status"` (en `error` usa `alert`); en móvil aparece arriba para no tapar la cuenta.
 
 ## Banners · `.promo-ribbon`, `.away-banner`
 - La cinta del viernes solo aparece si `fridayPromo().active`.
@@ -104,3 +104,25 @@ Capas z: nav 50 · fab 60 · scrim 70 · drawer 75 · agente 80 · grano 200 · 
 2. En `.storybook/preview.js`, importa `../css/tokens.css`, `../css/fonts.css` y `../css/styles.css`. Agrega un decorator que cambie `data-theme`.
 3. Escribe una historia por ficha usando la anatomía de arriba como `render`. Usa los textos de `js/voice.mjs` como args.
 4. Agrega `@storybook/addon-a11y`: los mismos chequeos axe que ya corren en `tests/a11y.spec.mjs`.
+
+
+---
+
+## v4 · Componentes de la Casa
+
+| Componente | Clase / función | Notas |
+|---|---|---|
+| Sala oscura / papel | `.room` · `.paper-room` | Redefinen los alias de color (`--text`, `--surface`, `--line`…) para que la sala conserve su material en Noche y Marfil |
+| Capítulo | `.eyebrow > span + span` | Recuadro "Cap. N" + nombre; `.section-head::after` dibuja el filete con rombo |
+| Ficha de sabor | `.card` + `.card-no` + `.card-alias` | Fondo de rueda de reconocimiento; `bag(color, fmt, { num })` graba el número en la anilla |
+| Anilla | `bag()` en `js/art.mjs` | Banda dorada, medallón de terciopelo y "Nº / M·G" |
+| Roseta | `guilloche()` · `[data-guilloche]` | SVG paramétrico en `currentColor` |
+| Monograma / lacre | `monogram()` · `.wax[data-monogram]` | Medallón MG art déco |
+| La Bolsa | `.ticker` + `.tk.up/.down` | Se regenera solo cuando cambia el stock |
+| Maletín | `.box-stage` | Asa, broches dorados (`.box-lid::before/::after`) e interior capitoné |
+| Invitación | `.ticket.paper-room` + `.ticket-head .invite` + `.wax` | Doble filete con `box-shadow` inset |
+| El Diario | `.masthead` + `.letter-body` | Columnas con regla y capitular |
+| Mesa de fieltro | `.pay` + `.pay-card` (`--brand`) | Tarjetas de metal negro con franja de marca |
+| Telegrama | `.note-card` | Encabezado por `::before` |
+| La puerta | `#door` + `js/door.mjs` | `html.door-on` lo decide el `<head>`; inerte el resto; Esc o "Entrar sin contraseña" la saltan; se abre sola a los 8 s |
+| Botón | `.btn-gold` | Plaqueta de foil con filete interior; esquinas de 2 px |

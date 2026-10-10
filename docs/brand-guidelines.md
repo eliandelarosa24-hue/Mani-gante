@@ -1,202 +1,164 @@
-# MANI-GANTE · Guía de marca v3.0
+# Casa MANI-GANTE · Guía de marca v4.0
 
-> Última actualización: 2026-10-09 · Estado: activa
-> Dirección: **"Premium artesanal"**: lujo cálido y oscuro (espresso + oro) con materiales reales del producto (papel kraft, sello, tinta del elefante).
+> Última actualización: 2026-10-10 · Estado: activa
+> Eslogan: **"Para gente gánster y elegante."**
+> Dirección: **noir de lujo**. Un speakeasy de los años 20 con alma dominicana: terciopelo, oro champán, anillas de habano y grabado de billete. El "gánster" es estilo, lealtad y familia; nunca violencia ni nada ilegal.
+> Investigación y referencias detrás de cada decisión: [`docs/identidad-casa.md`](identidad-casa.md).
 
 ## Referencia rápida
 
 | Elemento | Valor |
-|---------|-------|
-| Color principal | Espresso #140D08 |
-| Color secundario | Kraft #C9A470 |
-| Acento | Oro miel #C8963E |
-| Fuente titulares | Fraunces (serif suave, óptica variable) |
-| Fuente cuerpo | Manrope |
-| Fuente manuscrita | Caveat (solo notas de Jorge, máx. 1 por sección) |
-| Voz | Cercana, orgullosa del oficio, con humor de campus |
+|---|---|
+| Tema de la marca | **Noche** (oscuro) por defecto · Marfil (claro) opcional |
+| Noir | #0D0B09 fondo · #161210 superficie · #1E1915 superficie 2 |
+| Oro champán | #D2AE6D (acción) · #DDBB7C (texto dorado sobre noir) · foil en degradado |
+| Terciopelo | #6E1A2C (sala del maletín, lacre, cuenta) · #E2687C (acento de texto sobre noir) |
+| Fieltro de casino | #1E5A43 → #0D2A1F (sala del trato) |
+| Marfil | #F2EADB (texto sobre noir) · #F7F1E6 (papel: invitación, cuenta, periódico) |
+| Titulares | **Bodoni Moda**: lujo editorial, cursiva dorada para la palabra clave |
+| Etiquetas y números | **Big Shoulders**: inspirada en los carteles de Chicago de los años 20 |
+| Texto | **Instrument Sans** |
+| Firma | **Pinyon Script**: solo la firma del Jefe y la palabra "Invitación" |
 
 ---
 
-## 1. Paleta de color
+## 1. Paleta
 
-Extraída del logo (pergamino y tinta del elefante) y de las fotos reales del empaque (kraft).
+Todos los valores viven en `design/tokens.json`. El archivo `css/tokens.css` se genera con `node design/build-tokens.mjs`.
 
-### Primary Colors (principales)
+| Rol | Noche (marca) | Marfil (claro) | Contraste |
+|---|---|---|---|
+| Fondo | #0D0B09 | #F3ECDF | — |
+| Texto | #F2EADB | #17120E | 16.4:1 · 15.8:1 (AAA) |
+| Texto secundario | #BFB3A1 | #4E4337 | 9.5:1 · 8.2:1 (AAA) |
+| Texto sutil | #968A78 | #6B5E4F | 5.8:1 · 5.4:1 (AA) |
+| Dorado de texto | #DDBB7C | #6E5220 | 10.7:1 · 6.2:1 |
+| Acento (terciopelo) | #E2687C | #7A1E31 | 6.1:1 · 8.7:1 |
+| Éxito (fieltro) | #4FB386 | #1E6B4A | 7.6:1 · 5.5:1 |
+| Error | #E06A60 | #B3332B | 6.0:1 · 5.2:1 |
+| Botón dorado | texto #0D0B09 sobre #D2AE6D | igual | 9.4:1 |
 
-| Nombre | Hex | Uso |
-|------|-----|-------|
-| Espresso | #140D08 | Fondos oscuros, hero, historia, footer |
-| Tinta | #1D140D | Texto principal en modo claro |
-| Oro miel | #C8963E | CTAs, acentos, cursivas destacadas |
-| Oro claro | #E2B765 | Acentos sobre fondos oscuros |
+**Salas con material propio:** se ven iguales en Noche y Marfil, porque son "habitaciones" de la casa (clase `.room`).
+- Salón (hero): noir y terciopelo.
+- La Bolsa: noir.
+- El maletín: terciopelo capitoné.
+- La cita: noir con foco de luz.
+- El trato: fieltro verde.
+- Pie de página: noir.
 
-### Secondary Colors (materiales)
+El papel (invitación, cuenta, periódico y telegrama) usa la clase `.paper-room`.
 
-| Nombre | Hex | Uso |
-|------|-----|-------|
-| Kraft | #C9A470 | Etiquetas, tarjetas tipo bolsa, texturas |
-| Kraft claro | #E5CEB3 | Superficies de "papel" |
-| Pergamino | #F6EEDC | Fondo de la página (modo claro) |
-| Elefante | #5F6467 | Detalles gráficos e ilustración |
-| Arcilla | #B5651D | Sellos "hecho a mano", estados de oferta |
-
-### Neutral (neutros)
-
-| Nombre | Hex | Uso |
-|------|-----|-------|
-| Background | #F6EEDC | Fondo de página |
-| Surface | #FFFAF0 | Tarjetas |
-| Text Primary | #1D140D | Titulares y texto |
-| Text Secondary | #5B4A3B | Texto secundario |
-| Border | #E2D5BC | Bordes |
-
-### Semantic (semánticos)
-
-| Estado | Hex | Uso |
-|-------|-----|-------|
-| Success | #2F9E5B | Disponible, confirmaciones |
-| Warning | #B5651D | Últimas unidades / promos |
-| Error | #C2413B | Agotado, errores |
-| Info | #1FA855 | Acciones de WhatsApp |
-
-### Accesibilidad
-- Tinta sobre pergamino: 15:1 (AAA). Texto secundario sobre pergamino: 7:1 (AAA).
-- Oro miel **nunca** como color de texto pequeño sobre pergamino (2.4:1): usar #7A5414 (oro tinta, 6.1:1).
-- Sobre espresso, el oro claro #E2B765 alcanza 9:1.
-
----
+**Reglas**
+- El oro es para acción y énfasis. Nunca se usa en párrafos.
+- El foil (degradado) va solo en titulares grandes, botones principales y el logotipo del pie.
+- Los colores de bancos se ven solo como franja de 6 px en las tarjetas de pago.
 
 ## 2. Tipografía
 
-| Rol | Fuente | Peso | Notas |
-|------|------|--------|-------|
-| Display / H1–H2 | Fraunces | 400–500, cursiva para palabras clave | `opsz` alto, interletrado −2 % |
-| Cuerpo | Manrope | 400–700 | 16 px base, interlineado 1.6 |
-| Etiquetas | Manrope | 700–800 | Mayúsculas, interletrado +0.14em |
-| Nota manuscrita | Caveat | 500–700 | Solo para la "voz de Jorge" |
+| Rol | Fuente | Uso |
+|---|---|---|
+| Display | Bodoni Moda 500 (cursiva 500) | Titulares con tracking −0.025em; la palabra clave va en cursiva con foil dorado |
+| Deco | Big Shoulders 700–800, mayúsculas | Etiquetas de capítulo, números de ficha, precios, botones y la Bolsa. Tracking +0.14 a +0.3em |
+| Texto | Instrument Sans 400–600 | Cuerpo de 16 px, interlineado 1.65 |
+| Firma | Pinyon Script | Solo para "Jorge" y "Invitación", siempre a 2rem o más |
 
-### Font Stack
-
-```css
---font-heading: 'Fraunces', Georgia, serif;
---font-body: 'Manrope', system-ui, sans-serif;
---font-mono: 'Caveat', cursive;
-```
-
----
+- **Precios y números** siempre en Big Shoulders: $1.000 se lee como una cifra de cartel.
+- **Capítulos**: cada sección abre con `Cap. I…IX` dentro de un recuadro, seguido de su nombre.
+- Las fuentes están autoalojadas en `assets/fonts/` (licencia OFL) y sus respaldos tienen ajuste métrico.
 
 ## 3. Voz de marca
 
-### Brand Personality
+### Personalidad
 
-| Rasgo | Descripción |
-|-------|-------------|
-| **Artesano orgulloso** | Habla del oficio con datos concretos |
-| **Cercano** | Tutea, voz de Jorge: dominicano con 8 años en Chile |
-| **Con humor de campus** | El antojo, la prueba, el día largo |
-| **Honesto** | Si se agota, lo dice; no inventa reseñas |
+| Rasgo | Cómo se nota |
+|---|---|
+| **Elegante** | Frases cortas y seguras. Nada de gritos ni exceso de signos. |
+| **Gánster de película** | Juega con la familia, el trato, la cita, el Jefe, el consigliere, la ficha y el alias. |
+| **Cercano** | Habla con la voz de Jorge: dominicano con 8 años en Chile. |
+| **Honesto** | Si se agota, lo dice. No inventa reseñas ni cifras. |
 
-### Prohibited Terms
+### El vocabulario de la casa
 
-| Evitar |
-|--------|
-| el mejor del mundo |
-| disruptivo |
-| garantizado |
-| reseñas inventadas |
+| En vez de… | Decimos… |
+|---|---|
+| Tienda / top ventas | **Los más buscados** / "Más buscado" |
+| Sabor nuevo | "Recién llegado" |
+| Arma tu caja | **El maletín** |
+| Reservar | **Pedir una cita con el Jefe** |
+| Carrito / boleta | **La cuenta de la casa** |
+| Formas de pago | **Así se cierra el trato** |
+| FAQ | **La letra chica** |
+| Opiniones | **La familia habla** / "telegrama" |
+| Asistente IA | **El Gigante, tu consigliere** |
+| Test de sabor | **El interrogatorio** → "tus cómplices ideales" |
+| Promo de viernes | "Una oferta que no podrás rechazar" |
+| Formatos | **El Clásico** (celofán) y **La Reserva** (doypack) |
 
-### Somos
-- **Artesanos orgullosos**: hablamos del oficio (lotes pequeños, tostado, baño a mano) con datos concretos, sin exagerar.
-- **Cercanos**: tuteamos con la voz de Jorge, un dominicano que lleva años en Chile. Mezclamos suave el dominicano ("chévere", "dímelo", "mi pana", "tranquilo") con el chileno de campus ("al tiro", "bacán", "el bajón"). Sin garabatos.
-- **Con humor de campus**: el antojo, la prueba difícil, el día largo.
-- **Honestos**: si algo está agotado, lo decimos. No inventamos reseñas ni cifras.
+### Mezcla dominicana-chilena
+- **Dosis:** máximo 1–2 modismos por mensaje.
+- **Dominicano:** "¡Chévere!", "Dímelo", "mi pana", "tranquilo".
+- **Chileno:** "al tiro", "bacán", "el bajón".
+- **Emoji:** máximo 1 por mensaje, nunca en errores ni pagos.
+- **Claridad primero:** en pagos, horarios y pasos de reserva, el juego de palabras nunca reemplaza el dato.
+
+### Límites (no negociables)
+- **Nunca:** armas, violencia, drogas, "mercancía", "contrabando", "dealer", "soplón", ni nada que insinúe algo ilegal.
+- El "gánster" es estilo, lealtad y elegancia.
+- Prohibido también: "el mejor del mundo", "garantizado", reseñas inventadas.
 
 ### Sonamos así
-- "Hecho a mano, en lotes chicos, cada semana."
-- "Para ese bajón de media tarde."
-- "Si se acaba, lo verás marcado al instante."
+Todos estos textos salen de `js/voice.mjs`, la única fuente de microcopy.
+- "Maracuyá ya es de la familia."
+- "Se nos escapó Frambuesa. Lo saqué de tu cuenta, tranquilo."
+- "Ese maletín quedó de jefe."
+- "La casa te guardó la cuenta: 3 bolsas. ¿Cerramos el trato?"
+- "¡Dímelo! Soy *El Gigante*, el consigliere de la casa."
 
-### No sonamos así
-- "El mejor maní del universo" (exagerado)
-- "Experiencia gastronómica disruptiva" (corporativo)
-- Reseñas o estadísticas que no podemos probar
+## 4. Logo y monograma
+- **Logo:** el elefante circular de siempre. En la web lleva un anillo de oro doble.
+- **Monograma "MG":** Bodoni en cursiva dentro de un medallón art déco con abanico de rayos (`monogram()` en `js/art.mjs`). Se usa en el lacre de la invitación.
+- **Wordmark:** MANI-GANTE en Bodoni 600 versalitas con tracking +0.16em. El guion va en oro y en Big Shoulders.
 
-### Mezcla dominicana-chilena (v3)
-Jorge es dominicano y vive en Temuco. La marca suena como él: cálida, rápida y con cariño.
+## 5. Elementos de firma
+1. **Anilla de habano:** cada bolsa lleva una banda dorada grabada con medallón de terciopelo, el elefante, "Nº" de ficha y "M·G". Es la herencia dominicana (República Dominicana es tierra de habanos).
+2. **Roseta guilloché:** el grabado de los billetes, generado en SVG (`guilloche()`). Va detrás de la bolsa del salón, en el 404 y en las imágenes para compartir.
+3. **La ficha:** la tarjeta de cada sabor se apoya en el fondo de rueda de reconocimiento (líneas de altura) y lleva placa "Ficha Nº", alias y esquinas doradas.
+4. **La Bolsa de hoy:** el stock en vivo como cotización de bolsa (▲ en circulación · ▼ agotado). La palabra juega con "bolsa" de maní y bolsa de valores.
+5. **Salas:**
+   - el maletín de cuero con terciopelo capitoné y broches dorados;
+   - la invitación de marfil con doble filete y lacre;
+   - el periódico "El Diario de la Casa", con fotos en blanco y negro y capitular;
+   - la mesa de fieltro con tarjetas de metal negro;
+   - el telegrama para el Jefe.
+6. **La puerta:** intro de speakeasy ("¿Quién te manda?" → "Vengo de parte de Jorge"). Aparece solo en la primera visita, se puede saltar y no aparece con reducir movimiento.
+7. **El foco de luz:** en el salón y en la cita, una luz cálida sigue al puntero.
 
-| Regla | Detalle |
-|---|---|
-| Dosis | Máximo **1–2 modismos por mensaje**. El resto, español neutro y claro. |
-| Dominicano | "¡Chévere!", "Dímelo", "mi pana", "tranquilo", "qué lo qué" (solo en saludos informales) |
-| Chileno | "al tiro", "bacán", "el bajón", "la prueba", "el campus" |
-| Emoji | Máximo 1 por mensaje, nunca en errores ni pagos |
-| Claridad primero | En reservas, pagos y errores: cero modismos si restan claridad. |
-
-**Ejemplos (salen de `js/voice.mjs`, la única fuente de microcopy):**
-- Agregar: "Maracuyá a la boleta. ¡Chévere!"
-- Compartir: "Link copiado, mándaselo a tu pana"
-- Agotado: "Se nos acabó Frambuesa. Lo saqué de tu boleta, tranquilo."
-- Ausente: "Hoy Jorge no está en el campus. Puedes reservar para cuando vuelva."
-- Agente: "¡Dímelo! Soy *El Gigante*…"
-
-Todo texto nuevo de feedback (toasts, estados vacíos, errores) se agrega en `js/voice.mjs` y no queda suelto en el código.
-
-### Tono por contexto
-| Contexto | Tono |
-|---------|------|
-| Titulares | Poético-breve, una palabra en cursiva dorada |
-| Catálogo | Sensorial: sabor + textura en ≤ 8 palabras |
-| Reservas / pagos | Claro y tranquilizador, pasos numerados |
-| Asistente IA | Amable, breve, máximo 1 emoji |
-| Errores | Empático y con salida: "Uy, se agotó. ¿Probamos…?" |
-
----
-
-## 4. Logo
-
-- Elefante con maní sobre pergamino. Versión circular (sticker) para avatar, favicon y sello.
-- Espacio libre mínimo: 25 % del diámetro. Nunca sobre fotos sin un círculo pergamino de fondo.
-
-## 5. Elementos gráficos de firma
-- **Etiqueta kraft**: tarjetas de producto con textura de papel kraft y ventana como el doypack real.
-- **Sello circular**: "Hecho a mano · Temuco" girando lentamente.
-- **Grano**: textura de ruido al 6–8 % sobre las superficies oscuras.
-- **Nota manuscrita**: comentarios de Jorge en Caveat con flecha dibujada.
-
-
----
-
-## 6. Elevación (v3)
-
-Sombra cálida en cuatro niveles. El tono viene del espresso, nunca negro puro. En modo oscuro las sombras son más profundas y se acompañan de un borde de luz.
+## 6. Elevación
+Las sombras son negras y profundas, con un filete dorado al 8–22 %, en lugar de sombras de color.
 
 | Token | Uso |
 |---|---|
-| `--elevation-card` (nivel 1) | Tarjetas en reposo, chips |
-| `--elevation-raised` (nivel 2) | Hover, boleta, ticket |
-| `--elevation-overlay` (nivel 3) | Popovers, vista rápida, dock |
-| `--elevation-modal` (nivel 4) | Diálogos, drawer |
+| `--elevation-card` | Fichas en reposo |
+| `--elevation-raised` | Hover, botones flotantes |
+| `--elevation-overlay` | Vista rápida, menús |
+| `--elevation-modal` | Diálogos y la cuenta |
 
-## 7. Tipografía óptica y escala (v3)
-- Fraunces usa el eje `opsz`: 144 fijo en el hero y en las cursivas doradas; en H2/H3 se ajusta solo al tamaño (`font-optical-sizing: auto`). `SOFT` sube a 100 en las cursivas y en las citas, y `WONK` se activa solo en las cursivas doradas.
-- Tracking: display −0.035em · heading −0.02em · cuerpo 0 · etiquetas +0.14em.
-- Escala: xs 12 · sm 14 · base 16 · md 18 · lg 22 · xl 28 · 2xl–hero con `clamp()`.
-- Espaciado de 8 pt: 4 · 8 · 12 · 16 · 24 · 32 · 48 · 64 · 96 · 128.
-- Las fuentes están autoalojadas en `assets/fonts` (OFL) y sus fallbacks tienen ajuste métrico (sin saltos al cargar).
+## 7. Forma
+- **Esquinas casi rectas:** botones a 2 px y fichas a 4 px. La casa no usa píldoras.
+- **Botón principal:** "plaqueta" de foil con un filete interior.
+- **Botones secundarios:** solo con borde dorado.
+- **Separadores:** filete con rombo art déco (`--rule`).
 
-## 8. Modo oscuro pensado
-No se invierte la paleta: tiene sus propios valores. Fondo espresso, kraft tostado, oro más claro para el texto y el grano sube al 8 %. Los gráficos del panel usan su propio dorado validado para daltonismo (#B5822F oscuro / #A87526 claro).
+## 8. Movimiento
+- Titulares que suben palabra por palabra, la roseta girando lento (140 s), la bolsa flotando y la Bolsa corriendo (se pausa con hover).
+- Con **reducir movimiento** todo queda quieto y la puerta no aparece.
 
-## 9. Momentos de marca
-- **Sello "Hecho a mano"**: aparece al completar una caja, una reserva o un pedido (`stampMoment` en `js/ui.mjs`). No usarlo en más lugares para que no pierda valor.
-- **Papel real**: las tarjetas se inclinan levemente y tienen brillo de papel (`data-tilt`). Se desactiva con "reducir movimiento" y en pantallas táctiles.
-- **Estados vacíos con bolsa** y mensaje de Jorge; skeleton en la tarjeta "Estado en vivo" mientras llega el stock.
+## 9. Procesos
 
-## 10. Procesos
 | Proceso | Cómo |
 |---|---|
-| Cambio de catálogo | Editar `js/catalog.mjs` → subir `CATALOG_VERSION` + `CATALOG_CHANGELOG` → `npm run seo` → `npm test` |
-| Stock del día | Sheets (con webhook) o el panel. El panel manda. |
-| Ausencia | Panel → "Jorge no está". Se refleja en la web, en el agente y en las reservas. |
-| Nuevo componente | Solo tokens (`var(--…)`), con objetivo táctil ≥ 44 px, foco visible y modo oscuro revisado; documentarlo en `docs/design-system.md` |
-| Antes de publicar | `npm test` (incluye axe WCAG 2.2 AA en claro y oscuro) |
+| Cambiar colores o tipos | Editar `design/tokens.json`, luego `node design/build-tokens.mjs` |
+| Cambio de catálogo o alias | Editar `js/catalog.mjs` (`ALIASES`), subir `CATALOG_VERSION`, luego `npm run seo` |
+| Imágenes para compartir | `node tests/serve.mjs . 8787` y `node scripts/og.mjs` |
+| Texto nuevo de la interfaz | Va en `js/voice.mjs`, respetando el vocabulario y los límites del §3 |
+| Antes de publicar | `npm test` (incluye axe WCAG 2.2 AA en Noche y Marfil) |

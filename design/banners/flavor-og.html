@@ -1,33 +1,49 @@
 <!doctype html>
-<html lang="es"><head><meta charset="utf-8"><title>OG por sabor</title>
+<html lang="es"><head><meta charset="utf-8"><title>OG · Casa Mani-Gante</title>
 <link rel="stylesheet" href="../../css/fonts.css">
 <style>
 body { margin: 0; }
-.og { width: 1200px; height: 630px; position: relative; overflow: hidden; background: #140d08; color: #f4ead6; font-family: Manrope, sans-serif; }
-.og::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 80% at 78% 55%, color-mix(in srgb, var(--c) 55%, transparent), transparent 70%); }
-.og::after { content: ""; position: absolute; inset: 0; opacity: .12; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
-.copy { position: absolute; left: 84px; top: 92px; width: 600px; z-index: 1; }
-.kick { font-size: 15px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #e2b765; }
-h1 { font-family: Fraunces, serif; font-weight: 400; font-size: 92px; line-height: .95; letter-spacing: -.03em; margin: 22px 0 18px; font-variation-settings: "opsz" 144, "SOFT" 40; }
-p { font-size: 25px; color: rgba(244,234,214,.8); margin: 0; }
-.price { margin-top: 30px; display: inline-flex; gap: 14px; align-items: baseline; padding: 14px 26px; border-radius: 99px; background: #f4ead6; color: #140d08; font-weight: 800; font-size: 22px; }
-.price b { font-family: Fraunces, serif; font-size: 34px; font-weight: 500; }
-.bag { position: absolute; right: 120px; top: 70px; width: 330px; z-index: 1; filter: drop-shadow(0 40px 50px rgba(0,0,0,.55)); transform: rotate(-4deg); }
-.brand { position: absolute; left: 84px; bottom: 56px; display: flex; gap: 14px; align-items: center; font-family: Fraunces, serif; font-weight: 700; font-size: 24px; letter-spacing: .05em; z-index: 1; }
-.brand img { width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 0 0 2px #c8963e; }
-.brand span { color: #c8963e; }
+.og { width: 1200px; height: 630px; position: relative; overflow: hidden; color: #f2eadb; font-family: "Instrument Sans", sans-serif;
+  background: radial-gradient(55% 75% at 76% 52%, color-mix(in srgb, var(--c) 45%, #4a0f1c), transparent 72%), repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 2px, transparent 2px 46px), #0d0b09; }
+.og::after { content: ""; position: absolute; inset: 18px; border: 1px solid rgba(210,174,109,.45); box-shadow: inset 0 0 0 6px transparent, inset 0 0 0 7px rgba(210,174,109,.2); pointer-events: none; }
+.rosette { position: absolute; right: 40px; top: 15px; width: 600px; color: rgba(210,174,109,.32); }
+.copy { position: absolute; left: 84px; top: 84px; width: 560px; z-index: 1; }
+.kick { font-family: "Big Shoulders", sans-serif; font-size: 20px; font-weight: 800; letter-spacing: .3em; text-transform: uppercase; color: #ddbb7c; display: flex; gap: 14px; align-items: center; }
+.kick b { border: 1.5px solid currentColor; padding: 3px 12px; }
+h1 { font-family: "Bodoni Moda", serif; font-weight: 500; font-size: 96px; line-height: .92; letter-spacing: -.025em; margin: 26px 0 8px; }
+h1 em { font-style: italic; color: #d9b676; }
+.alias { font-family: "Bodoni Moda", serif; font-style: italic; font-size: 34px; color: #ddbb7c; margin: 0 0 18px; }
+p { font-size: 24px; color: #bfb3a1; margin: 0; }
+.price { margin-top: 28px; display: inline-flex; gap: 14px; align-items: baseline; padding: 12px 24px; background: linear-gradient(100deg, #b08a45, #f1dba8 40%, #d2ae6d 60%, #e9cf97); color: #0d0b09; font-family: "Big Shoulders", sans-serif; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; font-size: 20px; }
+.price b { font-size: 38px; letter-spacing: .02em; }
+.bag { position: absolute; right: 190px; top: 98px; width: 300px; z-index: 1; filter: drop-shadow(0 40px 50px rgba(0,0,0,.65)); transform: rotate(-3deg); }
+.plate { position: absolute; right: 210px; bottom: 52px; z-index: 2; font-family: "Big Shoulders", sans-serif; font-weight: 800; letter-spacing: .26em; font-size: 18px; color: #ddbb7c; background: #0d0b09; border: 1px solid rgba(210,174,109,.6); padding: 6px 16px; }
+.brand { position: absolute; left: 84px; bottom: 56px; display: flex; gap: 14px; align-items: center; font-family: "Bodoni Moda", serif; font-weight: 600; font-size: 24px; letter-spacing: .18em; z-index: 1; }
+.brand img { width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 0 0 2px #d2ae6d, 0 0 0 5px #0d0b09, 0 0 0 6px rgba(210,174,109,.5); }
+.brand span { color: #d2ae6d; font-family: "Big Shoulders", sans-serif; }
 </style></head>
 <body><div class="og" id="og"></div>
 <script type="module">
 import { FLAVORS, JAPANESE, unitPrice, formatCLP } from "../../js/catalog.mjs";
-import { bag } from "../../js/art.mjs";
-const id = new URLSearchParams(location.search).get("id");
-const f = [...FLAVORS, ...JAPANESE].find((x) => x.id === id) || FLAVORS[0];
+import { bag, guilloche } from "../../js/art.mjs";
+const q = new URLSearchParams(location.search);
 const og = document.getElementById("og");
-og.style.setProperty("--c", f.color);
-og.innerHTML = `<div class="copy"><div class="kick">${f.line === "japones" ? "Maní japonés" : "Maní confitado a mano"} · Temuco</div><h1>${f.name}</h1><p>${f.notes}</p><div class="price">desde <b>${formatCLP(unitPrice(f, "celofan"))}</b></div></div>
-  ${bag(f.color, f.line === "japones" ? "celofan" : "doypack").replace('class="bag"', 'class="bag"')}
-  <div class="brand"><img src="../../assets/img/icon-192.png" alt=""><b>MANI<span>-</span>GANTE</b></div>`;
+const brand = `<div class="brand"><img src="../../assets/img/icon-192.png" alt=""><b>MANI<span>-</span>GANTE</b></div>`;
+if (q.get("main")) {
+  // Banners de la casa: editorial (portada) y kraft (La receta)
+  const recipe = q.get("main") === "kraft";
+  const f = FLAVORS[0];
+  og.style.setProperty("--c", recipe ? "#b8935f" : "#6e1a2c");
+  og.innerHTML = `<div class="rosette">${guilloche()}</div><div class="copy"><div class="kick"><b>${recipe ? "Expediente" : "Casa"}</b>${recipe ? "La receta de la familia" : "Confitería de autor · Temuco"}</div>
+    <h1>${recipe ? "Cuatro pasos.<br><em>Cero atajos.</em>" : "Para gente<br><em>gánster</em><br>y elegante."}</h1></div>
+    ${bag(f.color, "doypack", { num: f.no })}${brand}`;
+} else {
+  const f = [...FLAVORS, ...JAPANESE].find((x) => x.id === q.get("id")) || FLAVORS[0];
+  og.style.setProperty("--c", f.color);
+  og.innerHTML = `<div class="rosette">${guilloche()}</div><div class="copy"><div class="kick"><b>Se busca</b>${f.line === "japones" ? "Maní japonés" : "Maní confitado a mano"}</div>
+    <h1>${f.name.replace("Maní Japonés ", "Japonés ")}</h1>${f.alias ? `<p class="alias">alias «${f.alias}»</p>` : ""}<p>${f.notes}</p><div class="price">desde <b>${formatCLP(unitPrice(f, "celofan"))}</b></div></div>
+    ${bag(f.color, f.line === "japones" ? "celofan" : "doypack", { num: f.no })}<div class="plate">FICHA Nº ${f.no}</div>${brand}`;
+}
 document.body.dataset.ready = "1";
 </script>
 </body></html>

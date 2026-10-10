@@ -93,7 +93,7 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel.cl
 function greet() {
   if (history.length) { history.forEach((m) => bubble(m.role, m.content)); renderQuick(); return; }
   const s = campusStatus();
-  bubble("assistant", `¡Dímelo! Soy *El Gigante*, el asistente de MANI-GANTE 🥜\nTe digo qué sabores hay hoy, te recomiendo y te dejo la reserva lista para WhatsApp.\n\nAhora mismo: ${s.open ? "Jorge está en el campus" : s.label.toLowerCase()}. ¿En qué te ayudo?`);
+  bubble("assistant", `¡Dímelo! Soy *El Gigante*, el consigliere de la casa 🥜\nTe digo qué sabores están en circulación, te recomiendo cómplices y te dejo la cita con el Jefe lista para WhatsApp.\n\nAhora mismo: ${s.open ? "Jorge está en el campus" : s.label.toLowerCase()}. ¿En qué te ayudo?`);
   renderQuick();
 }
 

@@ -2,13 +2,13 @@
 // El catálogo y las historias de Jorge quedan en español a propósito (es su voz).
 const DICT = {
   en: {
-    "hero.kicker": "No. 01 · This week's batch · Temuco",
-    "hero.shop": "Enter the shop", "hero.quiz": "Find your flavor", "hero.reserve": "or reserve it for tomorrow",
-    "filter.available": "Available", "filter.top": "Best sellers", "filter.new": "New",
+    "hero.kicker": "Signature confectionery · Temuco",
+    "hero.shop": "Meet the most wanted", "hero.quiz": "Take the interrogation", "hero.reserve": "or book a meeting with the Boss",
+    "filter.available": "Available", "filter.top": "Most wanted", "filter.new": "Just arrived",
     "nav.history": "My orders",
   },
 };
-const NAV_EN = { "#oficio": "The craft", "#tienda": "Shop", "#caja": "Build a box", "#reservar": "Reserve", "#historia": "Story" };
+const NAV_EN = { "#oficio": "The recipe", "#tienda": "Most wanted", "#caja": "The briefcase", "#reservar": "The meeting", "#historia": "The Boss" };
 const originals = new Map();
 
 export function getLang() { try { return localStorage.getItem("mg-lang") || "es"; } catch { return "es"; } }

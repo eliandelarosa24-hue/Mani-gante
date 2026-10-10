@@ -3,43 +3,51 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Antojo no encontrado · MANI-GANTE</title>
+<title>Se nos fugó · MANI-GANTE</title>
 <meta name="robots" content="noindex">
+<meta name="theme-color" content="#0d0b09">
 <link rel="icon" type="image/png" href="/assets/img/icon-192.png">
-<link rel="preload" href="/assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/assets/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/css/fonts.css">
 <link rel="stylesheet" href="/css/tokens.css">
 <style>
-  body { margin: 0; min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 24px; background: var(--color-night); color: #f4ead6; font-family: Manrope, system-ui, sans-serif; }
-  .wrap { max-width: 520px; display: grid; gap: 18px; justify-items: center; }
-  .bag { width: 150px; transform: rotate(-8deg); filter: drop-shadow(0 24px 30px rgba(0,0,0,.5)); }
-  h1 { font-family: Fraunces, Georgia, serif; font-weight: 450; font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1; margin: 8px 0 0; letter-spacing: -.02em; }
-  h1 em { color: var(--color-primary-light); }
-  p { color: rgba(244,234,214,.72); margin: 0; }
+  body { margin: 0; min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 24px; color: #f2eadb; font-family: "Instrument Sans", system-ui, sans-serif; overflow-x: hidden;
+    background: radial-gradient(60% 60% at 50% 40%, rgba(110,26,44,.5), transparent 70%), #0d0b09; }
+  .wrap { max-width: 560px; display: grid; gap: 18px; justify-items: center; position: relative; }
+  .rosette { position: absolute; top: -40px; left: 50%; width: 360px; translate: -50% 0; color: rgba(210,174,109,.28); z-index: -1; animation: spin 120s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+  .bag { width: 140px; transform: rotate(-8deg); filter: grayscale(.9) drop-shadow(0 24px 30px rgba(0,0,0,.6)); }
+  .plate { font-family: "Big Shoulders", "Arial Narrow", sans-serif; font-weight: 800; letter-spacing: .3em; text-transform: uppercase; font-size: .86rem; color: #e2687c; border: 2px solid currentColor; padding: 6px 14px; transform: rotate(-4deg); }
+  h1 { font-family: "Bodoni Moda", Georgia, serif; font-weight: 500; font-size: clamp(2.6rem, 9vw, 4.2rem); line-height: .95; margin: 4px 0 0; letter-spacing: -.02em; }
+  h1 em { color: #d9b676; }
+  p { color: #bfb3a1; margin: 0; }
   .sugg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
-  .sugg-card { display: grid; justify-items: center; gap: 6px; padding: 14px 8px; border-radius: 18px; background: rgba(244,234,214,.06); border: 1px solid rgba(244,234,214,.12); color: #f4ead6; font-weight: 700; font-size: .86rem; text-decoration: none; height: auto; margin: 0; transition: transform .3s; }
-  .sugg-card:hover { transform: translateY(-4px); }
-  .sugg-card .bag { width: 60%; transform: none; filter: none; }
-  .hand { font-family: Caveat, cursive; font-size: 1.6rem; color: var(--color-primary-light); transform: rotate(-3deg); }
-  a { display: inline-flex; align-items: center; height: 52px; padding: 0 26px; border-radius: 99px; background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)); color: var(--color-night); font-weight: 700; text-decoration: none; margin-top: 8px; }
+  .sugg-card { display: grid; justify-items: center; gap: 6px; padding: 14px 8px; background: #161210; border: 1px solid rgba(210,174,109,.3); color: #f2eadb; font-weight: 600; font-size: .9rem; text-decoration: none; transition: transform .3s, border-color .3s; }
+  .sugg-card:hover { transform: translateY(-4px); border-color: #d2ae6d; }
+  .sugg-card .bag { width: 60%; transform: none; filter: drop-shadow(0 8px 10px rgba(0,0,0,.5)); }
+  .sugg-card em { font-family: "Bodoni Moda", serif; color: #ddbb7c; font-size: .82rem; }
+  .cta { display: inline-flex; align-items: center; height: 54px; padding: 0 28px; background: linear-gradient(100deg, #b08a45, #f1dba8 40%, #d2ae6d 60%, #e9cf97); color: #0d0b09; font-family: "Big Shoulders", "Arial Narrow", sans-serif; font-weight: 800; letter-spacing: .16em; text-transform: uppercase; text-decoration: none; margin-top: 8px; }
+  .cta:focus-visible, .sugg-card:focus-visible { outline: 2px solid #ddbb7c; outline-offset: 3px; }
+  @media (prefers-reduced-motion: reduce) { .rosette { animation: none; } }
 </style>
 </head>
 <body>
   <main class="wrap">
-    <div id="art"></div>
-    <p class="hand">404 · esta bolsa está vacía</p>
-    <h1>Este antojo <em>no existe</em></h1>
-    <p>La página que buscas no está, pero quedan 28 sabores esperándote. ¿Probamos uno de estos?</p>
+    <div class="rosette" id="rosette" aria-hidden="true"></div>
+    <div id="art" aria-hidden="true"></div>
+    <p class="plate">Error 404 · Se fugó</p>
+    <h1>Esta página <em>no está fichada</em></h1>
+    <p>Lo que buscas se nos escapó, pero los más buscados siguen en la casa. ¿Te presento a tres?</p>
     <div class="sugg" id="sugg" aria-label="Sabores sugeridos"></div>
-    <a href="/#tienda">Volver a la tienda</a>
+    <a class="cta" href="/#tienda">Volver a la casa</a>
   </main>
   <script type="module">
-    import { bag } from "/js/art.mjs";
+    import { bag, guilloche } from "/js/art.mjs";
     import { FLAVORS } from "/js/catalog.mjs";
-    document.getElementById("art").innerHTML = bag("#C8963E", "doypack");
+    document.getElementById("rosette").innerHTML = guilloche();
+    document.getElementById("art").innerHTML = bag("#C8963E", "doypack", { num: "404" });
     const picks = FLAVORS.filter((f) => f.available).sort(() => Math.random() - .5).slice(0, 3);
-    document.getElementById("sugg").innerHTML = picks.map((f) => `<a class="sugg-card" href="/sabor/${f.id}">${bag(f.color, "celofan")}<span>${f.name}</span></a>`).join("");
+    document.getElementById("sugg").innerHTML = picks.map((f) => `<a class="sugg-card" href="/sabor/${f.id}">${bag(f.color, "celofan", { num: f.no })}<span>${f.name}</span><em>«${f.alias}»</em></a>`).join("");
   </script>
 </body>
 </html>

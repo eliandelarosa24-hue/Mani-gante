@@ -1,5 +1,54 @@
 # Changelog · MANI-GANTE
 
+## v4.0 · "Para gente gánster y elegante" · catálogo 2026.10.3 (10 de octubre de 2026)
+
+Identidad nueva y única. La investigación está en [`docs/identidad-casa.md`](docs/identidad-casa.md) y las reglas en [`docs/brand-guidelines.md`](docs/brand-guidelines.md). Todo lo funcional de la v3 se mantiene.
+
+**Identidad**
+- Eslogan nuevo: **"Para gente gánster y elegante."**
+- Tema **Noche** por defecto (noir, terciopelo y champán) y **Marfil** opcional.
+- Tokens nuevos y generador sin dependencias (`design/build-tokens.mjs`).
+- Tipografías nuevas: **Bodoni Moda**, **Big Shoulders**, **Instrument Sans** y **Pinyon Script**. Se eliminaron Fraunces, Manrope y Caveat.
+- Arte generativo nuevo: **anilla de habano** en cada bolsa (con número de ficha), **roseta guilloché** y **monograma MG**.
+- **La puerta**: intro de speakeasy accesible, solo en la primera visita.
+
+**Cada sección, una sala**
+- **El salón** (hero):
+  - titular de tres líneas con cursiva en foil;
+  - bolsa Nº 01 sobre la roseta;
+  - foco de luz que sigue al puntero;
+  - "Parte del día" impreso en papel.
+- **La Bolsa de hoy**: el stock en vivo como cotización (▲/▼).
+- Los capítulos:
+  - Cap. I **La receta**: expediente confidencial en 4 folios.
+  - Cap. II **Los más buscados**: fichas tipo rueda de reconocimiento, **33 alias** (`ALIASES` en `catalog.mjs`), búsqueda por alias.
+  - Cap. III **El maletín**: cuero, terciopelo capitoné y broches.
+  - Cap. IV **La cita**: invitación de marfil con lacre.
+  - Cap. V **El Jefe**: "El Diario de la Casa".
+  - Cap. VI **Las pruebas**: galería numerada.
+  - Cap. VII **El trato**: mesa de fieltro con tarjetas de metal.
+  - Cap. VIII **La letra chica**.
+  - Cap. IX **La familia habla**: telegrama.
+- **Pie**: logotipo gigante en foil.
+- **La cuenta de la casa**, **El interrogatorio** (quiz bajo una lámpara) y **El Gigante, tu consigliere** (IA).
+
+**Voz y contenido**
+- `voice.mjs`, el prompt del agente, la versión en inglés, el 404, "La receta" y las fichas `/sabor/:id` hablan el idioma de la casa: dominicano-chileno y gánster elegante.
+- La voz tiene límites explícitos: nada de armas, violencia ni drogas.
+- Formatos renombrados: **El Clásico** y **La Reserva**.
+- **35 imágenes para compartir** regeneradas con la identidad nueva (`scripts/og.mjs`): una por sabor, más portada y receta.
+- El ticket PNG descargable ahora es una invitación.
+
+**Calidad**
+- **52 pruebas** Playwright en escritorio y móvil: se agregaron las de la puerta y la identidad.
+- axe WCAG 2.2 AA sin violaciones en Noche y Marfil. Todos los contrastes están documentados.
+- El service worker (`mg-v4-2026.10.3`) limpia la caché de la v3, así nadie queda viendo el diseño anterior.
+
+**Pendiente**
+- Jorge revisa los alias, el horario y `NEW_IDS`.
+- Foto de Jorge para El Diario (opcional).
+- Splash screens de iOS con la estética nueva.
+
 ## v3.0 · catálogo 2026.10.2 (octubre 2026)
 
 Leyenda: ✅ implementada · 🟡 parcial (detalle en el plan de pendientes)

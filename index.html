@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MANI-GANTE · Maní confitado artesanal en Temuco</title>
-<meta name="description" content="28 sabores de maní confitado artesanal y la nueva línea de maní japonés. Stock en vivo, reservas en segundos y entrega en el campus INACAP Temuco.">
-<meta name="theme-color" content="#140d08">
+<title>MANI-GANTE · Para gente gánster y elegante</title>
+<meta name="description" content="Casa Mani-Gante: maní confitado a mano en 28 sabores con receta de la casa, más maní japonés. Para gente gánster y elegante. Stock en vivo, citas por WhatsApp y entrega en el campus INACAP Temuco.">
+<meta name="theme-color" content="#0d0b09">
 <link rel="canonical" href="https://manigante.netlify.app/">
 <link rel="icon" type="image/png" href="./assets/img/icon-192.png">
 <link rel="apple-touch-icon" href="./assets/img/apple-touch-icon.png">
@@ -21,17 +21,18 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_CL">
 <meta property="og:site_name" content="MANI-GANTE">
-<meta property="og:title" content="MANI-GANTE · El Gigante de los Antojos">
-<meta property="og:description" content="Maní confitado artesanal en 28 sabores. Reserva en segundos y recíbelo en INACAP Temuco.">
+<meta property="og:title" content="MANI-GANTE · Para gente gánster y elegante">
+<meta property="og:description" content="Maní confitado a mano, 28 sabores con ficha y alias. Pide tu cita con el Jefe y recíbelo en INACAP Temuco.">
 <meta property="og:image" content="https://manigante.netlify.app/assets/banners/og/editorial-1200x630.jpg">
 <meta property="og:url" content="https://manigante.netlify.app/">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://manigante.netlify.app/assets/banners/og/editorial-1200x630.jpg">
 
-<link rel="preload" href="./assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="./assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/bodoni-moda.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/bodoni-moda-italic.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/big-shoulders.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/instrument-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="./css/fonts.css">
-<link rel="preload" as="image" href="./assets/img/g7-1600.webp" imagesrcset="./assets/img/g7-800.webp 800w, ./assets/img/g7-1600.webp 1600w" imagesizes="100vw">
 <link rel="stylesheet" href="./css/tokens.css">
 <link rel="stylesheet" href="./css/styles.css">
 
@@ -44,7 +45,7 @@
    "@type": "FoodEstablishment",
    "@id": "https://manigante.netlify.app/#negocio",
    "name": "MANI-GANTE",
-   "slogan": "El Gigante de los Antojos",
+   "slogan": "Para gente gánster y elegante",
    "description": "Maní confitado a mano en 28 sabores y maní japonés. Venta y entrega en el campus INACAP Temuco.",
    "url": "https://manigante.netlify.app/",
    "image": "https://manigante.netlify.app/assets/banners/og/editorial-1200x630.jpg",
@@ -934,8 +935,9 @@
 </script>
 <!-- SEO:END -->
 <script>
-  // Tema antes de pintar, para evitar parpadeo.
-  try { const t = JSON.parse(localStorage.getItem("mg-theme") || "null"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (e) {}
+  // Tema antes de pintar (Noche es el tema de la casa; Marfil es opcional) y la puerta solo en la primera visita.
+  try { const t = JSON.parse(localStorage.getItem("mg-theme") || "null"); if (t === "light") document.documentElement.dataset.theme = t; } catch (e) {}
+  try { if (!localStorage.getItem("mg-door") && !navigator.webdriver && !matchMedia("(prefers-reduced-motion: reduce)").matches && !/[?&](pedido|nodoor)=/.test(location.search)) document.documentElement.classList.add("door-on"); } catch (e) {}
 </script>
 </head>
 <body>
@@ -969,11 +971,25 @@
   <symbol id="i-arrow-curve" viewBox="0 0 80 40"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 8c18 22 44 26 68 18m0 0-9-7m9 7-6 9"/></symbol>
 </svg>
 
+
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
 <div class="promo-ribbon" id="promoRibbon" role="status" hidden></div>
 <div class="away-banner" id="awayBanner" role="status" hidden><svg><use href="#i-pin"/></svg><span id="awayText"></span></div>
 
-<!-- ===================== HEADER ===================== -->
+<!-- ===================== LA PUERTA (primera visita) ===================== -->
+<div class="door" id="door" role="dialog" aria-modal="true" aria-labelledby="doorTitle">
+  <div class="door-panel l" aria-hidden="true"></div>
+  <div class="door-panel r" aria-hidden="true"></div>
+  <div class="door-center">
+    <div class="door-slot" aria-hidden="true"><span class="door-eyes"></span></div>
+    <p class="door-knock" aria-hidden="true">Toc · toc · toc</p>
+    <h2 class="door-q" id="doorTitle">¿Quién te manda?</h2>
+    <button class="btn btn-gold btn-lg" type="button" id="doorEnter">Vengo de parte de Jorge</button>
+    <button class="link" type="button" id="doorSkip">Entrar sin contraseña</button>
+  </div>
+</div>
+
+<!-- ===================== NAVEGACIÓN ===================== -->
 <header class="nav" id="nav">
   <div class="nav-inner">
     <a class="brand" href="#top" aria-label="MANI-GANTE, inicio">
@@ -981,66 +997,70 @@
       <span class="brand-name">MANI<span>-</span>GANTE</span>
     </a>
     <nav class="nav-links" aria-label="Principal">
-      <a href="#oficio">El oficio</a>
-      <a href="#tienda">Tienda</a>
-      <a href="#caja">Arma tu caja</a>
-      <a href="#reservar">Reservar</a>
-      <a href="#historia">Historia</a>
+      <a href="#oficio">La receta</a>
+      <a href="#tienda">Los más buscados</a>
+      <a href="#caja">El maletín</a>
+      <a href="#reservar">La cita</a>
+      <a href="#historia">El Jefe</a>
     </nav>
     <div class="nav-tools">
       <span class="live-pill" id="livePill" data-open="false"><i></i><span>Comprobando…</span></span>
       <button class="icon-btn lang-btn" id="langToggle" type="button" aria-label="Switch to English" lang="en">EN</button>
       <button class="icon-btn" id="themeToggle" type="button" aria-label="Cambiar tema"><svg><use href="#i-moon"/></svg></button>
       <button class="icon-btn" id="historyOpen" type="button" aria-label="Mis pedidos" data-i18n-label="nav.history"><svg><use href="#i-receipt"/></svg></button>
-      <button class="icon-btn cart-btn" id="cartOpen" type="button" aria-label="Abrir tu boleta de antojos">
+      <button class="icon-btn cart-btn" id="cartOpen" type="button" aria-label="Abrir la cuenta de la casa">
         <svg><use href="#i-bag"/></svg><b class="cart-count" id="cartCount" hidden>0</b>
       </button>
       <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
     </div>
   </div>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#oficio"><small>01</small>El oficio</a>
-    <a href="#tienda"><small>02</small>Tienda</a>
-    <a href="#caja"><small>03</small>Arma tu caja</a>
-    <a href="#reservar"><small>04</small>Reservar</a>
-    <a href="#historia"><small>05</small>Historia</a>
-    <a href="#pago"><small>06</small>Cómo pagar</a>
+    <a href="#oficio"><small>I</small>La receta</a>
+    <a href="#tienda"><small>II</small>Los más buscados</a>
+    <a href="#caja"><small>III</small>El maletín</a>
+    <a href="#reservar"><small>IV</small>La cita</a>
+    <a href="#historia"><small>V</small>El Jefe</a>
+    <a href="#pago"><small>VII</small>El trato</a>
     <div class="mobile-menu-row">
       <button class="btn btn-ghost" type="button" data-action="history"><svg><use href="#i-receipt"/></svg> Mis pedidos</button>
       <button class="btn btn-ghost" type="button" data-action="lang" lang="en">English</button>
     </div>
-    <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Preguntarle al Gigante</button>
+    <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Hablar con el consigliere</button>
   </div>
 </header>
 
 <main id="top">
-<!-- ===================== HERO ===================== -->
-<section class="hero" aria-labelledby="heroTitle">
-  <picture class="hero-bg" aria-hidden="true">
-    <img id="heroImg" src="./assets/img/g7-1600.webp" srcset="./assets/img/g7-800.webp 800w, ./assets/img/g7-1600.webp 1600w" sizes="100vw" alt="" fetchpriority="high">
-  </picture>
-  <div class="hero-shade" aria-hidden="true"></div>
+<!-- ===================== EL SALÓN (hero) ===================== -->
+<section class="hero room" aria-labelledby="heroTitle">
+  <div class="hero-velvet" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-copy">
-      <p class="kicker reveal"><span class="dot"></span><span data-i18n="hero.kicker">N.º 01 · Lote de esta semana · Temuco</span></p>
+      <p class="kicker reveal"><span>Casa Mani-Gante</span><i></i><span data-i18n="hero.kicker">Confitería de autor · Temuco</span></p>
       <h1 class="hero-title" id="heroTitle">
-        <span class="line"><span>El gigante</span></span>
-        <span class="line"><span>de los <em>antojos</em></span></span>
+        <span class="line"><span>Para gente</span></span>
+        <span class="line"><span><em>gánster</em></span></span>
+        <span class="line"><span>y elegante.</span></span>
       </h1>
-      <p class="hero-lead reveal">28 sabores confitados en lotes chicos, cada semana, más la nueva línea de maní japonés. Elige, arma tu caja o reserva para mañana: te lo entregamos en el campus INACAP.</p>
+      <p class="hero-lead reveal">Maní confitado a mano, en lotes chicos y con receta de la casa. 28 sabores con ficha y alias, una línea japonesa y un trato que se cierra por WhatsApp, directo en el campus INACAP.</p>
       <div class="hero-cta reveal">
-        <a class="btn btn-gold btn-lg" href="#tienda"><span data-i18n="hero.shop">Entrar a la tienda</span> <svg><use href="#i-arrow"/></svg></a>
-        <button class="btn btn-glass btn-lg" type="button" data-open-quiz><svg><use href="#i-compass"/></svg> <span data-i18n="hero.quiz">Encuentra tu sabor</span></button>
+        <a class="btn btn-gold btn-lg" href="#tienda"><span data-i18n="hero.shop">Ver a los más buscados</span> <svg><use href="#i-arrow"/></svg></a>
+        <button class="btn btn-glass btn-lg" type="button" data-open-quiz><svg><use href="#i-compass"/></svg> <span data-i18n="hero.quiz">Pasar el interrogatorio</span></button>
       </div>
-      <a class="hero-link reveal" href="#reservar"><span data-i18n="hero.reserve">o déjalo reservado para mañana</span> <svg><use href="#i-arrow"/></svg></a>
+      <a class="hero-link reveal" href="#reservar"><span data-i18n="hero.reserve">o pide una cita con el Jefe</span> <svg><use href="#i-arrow"/></svg></a>
       <dl class="hero-stats reveal">
-        <div><dt id="statAvailable">28</dt><dd>sabores hoy</dd></div>
+        <div><dt id="statAvailable">28</dt><dd>en circulación</dd></div>
         <div><dt>$1.000</dt><dd>la bolsa</dd></div>
-        <div><dt>24/7</dt><dd>asistente con IA</dd></div>
+        <div><dt>24/7</dt><dd>el consigliere</dd></div>
       </dl>
     </div>
-    <aside class="hero-card reveal is-loading" aria-label="Estado en vivo" aria-busy="true">
-      <p class="hand hero-note" aria-hidden="true">recién confitados<svg><use href="#i-arrow-curve"/></svg></p>
+    <div class="hero-side">
+    <div class="hero-stage" aria-hidden="true">
+      <div class="hero-rosette" data-guilloche></div>
+      <div class="hero-halo"></div>
+      <div class="hero-bag" id="heroBag"></div>
+      <p class="hero-plate">Ficha Nº 01 · Maracuyá · alias «La Tropical»</p>
+    </div>
+  <aside class="hero-card reveal is-loading" aria-label="Parte del día: estado en vivo" aria-busy="true">
       <div class="hero-card-top">
         <span class="live-dot" id="heroLiveDot"></span>
         <div>
@@ -1049,22 +1069,27 @@
         </div>
       </div>
       <div class="hero-card-flavors" id="heroTop"></div>
-      <a class="btn btn-paper btn-block" href="#reservar"><svg><use href="#i-cal"/></svg> Reservar para un día</a>
+      <a class="btn btn-block" href="#reservar"><svg><use href="#i-cal"/></svg> Pedir una cita</a>
     </aside>
+    </div>
   </div>
-  <div class="hero-stamp" aria-hidden="true" data-stamp></div>
-  <a class="scroll-cue" href="#oficio" aria-label="Seguir bajando"><span></span></a>
+
+  <a class="scroll-cue" href="#oficio" aria-label="Seguir bajando"><span></span>Entra</a>
 </section>
 
-<div class="marquee" aria-hidden="true"><div class="marquee-track" id="marqueeTrack"></div></div>
+<!-- ===================== LA BOLSA (stock en vivo) ===================== -->
+<div class="ticker room" aria-hidden="true">
+  <p class="ticker-label">La Bolsa<small>de hoy</small></p>
+  <div class="ticker-window"><div class="marquee-track" id="marqueeTrack"></div></div>
+</div>
 
-<!-- ===================== EL OFICIO ===================== -->
+<!-- ===================== I · LA RECETA ===================== -->
 <section class="section craft" id="oficio" aria-labelledby="craftTitle">
   <div class="container">
     <header class="section-head">
-      <p class="eyebrow">El oficio</p>
-      <h2 class="h2" id="craftTitle">De la olla <em>a tu mano</em></h2>
-      <p class="lead">No hay fábrica ni bodega. Hay una olla, mucho revolver y un elefante que no deja salir una bolsa que no esté perfecta.</p>
+      <p class="eyebrow"><span>Cap. I</span><span>La receta de la familia</span></p>
+      <h2 class="h2" id="craftTitle">Cuatro pasos. <em>Cero atajos.</em></h2>
+      <p class="lead">Aquí no hay fábrica. Hay una olla, fuego lento y un Jefe que no deja salir una bolsa que no esté perfecta.</p>
     </header>
     <div class="craft-grid">
       <div class="craft-media" aria-hidden="true">
@@ -1072,48 +1097,50 @@
         <figure class="craft-frame" data-step="1"><img decoding="async" src="./assets/img/g9-800.webp" alt="" loading="lazy" width="800" height="1147"></figure>
         <figure class="craft-frame" data-step="2"><img decoding="async" src="./assets/img/g5-800.webp" alt="" loading="lazy" width="800" height="600"></figure>
         <figure class="craft-frame" data-step="3"><img decoding="async" src="./assets/img/g1-800.webp" alt="" loading="lazy" width="800" height="554"></figure>
+        <span class="confidential">Confidencial</span>
         <div class="craft-counter"><b id="craftNum">01</b><span>/ 04</span></div>
       </div>
       <ol class="craft-steps">
         <li class="craft-step is-active" data-step="0">
-          <span class="craft-n">01</span>
-          <h3>Elegimos el maní</h3>
-          <p>Grano entero y parejo. Si no se ve bien en crudo, no entra a la olla.</p>
+          <span class="craft-n">Folio I</span>
+          <h3>Se escoge el grano</h3>
+          <p>Entero y parejo. Si no se ve bien en crudo, no entra a la olla. Así de simple, así de estricto.</p>
         </li>
         <li class="craft-step" data-step="1">
-          <span class="craft-n">02</span>
-          <h3>Confitado a mano</h3>
+          <span class="craft-n">Folio II</span>
+          <h3>El baño, a mano</h3>
           <p>Azúcar, sabor y fuego, revolviendo hasta que el baño cristaliza y cada grano queda con su costra crujiente.</p>
-          <p class="hand">esta es la parte que no se puede apurar</p>
+          <p class="hand">esto no se apura</p>
         </li>
         <li class="craft-step" data-step="2">
-          <span class="craft-n">03</span>
-          <h3>Enfriado y sellado</h3>
-          <p>Se enfría, se revisa y se envasa en celofán o en doypack hermético con el sello del elefante.</p>
+          <span class="craft-n">Folio III</span>
+          <h3>Reposo y sello</h3>
+          <p>Se enfría, se revisa y se envasa en celofán o en doypack hermético, con la anilla de la casa.</p>
         </li>
         <li class="craft-step" data-step="3">
-          <span class="craft-n">04</span>
+          <span class="craft-n">Folio IV</span>
           <h3>Directo al campus</h3>
-          <p>Lotes chicos que se venden en la semana. Por eso el stock que ves aquí está en vivo.</p>
+          <p>Lotes chicos que se venden en la semana. Por eso lo que ves en la Bolsa de hoy está en vivo.</p>
           <a class="link" href="#tienda">Ver lo que salió esta semana →</a>
-          <a class="link craft-more" href="/oficio.html">Leer la historia completa del oficio →</a>
+          <a class="link craft-more" href="/oficio.html">Leer la receta completa →</a>
         </li>
       </ol>
     </div>
   </div>
 </section>
 
-<!-- ===================== TIENDA ===================== -->
+<!-- ===================== II · LOS MÁS BUSCADOS ===================== -->
 <section class="section shop" id="tienda" aria-labelledby="shopTitle">
   <div class="container">
     <header class="shop-head">
       <div>
-        <p class="eyebrow">La tienda · stock en vivo</p>
-        <h2 class="h2" id="shopTitle">Elige tu <em>antojo</em></h2>
+        <p class="eyebrow"><span>Cap. II</span><span>Stock en vivo</span></p>
+        <h2 class="h2" id="shopTitle">Los más <em>buscados</em></h2>
+        <p class="lead">Cada sabor tiene su ficha, su número y su alias. Todos confitados esta semana.</p>
       </div>
       <button class="finder" type="button" data-open-quiz>
         <span class="finder-icon"><svg><use href="#i-compass"/></svg></span>
-        <span><strong>¿No sabes cuál?</strong><small>Encuentra tu sabor en 3 toques</small></span>
+        <span><strong>¿No sabes cuál?</strong><small>Pasa el interrogatorio: 4 preguntas</small></span>
         <svg class="finder-arrow"><use href="#i-arrow"/></svg>
       </button>
     </header>
@@ -1123,12 +1150,12 @@
       <div class="shop-tools">
         <label class="search">
           <svg><use href="#i-search"/></svg>
-          <input type="search" id="search" placeholder="Busca un sabor…" autocomplete="off" aria-label="Buscar sabor">
+          <input type="search" id="search" placeholder="Busca un sabor o un alias…" autocomplete="off" aria-label="Buscar sabor">
         </label>
         <div class="filters" id="filters" role="group" aria-label="Filtros rápidos">
           <button type="button" class="filter" data-filter="available" aria-pressed="false"><i class="dot-ok"></i><span data-i18n="filter.available">Disponibles</span></button>
-          <button type="button" class="filter" data-filter="top" aria-pressed="false"><span data-i18n="filter.top">Top ventas</span></button>
-          <button type="button" class="filter" data-filter="new" aria-pressed="false"><span data-i18n="filter.new">Nuevos</span></button>
+          <button type="button" class="filter" data-filter="top" aria-pressed="false"><span data-i18n="filter.top">Más buscados</span></button>
+          <button type="button" class="filter" data-filter="new" aria-pressed="false"><span data-i18n="filter.new">Recién llegados</span></button>
         </div>
       </div>
     </div>
@@ -1139,71 +1166,73 @@
     </div>
 
     <div class="grid" id="grid"></div>
-    <p class="empty" id="empty" hidden>No encontramos sabores con ese filtro. <button type="button" data-open-agent>¿Le preguntas al Gigante?</button></p>
+    <p class="empty" id="empty" hidden>No encontramos sabores con ese filtro. <button type="button" data-open-agent>¿Le preguntas al consigliere?</button></p>
 
-    <div class="japanese">
+    <div class="japanese room">
       <div class="japanese-head">
         <div>
-          <p class="eyebrow">Nueva línea</p>
+          <p class="eyebrow"><span>Socios</span><span>Del otro lado de la familia</span></p>
           <h3 class="h3">Maní <em>japonés</em></h3>
-          <p class="muted">Crocante y salado, para los que no son tan de dulce. Va al mismo carrito.</p>
+          <p class="muted">Crocante y salado, para los que no son de dulce. Entra a la misma cuenta.</p>
         </div>
-        <p class="hand japanese-note" aria-hidden="true">el merkén es muy del sur</p>
       </div>
       <div class="grid grid-sm" id="gridJp"></div>
     </div>
   </div>
 </section>
 
-<!-- ===================== ARMA TU CAJA ===================== -->
-<section class="section box" id="caja" aria-labelledby="boxTitle">
+<!-- ===================== III · EL MALETÍN ===================== -->
+<section class="section box room" id="caja" aria-labelledby="boxTitle">
   <div class="container">
     <header class="section-head center">
-      <p class="eyebrow">Arma tu caja</p>
-      <h2 class="h2" id="boxTitle">Tu propia <em>degustación</em></h2>
-      <p class="lead">Elige el tamaño y llena cada espacio con el sabor que quieras. Perfecta para compartir, para la sala o para regalar.</p>
+      <p class="eyebrow"><span>Cap. III</span><span>Para el grupo, la sala o un regalo</span></p>
+      <h2 class="h2" id="boxTitle">Arma tu <em>maletín</em></h2>
+      <p class="lead">Elige el tamaño y llena cada compartimiento con el sabor que quieras. Para compartir, para la sala o para quedar como un señor.</p>
     </header>
-    <div class="box-sizes" id="boxSizes" role="radiogroup" aria-label="Tamaño de la caja"></div>
+    <div class="box-sizes" id="boxSizes" role="radiogroup" aria-label="Tamaño del maletín"></div>
     <div class="box-grid">
       <div class="box-stage">
         <div class="box-lid"><span class="brand-name">MANI<span>-</span>GANTE</span><small id="boxName">Combo Grupo</small></div>
         <div class="box-slots" id="boxSlots" aria-live="polite"></div>
         <div class="box-foot">
-          <div><small>Tu caja</small><strong id="boxTotal">$0</strong><span id="boxCount">0 / 6</span></div>
+          <div><small>Tu maletín</small><strong id="boxTotal">$0</strong><span id="boxCount">0 / 6</span></div>
           <div class="box-actions">
             <button class="btn btn-ghost-dark" type="button" id="boxShuffle"><svg><use href="#i-shuffle"/></svg> Sorpréndeme</button>
-            <button class="btn btn-gold" type="button" id="boxAdd" disabled><svg><use href="#i-bag"/></svg> Agregar caja</button>
+            <button class="btn btn-gold" type="button" id="boxAdd" disabled><svg><use href="#i-bag"/></svg> Agregar maletín</button>
           </div>
         </div>
       </div>
       <div class="box-palette">
-        <p class="box-help">Toca un sabor para ponerlo en la caja · toca un espacio para vaciarlo</p>
+        <p class="box-help">Toca un sabor para guardarlo · toca un compartimiento para vaciarlo</p>
         <div class="palette" id="palette"></div>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== RESERVAR ===================== -->
-<section class="section reserve" id="reservar" aria-labelledby="reserveTitle">
+<!-- ===================== IV · LA CITA ===================== -->
+<section class="section reserve room" id="reservar" aria-labelledby="reserveTitle">
   <div class="container reserve-grid">
     <div class="reserve-copy">
-      <p class="eyebrow">Reserva inteligente</p>
-      <h2 class="h2" id="reserveTitle">Tu pedido listo, <em>a la hora que digas</em></h2>
-      <p class="lead">Reserva con hasta 4 días de anticipación. Solo te mostramos los horarios en que Jorge está en el campus, validamos el stock en vivo y te dejamos el WhatsApp listo para enviar.</p>
+      <header class="section-head">
+        <p class="eyebrow"><span>Cap. IV</span><span>Reserva inteligente</span></p>
+        <h2 class="h2" id="reserveTitle">Pide una cita <em>con el Jefe</em></h2>
+        <p class="lead">Hasta 4 días de anticipación. Solo te mostramos horas en que Jorge está en el campus, el stock se valida en vivo y el WhatsApp queda listo para enviar.</p>
+      </header>
       <ol class="steps">
-        <li><b>1</b><div><strong>Elige tus sabores</strong><span>Desde la tienda, tu caja o pidiéndoselos al Gigante.</span></div></li>
-        <li><b>2</b><div><strong>Día, hora y lugar</strong><span>Biblioteca, patio, hall… tú decides.</span></div></li>
-        <li><b>3</b><div><strong>Envía y paga</strong><span>Se abre WhatsApp con tu reserva. Adjunta el comprobante y listo.</span></div></li>
+        <li><b><span>1</span></b><div><strong>Escoge tus sabores</strong><span>Desde los más buscados, tu maletín o pidiéndoselos al consigliere.</span></div></li>
+        <li><b><span>2</span></b><div><strong>Día, hora y lugar</strong><span>Biblioteca, patio, hall… tú pones el punto de encuentro.</span></div></li>
+        <li><b><span>3</span></b><div><strong>Se cierra el trato</strong><span>Se abre WhatsApp con tu invitación. Adjuntas el comprobante y listo.</span></div></li>
       </ol>
-      <button class="btn btn-ghost" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Prefiero que el Gigante reserve por mí</button>
+      <button class="btn btn-ghost" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Que el consigliere reserve por mí</button>
     </div>
 
-    <form class="ticket" id="reserveForm" novalidate>
+    <form class="ticket paper-room" id="reserveForm" novalidate>
       <div class="ticket-main">
         <div class="ticket-head">
+          <span class="invite" aria-hidden="true">Invitación</span>
           <span class="brand-name">MANI<span>-</span>GANTE</span>
-          <small id="rfLive" aria-live="polite">Reserva · INACAP Temuco</small>
+          <small id="rfLive" aria-live="polite">Cita · INACAP Temuco</small>
         </div>
         <div class="rc-section">
           <div class="rc-label"><span>Tu pedido</span><button type="button" class="link" id="rfEditCart">Editar</button></div>
@@ -1211,11 +1240,11 @@
         </div>
         <div class="rc-section">
           <div class="rc-label"><span>Día</span></div>
-          <div class="day-picker" id="rfDays" role="radiogroup" aria-label="Día de la reserva"></div>
+          <div class="day-picker" id="rfDays" role="radiogroup" aria-label="Día de la cita"></div>
         </div>
         <div class="rc-section">
           <div class="rc-label"><span>Hora</span></div>
-          <div class="slot-picker" id="rfSlots" role="radiogroup" aria-label="Hora de la reserva"></div>
+          <div class="slot-picker" id="rfSlots" role="radiogroup" aria-label="Hora de la cita"></div>
         </div>
         <div class="rc-section">
           <div class="rc-label"><span>Punto de encuentro</span></div>
@@ -1233,6 +1262,7 @@
         <div class="rc-errors" id="rfErrors" role="alert" hidden></div>
       </div>
       <div class="ticket-stub">
+        <span class="wax" aria-hidden="true" data-monogram></span>
         <div><small>Total</small><strong id="rfTotal">$0</strong></div>
         <button class="btn btn-wa btn-lg" type="submit" id="rfSubmit"><svg><use href="#i-wa"/></svg><span>Reservar por WhatsApp</span></button>
       </div>
@@ -1240,33 +1270,41 @@
   </div>
 </section>
 
-<!-- ===================== HISTORIA ===================== -->
-<section class="section story" id="historia" aria-labelledby="storyTitle">
-  <div class="container story-grid">
-    <div class="story-photos" aria-hidden="true">
-      <figure class="polaroid p1"><img decoding="async" src="./assets/img/g3-800.webp" alt="" loading="lazy" width="800" height="592"><figcaption class="hand">los doypacks nuevos</figcaption></figure>
-      <figure class="polaroid p2"><img decoding="async" src="./assets/img/g6-800.webp" alt="" loading="lazy" width="628" height="1400"><figcaption class="hand">maridaje con vino</figcaption></figure>
-      <div class="story-stamp" data-stamp="HECHO EN TEMUCO · DESDE EL CAMPUS · "></div>
+<!-- ===================== V · EL JEFE (el diario de la casa) ===================== -->
+<section class="section story paper-room" id="historia" aria-labelledby="storyTitle">
+  <div class="container">
+    <div class="masthead" aria-hidden="true">
+      <div class="masthead-top"><span>Edición Temuco</span><span>Desde el campus INACAP</span><span>Precio: un antojo</span></div>
+      <p class="masthead-name">El Diario <em>de la Casa</em></p>
     </div>
-    <article class="letter">
-      <p class="eyebrow">Nuestra historia</p>
-      <h2 class="h2" id="storyTitle">El gigante detrás <em>de los antojos</em></h2>
-      <p>Llevo 8 años en Chile. Soy de República Dominicana, y en todo este tiempo no he vuelto a mi país. Antes de MANI-GANTE trabajé como garzón: me enseñó mucho, pero también entendí que quería construir algo propio, a mi manera.</p>
-      <p>Así nació MANI-GANTE: maní confitado hecho con cuidado, donde yo mismo superviso que cada sabor esté fresco y sea único. Coordino cada pedido y lo llevo hasta tu universidad.</p>
-      <blockquote>Para ese bajón de media tarde, la prueba difícil o el día que se siente demasiado largo. Para que el día pese un poco menos.</blockquote>
-      <p class="signature hand">Jorge</p>
-      <p class="signature-role">Fundador · confitero · el que camina el campus</p>
-    </article>
+    <div class="story-grid">
+      <div class="story-photos" aria-hidden="true">
+        <figure class="polaroid p1"><img decoding="async" src="./assets/img/g3-800.webp" alt="" loading="lazy" width="800" height="592"><figcaption>Los doypacks nuevos</figcaption></figure>
+        <figure class="polaroid p2"><img decoding="async" src="./assets/img/g6-800.webp" alt="" loading="lazy" width="628" height="1400"><figcaption>Maridaje con vino</figcaption></figure>
+        <div class="story-stamp" data-stamp="HECHO EN TEMUCO · RECETA DE LA CASA · "></div>
+      </div>
+      <article class="letter">
+        <p class="eyebrow"><span>Cap. V</span><span>El Jefe</span></p>
+        <h2 class="h2" id="storyTitle">Un dominicano, una olla <em>y un campus entero</em></h2>
+        <div class="letter-body">
+          <p>Llevo 8 años en Chile. Soy de República Dominicana, y en todo este tiempo no he vuelto a mi país. Antes de MANI-GANTE trabajé como garzón: me enseñó mucho, pero también entendí que quería construir algo propio, a mi manera.</p>
+          <p>Así nació MANI-GANTE: maní confitado hecho con cuidado, donde yo mismo superviso que cada sabor esté fresco y sea único. Coordino cada pedido y lo llevo hasta tu universidad.</p>
+        </div>
+        <blockquote>Para ese bajón de media tarde, la prueba difícil o el día que se siente demasiado largo. Para que el día pese un poco menos.</blockquote>
+        <p class="signature">Jorge</p>
+        <p class="signature-role">El Jefe · fundador y confitero</p>
+      </article>
+    </div>
   </div>
 </section>
 
-<!-- ===================== GALERÍA ===================== -->
+<!-- ===================== VI · LAS PRUEBAS ===================== -->
 <section class="section gallery" id="galeria" aria-labelledby="galleryTitle">
   <div class="container gallery-head">
-    <div>
-      <p class="eyebrow">En imágenes</p>
-      <h2 class="h2" id="galleryTitle">Pequeñas muestras de <em>nuestros sueños</em></h2>
-    </div>
+    <header class="section-head">
+      <p class="eyebrow"><span>Cap. VI</span><span>En imágenes</span></p>
+      <h2 class="h2" id="galleryTitle">Las pruebas <em>del caso</em></h2>
+    </header>
     <div class="gallery-nav">
       <button class="icon-btn round" type="button" id="galPrev" aria-label="Fotos anteriores"><svg style="transform:scaleX(-1)"><use href="#i-arrow"/></svg></button>
       <button class="icon-btn round" type="button" id="galNext" aria-label="Fotos siguientes"><svg><use href="#i-arrow"/></svg></button>
@@ -1275,13 +1313,13 @@
   <div class="gallery-track" id="gallery" tabindex="0" aria-label="Galería de fotos, desplázate horizontalmente"></div>
 </section>
 
-<!-- ===================== PAGOS ===================== -->
-<section class="section pay" id="pago" aria-labelledby="payTitle">
+<!-- ===================== VII · EL TRATO ===================== -->
+<section class="section pay room" id="pago" aria-labelledby="payTitle">
   <div class="container">
     <header class="section-head center">
-      <p class="eyebrow">Cómo pagar</p>
-      <h2 class="h2" id="payTitle">Paga <em>como quieras</em></h2>
-      <p class="lead">Toca una tarjeta para copiar los datos. Las reservas se confirman con transferencia o Mercado Pago.</p>
+      <p class="eyebrow"><span>Cap. VII</span><span>Cómo pagar</span></p>
+      <h2 class="h2" id="payTitle">Así se cierra <em>el trato</em></h2>
+      <p class="lead">Toca una tarjeta para copiar los datos. Las citas se confirman con transferencia o Mercado Pago.</p>
     </header>
     <div class="pay-grid">
       <button class="pay-card estado" type="button" data-copy="BancoEstado – Cuenta RUT&#10;Nombre: Jorge Luis Vásquez De La Rosa&#10;RUT / N° de cuenta: 26.523.498-4" data-label="Cuenta RUT">
@@ -1306,22 +1344,24 @@
         <span class="pay-hint"><svg><use href="#i-arrow"/></svg> Abrir link de pago</span>
       </a>
       <div class="pay-card cash">
-        <span class="pay-top"><strong>Efectivo</strong><small>Solo venta presencial</small></span>
-        <span class="pay-num">Pago al recibir</span>
+        <span class="pay-top"><strong>Efectivo</strong><small>Solo en persona</small></span>
+        <span class="pay-num">Al recibir</span>
         <span class="pay-name">Si me encuentras en el campus</span>
       </div>
     </div>
   </div>
 </section>
 
-<!-- ===================== FAQ ===================== -->
+<!-- ===================== VIII · LA LETRA CHICA ===================== -->
 <section class="section faq" id="faq" aria-labelledby="faqTitle">
   <div class="container faq-grid">
     <div class="faq-aside">
-      <p class="eyebrow">Preguntas frecuentes</p>
-      <h2 class="h2" id="faqTitle">Antes de que <em>preguntes</em></h2>
-      <p class="lead">¿No está tu duda? El Gigante responde al instante, a cualquier hora.</p>
-      <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Hacer una pregunta</button>
+      <header class="section-head">
+        <p class="eyebrow"><span>Cap. VIII</span><span>La letra chica</span></p>
+        <h2 class="h2" id="faqTitle">Antes de que <em>preguntes</em></h2>
+        <p class="lead">¿No está tu duda? El consigliere responde al instante, a cualquier hora.</p>
+      </header>
+      <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Consultar al consigliere</button>
     </div>
     <div>
       <div class="faq-list" id="faqList"></div>
@@ -1333,19 +1373,19 @@
   </div>
 </section>
 
-<!-- ===================== OPINIONES ===================== -->
+<!-- ===================== IX · LA FAMILIA HABLA ===================== -->
 <section class="section reviews" id="opiniones" aria-labelledby="reviewTitle">
   <div class="container reviews-grid">
-    <div>
-      <p class="eyebrow">Tu opinión</p>
-      <h2 class="h2" id="reviewTitle">¿Ya lo <em>probaste?</em></h2>
-      <p class="lead">Cuéntanos qué sabor probaste. Jorge lee cada nota, y las mejores las publicamos aquí.</p>
-    </div>
+    <header class="section-head">
+      <p class="eyebrow"><span>Cap. IX</span><span>La familia habla</span></p>
+      <h2 class="h2" id="reviewTitle">¿Ya eres <em>de la familia?</em></h2>
+      <p class="lead">Cuéntanos qué sabor probaste. Jorge lee cada telegrama, y los mejores salen en el diario de la casa.</p>
+    </header>
     <div class="ugc" id="ugc" hidden>
       <p class="eyebrow">Lo que dicen de verdad</p>
       <div class="ugc-track"></div>
     </div>
-    <form class="note-card" id="reviewForm" name="opiniones" method="POST" data-netlify="true" netlify-honeypot="bot-field">
+    <form class="note-card paper-room" id="reviewForm" name="opiniones" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="opiniones">
       <p class="hp"><label>No llenar <input name="bot-field"></label></p>
       <div class="rc-row">
@@ -1360,32 +1400,32 @@
           </div>
         </fieldset>
       </div>
-      <label class="field"><span>Tu nota para Jorge</span><textarea name="comentario" rows="3" required maxlength="600" placeholder="¿Qué sabor probaste? ¿Qué te pareció?"></textarea></label>
-      <button class="btn btn-ink" type="submit">Enviar nota</button>
-      <p class="form-ok" hidden><svg><use href="#i-check"/></svg> ¡Gracias! Tu nota le llegó a Jorge.</p>
+      <label class="field"><span>Tu telegrama para Jorge</span><textarea name="comentario" rows="3" required maxlength="600" placeholder="¿Qué sabor probaste? ¿Qué te pareció?"></textarea></label>
+      <button class="btn btn-ink" type="submit">Enviar telegrama</button>
+      <p class="form-ok" hidden><svg><use href="#i-check"/></svg> ¡Gracias! Tu telegrama le llegó a Jorge.</p>
     </form>
   </div>
 </section>
 </main>
 
-<!-- ===================== FOOTER ===================== -->
-<footer class="footer">
+<!-- ===================== PIE ===================== -->
+<footer class="footer room">
   <div class="footer-marquee" aria-hidden="true"><div class="marquee-track" id="footerMarquee"></div></div>
   <div class="container">
     <div class="footer-cta">
-      <h2 class="h2">¿Se te <em>antojó</em>?</h2>
+      <h2 class="h2">La casa <em>te espera.</em></h2>
       <div class="footer-actions">
-        <a class="btn btn-gold btn-lg" href="#tienda">Ir a la tienda</a>
+        <a class="btn btn-gold btn-lg" href="#tienda">Ver a los más buscados</a>
         <a class="btn btn-wa btn-lg" data-wa href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg> WhatsApp</a>
       </div>
     </div>
     <div class="footer-cols">
       <div>
         <div class="brand"><img src="./assets/img/icon-192.png" alt="" width="44" height="44"><span class="brand-name">MANI<span>-</span>GANTE</span></div>
-        <p class="hand footer-hand">hecho a mano, con cariño, en Temuco</p>
+        <p class="hand footer-hand">Para gente gánster y elegante.</p>
       </div>
-      <nav aria-label="Pie de página"><strong>Tienda</strong><a href="#tienda">Sabores</a><a href="#caja">Arma tu caja</a><a href="#reservar">Reservar</a><a href="#pago">Pagos</a></nav>
-      <nav aria-label="Ayuda"><strong>Ayuda</strong><a href="#faq">Preguntas</a><button type="button" data-open-agent>Asistente IA</button><a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a></nav>
+      <nav aria-label="Pie de página"><strong>La casa</strong><a href="#tienda">Los más buscados</a><a href="#caja">El maletín</a><a href="#reservar">La cita</a><a href="#pago">El trato</a></nav>
+      <nav aria-label="Ayuda"><strong>Ayuda</strong><a href="#faq">La letra chica</a><button type="button" data-open-agent>El consigliere (IA)</button><a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a></nav>
       <div class="socials-col"><strong>Síguenos</strong>
         <div class="socials">
           <a href="https://www.instagram.com/mani_gant" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
@@ -1394,15 +1434,16 @@
         </div>
       </div>
     </div>
-    <p class="footer-legal">© <span id="year">2026</span> MANI-GANTE · El Gigante de los Antojos · Temuco, Chile · Entregas en campus INACAP</p>
+    <p class="footer-mark" aria-hidden="true">MANI-GANTE</p>
+    <p class="footer-legal"><span>© <span id="year">2026</span> MANI-GANTE · Para gente gánster y elegante</span><span>Temuco, Chile · Entregas en campus INACAP</span></p>
   </div>
 </footer>
 
 <!-- ===================== BOLETA (CARRITO) ===================== -->
 <div class="scrim" id="scrim" hidden></div>
-<aside class="drawer" id="cart" aria-label="Tu boleta de antojos" aria-hidden="true">
+<aside class="drawer paper-room" id="cart" aria-label="La cuenta de la casa" aria-hidden="true">
   <header class="drawer-head">
-    <div><p class="receipt-title">Boleta de antojos</p><small id="cartSub">0 bolsas</small></div>
+    <div><p class="receipt-title">La cuenta de la casa</p><small id="cartSub">0 bolsas</small></div>
     <button class="icon-btn" type="button" data-close-cart aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
   </header>
   <div class="drawer-promo" id="cartPromo" hidden></div>
@@ -1410,15 +1451,15 @@
   <footer class="drawer-foot" id="cartFoot">
     <div class="pay-pick" id="cartPay" role="radiogroup" aria-label="Medio de pago"></div>
     <div class="total-row"><span>Total</span><strong id="cartTotal">$0</strong></div>
-    <a class="btn btn-gold btn-block" href="#reservar" id="cartReserve"><svg><use href="#i-cal"/></svg> Reservar día y hora</a>
+    <a class="btn btn-gold btn-block" href="#reservar" id="cartReserve"><svg><use href="#i-cal"/></svg> Pedir cita: día y hora</a>
     <a class="btn btn-wa btn-block" id="cartWa" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg> Pedir ahora por WhatsApp</a>
-    <div class="drawer-links"><button class="link" type="button" id="cartShare"><svg><use href="#i-arrow"/></svg> Guardar o compartir mi pedido</button><button class="link" type="button" id="cartClear">Vaciar boleta</button></div>
+    <div class="drawer-links"><button class="link" type="button" id="cartShare"><svg><use href="#i-arrow"/></svg> Guardar o compartir mi pedido</button><button class="link" type="button" id="cartClear">Vaciar la cuenta</button></div>
   </footer>
 </aside>
 
 <div class="dock" id="dock" hidden>
   <button type="button" id="dockCart"><svg><use href="#i-bag"/></svg><b id="dockCount">0</b> · <strong id="dockTotal">$0</strong></button>
-  <a class="btn btn-gold" href="#reservar">Reservar</a>
+  <a class="btn btn-gold" href="#reservar">Cita</a>
 </div>
 
 <!-- ===================== VISTA RÁPIDA ===================== -->
@@ -1427,7 +1468,7 @@
   <div class="quick-grid">
     <div class="quick-media">
       <div class="quick-art" id="qvArt"></div>
-      <figure class="quick-photo" id="qvPhoto" hidden><img decoding="async" src="./assets/img/g9-800.webp" alt="Bolsas reales de MANI-GANTE surtidas" loading="lazy" width="800" height="1147"><figcaption class="hand">así se ve en persona</figcaption></figure>
+      <figure class="quick-photo" id="qvPhoto" hidden><img decoding="async" src="./assets/img/g9-800.webp" alt="Bolsas reales de MANI-GANTE surtidas" loading="lazy" width="800" height="1147"><figcaption>Así se ve en persona</figcaption></figure>
       <div class="media-toggle" role="tablist" aria-label="Vista">
         <button type="button" role="tab" aria-selected="true" data-media="art">Ilustración</button>
         <button type="button" role="tab" aria-selected="false" data-media="photo">Foto real</button>
@@ -1436,6 +1477,7 @@
     <div class="quick-info">
       <p class="eyebrow" id="qvCat">Frutales</p>
       <h2 class="h3" id="qvName">Sabor</h2>
+      <p class="quick-alias" id="qvAlias"></p>
       <p class="quick-notes" id="qvNotes"></p>
       <div class="quick-status" id="qvStatus"></div>
       <div class="formats small" role="radiogroup" aria-label="Formato" id="qvFormats"></div>
@@ -1444,10 +1486,10 @@
         <button class="btn btn-gold btn-lg" type="button" id="qvAdd">Agregar · <span id="qvPrice">$1.000</span></button>
       </div>
       <div class="quick-ctas">
-        <button class="btn btn-ghost" type="button" id="qvReserve"><svg><use href="#i-cal"/></svg> Reservar este sabor</button>
-        <button class="btn btn-ghost" type="button" id="qvAsk"><svg><use href="#i-spark"/></svg> Preguntarle al Gigante</button>
+        <button class="btn btn-ghost" type="button" id="qvReserve"><svg><use href="#i-cal"/></svg> Pedir cita con este</button>
+        <button class="btn btn-ghost" type="button" id="qvAsk"><svg><use href="#i-spark"/></svg> Consultar al consigliere</button>
       </div>
-      <div class="quick-pair"><p class="rc-label"><span>Va bien con</span></p><div id="qvPair" class="pair-row"></div></div>
+      <div class="quick-pair"><p class="rc-label"><span>Hace buena pareja con</span></p><div id="qvPair" class="pair-row"></div></div>
       <p class="allergen" id="qvAllergen"></p>
       <a class="link" id="qvPage" href="#">Ver ficha completa del sabor →</a>
     </div>
@@ -1459,9 +1501,9 @@
   <button class="icon-btn modal-close" type="button" data-close-modal aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
   <form class="alert-form" id="alertForm" novalidate>
     <div class="alert-art" id="alertArt"></div>
-    <p class="eyebrow">Avísame cuando vuelva</p>
+    <p class="eyebrow">Se nos escapó</p>
     <h2 class="h3" id="alertTitle">Sabor</h2>
-    <p class="muted">Se acabó este lote. Déjanos tu WhatsApp o email y te avisamos apenas Jorge confite el próximo.</p>
+    <p class="muted">Este lote se agotó. Déjanos tu WhatsApp o email y te avisamos apenas Jorge confite el próximo.</p>
     <label class="field"><span>Tu nombre (opcional)</span><input name="name" maxlength="60" autocomplete="given-name"></label>
     <label class="field"><span>WhatsApp o email</span><input name="contact" required maxlength="80" placeholder="+56 9 1234 5678" autocomplete="email" inputmode="email"></label>
     <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
@@ -1481,7 +1523,7 @@
 </dialog>
 
 <!-- ===================== ENCUENTRA TU SABOR ===================== -->
-<dialog class="modal quiz" id="quiz" aria-labelledby="quizTitle">
+<dialog class="modal quiz room" id="quiz" aria-labelledby="quizTitle">
   <button class="icon-btn modal-close" type="button" data-close-modal aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
   <div class="quiz-body" id="quizBody"></div>
 </dialog>
@@ -1489,12 +1531,12 @@
 <!-- ===================== AGENTE IA ===================== -->
 <button class="agent-fab" id="agentFab" type="button" aria-label="Abrir asistente" aria-expanded="false">
   <span class="agent-fab-avatar"><img src="./assets/img/icon-192.png" alt=""></span>
-  <span class="agent-fab-text"><strong>El Gigante</strong><small>Te respondo al tiro</small></span>
+  <span class="agent-fab-text"><strong>El Gigante</strong><small>Tu consigliere · IA</small></span>
 </button>
-<section class="agent" id="agent" aria-label="Asistente El Gigante" aria-hidden="true">
+<section class="agent" id="agent" aria-label="El Gigante, consigliere de la casa" aria-hidden="true">
   <header class="agent-head">
     <span class="agent-avatar"><img src="./assets/img/icon-192.png" alt=""></span>
-    <div><strong>El Gigante</strong><small><i class="live-dot sm"></i> Asistente de MANI-GANTE · IA</small></div>
+    <div><strong>El Gigante</strong><small><i class="live-dot sm"></i> El consigliere de la casa · IA</small></div>
     <button class="icon-btn" type="button" id="agentClose" aria-label="Cerrar asistente"><svg><use href="#i-close"/></svg></button>
   </header>
   <div class="agent-log" id="agentLog" aria-live="polite"></div>

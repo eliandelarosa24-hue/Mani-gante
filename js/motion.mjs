@@ -5,7 +5,11 @@
 const $$ = (s) => [...document.querySelectorAll(s)];
 const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
-// Revelado al entrar en pantalla
+// Revelado al entrar en pantalla. Lo que ya está a la vista se marca antes de activar el modo,
+// así nada parpadea; si este módulo no carga, todo queda visible.
+const vh = innerHeight;
+$$(".reveal").forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < vh && r.bottom > 0) el.classList.add("in"); });
+document.documentElement.classList.add("motion-ready");
 const io = new IntersectionObserver((entries) => entries.forEach((en) => {
   if (en.isIntersecting) { en.target.classList.add("in"); io.unobserve(en.target); }
 }), { threshold: .12 });
@@ -64,7 +68,7 @@ if (!reduce) {
     gsap.registerPlugin(ScrollTrigger);
 
     // Entradas cinematográficas por sección
-    gsap.utils.toArray(".section .h2:not(.hero-title)").forEach((h) => {
+    gsap.utils.toArray(".section .h2:not(.hero-title):not(.masthead-name)").forEach((h) => {
       const words = splitWords(h);
       if (!words.length) return;
       gsap.from(words, { yPercent: 110, rotate: 3, duration: 1, ease: "power4.out", stagger: .045, scrollTrigger: { trigger: h, start: "top 85%" } });
