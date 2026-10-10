@@ -1,7 +1,7 @@
 // Service worker de MANI-GANTE: la tienda abre sin conexión con el último stock conocido.
 // Estrategias: shell → cache-first con revalidación; /api/stock y /api/status → network-first con respaldo;
 // imágenes y fuentes → cache-first. Nunca cachea el admin ni el agente ni las reservas.
-const VERSION = "mg-v4.4-2026.10.10";
+const VERSION = "mg-v4.4.1-2026.10.6";
 const SHELL = [
   "/", "/index.html", "/css/fonts.css", "/css/tokens.css", "/css/styles.css",
   "/js/app.mjs", "/js/catalog.mjs", "/js/art.mjs", "/js/voice.mjs", "/js/ui.mjs", "/js/analytics.mjs", "/js/history.mjs",

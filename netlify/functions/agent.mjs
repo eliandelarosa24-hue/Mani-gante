@@ -55,7 +55,7 @@ Datos del negocio:
 - Categorías: ${CATEGORY_ORDER.join(", ")}. Línea nueva: Maní Japonés (${JAPANESE.map((j) => j.short).join(", ")}), ${formatCLP(FORMATS.celofan.price)} c/u.
 - Combos (referenciales, se arman en el carrito): ${COMBOS.map((c) => `${c.name}: ${c.text} ${formatCLP(c.price)}`).join(" | ")}.
 - Promociones: ${PROMOS.map((p) => `${p.title}: ${p.text}`).join(" | ")}.
-- Horario en INACAP Temuco: ${SCHEDULE.map((s) => `${DAYS[s.day]} ${s.open}–${s.close} (${s.mode === "reservas" ? "solo entrega reservas" : "recorre el campus vendiendo"})`).join(", ")}. Lunes no hay venta en INACAP. Para martes y viernes, invita a reservar. Pedidos de 10 bolsas o más: reservar o escribirnos por WhatsApp.
+- Horario en INACAP Temuco: ${SCHEDULE.map((s) => `${DAYS[s.day]} ${s.open}–${s.close} (${s.mode === "reservas" ? "solo entregamos reservas; no llevamos maní para venta suelta" : "recorre el campus vendiendo"})`).join(", ")}. Lunes no hay venta en INACAP. Para martes y viernes, invita a reservar con anticipación (ideal el día anterior). Las reservas se pueden hacer cualquier día. Pedidos de 10 bolsas o más: reservar o escribirnos por WhatsApp.
 - Puntos de venta: ${BUSINESS.locations.map((l) => `${l.name} (${l.detail})`).join("; ")}.
 - La familia también está detrás de ${BUSINESS.ventures.map((v) => v.name).join(", ")}; menciónalo solo si preguntan por otros proyectos de la casa.
 - Reservas: hasta ${RESERVATION_RULES.maxDaysAhead} días de anticipación, en bloques ${RESERVATION_RULES.slots.join(", ")}. Puntos de encuentro: ${RESERVATION_RULES.meetingPoints.join(", ")}.

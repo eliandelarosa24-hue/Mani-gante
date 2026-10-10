@@ -1,5 +1,10 @@
 # Changelog · MANI-GANTE
 
+## v4.4.1 · Red Vaeru y días de reserva (catálogo 2026.10.6)
+- **Red Vaeru** tiene su descripción real: construye el potencial de los alojamientos turísticos de La Araucanía con una presencia digital que es toda una experiencia, desde la primera mirada hasta el pago y la llegada. La etiqueta pasó de "Fundador también de" a "Creadores también de".
+- **Martes y viernes** (08:00–12:30): se aclara que esos días no llevamos maní para venta suelta y que solo entregamos reservas, que se pueden hacer cualquier día. Se ve en la cita, en los puntos de venta, en la letra chica y en el consigliere.
+- El formulario de opiniones ya decía "Ej: Reina de la Rosa" y "Tu telegrama para la casa" desde la v4.4.
+
 ## v4.4 · La experiencia de la Casa (2026-10-10)
 
 **La casa habla en plural**
