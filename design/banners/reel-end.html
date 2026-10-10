@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cierre de Reel · MANI-GANTE</title>
+<!-- Cierre vertical (9:16) para Reels: se graba con scripts de screencast a 1080×1920. -->
+<link rel="stylesheet" href="../../css/fonts.css">
+<style>
+  :root { --gold: #d2ae6d; --gold-ink: #ddbb7c; --ivory: #f2eadb; --noir: #0d0b09; --velvet: #6e1a2c; }
+  * { box-sizing: border-box; margin: 0; }
+  html, body { height: 100%; background: var(--noir); overflow: hidden; }
+  body { display: grid; place-items: center; color: var(--ivory); font-family: "Instrument Sans", system-ui, sans-serif;
+    background: radial-gradient(70% 55% at 50% 42%, rgba(110,26,44,.6), transparent 72%), repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 2px, transparent 2px 46px), var(--noir); }
+  .rosette { position: absolute; left: 50%; top: 40%; width: 150vw; aspect-ratio: 1; translate: -50% -50%; color: rgba(210,174,109,.14); animation: spin 60s linear infinite, fade 1.2s ease both; }
+  .rosette svg { width: 100%; height: 100%; }
+  .card { position: relative; display: grid; justify-items: center; text-align: center; gap: 0; padding-bottom: 6vh; }
+  .logo { width: 34vw; aspect-ratio: 1; border-radius: 50%; box-shadow: 0 0 0 3px var(--noir), 0 0 0 5px var(--gold), 0 0 0 9px var(--noir), 0 0 0 10px rgba(210,174,109,.5), 0 30px 60px -10px rgba(0,0,0,.9); overflow: hidden; animation: pop .9s cubic-bezier(.2,.9,.25,1.15) .1s both; }
+  .logo img { width: 100%; height: 100%; object-fit: cover; display: block; }
+  .word { margin-top: 6.5vw; font-family: "Bodoni Moda", serif; font-weight: 600; font-size: 9.6vw; letter-spacing: .14em; animation: up .9s cubic-bezier(.2,.8,.2,1) .35s both; }
+  .word b { font-family: "Big Shoulders", sans-serif; color: var(--gold); font-weight: 800; }
+  .tag { margin-top: 2vw; font-family: "Bodoni Moda", serif; font-style: italic; font-size: 5vw; background: linear-gradient(100deg, #b98d45, #f3dba4 45%, #c9a15a 70%, #f0d79f); -webkit-background-clip: text; background-clip: text; color: transparent; animation: up .9s cubic-bezier(.2,.8,.2,1) .5s both; }
+  .rule { width: 46vw; height: 1px; margin: 8vw 0 6vw; background: linear-gradient(90deg, transparent, var(--gold), transparent); position: relative; animation: grow 1s cubic-bezier(.2,.8,.2,1) .7s both; }
+  .rule::after { content: ""; position: absolute; left: 50%; top: 50%; width: 7px; height: 7px; translate: -50% -50%; rotate: 45deg; background: var(--noir); border: 1px solid var(--gold); }
+  .url { font-family: "Big Shoulders", sans-serif; font-weight: 800; font-size: 7.4vw; letter-spacing: .06em; padding: 3.4vw 6vw; border: 1px solid var(--gold); box-shadow: inset 0 0 0 4px var(--noir), inset 0 0 0 5px rgba(210,174,109,.45); background: linear-gradient(100deg, #b98d45, #f3dba4 45%, #c9a15a 70%, #f0d79f); color: var(--noir); animation: up .9s cubic-bezier(.2,.8,.2,1) .85s both, shine 2.4s ease 1.8s both; background-size: 220% 100%; }
+  .ig { margin-top: 5vw; font-family: "Big Shoulders", sans-serif; font-weight: 700; font-size: 4.6vw; letter-spacing: .3em; text-transform: uppercase; color: var(--gold-ink); animation: up .9s cubic-bezier(.2,.8,.2,1) 1.05s both; }
+  .place { position: absolute; bottom: 6vh; left: 0; right: 0; text-align: center; font-family: "Big Shoulders", sans-serif; font-weight: 700; font-size: 3.4vw; letter-spacing: .32em; text-transform: uppercase; color: #968a78; animation: fade 1s ease 1.3s both; }
+  @keyframes spin { to { rotate: 360deg; } }
+  @keyframes fade { from { opacity: 0; } }
+  @keyframes pop { from { opacity: 0; transform: scale(.6) rotate(-12deg); } }
+  @keyframes up { from { opacity: 0; transform: translateY(24px); filter: blur(6px); } }
+  @keyframes grow { from { transform: scaleX(0); } }
+  @keyframes shine { from { background-position: 100% 0; } to { background-position: 0 0; } }
+</style>
+</head>
+<body>
+  <div class="rosette" data-guilloche></div>
+  <div class="card">
+    <div class="logo"><img src="../../assets/img/logo-mark.png" alt="MANI-GANTE"></div>
+    <p class="word">MANI<b>-</b>GANTE</p>
+    <p class="tag">Para gente elegante y gánster</p>
+    <span class="rule"></span>
+    <p class="url">manigante.netlify.app</p>
+    <p class="ig">@mani_gant</p>
+  </div>
+  <p class="place">Temuco · Campus INACAP</p>
+  <script type="module">
+    import { guilloche } from "../../js/art.mjs";
+    document.querySelector("[data-guilloche]").innerHTML = guilloche();
+  </script>
+</body>
+</html>
