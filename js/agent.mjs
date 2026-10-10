@@ -93,7 +93,7 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel.cl
 function greet() {
   if (history.length) { history.forEach((m) => bubble(m.role, m.content)); renderQuick(); return; }
   const s = campusStatus();
-  bubble("assistant", `¡Hola! Soy *El Gigante*, el asistente de MANI-GANTE 🥜\nTe digo qué sabores hay hoy, te recomiendo y te dejo la reserva lista para WhatsApp.\n\nAhora mismo: ${s.open ? "Jorge está en el campus" : s.label.toLowerCase()}. ¿En qué te ayudo?`);
+  bubble("assistant", `¡Dímelo! Soy *El Gigante*, el asistente de MANI-GANTE 🥜\nTe digo qué sabores hay hoy, te recomiendo y te dejo la reserva lista para WhatsApp.\n\nAhora mismo: ${s.open ? "Jorge está en el campus" : s.label.toLowerCase()}. ¿En qué te ayudo?`);
   renderQuick();
 }
 
@@ -214,7 +214,7 @@ function localAnswer(question) {
   } else if (has(t, "envio", "delivery", "despacho", "domicilio")) {
     answer = FAQ.find(([q]) => q.includes("envíos"))[1];
   } else if (has(t, "hola", "buenas", "wena", "hey")) {
-    answer = "¡Hola! 👋 ¿Buscas algún sabor en particular, quieres una recomendación o prefieres reservar para otro día?";
+    answer = "¡Qué lo que! 👋 ¿Buscas algún sabor en particular, quieres una recomendación o prefieres reservar para otro día?";
   } else if (has(t, "gracias", "vale", "ok", "listo")) {
     answer = "¡A ti! Cualquier antojo, aquí estoy 🥜";
   } else {
@@ -235,3 +235,11 @@ setTimeout(() => {
   try { sessionStorage.setItem("mg-agent-nudge", "1"); } catch {}
   fab.querySelector("small").textContent = "¿Te ayudo a elegir?";
 }, 12000);
+
+// API para la carga diferida desde app.mjs: abre el panel y, si viene, envía una pregunta.
+window.MGAgent = {
+  open(prompt) {
+    open();
+    if (prompt) setTimeout(() => send(prompt), 350);
+  },
+};

@@ -21,14 +21,12 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://manigante.netlify.app/assets/banners/og/editorial-1200x630.jpg">
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..800;1,9..144,400..700&family=Manrope:wght@400;500;600;700;800&family=Caveat:wght@500;700&display=swap" rel="stylesheet">
+<link rel="preload" href="./assets/fonts/fraunces-latin-full-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="./assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="./css/fonts.css">
 <link rel="preload" as="image" href="./assets/img/g7-1600.webp" imagesrcset="./assets/img/g7-800.webp 800w, ./assets/img/g7-1600.webp 1600w" imagesizes="100vw">
 <link rel="stylesheet" href="./css/tokens.css">
 <link rel="stylesheet" href="./css/styles.css">
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script defer src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 
 <script type="application/ld+json">
 {
@@ -76,12 +74,17 @@
   <symbol id="i-shuffle" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" d="M4 7h3.5c4 0 5 10 9 10H20m0 0-3-3m3 3-3 3M4 17h3.5c1.4 0 2.4-1.2 3.2-2.8M20 7h-3.5c-1.4 0-2.4 1.2-3.2 2.8M20 7l-3-3m3 3-3 3"/></symbol>
   <symbol id="i-compass" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="m15.5 8.5-2 5-5 2 2-5 5-2Z"/></g></symbol>
   <symbol id="i-box" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round"><path d="M3.5 8 12 3.5 20.5 8v8L12 20.5 3.5 16V8Z"/><path d="M3.5 8 12 12.5 20.5 8M12 12.5v8"/></g></symbol>
+  <symbol id="i-receipt" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M6 3h12v18l-3-2-3 2-3-2-3 2V3Zm3 5h6M9 11h6M9 14h4"/></symbol>
+  <symbol id="i-bell" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.7" stroke-linejoin="round" stroke-linecap="round" d="M6 16V11a6 6 0 1 1 12 0v5l2 2H4l2-2Zm4 4h4"/></symbol>
+  <symbol id="i-download" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M12 4v11m0 0-4-4m4 4 4-4M5 19h14"/></symbol>
   <symbol id="i-plus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M12 5v14M5 12h14"/></symbol>
   <symbol id="i-minus" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M5 12h14"/></symbol>
   <symbol id="i-arrow-curve" viewBox="0 0 80 40"><path fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" d="M4 8c18 22 44 26 68 18m0 0-9-7m9 7-6 9"/></symbol>
 </svg>
 
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
+<div class="promo-ribbon" id="promoRibbon" role="status" hidden></div>
+<div class="away-banner" id="awayBanner" role="status" hidden><svg><use href="#i-pin"/></svg><span id="awayText"></span></div>
 
 <!-- ===================== HEADER ===================== -->
 <header class="nav" id="nav">
@@ -99,7 +102,9 @@
     </nav>
     <div class="nav-tools">
       <span class="live-pill" id="livePill" data-open="false"><i></i><span>Comprobando…</span></span>
+      <button class="icon-btn lang-btn" id="langToggle" type="button" aria-label="Switch to English" lang="en">EN</button>
       <button class="icon-btn" id="themeToggle" type="button" aria-label="Cambiar tema"><svg><use href="#i-moon"/></svg></button>
+      <button class="icon-btn" id="historyOpen" type="button" aria-label="Mis pedidos" data-i18n-label="nav.history"><svg><use href="#i-receipt"/></svg></button>
       <button class="icon-btn cart-btn" id="cartOpen" type="button" aria-label="Abrir tu boleta de antojos">
         <svg><use href="#i-bag"/></svg><b class="cart-count" id="cartCount" hidden>0</b>
       </button>
@@ -113,6 +118,10 @@
     <a href="#reservar"><small>04</small>Reservar</a>
     <a href="#historia"><small>05</small>Historia</a>
     <a href="#pago"><small>06</small>Cómo pagar</a>
+    <div class="mobile-menu-row">
+      <button class="btn btn-ghost" type="button" data-action="history"><svg><use href="#i-receipt"/></svg> Mis pedidos</button>
+      <button class="btn btn-ghost" type="button" data-action="lang" lang="en">English</button>
+    </div>
     <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Preguntarle al Gigante</button>
   </div>
 </header>
@@ -126,23 +135,24 @@
   <div class="hero-shade" aria-hidden="true"></div>
   <div class="container hero-grid">
     <div class="hero-copy">
-      <p class="kicker reveal"><span class="dot"></span>Maní confitado a mano · Temuco</p>
+      <p class="kicker reveal"><span class="dot"></span><span data-i18n="hero.kicker">N.º 01 · Lote de esta semana · Temuco</span></p>
       <h1 class="hero-title" id="heroTitle">
         <span class="line"><span>El gigante</span></span>
         <span class="line"><span>de los <em>antojos</em></span></span>
       </h1>
       <p class="hero-lead reveal">28 sabores confitados en lotes chicos, cada semana, más la nueva línea de maní japonés. Elige, arma tu caja o reserva para mañana: te lo entregamos en el campus INACAP.</p>
       <div class="hero-cta reveal">
-        <a class="btn btn-gold btn-lg" href="#tienda">Entrar a la tienda <svg><use href="#i-arrow"/></svg></a>
-        <button class="btn btn-glass btn-lg" type="button" data-open-quiz><svg><use href="#i-compass"/></svg> Encuentra tu sabor</button>
+        <a class="btn btn-gold btn-lg" href="#tienda"><span data-i18n="hero.shop">Entrar a la tienda</span> <svg><use href="#i-arrow"/></svg></a>
+        <button class="btn btn-glass btn-lg" type="button" data-open-quiz><svg><use href="#i-compass"/></svg> <span data-i18n="hero.quiz">Encuentra tu sabor</span></button>
       </div>
+      <a class="hero-link reveal" href="#reservar"><span data-i18n="hero.reserve">o déjalo reservado para mañana</span> <svg><use href="#i-arrow"/></svg></a>
       <dl class="hero-stats reveal">
         <div><dt id="statAvailable">28</dt><dd>sabores hoy</dd></div>
         <div><dt>$1.000</dt><dd>la bolsa</dd></div>
         <div><dt>24/7</dt><dd>asistente con IA</dd></div>
       </dl>
     </div>
-    <aside class="hero-card reveal" aria-label="Estado en vivo">
+    <aside class="hero-card reveal is-loading" aria-label="Estado en vivo" aria-busy="true">
       <p class="hand hero-note" aria-hidden="true">recién confitados<svg><use href="#i-arrow-curve"/></svg></p>
       <div class="hero-card-top">
         <span class="live-dot" id="heroLiveDot"></span>
@@ -220,14 +230,18 @@
       </button>
     </header>
 
-    <div class="shop-bar">
+    <div class="shop-bar" id="shopBar">
       <div class="formats" role="radiogroup" aria-label="Formato de empaque" id="formats"></div>
       <div class="shop-tools">
         <label class="search">
           <svg><use href="#i-search"/></svg>
           <input type="search" id="search" placeholder="Busca un sabor…" autocomplete="off" aria-label="Buscar sabor">
         </label>
-        <label class="switch"><input type="checkbox" id="onlyAvailable"><span></span>Solo disponibles</label>
+        <div class="filters" id="filters" role="group" aria-label="Filtros rápidos">
+          <button type="button" class="filter" data-filter="available" aria-pressed="false"><i class="dot-ok"></i><span data-i18n="filter.available">Disponibles</span></button>
+          <button type="button" class="filter" data-filter="top" aria-pressed="false"><span data-i18n="filter.top">Top ventas</span></button>
+          <button type="button" class="filter" data-filter="new" aria-pressed="false"><span data-i18n="filter.new">Nuevos</span></button>
+        </div>
       </div>
     </div>
     <div class="chips" id="chips" role="tablist" aria-label="Categorías"></div>
@@ -301,7 +315,7 @@
       <div class="ticket-main">
         <div class="ticket-head">
           <span class="brand-name">MANI<span>-</span>GANTE</span>
-          <small>Reserva · INACAP Temuco</small>
+          <small id="rfLive" aria-live="polite">Reserva · INACAP Temuco</small>
         </div>
         <div class="rc-section">
           <div class="rc-label"><span>Tu pedido</span><button type="button" class="link" id="rfEditCart">Editar</button></div>
@@ -318,6 +332,10 @@
         <div class="rc-section">
           <div class="rc-label"><span>Punto de encuentro</span></div>
           <div class="point-picker" id="rfPoints" role="radiogroup" aria-label="Punto de encuentro"></div>
+        </div>
+        <div class="rc-section">
+          <div class="rc-label"><span>¿Cómo vas a pagar?</span></div>
+          <div class="point-picker" id="rfPay" role="radiogroup" aria-label="Medio de pago"></div>
         </div>
         <div class="rc-row">
           <label class="field"><span>Tu nombre</span><input id="rfName" name="name" autocomplete="given-name" placeholder="Ej: Camila" maxlength="60" required></label>
@@ -435,6 +453,10 @@
       <h2 class="h2" id="reviewTitle">¿Ya lo <em>probaste?</em></h2>
       <p class="lead">Cuéntanos qué sabor probaste. Jorge lee cada nota, y las mejores las publicamos aquí.</p>
     </div>
+    <div class="ugc" id="ugc" hidden>
+      <p class="eyebrow">Lo que dicen de verdad</p>
+      <div class="ugc-track"></div>
+    </div>
     <form class="note-card" id="reviewForm" name="opiniones" method="POST" data-netlify="true" netlify-honeypot="bot-field">
       <input type="hidden" name="form-name" value="opiniones">
       <p class="hp"><label>No llenar <input name="bot-field"></label></p>
@@ -498,10 +520,11 @@
   <div class="drawer-promo" id="cartPromo" hidden></div>
   <div class="drawer-body" id="cartItems"></div>
   <footer class="drawer-foot" id="cartFoot">
+    <div class="pay-pick" id="cartPay" role="radiogroup" aria-label="Medio de pago"></div>
     <div class="total-row"><span>Total</span><strong id="cartTotal">$0</strong></div>
     <a class="btn btn-gold btn-block" href="#reservar" id="cartReserve"><svg><use href="#i-cal"/></svg> Reservar día y hora</a>
     <a class="btn btn-wa btn-block" id="cartWa" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg> Pedir ahora por WhatsApp</a>
-    <button class="link center" type="button" id="cartClear">Vaciar boleta</button>
+    <div class="drawer-links"><button class="link" type="button" id="cartShare"><svg><use href="#i-arrow"/></svg> Guardar o compartir mi pedido</button><button class="link" type="button" id="cartClear">Vaciar boleta</button></div>
   </footer>
 </aside>
 
@@ -514,7 +537,14 @@
 <dialog class="modal quick" id="quick" aria-labelledby="qvName">
   <button class="icon-btn modal-close" type="button" data-close-modal aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
   <div class="quick-grid">
-    <div class="quick-art" id="qvArt"></div>
+    <div class="quick-media">
+      <div class="quick-art" id="qvArt"></div>
+      <figure class="quick-photo" id="qvPhoto" hidden><img src="./assets/img/g9-800.webp" alt="Bolsas reales de MANI-GANTE surtidas" loading="lazy" width="800" height="1147"><figcaption class="hand">así se ve en persona</figcaption></figure>
+      <div class="media-toggle" role="tablist" aria-label="Vista">
+        <button type="button" role="tab" aria-selected="true" data-media="art">Ilustración</button>
+        <button type="button" role="tab" aria-selected="false" data-media="photo">Foto real</button>
+      </div>
+    </div>
     <div class="quick-info">
       <p class="eyebrow" id="qvCat">Frutales</p>
       <h2 class="h3" id="qvName">Sabor</h2>
@@ -525,8 +555,39 @@
         <div class="stepper big"><button type="button" id="qvMinus" aria-label="Menos"><svg><use href="#i-minus"/></svg></button><output id="qvQty">1</output><button type="button" id="qvPlus" aria-label="Más"><svg><use href="#i-plus"/></svg></button></div>
         <button class="btn btn-gold btn-lg" type="button" id="qvAdd">Agregar · <span id="qvPrice">$1.000</span></button>
       </div>
+      <div class="quick-ctas">
+        <button class="btn btn-ghost" type="button" id="qvReserve"><svg><use href="#i-cal"/></svg> Reservar este sabor</button>
+        <button class="btn btn-ghost" type="button" id="qvAsk"><svg><use href="#i-spark"/></svg> Preguntarle al Gigante</button>
+      </div>
       <div class="quick-pair"><p class="rc-label"><span>Va bien con</span></p><div id="qvPair" class="pair-row"></div></div>
+      <p class="allergen" id="qvAllergen"></p>
     </div>
+  </div>
+</dialog>
+
+<!-- ===================== AVÍSAME ===================== -->
+<dialog class="modal small-modal" id="alertDlg" aria-labelledby="alertTitle">
+  <button class="icon-btn modal-close" type="button" data-close-modal aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
+  <form class="alert-form" id="alertForm" novalidate>
+    <div class="alert-art" id="alertArt"></div>
+    <p class="eyebrow">Avísame cuando vuelva</p>
+    <h2 class="h3" id="alertTitle">Sabor</h2>
+    <p class="muted">Se acabó este lote. Déjanos tu WhatsApp o email y te avisamos apenas Jorge confite el próximo.</p>
+    <label class="field"><span>Tu nombre (opcional)</span><input name="name" maxlength="60" autocomplete="given-name"></label>
+    <label class="field"><span>WhatsApp o email</span><input name="contact" required maxlength="80" placeholder="+56 9 1234 5678" autocomplete="email" inputmode="email"></label>
+    <input type="text" name="website" tabindex="-1" autocomplete="off" class="hp" aria-hidden="true">
+    <p class="rc-errors" id="alertErr" role="alert" hidden></p>
+    <button class="btn btn-gold btn-lg" type="submit"><svg><use href="#i-bell"/></svg> Avísame</button>
+  </form>
+</dialog>
+
+<!-- ===================== MIS PEDIDOS ===================== -->
+<dialog class="modal small-modal" id="historyDlg" aria-labelledby="historyTitle">
+  <button class="icon-btn modal-close" type="button" data-close-modal aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
+  <div class="history-body">
+    <p class="eyebrow">Solo en este dispositivo</p>
+    <h2 class="h3" id="historyTitle">Mis pedidos</h2>
+    <div id="historyList" class="history-list"></div>
   </div>
 </dialog>
 
@@ -560,7 +621,6 @@
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 
 <script type="module" src="./js/app.mjs"></script>
-<script type="module" src="./js/agent.mjs"></script>
-<script type="module" src="./js/motion.mjs"></script>
+
 </body>
 </html>

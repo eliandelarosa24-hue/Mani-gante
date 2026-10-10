@@ -36,6 +36,49 @@
   --primitive-duration-fast: 180ms;
   --primitive-duration-normal: 320ms;
   --primitive-duration-slow: 650ms;
+  --primitive-duration-instant: 100ms;
+  --primitive-space-1: 4px;
+  --primitive-space-2: 8px;
+  --primitive-space-3: 12px;
+  --primitive-space-4: 16px;
+  --primitive-space-5: 24px;
+  --primitive-space-6: 32px;
+  --primitive-space-7: 48px;
+  --primitive-space-8: 64px;
+  --primitive-space-9: 96px;
+  --primitive-space-10: 128px;
+  --primitive-font-size-xs: 0.75rem;
+  --primitive-font-size-sm: 0.875rem;
+  --primitive-font-size-base: 1rem;
+  --primitive-font-size-md: 1.125rem;
+  --primitive-font-size-lg: 1.375rem;
+  --primitive-font-size-xl: 1.75rem;
+  --primitive-font-size-2xl: clamp(1.75rem, 3vw, 2.4rem);
+  --primitive-font-size-3xl: clamp(2.3rem, 5.4vw, 4.3rem);
+  --primitive-font-size-4xl: clamp(3rem, 9vw, 7.5rem);
+  --primitive-font-size-hero: clamp(3.4rem, 10vw, 8.6rem);
+  --primitive-leading-tight: 0.92;
+  --primitive-leading-snug: 1.1;
+  --primitive-leading-normal: 1.6;
+  --primitive-tracking-display: -0.035em;
+  --primitive-tracking-heading: -0.02em;
+  --primitive-tracking-body: 0;
+  --primitive-tracking-label: 0.14em;
+  --primitive-elevation-1: 0 1px 2px rgba(60,35,12,.08), 0 2px 6px -1px rgba(60,35,12,.06);
+  --primitive-elevation-2: 0 2px 4px rgba(60,35,12,.06), 0 12px 24px -8px rgba(90,55,20,.18);
+  --primitive-elevation-3: 0 4px 8px rgba(60,35,12,.06), 0 24px 48px -16px rgba(90,55,20,.28);
+  --primitive-elevation-4: 0 8px 16px rgba(40,22,8,.12), 0 40px 90px -24px rgba(40,22,8,.5);
+  --primitive-easing-out: cubic-bezier(.22, 1, .36, 1);
+  --primitive-easing-back: cubic-bezier(.34, 1.56, .64, 1);
+  --primitive-easing-in-out: cubic-bezier(.65, 0, .35, 1);
+  --primitive-z-nav: 50;
+  --primitive-z-dock: 40;
+  --primitive-z-fab: 60;
+  --primitive-z-scrim: 70;
+  --primitive-z-drawer: 75;
+  --primitive-z-agent: 80;
+  --primitive-z-toast: 260;
+  --primitive-z-grain: 200;
 }
 
 /* === SEMANTIC === */
@@ -60,6 +103,12 @@
   --color-destructive: #C2413B;
   --color-whatsapp: #15803D;
   --color-primary-display: #A87526;
+  --color-ring: #C8963E;
+  --color-grain-opacity: 0.06;
+  --elevation-card: 0 1px 2px rgba(60,35,12,.08), 0 2px 6px -1px rgba(60,35,12,.06);
+  --elevation-raised: 0 2px 4px rgba(60,35,12,.06), 0 12px 24px -8px rgba(90,55,20,.18);
+  --elevation-overlay: 0 4px 8px rgba(60,35,12,.06), 0 24px 48px -16px rgba(90,55,20,.28);
+  --elevation-modal: 0 8px 16px rgba(40,22,8,.12), 0 40px 90px -24px rgba(40,22,8,.5);
 }
 
 /* === COMPONENTS === */
@@ -71,24 +120,36 @@
 :root[data-theme="dark"] {
   --color-background: #120C07;
   --color-surface: #1C140D;
-  --color-surface-2: #231910;
+  --color-surface-2: #211810;
   --color-foreground: #F4EAD6;
   --color-muted-foreground: #CBB9A0;
   --color-subtle-foreground: #9C8A73;
   --color-primary-ink: #E2B765;
   --color-primary-display: #E2B765;
   --color-accent: #D98A4E;
+  --color-kraft: #A8875A;
+  --color-grain-opacity: 0.035;
+  --elevation-card: 0 1px 2px rgba(0,0,0,.4), 0 0 0 1px rgba(244,234,214,.05);
+  --elevation-raised: 0 2px 4px rgba(0,0,0,.4), 0 14px 30px -10px rgba(0,0,0,.7), 0 0 0 1px rgba(244,234,214,.06);
+  --elevation-overlay: 0 4px 10px rgba(0,0,0,.45), 0 28px 56px -16px rgba(0,0,0,.8), 0 0 0 1px rgba(244,234,214,.07);
+  --elevation-modal: 0 10px 20px rgba(0,0,0,.5), 0 50px 100px -20px rgba(0,0,0,.9), 0 0 0 1px rgba(226,183,101,.12);
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
     --color-background: #120C07;
     --color-surface: #1C140D;
-    --color-surface-2: #231910;
+    --color-surface-2: #211810;
     --color-foreground: #F4EAD6;
     --color-muted-foreground: #CBB9A0;
     --color-subtle-foreground: #9C8A73;
     --color-primary-ink: #E2B765;
     --color-primary-display: #E2B765;
     --color-accent: #D98A4E;
+    --color-kraft: #A8875A;
+    --color-grain-opacity: 0.035;
+    --elevation-card: 0 1px 2px rgba(0,0,0,.4), 0 0 0 1px rgba(244,234,214,.05);
+    --elevation-raised: 0 2px 4px rgba(0,0,0,.4), 0 14px 30px -10px rgba(0,0,0,.7), 0 0 0 1px rgba(244,234,214,.06);
+    --elevation-overlay: 0 4px 10px rgba(0,0,0,.45), 0 28px 56px -16px rgba(0,0,0,.8), 0 0 0 1px rgba(244,234,214,.07);
+    --elevation-modal: 0 10px 20px rgba(0,0,0,.5), 0 50px 100px -20px rgba(0,0,0,.9), 0 0 0 1px rgba(226,183,101,.12);
   }
 }

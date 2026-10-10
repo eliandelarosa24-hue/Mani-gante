@@ -25,15 +25,52 @@ const stepObserver = new IntersectionObserver((entries) => entries.forEach((en) 
 }), { rootMargin: "-40% 0px -45% 0px" });
 steps.forEach((s) => stepObserver.observe(s));
 
-// GSAP (cargado con defer desde cdnjs)
-function withGsap(fn, tries = 0) {
-  if (window.gsap && window.ScrollTrigger) return fn(window.gsap, window.ScrollTrigger);
-  if (tries < 40) setTimeout(() => withGsap(fn, tries + 1), 100);
+// GSAP alojado en el sitio (assets/vendor), cargado bajo demanda: no bloquea la primera pintura.
+function loadScript(src) {
+  return new Promise((ok, fail) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = fail; document.head.append(s); });
+}
+let gsapReady = null;
+function withGsap(fn) {
+  gsapReady ||= loadScript(new URL("../assets/vendor/gsap.min.js", import.meta.url).href)
+    .then(() => loadScript(new URL("../assets/vendor/ScrollTrigger.min.js", import.meta.url).href));
+  gsapReady.then(() => fn(window.gsap, window.ScrollTrigger)).catch(() => {});
+}
+
+// Títulos de sección: cada palabra sube desde una máscara (entrada cinematográfica, accesible).
+function splitWords(el) {
+  if (el.dataset.split) return [];
+  el.dataset.split = "1";
+  el.setAttribute("aria-label", el.textContent.trim());
+  const walk = (node) => {
+    [...node.childNodes].forEach((n) => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach((w) => {
+          if (!w) return;
+          if (/^\s+$/.test(w)) { frag.append(w); return; }
+          const outer = document.createElement("span"); outer.className = "w"; outer.setAttribute("aria-hidden", "true");
+          const inner = document.createElement("span"); inner.textContent = w; outer.append(inner); frag.append(outer);
+        });
+        n.replaceWith(frag);
+      } else if (n.nodeType === 1 && n.tagName !== "BR") walk(n);
+    });
+  };
+  walk(el);
+  return [...el.querySelectorAll(".w > span")];
 }
 
 if (!reduce) {
   withGsap((gsap, ScrollTrigger) => {
     gsap.registerPlugin(ScrollTrigger);
+
+    // Entradas cinematográficas por sección
+    gsap.utils.toArray(".section .h2:not(.hero-title)").forEach((h) => {
+      const words = splitWords(h);
+      if (!words.length) return;
+      gsap.from(words, { yPercent: 110, rotate: 3, duration: 1, ease: "power4.out", stagger: .045, scrollTrigger: { trigger: h, start: "top 85%" } });
+    });
+    gsap.utils.toArray(".section .eyebrow").forEach((e) => gsap.from(e, { opacity: 0, x: -14, duration: .8, ease: "power3.out", scrollTrigger: { trigger: e, start: "top 90%" } }));
+    gsap.utils.toArray(".craft-media, .story-photos").forEach((m) => gsap.from(m, { clipPath: "inset(18% 12% 18% 12% round 32px)", opacity: .2, duration: 1.4, ease: "power3.out", scrollTrigger: { trigger: m, start: "top 80%" } }));
 
     // Parallax sutil solo en capas decorativas (nunca en texto)
     gsap.to("#heroImg", { yPercent: 8, ease: "none", scrollTrigger: { trigger: ".hero", start: "top top", end: "bottom top", scrub: true } });

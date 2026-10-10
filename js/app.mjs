@@ -1,8 +1,15 @@
 import {
-  BUSINESS, FORMATS, FLAVORS, JAPANESE, COMBOS, FAQ, NUTRITION, CATEGORY_ORDER, RESERVATION_RULES, STOCK_API_URL,
-  mergeRemoteStock, formatCLP, unitPrice, slug, campusStatus, reservableDays, buildReservation, whatsappLink,
+  BUSINESS, FORMATS, FLAVORS, JAPANESE, COMBOS, FAQ, NUTRITION, CATEGORY_ORDER, RESERVATION_RULES, STOCK_API_URL, ALLERGENS,
+  mergeRemoteStock, formatCLP, unitPrice, slug, campusStatus, reservableDays, buildReservation, whatsappLink, fridayPromo, isNewFlavor,
 } from "./catalog.mjs";
 import { bag, peanuts as swatch, stamp } from "./art.mjs";
+import { VOICE } from "./voice.mjs";
+import { toast, trapFocus, stampMoment } from "./ui.mjs";
+import { track } from "./analytics.mjs";
+import { saveOrder, getOrders, setOrderStatus, removeOrder, cartToUrl, cartFromUrl } from "./history.mjs";
+import { enableTilt } from "./tilt.mjs";
+import { icsFile, googleCalendarUrl, downloadTicketPng } from "./ticket.mjs";
+import { applyLang, getLang } from "./i18n.mjs";
 
 const $ = (s, el = document) => el.querySelector(s);
 const $$ = (s, el = document) => [...el.querySelectorAll(s)];
@@ -13,21 +20,33 @@ const store = {
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" })[c]);
 const reduceMotion = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+const PAYMENTS = [
+  { id: "mercadopago", label: "Mercado Pago", hint: "débito, crédito o saldo" },
+  { id: "transferencia", label: "Transferencia", hint: "Cuenta RUT o Mach" },
+  { id: "efectivo", label: "Efectivo", hint: "solo al recibir en el campus" },
+];
+
 // ============================================================
 // Estado
 // ============================================================
 const state = {
   catalog: FLAVORS,
+  japanese: JAPANESE,
   stockSource: "local",
+  synced: false,
   format: store.get("mg-format", "celofan"),
+  payment: store.get("mg-payment", "mercadopago"),
   cart: new Map(Object.entries(store.get("mg-cart-v2", {})).filter(([, q]) => q > 0)),
   category: "todos",
   query: "",
-  onlyAvailable: false,
+  filters: { available: false, top: false, new: false },
+  status: null, // /api/status: campus, cupos, ugc
 };
 if (!FORMATS[state.format]) state.format = "celofan";
-const byId = () => new Map([...state.catalog, ...JAPANESE].map((f) => [f.id, f]));
+if (!PAYMENTS.some((p) => p.id === state.payment)) state.payment = "mercadopago";
+const byId = () => new Map([...state.catalog, ...state.japanese].map((f) => [f.id, f]));
 const available = () => state.catalog.filter((f) => f.available);
+const formatOf = (f) => (f.line === "japones" ? "celofan" : state.format);
 
 function splitName(name) {
   const m = name.match(/^(.*?)\s+c\/\s+(.*)$/);
@@ -43,14 +62,16 @@ const gridJp = $("#gridJp");
 function cardHTML(f) {
   const qty = state.cart.get(f.id) || 0;
   const [main, sub] = splitName(f.name);
-  const badge = !f.available ? `<span class="badge out">Agotado</span>` : f.topVentas ? `<span class="badge">Top ventas</span>` : "";
+  const badge = !f.available ? `<span class="badge out">Agotado</span>` : isNewFlavor(f) ? `<span class="badge new">Nuevo</span>` : f.topVentas ? `<span class="badge">Top ventas</span>` : "";
   const premium = f.premium ? `<span class="badge premium">Precio fijo</span>` : "";
-  const control = qty > 0
-    ? `<div class="stepper"><button type="button" data-dec="${f.id}" aria-label="Quitar uno de ${esc(f.name)}"><svg><use href="#i-minus"/></svg></button><output aria-live="polite">${qty}</output><button type="button" data-inc="${f.id}" aria-label="Agregar uno de ${esc(f.name)}"><svg><use href="#i-plus"/></svg></button></div>`
-    : `<button class="add-btn" type="button" data-inc="${f.id}" ${f.available ? "" : "disabled"}>${f.available ? `<svg><use href="#i-plus"/></svg>Agregar` : "Agotado"}</button>`;
-  const fmt = f.line === "japones" ? "celofan" : state.format;
-  return `<article class="card${f.available ? "" : " soldout"}${qty ? " in-cart" : ""}" data-id="${f.id}" style="--c:${f.color}">
-    <button class="card-art" type="button" data-quick="${f.id}" aria-label="Ver detalle de ${esc(f.name)}">${badge}${premium}${bag(f.color, fmt, { label: "" })}<span class="quick-hint" aria-hidden="true"><svg><use href="#i-eye"/></svg></span></button>
+  const control = !f.available
+    ? `<button class="add-btn ghost" type="button" data-alert="${f.id}"><svg><use href="#i-bell"/></svg>Avísame</button>`
+    : qty > 0
+      ? `<div class="stepper"><button type="button" data-dec="${f.id}" aria-label="Quitar uno de ${esc(f.name)}"><svg><use href="#i-minus"/></svg></button><output aria-live="polite">${qty}</output><button type="button" data-inc="${f.id}" aria-label="Agregar uno de ${esc(f.name)}"><svg><use href="#i-plus"/></svg></button></div>`
+      : `<button class="add-btn" type="button" data-inc="${f.id}" aria-label="Agregar ${esc(f.name)}"><svg><use href="#i-plus"/></svg>Agregar</button>`;
+  const fmt = formatOf(f);
+  return `<article class="card${f.available ? "" : " soldout"}${qty ? " in-cart" : ""}" data-id="${f.id}" data-tilt style="--c:${f.color}">
+    <button class="card-art" type="button" data-quick="${f.id}" aria-label="Ver detalle de ${esc(f.name)}">${badge}${premium}${bag(f.color, fmt, { label: "" })}<span class="paper-sheen" aria-hidden="true"></span><span class="quick-hint" aria-hidden="true"><svg><use href="#i-eye"/></svg></span></button>
     <h3>${esc(main)}${sub ? `<small>c/ ${esc(sub)}</small>` : ""}</h3>
     <p>${esc(f.notes || "")}</p>
     <div class="card-foot"><span class="price">${formatCLP(unitPrice(f, fmt))}</span>${control}</div>
@@ -59,19 +80,21 @@ function cardHTML(f) {
 
 function filtered() {
   const q = slug(state.query);
+  const { available: onlyAv, top, new: onlyNew } = state.filters;
   return state.catalog.filter((f) =>
     (state.category === "todos" || slug(f.category) === state.category)
     && (!q || slug(`${f.name} ${f.category} ${f.notes}`).includes(q))
-    && (!state.onlyAvailable || f.available));
+    && (!onlyAv || f.available) && (!top || f.topVentas) && (!onlyNew || isNewFlavor(f)));
 }
 function renderCatalog() {
   const list = filtered();
   grid.innerHTML = list.map(cardHTML).join("");
-  $("#empty").hidden = list.length > 0;
-  gridJp.innerHTML = JAPANESE.map(cardHTML).join("");
+  const empty = $("#empty");
+  empty.hidden = list.length > 0;
+  if (!list.length) empty.innerHTML = `${bag("#C8963E", "doypack", { cls: "bag empty-bag" })}<span>${VOICE.emptySearch}</span> <button type="button" data-open-agent>Preguntarle al Gigante</button>`;
+  gridJp.innerHTML = state.japanese.map(cardHTML).join("");
   window.dispatchEvent(new CustomEvent("mg:catalog"));
 }
-// Actualiza solo una tarjeta (evita re-pintar todo al sumar/restar).
 function refreshCard(id) {
   const f = byId().get(id);
   $$(`.card[data-id="${id}"]`).forEach((el) => {
@@ -89,6 +112,9 @@ function renderChips() {
   $("#chips").innerHTML = [`<button class="chip" role="tab" data-cat="todos" aria-selected="${state.category === "todos"}">Todos <b>${state.catalog.length}</b></button>`]
     .concat(cats.map((c) => `<button class="chip" role="tab" data-cat="${slug(c)}" aria-selected="${state.category === slug(c)}" style="--c:${colors[c]}"><i></i>${esc(c)} <b>${counts[c]}</b></button>`))
     .join("");
+  const hasNew = [...state.catalog, ...state.japanese].some(isNewFlavor);
+  const newBtn = $('#filters [data-filter="new"]');
+  if (newBtn) newBtn.hidden = !hasNew; // si solo la línea japonesa es nueva, el filtro lleva a ella
 }
 
 function formatsHTML(current) {
@@ -108,55 +134,100 @@ $("#chips").addEventListener("click", (e) => {
 $("#formats").addEventListener("click", (e) => { const b = e.target.closest("[data-format]"); if (b) setFormat(b.dataset.format); });
 let searchTimer;
 $("#search").addEventListener("input", (e) => { clearTimeout(searchTimer); searchTimer = setTimeout(() => { state.query = e.target.value; renderCatalog(); }, 120); });
-$("#onlyAvailable").addEventListener("change", (e) => { state.onlyAvailable = e.target.checked; renderCatalog(); });
+$("#filters").addEventListener("click", (e) => {
+  const b = e.target.closest("[data-filter]"); if (!b) return;
+  const key = b.dataset.filter;
+  state.filters[key] = !state.filters[key];
+  b.setAttribute("aria-pressed", state.filters[key]);
+  if (key === "new" && state.filters.new && !state.catalog.some(isNewFlavor)) { $("#gridJp").closest(".japanese").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth", block: "start" }); }
+  track("filter", { filter: key });
+  renderCatalog();
+});
 
 for (const container of [grid, gridJp]) {
   container.addEventListener("click", (e) => {
-    const inc = e.target.closest("[data-inc]"), dec = e.target.closest("[data-dec]"), quick = e.target.closest("[data-quick]");
-    if (inc) { changeQty(inc.dataset.inc, +1, { from: inc.closest(".card")?.querySelector(".card-art") }); }
+    const inc = e.target.closest("[data-inc]"), dec = e.target.closest("[data-dec]"), quick = e.target.closest("[data-quick]"), alert = e.target.closest("[data-alert]");
+    if (inc) changeQty(inc.dataset.inc, +1, { from: inc.closest(".card")?.querySelector(".card-art") });
     else if (dec) changeQty(dec.dataset.dec, -1);
+    else if (alert) openAlert(alert.dataset.alert);
     else if (quick) openQuick(quick.dataset.quick);
   });
 }
 
 // ============================================================
-// Stock en vivo (Google Sheets)
+// Stock en vivo: /api/stock (caché + ajustes de Jorge) → Google Sheets → catálogo local
 // ============================================================
 const sync = $("#sync");
+async function fetchStock() {
+  try {
+    const res = await fetch("/api/stock", { cache: "no-store", signal: AbortSignal.timeout(10000) });
+    if (res.ok && (res.headers.get("content-type") || "").includes("json")) {
+      const d = await res.json();
+      if (d.ok && Array.isArray(d.catalog)) return { catalog: d.catalog, japanese: d.japanese || JAPANESE, updated: d.updated, source: d.source };
+    }
+  } catch {}
+  const res = await fetch(`${STOCK_API_URL}?t=${Date.now()}`, { cache: "no-store", redirect: "follow", signal: AbortSignal.timeout(15000) });
+  if (!res.ok) throw new Error(res.status);
+  const data = await res.json();
+  if (!data?.ok || !Array.isArray(data.sabores)) throw new Error("formato");
+  return { catalog: mergeRemoteStock(data.sabores), japanese: JAPANESE, updated: data.actualizado, source: "google-sheets" };
+}
 async function syncStock({ quiet = false } = {}) {
   if (!quiet) { sync.dataset.state = "loading"; $("#syncText").textContent = "Sincronizando disponibilidad…"; }
+  const before = new Map(state.catalog.map((f) => [f.id, f.available]));
   try {
-    const res = await fetch(`${STOCK_API_URL}?t=${Date.now()}`, { cache: "no-store", redirect: "follow", signal: AbortSignal.timeout(15000) });
-    if (!res.ok) throw new Error(res.status);
-    const data = await res.json();
-    if (!data?.ok || !Array.isArray(data.sabores)) throw new Error("formato");
-    state.catalog = mergeRemoteStock(data.sabores);
-    state.stockSource = "live";
-    const t = data.actualizado ? new Date(data.actualizado) : new Date();
-    sync.dataset.state = "online";
-    $("#syncText").textContent = `Stock en vivo · actualizado ${isNaN(t) ? "recién" : t.toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" })}`;
+    const d = await fetchStock();
+    state.catalog = d.catalog; state.japanese = d.japanese; state.stockSource = d.source === "local" ? "local" : "live";
+    const t = d.updated ? new Date(d.updated) : new Date();
+    sync.dataset.state = state.stockSource === "live" ? "online" : "fallback";
+    $("#syncText").textContent = state.stockSource === "live"
+      ? `Stock en vivo · actualizado ${isNaN(t) ? "recién" : t.toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" })}`
+      : "Mostrando stock de respaldo · Jorge confirma por WhatsApp";
+    store.set("mg-stock-cache", { at: Date.now(), catalog: state.catalog });
   } catch {
+    const cached = store.get("mg-stock-cache", null);
+    if (cached?.catalog) state.catalog = cached.catalog;
     sync.dataset.state = "fallback";
-    $("#syncText").textContent = "Mostrando stock de respaldo · Jorge confirma por WhatsApp";
+    $("#syncText").textContent = cached ? "Sin conexión · mostrando el último stock que vimos" : "Mostrando stock de respaldo · Jorge confirma por WhatsApp";
   }
+  state.synced = true;
+  $(".hero-card")?.classList.remove("is-loading"); $(".hero-card")?.removeAttribute("aria-busy");
+  const backNow = state.catalog.filter((f) => f.available && before.get(f.id) === false);
   pruneCart();
   renderChips(); renderCatalog(); renderHero(); renderCart(); renderReserveItems(); renderPalette();
+  if (backNow.length && quiet) toast(`Volvió ${backNow.map((f) => f.name).join(", ")}`, { tone: "alert", color: backNow[0].color });
 }
 $("#syncRetry").addEventListener("click", () => syncStock());
-setInterval(() => { if (!document.hidden) syncStock({ quiet: true }); }, 5 * 60 * 1000);
+setInterval(() => { if (!document.hidden) { syncStock({ quiet: true }); loadStatus(); } }, 5 * 60 * 1000);
 document.addEventListener("visibilitychange", () => { if (!document.hidden) syncStock({ quiet: true }); });
 
 // ============================================================
-// Carrito
+// Estado del negocio: campus (y "Jorge no está"), cupos, opiniones curadas
 // ============================================================
-function saveCart() { store.set("mg-cart-v2", Object.fromEntries(state.cart)); }
+async function loadStatus() {
+  try {
+    const res = await fetch("/api/status", { cache: "no-store", signal: AbortSignal.timeout(8000) });
+    if (!res.ok || !(res.headers.get("content-type") || "").includes("json")) return;
+    state.status = await res.json();
+  } catch { return; }
+  const c = state.status.campus;
+  const banner = $("#awayBanner");
+  banner.hidden = !c?.away;
+  if (c?.away) { $("#awayText").textContent = VOICE.away(c.label); document.body.classList.add("has-away"); }
+  renderHero(); renderDays(); renderUgc();
+}
+
+// ============================================================
+// Carrito / boleta
+// ============================================================
+function saveCart() { store.set("mg-cart-v2", Object.fromEntries(state.cart)); store.set("mg-cart-at", Date.now()); }
 function pruneCart() {
   const m = byId(); const removed = [];
   for (const [id] of state.cart) {
     const f = m.get(id);
     if (!f || !f.available) { state.cart.delete(id); if (f) removed.push(f.name); }
   }
-  if (removed.length) { toast(`Se agotó: ${removed.join(", ")}. Lo quitamos de tu boleta.`); saveCart(); }
+  if (removed.length) { toast(VOICE.removedSoldOut(removed.join(", ")), { tone: "info" }); saveCart(); }
 }
 function changeQty(id, delta, { from = null, silent = false } = {}) {
   const f = byId().get(id);
@@ -164,10 +235,13 @@ function changeQty(id, delta, { from = null, silent = false } = {}) {
   const q = Math.max(0, Math.min(99, (state.cart.get(id) || 0) + delta));
   q ? state.cart.set(id, q) : state.cart.delete(id);
   saveCart(); refreshCard(id); renderCart(); renderReserveItems();
-  if (delta > 0 && !silent) {
-    if (from) flyToCart(from, f.color); else bumpCart();
-    if (q === 1) toast(f.name, f.color);
-    try { navigator.vibrate?.(8); } catch {}
+  if (delta > 0) {
+    track("add_to_cart", { flavor: id });
+    if (!silent) {
+      if (from) flyToCart(from, f.color); else bumpCart();
+      if (q === 1) toast(VOICE.added(f.name), { color: f.color });
+      try { navigator.vibrate?.(8); } catch {}
+    }
   }
 }
 function addItems(items, { format } = {}) {
@@ -184,17 +258,14 @@ function addItems(items, { format } = {}) {
 function cartLines() {
   const m = byId();
   return [...state.cart].map(([id, qty]) => ({ f: m.get(id), qty })).filter((l) => l.f)
-    .map((l) => { const price = unitPrice(l.f, state.format); return { ...l, price, subtotal: price * l.qty }; });
+    .map((l) => { const price = unitPrice(l.f, formatOf(l.f)); return { ...l, price, subtotal: price * l.qty }; });
 }
 const cartTotals = () => { const lines = cartLines(); return { lines, bags: lines.reduce((s, l) => s + l.qty, 0), total: lines.reduce((s, l) => s + l.subtotal, 0) }; };
 
-function cartTarget() {
-  const dock = $("#dockCart");
-  return dock && dock.offsetParent ? dock : $("#cartOpen");
-}
+function cartTarget() { const dock = $("#dockCart"); return dock && dock.offsetParent ? dock : $("#cartOpen"); }
 function bumpCart() { const c = $("#cartOpen"); c.classList.remove("bump"); void c.offsetWidth; c.classList.add("bump"); }
 function flyToCart(fromEl, color) {
-  if (reduceMotion || !fromEl.animate) return bumpCart();
+  if (reduceMotion || !fromEl?.animate) return bumpCart();
   const a = fromEl.getBoundingClientRect(), b = cartTarget().getBoundingClientRect();
   const el = document.createElement("div");
   el.className = "fly"; el.innerHTML = swatch(color);
@@ -208,6 +279,47 @@ function flyToCart(fromEl, color) {
   ], { duration: 800, easing: "cubic-bezier(.5,0,.3,1)" }).onfinish = () => { el.remove(); bumpCart(); };
 }
 
+/** Venta sugerida: complementos que no están en la boleta (mismo estilo o top ventas) y empujón al combo. */
+function upsell(lines) {
+  if (!lines.length) return [];
+  const inCart = new Set(lines.map((l) => l.f.id));
+  const cats = new Set(lines.map((l) => l.f.category));
+  return available().filter((f) => !inCart.has(f.id)).sort((a, b) => (cats.has(b.category) - cats.has(a.category)) || (b.topVentas - a.topVentas)).slice(0, 3);
+}
+
+function orderMessage(lines, bags, total) {
+  const fp = fridayPromo(bags);
+  const pay = PAYMENTS.find((p) => p.id === state.payment);
+  return [
+    `*Pedido MANI-GANTE* ✅`, `Formato: ${FORMATS[state.format].name}`, ``,
+    ...lines.map(({ f, qty, price }) => `▪ ${f.name} x${qty} (${formatCLP(price)} c/u)`),
+    ``, `*Total: ${formatCLP(total)}* · ${bags} bolsas`,
+    fp.free ? `🎁 Promo de viernes: ${fp.free} bolsa(s) gratis` : null,
+    `Pago: ${pay.label}`, ``, `Mi nombre: `,
+    state.payment === "efectivo" ? "Pago en efectivo al recibir." : "Adjunto comprobante.",
+  ].filter((x) => x !== null).join("\n");
+}
+
+function renderPromo(bags) {
+  const fp = fridayPromo(bags);
+  const ribbon = $("#promoRibbon");
+  if (ribbon) {
+    ribbon.hidden = !fp.active;
+    if (fp.active) {
+      const pct = bags === 0 ? 0 : fp.free > 0 && bags % fp.group === 0 ? 100 : ((bags % fp.group) / fp.group) * 100;
+      ribbon.innerHTML = `<span class="ribbon-label">Viernes de antojo</span><span class="ribbon-text">${bags ? VOICE.friday(fp.toNext, fp.free) : "Compra 4 y la 5ª va gratis, solo hoy"}</span><span class="ribbon-bar" role="progressbar" aria-label="Avance hacia la bolsa gratis" aria-valuemin="0" aria-valuemax="${fp.group}" aria-valuenow="${bags % fp.group}"><i style="width:${pct}%"></i></span>`;
+    }
+    document.body.classList.toggle("has-ribbon", fp.active);
+  }
+  const promo = $("#cartPromo");
+  if (bags > 0 && fp.active) {
+    promo.hidden = false;
+    promo.innerHTML = `${VOICE.friday(fp.toNext, fp.free)}<div class="bar"><i style="width:${fp.free && bags % fp.group === 0 ? 100 : ((bags % fp.group) / fp.group) * 100}%"></i></div>`;
+  } else if (bags > 0 && bags < 3) {
+    promo.hidden = false; promo.textContent = `Con ${3 - bags} más armas el Combo Estudiante para compartir.`;
+  } else promo.hidden = true;
+}
+
 function renderCart() {
   const { lines, bags, total } = cartTotals();
   $("#cartCount").hidden = bags === 0; $("#cartCount").textContent = bags;
@@ -217,53 +329,61 @@ function renderCart() {
   $("#dock").hidden = bags === 0;
   document.body.classList.toggle("has-cart", bags > 0);
   $("#cartFoot").hidden = bags === 0;
+  renderPromo(bags);
 
-  const promo = $("#cartPromo");
-  const isFriday = new Date().toLocaleDateString("en-US", { weekday: "short", timeZone: BUSINESS.timezone }) === "Fri";
-  if (bags > 0 && isFriday) {
-    const rem = 5 - (bags % 5);
-    promo.hidden = false;
-    promo.innerHTML = (bags >= 5 ? `Promo de viernes: llevas ${Math.floor(bags / 5)} bolsa(s) gratis. Jorge la aplica al confirmar.` : `Promo de viernes: agrega ${rem} bolsa${rem === 1 ? "" : "s"} más y la 5ª va gratis.`)
-      + `<div class="bar"><i style="width:${bags >= 5 ? 100 : (bags % 5) * 20}%"></i></div>`;
-  } else if (bags > 0 && bags < 3) {
-    promo.hidden = false; promo.textContent = "Tip: con 3 bolsas armas el Combo Estudiante para compartir.";
-  } else promo.hidden = true;
-
+  const ups = upsell(lines);
   $("#cartItems").innerHTML = lines.length ? lines.map(({ f, qty, price, subtotal }) => `
     <div class="line">${swatch(f.color)}
       <div class="line-info"><strong>${esc(f.name)}</strong><small>${qty} × ${formatCLP(price)} ····· ${formatCLP(subtotal)}</small></div>
       <div class="stepper"><button type="button" data-dec="${f.id}" aria-label="Quitar uno de ${esc(f.name)}"><svg><use href="#i-minus"/></svg></button><output>${qty}</output><button type="button" data-inc="${f.id}" aria-label="Agregar uno de ${esc(f.name)}"><svg><use href="#i-plus"/></svg></button></div>
-    </div>`).join("")
-    : `<div class="drawer-empty">${bag("#C8963E", "doypack")}<p>Tu boleta está vacía.<br>Elige un sabor, arma tu caja o pídele una recomendación al Gigante.</p>
+    </div>`).join("") + (ups.length ? `<div class="upsell"><p class="rc-label"><span>Va chévere con lo tuyo</span></p><div class="pair-row">${ups.map((u) => `<button type="button" data-inc="${u.id}">${swatch(u.color)}${esc(u.name)} <b>+</b></button>`).join("")}</div></div>` : "")
+    : `<div class="drawer-empty">${bag("#C8963E", "doypack")}<p class="hand">${VOICE.emptyCart}</p>
        <a class="btn btn-gold" href="#tienda" data-close-cart>Ir a la tienda</a><button class="link" type="button" data-open-quiz data-close-cart>Encontrar mi sabor</button></div>`;
 
-  const msg = [
-    `*Pedido MANI-GANTE* ✅`, `Formato: ${FORMATS[state.format].name}`, ``,
-    ...lines.map(({ f, qty, price }) => `▪ ${f.name} x${qty} (${formatCLP(price)} c/u)`),
-    ``, `*Total: ${formatCLP(total)}* · ${bags} bolsas`, ``, `Mi nombre: `, `Adjunto comprobante 👇`,
-  ].join("\n");
-  $("#cartWa").href = whatsappLink(msg);
+  $("#cartPay").innerHTML = `<p class="rc-label"><span>Medio de pago</span></p>` + PAYMENTS.map((p) => `<button type="button" class="point" role="radio" data-pay="${p.id}" aria-checked="${p.id === state.payment}" title="${p.hint}">${p.label}</button>`).join("");
+  $("#cartWa").href = whatsappLink(orderMessage(lines, bags, total));
 }
 $("#cartItems").addEventListener("click", (e) => {
   const inc = e.target.closest("[data-inc]"), dec = e.target.closest("[data-dec]");
-  if (inc) changeQty(inc.dataset.inc, +1, { silent: true });
+  if (inc) changeQty(inc.dataset.inc, +1, { silent: !inc.closest(".upsell") });
   if (dec) changeQty(dec.dataset.dec, -1);
 });
+$("#cartPay").addEventListener("click", (e) => { const b = e.target.closest("[data-pay]"); if (b) { state.payment = b.dataset.pay; store.set("mg-payment", state.payment); renderCart(); renderPayPicker(); } });
 $("#cartClear").addEventListener("click", () => { state.cart.clear(); saveCart(); renderCatalog(); renderCart(); renderReserveItems(); });
+$("#cartWa").addEventListener("click", () => {
+  const { lines, bags, total } = cartTotals();
+  saveOrder({ type: "pedido", items: lines.map(({ f, qty }) => ({ id: f.id, name: f.name, qty })), bags, total, format: state.format, payment: state.payment, whatsappUrl: $("#cartWa").href });
+  track("order_whatsapp", { payment: state.payment });
+  stampMoment($("#cart"));
+  setTimeout(() => toast(VOICE.orderSaved(), { tone: "success", action: { label: "Ver", onClick: openHistory } }), 400);
+});
+$("#cartShare").addEventListener("click", async () => {
+  const url = cartToUrl(state.cart, state.format);
+  const text = `Mi pedido MANI-GANTE (${cartTotals().bags} bolsas): ${url}`;
+  if (navigator.share) { try { await navigator.share({ title: "Mi pedido MANI-GANTE", text, url }); return; } catch {} }
+  try { await navigator.clipboard.writeText(url); toast(VOICE.orderShared(), { tone: "info" }); }
+  catch { window.open(`https://wa.me/?text=${encodeURIComponent(text)}`, "_blank", "noopener"); }
+});
 
-let lastFocus = null;
+let lastFocus = null, untrap = null;
 function openCart() {
   lastFocus = document.activeElement;
-  $("#cart").classList.add("open"); $("#cart").setAttribute("aria-hidden", "false"); $("#scrim").hidden = false;
+  const cart = $("#cart");
+  cart.classList.add("open"); cart.setAttribute("aria-hidden", "false"); cart.inert = false; $("#scrim").hidden = false;
   document.body.style.overflow = "hidden";
+  untrap = trapFocus(cart);
   setTimeout(() => $("#cart [data-close-cart]")?.focus(), 50);
+  track("cart_open");
 }
 function closeCart() {
-  if (!$("#cart").classList.contains("open")) return;
-  $("#cart").classList.remove("open"); $("#cart").setAttribute("aria-hidden", "true"); $("#scrim").hidden = true;
+  const cart = $("#cart");
+  if (!cart.classList.contains("open")) return;
+  cart.classList.remove("open"); cart.setAttribute("aria-hidden", "true"); cart.inert = true; $("#scrim").hidden = true;
   document.body.style.overflow = "";
+  untrap?.();
   lastFocus?.focus?.({ preventScroll: true });
 }
+$("#cart").inert = true;
 $("#cartOpen").addEventListener("click", openCart);
 $("#dockCart").addEventListener("click", openCart);
 $("#scrim").addEventListener("click", closeCart);
@@ -298,35 +418,90 @@ function renderQuick() {
   $("#qvFormats").innerHTML = formatsHTML(fmt);
   $("#qvQty").textContent = qv.qty;
   $("#qvPrice").textContent = formatCLP(unitPrice(f, fmt) * qv.qty);
-  $("#qvAdd").disabled = !f.available;
+  const add = $("#qvAdd");
+  add.disabled = false;
+  add.innerHTML = f.available ? `Agregar · <span id="qvPrice">${formatCLP(unitPrice(f, fmt) * qv.qty)}</span>` : `<svg><use href="#i-bell"/></svg> Avísame cuando vuelva`;
+  $("#qvReserve").hidden = !f.available;
   $("#qvPair").innerHTML = pairsFor(f).map((p) => `<button type="button" data-pair="${p.id}">${swatch(p.color)}${esc(p.name)}</button>`).join("");
+  $("#qvAllergen").innerHTML = `<strong>Alérgenos:</strong> ${esc(ALLERGENS.note)}`;
+}
+function setMedia(which) {
+  $$(".media-toggle [data-media]").forEach((b) => b.setAttribute("aria-selected", b.dataset.media === which));
+  $("#qvArt").hidden = which !== "art"; $("#qvPhoto").hidden = which !== "photo";
 }
 function openQuick(id) {
   qv = { id, qty: 1, format: state.format };
+  setMedia("art");
   renderQuick();
   quick.showModal();
+  track("quick_view", { flavor: id });
 }
+$(".media-toggle").addEventListener("click", (e) => { const b = e.target.closest("[data-media]"); if (b) setMedia(b.dataset.media); });
 $("#qvMinus").addEventListener("click", () => { qv.qty = Math.max(1, qv.qty - 1); renderQuick(); });
 $("#qvPlus").addEventListener("click", () => { qv.qty = Math.min(60, qv.qty + 1); renderQuick(); });
 $("#qvFormats").addEventListener("click", (e) => { const b = e.target.closest("[data-format]"); if (b) { qv.format = b.dataset.format; renderQuick(); } });
 $("#qvPair").addEventListener("click", (e) => { const b = e.target.closest("[data-pair]"); if (b) { qv.id = b.dataset.pair; qv.qty = 1; renderQuick(); } });
-$("#qvAdd").addEventListener("click", () => {
+function addFromQuick() {
   const f = byId().get(qv.id);
   if (f.line !== "japones" && qv.format !== state.format) setFormat(qv.format);
-  const from = $("#qvArt");
   for (let i = 0; i < qv.qty; i++) changeQty(qv.id, +1, { silent: true });
+  return f;
+}
+$("#qvAdd").addEventListener("click", () => {
+  const f = byId().get(qv.id);
+  if (!f.available) { quick.close(); openAlert(f.id); return; }
+  const from = $("#qvArt");
+  addFromQuick();
   quick.close();
   flyToCart(from, f.color);
-  toast(`${qv.qty} × ${f.name}`, f.color);
+  toast(VOICE.added(`${qv.qty} × ${f.name}`), { color: f.color });
 });
+$("#qvReserve").addEventListener("click", () => {
+  addFromQuick(); quick.close();
+  $("#reservar").scrollIntoView({ behavior: reduceMotion ? "auto" : "smooth" });
+});
+$("#qvAsk").addEventListener("click", () => { const f = byId().get(qv.id); quick.close(); openAgent(`Cuéntame del sabor ${f.name}`); });
 
-// Cierre de modales con botón o clic en el fondo
 for (const dlg of $$("dialog.modal")) {
   dlg.addEventListener("click", (e) => { if (e.target === dlg || e.target.closest("[data-close-modal]")) dlg.close(); });
 }
 
 // ============================================================
-// Encuentra tu sabor (quiz)
+// Avísame cuando vuelva
+// ============================================================
+let alertFlavor = null;
+function openAlert(id) {
+  const f = byId().get(id); if (!f) return;
+  alertFlavor = f;
+  $("#alertArt").innerHTML = bag(f.color, formatOf(f), { label: "" });
+  $("#alertTitle").textContent = f.name;
+  $("#alertErr").hidden = true;
+  const form = $("#alertForm"); form.contact.value = store.get("mg-contact", ""); form.name.value = store.get("mg-name", "");
+  $("#alertDlg").showModal();
+}
+$("#alertForm").addEventListener("submit", async (e) => {
+  e.preventDefault();
+  const form = e.target, err = $("#alertErr");
+  const payload = { flavorId: alertFlavor.id, name: form.name.value.trim(), contact: form.contact.value.trim(), website: form.website.value };
+  if (!/^\+?[\d\s]{8,15}$/.test(payload.contact) && !/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(payload.contact)) {
+    err.hidden = false; err.textContent = "Escribe un WhatsApp (+569…) o un email válido."; form.contact.focus(); return;
+  }
+  const btn = form.querySelector("button[type=submit]"); btn.disabled = true;
+  try {
+    const res = await fetch("/api/alerts", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload) });
+    const data = (res.headers.get("content-type") || "").includes("json") ? await res.json() : { ok: false, errors: ["El servicio de avisos no está activo todavía."] };
+    if (!data.ok) throw new Error((data.errors || []).join(" "));
+    store.set("mg-contact", payload.contact);
+    $("#alertDlg").close();
+    toast(VOICE.alertOk(alertFlavor.name), { tone: "alert", color: alertFlavor.color });
+    track("alert_subscribe", { flavor: alertFlavor.id });
+  } catch (e2) {
+    err.hidden = false; err.textContent = e2.message || VOICE.networkError();
+  } finally { btn.disabled = false; }
+});
+
+// ============================================================
+// Encuentra tu sabor (4 preguntas, resultado guardado y compartible)
 // ============================================================
 const QUIZ = [
   { q: "¿Qué se te <em>antoja</em>?", key: "taste", opts: [
@@ -336,6 +511,10 @@ const QUIZ = [
     { v: "cafe", label: "Café", hint: "para estudiar", color: "#7B4B33" },
     { v: "coctel", label: "De coctel", hint: "atrevido", color: "#A9702D" },
     { v: "salado", label: "Salado", hint: "nada de dulce", color: "#B28A4A" },
+  ] },
+  { q: "¿Suave o <em>intenso</em>?", key: "intensity", opts: [
+    { v: "suave", label: "Suavecito", hint: "para picotear", color: "#F5D98B" },
+    { v: "intenso", label: "Intenso", hint: "que se sienta", color: "#3E2A1A" },
   ] },
   { q: "¿Para qué <em>momento</em>?", key: "moment", opts: [
     { v: "estudiar", label: "Para estudiar", hint: "energía larga", color: "#7B4B33" },
@@ -349,6 +528,7 @@ const QUIZ = [
   ] },
 ];
 const TASTE_CATS = { frutal: ["Frutales"], chocolate: ["Chocolate", "Coberturas"], postre: ["Cremosos", "Clásicos", "Coberturas"], cafe: ["Café", "Chocolate"], coctel: ["Cócteles"], salado: ["Maní Japonés"] };
+const INTENSE = new Set(["Chocolate", "Coberturas", "Café", "Cócteles"]);
 let quizAns = {};
 function renderQuiz(step = 0) {
   const body = $("#quizBody");
@@ -356,34 +536,53 @@ function renderQuiz(step = 0) {
   if (step < QUIZ.length) {
     const s = QUIZ[step];
     body.innerHTML = `${prog}<p class="eyebrow" style="justify-content:center">Paso ${step + 1} de ${QUIZ.length}</p><h2 class="quiz-q" id="quizTitle">${s.q}</h2>
-      <div class="quiz-opts">${s.opts.map((o) => `<button type="button" class="quiz-opt" data-v="${o.v}">${swatch(o.color)}<span>${o.label}</span><small>${o.hint}</small></button>`).join("")}</div>`;
+      <div class="quiz-opts">${s.opts.map((o) => `<button type="button" class="quiz-opt" data-v="${o.v}">${swatch(o.color)}<span>${o.label}</span><small>${o.hint}</small></button>`).join("")}</div>
+      ${step > 0 ? `<button class="link quiz-back" type="button" id="quizBack">← Atrás</button>` : ""}`;
     body.querySelector(".quiz-opts").addEventListener("click", (e) => {
       const b = e.target.closest("[data-v]"); if (!b) return;
       quizAns[s.key] = b.dataset.v; renderQuiz(step + 1);
     });
-    body.querySelector("button")?.focus();
+    $("#quizBack")?.addEventListener("click", () => renderQuiz(step - 1));
+    body.querySelector(".quiz-opt")?.focus();
     return;
   }
   const picks = recommend(quizAns);
   const fmt = quizAns.moment === "regalo" ? "doypack" : "celofan";
+  store.set("mg-quiz", { ans: quizAns, picks: picks.map((f) => f.id), at: Date.now() });
+  track("quiz_complete", { taste: quizAns.taste });
   body.innerHTML = `${prog}<p class="eyebrow" style="justify-content:center">Tu selección</p><h2 class="quiz-q" id="quizTitle">Estos son <em>para ti</em></h2>
     <div class="quiz-result">${picks.map((f) => `<div class="quiz-pick">${bag(f.color, f.line === "japones" ? "celofan" : fmt)}<strong>${esc(f.name.replace("Maní Japonés ", "Japonés "))}</strong><small>${esc(f.notes)}</small></div>`).join("")}</div>
     ${fmt === "doypack" ? `<p class="muted" style="margin-bottom:18px">Para regalo te sugerimos la <strong>Reserva del Gigante</strong> (doypack hermético).</p>` : ""}
-    <div class="quiz-actions"><button class="btn btn-gold btn-lg" type="button" id="quizAdd"><svg><use href="#i-bag"/></svg> Agregar los ${picks.length}</button><button class="btn btn-ghost" style="margin:0" type="button" id="quizAgain">Volver a empezar</button></div>`;
+    <div class="quiz-actions"><button class="btn btn-gold btn-lg" type="button" id="quizAdd"><svg><use href="#i-bag"/></svg> Agregar los ${picks.length}</button><button class="btn btn-ghost" style="margin:0" type="button" id="quizShare">Compartir resultado</button><button class="link" type="button" id="quizAgain">Volver a empezar</button></div>`;
   $("#quizAdd").addEventListener("click", () => {
     addItems(picks.map((f) => ({ id: f.id, qty: 1 })), { format: fmt });
-    $("#quiz").close(); toast(`Tu selección quedó en la boleta`, picks[0]?.color); openCart();
+    $("#quiz").close(); toast(VOICE.addedMany(picks.length), { color: picks[0]?.color }); openCart();
+  });
+  $("#quizShare").addEventListener("click", async () => {
+    const text = `Mi sabor MANI-GANTE es ${picks[0]?.name}. Encuentra el tuyo:`;
+    const url = `${BUSINESS.url}#tienda`;
+    if (navigator.share) { try { await navigator.share({ title: "Mi sabor MANI-GANTE", text, url }); return; } catch {} }
+    try { await navigator.clipboard.writeText(`${text} ${url}`); toast(VOICE.linkCopied(), { tone: "info" }); } catch {}
   });
   $("#quizAgain").addEventListener("click", () => { quizAns = {}; renderQuiz(0); });
+  renderFinder();
 }
-function recommend({ taste, moment, style }) {
+function recommend({ taste, intensity, moment, style }) {
   const cats = TASTE_CATS[taste] || [];
-  let pool = (taste === "salado" ? JAPANESE : available()).filter((f) => f.available && (taste === "salado" || cats.includes(f.category)));
-  if (moment === "estudiar") pool.sort((a, b) => (b.category === "Café") - (a.category === "Café"));
-  const score = (f) => (style === "clasico" ? (f.topVentas ? 2 : 0) : (f.topVentas ? 0 : 2)) + (moment === "regalo" && f.premium ? 1 : 0) + (moment === "compartir" && f.id === "mix" ? 2 : 0);
+  let pool = (taste === "salado" ? state.japanese : available()).filter((f) => f.available && (taste === "salado" || cats.includes(f.category)));
+  const score = (f) => (style === "clasico" ? (f.topVentas ? 2 : 0) : (f.topVentas ? 0 : 2))
+    + (intensity === "intenso" ? (INTENSE.has(f.category) ? 1.5 : 0) : (INTENSE.has(f.category) ? 0 : 1.5))
+    + (moment === "estudiar" && f.category === "Café" ? 2 : 0)
+    + (moment === "regalo" && f.premium ? 1 : 0) + (moment === "compartir" && f.id === "mix" ? 2 : 0);
   pool = [...pool].sort((a, b) => score(b) - score(a) || a.order - b.order);
   const extra = available().filter((f) => f.topVentas && !pool.includes(f));
   return [...pool, ...extra].slice(0, 3);
+}
+function renderFinder() {
+  const saved = store.get("mg-quiz", null);
+  const f = saved && byId().get(saved.picks?.[0]);
+  const small = $(".finder small");
+  if (small && f) small.textContent = `Tu último resultado: ${f.name}`;
 }
 document.addEventListener("click", (e) => {
   if (!e.target.closest("[data-open-quiz]")) return;
@@ -391,7 +590,7 @@ document.addEventListener("click", (e) => {
 });
 
 // ============================================================
-// Arma tu caja
+// Arma tu caja (vista previa con bolsas reales)
 // ============================================================
 const box = { size: COMBOS[1], slots: [] };
 function renderBoxSizes() {
@@ -402,8 +601,8 @@ function renderBox() {
   const cells = Array.from({ length: box.size.bags }, (_, i) => {
     const f = m.get(box.slots[i]);
     return f
-      ? `<button type="button" class="slot-cell filled" data-slot="${i}" style="--c:${f.color}" aria-label="Quitar ${esc(f.name)} del espacio ${i + 1}">${swatch(f.color)}<span>${esc(f.name.replace("Maní Japonés ", "Jp. "))}</span></button>`
-      : `<div class="slot-cell" aria-label="Espacio ${i + 1} vacío"><em>${i + 1}</em></div>`;
+      ? `<button type="button" class="slot-cell filled" data-slot="${i}" style="--c:${f.color}" aria-label="Quitar ${esc(f.name)} del espacio ${i + 1}">${bag(f.color, "celofan", { cls: "bag slot-bag" })}<span>${esc(f.name.replace("Maní Japonés ", "Jp. "))}</span></button>`
+      : `<div class="slot-cell" role="img" aria-label="Espacio ${i + 1} vacío"><em>${i + 1}</em></div>`;
   }).join("");
   $("#boxSlots").innerHTML = cells;
   $("#boxSlots").style.setProperty("--cols", box.size.bags === 10 ? 5 : 3);
@@ -414,9 +613,11 @@ function renderBox() {
   $("#boxName").textContent = box.size.name;
   $("#boxAdd").disabled = filled.length === 0;
   $("#boxAdd").lastChild.textContent = filled.length === box.size.bags ? " Agregar caja" : ` Agregar ${filled.length || ""} a la boleta`;
+  if (filled.length === box.size.bags && !box.celebrated) { box.celebrated = true; stampMoment($(".box-stage"), "CAJA COMPLETA · HECHA A TU GUSTO · "); }
+  if (filled.length < box.size.bags) box.celebrated = false;
 }
 function renderPalette() {
-  const items = [...available().filter((f) => !f.premium), ...available().filter((f) => f.premium), ...JAPANESE.filter((f) => f.available)];
+  const items = [...available().filter((f) => !f.premium), ...available().filter((f) => f.premium), ...state.japanese.filter((f) => f.available)];
   $("#palette").innerHTML = items.map((f) => `<button type="button" class="pal" data-pal="${f.id}">${swatch(f.color)}<span>${esc(f.name.replace("Maní Japonés ", "Japonés "))}</span>${f.premium ? `<b>${formatCLP(unitPrice(f, "celofan"))}</b>` : ""}</button>`).join("");
 }
 $("#boxSizes").addEventListener("click", (e) => {
@@ -428,7 +629,7 @@ $("#boxSizes").addEventListener("click", (e) => {
 $("#palette").addEventListener("click", (e) => {
   const b = e.target.closest("[data-pal]"); if (!b) return;
   const i = Array.from({ length: box.size.bags }, (_, k) => k).find((k) => !box.slots[k]);
-  if (i === undefined) { toast("Tu caja está llena. Toca un espacio para cambiarlo."); return; }
+  if (i === undefined) { toast(VOICE.boxFull(), { tone: "info" }); return; }
   box.slots[i] = b.dataset.pal; renderBox();
 });
 $("#boxSlots").addEventListener("click", (e) => { const b = e.target.closest("[data-slot]"); if (b) { box.slots[+b.dataset.slot] = null; renderBox(); } });
@@ -443,7 +644,8 @@ $("#boxAdd").addEventListener("click", () => {
   box.slots.filter(Boolean).forEach((id) => { counts[id] = (counts[id] || 0) + 1; });
   addItems(Object.entries(counts).map(([id, qty]) => ({ id, qty })), { format: "celofan" });
   flyToCart($("#boxSlots"), byId().get(box.slots.find(Boolean))?.color || "#C8963E");
-  toast(`${box.size.name} agregado a tu boleta`);
+  toast(VOICE.boxAdded(box.size.name), { tone: "success" });
+  track("box_add", { size: box.size.bags });
   box.slots = []; renderBox();
 });
 
@@ -451,7 +653,7 @@ $("#boxAdd").addEventListener("click", () => {
 // Hero, marquee, estado en vivo
 // ============================================================
 function renderHero() {
-  const status = campusStatus();
+  const status = state.status?.campus || campusStatus();
   const pill = $("#livePill");
   pill.dataset.open = status.open; pill.querySelector("span").textContent = status.open ? "En campus ahora" : status.label;
   $("#heroStatus").textContent = status.open ? "Jorge está en el campus ahora" : status.label;
@@ -475,7 +677,7 @@ function renderMarquees() {
 $$("[data-stamp]").forEach((el) => { el.innerHTML = stamp(el.dataset.stamp || undefined); });
 
 // ============================================================
-// Reservas (ticket)
+// Reservas: un solo flujo con ticket en vivo, cupos y medio de pago
 // ============================================================
 const rf = { day: null, slot: null, point: RESERVATION_RULES.meetingPoints[0] };
 function renderReserveItems() {
@@ -488,7 +690,20 @@ function renderReserveItems() {
   } else {
     boxEl.innerHTML = lines.map(({ f, qty, subtotal }) => `<div class="rc-item">${swatch(f.color)}<span>${esc(f.name)}</span><em>x${qty} · ${formatCLP(subtotal)}</em></div>`).join("");
   }
-  $("#rfTotal").textContent = formatCLP(total);
+  const totalEl = $("#rfTotal"); if (totalEl) totalEl.textContent = formatCLP(total);
+  renderLive();
+}
+function liveDays() {
+  // Prioriza los cupos reales del servidor; si no hay backend, usa el calendario local.
+  const server = state.status?.slots;
+  if (Array.isArray(server)) return server.filter((d) => !d.blocked).map((d) => ({ ...d, slots: d.slots.filter((s) => s.left > 0).map((s) => s.time), left: Object.fromEntries(d.slots.map((s) => [s.time, s.left])) }));
+  return reservableDays().map((d) => ({ ...d, left: {} }));
+}
+function renderLive() {
+  const el = $("#rfLive"); if (!el) return;
+  const day = liveDays().find((d) => d.iso === rf.day);
+  const { bags } = cartTotals();
+  el.textContent = day && rf.slot ? `${day.label} · ${rf.slot} · ${rf.point}${bags ? ` · ${bags} bolsa${bags === 1 ? "" : "s"}` : ""}` : "Reserva · INACAP Temuco";
 }
 function bindReserve() {
   $("#rfItems").addEventListener("click", (e) => { const b = e.target.closest("[data-inc]"); if (b) changeQty(b.dataset.inc, +1, { from: b }); });
@@ -496,28 +711,42 @@ function bindReserve() {
   $("#rfDays").addEventListener("click", (e) => { const b = e.target.closest("[data-day]"); if (b) { rf.day = b.dataset.day; renderDays(); } });
   $("#rfSlots").addEventListener("click", (e) => { const b = e.target.closest("[data-slot]"); if (b) { rf.slot = b.dataset.slot; renderSlots(); } });
   $("#rfPoints").addEventListener("click", (e) => { const b = e.target.closest("[data-point]"); if (b) { rf.point = b.dataset.point; renderPoints(); } });
+  $("#rfPay").addEventListener("click", (e) => { const b = e.target.closest("[data-pay]"); if (b) { state.payment = b.dataset.pay; store.set("mg-payment", state.payment); renderPayPicker(); renderCart(); } });
   $("#rfName").value = store.get("mg-name", "");
   $("#rfName").addEventListener("input", (e) => { e.target.removeAttribute("aria-invalid"); showErrors([]); });
   $("#reserveForm").addEventListener("submit", submitReservation);
-  renderReserveItems(); renderDays(); renderPoints();
+  renderReserveItems(); renderDays(); renderPoints(); renderPayPicker();
 }
 function renderDays() {
-  const days = reservableDays();
+  const el = $("#rfDays"); if (!el) return;
+  const days = liveDays();
   if (!days.find((d) => d.iso === rf.day)) rf.day = days[0]?.iso ?? null;
-  $("#rfDays").innerHTML = days.length ? days.map((d) => {
+  el.innerHTML = days.length ? days.map((d) => {
     const [wd, rest] = d.long.split(", ");
     return `<button type="button" class="day" role="radio" data-day="${d.iso}" aria-checked="${d.iso === rf.day}"><small>${d.label === "Hoy" || d.label === "Mañana" ? d.label : wd}</small><strong>${rest || d.label}</strong></button>`;
-  }).join("") : `<p class="muted">No hay días disponibles esta semana. Escríbenos por WhatsApp.</p>`;
+  }).join("") : `<p class="muted">${state.status?.campus?.away ? VOICE.away(state.status.campus.label) : "No quedan cupos esta semana."} Escríbele a Jorge por WhatsApp.</p>`;
   renderSlots();
 }
 function renderSlots() {
-  const day = reservableDays().find((d) => d.iso === rf.day);
+  const el = $("#rfSlots"); if (!el) return;
+  const day = liveDays().find((d) => d.iso === rf.day);
   const slots = day?.slots || [];
   if (!slots.includes(rf.slot)) rf.slot = slots[0] ?? null;
-  $("#rfSlots").innerHTML = slots.map((s) => `<button type="button" class="slot" role="radio" data-slot="${s}" aria-checked="${s === rf.slot}">${s}</button>`).join("");
+  el.innerHTML = slots.map((s) => {
+    const left = day.left?.[s];
+    const few = typeof left === "number" && left <= 2;
+    return `<button type="button" class="slot${few ? " few" : ""}" role="radio" data-slot="${s}" aria-checked="${s === rf.slot}"${few ? ` aria-label="${s}, quedan ${left} cupos"` : ""}>${s}${few ? `<small>quedan ${left}</small>` : ""}</button>`;
+  }).join("");
+  renderLive();
 }
 function renderPoints() {
-  $("#rfPoints").innerHTML = RESERVATION_RULES.meetingPoints.map((p) => `<button type="button" class="point" role="radio" data-point="${esc(p)}" aria-checked="${p === rf.point}"><svg><use href="#i-pin"/></svg>${esc(p)}</button>`).join("");
+  const el = $("#rfPoints"); if (!el) return;
+  el.innerHTML = RESERVATION_RULES.meetingPoints.map((p) => `<button type="button" class="point" role="radio" data-point="${esc(p)}" aria-checked="${p === rf.point}"><svg><use href="#i-pin"/></svg>${esc(p)}</button>`).join("");
+  renderLive();
+}
+function renderPayPicker() {
+  const el = $("#rfPay"); if (!el) return;
+  el.innerHTML = PAYMENTS.filter((p) => p.id !== "efectivo").map((p) => `<button type="button" class="point" role="radio" data-pay="${p.id}" aria-checked="${p.id === state.payment || (state.payment === "efectivo" && p.id === "mercadopago")}"><span>${p.label}</span><small>${p.hint}</small></button>`).join("");
 }
 function showErrors(errors) {
   const boxEl = $("#rfErrors");
@@ -526,11 +755,12 @@ function showErrors(errors) {
 }
 async function submitReservation(e) {
   e.preventDefault();
+  const payment = state.payment === "efectivo" ? "mercadopago" : state.payment;
   const payload = {
     name: $("#rfName").value, date: rf.day, time: rf.slot, meetingPoint: rf.point, notes: $("#rfNotes").value,
-    format: state.format, items: [...state.cart].map(([id, qty]) => ({ id, qty })), website: $("#rfHp").value,
+    format: state.format, items: [...state.cart].map(([id, qty]) => ({ id, qty })), website: $("#rfHp").value, payment,
   };
-  const local = buildReservation(payload, state.catalog);
+  const local = buildReservation(payload, [...state.catalog, ...state.japanese]);
   if (!local.ok) {
     if (!payload.name.trim()) { $("#rfName").setAttribute("aria-invalid", "true"); $("#rfName").focus(); }
     return showErrors(local.errors);
@@ -538,7 +768,7 @@ async function submitReservation(e) {
   showErrors([]);
   store.set("mg-name", payload.name.trim());
   const btn = $("#rfSubmit"), label = btn.querySelector("span");
-  btn.disabled = true; btn.setAttribute("aria-busy", "true"); label.textContent = "Validando stock…";
+  btn.disabled = true; btn.setAttribute("aria-busy", "true"); label.textContent = "Validando stock y cupos…";
   let result = { ok: true, reservation: local.reservation, whatsappUrl: local.whatsappUrl };
   try {
     const res = await fetch("/api/reserve", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(payload), signal: AbortSignal.timeout(15000) });
@@ -546,34 +776,101 @@ async function submitReservation(e) {
       const data = await res.json();
       if (!data.ok) {
         btn.disabled = false; btn.removeAttribute("aria-busy"); label.textContent = "Reservar por WhatsApp";
-        if (data.errors) { showErrors(data.errors); syncStock({ quiet: true }); }
+        if (data.errors) { showErrors(data.errors); syncStock({ quiet: true }); loadStatus(); }
         return;
       }
       result = data;
     }
   } catch { /* sin backend: validación local */ }
   btn.disabled = false; btn.removeAttribute("aria-busy"); label.textContent = "Reservar por WhatsApp";
-  showReservationSuccess(result);
+  track("reservation_submit", { payment });
+  showReservationSuccess({ ...result, reservation: { ...result.reservation, payment } });
+  loadStatus();
 }
 const ticketHTML = $("#reserveForm").innerHTML;
 function showReservationSuccess({ reservation: r, whatsappUrl }) {
   const form = $("#reserveForm");
-  form.innerHTML = `<div class="ticket-main"><div class="ticket-head"><span class="brand-name">MANI<span>-</span>GANTE</span><small>Reserva confirmada en la web</small></div>
+  saveOrder({ type: "reserva", code: r.code, items: (r.lines || []).map((l) => ({ id: l.id, name: l.name, qty: l.qty })), bags: r.bags, total: r.total, format: r.format, payment: r.payment, date: r.date, dateLabel: r.dateLabel, time: r.time, meetingPoint: r.meetingPoint, whatsappUrl });
+  const pay = PAYMENTS.find((p) => p.id === r.payment);
+  form.innerHTML = `<div class="ticket-main"><div class="ticket-head"><span class="brand-name">MANI<span>-</span>GANTE</span><small>Reserva creada · ${esc(pay?.label || "")}</small></div>
     <div class="rc-success">
       <span class="ok"><svg><use href="#i-check"/></svg></span>
-      <h3 class="h3">¡Reserva lista, ${esc(r.name)}!</h3>
+      <h3 class="h3">¡Dímelo, ${esc(r.name)}! Quedó lista</h3>
       <code>${esc(r.code)}</code>
       <p class="muted">${esc(r.dateLabel || r.date)} · ${esc(r.time)} · ${esc(r.meetingPoint)}<br>${r.bags} bolsa${r.bags === 1 ? "" : "s"} · <strong>${formatCLP(r.total)}</strong></p>
-      <p class="hand">solo falta enviarla y adjuntar el comprobante</p>
+      <ol class="next-steps"><li class="done">Reserva creada</li><li>Envíala a Jorge por WhatsApp</li><li>${r.payment === "transferencia" ? "Transfiere y adjunta el comprobante" : "Paga con Mercado Pago y adjunta el comprobante"}</li></ol>
+      <div class="save-row">
+        <a class="btn btn-ghost" href="${icsFile(r)}" download="reserva-${esc(r.code)}.ics"><svg><use href="#i-cal"/></svg> Calendario (.ics)</a>
+        <a class="btn btn-ghost" href="${googleCalendarUrl(r)}" target="_blank" rel="noopener"><svg><use href="#i-cal"/></svg> Google Calendar</a>
+        <button class="btn btn-ghost" type="button" id="rfPng"><svg><use href="#i-download"/></svg> Guardar ticket</button>
+      </div>
     </div></div>
     <div class="ticket-stub"><span class="barcode" aria-hidden="true"></span>
       <a class="btn btn-wa btn-lg" href="${whatsappUrl}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span>Enviar a Jorge</span></a>
-      <p style="width:100%;display:flex;gap:16px;justify-content:center;flex-wrap:wrap"><a class="link" href="#pago">Ver cuentas para pagar</a><button class="link" type="button" id="rfAgain">Hacer otra reserva</button></p></div>`;
+      <p class="stub-links">${r.payment === "mercadopago" ? `<a class="link" href="${BUSINESS.mercadoPago}" target="_blank" rel="noopener">Pagar con Mercado Pago</a>` : `<a class="link" href="#pago">Ver cuentas para transferir</a>`}<button class="link" type="button" id="rfAgain">Hacer otra reserva</button></p></div>`;
+  stampMoment(form);
+  toast(VOICE.reserveOk(r.code), { tone: "success" });
   window.open(whatsappUrl, "_blank", "noopener");
+  $("#rfPng").addEventListener("click", () => downloadTicketPng(r));
   $("#rfAgain").addEventListener("click", () => {
     state.cart.clear(); saveCart(); renderCatalog(); renderCart();
     form.innerHTML = ticketHTML; bindReserve();
   });
+}
+
+// ============================================================
+// Mis pedidos (historial local) + recuperación de carrito
+// ============================================================
+const STATUS_LABEL = { enviado: "Enviado a Jorge", pagado: "Pagado", recibido: "Recibido" };
+function renderHistory() {
+  const list = getOrders();
+  $("#historyList").innerHTML = list.length ? list.map((o) => `
+    <article class="history-item">
+      <div class="history-top"><strong>${o.type === "reserva" ? `Reserva ${esc(o.code)}` : "Pedido"}</strong><span class="pill">${esc(STATUS_LABEL[o.status] || o.status)}</span></div>
+      <small>${new Date(o.createdAt).toLocaleDateString("es-CL", { day: "numeric", month: "short" })}${o.dateLabel ? ` · para ${esc(o.dateLabel)} ${esc(o.time)}` : ""} · ${o.bags} bolsas · ${formatCLP(o.total)}</small>
+      <p>${(o.items || []).map((i) => `${esc(i.name)} ×${i.qty}`).join(", ")}</p>
+      <div class="history-actions">
+        <button type="button" class="link" data-repeat="${esc(o.id)}">Repetir pedido</button>
+        ${o.status === "enviado" ? `<button type="button" class="link" data-paid="${esc(o.id)}">Ya pagué</button>` : ""}
+        ${o.status === "pagado" ? `<button type="button" class="link" data-received="${esc(o.id)}">Ya lo recibí</button>` : ""}
+        ${o.whatsappUrl ? `<a class="link" href="${esc(o.whatsappUrl)}" target="_blank" rel="noopener">Reenviar</a>` : ""}
+        <button type="button" class="link subtle" data-remove="${esc(o.id)}">Borrar</button>
+      </div>
+    </article>`).join("") : `<div class="drawer-empty">${bag("#C8963E", "celofan")}<p class="hand">${VOICE.emptyHistory}</p></div>`;
+}
+function openHistory() { renderHistory(); $("#historyDlg").showModal(); }
+$("#historyOpen").addEventListener("click", openHistory);
+$("#historyList").addEventListener("click", (e) => {
+  const t = e.target.closest("button"); if (!t) return;
+  const o = getOrders().find((x) => x.id === (t.dataset.repeat || t.dataset.paid || t.dataset.received || t.dataset.remove));
+  if (!o) return;
+  if (t.dataset.repeat) { const added = addItems(o.items.map((i) => ({ id: i.id, qty: i.qty })), { format: o.format }); $("#historyDlg").close(); toast(added.length ? VOICE.addedMany(added.length) : "Esos sabores están agotados por ahora", { tone: added.length ? "success" : "info" }); if (added.length) openCart(); return; }
+  if (t.dataset.paid) setOrderStatus(o.id, "pagado");
+  if (t.dataset.received) setOrderStatus(o.id, "recibido");
+  if (t.dataset.remove) removeOrder(o.id);
+  renderHistory();
+});
+function recoverCart() {
+  const fromUrl = cartFromUrl();
+  if (fromUrl?.items.length) {
+    state.cart.clear();
+    addItems(fromUrl.items, { format: fromUrl.format });
+    toast(VOICE.orderRestored(cartTotals().bags), { tone: "info", action: { label: "Ver boleta", onClick: openCart } });
+    return;
+  }
+  const at = store.get("mg-cart-at", 0);
+  const { bags } = cartTotals();
+  if (bags && Date.now() - at > 30 * 60 * 1000) setTimeout(() => toast(VOICE.welcomeBack(bags), { tone: "info", action: { label: "Ver boleta", onClick: openCart } }), 2500);
+}
+
+// ============================================================
+// Opiniones curadas por Jorge (UGC aprobado desde el admin)
+// ============================================================
+function renderUgc() {
+  const items = state.status?.ugc || [];
+  const wrap = $("#ugc"); if (!wrap) return;
+  wrap.hidden = !items.length;
+  wrap.querySelector(".ugc-track").innerHTML = items.map((u) => `<figure class="ugc-card"><blockquote>“${esc(u.quote)}”</blockquote><figcaption>— ${esc(u.author)}${u.url ? ` · <a class="link" href="${esc(u.url)}" target="_blank" rel="noopener">${u.source === "instagram" ? "ver en Instagram" : "ver"}</a>` : ""}</figcaption></figure>`).join("");
 }
 
 // ============================================================
@@ -591,17 +888,19 @@ const PHOTOS = [
 ];
 const gal = $("#gallery");
 gal.innerHTML = PHOTOS.map(([g, alt, cap, w, h]) => `<figure class="gallery-item" data-src="./assets/img/${g}-1600.webp">
-  <img src="./assets/img/${g}-800.webp" alt="${esc(alt)}" loading="lazy" decoding="async" width="${w}" height="${h}" draggable="false"><figcaption>${esc(cap)}</figcaption></figure>`).join("");
+  <button type="button" class="gallery-open" aria-label="Ampliar foto: ${esc(alt)}"><img src="./assets/img/${g}-800.webp" alt="${esc(alt)}" loading="lazy" decoding="async" width="${w}" height="${h}" draggable="false"></button><figcaption>${esc(cap)}</figcaption></figure>`).join("");
 const lb = $("#lightbox");
-let dragged = false;
+let dragged = false, lbReturn = null;
 gal.addEventListener("click", (e) => {
   if (dragged) return;
   const fig = e.target.closest(".gallery-item"); if (!fig) return;
+  lbReturn = document.activeElement;
   lb.querySelector("img").src = fig.dataset.src; lb.querySelector("img").alt = fig.querySelector("img").alt; lb.hidden = false;
+  lb.querySelector("button").focus();
 });
-function closeLightbox() { lb.hidden = true; }
+function closeLightbox() { if (lb.hidden) return; lb.hidden = true; lbReturn?.focus?.(); }
 lb.addEventListener("click", closeLightbox);
-(() => { // arrastrar para desplazar (mouse)
+(() => {
   let down = false, startX = 0, startScroll = 0;
   gal.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") return; down = true; dragged = false; startX = e.clientX; startScroll = gal.scrollLeft; });
   addEventListener("pointermove", (e) => { if (!down) return; const dx = e.clientX - startX; if (Math.abs(dx) > 5) { dragged = true; gal.classList.add("dragging"); } gal.scrollLeft = startScroll - dx; });
@@ -613,18 +912,12 @@ $("#galNext").addEventListener("click", () => gal.scrollBy({ left: gal.clientWid
 // ============================================================
 // Pagos, FAQ, nutrición, opiniones, compartir
 // ============================================================
-let toastTimer;
-function toast(text, color) {
-  const t = $("#toast");
-  t.innerHTML = `${color ? swatch(color) : ""}<span>${esc(text)}</span>`;
-  t.classList.add("show");
-  clearTimeout(toastTimer); toastTimer = setTimeout(() => t.classList.remove("show"), 2600);
-}
 $$(".pay-card[data-copy]").forEach((card) => card.addEventListener("click", async () => {
   try { await navigator.clipboard.writeText(card.dataset.copy); } catch {
     const ta = document.createElement("textarea"); ta.value = card.dataset.copy; document.body.append(ta); ta.select(); document.execCommand("copy"); ta.remove();
   }
-  card.classList.add("copied"); toast(`${card.dataset.label}: datos copiados`);
+  card.classList.add("copied"); toast(VOICE.copied(card.dataset.label), { tone: "success" });
+  track("copy_payment", { method: card.dataset.label });
   setTimeout(() => card.classList.remove("copied"), 1800);
 }));
 
@@ -634,27 +927,29 @@ $("#nutrition tbody").innerHTML = NUTRITION.map(([k, a, b]) => `<tr><td>${k}</td
 $("#reviewForm").addEventListener("submit", async (e) => {
   e.preventDefault();
   const form = e.target; const btn = form.querySelector("button[type=submit]");
-  btn.disabled = true; btn.textContent = "Enviando…";
+  btn.disabled = true; btn.textContent = VOICE.sending();
   try {
     await fetch("/", { method: "POST", headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: new URLSearchParams(new FormData(form)).toString() });
     form.querySelectorAll(".field, .rc-row, button").forEach((el) => (el.hidden = true));
     form.querySelector(".form-ok").hidden = false;
-  } catch { btn.disabled = false; btn.textContent = "Enviar nota"; toast("No se pudo enviar, inténtalo de nuevo"); }
+    track("review_submit");
+  } catch { btn.disabled = false; btn.textContent = "Enviar nota"; toast(VOICE.networkError(), { tone: "error" }); }
 });
 
 $$("[data-wa]").forEach((a) => (a.href = whatsappLink("Hola Jorge, quiero hacer un pedido de MANI-GANTE 🥜")));
 $("#year").textContent = new Date().getFullYear();
 $("#shareBtn").addEventListener("click", async () => {
-  const data = { title: "MANI-GANTE", text: "Maní confitado a mano en 28 sabores 🥜", url: BUSINESS.url };
+  const data = { title: "MANI-GANTE", text: "Maní confitado a mano en 28 sabores", url: BUSINESS.url };
   if (navigator.share) { try { await navigator.share(data); } catch {} }
-  else { try { await navigator.clipboard.writeText(BUSINESS.url); toast("Link copiado"); } catch {} }
+  else { try { await navigator.clipboard.writeText(BUSINESS.url); toast(VOICE.linkCopied(), { tone: "info" }); } catch {} }
 });
 
 // ============================================================
-// Navegación, tema, progreso
+// Navegación, tema, idioma, progreso
 // ============================================================
 const nav = $("#nav");
 const progress = $("#progress");
+const shopBar = $("#shopBar");
 let lastY = 0, ticking = false;
 addEventListener("scroll", () => {
   if (ticking) return; ticking = true;
@@ -663,37 +958,66 @@ addEventListener("scroll", () => {
     nav.classList.toggle("scrolled", y > 40);
     nav.classList.toggle("hide", y > 600 && y > lastY + 4 && !nav.classList.contains("menu-open"));
     if (y < lastY - 4) nav.classList.remove("hide");
+    document.body.classList.toggle("nav-hidden", nav.classList.contains("hide"));
     lastY = y;
     progress.style.transform = `scaleX(${Math.min(1, y / (document.documentElement.scrollHeight - innerHeight))})`;
+    if (shopBar) shopBar.classList.toggle("stuck", shopBar.getBoundingClientRect().top <= 90 && $("#tienda").getBoundingClientRect().bottom > 200);
     ticking = false;
   });
 }, { passive: true });
 const menuBtn = $("#menuBtn");
 const setMenu = (open) => { menuBtn.setAttribute("aria-expanded", open); $("#mobileMenu").classList.toggle("open", open); nav.classList.toggle("menu-open", open); };
 menuBtn.addEventListener("click", () => setMenu(menuBtn.getAttribute("aria-expanded") !== "true"));
-$("#mobileMenu").addEventListener("click", (e) => { if (e.target.closest("a, button")) setMenu(false); });
+$("#mobileMenu").addEventListener("click", (e) => {
+  const act = e.target.closest("[data-action]")?.dataset.action;
+  if (act === "history") openHistory();
+  if (act === "lang") $("#langToggle").click();
+  if (e.target.closest("a, button")) setMenu(false);
+});
 
-// Sección activa en el menú
 const sectionObserver = new IntersectionObserver((entries) => entries.forEach((en) => {
   if (!en.isIntersecting) return;
-  $$(".nav-links a").forEach((a) => a.classList.toggle("active", a.getAttribute("href") === `#${en.target.id}`));
+  $$(".nav-links a").forEach((a) => { const on = a.getAttribute("href") === `#${en.target.id}`; a.classList.toggle("active", on); on ? a.setAttribute("aria-current", "true") : a.removeAttribute("aria-current"); });
 }), { rootMargin: "-45% 0px -50% 0px" });
 ["oficio", "tienda", "caja", "reservar", "historia"].forEach((id) => { const s = document.getElementById(id); if (s) sectionObserver.observe(s); });
 
 const themeBtn = $("#themeToggle");
 const isDark = () => document.documentElement.dataset.theme ? document.documentElement.dataset.theme === "dark" : matchMedia("(prefers-color-scheme: dark)").matches;
-const paintThemeIcon = () => themeBtn.querySelector("use").setAttribute("href", isDark() ? "#i-sun" : "#i-moon");
+const paintThemeIcon = () => { themeBtn.querySelector("use").setAttribute("href", isDark() ? "#i-sun" : "#i-moon"); themeBtn.setAttribute("aria-label", isDark() ? "Cambiar a modo claro" : "Cambiar a modo oscuro"); };
 themeBtn.addEventListener("click", () => {
   const next = isDark() ? "light" : "dark";
   document.documentElement.dataset.theme = next; store.set("mg-theme", next); paintThemeIcon();
+  track("theme", { theme: next });
 });
 paintThemeIcon();
+$("#langToggle").addEventListener("click", () => { const next = getLang() === "en" ? "es" : "en"; applyLang(next); track("lang", { lang: next }); });
+if (getLang() === "en") applyLang("en");
+
+// ============================================================
+// Carga diferida: asistente IA y animaciones (code-splitting)
+// ============================================================
+let agentLoading = null;
+function loadAgent() { agentLoading ||= import("./agent.mjs"); return agentLoading; }
+async function openAgent(prompt) {
+  await loadAgent();
+  window.MGAgent?.open(prompt);
+}
+document.addEventListener("click", (e) => {
+  const t = e.target.closest("[data-open-agent], #agentFab");
+  if (!t || window.MGAgent) return;
+  e.preventDefault(); e.stopPropagation();
+  openAgent();
+}, true);
+const idle = window.requestIdleCallback || ((fn) => setTimeout(fn, 1200));
+idle(() => import("./motion.mjs"));
+idle(() => loadAgent(), { timeout: 6000 });
 
 // ============================================================
 // API pública para el agente de IA
 // ============================================================
 window.MG = {
-  addItems, openCart, toast,
+  addItems, openCart,
+  toast: (text, color) => toast(text, { color }),
   getCart: () => [...state.cart].map(([id, qty]) => ({ id, qty })),
   getFormat: () => state.format,
   getCatalog: () => state.catalog,
@@ -703,6 +1027,15 @@ window.MG = {
 // Inicio
 // ============================================================
 renderFormats(); renderChips(); renderCatalog(); renderMarquees(); renderHero(); renderCart();
-renderBoxSizes(); renderPalette(); renderBox(); bindReserve();
-setInterval(() => { renderHero(); renderDays(); }, 60_000);
+renderBoxSizes(); renderPalette(); renderBox(); bindReserve(); renderFinder();
+enableTilt();
+recoverCart();
+setInterval(() => { renderHero(); renderDays(); renderPromo(cartTotals().bags); }, 60_000);
 syncStock();
+loadStatus();
+track("page_view", { lang: getLang() });
+
+// Service worker: catálogo y fotos disponibles sin conexión
+if ("serviceWorker" in navigator && location.protocol === "https:") {
+  addEventListener("load", () => navigator.serviceWorker.register("/sw.js").catch(() => {}));
+}

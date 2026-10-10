@@ -54,7 +54,8 @@ function fill(color, x0, y0, w, h, gradId) {
  * format: "doypack" (kraft con ventana y zipper) | "celofan" (transparente con amarra dorada)
  */
 export function bag(color, format = "doypack", { label = "", cls = "bag" } = {}) {
-  const g = next("bg"), clip = next("cl"), kraft = next("kr"), stick = next("st"), noise = next("nz");
+  const g = next("bg"), clip = next("cl"), kraft = next("kr"), stick = next("st"), noise = next("nz"), light = next("lt"), shadeId = next("sh");
+  const lightGrad = `<radialGradient id="${light}"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`;
   const nutGrad = `<radialGradient id="${g}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="${shade(color, 70)}"/><stop offset=".55" stop-color="${color}"/><stop offset="1" stop-color="${shade(color, -55)}"/></radialGradient>`;
   const sticker = (cx, cy, r) => `
     <g>
@@ -68,9 +69,9 @@ export function bag(color, format = "doypack", { label = "", cls = "bag" } = {})
   if (format === "celofan") {
     const body = "M22 44 Q20 40 26 38 L94 38 Q100 40 98 44 L103 136 Q103 144 95 144 L25 144 Q17 144 17 136 Z";
     return `<svg class="${cls}" viewBox="0 0 120 160" role="img" aria-label="${label}" focusable="false">
-      <defs>${nutGrad}<clipPath id="${clip}"><path d="${body}"/></clipPath>
+      <defs>${nutGrad}${lightGrad}<clipPath id="${clip}"><path d="${body}"/></clipPath>
         <linearGradient id="${kraft}" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".25" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset=".92" stop-color="#fff" stop-opacity=".35"/></linearGradient></defs>
-      <ellipse cx="60" cy="150" rx="40" ry="5" fill="#000" opacity=".14"/>
+      <ellipse cx="60" cy="151" rx="46" ry="6" fill="#000" opacity=".08"/><ellipse cx="60" cy="149" rx="36" ry="3.5" fill="#000" opacity=".16"/>
       <g clip-path="url(#${clip})"><rect x="0" y="30" width="120" height="120" fill="${shade(color, 40)}" opacity=".35"/>${fill(color, 14, 52, 92, 92, g)}</g>
       <path d="${body}" fill="url(#${kraft})" stroke="rgba(255,255,255,.7)" stroke-width="1.2"/>
       <path d="M26 38 L40 14 Q60 6 80 14 L94 38 Z" fill="rgba(255,255,255,.28)" stroke="rgba(255,255,255,.7)" stroke-width="1"/>
@@ -78,16 +79,21 @@ export function bag(color, format = "doypack", { label = "", cls = "bag" } = {})
       <rect x="44" y="33" width="32" height="7" rx="3.5" fill="#c8963e"/><rect x="44" y="33" width="32" height="2.5" rx="1.2" fill="#e8c27a"/>
       ${sticker(60, 76, 15)}
       <path d="M30 50 Q28 95 32 132" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".45" fill="none"/>
+      <path d="M88 52 Q92 80 89 118" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".3" fill="none"/>
+      <g stroke="#fff" stroke-width=".7" fill="none" opacity=".45"><path d="M24 104 l9 -4 l7 5"/><path d="M78 124 l8 -5 l9 3"/><path d="M70 50 l6 4 l7 -3"/><path d="M36 128 l6 4"/></g>
+      <ellipse cx="44" cy="58" rx="5" ry="11" fill="url(#${light})" transform="rotate(-12 44 58)"/>
+      <path d="M17 136 Q17 144 25 144 L95 144 Q103 144 103 136" stroke="rgba(0,0,0,.18)" stroke-width="1.4" fill="none"/>
     </svg>`;
   }
 
   const body = "M18 30 Q18 22 26 22 L94 22 Q102 22 102 30 L104 138 Q104 146 96 146 L24 146 Q16 146 16 138 Z";
   return `<svg class="${cls}" viewBox="0 0 120 160" role="img" aria-label="${label}" focusable="false">
-    <defs>${nutGrad}
+    <defs>${nutGrad}${lightGrad}
+      <linearGradient id="${shadeId}" x1="0" x2="1"><stop offset="0" stop-color="#3a2410" stop-opacity=".28"/><stop offset=".22" stop-color="#3a2410" stop-opacity="0"/><stop offset=".7" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#3a2410" stop-opacity=".22"/></linearGradient>
       <linearGradient id="${kraft}" x1="0" x2="1"><stop offset="0" stop-color="#b98d58"/><stop offset=".18" stop-color="#d9b886"/><stop offset=".55" stop-color="#cfa872"/><stop offset=".85" stop-color="#c39762"/><stop offset="1" stop-color="#a87c4a"/></linearGradient>
       <filter id="${noise}" x="0" y="0" width="1" height="1"><feTurbulence type="fractalNoise" baseFrequency="1.4" numOctaves="2" seed="3"/><feColorMatrix values="0 0 0 0 .35  0 0 0 0 .24  0 0 0 0 .12  0 0 0 .22 0"/><feComposite in2="SourceGraphic" operator="in"/></filter>
       <clipPath id="${clip}"><rect x="30" y="84" width="60" height="44" rx="6"/></clipPath></defs>
-    <ellipse cx="60" cy="152" rx="44" ry="5" fill="#000" opacity=".16"/>
+    <ellipse cx="60" cy="153" rx="50" ry="6" fill="#000" opacity=".08"/><ellipse cx="60" cy="151" rx="40" ry="3.5" fill="#000" opacity=".18"/>
     <path d="${body}" fill="url(#${kraft})"/>
     <path d="${body}" filter="url(#${noise})"/>
     <path d="M16 136 Q60 128 104 136" fill="none" stroke="#8c6a3e" stroke-width=".8" opacity=".5"/>
@@ -99,6 +105,11 @@ export function bag(color, format = "doypack", { label = "", cls = "bag" } = {})
     <path d="M34 88 L46 88" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".5"/>
     ${sticker(60, 59, 17)}
     <path d="M22 44 Q20 90 22 132" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".18" fill="none"/>
+    <path d="${body}" fill="url(#${shadeId})"/>
+    <path d="M18 132 Q60 150 102 132 L104 138 Q104 146 96 146 L24 146 Q16 146 16 138 Z" fill="#7a5530" opacity=".22"/>
+    <path d="M102 26 l-4 2 l4 2" fill="none" stroke="#8c6a3e" stroke-width=".9" opacity=".6"/>
+    <ellipse cx="40" cy="92" rx="4" ry="9" fill="url(#${light})" opacity=".55" transform="rotate(-20 40 92)"/>
+    <path d="M28 26 Q60 20 92 26" stroke="#fff" stroke-width="1.4" opacity=".25" fill="none"/>
   </svg>`;
 }
 
