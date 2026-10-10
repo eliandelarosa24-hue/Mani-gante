@@ -115,7 +115,6 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 /* ---------- Tipografía de la casa ---------- */
 .eyebrow { font-family: var(--deco); font-size: .82rem; font-weight: 700; letter-spacing: var(--primitive-tracking-label); text-transform: uppercase; color: var(--gold-ink); margin-bottom: 22px; display: flex; align-items: center; gap: 14px; }
 .eyebrow > span:first-child:not(:only-child) { display: inline-grid; place-items: center; min-width: 74px; height: 28px; padding: 0 10px; border: 1px solid currentColor; letter-spacing: .16em; }
-.eyebrow:not(:has(> span))::before { content: ""; width: 28px; height: 1px; background: currentColor; }
 .center .eyebrow { justify-content: center; }
 .h2 { font-family: var(--serif); font-weight: 500; font-size: var(--primitive-font-size-3xl); line-height: .98; letter-spacing: -.025em; font-optical-sizing: auto; text-wrap: balance; }
 .h3 { font-family: var(--serif); font-weight: 500; font-size: var(--primitive-font-size-2xl); line-height: 1.04; letter-spacing: -.015em; font-optical-sizing: auto; }
@@ -265,7 +264,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .hero::after { content: ""; position: absolute; inset: auto 0 0; height: 40%; z-index: -1; background: linear-gradient(0deg, #0d0b09, transparent); pointer-events: none; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
 .kicker { display: inline-flex; align-items: center; gap: 14px; font-family: var(--deco); font-size: .86rem; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: #ddbb7c; }
-.kicker i { width: 36px; height: 1px; background: currentColor; }
+.kicker i { width: 5px; height: 5px; background: currentColor; transform: rotate(45deg); opacity: .7; }
 .hero-title { font-family: var(--serif); font-weight: 500; font-size: clamp(3.4rem, 8.4vw, 8.4rem); line-height: .86; letter-spacing: var(--primitive-tracking-display); margin: 28px 0 30px; color: #f2eadb; }
 .hero-title .line { display: block; overflow: hidden; padding: .02em .12em .12em 0; margin-right: -.12em; white-space: nowrap; }
 .hero-title .line > span { display: inline-block; transform: translateY(108%); animation: lineUp 1.3s var(--ease) forwards; }
@@ -742,7 +741,7 @@ a.venture-name { text-decoration: underline; text-decoration-thickness: 1px; tex
 .reviews-grid .section-head { margin-bottom: 0; }
 .note-card { display: grid; gap: 16px; padding: clamp(22px, 3vw, 36px); background: var(--paper-note); color: #17120e; box-shadow: 0 30px 60px -26px rgba(0,0,0,.7); transform: rotate(-.6deg); position: relative;
   background-image: linear-gradient(rgba(122,84,20,.06), rgba(122,84,20,.06)), repeating-linear-gradient(180deg, transparent 0 31px, rgba(122,84,20,.14) 31px 32px); }
-.note-card::before { content: "TELEGRAMA · PARA: EL JEFE · CASA MANI-GANTE"; display: block; font-family: var(--deco); font-weight: 800; letter-spacing: .24em; font-size: .78rem; padding-bottom: 10px; border-bottom: 2px solid #17120e; }
+.note-card::before { content: "TELEGRAMA · PARA: LA CASA MANI-GANTE"; display: block; font-family: var(--deco); font-weight: 800; letter-spacing: .24em; font-size: .78rem; padding-bottom: 10px; border-bottom: 2px solid #17120e; }
 .note-card .field > span, .note-card legend { color: #5e5244; }
 .note-card .field input, .note-card .field textarea { background: rgba(255,255,255,.55); border-color: rgba(23,18,14,.3); color: #17120e; }
 .note-card textarea { font-family: var(--serif); font-style: italic; font-size: 1.15rem; line-height: 1.4; }
@@ -1229,4 +1228,97 @@ svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; he
 }
 @media (forced-colors: active) {
   .h2 em, .h3 em, .hero-title em, .foil, .footer-mark { -webkit-text-fill-color: currentColor; background: none; }
+}
+
+/* ============================================================
+   v4.4 · La experiencia de la Casa
+   ============================================================ */
+/* Desplazamiento suave (Lenis) */
+html.lenis, html.lenis body { height: auto; }
+html.lenis { scroll-behavior: auto; }
+.lenis.lenis-stopped { overflow: clip; }
+.lenis [data-lenis-prevent] { overscroll-behavior: contain; }
+
+/* Cursor de la casa: acompaña al puntero nativo, nunca lo reemplaza */
+.house-cursor { position: fixed; left: 0; top: 0; z-index: 2147483000; pointer-events: none; opacity: 0; transition: opacity .3s ease; will-change: transform; }
+.house-cursor.on { opacity: 1; }
+.hc-ring { position: absolute; left: -17px; top: -17px; width: 34px; height: 34px; border-radius: 50%; border: 1px solid rgba(221,187,124,.55); transition: transform .35s var(--ease), background-color .35s ease, border-color .35s ease, opacity .25s ease; }
+.house-cursor.link .hc-ring { transform: scale(1.45); background: rgba(221,187,124,.08); border-color: rgba(221,187,124,.8); }
+.house-cursor.press .hc-ring { transform: scale(.82); }
+.house-cursor.text .hc-ring { opacity: 0; }
+.house-cursor.labeled .hc-ring { transform: scale(2.6); background: rgba(13,11,9,.82); border-color: #d2ae6d; }
+.hc-label { position: absolute; left: 0; top: 0; translate: -50% -50%; font-family: var(--deco); font-weight: 800; font-size: .62rem; letter-spacing: .2em; text-transform: uppercase; color: #ddbb7c; white-space: nowrap; opacity: 0; transform: scale(.6); transition: opacity .25s ease, transform .35s var(--ease); }
+.house-cursor.labeled .hc-label { opacity: 1; transform: none; }
+
+/* Profundidad del salón: cada capa a su distancia */
+.hero.depth .hero-rosette { translate: calc(var(--dx, 0) * -26px) calc(var(--dy, 0) * -20px); transition: translate .9s var(--ease); }
+.hero.depth .hero-halo { translate: calc(var(--dx, 0) * 12px) calc(var(--dy, 0) * 10px); transition: translate .9s var(--ease); }
+.hero.depth .hero-bag { translate: calc(var(--dx, 0) * 30px) calc(var(--dy, 0) * 22px); transition: translate .7s var(--ease); }
+.hero.depth .hero-plate { margin-left: calc(var(--dx, 0) * 14px); transition: margin .9s var(--ease); }
+.hero.depth .hero-title { translate: calc(var(--dx, 0) * -8px) calc(var(--dy, 0) * -5px); transition: translate 1.1s var(--ease); }
+
+/* Luz del día en el salón */
+.hero-velvet::before { content: ""; position: absolute; inset: 0; pointer-events: none; background: var(--daylight, none); transition: opacity 1s ease; }
+[data-daypart="manana"] .hero-velvet { --daylight: radial-gradient(70% 60% at 88% -6%, rgba(240,214,160,.16), transparent 70%); }
+[data-daypart="tarde"] .hero-velvet { --daylight: radial-gradient(75% 65% at 104% 34%, rgba(226,146,84,.13), transparent 70%); }
+[data-daypart="noche"] .hero-velvet { --daylight: radial-gradient(80% 70% at 50% -10%, rgba(52,62,104,.22), transparent 70%); }
+
+/* Bienvenida personal */
+.hero-hello { font-family: var(--serif); font-style: italic; font-size: clamp(1.02rem, 1.4vw, 1.2rem); color: #bfb3a1; margin-bottom: 16px; animation: helloIn 1.2s var(--ease) .5s both; }
+.hero-hello em { color: #ddbb7c; font-style: italic; }
+@keyframes helloIn { from { opacity: 0; transform: translateY(8px); filter: blur(4px); } to { opacity: 1; transform: none; filter: none; } }
+
+/* Numerales de capítulo: grabados gigantes detrás de cada sala */
+.section:has(> .ch-layer) { isolation: isolate; }
+.ch-layer { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: -1; }
+.ch-numeral { position: absolute; top: clamp(40px, 6vw, 90px); right: clamp(-10px, 2vw, 40px); font-family: var(--serif); font-weight: 500; font-style: italic; font-size: clamp(9rem, 22vw, 22rem); line-height: .8; color: transparent; -webkit-text-stroke: 1px var(--numeral, rgba(210,174,109,.16)); letter-spacing: -.04em; user-select: none; will-change: transform; }
+.paper-room .ch-numeral, [data-theme="light"] .section:not(.room) .ch-numeral { --numeral: rgba(110,82,32,.16); }
+.center .ch-numeral, .section-head.center ~ .ch-numeral { right: auto; left: clamp(-10px, 2vw, 40px); }
+
+/* Revelado del Diario: las palabras se encienden con la lectura */
+.letter blockquote .bw { transition: opacity .3s linear; }
+
+/* El recorrido */
+.journey { display: flex; gap: 6px; list-style: none; margin: 0; padding: 0; counter-reset: none; }
+.journey li { flex: 1; display: grid; gap: 6px; font-family: var(--deco); font-weight: 700; font-size: .7rem; letter-spacing: .18em; text-transform: uppercase; color: var(--text-subtle, #968a78); padding-top: 9px; border-top: 2px solid color-mix(in srgb, currentColor 28%, transparent); transition: color .5s ease, border-color .5s ease; }
+.journey li b { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: .95rem; letter-spacing: 0; text-transform: none; }
+.journey li.done { color: var(--gold-ink); border-color: currentColor; }
+.journey li.now { color: var(--text); border-color: var(--gold-ink); }
+.journey li.now b { color: var(--gold-ink); }
+#cartJourney { padding: 6px 22px 14px; }
+#cartJourney .journey li { color: #6b5e4f; }
+#cartJourney .journey li.done, #cartJourney .journey li.now b { color: #6e5220; }
+#cartJourney .journey li.now { color: #17120e; border-color: #6e5220; }
+#reserveJourney { margin-top: 28px; max-width: 520px; }
+.reserve #reserveJourney .journey li { color: #968a78; }
+.reserve #reserveJourney .journey li.done, .reserve #reserveJourney .journey li.now b { color: #ddbb7c; }
+.reserve #reserveJourney .journey li.now { color: #f2eadb; border-color: #ddbb7c; }
+
+/* La ceremonia: sobre, tarjeta y lacre */
+.ceremony { position: fixed; inset: 0; z-index: 2147482000; pointer-events: none; display: grid; place-items: center; background: radial-gradient(circle at 50% 50%, rgba(13,11,9,.72), rgba(13,11,9,.92)); opacity: 0; transition: opacity .5s ease; }
+.ceremony.play { opacity: 1; }
+.ceremony.out { opacity: 0; transition-duration: .7s; }
+.cer-env { position: relative; width: min(360px, 82vw); aspect-ratio: 1.55; background: linear-gradient(160deg, #f7f1e6, #e9dfcc); box-shadow: 0 40px 80px -20px rgba(0,0,0,.9), inset 0 0 0 1px rgba(110,82,32,.25), inset 0 0 0 7px #f7f1e6, inset 0 0 0 8px rgba(110,82,32,.35); transform: translateY(40px) scale(.92); opacity: 0; perspective: 900px; }
+.ceremony.play .cer-env { animation: envIn .8s var(--ease) forwards; }
+.cer-flap { position: absolute; inset: 0 0 auto; height: 58%; background: linear-gradient(0deg, #ede3d0, #e2d6bf); clip-path: polygon(0 0, 100% 0, 50% 100%); transform-origin: top; transform: rotateX(180deg); z-index: 0; }
+.cer-pocket { position: absolute; inset: 0; z-index: 2; background: linear-gradient(160deg, #f4ecdf, #e6dbc6); clip-path: polygon(0 18%, 50% 62%, 100% 18%, 100% 100%, 0 100%); box-shadow: inset 0 0 0 1px rgba(110,82,32,.25); }
+.cer-card { position: absolute; inset: 8% 7% 10%; background: #fbf7ef; box-shadow: 0 10px 30px -10px rgba(0,0,0,.4), inset 0 0 0 1px rgba(110,82,32,.3), inset 0 0 0 5px #fbf7ef, inset 0 0 0 6px rgba(110,82,32,.25); display: grid; place-content: center; text-align: center; gap: 4px; color: #17120e; z-index: 1; }
+.cer-card small { font-family: var(--deco); font-weight: 800; font-size: .66rem; letter-spacing: .3em; text-transform: uppercase; color: #6e5220; }
+.cer-card strong { font-family: var(--serif); font-style: italic; font-weight: 500; font-size: clamp(1.9rem, 6vw, 2.5rem); line-height: 1; color: #6e1a2c; }
+.cer-card span { font-size: .92rem; color: #4e4337; }
+.ceremony.play .cer-card { animation: cardRise .9s var(--ease) .55s both; }
+.cer-seal { position: absolute; left: 50%; top: 62%; width: 84px; height: 84px; margin: -42px 0 0 -42px; border-radius: 50%; z-index: 3; display: grid; place-items: center; color: #e8c88a; background: radial-gradient(circle at 35% 30%, #a3324a, #6e1a2c 55%, #4a0f1d); box-shadow: 0 8px 18px rgba(0,0,0,.45), inset 0 -3px 8px rgba(0,0,0,.35), inset 0 2px 4px rgba(255,255,255,.12); opacity: 0; }
+.cer-seal svg { width: 74%; height: 74%; }
+.ceremony.play .cer-seal { animation: sealDrop .55s cubic-bezier(.3,1.6,.5,1) 1.35s both; }
+@keyframes envIn { to { transform: none; opacity: 1; } }
+@keyframes cardRise { from { transform: translateY(10%); } to { transform: translateY(-62%); } }
+@keyframes sealDrop { 0% { opacity: 0; transform: scale(2.2) rotate(-25deg); } 70% { opacity: 1; transform: scale(.94) rotate(4deg); } 100% { opacity: 1; transform: none; } }
+
+/* Interruptor de sonido */
+.sound-btn svg { width: 20px; height: 20px; }
+.sound-btn[aria-pressed="true"] { color: #ddbb7c; }
+@media (max-width: 760px) { .sound-btn { display: none; } }
+@media (prefers-reduced-motion: reduce) {
+  .house-cursor, .ceremony { display: none !important; }
+  .hero-hello { animation: none; }
 }

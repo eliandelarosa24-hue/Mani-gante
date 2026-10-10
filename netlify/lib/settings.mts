@@ -24,7 +24,7 @@ export async function liveCampus(date = new Date()) {
   const campus = await getCampus();
   const today = date.toISOString().slice(0, 10);
   if (campus.away && (!campus.until || campus.until >= today)) {
-    return { ...base, open: false, away: true, label: campus.message || "Jorge no está en el campus hoy", until: campus.until };
+    return { ...base, open: false, away: true, label: campus.message || "Hoy no estamos en el campus", until: campus.until };
   }
   return { ...base, away: false };
 }

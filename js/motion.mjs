@@ -31,6 +31,18 @@ const stepObserver = new IntersectionObserver((entries) => entries.forEach((en) 
 }), { rootMargin: "-40% 0px -45% 0px" });
 steps.forEach((s) => stepObserver.observe(s));
 
+// Numerales de capítulo: un grabado gigante (I…IX) detrás de cada sala, decorativo
+$$(".section .eyebrow > span:first-child").forEach((tag) => {
+  const m = /^Cap\.\s*([IVX]+)$/.exec(tag.textContent.trim());
+  const section = tag.closest(".section");
+  if (!m || !section || section.matches(".shop") || section.querySelector(":scope > .ch-layer")) return; // la tienda ya tiene su cartel "Se buscan"
+  const layer = document.createElement("div");
+  layer.className = "ch-layer"; layer.setAttribute("aria-hidden", "true");
+  layer.innerHTML = `<span class="ch-numeral">${m[1]}</span>`;
+  if (tag.closest(".center")) layer.classList.add("center");
+  section.prepend(layer);
+});
+
 // GSAP alojado en el sitio (assets/vendor), cargado bajo demanda: no bloquea la primera pintura.
 function loadScript(src) {
   return new Promise((ok, fail) => { const s = document.createElement("script"); s.src = src; s.onload = ok; s.onerror = fail; document.head.append(s); });
@@ -88,6 +100,19 @@ if (!reduce) {
     gsap.from(".ticket", { y: 60, rotate: 1.5, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".reserve", start: "top 70%" } });
     gsap.from(".pay-card", { y: 50, rotate: (i) => (i % 2 ? 4 : -4), opacity: 0, duration: .9, stagger: .08, ease: "back.out(1.4)", scrollTrigger: { trigger: ".pay-grid", start: "top 80%" } });
     gsap.from(".note-card", { y: 50, rotate: 3, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".reviews", start: "top 70%" } });
+
+    // Numerales: viajan más lento que el contenido (profundidad entre salas)
+    gsap.utils.toArray(".ch-numeral").forEach((n) => gsap.fromTo(n, { yPercent: 35 }, { yPercent: -35, ease: "none", scrollTrigger: { trigger: n.closest(".section"), start: "top bottom", end: "bottom top", scrub: .8 } }));
+
+    // El Diario: la cita se enciende palabra por palabra mientras la lees
+    const quote = document.querySelector(".letter blockquote");
+    if (quote && !quote.dataset.split) {
+      quote.dataset.split = "1";
+      quote.setAttribute("aria-label", quote.textContent.trim());
+      const words = quote.textContent.trim().split(/\s+/);
+      quote.innerHTML = words.map((w) => `<span class="bw" aria-hidden="true">${w.replace(/[&<>]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;" })[c])}</span>`).join(" ");
+      gsap.fromTo(quote.querySelectorAll(".bw"), { opacity: .16 }, { opacity: 1, ease: "none", stagger: .1, scrollTrigger: { trigger: quote, start: "top 82%", end: "bottom 45%", scrub: .5 } });
+    }
 
     // Entrada escalonada de la tienda (cada vez que se re-pinta, solo la primera vez que se ve)
     let shopSeen = false;

@@ -1,6 +1,6 @@
 # Casa MANI-GANTE · Guía de marca v4.0
 
-> Última actualización: 2026-10-10 · Estado: activa
+> Última actualización: 2026-10-10 (v4.4) · Estado: activa
 > Eslogan: **"Para gente elegante y gánster."**
 > Dirección: **noir de lujo**. Un speakeasy de los años 20 con alma dominicana: terciopelo, oro champán, anillas de habano y grabado de billete. El "gánster" es estilo, lealtad y familia; nunca violencia ni nada ilegal.
 > Investigación y referencias detrás de cada decisión: [`docs/identidad-casa.md`](identidad-casa.md).
@@ -18,7 +18,7 @@
 | Titulares | **Bodoni Moda**: lujo editorial, cursiva dorada para la palabra clave |
 | Etiquetas y números | **Big Shoulders**: inspirada en los carteles de Chicago de los años 20 |
 | Texto | **Instrument Sans** |
-| Firma | **Pinyon Script**: solo la firma del Jefe y la palabra "Invitación" |
+| Firma | **Pinyon Script**: solo la firma "La Familia" y la palabra "Invitación" |
 
 ---
 
@@ -60,7 +60,7 @@ El papel (invitación, cuenta, periódico y telegrama) usa la clase `.paper-room
 | Display | Bodoni Moda 500 (cursiva 500) | Titulares con tracking −0.025em; la palabra clave va en cursiva con foil dorado |
 | Deco | Big Shoulders 700–800, mayúsculas | Etiquetas de capítulo, números de ficha, precios, botones y la Bolsa. Tracking +0.14 a +0.3em |
 | Texto | Instrument Sans 400–600 | Cuerpo de 16 px, interlineado 1.65 |
-| Firma | Pinyon Script | Solo para "Jorge" y "Invitación", siempre a 2rem o más |
+| Firma | Pinyon Script | Solo para "La Familia" y "Invitación", siempre a 2rem o más |
 
 - **Precios y números** siempre en Big Shoulders: $1.000 se lee como una cifra de cartel.
 - **Capítulos**: cada sección abre con `Cap. I…IX` dentro de un recuadro, seguido de su nombre.
@@ -73,8 +73,8 @@ El papel (invitación, cuenta, periódico y telegrama) usa la clase `.paper-room
 | Rasgo | Cómo se nota |
 |---|---|
 | **Elegante** | Frases cortas y seguras. Nada de gritos ni exceso de signos. |
-| **Gánster de película** | Juega con la familia, el trato, la cita, el Jefe, el consigliere, la ficha y el alias. |
-| **Cercano** | Habla con la voz de Jorge: dominicano con 8 años en Chile. |
+| **Gánster de película** | Juega con la familia, el trato, la cita, el consigliere, la ficha y el alias. |
+| **Cercano** | Habla en plural, como **la familia**: dominicanos con 8 años en Chile. Suma a quien compra ("tú también eres de la familia"). Nunca nombra a una persona: no decimos "Jorge" ni "el Jefe". |
 | **Honesto** | Si se agota, lo dice. No inventa reseñas ni cifras. |
 
 ### El vocabulario de la casa
@@ -84,7 +84,7 @@ El papel (invitación, cuenta, periódico y telegrama) usa la clase `.paper-room
 | Tienda / top ventas | **Los más buscados** / "Más buscado" |
 | Sabor nuevo | "Recién llegado" |
 | Arma tu caja | **Llena tu maletín** (evitamos "arma": en clave gánster suena a armas) |
-| Reservar | **Pedir una cita con el Jefe** |
+| Reservar | **Pedir una cita** / "Pide tu cita con la casa" |
 | Carrito / boleta | **La cuenta de la casa** |
 | Formas de pago | **Así se cierra el trato** |
 | FAQ | **La letra chica** |
@@ -115,7 +115,7 @@ Los alias usan **jerga dominicana** y cuentan **a qué sabe** cada sabor. Tienen
 ### Sonamos así
 Todos estos textos salen de `js/voice.mjs`, la única fuente de microcopy.
 - "Maracuyá ya es de la familia."
-- "Se nos escapó Frambuesa. Lo saqué de tu cuenta, tranquilo."
+- "Se nos escapó Frambuesa. Lo sacamos de tu cuenta, tranquilo."
 - "Ese maletín quedó de jefe."
 - "La casa te guardó la cuenta: 3 bolsas. ¿Cerramos el trato?"
 - "¡Dímelo! Soy *El Gigante*, el consigliere de la casa."
@@ -135,8 +135,8 @@ Todos estos textos salen de `js/voice.mjs`, la única fuente de microcopy.
    - la invitación de marfil con doble filete y lacre;
    - el periódico "El Diario de la Casa", con fotos en blanco y negro y capitular;
    - la mesa de fieltro con tarjetas de metal negro;
-   - el telegrama para el Jefe.
-6. **La puerta:** intro de speakeasy ("¿Quién te manda?" → "Vengo de parte de Jorge"). Aparece solo en la primera visita, se puede saltar y no aparece con reducir movimiento.
+   - el telegrama para la casa.
+6. **La puerta:** intro de speakeasy ("¿Quién te manda?" → "Vengo de parte de la familia"). Aparece solo en la primera visita, se puede saltar y no aparece con reducir movimiento.
 7. **El foco de luz:** en el salón y en la cita, una luz cálida sigue al puntero.
 
 ## 6. Elevación
@@ -154,10 +154,13 @@ Las sombras son negras y profundas, con un filete dorado al 8–22 %, en lugar d
 - **Botón principal:** "plaqueta" de foil con un filete interior.
 - **Botones secundarios:** solo con borde dorado.
 - **Separadores:** filete con rombo art déco (`--rule`).
+- **Sin rayitas delante de los textos chicos:** las etiquetas (eyebrows) van solas o con su recuadro "Cap. I". Una línea corta antes del texto se ve genérica.
 
 ## 8. Movimiento
 - Titulares que suben palabra por palabra, la roseta girando lento (140 s), la bolsa flotando y la Bolsa corriendo (se pausa con hover).
-- Con **reducir movimiento** todo queda quieto y la puerta no aparece.
+- **v4.4 · La experiencia:** desplazamiento suave (Lenis), cursor con etiquetas, profundidad del salón, luz según la hora, numerales de capítulo con parallax, el recorrido I–IV, la ceremonia del sobre y el lacre, y los sonidos de la casa (apagados por defecto). Todo vive en `js/immersion.mjs`.
+- **Regla de dosis:** cada efecto tiene una sola tarea y no compite con el contenido. Nada se mueve más de 30 px, y nada parpadea ni se repite en bucle cerca del texto.
+- Con **reducir movimiento** todo queda quieto y la puerta no aparece. En pantallas táctiles no hay cursor ni desplazamiento suave.
 
 ## 9. Procesos
 

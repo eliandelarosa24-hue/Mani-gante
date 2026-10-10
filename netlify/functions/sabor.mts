@@ -50,7 +50,7 @@ export default async (req: Request, context: { params?: { id?: string } }) => {
       <ul class="flavor-prices">${formats.map((fm: any) => `<li><span>${esc(fm.name)}<small>${esc(fm.detail)}</small></span><strong>${formatCLP(unitPrice(f, fm.id))}</strong></li>`).join("")}</ul>
       <div class="flavor-ctas">
         ${f.available ? `<a class="btn btn-gold btn-lg" href="/?pedido=${f.id}.1#reservar">Pedir cita con ${esc(f.name)}</a>` : `<a class="btn btn-gold btn-lg" href="/#tienda">Avísame cuando vuelva</a>`}
-        <a class="btn btn-wa btn-lg" href="${whatsappLink(`Hola Jorge, quiero ${f.name} 🥜`)}" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        <a class="btn btn-wa btn-lg" href="${whatsappLink(`Hola MANI-GANTE, quiero ${f.name} 🥜`)}" target="_blank" rel="noopener">Pedir por WhatsApp</a>
       </div>
       <p class="allergen"><strong>Alérgenos:</strong> ${esc(ALLERGENS.note)}</p>
     </div>

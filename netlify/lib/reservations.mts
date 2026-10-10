@@ -40,7 +40,7 @@ export async function createReservation(raw: unknown, origin: string) {
 
   const campus = await getCampus();
   if (campus.away && (!campus.until || input.date <= campus.until)) {
-    return { ok: false as const, status: 409, errors: [campus.message || "Jorge no está en el campus esos días. Escríbele por WhatsApp para coordinar."] };
+    return { ok: false as const, status: 409, errors: [campus.message || "Esos días no estamos en el campus. Escríbenos por WhatsApp y lo coordinamos."] };
   }
 
   const { catalog, japanese } = await getLiveCatalog();

@@ -210,13 +210,13 @@ async function syncStock({ quiet = false } = {}) {
     sync.dataset.state = state.stockSource === "live" ? "online" : "fallback";
     $("#syncText").textContent = state.stockSource === "live"
       ? `Stock en vivo · actualizado ${isNaN(t) ? "recién" : t.toLocaleTimeString("es-CL", { hour: "2-digit", minute: "2-digit" })}`
-      : "Mostrando stock de respaldo · Jorge confirma por WhatsApp";
+      : "Mostrando stock de respaldo · lo confirmamos por WhatsApp";
     store.set("mg-stock-cache", { at: Date.now(), catalog: state.catalog });
   } catch {
     const cached = store.get("mg-stock-cache", null);
     if (cached?.catalog) state.catalog = cached.catalog;
     sync.dataset.state = "fallback";
-    $("#syncText").textContent = cached ? "Sin conexión · mostrando el último stock que vimos" : "Mostrando stock de respaldo · Jorge confirma por WhatsApp";
+    $("#syncText").textContent = cached ? "Sin conexión · mostrando el último stock que vimos" : "Mostrando stock de respaldo · lo confirmamos por WhatsApp";
   }
   state.synced = true;
   $(".hero-card")?.classList.remove("is-loading"); $(".hero-card")?.removeAttribute("aria-busy");
@@ -775,7 +775,7 @@ function renderHero() {
   const status = state.status?.campus || campusStatus();
   const pill = $("#livePill");
   pill.dataset.open = status.open; pill.querySelector("span").textContent = status.open ? "En campus ahora" : status.label;
-  $("#heroStatus").textContent = status.open ? "Jorge está en el campus ahora" : status.label;
+  $("#heroStatus").textContent = status.open ? "Estamos en el campus ahora" : status.label;
   $("#heroLiveDot").classList.toggle("on", status.open);
   const avail = available();
   $("#statAvailable").textContent = avail.length;
@@ -808,7 +808,7 @@ if ($("#heroBag")) $("#heroBag").innerHTML = bag(heroFlavor.color, "doypack", { 
 if ($("#heroPlate")) $("#heroPlate").textContent = `Ficha Nº ${heroFlavor.no} · ${heroFlavor.name} · alias «${heroFlavor.alias}»`;
 // Dónde vende Jorge y sus otros proyectos (salen de catalog.mjs → BUSINESS)
 const DAY_NAMES = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
-if ($("#spots")) $("#spots").innerHTML = `<p class="rc-label"><span>Dónde encontrarme</span></p>` + BUSINESS.locations.map((l) => `
+if ($("#spots")) $("#spots").innerHTML = `<p class="rc-label"><span>Dónde encontrarnos</span></p>` + BUSINESS.locations.map((l) => `
   <div class="spot${l.main ? " main" : ""}"><svg><use href="#i-pin"/></svg><div><strong>${esc(l.name)}</strong><span>${esc(l.detail)}</span>
   ${l.main ? `<ul class="spot-days">${SCHEDULE.map((d) => `<li class="${d.mode}"><b>${DAY_NAMES[d.day]}</b>${d.open}–${d.close}<em>${d.mode === "reservas" ? "solo reservas" : "en el campus"}</em></li>`).join("")}</ul>
   ${SCHEDULE.some((d) => d.notice) ? `<p class="spot-note">${SCHEDULE.filter((d) => d.notice).map((d) => DAY_NAMES[d.day]).join(" y ")}: ${esc(SCHEDULE.find((d) => d.notice).notice.toLowerCase())}.</p>` : ""}` : ""}</div></div>`).join("");
@@ -903,7 +903,7 @@ function renderDays() {
   el.innerHTML = days.length ? days.map((d) => {
     const [wd, rest] = d.long.split(", ");
     return `<button type="button" class="day" role="radio" data-day="${d.iso}" aria-checked="${d.iso === rf.day}"><small>${d.label === "Hoy" || d.label === "Mañana" ? d.label : wd}</small><strong>${rest || d.label}</strong></button>`;
-  }).join("") : `<p class="muted">${state.status?.campus?.away ? VOICE.away(state.status.campus.label) : "No quedan cupos esta semana."} Escríbele a Jorge por WhatsApp.</p>`;
+  }).join("") : `<p class="muted">${state.status?.campus?.away ? VOICE.away(state.status.campus.label) : "No quedan cupos esta semana."} Escríbenos por WhatsApp.</p>`;
   renderSlots();
 }
 function renderSlots() {
@@ -929,8 +929,8 @@ function renderRfNotice(day) {
   const wd = day ? new Date(`${day.iso}T12:00:00Z`).getUTCDay() : null;
   const sched = SCHEDULE.find((d) => d.day === wd);
   const msgs = [];
-  if (sched?.mode === "reservas") msgs.push(`${day.long.split(",")[0].replace(/^./, (c) => c.toUpperCase())}: Jorge solo entrega reservas de ${sched.open} a ${sched.close}. ${sched.notice || ""}`);
-  if (bags >= 10) msgs.push(`Pedido grande (${bags} bolsas): ideal reservarlo con un día de anticipación para que Jorge lo confite a tiempo.`);
+  if (sched?.mode === "reservas") msgs.push(`${day.long.split(",")[0].replace(/^./, (c) => c.toUpperCase())}: solo entregamos reservas de ${sched.open} a ${sched.close}. ${sched.notice || ""}`);
+  if (bags >= 10) msgs.push(`Pedido grande (${bags} bolsas): ideal reservarlo con un día de anticipación para confitarlo a tiempo.`);
   el.hidden = !msgs.length;
   el.innerHTML = msgs.map((m) => `<p>${esc(m)}</p>`).join("");
 }
@@ -994,7 +994,7 @@ function showReservationSuccess({ reservation: r, whatsappUrl }) {
       <h3 class="h3">¡Dímelo, ${esc(r.name)}! Quedó lista</h3>
       <code>${esc(r.code)}</code>
       <p class="muted">${esc(r.dateLabel || r.date)} · ${esc(r.time)} · ${esc(r.meetingPoint)}<br>${r.bags} bolsa${r.bags === 1 ? "" : "s"} · <strong>${formatCLP(r.total)}</strong></p>
-      <ol class="next-steps"><li class="done">Reserva creada</li><li>Envíala a Jorge por WhatsApp</li><li>${r.payment === "transferencia" ? "Transfiere y adjunta el comprobante" : "Paga con Mercado Pago y adjunta el comprobante"}</li></ol>
+      <ol class="next-steps"><li class="done">Reserva creada</li><li>Envíanosla por WhatsApp</li><li>${r.payment === "transferencia" ? "Transfiere y adjunta el comprobante" : "Paga con Mercado Pago y adjunta el comprobante"}</li></ol>
       <div class="save-row">
         <a class="btn btn-ghost" href="${icsFile(r)}" download="reserva-${esc(r.code)}.ics"><svg><use href="#i-cal"/></svg> Calendario (.ics)</a>
         <a class="btn btn-ghost" href="${googleCalendarUrl(r)}" target="_blank" rel="noopener"><svg><use href="#i-cal"/></svg> Google Calendar</a>
@@ -1002,7 +1002,7 @@ function showReservationSuccess({ reservation: r, whatsappUrl }) {
       </div>
     </div></div>
     <div class="ticket-stub"><span class="barcode" aria-hidden="true"></span>
-      <a class="btn btn-wa btn-lg" href="${whatsappUrl}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span>Enviar a Jorge</span></a>
+      <a class="btn btn-wa btn-lg" href="${whatsappUrl}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span>Enviar por WhatsApp</span></a>
       <p class="stub-links">${r.payment === "mercadopago" ? `<a class="link" href="${BUSINESS.mercadoPago}" target="_blank" rel="noopener">Pagar con Mercado Pago</a>` : `<a class="link" href="#pago">Ver cuentas para transferir</a>`}<button class="link" type="button" id="rfAgain">Hacer otra reserva</button></p></div>`;
   stampMoment(form);
   toast(VOICE.reserveOk(r.code), { tone: "success" });
@@ -1017,7 +1017,7 @@ function showReservationSuccess({ reservation: r, whatsappUrl }) {
 // ============================================================
 // Mis pedidos (historial local) + recuperación de carrito
 // ============================================================
-const STATUS_LABEL = { enviado: "Enviado a Jorge", pagado: "Pagado", recibido: "Recibido" };
+const STATUS_LABEL = { enviado: "Enviado a la casa", pagado: "Pagado", recibido: "Recibido" };
 function renderHistory() {
   const list = getOrders();
   $("#historyList").innerHTML = list.length ? list.map((o) => `
@@ -1157,7 +1157,7 @@ $("#reviewForm").addEventListener("submit", async (e) => {
   } catch { btn.disabled = false; btn.textContent = "Enviar nota"; toast(VOICE.networkError(), { tone: "error" }); }
 });
 
-$$("[data-wa]").forEach((a) => (a.href = whatsappLink("Hola Jorge, quiero hacer un pedido de MANI-GANTE 🥜")));
+$$("[data-wa]").forEach((a) => (a.href = whatsappLink("Hola MANI-GANTE, quiero hacer un pedido 🥜")));
 $("#year").textContent = new Date().getFullYear();
 $("#shareBtn").addEventListener("click", async () => {
   const data = { title: "MANI-GANTE", text: "Maní confitado a mano en 28 sabores", url: BUSINESS.url };

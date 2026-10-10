@@ -29,13 +29,13 @@ export const BUSINESS = {
   campus: "INACAP Temuco",
   // Dónde vende Jorge. El primero es el principal (con horario y reservas).
   locations: [
-    { id: "inacap", name: "INACAP Temuco", main: true, detail: "Mié 08:00–18:30 y jue 08:00–17:00 recorriendo el campus · mar y vie 08:00–12:30 solo con reserva (avisa con anticipación)" },
+    { id: "inacap", name: "INACAP Temuco", main: true, detail: "Mié 08:00–18:30 y jue 08:00–17:00 recorriendo el campus · mar y vie 08:00–12:30 solo con reserva (avísanos con anticipación)" },
     { id: "james-mundell", name: "Liceo Bicentenario James Mundell", main: false, detail: "Lunes a viernes, en horario escolar" },
   ],
   // Otros proyectos de Jorge (se muestran en "El Jefe" y en el pie). Deja url vacía hasta tener el link.
   ventures: [
     { name: "Red Vaeru", role: "Fundador", url: "https://redvaeru.netlify.app/", live: true,
-      text: "El otro proyecto de Jorge. Míralo en vivo aquí abajo y entra a conocer todo lo que hacen." },
+      text: "Otro proyecto de nuestra familia. Míralo en vivo aquí abajo y entra a conocer todo lo que hacen." },
   ],
   timezone: "America/Santiago",
   url: "https://manigante.netlify.app/",
@@ -52,10 +52,10 @@ export const PREMIUM_PRICE = 1500;
 // mode "campus": recorre el campus vendiendo y además entrega reservas.
 // mode "reservas": ese día no anda con maní para vender; solo entrega lo reservado.
 export const SCHEDULE = [
-  { day: 2, open: "08:00", close: "12:30", mode: "reservas", notice: "Avísale con anticipación (ideal el día anterior)" },
+  { day: 2, open: "08:00", close: "12:30", mode: "reservas", notice: "Avísanos con anticipación (ideal el día anterior)" },
   { day: 3, open: "08:00", close: "18:30", mode: "campus" },
   { day: 4, open: "08:00", close: "17:00", mode: "campus" },
-  { day: 5, open: "08:00", close: "12:30", mode: "reservas", notice: "Avísale con anticipación (ideal el día anterior)" },
+  { day: 5, open: "08:00", close: "12:30", mode: "reservas", notice: "Avísanos con anticipación (ideal el día anterior)" },
 ];
 
 // Reservas: con cuántos días de anticipación se aceptan.
@@ -72,7 +72,7 @@ export const RESERVATION_RULES = {
 // Alérgenos: texto honesto. Ajusta si Jorge certifica trazas.
 export const ALLERGENS = {
   contains: ["Maní"],
-  note: "Contiene maní. No tenemos certificación de trazas (frutos secos, leche, gluten): si tienes alergias, confírmalo con Jorge antes de comprar.",
+  note: "Contiene maní. No tenemos certificación de trazas (frutos secos, leche, gluten): si tienes alergias, confírmalo con nosotros antes de comprar.",
 };
 
 export const PROMOS = [
@@ -220,8 +220,8 @@ export const NUTRITION = [
 export const FAQ = [
   ["¿Puedo pedir con anticipación?", "Sí. Puedes reservar hasta con 4 días de anticipación desde la sección Reservar o con el asistente. Las reservas se confirman por WhatsApp y se pagan por transferencia o Mercado Pago."],
   ["¿Cómo sé que el maní está fresco?", "Se prepara en pequeños lotes durante la semana; no hay stock guardado por meses. La disponibilidad de cada sabor se actualiza en vivo en el catálogo."],
-  ["¿Dónde y cuándo te encuentro?", "En INACAP Temuco: miércoles de 08:00 a 18:30 y jueves de 08:00 a 17:00 Jorge recorre el campus (biblioteca, patios, pasillos). Martes y viernes, de 08:00 a 12:30, solo entrega reservas: avísale con anticipación, ideal el día anterior. También vende en el Liceo Bicentenario James Mundell de lunes a viernes."],
-  ["¿Puedo hacer un pedido grande?", "Sí. Para 10 bolsas o más, resérvalo (ideal para martes o viernes) o escríbele directo a Jorge por WhatsApp para coordinar."],
+  ["¿Dónde y cuándo te encuentro?", "En INACAP Temuco: miércoles de 08:00 a 18:30 y jueves de 08:00 a 17:00 recorremos el campus (biblioteca, patios, pasillos). Martes y viernes, de 08:00 a 12:30, solo entregamos reservas: avísanos con anticipación, ideal el día anterior. También estamos en el Liceo Bicentenario James Mundell de lunes a viernes."],
+  ["¿Puedo hacer un pedido grande?", "Sí. Para 10 bolsas o más, resérvalo (ideal para martes o viernes) o escríbenos directo por WhatsApp para coordinar."],
   ["¿Qué formas de pago aceptan?", "Cuenta RUT (BancoEstado), Mach, Mercado Pago (débito, crédito o saldo) y efectivo solo en compra presencial."],
   ["¿Puedo mezclar sabores?", "Sí. Agrega los sabores que quieras al carrito; se hace un solo pedido con el detalle completo."],
   ["¿Hacen envíos fuera de INACAP?", "La entrega es personal en INACAP Temuco y en el Liceo Bicentenario James Mundell. Si necesitas algo fuera de eso, escríbenos por WhatsApp y vemos la posibilidad."],

@@ -1,5 +1,32 @@
 # Changelog · MANI-GANTE
 
+## v4.4 · La experiencia de la Casa (2026-10-10)
+
+**La casa habla en plural**
+- Toda la web habla como **nosotros, la familia**, y suma a quien compra ("desde la primera bolsa, tú también eres de la familia"). Ya no se nombra a una persona: "Pide tu cita con la casa", "Estamos en el campus", "Escríbenos", "Dónde encontrarnos".
+- El Diario de la Casa lo firma **La Familia**. El consigliere (IA), los mensajes del servidor, las alertas de reposición y los links de WhatsApp también hablan en plural.
+- El único nombre propio que queda es el del **titular de las cuentas** en "Cómo pagar", porque el banco lo exige.
+- Nombre de ejemplo en los formularios: **Reina de la Rosa**.
+
+**Sin la rayita**
+- Se quitó la línea delante de los textos chicos (eyebrows). En el salón, entre "Casa Mani-Gante" y "Confitería de autor", queda un rombo art déco.
+
+**Inmersión de principio a fin** (todo con animación propia; con "reducir movimiento" o en pantallas táctiles la página queda igual de completa)
+1. **Desplazamiento suave** (Lenis, alojado en el sitio) en computadores. Medido con rueda real y CPU 4× más lenta: 6–7 tirones contra 19–20 del scroll nativo. Se desactiva solo cuando hay algo abierto encima (la cuenta, un diálogo o la puerta).
+2. **Cursor de la casa:** un anillo dorado acompaña al puntero y cambia según lo que hay debajo: "Ver ficha", "Mirar", "Entrar", "Suerte", "Copiar" y "Pruébame".
+3. **Profundidad del salón:** la roseta, el halo, la bolsa y el titular se mueven a distintas distancias según el puntero.
+4. **Luz del día:** el salón cambia de luz según la hora en Temuco (mañana dorada, tarde ámbar, noche azul profundo).
+5. **Bienvenida personal:** "Buenas tardes, *Reina*. Qué bueno tenerte de vuelta en la casa." Usa el nombre de la última reserva, solo en este teléfono.
+6. **Numerales de capítulo:** un I…IX grabado gigante detrás de cada sala, que viaja más lento que el contenido.
+7. **El recorrido** (I Elegir · II La cuenta · III La cita · IV El trato) en la cuenta y en la cita. Avanza solo.
+8. **La ceremonia:** al cerrar un pedido o una cita aparece un sobre de marfil, sale la tarjeta "Trato hecho · Ya eres de la familia, Reina" y cae el lacre MG.
+9. **Sonidos de la casa** (WebAudio, sin archivos): apagados por defecto; se encienden con el parlante del menú. Suenan un tintineo al agregar, el golpe del lacre más un acorde al cerrar el trato y un clic suave en los filtros.
+10. **El Diario se lee solo:** la cita del Diario se enciende palabra por palabra mientras bajas.
+
+**Calidad**
+- 64 pruebas Playwright pasan (se sumaron voz en plural sin nombres, sin rayita, recorrido, bienvenida y ceremonia). También pasa axe WCAG 2.2 AA en Noche y Marfil.
+- Service worker `mg-v4.4-2026.10.10`.
+
 ## v4.3 · 10 mejoras hacia la perfección (catálogo 2026.10.5)
 
 **Pedidos de Jorge**

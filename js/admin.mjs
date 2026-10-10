@@ -194,7 +194,7 @@ function renderAlerts() {
     const f = data.stock.catalog.find((x) => x.id === id);
     return `<div class="a-alert"><div class="a-card-head"><strong>${esc(nameOf(id))}</strong><span class="a-chip" data-tone="${f?.available ? "good" : "neutral"}">${f?.available ? "¡Ya hay!" : "Agotado"} · ${subs.length} esperando</span></div>
       <ul>${subs.map((s) => {
-        const msg = `Hola${s.name ? " " + s.name : ""}, volvió ${nameOf(id)} a MANI-GANTE. ¿Te guardo una bolsa? · Jorge`;
+        const msg = `Hola${s.name ? " " + s.name : ""}, volvió ${nameOf(id)} a MANI-GANTE. ¿Te guardamos una bolsa? · La familia MANI-GANTE`;
         const link = s.contact.includes("@") ? `mailto:${s.contact}?subject=${encodeURIComponent("Volvió " + nameOf(id))}&body=${encodeURIComponent(msg)}` : `https://wa.me/${s.contact.replace(/\D/g, "")}?text=${encodeURIComponent(msg)}`;
         return `<li>${esc(s.name || "Cliente")} · <a href="${link}" target="_blank" rel="noopener">${esc(s.contact)}</a></li>`;
       }).join("")}</ul>

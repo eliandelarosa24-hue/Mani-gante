@@ -125,7 +125,7 @@ if (ruleta) {
 // ------------------------------------------------------------
 // 4. Índice de capítulos (escritorio): I…IX con progreso
 // ------------------------------------------------------------
-const CHAPTERS = [["oficio", "La receta"], ["tienda", "Los más buscados"], ["caja", "El maletín"], ["reservar", "La cita"], ["historia", "El Jefe"], ["galeria", "Las pruebas"], ["pago", "El trato"], ["faq", "La letra chica"], ["opiniones", "La familia habla"]];
+const CHAPTERS = [["oficio", "La receta"], ["tienda", "Los más buscados"], ["caja", "El maletín"], ["reservar", "La cita"], ["historia", "La familia"], ["galeria", "Las pruebas"], ["pago", "El trato"], ["faq", "La letra chica"], ["opiniones", "La familia habla"]];
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
 function buildIndex() {
   const nav = document.createElement("nav");
@@ -186,3 +186,6 @@ addEventListener("online", () => { MG().toast?.("De vuelta en línea. Actualizan
 renderClock(); setInterval(renderClock, 30_000);
 renderAgain();
 addEventListener("mg:cart", renderAgain);
+
+// v4.4 · La experiencia de la Casa (cursor, desplazamiento suave, ceremonia, sonidos…)
+import("./immersion.mjs").catch(() => {});

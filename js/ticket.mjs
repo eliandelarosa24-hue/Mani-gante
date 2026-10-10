@@ -51,7 +51,7 @@ export async function downloadTicketPng(r) {
   g.fillStyle = "#0D0B09"; g.beginPath(); g.arc(40, 760, 22, 0, Math.PI * 2); g.arc(W - 40, 760, 22, 0, Math.PI * 2); g.fill();
   g.setLineDash([10, 8]); g.strokeStyle = "rgba(42,30,20,.3)"; g.lineWidth = 2; g.beginPath(); g.moveTo(70, 760); g.lineTo(W - 70, 760); g.stroke(); g.setLineDash([]);
   g.fillStyle = "#2A1E14"; g.font = "600 36px 'Bodoni Moda', Georgia, serif"; g.fillText("MANI-GANTE", 90, 130);
-  g.fillStyle = "#6E5220"; g.font = "800 18px 'Instrument Sans', sans-serif"; g.fillText("INVITACIÓN · CITA CON EL JEFE · INACAP TEMUCO", 90, 168);
+  g.fillStyle = "#6E5220"; g.font = "800 18px 'Instrument Sans', sans-serif"; g.fillText("INVITACIÓN · TU CITA CON LA CASA · INACAP TEMUCO", 90, 168);
   g.fillStyle = "#7A1E31"; g.font = "800 96px 'Big Shoulders', 'Arial Narrow', sans-serif"; g.fillText(r.code, 90, 300);
   g.fillStyle = "#2A1E14"; g.font = "700 30px 'Instrument Sans', sans-serif";
   g.fillText(`${r.dateLabel || r.date} · ${r.time}`, 90, 380);
@@ -60,7 +60,7 @@ export async function downloadTicketPng(r) {
   for (const l of (r.lines || []).slice(0, 6)) { g.fillText(`${l.name} × ${l.qty}`, 90, y); y += 36; }
   g.font = "800 70px 'Big Shoulders', 'Arial Narrow', sans-serif"; g.fillText(formatCLP(r.total), 90, 870);
   g.fillStyle = "#6F5D4B"; g.font = "600 22px 'Instrument Sans', sans-serif"; g.fillText(`${r.bags} bolsas · muestra este ticket al retirar`, 90, 914);
-  g.fillStyle = "#7A1E31"; g.font = "400 46px 'Pinyon Script', cursive"; g.fillText("Para gente elegante y gánster · Jorge", 90, 990);
+  g.fillStyle = "#7A1E31"; g.font = "400 46px 'Pinyon Script', cursive"; g.fillText("Para gente elegante y gánster · La familia MANI-GANTE", 90, 990);
   const a = document.createElement("a");
   a.download = `ticket-${r.code}.png`; a.href = c.toDataURL("image/png"); a.click();
 }

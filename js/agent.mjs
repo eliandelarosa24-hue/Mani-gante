@@ -13,7 +13,7 @@ const HISTORY_KEY = "mg-agent-history";
 const QUICK = ["¿Qué hay disponible hoy?", "Recomiéndame un sabor", "Quiero reservar", "¿Dónde te encuentro?", "¿Cómo pago?"];
 const TOOL_LABELS = {
   check_availability: "Revisando el stock en vivo…",
-  get_schedule: "Mirando el horario de Jorge…",
+  get_schedule: "Mirando nuestro horario…",
   create_reservation: "Creando tu reserva…",
   add_to_cart: "Agregando a tu carrito…",
 };
@@ -93,7 +93,7 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape" && panel.cl
 function greet() {
   if (history.length) { history.forEach((m) => bubble(m.role, m.content)); renderQuick(); return; }
   const s = campusStatus();
-  bubble("assistant", `¡Dímelo! Soy *El Gigante*, el consigliere de la casa 🥜\nTe digo qué sabores están en circulación, te recomiendo cómplices y te dejo la cita con el Jefe lista para WhatsApp.\n\nAhora mismo: ${s.open ? "Jorge está en el campus" : s.label.toLowerCase()}. ¿En qué te ayudo?`);
+  bubble("assistant", `¡Dímelo! Soy *El Gigante*, el consigliere de la casa 🥜\nTe digo qué sabores están en circulación, te recomiendo cómplices y te dejo tu cita lista para WhatsApp.\n\nAhora mismo: ${s.open ? "estamos en el campus" : s.label.toLowerCase()}. ¿En qué te ayudo?`);
   renderQuick();
 }
 
@@ -201,7 +201,7 @@ function localAnswer(question) {
     renderAction({ kind: "link", url: "#reservar", label: "Ir a reservar" });
   } else if (has(t, "donde", "ubica", "encuentro", "campus", "inacap", "horario", "hora", "abierto", "estas")) {
     const s = campusStatus();
-    answer = `Jorge recorre el campus ${BUSINESS.campus} (biblioteca, patios y pasillos). ${s.open ? `Ahora está en el campus, ${s.label.toLowerCase()}.` : `${s.label}.`} Si reservas, eliges el punto de encuentro y la hora.`;
+    answer = `Recorremos el campus ${BUSINESS.campus} (biblioteca, patios y pasillos). ${s.open ? `Ahora estamos en el campus, ${s.label.toLowerCase()}.` : `${s.label}.`} Si reservas, eliges el punto de encuentro y la hora.`;
   } else if (has(t, "pag", "transfer", "cuenta", "mercado", "efectivo", "mach")) {
     answer = "Aceptamos Cuenta RUT (BancoEstado), Mach, Mercado Pago (débito, crédito o saldo) y efectivo solo en compra presencial. Las reservas se confirman enviando el comprobante por WhatsApp.";
     renderAction({ kind: "link", url: "#pago", label: "Ver datos de pago" });
@@ -210,7 +210,7 @@ function localAnswer(question) {
   } else if (has(t, "promo", "descuento", "oferta", "combo")) {
     answer = "Promos activas: los viernes compras 4 y la 5ª va gratis; y si subes una historia etiquetando @mani_gant tienes 10% de descuento (no acumulable). Los combos Estudiante (3), Grupo (6) y Profe (10) se arman solos desde la web.";
   } else if (has(t, "alerg", "gluten", "vegano", "azucar", "caloria", "nutri")) {
-    answer = "Cada 100 g aportan 498 kcal, 13,2 g de proteínas y 42 g de azúcares (porción de 25 g ≈ 124 kcal). Es maní, así que no es apto para alérgicos al maní. Para trazas u otros ingredientes, mejor confírmalo directo con Jorge.";
+    answer = "Cada 100 g aportan 498 kcal, 13,2 g de proteínas y 42 g de azúcares (porción de 25 g ≈ 124 kcal). Es maní, así que no es apto para alérgicos al maní. Para trazas u otros ingredientes, mejor confírmalo con nosotros por WhatsApp.";
   } else if (has(t, "envio", "delivery", "despacho", "domicilio")) {
     answer = FAQ.find(([q]) => q.includes("envíos"))[1];
   } else if (has(t, "hola", "buenas", "wena", "hey")) {
@@ -218,8 +218,8 @@ function localAnswer(question) {
   } else if (has(t, "gracias", "vale", "ok", "listo")) {
     answer = "¡A ti! Cualquier antojo, aquí estoy 🥜";
   } else {
-    answer = "Esa mejor te la responde Jorge directo. Te dejo el WhatsApp listo 👇";
-    renderAction({ kind: "whatsapp", url: whatsappLink(`Hola Jorge, tengo una consulta: ${question}`), label: "Preguntarle a Jorge" });
+    answer = "Esa te la respondemos mejor directo por WhatsApp. Te lo dejo listo 👇";
+    renderAction({ kind: "whatsapp", url: whatsappLink(`Hola MANI-GANTE, tengo una consulta: ${question}`), label: "Escribirle a la casa" });
   }
   // La acción se renderiza antes del texto: reordenamos para que el texto quede arriba.
   const actionEl = log.lastElementChild?.classList.contains("msg-action") ? log.lastElementChild : null;

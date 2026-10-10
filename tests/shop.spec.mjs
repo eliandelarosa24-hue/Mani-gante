@@ -157,3 +157,24 @@ test("v4.3: 'lo de siempre' repite el último pedido", async ({ page }) => {
   await page.locator("#heroAgain button").click();
   await expect(page.locator("#cartCount")).toHaveText("2");
 });
+
+test("v4.4: la casa habla en plural, sin rayita y con el recorrido", async ({ page }) => {
+  await page.goto("/");
+  // Fuera de los datos bancarios, ningún texto visible nombra a una persona
+  const text = await page.evaluate(() => { const c = document.body.cloneNode(true); c.querySelectorAll(".pay-card, script").forEach((n) => n.remove()); return c.innerText; });
+  expect(text).not.toMatch(/Jorge|el Jefe/);
+  const before = await page.locator(".section .eyebrow").first().evaluate((el) => getComputedStyle(el, "::before").content);
+  expect(["none", "normal"]).toContain(before);
+  await expect(page.locator("#reserveJourney li")).toHaveCount(4);
+  await expect(page.locator(".ch-numeral").first()).toBeAttached();
+});
+
+test("v4.4: bienvenida con el nombre y ceremonia al cerrar el trato", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.addInitScript(() => localStorage.setItem("mg-name", JSON.stringify("Reina de la Rosa")));
+  await page.goto("/?nodoor=1");
+  await expect(page.locator("#heroHello")).toContainText("Reina");
+  await page.evaluate(() => dispatchEvent(new CustomEvent("mg:order")));
+  await expect(page.locator(".ceremony")).toContainText("Trato hecho");
+  await expect(page.locator("#reserveJourney li.done")).toHaveCount(4);
+});

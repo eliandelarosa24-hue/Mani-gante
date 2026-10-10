@@ -34,7 +34,7 @@ export async function processBackInStock(available: Array<{ id: string; name: st
     for (const s of list.filter((x) => !x.notifiedAt)) {
       const ok = await notifyCustomer(s.contact, {
         title: `Volvió ${f.name} a MANI-GANTE`,
-        text: `Hola${s.name ? " " + s.name : ""}, volvió ${f.name}. Resérvalo en ${BUSINESS.url}#tienda antes de que se acabe.\n\nJorge · MANI-GANTE`,
+        text: `Hola${s.name ? " " + s.name : ""}, volvió ${f.name}. Resérvalo en ${BUSINESS.url}#tienda antes de que se acabe.\n\nLa familia MANI-GANTE`,
         summary: f.name,
       });
       if (ok) { s.notifiedAt = new Date().toISOString(); s.channelOk = true; sent++; }
