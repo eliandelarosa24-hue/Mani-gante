@@ -1,0 +1,106 @@
+# Changelog · MANI-GANTE
+
+## v3.0 · catálogo 2026.10.2 (octubre 2026)
+
+Leyenda: ✅ implementada · 🟡 parcial (detalle en el plan de pendientes)
+
+**Resumen: 41 ✅ · 9 🟡.** 48 pruebas Playwright pasan en escritorio y móvil (Pixel 7), incluido axe WCAG 2.2 AA en modo claro y oscuro.
+
+### Diseño y percepción premium
+| # | Mejora | Estado | Dónde |
+|---|---|---|---|
+| 1 | Micro-interacciones de papel real | ✅ | Tilt 3D con sombra dinámica y brillo de papel (`js/tilt.mjs`, `.paper-sheen`) sobre el grano. Solo con puntero fino y sin "reducir movimiento". |
+| 2 | Elevación de 4 niveles con sombra cálida | ✅ | `--primitive-elevation-1…4` → `--elevation-card/raised/overlay/modal` (claro y oscuro) |
+| 3 | Tipografía óptica | ✅ | Ejes `opsz`, `SOFT` y `WONK` de Fraunces (fuente completa autoalojada) + tracking por rol |
+| 4 | Escala tipográfica y spacing de 8 pt en tokens | ✅ | `design/tokens.json` → `css/tokens.css`; documentado en la guía de marca §7 |
+| 5 | Skeletons y estados vacíos con bolsa y voz de Jorge | ✅ | Bolsa en la boleta vacía y en búsquedas sin resultado; skeleton en "Estado en vivo"; textos en `js/voice.mjs` |
+| 6 | Entradas cinematográficas GSAP | ✅ | `js/motion.mjs`: palabras que suben desde una máscara, clip-path y stagger de la tienda. Con reduced-motion no se anima nada. |
+| 7 | Hero editorial con jerarquía de CTAs | ✅ | Kicker, un CTA principal dorado y un link secundario (`.hero-link`) |
+| 8 | Sello "Hecho a mano" contextual | ✅ | `stampMoment()` al completar una caja, una reserva o un pedido |
+| 9 | Bolsa generativa más realista | ✅ | `js/art.mjs`: luz, reflejo, fuelle y muesca; celofán con arrugas y doypack con ventana |
+| 10 | Dark mode pensado | ✅ | Valores propios (kraft tostado, oro de texto, grano 8 %, sombras más profundas) generados por `build-tokens.py` |
+| 11 | 404 memorable | ✅ | `404.html` con 3 sabores sugeridos y el Gigante; `/sabor/inexistente` también responde con la página de marca |
+| 12 | Íconos PWA y splash | ✅ | Maskable 192/512, monocromo, splash para iOS y shortcuts en el manifest |
+
+### UX y conversión
+| # | Mejora | Estado | Dónde |
+|---|---|---|---|
+| 13 | Carrito persistente y recuperación | ✅ | localStorage + toast "Tu boleta te esperó" + link `?pedido=` para compartir o recuperar por WhatsApp |
+| 14 | Promo de viernes gamificada | ✅ | `fridayPromo()` en catalog: cinta superior + barra en la boleta + mensaje de WhatsApp |
+| 15 | Quick view completa | ✅ | Foto ↔ ilustración, "va bien con", alérgenos y CTAs para reservar, preguntar y ver la ficha |
+| 16 | Reserva en un flujo con ticket en vivo | ✅ | `#rfLive` (aria-live), cupos por bloque y medio de pago |
+| 17 | Post-reserva: ticket guardable, .ics y wallet | 🟡 | PNG, .ics y Google Calendar listos. **Falta Apple/Google Wallet.** |
+| 18 | Quiz más profundo y guardado | ✅ | 4 preguntas (con intensidad); se guarda en el dispositivo y se puede compartir |
+| 19 | Arma tu caja con preview real | ✅ | Bolsas reales en cada espacio + "Sorpréndeme" + sello |
+| 20 | Upsell inteligente | ✅ | "Va chévere con lo tuyo" en la boleta; el agente ofrece 1 complemento (`pairs`) por conversación |
+| 21 | Checkout híbrido con estado | 🟡 | Transferencia / Mercado Pago / efectivo; estado "ya pagué → recibido" en Mis pedidos. **Falta el cobro verificado de Mercado Pago** (Checkout Pro + webhook). |
+| 22 | Avísame cuando vuelva | ✅ | `/api/alerts` + panel con los avisos pendientes (WhatsApp o mail en un toque) |
+| 23 | Historial de pedidos | ✅ | `js/history.mjs` + diálogo Mis pedidos (repetir, ya pagué, recibido, borrar) |
+| 24 | Filtros sticky | ✅ | `.shop-bar` sticky: Disponibles / Top / Nuevos + buscador |
+
+### Performance y calidad
+| # | Mejora | Estado | Dónde |
+|---|---|---|---|
+| 25 | Fuentes locales y critical CSS | 🟡 | Google Fonts eliminado; fuentes autoalojadas con preload y fallbacks métricos. **Falta inline del critical CSS.** |
+| 26 | Lazy-load, fetchpriority y decoding async | ✅ | Imágenes bajo el fold con lazy y async; hero con `fetchpriority="high"` |
+| 27 | Service Worker y catálogo offline | ✅ | `sw.js` + `offline.html`. Nunca cachea admin, el agente ni las reservas. |
+| 28 | Code-splitting | ✅ | `agent.mjs` y `motion.mjs` (y GSAP) se cargan bajo demanda. `art.mjs` queda en el bundle principal porque pinta la primera vista. |
+| 29 | Core Web Vitals | ✅ | LCP, CLS, INP, FCP y TTFB → `/api/events` → panel (con ícono y etiqueta) |
+| 30 | Tests Playwright | ✅ | `tests/`: tienda (9), API (6), accesibilidad (9), × escritorio y móvil |
+| 31 | TypeScript + Zod | 🟡 | Todo el backend de negocio en `.mts` + Zod con mensajes en español. **El frontend sigue en JS** (sin build step). |
+| 32 | Toasts unificados con voz de marca | ✅ | `toast()` en `js/ui.mjs` + textos en `js/voice.mjs` |
+
+### Backend, gestión y operaciones
+| # | Mejora | Estado | Dónde |
+|---|---|---|---|
+| 33 | Panel admin | ✅ | `/admin.html`: reservas del día, entregas, stock manual, métricas del agente |
+| 34 | Stock robusto | ✅ | Webhook `pushStock` → Blobs (60 s) → último conocido → catálogo local |
+| 35 | Notificaciones unificadas | 🟡 | WhatsApp Cloud + email (Resend) + Sheets en `notify.mts`. **Faltan las push web** (requiere claves VAPID). |
+| 36 | Analytics de negocio y dashboard | ✅ | `/api/events` + gráficos de 14 días en el panel (paleta validada para daltonismo, vista en tabla) |
+| 37 | Inventario por lote | ✅ | Lotes y ventas por lote, solo en el panel |
+| 38 | Capacidad por slot | ✅ | `slotCapacity: 6` en catalog; los bloques llenos se bloquean y la web muestra "quedan N" |
+| 39 | Export CSV | ✅ | `/api/admin/export.csv` (UTF-8 con BOM para Excel) |
+| 40 | Toggle "Jorge no está" | ✅ | Frena las reservas y se refleja en la web y en el agente |
+| 41 | Versionado de catálogo | ✅ | `CATALOG_VERSION` + `CATALOG_CHANGELOG`; el historial queda en el panel |
+| 42 | Rate limiting y anti-abuso | ✅ | Límite por IP y ruta, same-origin, honeypot y token admin con comparación segura |
+
+### SEO y growth
+| # | Mejora | Estado | Dónde |
+|---|---|---|---|
+| 43 | Páginas de sabor con schema Product | ✅ | `/sabor/:id` (Product + Offer + Breadcrumb) + sitemap dinámico |
+| 44 | "El oficio" como blog | ✅ | `oficio.html` (Article schema). Los textos son borrador para Jorge. |
+| 45 | Schema completo | ✅ | FoodEstablishment, ItemList, FAQPage, WebSite, Article y BreadcrumbList (`npm run seo`) |
+| 46 | Open Graph dinámico | 🟡 | Una imagen OG por sabor (33), generada desde `design/banners/flavor-og.html`. **No se genera en runtime**: hay que regenerarla al agregar un sabor. |
+| 47 | Feed UGC / Instagram | 🟡 | Galería UGC curada desde el panel. **Falta la conexión con la API de Instagram.** |
+
+### Accesibilidad y pulido
+| # | Mejora | Estado | Dónde |
+|---|---|---|---|
+| 48 | WCAG 2.2 AA, focus premium y teclado | ✅ | axe sin violaciones (claro y oscuro, quick view, boleta, páginas secundarias); foco atrapado e `inert`; anillo de foco con token |
+| 49 | i18n es-CL + en | 🟡 | Interfaz y navegación en inglés. **El catálogo, el agente y los textos largos siguen en español.** |
+| 50 | Design system documentado | 🟡 | `docs/design-system.md` con fichas listas para Storybook o MDX. **Falta montar Storybook.** |
+
+### Otros cambios
+- **Voz de marca**: Jorge es dominicano y vive en Chile. Los textos de la web y del agente mezclan con suavidad el dominicano ("chévere", "dímelo", "mi pana") con el chileno ("al tiro", "bacán"). Ver guía de marca §3.
+- **Seguridad**: el panel exige un `ADMIN_TOKEN` de al menos 12 caracteres; el webhook de stock exige secreto.
+- **Eliminados**:
+  - `netlify/functions/reserve.mjs`, `netlify/lib/stock.mjs` y `netlify/lib/notify.mjs`, reemplazados por sus versiones `.mts`;
+  - `sitemap.xml` estático, reemplazado por el dinámico.
+
+---
+
+## Plan de pendientes
+
+| Prioridad | Tarea | Qué se necesita |
+|---|---|---|
+| Alta | Revisar contenido | Jorge: horario real (`SCHEDULE`), textos de "El oficio", notas de sabores, qué sabores son **nuevos** (`NEW_IDS`, hoy vacío) y alérgenos |
+| Alta | Configurar Netlify | `ADMIN_TOKEN`, `ANTHROPIC_API_KEY`, `STOCK_WEBHOOK_SECRET` + activador `pushStock` en Apps Script |
+| Media | #21 Mercado Pago verificado | Cuenta de MP, Access Token → función `/api/pay` (Checkout Pro) + webhook que marque la reserva como pagada |
+| Media | #35 Push web | Claves VAPID, suscripción en `sw.js` y envío en `alerts.mts` (avisos de "volvió tu sabor") |
+| Media | #17 Wallet | Certificado de Apple Developer (Pass Type ID) / Google Wallet issuer, más una función que firme el pase |
+| Media | #47 Instagram | Cuenta Business + token de Instagram Graph API → función con caché diaria que alimente `.ugc` |
+| Baja | #25 Critical CSS | Script que extraiga el CSS del primer pantallazo y lo inserte inline en `index.html` (opcional, sin build obligatorio) |
+| Baja | #46 OG en runtime | Netlify Edge Function con `og_edge` o un satori equivalente, si el catálogo crece mucho |
+| Baja | #31 Frontend tipado | JSDoc + `// @ts-check` en `js/*.mjs` (tipado sin build) |
+| Baja | #49 i18n completa | Nombres y notas en inglés en `catalog.mjs` + idioma en el prompt del agente |
+| Baja | #50 Storybook | Seguir los pasos de `docs/design-system.md` → "Llevarlo a Storybook" |

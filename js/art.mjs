@@ -69,7 +69,7 @@ export function bag(color, format = "doypack", { label = "", cls = "bag" } = {})
 
   if (format === "celofan") {
     const body = "M22 44 Q20 40 26 38 L94 38 Q100 40 98 44 L103 136 Q103 144 95 144 L25 144 Q17 144 17 136 Z";
-    return `<svg class="${cls}" viewBox="0 0 120 160" role="img" aria-label="${label}" focusable="false">
+    return `<svg class="${cls}" viewBox="0 0 120 160" ${label ? `role="img" aria-label="${label}"` : `aria-hidden="true"`} focusable="false">
       <defs>${nutGrad}${lightGrad}<clipPath id="${clip}"><path d="${body}"/></clipPath>
         <linearGradient id="${kraft}" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".25" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset=".92" stop-color="#fff" stop-opacity=".35"/></linearGradient></defs>
       <ellipse cx="60" cy="151" rx="46" ry="6" fill="#000" opacity=".08"/><ellipse cx="60" cy="149" rx="36" ry="3.5" fill="#000" opacity=".16"/>
@@ -88,7 +88,7 @@ export function bag(color, format = "doypack", { label = "", cls = "bag" } = {})
   }
 
   const body = "M18 30 Q18 22 26 22 L94 22 Q102 22 102 30 L104 138 Q104 146 96 146 L24 146 Q16 146 16 138 Z";
-  return `<svg class="${cls}" viewBox="0 0 120 160" role="img" aria-label="${label}" focusable="false">
+  return `<svg class="${cls}" viewBox="0 0 120 160" ${label ? `role="img" aria-label="${label}"` : `aria-hidden="true"`} focusable="false">
     <defs>${nutGrad}${lightGrad}
       <linearGradient id="${shadeId}" x1="0" x2="1"><stop offset="0" stop-color="#3a2410" stop-opacity=".28"/><stop offset=".22" stop-color="#3a2410" stop-opacity="0"/><stop offset=".7" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#3a2410" stop-opacity=".22"/></linearGradient>
       <linearGradient id="${kraft}" x1="0" x2="1"><stop offset="0" stop-color="#b98d58"/><stop offset=".18" stop-color="#d9b886"/><stop offset=".55" stop-color="#cfa872"/><stop offset=".85" stop-color="#c39762"/><stop offset="1" stop-color="#a87c4a"/></linearGradient>

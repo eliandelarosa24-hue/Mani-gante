@@ -217,9 +217,11 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .craft-counter { position: absolute; left: 20px; bottom: 18px; color: #fff; font-family: var(--serif); display: flex; align-items: baseline; gap: 6px; text-shadow: 0 2px 20px rgba(0,0,0,.5); }
 .craft-counter b { font-size: 3rem; font-weight: 400; line-height: 1; }
 .craft-steps { list-style: none; display: grid; gap: 0; }
-.craft-step { padding: clamp(28px, 6vh, 64px) 0; border-top: 1px solid var(--line); opacity: .38; transition: opacity .6s var(--ease); min-height: 38vh; }
-.craft-step.is-active { opacity: 1; }
-.craft-n { font-family: var(--serif); font-style: italic; color: var(--gold); font-size: 1.1rem; }
+.craft-step { padding: clamp(28px, 6vh, 64px) 0; border-top: 1px solid var(--line); transition: color .6s var(--ease); min-height: 38vh; color: var(--subtle); }
+.craft-step:not(.is-active) p, .craft-step:not(.is-active) .hand { color: var(--subtle); }
+.craft-step.is-active { border-top-color: var(--gold); }
+.craft-step.is-active { color: var(--text); }
+.craft-n { font-family: var(--serif); font-style: italic; color: var(--gold-ink); font-size: 1.1rem; }
 .craft-step h3 { font-family: var(--serif); font-weight: 450; font-size: clamp(1.8rem, 3vw, 2.6rem); line-height: 1.05; margin: 10px 0 14px; letter-spacing: -.015em; }
 .craft-step p { color: var(--muted); max-width: 44ch; font-size: 1.04rem; }
 .craft-step .hand { color: var(--clay); margin-top: 14px; transform: rotate(-2deg); display: inline-block; }
