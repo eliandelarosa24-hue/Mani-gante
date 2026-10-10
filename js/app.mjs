@@ -1,8 +1,8 @@
 import {
-  BUSINESS, FORMATS, FLAVORS, JAPANESE, COMBOS, FAQ, NUTRITION, CATEGORY_ORDER, RESERVATION_RULES, STOCK_API_URL, ALLERGENS,
+  BUSINESS, FORMATS, FLAVORS, JAPANESE, COMBOS, FAQ, NUTRITION, CATEGORY_ORDER, RESERVATION_RULES, STOCK_API_URL, ALLERGENS, SCHEDULE,
   mergeRemoteStock, formatCLP, unitPrice, slug, campusStatus, reservableDays, buildReservation, whatsappLink, fridayPromo, isNewFlavor,
 } from "./catalog.mjs";
-import { bag, peanuts as swatch, stamp, guilloche, monogram } from "./art.mjs";
+import { bagImg as bag, peanutsImg as swatch, stamp, guillocheImg, monogram } from "./art.mjs";
 import { VOICE } from "./voice.mjs";
 import { toast, trapFocus, stampMoment } from "./ui.mjs";
 import { track } from "./analytics.mjs";
@@ -148,7 +148,7 @@ $("#filters").addEventListener("click", (e) => {
 for (const container of [grid, gridJp]) {
   container.addEventListener("click", (e) => {
     const inc = e.target.closest("[data-inc]"), dec = e.target.closest("[data-dec]"), quick = e.target.closest("[data-quick]"), alert = e.target.closest("[data-alert]");
-    if (inc) changeQty(inc.dataset.inc, +1, { from: inc.closest(".card")?.querySelector(".card-art") });
+    if (inc) { plusOne(inc, "+1"); changeQty(inc.dataset.inc, +1, { from: inc.closest(".card")?.querySelector(".card-art") }); pulseCard(inc.dataset.inc); }
     else if (dec) changeQty(dec.dataset.dec, -1);
     else if (alert) openAlert(alert.dataset.alert);
     else if (quick) openQuick(quick.dataset.quick);
@@ -230,6 +230,49 @@ function pruneCart() {
   }
   if (removed.length) { toast(VOICE.removedSoldOut(removed.join(", ")), { tone: "info" }); saveCart(); }
 }
+// ============================================================
+// Microanimaciones (todas respetan "reducir movimiento")
+// ============================================================
+/** Las cifras de dinero "ruedan" hasta el nuevo valor, como un contador de casino. */
+function setMoney(el, value) {
+  if (!el) return;
+  const from = Number(el.dataset.v ?? value);
+  el.dataset.v = value;
+  if (reduceMotion || from === value || !el.isConnected) { el.textContent = formatCLP(value); return; }
+  const t0 = performance.now(), dur = 420;
+  cancelAnimationFrame(el._raf);
+  const step = (t) => {
+    const k = Math.min(1, (t - t0) / dur), e = 1 - (1 - k) ** 3;
+    el.textContent = formatCLP(Math.round(from + (value - from) * e));
+    if (k < 1) el._raf = requestAnimationFrame(step);
+  };
+  el._raf = requestAnimationFrame(step);
+}
+/** Un "+1" dorado que sube desde el botón al agregar. */
+function plusOne(anchor, text) {
+  if (reduceMotion || !anchor?.getBoundingClientRect) return;
+  const r = anchor.getBoundingClientRect(), el = document.createElement("span");
+  el.className = "plus-one"; el.textContent = text; el.setAttribute("aria-hidden", "true");
+  el.style.left = `${r.left + r.width / 2}px`; el.style.top = `${r.top}px`;
+  document.body.append(el);
+  el.animate([{ transform: "translate(-50%, 0) scale(.6)", opacity: 0 }, { transform: "translate(-50%, -18px) scale(1.15)", opacity: 1, offset: .3 }, { transform: "translate(-50%, -54px) scale(1)", opacity: 0 }], { duration: 900, easing: "cubic-bezier(.2,.8,.2,1)" }).onfinish = () => el.remove();
+}
+/** La ficha agregada se ilumina un instante. */
+function pulseCard(id) {
+  if (reduceMotion) return;
+  requestAnimationFrame(() => $$(`.card[data-id="${id}"]`).forEach((c) => c.animate([{ boxShadow: "0 0 0 1px #d2ae6d, 0 0 0 0 rgba(210,174,109,.55)" }, { boxShadow: "0 0 0 1px #d2ae6d, 0 0 0 14px rgba(210,174,109,0)" }], { duration: 700, easing: "ease-out" })));
+}
+/** Botones dorados "magnéticos": se acercan sutilmente al puntero. */
+if (!reduceMotion && matchMedia("(hover: hover) and (pointer: fine)").matches) {
+  document.addEventListener("pointermove", (e) => {
+    const b = e.target.closest?.(".btn-gold, .finder, .agent-fab");
+    if (!b) return;
+    const r = b.getBoundingClientRect();
+    b.style.translate = `${((e.clientX - r.left) / r.width - .5) * 8}px ${((e.clientY - r.top) / r.height - .5) * 6}px`;
+    if (!b._mag) { b._mag = true; b.addEventListener("pointerleave", () => { b.style.translate = ""; b._mag = false; }, { once: true }); }
+  }, { passive: true });
+}
+
 function changeQty(id, delta, { from = null, silent = false } = {}) {
   const f = byId().get(id);
   if (!f || (delta > 0 && !f.available)) return;
@@ -325,8 +368,8 @@ function renderCart() {
   const { lines, bags, total } = cartTotals();
   $("#cartCount").hidden = bags === 0; $("#cartCount").textContent = bags;
   $("#cartSub").textContent = `N° ${String(bags).padStart(3, "0")} · ${bags} bolsa${bags === 1 ? "" : "s"} · ${FORMATS[state.format].name}`;
-  $("#cartTotal").textContent = formatCLP(total);
-  $("#dockCount").textContent = `${bags} bolsa${bags === 1 ? "" : "s"}`; $("#dockTotal").textContent = formatCLP(total);
+  setMoney($("#cartTotal"), total);
+  $("#dockCount").textContent = `${bags} bolsa${bags === 1 ? "" : "s"}`; setMoney($("#dockTotal"), total);
   $("#dock").hidden = bags === 0;
   document.body.classList.toggle("has-cart", bags > 0);
   $("#cartFoot").hidden = bags === 0;
@@ -611,7 +654,7 @@ function renderBox() {
   $("#boxSlots").style.setProperty("--cols", box.size.bags === 10 ? 5 : 3);
   const filled = box.slots.filter(Boolean);
   const total = filled.reduce((s, id) => s + unitPrice(m.get(id), "celofan"), 0);
-  $("#boxTotal").textContent = formatCLP(total);
+  setMoney($("#boxTotal"), total);
   $("#boxCount").textContent = `${filled.length} / ${box.size.bags}`;
   $("#boxName").textContent = box.size.name;
   $("#boxAdd").disabled = filled.length === 0;
@@ -682,14 +725,24 @@ function renderMarquees() {
     $("#marqueeTrack").innerHTML = items + items;
   }
   if (!$("#footerMarquee").childElementCount) {
-    const words = ["Para gente gánster y elegante", "Hecho a mano en Temuco", "Receta de la casa", "Lotes chicos", "Directo al campus"].map((w) => `<span>${w}</span>`).join("");
+    const words = ["Para gente elegante y gánster", "Hecho a mano en Temuco", "Receta de la casa", "Lotes chicos", "Directo al campus"].map((w) => `<span>${w}</span>`).join("");
     $("#footerMarquee").innerHTML = words + words + words + words;
   }
 }
 // Arte de la casa: bolsa del salón, roseta guilloché y monograma del lacre
 const heroFlavor = FLAVORS[0];
 if ($("#heroBag")) $("#heroBag").innerHTML = bag(heroFlavor.color, "doypack", { num: heroFlavor.no });
-$$("[data-guilloche]").forEach((el) => { el.innerHTML = guilloche(); });
+if ($("#heroPlate")) $("#heroPlate").textContent = `Ficha Nº ${heroFlavor.no} · ${heroFlavor.name} · alias «${heroFlavor.alias}»`;
+// Dónde vende Jorge y sus otros proyectos (salen de catalog.mjs → BUSINESS)
+const DAY_NAMES = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
+if ($("#spots")) $("#spots").innerHTML = `<p class="rc-label"><span>Dónde encontrarme</span></p>` + BUSINESS.locations.map((l) => `
+  <div class="spot${l.main ? " main" : ""}"><svg><use href="#i-pin"/></svg><div><strong>${esc(l.name)}</strong><span>${esc(l.detail)}</span>
+  ${l.main ? `<ul class="spot-days">${SCHEDULE.map((d) => `<li class="${d.mode}"><b>${DAY_NAMES[d.day]}</b>${d.open}–${d.close}<em>${d.mode === "reservas" ? "solo reservas" : "en el campus"}</em></li>`).join("")}</ul>` : ""}</div></div>`).join("");
+const ventures = BUSINESS.ventures || [];
+const ventureLink = (v, cls = "") => v.url ? `<a class="${cls}" href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.name)} ↗</a>` : `<span class="${cls}">${esc(v.name)}</span>`;
+if ($("#ventures")) $("#ventures").innerHTML = ventures.map((v) => `<div class="venture"><small>${esc(v.role)} también de</small>${ventureLink(v, "venture-name")}<p>${esc(v.text)}</p></div>`).join("");
+if ($("#footVentures")) $("#footVentures").innerHTML = ventures.map((v) => ventureLink(v)).join("");
+$$("[data-guilloche]").forEach((el) => { el.innerHTML = guillocheImg(); });
 $$("[data-monogram]").forEach((el) => { el.innerHTML = monogram(); });
 // Foco de luz que sigue al puntero en las salas oscuras
 if (!reduceMotion && matchMedia("(pointer: fine)").matches) {
@@ -699,8 +752,8 @@ if (!reduceMotion && matchMedia("(pointer: fine)").matches) {
       cancelAnimationFrame(raf);
       raf = requestAnimationFrame(() => {
         const r = room.getBoundingClientRect();
-        room.style.setProperty("--mx", `${((e.clientX - r.left) / r.width) * 100}%`);
-        room.style.setProperty("--my", `${((e.clientY - r.top) / r.height) * 100}%`);
+        room.style.setProperty("--sx", `${e.clientX - r.left - 520}px`);
+        room.style.setProperty("--sy", `${e.clientY - r.top - 520}px`);
       });
     });
   });
@@ -721,7 +774,7 @@ function renderReserveItems() {
   } else {
     boxEl.innerHTML = lines.map(({ f, qty, subtotal }) => `<div class="rc-item">${swatch(f.color)}<span>${esc(f.name)}</span><em>x${qty} · ${formatCLP(subtotal)}</em></div>`).join("");
   }
-  const totalEl = $("#rfTotal"); if (totalEl) totalEl.textContent = formatCLP(total);
+  setMoney($("#rfTotal"), total);
   renderLive();
 }
 function liveDays() {
@@ -908,18 +961,43 @@ function renderUgc() {
 // Galería
 // ============================================================
 const PHOTOS = [
-  ["g1", "Mesa con decenas de bolsas MANI-GANTE de colores", "la mesa de los viernes", 1400, 969],
+  ["n7", "Nueve bolsas MANI-GANTE de colores con la etiqueta 'Para gente elegante y gánster'", "la alineación completa", 1600, 2133],
+  ["n3", "Maní confitado dorado con brillo de azúcar y la etiqueta MANI-GANTE", "el baño que brilla", 1600, 1600],
+  ["n5", "Mesa con más de veinte sabores MANI-GANTE y el Instagram de fondo", "la mesa de los viernes", 1600, 1600],
+  ["n2", "Bolsa de maní morado con la etiqueta y el código QR", "escanea y pide", 1600, 1600],
+  ["n6", "Bolsas de celofán y doypacks kraft en un puesto al sol", "el puesto al sol", 1600, 1200],
+  ["n4", "Una bolsa de maní en la mano frente a la mesa de sabores", "directo a tu mano", 1600, 1600],
+  ["n1", "Filas de bolsas moradas, verdes y de chocolate", "lote recién sellado", 1600, 1600],
+  ["n8", "Doypacks MANI-GANTE en la repisa de un bar junto a vinos", "noche de bar", 1600, 2845],
   ["g6", "Maridaje MANI-GANTE con vino y quesos", "maridaje con vino", 628, 1400],
-  ["g2", "Sabores MANI-GANTE de cerca", "de cerca se ve el baño", 1178, 1400],
-  ["g8", "MANI-GANTE en repisa junto a vinos", "en la repisa", 1364, 768],
-  ["g4", "Bolsas MANI-GANTE sobre la mesa", "lotes recién sellados", 1050, 1400],
-  ["g5", "Detalle de una bolsa MANI-GANTE con su sticker", "el sello del elefante", 1400, 1050],
-  ["g10", "MANI-GANTE junto a vinos en repisa", "noche de vinos", 900, 1600],
-  ["g9", "Sabores MANI-GANTE surtidos en bolsas", "todos los colores", 900, 1290],
+  ["g1", "Mesa con decenas de bolsas MANI-GANTE de colores", "los primeros lotes", 1400, 969],
 ];
 const gal = $("#gallery");
 gal.innerHTML = PHOTOS.map(([g, alt, cap, w, h]) => `<figure class="gallery-item" data-src="./assets/img/${g}-1600.webp">
   <button type="button" class="gallery-open" aria-label="Ampliar foto: ${esc(alt)}"><img src="./assets/img/${g}-800.webp" alt="${esc(alt)}" loading="lazy" decoding="async" width="${w}" height="${h}" draggable="false"></button><figcaption>${esc(cap)}</figcaption></figure>`).join("");
+// Instagram en vivo: se pide solo cuando la sección está por verse (no frena la carga inicial).
+function renderInsta(data) {
+  const grid = $("#instaGrid"), st = $("#instaStories");
+  if (!data?.posts?.length) {
+    grid.innerHTML = `<a class="insta-empty" href="${BUSINESS.instagram}" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg><span><strong>${esc(BUSINESS.instagramHandle)}</strong> Los lotes nuevos, los sabores del día y la vida de la casa, primero en Instagram.</span></a>`;
+    return;
+  }
+  const ago = (iso) => { const d = Math.max(0, Math.round((Date.now() - new Date(iso)) / 86400000)); return d === 0 ? "hoy" : d === 1 ? "ayer" : `hace ${d} días`; };
+  grid.innerHTML = data.posts.slice(0, 8).map((p) => `<a class="insta-post" href="${esc(p.url)}" target="_blank" rel="noopener">
+    <img src="${esc(p.image)}" alt="${esc(p.caption ? p.caption.slice(0, 90) : "Publicación de Instagram de MANI-GANTE")}" loading="lazy" decoding="async" referrerpolicy="no-referrer">
+    ${p.type === "VIDEO" ? `<span class="insta-badge">Video</span>` : ""}<span class="insta-meta">${ago(p.at)}</span></a>`).join("");
+  if (data.stories?.length) {
+    st.hidden = false;
+    st.innerHTML = `<p class="rc-label"><span>Historias de hoy</span></p><div class="insta-story-row">` + data.stories.slice(0, 10).map((p) => `<a class="insta-story" href="${esc(p.url)}" target="_blank" rel="noopener" aria-label="Ver historia de Instagram"><img src="${esc(p.image)}" alt="" loading="lazy" referrerpolicy="no-referrer"></a>`).join("") + `</div>`;
+  }
+}
+const instaIO = new IntersectionObserver((entries) => {
+  if (!entries.some((e) => e.isIntersecting)) return;
+  instaIO.disconnect();
+  fetch("/api/instagram").then((r) => r.ok ? r.json() : null).catch(() => null).then(renderInsta);
+}, { rootMargin: "600px 0px" });
+if ($("#insta")) instaIO.observe($("#insta"));
+
 const lb = $("#lightbox");
 let dragged = false, lbReturn = null;
 gal.addEventListener("click", (e) => {

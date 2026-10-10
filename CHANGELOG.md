@@ -1,11 +1,70 @@
 # Changelog · MANI-GANTE
 
-## v4.0 · "Para gente gánster y elegante" · catálogo 2026.10.3 (10 de octubre de 2026)
+## v4.2 · Logo oficial, horario real y velocidad (catálogo 2026.10.4)
+
+**Marca**
+- **Logo oficial:** la etiqueta de las bolsas va en cada bolsa ilustrada, sobre la anilla dorada.
+- **Íconos nuevos:** versión compacta (elefante + MANI-GANTE) para la app, la navegación y la pantalla de carga.
+- **Eslogan igual a la etiqueta:** "Para gente **elegante y gánster**", en la web, el SEO, las imágenes para compartir y el agente.
+- **33 alias nuevos con jerga dominicana**, que dicen a qué sabe cada uno. Algunos ejemplos:
+  - La Chinola (maracuyá)
+  - La Patilla (sandía)
+  - Morir Soñando (naranja)
+  - La Mamajuana (pasa al ron)
+  - El Sancocho (mix)
+  - El Mangú (leche con plátano)
+  - La Greca (mocaccino)
+  - El Amanecío (cappuccino)
+  - Tostón de Gala (plátano con chocolate)
+  - El Chimi (japonés barbecue)
+
+**Horario y puntos de venta**
+- **INACAP:** miércoles 08:00–18:30 y jueves 08:00–17:00 recorriendo el campus. Martes y viernes, solo reservas.
+- Las citas solo ofrecen esos días. El estado en vivo dice "Hoy solo con reserva" cuando corresponde.
+- **Liceo Bicentenario James Mundell** (lunes a viernes) agregado como punto de venta, en la web, las preguntas frecuentes y el agente.
+- Nueva pregunta frecuente sobre pedidos grandes (10 bolsas o más).
+
+**Contenido**
+- 8 fotos nuevas del producto real en la galería, "La receta", "El Diario" y la vista rápida. Se quitaron las fotos antiguas que ya no se usaban.
+- **Instagram en vivo** (`/api/instagram`): publicaciones e historias con caché de 10 minutos y renovación automática del token. Las destacadas no son posibles por la API de Instagram.
+- **Red Baeru** en "El Jefe" y en el pie. El link queda pendiente, se configura en `BUSINESS.ventures`.
+
+**Rendimiento** (medido con el procesador 4 veces más lento)
+
+| | Antes | Después |
+|---|---|---|
+| Elementos en la página | 23.800 | 2.090 |
+| Cuadros trabados al hacer scroll | 115 | 3 |
+| Cuadro p95 | 217 ms | 16,8 ms (60 fps) |
+| Carga en escritorio | 7,5 s | 1,8 s |
+
+Qué se cambió:
+- Las bolsas, los maníes y la roseta se dibujan una vez y se reutilizan como imagen (`bagImg`, `peanutsImg`, `guillocheImg`).
+- Se quitó la capa de grano fija con mezcla de colores.
+- El dorado animado quedó solo en el titular.
+- El foco de luz ahora se mueve con `transform`.
+- Las secciones usan `content-visibility: auto`.
+- La barra de la tienda ya no usa blur.
+
+**Movimiento**
+- **Pantalla de carga** por sesión: moneda con el logo, barra dorada y telón. Máximo 1,8 s; no aparece si ya se mostró la puerta.
+- **Microanimaciones:**
+  - totales que ruedan como contador;
+  - "+1" dorado al agregar;
+  - destello en la ficha agregada;
+  - botones dorados magnéticos;
+  - entradas escalonadas de pasos, tarjetas y preguntas;
+  - filete dorado que se dibuja bajo cada capítulo.
+
+**Calidad**
+- 52 pruebas Playwright pasan, incluido axe WCAG 2.2 AA en Noche y Marfil.
+
+## v4.0 · "Para gente elegante y gánster" · catálogo 2026.10.3 (10 de octubre de 2026)
 
 Identidad nueva y única. La investigación está en [`docs/identidad-casa.md`](docs/identidad-casa.md) y las reglas en [`docs/brand-guidelines.md`](docs/brand-guidelines.md). Todo lo funcional de la v3 se mantiene.
 
 **Identidad**
-- Eslogan nuevo: **"Para gente gánster y elegante."**
+- Eslogan nuevo: **"Para gente elegante y gánster."**
 - Tema **Noche** por defecto (noir, terciopelo y champán) y **Marfil** opcional.
 - Tokens nuevos y generador sin dependencias (`design/build-tokens.mjs`).
 - Tipografías nuevas: **Bodoni Moda**, **Big Shoulders**, **Instrument Sans** y **Pinyon Script**. Se eliminaron Fraunces, Manrope y Caveat.

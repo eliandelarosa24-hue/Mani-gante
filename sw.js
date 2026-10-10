@@ -1,12 +1,12 @@
 // Service worker de MANI-GANTE: la tienda abre sin conexión con el último stock conocido.
 // Estrategias: shell → cache-first con revalidación; /api/stock y /api/status → network-first con respaldo;
 // imágenes y fuentes → cache-first. Nunca cachea el admin ni el agente ni las reservas.
-const VERSION = "mg-v4-2026.10.3";
+const VERSION = "mg-v4.2-2026.10.4";
 const SHELL = [
   "/", "/index.html", "/css/fonts.css", "/css/tokens.css", "/css/styles.css",
   "/js/app.mjs", "/js/catalog.mjs", "/js/art.mjs", "/js/voice.mjs", "/js/ui.mjs", "/js/analytics.mjs", "/js/history.mjs",
   "/js/tilt.mjs", "/js/ticket.mjs", "/js/i18n.mjs", "/js/agent.mjs", "/js/motion.mjs",
-  "/js/door.mjs", "/assets/fonts/bodoni-moda.woff2", "/assets/fonts/bodoni-moda-italic.woff2", "/assets/fonts/big-shoulders.woff2",
+  "/js/door.mjs", "/js/label-data.mjs", "/assets/img/logo-mark.png", "/assets/fonts/bodoni-moda.woff2", "/assets/fonts/bodoni-moda-italic.woff2", "/assets/fonts/big-shoulders.woff2",
   "/assets/fonts/instrument-sans.woff2", "/assets/img/icon-192.png", "/offline.html",
 ];
 

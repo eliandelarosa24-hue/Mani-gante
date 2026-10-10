@@ -112,7 +112,7 @@ test("la puerta: solo en la primera visita, accesible y se abre", async ({ page 
 test("identidad: fichas con alias, la Bolsa en vivo y eslogan", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("#heroTitle")).toContainText("gánster");
-  await expect(page.locator('#grid .card[data-id="maracuya"] .card-alias')).toHaveText("alias «La Tropical»");
+  await expect(page.locator('#grid .card[data-id="maracuya"] .card-alias')).toHaveText("alias «La Chinola»");
   await expect(page.locator("#marqueeTrack .tk.down").first()).toBeAttached();
   await page.locator("#search").fill("jeque");
   await expect(page.locator("#grid .card")).toHaveCount(1);

@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>MANI-GANTE · Para gente gánster y elegante</title>
-<meta name="description" content="Casa Mani-Gante: maní confitado a mano en 28 sabores con receta de la casa, más maní japonés. Para gente gánster y elegante. Stock en vivo, citas por WhatsApp y entrega en el campus INACAP Temuco.">
+<title>MANI-GANTE · Para gente elegante y gánster</title>
+<meta name="description" content="Casa Mani-Gante: maní confitado a mano en 28 sabores con receta de la casa, más maní japonés. Para gente elegante y gánster. Stock en vivo, citas por WhatsApp y entrega en el campus INACAP Temuco.">
 <meta name="theme-color" content="#0d0b09">
 <link rel="canonical" href="https://manigante.netlify.app/">
 <link rel="icon" type="image/png" href="./assets/img/icon-192.png">
@@ -21,7 +21,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="es_CL">
 <meta property="og:site_name" content="MANI-GANTE">
-<meta property="og:title" content="MANI-GANTE · Para gente gánster y elegante">
+<meta property="og:title" content="MANI-GANTE · Para gente elegante y gánster">
 <meta property="og:description" content="Maní confitado a mano, 28 sabores con ficha y alias. Pide tu cita con el Jefe y recíbelo en INACAP Temuco.">
 <meta property="og:image" content="https://manigante.netlify.app/assets/banners/og/editorial-1200x630.jpg">
 <meta property="og:url" content="https://manigante.netlify.app/">
@@ -45,7 +45,7 @@
    "@type": "FoodEstablishment",
    "@id": "https://manigante.netlify.app/#negocio",
    "name": "MANI-GANTE",
-   "slogan": "Para gente gánster y elegante",
+   "slogan": "Para gente elegante y gánster",
    "description": "Maní confitado a mano en 28 sabores y maní japonés. Venta y entrega en el campus INACAP Temuco.",
    "url": "https://manigante.netlify.app/",
    "image": "https://manigante.netlify.app/assets/banners/og/editorial-1200x630.jpg",
@@ -65,32 +65,26 @@
    "openingHoursSpecification": [
     {
      "@type": "OpeningHoursSpecification",
-     "dayOfWeek": "Monday",
-     "opens": "09:00",
-     "closes": "19:00"
-    },
-    {
-     "@type": "OpeningHoursSpecification",
      "dayOfWeek": "Tuesday",
-     "opens": "09:00",
-     "closes": "19:00"
+     "opens": "08:00",
+     "closes": "17:00"
     },
     {
      "@type": "OpeningHoursSpecification",
      "dayOfWeek": "Wednesday",
-     "opens": "09:00",
-     "closes": "19:00"
+     "opens": "08:00",
+     "closes": "18:30"
     },
     {
      "@type": "OpeningHoursSpecification",
      "dayOfWeek": "Thursday",
-     "opens": "09:00",
-     "closes": "19:00"
+     "opens": "08:00",
+     "closes": "17:00"
     },
     {
      "@type": "OpeningHoursSpecification",
      "dayOfWeek": "Friday",
-     "opens": "09:00",
+     "opens": "08:00",
      "closes": "17:00"
     }
    ],
@@ -888,10 +882,18 @@
     },
     {
      "@type": "Question",
-     "name": "¿Dónde te encuentro?",
+     "name": "¿Dónde y cuándo te encuentro?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "No hay puesto fijo: Jorge recorre el campus INACAP Temuco (biblioteca, patios, pasillos). Si reservas, eliges un punto de encuentro y la hora."
+      "text": "En INACAP Temuco: miércoles de 08:00 a 18:30 y jueves de 08:00 a 17:00 Jorge recorre el campus (biblioteca, patios, pasillos). Martes y viernes solo entrega reservas, así que pide la tuya con anticipación. También vende en el Liceo Bicentenario James Mundell de lunes a viernes."
+     }
+    },
+    {
+     "@type": "Question",
+     "name": "¿Puedo hacer un pedido grande?",
+     "acceptedAnswer": {
+      "@type": "Answer",
+      "text": "Sí. Para 10 bolsas o más, resérvalo (ideal para martes o viernes) o escríbele directo a Jorge por WhatsApp para coordinar."
      }
     },
     {
@@ -907,7 +909,7 @@
      "name": "¿Puedo mezclar sabores?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "Sí. Agrega los sabores que quieras al carrito; se arma un solo pedido con el detalle completo."
+      "text": "Sí. Agrega los sabores que quieras al carrito; se hace un solo pedido con el detalle completo."
      }
     },
     {
@@ -915,7 +917,7 @@
      "name": "¿Hacen envíos fuera de INACAP?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "La entrega es personal dentro del campus INACAP Temuco. Si necesitas algo fuera de ese radio, escríbenos por WhatsApp y vemos la posibilidad."
+      "text": "La entrega es personal en INACAP Temuco y en el Liceo Bicentenario James Mundell. Si necesitas algo fuera de eso, escríbenos por WhatsApp y vemos la posibilidad."
      }
     }
    ]
@@ -938,6 +940,8 @@
   // Tema antes de pintar (Noche es el tema de la casa; Marfil es opcional) y la puerta solo en la primera visita.
   try { const t = JSON.parse(localStorage.getItem("mg-theme") || "null"); if (t === "light") document.documentElement.dataset.theme = t; } catch (e) {}
   try { if (!localStorage.getItem("mg-door") && !navigator.webdriver && !matchMedia("(prefers-reduced-motion: reduce)").matches && !/[?&](pedido|nodoor)=/.test(location.search)) document.documentElement.classList.add("door-on"); } catch (e) {}
+  // Pantalla de carga: una vez por sesión, solo si no toca la puerta (la puerta ya es la bienvenida).
+  try { var h = document.documentElement; if (!h.classList.contains("door-on") && !sessionStorage.getItem("mg-loaded") && !navigator.webdriver && !matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("loading"); } catch (e) {}
 </script>
 </head>
 <body>
@@ -972,6 +976,30 @@
 </svg>
 
 
+<div class="loader" id="loader" aria-hidden="true">
+  <div class="loader-coin"><img src="./assets/img/logo-mark.png" alt="" width="132" height="132"></div>
+  <p class="loader-word">MANI<span>-</span>GANTE</p>
+  <div class="loader-bar"><i id="loaderBar"></i></div>
+  <p class="loader-tag">Abriendo la casa…</p>
+</div>
+<script>
+  // Cierra la pantalla de carga cuando la página está lista (mín. 0,9 s para que se lea, máx. 1,8 s para no hacer esperar).
+  (function () {
+    var h = document.documentElement; if (!h.classList.contains("loading")) return;
+    var t0 = Date.now(), done = false, bar = document.getElementById("loaderBar");
+    function finish() {
+      if (done) return; done = true;
+      var wait = Math.max(0, 900 - (Date.now() - t0));
+      setTimeout(function () {
+        if (bar) bar.style.transform = "scaleX(1)";
+        h.classList.add("loaded");
+        setTimeout(function () { h.classList.remove("loading", "loaded"); try { sessionStorage.setItem("mg-loaded", "1"); } catch (e) {} }, 750);
+      }, wait);
+    }
+    requestAnimationFrame(function () { if (bar) bar.style.transform = "scaleX(.85)"; });
+    addEventListener("load", finish); setTimeout(finish, 1800);
+  })();
+</script>
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
 <div class="promo-ribbon" id="promoRibbon" role="status" hidden></div>
 <div class="away-banner" id="awayBanner" role="status" hidden><svg><use href="#i-pin"/></svg><span id="awayText"></span></div>
@@ -1038,8 +1066,8 @@
       <p class="kicker reveal"><span>Casa Mani-Gante</span><i></i><span data-i18n="hero.kicker">Confitería de autor · Temuco</span></p>
       <h1 class="hero-title" id="heroTitle">
         <span class="line"><span>Para gente</span></span>
-        <span class="line"><span><em>gánster</em></span></span>
-        <span class="line"><span>y elegante.</span></span>
+        <span class="line"><span>elegante</span></span>
+        <span class="line"><span>y <em>gánster.</em></span></span>
       </h1>
       <p class="hero-lead reveal">Maní confitado a mano, en lotes chicos y con receta de la casa. 28 sabores con ficha y alias, una línea japonesa y un trato que se cierra por WhatsApp, directo en el campus INACAP.</p>
       <div class="hero-cta reveal">
@@ -1058,7 +1086,7 @@
       <div class="hero-rosette" data-guilloche></div>
       <div class="hero-halo"></div>
       <div class="hero-bag" id="heroBag"></div>
-      <p class="hero-plate">Ficha Nº 01 · Maracuyá · alias «La Tropical»</p>
+      <p class="hero-plate" id="heroPlate">Ficha Nº 01 · Maracuyá · alias «La Chinola»</p>
     </div>
   <aside class="hero-card reveal is-loading" aria-label="Parte del día: estado en vivo" aria-busy="true">
       <div class="hero-card-top">
@@ -1093,10 +1121,10 @@
     </header>
     <div class="craft-grid">
       <div class="craft-media" aria-hidden="true">
-        <figure class="craft-frame is-active" data-step="0"><img decoding="async" src="./assets/img/g2-800.webp" alt="" loading="lazy" width="800" height="950"></figure>
-        <figure class="craft-frame" data-step="1"><img decoding="async" src="./assets/img/g9-800.webp" alt="" loading="lazy" width="800" height="1147"></figure>
-        <figure class="craft-frame" data-step="2"><img decoding="async" src="./assets/img/g5-800.webp" alt="" loading="lazy" width="800" height="600"></figure>
-        <figure class="craft-frame" data-step="3"><img decoding="async" src="./assets/img/g1-800.webp" alt="" loading="lazy" width="800" height="554"></figure>
+        <figure class="craft-frame is-active" data-step="0"><img decoding="async" src="./assets/img/n7-800.webp" alt="" loading="lazy" width="800" height="1067"></figure>
+        <figure class="craft-frame" data-step="1"><img decoding="async" src="./assets/img/n3-800.webp" alt="" loading="lazy" width="800" height="800"></figure>
+        <figure class="craft-frame" data-step="2"><img decoding="async" src="./assets/img/n2-800.webp" alt="" loading="lazy" width="800" height="800"></figure>
+        <figure class="craft-frame" data-step="3"><img decoding="async" src="./assets/img/n4-800.webp" alt="" loading="lazy" width="800" height="800"></figure>
         <span class="confidential">Confidencial</span>
         <div class="craft-counter"><b id="craftNum">01</b><span>/ 04</span></div>
       </div>
@@ -1217,13 +1245,14 @@
       <header class="section-head">
         <p class="eyebrow"><span>Cap. IV</span><span>Reserva inteligente</span></p>
         <h2 class="h2" id="reserveTitle">Pide una cita <em>con el Jefe</em></h2>
-        <p class="lead">Hasta 4 días de anticipación. Solo te mostramos horas en que Jorge está en el campus, el stock se valida en vivo y el WhatsApp queda listo para enviar.</p>
+        <p class="lead">Hasta 4 días de anticipación. Miércoles y jueves Jorge recorre el campus; <strong>martes y viernes solo entrega reservas</strong>, así que esos días la cita es la única vía. El stock se valida en vivo y el WhatsApp queda listo para enviar.</p>
       </header>
       <ol class="steps">
         <li><b><span>1</span></b><div><strong>Escoge tus sabores</strong><span>Desde los más buscados, tu maletín o pidiéndoselos al consigliere.</span></div></li>
         <li><b><span>2</span></b><div><strong>Día, hora y lugar</strong><span>Biblioteca, patio, hall… tú pones el punto de encuentro.</span></div></li>
         <li><b><span>3</span></b><div><strong>Se cierra el trato</strong><span>Se abre WhatsApp con tu invitación. Adjuntas el comprobante y listo.</span></div></li>
       </ol>
+      <div class="spots" id="spots" aria-label="Dónde vende Jorge"></div>
       <button class="btn btn-ghost" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Que el consigliere reserve por mí</button>
     </div>
 
@@ -1279,8 +1308,8 @@
     </div>
     <div class="story-grid">
       <div class="story-photos" aria-hidden="true">
-        <figure class="polaroid p1"><img decoding="async" src="./assets/img/g3-800.webp" alt="" loading="lazy" width="800" height="592"><figcaption>Los doypacks nuevos</figcaption></figure>
-        <figure class="polaroid p2"><img decoding="async" src="./assets/img/g6-800.webp" alt="" loading="lazy" width="628" height="1400"><figcaption>Maridaje con vino</figcaption></figure>
+        <figure class="polaroid p1"><img decoding="async" src="./assets/img/n5-800.webp" alt="" loading="lazy" width="800" height="800"><figcaption>La mesa de los viernes</figcaption></figure>
+        <figure class="polaroid p2"><img decoding="async" src="./assets/img/n8-800.webp" alt="" loading="lazy" width="800" height="1422"><figcaption>Noche de bar</figcaption></figure>
         <div class="story-stamp" data-stamp="HECHO EN TEMUCO · RECETA DE LA CASA · "></div>
       </div>
       <article class="letter">
@@ -1293,6 +1322,7 @@
         <blockquote>Para ese bajón de media tarde, la prueba difícil o el día que se siente demasiado largo. Para que el día pese un poco menos.</blockquote>
         <p class="signature">Jorge</p>
         <p class="signature-role">El Jefe · fundador y confitero</p>
+        <div class="ventures" id="ventures"></div>
       </article>
     </div>
   </div>
@@ -1311,6 +1341,17 @@
     </div>
   </div>
   <div class="gallery-track" id="gallery" tabindex="0" aria-label="Galería de fotos, desplázate horizontalmente"></div>
+  <div class="container insta" id="insta" aria-labelledby="instaTitle">
+    <div class="insta-head">
+      <div>
+        <p class="eyebrow"><span>En vivo</span><span>Desde Instagram</span></p>
+        <h3 class="h3" id="instaTitle">Lo último de <em>la casa</em></h3>
+      </div>
+      <a class="btn btn-ghost" href="https://www.instagram.com/mani_gant" target="_blank" rel="noopener"><svg><use href="#i-ig"/></svg> Seguir a la casa</a>
+    </div>
+    <div class="insta-stories" id="instaStories" hidden></div>
+    <div class="insta-grid" id="instaGrid" aria-live="polite"></div>
+  </div>
 </section>
 
 <!-- ===================== VII · EL TRATO ===================== -->
@@ -1422,10 +1463,10 @@
     <div class="footer-cols">
       <div>
         <div class="brand"><img src="./assets/img/icon-192.png" alt="" width="44" height="44"><span class="brand-name">MANI<span>-</span>GANTE</span></div>
-        <p class="hand footer-hand">Para gente gánster y elegante.</p>
+        <p class="hand footer-hand">Para gente elegante y gánster.</p>
       </div>
       <nav aria-label="Pie de página"><strong>La casa</strong><a href="#tienda">Los más buscados</a><a href="#caja">El maletín</a><a href="#reservar">La cita</a><a href="#pago">El trato</a></nav>
-      <nav aria-label="Ayuda"><strong>Ayuda</strong><a href="#faq">La letra chica</a><button type="button" data-open-agent>El consigliere (IA)</button><a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a></nav>
+      <nav aria-label="Ayuda"><strong>Ayuda</strong><a href="#faq">La letra chica</a><button type="button" data-open-agent>El consigliere (IA)</button><a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a><span id="footVentures"></span></nav>
       <div class="socials-col"><strong>Síguenos</strong>
         <div class="socials">
           <a href="https://www.instagram.com/mani_gant" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
@@ -1435,7 +1476,7 @@
       </div>
     </div>
     <p class="footer-mark" aria-hidden="true">MANI-GANTE</p>
-    <p class="footer-legal"><span>© <span id="year">2026</span> MANI-GANTE · Para gente gánster y elegante</span><span>Temuco, Chile · Entregas en campus INACAP</span></p>
+    <p class="footer-legal"><span>© <span id="year">2026</span> MANI-GANTE · Para gente elegante y gánster</span><span>Temuco, Chile · Entregas en campus INACAP</span></p>
   </div>
 </footer>
 
@@ -1468,7 +1509,7 @@
   <div class="quick-grid">
     <div class="quick-media">
       <div class="quick-art" id="qvArt"></div>
-      <figure class="quick-photo" id="qvPhoto" hidden><img decoding="async" src="./assets/img/g9-800.webp" alt="Bolsas reales de MANI-GANTE surtidas" loading="lazy" width="800" height="1147"><figcaption>Así se ve en persona</figcaption></figure>
+      <figure class="quick-photo" id="qvPhoto" hidden><img decoding="async" src="./assets/img/n2-800.webp" alt="Bolsa real de MANI-GANTE con su etiqueta" loading="lazy" width="800" height="800"><figcaption>Así se ve en persona</figcaption></figure>
       <div class="media-toggle" role="tablist" aria-label="Vista">
         <button type="button" role="tab" aria-selected="true" data-media="art">Ilustración</button>
         <button type="button" role="tab" aria-selected="false" data-media="photo">Foto real</button>

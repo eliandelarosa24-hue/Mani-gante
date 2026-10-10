@@ -38,7 +38,7 @@ ${jsonld.map((j) => `<script type="application/ld+json">${JSON.stringify(j).repl
 <body class="page">
 <header class="page-nav"><a class="brand" href="/"><img src="/assets/img/icon-192.png" alt="" width="36" height="36"><span class="brand-name">MANI<span>-</span>GANTE</span></a><a class="btn btn-gold" href="/#tienda">Los más buscados</a></header>
 <main id="main">${body}</main>
-<footer class="page-foot"><p>MANI-GANTE · Para gente gánster y elegante · ${esc(BUSINESS.city)} · Entregas en campus ${esc(BUSINESS.campus)}</p><p><a href="/">Inicio</a> · <a href="/oficio.html">La receta</a> · <a href="/#faq">Preguntas</a></p></footer>
+<footer class="page-foot"><p>MANI-GANTE · Para gente elegante y gánster · ${esc(BUSINESS.city)} · Entregas en campus ${esc(BUSINESS.campus)}</p><p><a href="/">Inicio</a> · <a href="/oficio.html">La receta</a> · <a href="/#faq">Preguntas</a></p></footer>
 </body>
 </html>`;
 }

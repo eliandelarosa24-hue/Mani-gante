@@ -93,7 +93,7 @@
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 html { scroll-behavior: smooth; scroll-padding-top: calc(var(--nav-h) + 16px); -webkit-text-size-adjust: 100%; background: var(--bg); }
 body { font-family: var(--sans); font-size: 16px; line-height: 1.65; color: var(--text); background: var(--bg); -webkit-font-smoothing: antialiased; overflow-x: hidden; font-feature-settings: "ss01", "kern"; }
-body::after { content: ""; position: fixed; inset: 0; z-index: var(--primitive-z-grain); pointer-events: none; background-image: var(--grain); opacity: var(--color-grain-opacity); mix-blend-mode: overlay; }
+/* Rendimiento: el grano ya no es una capa fija con mix-blend sobre toda la pantalla (repintaba en cada scroll). */
 ::selection { background: var(--gold); color: #0d0b09; }
 img { display: block; max-width: 100%; height: auto; }
 a { color: inherit; text-decoration: none; }
@@ -109,7 +109,8 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: clamp(16px, 4vw, 48px); }
-.section { padding-block: clamp(96px, 12vw, 168px); position: relative; }
+.section { padding-block: clamp(96px, 12vw, 168px); position: relative; content-visibility: auto; contain-intrinsic-size: auto 1200px; }
+.reserve, .shop { overflow: clip; }
 
 /* ---------- Tipografía de la casa ---------- */
 .eyebrow { font-family: var(--deco); font-size: .82rem; font-weight: 700; letter-spacing: var(--primitive-tracking-label); text-transform: uppercase; color: var(--gold-ink); margin-bottom: 22px; display: flex; align-items: center; gap: 14px; }
@@ -121,8 +122,9 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .h2 em, .h3 em, .hero-title em, .foil {
   font-style: italic; font-weight: 500; color: var(--gold-display);
   background: var(--foil); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent;
-  animation: foil 9s ease-in-out infinite; padding-right: .06em;
+  padding-right: .06em;
 }
+.hero-title em { animation: foil 9s ease-in-out infinite; }
 :root[data-theme="light"] .h2 em:not(.room *), :root[data-theme="light"] .h3 em:not(.room *) { background: none; -webkit-text-fill-color: currentColor; color: var(--gold-display); }
 .paper-room .h2 em, .paper-room .h3 em { background: none; -webkit-text-fill-color: currentColor; color: var(--clay); }
 @keyframes foil { 50% { background-position: 100% 0; } }
@@ -173,6 +175,25 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .icon-btn { width: 44px; height: 44px; border-radius: 50%; display: grid; place-items: center; transition: background .2s, box-shadow .2s, color .2s; position: relative; }
 .icon-btn:hover { box-shadow: inset 0 0 0 1px var(--line-2); color: var(--gold-ink); }
 .icon-btn.round { box-shadow: inset 0 0 0 1px var(--line-2); }
+
+/* ---------- Pantalla de carga (una vez por sesión) ---------- */
+.loader { display: none; }
+.loading .loader { display: grid; }
+.loading body { overflow: hidden; }
+.loader { position: fixed; inset: 0; z-index: 410; place-content: center; justify-items: center; gap: 18px; text-align: center; color: #f2eadb;
+  background: radial-gradient(55% 45% at 50% 45%, #4a0f1c, transparent 72%), #0d0b09;
+  clip-path: inset(0 0 0 0); transition: clip-path .7s cubic-bezier(.7,0,.2,1); animation: loaderAuto 0s 3.5s forwards; }
+.loaded .loader { clip-path: inset(0 0 100% 0); }
+.loader-coin { width: 132px; height: 132px; border-radius: 50%; box-shadow: 0 0 0 2px #d2ae6d, 0 0 0 7px #0d0b09, 0 0 0 8px rgba(210,174,109,.5), 0 20px 50px rgba(0,0,0,.6); animation: coinIn 1s cubic-bezier(.2,.9,.2,1.2) both; }
+.loader-coin img { width: 100%; height: 100%; border-radius: 50%; }
+.loader-word { font-family: var(--serif); font-weight: 600; letter-spacing: .3em; font-size: 1.3rem; animation: wordIn 1s .15s var(--ease) both; }
+.loader-word span { color: #d2ae6d; font-family: var(--deco); }
+.loader-bar { width: 180px; height: 2px; background: rgba(210,174,109,.2); overflow: hidden; }
+.loader-bar i { display: block; height: 100%; background: var(--foil); transform: scaleX(0); transform-origin: 0 50%; transition: transform 1.4s var(--ease); }
+.loader-tag { font-family: var(--deco); font-weight: 700; letter-spacing: .32em; text-transform: uppercase; font-size: .76rem; color: #968a78; }
+@keyframes coinIn { from { transform: scale(.6) rotate(-90deg); opacity: 0; } }
+@keyframes wordIn { from { letter-spacing: .8em; opacity: 0; } }
+@keyframes loaderAuto { to { visibility: hidden; } }
 
 /* ---------- La Puerta (intro speakeasy, solo primera visita) ---------- */
 .door { display: none; }
@@ -239,7 +260,8 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
   radial-gradient(40% 50% at 10% 100%, rgba(110,26,44,.25), transparent 70%),
   repeating-linear-gradient(90deg, rgba(0,0,0,.18) 0 2px, transparent 2px 46px),
   #0d0b09; }
-.hero-velvet::after { content: ""; position: absolute; inset: 0; background: radial-gradient(520px circle at var(--mx) var(--my), rgba(232,206,152,.13), transparent 70%); transition: background-position .2s; }
+.hero-velvet::after, .reserve::after { content: ""; position: absolute; left: 0; top: 0; width: 1040px; height: 1040px; border-radius: 50%; pointer-events: none; background: radial-gradient(circle, rgba(232,206,152,.13), transparent 50%); transform: translate3d(var(--sx, 60vw), var(--sy, 0px), 0); will-change: transform; }
+.reserve::after { background: radial-gradient(circle, rgba(232,206,152,.08), transparent 50%); z-index: 0; }
 .hero::after { content: ""; position: absolute; inset: auto 0 0; height: 40%; z-index: -1; background: linear-gradient(0deg, #0d0b09, transparent); pointer-events: none; }
 .hero-grid { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
 .kicker { display: inline-flex; align-items: center; gap: 14px; font-family: var(--deco); font-size: .86rem; font-weight: 700; letter-spacing: .26em; text-transform: uppercase; color: #ddbb7c; }
@@ -260,7 +282,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .hero-stats dt { font-family: var(--deco); font-weight: 800; font-size: clamp(2rem, 3.4vw, 2.8rem); line-height: 1; color: #f2eadb; letter-spacing: .02em; }
 .hero-stats dd { font-family: var(--deco); font-size: .8rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; color: #968a78; margin-top: 8px; }
 .hero-stage { position: relative; aspect-ratio: 1; display: grid; place-items: center; }
-.hero-rosette { position: absolute; inset: -6%; color: rgba(210,174,109,.4); animation: spin 140s linear infinite; }
+.hero-rosette { position: absolute; inset: -6%; color: rgba(210,174,109,.4); animation: spin 140s linear infinite; will-change: transform; }
 .hero-rosette svg { width: 100%; height: 100%; }
 .hero-halo { position: absolute; inset: 14%; border-radius: 50%; background: radial-gradient(circle, rgba(232,206,152,.2), rgba(110,26,44,.15) 50%, transparent 70%); filter: blur(6px); }
 .hero-bag { position: relative; width: 50%; animation: float 7s ease-in-out infinite; filter: drop-shadow(0 40px 40px rgba(0,0,0,.65)); }
@@ -342,7 +364,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .finder small { color: #bfb3a1; font-size: .84rem; }
 .finder-arrow { margin-left: 8px; color: #ddbb7c; }
 .shop-bar { display: flex; gap: 14px; align-items: center; justify-content: space-between; flex-wrap: wrap; position: sticky; top: calc(var(--nav-h) + 14px); z-index: 30; padding: 10px; margin: -10px; transition: background .3s, box-shadow .3s, top .5s var(--ease); }
-.shop-bar.stuck { background: color-mix(in srgb, var(--surface) 92%, transparent); backdrop-filter: blur(16px) saturate(140%); -webkit-backdrop-filter: blur(16px) saturate(140%); box-shadow: 0 1px 0 var(--line-2), var(--shadow-sm); }
+.shop-bar.stuck { background: color-mix(in srgb, var(--surface) 97%, transparent); box-shadow: 0 1px 0 var(--line-2), var(--shadow-sm); }
 .nav-hidden .shop-bar { top: 10px; }
 .shop-tools { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; flex: 1; justify-content: flex-end; }
 .formats { display: inline-flex; border: 1px solid var(--line-2); }
@@ -352,7 +374,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .format strong { display: block; font-family: var(--deco); font-weight: 800; letter-spacing: .1em; text-transform: uppercase; font-size: .92rem; }
 .format small { font-size: .76rem; color: var(--subtle); }
 .format[aria-checked="true"] { background: var(--gold); color: #0d0b09; }
-.format[aria-checked="true"] small { color: inherit; opacity: .8; }
+.format[aria-checked="true"] small { color: #2a0a12; opacity: 1; }
 .formats.small .format { padding: 6px 14px 6px 8px; }
 .search { flex: 1; min-width: 200px; max-width: 320px; display: flex; align-items: center; gap: 10px; padding: 0 4px; border-bottom: 1px solid var(--line-2); color: var(--subtle); }
 .search:focus-within { border-color: var(--gold); color: var(--gold-ink); }
@@ -482,9 +504,9 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .pal b { margin-left: auto; font-family: var(--deco); font-size: .8rem; color: #e8ce98; }
 
 /* ---------- Capítulo IV · La cita (invitación con lacre) ---------- */
-.reserve { background: #0d0b09; overflow: hidden; --mx: 70%; --my: 30%; }
-.reserve::before { content: ""; position: absolute; inset: 0; background: radial-gradient(600px circle at var(--mx) var(--my), rgba(232,206,152,.08), transparent 70%), radial-gradient(60% 60% at 100% 0%, rgba(110,26,44,.35), transparent 70%); pointer-events: none; }
-.reserve-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(36px, 6vw, 96px); align-items: start; position: relative; }
+.reserve { background: #0d0b09; overflow: clip; --mx: 70%; --my: 30%; }
+.reserve::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 60% at 100% 0%, rgba(110,26,44,.35), transparent 70%); pointer-events: none; }
+.reserve-grid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(36px, 6vw, 96px); align-items: start; position: relative; z-index: 1; }
 .reserve-copy { position: sticky; top: calc(var(--nav-h) + 40px); }
 .steps { list-style: none; display: grid; gap: 20px; margin-top: 36px; }
 .steps li { display: flex; gap: 18px; align-items: flex-start; }
@@ -566,6 +588,26 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .save-row .btn { margin: 0; --h: 44px; font-size: .86rem; padding: 0 14px; }
 .stub-links { width: 100%; display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; }
 
+/* Puntos de venta y otros proyectos del Jefe */
+.spots { display: grid; gap: 10px; margin-top: 32px; }
+.spot { display: flex; gap: 12px; padding: 14px 16px; border: 1px solid var(--line); background: rgba(255,255,255,.02); }
+.spot.main { border-color: var(--line-2); }
+.spot > svg { color: var(--gold-ink); margin-top: 3px; }
+.spot strong { display: block; font-family: var(--serif); font-size: 1.08rem; font-weight: 600; }
+.spot span { color: var(--muted); font-size: .9rem; }
+.spot-days { list-style: none; display: grid; grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); gap: 6px; margin-top: 10px; }
+.spot-days li { display: grid; padding: 6px 10px; border: 1px solid var(--line); font-size: .82rem; color: var(--muted); }
+.spot-days b { font-family: var(--deco); font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--text); }
+.spot-days em { font-style: normal; font-family: var(--deco); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .72rem; color: var(--green); }
+.spot-days li.reservas em { color: var(--clay); }
+.ventures { margin-top: 22px; display: grid; gap: 10px; }
+.venture { padding: 14px 16px; border: 1px solid rgba(23,18,14,.25); border-left: 3px solid #7a1e31; }
+.venture small { display: block; font-family: var(--deco); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; font-size: .72rem; color: #5e5244; }
+.venture-name { font-family: var(--serif); font-size: 1.4rem; font-weight: 700; color: #17120e; }
+a.venture-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.venture p { margin: 4px 0 0 !important; font-size: .92rem !important; }
+#footVentures a, #footVentures span { display: block; padding: 5px 0; color: #ddbb7c; }
+
 /* ---------- Capítulo V · El Jefe (el diario de la casa) ---------- */
 .story { background: #efe6d5; color: #17120e; overflow: hidden;
   background-image: repeating-linear-gradient(0deg, rgba(23,18,14,.025) 0 1px, transparent 1px 3px), radial-gradient(90% 80% at 50% 50%, #f3ecdf, #e6dbc8); }
@@ -596,7 +638,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .signature-role { font-family: var(--deco); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; font-size: .78rem !important; color: #4e4337 !important; margin-top: 4px !important; }
 
 /* ---------- Capítulo VI · Las pruebas (galería) ---------- */
-.gallery { counter-reset: prueba; }
+.gallery { counter-reset: prueba; background: var(--bg); }
 .gallery-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 20px; margin-bottom: 44px; }
 .gallery-head .section-head, .gallery-head > div:first-child { margin: 0; }
 .gallery-nav { display: flex; gap: 8px; }
@@ -613,6 +655,25 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .lightbox { position: fixed; inset: 0; z-index: 250; background: rgba(8,7,6,.94); display: grid; place-items: center; padding: 24px; backdrop-filter: blur(8px); animation: fade .3s; }
 .lightbox img { max-height: 88vh; max-width: 92vw; width: auto; box-shadow: 0 0 0 1px rgba(210,174,109,.4); }
 .lightbox .icon-btn { position: absolute; top: 18px; right: 18px; color: #fff; background: rgba(255,255,255,.08); }
+
+/* Instagram en vivo */
+.insta { margin-top: clamp(48px, 7vw, 90px); }
+.insta-head { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 22px; }
+.insta-head .btn { margin: 0; }
+.insta-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px; }
+.insta-post { position: relative; aspect-ratio: 1; overflow: hidden; background: var(--surface-2); box-shadow: inset 0 0 0 1px var(--line); }
+.insta-post img { width: 100%; height: 100%; object-fit: cover; transition: transform .8s var(--ease), filter .4s; }
+.insta-post:hover img { transform: scale(1.06); filter: saturate(1.1); }
+.insta-meta, .insta-badge { position: absolute; left: 8px; bottom: 8px; padding: 3px 8px; background: rgba(13,11,9,.78); color: #f2eadb; font-family: var(--deco); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .7rem; }
+.insta-badge { left: auto; right: 8px; top: 8px; bottom: auto; background: var(--gold); color: #0d0b09; }
+.insta-empty { grid-column: 1 / -1; display: flex; gap: 14px; align-items: center; padding: 22px; border: 1px dashed var(--line-2); color: var(--muted); }
+.insta-empty svg { width: 34px; height: 34px; color: var(--gold-ink); }
+.insta-empty strong { display: block; font-family: var(--serif); font-size: 1.2rem; color: var(--text); }
+.insta-stories { margin-bottom: 18px; }
+.insta-story-row { display: flex; gap: 12px; overflow-x: auto; scrollbar-width: none; padding: 4px; }
+.insta-story { flex: 0 0 auto; width: 68px; height: 68px; border-radius: 50%; padding: 3px; background: var(--foil); }
+.insta-story img { width: 100%; height: 100%; border-radius: 50%; object-fit: cover; border: 2px solid var(--bg); }
+@media (max-width: 640px) { .insta-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 
 /* ---------- Capítulo VII · El trato (mesa de fieltro) ---------- */
 .pay { background: radial-gradient(80% 70% at 50% 40%, #1e5a43, #0d2a1f 75%); color: #f2eadb; overflow: hidden; }
@@ -704,8 +765,10 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .footer-legal { font-size: .84rem; color: #968a78; padding-top: 24px; border-top: 1px solid rgba(210,174,109,.14); display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; }
 
 /* ---------- Ilustraciones ---------- */
-svg.swatch { display: block; aspect-ratio: 1; height: auto; }
-svg.bag { display: block; height: auto; aspect-ratio: 120 / 160; }
+svg.swatch, img.swatch { display: block; aspect-ratio: 1; height: auto; }
+svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; height: auto; aspect-ratio: 120 / 160; }
+.fly img { width: 100%; height: 100%; }
+.hero-rosette img { width: 100%; height: 100%; opacity: .42; }
 .monogram { width: 100%; height: auto; }
 
 /* ---------- La cuenta (boleta) ---------- */
@@ -909,6 +972,20 @@ svg.bag { display: block; height: auto; aspect-ratio: 120 / 160; }
 @keyframes shimmer { to { background-position: -200% 0; } }
 .skeleton { background: linear-gradient(100deg, var(--surface-2) 30%, var(--surface) 50%, var(--surface-2) 70%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
 
+/* Microanimaciones */
+.plus-one { position: fixed; z-index: 320; pointer-events: none; font-family: var(--deco); font-weight: 800; font-size: 1.3rem; letter-spacing: .06em; color: #e8ce98; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
+.btn-gold, .finder, .agent-fab { transition: translate .25s var(--ease), transform .4s var(--ease), box-shadow .4s var(--ease), background-position .6s; }
+.motion-ready .section-head:not(.in)::after { transform: scaleX(0); }
+.section-head::after { transform-origin: 0 50%; transition: transform 1.1s .25s var(--ease); }
+.section-head.center::after { transform-origin: 50% 50%; }
+.motion-ready .stagger > .reveal:nth-child(2) { transition-delay: .08s; } .motion-ready .stagger > .reveal:nth-child(3) { transition-delay: .16s; }
+.motion-ready .stagger > .reveal:nth-child(4) { transition-delay: .24s; } .motion-ready .stagger > .reveal:nth-child(5) { transition-delay: .32s; }
+.card-no { transition: transform .45s var(--ease), background .3s, color .3s; }
+.card:hover .card-no { transform: translateY(-3px); background: #d2ae6d; color: #0d0b09; }
+.faq-item[open] p { animation: faqIn .45s var(--ease); }
+@keyframes faqIn { from { opacity: 0; transform: translateY(-6px); } }
+.tk { transition: color .3s; } .ticker:hover .tk.up b { color: #e8ce98; }
+
 /* Títulos divididos por palabra: el dorado se pinta en cada palabra (background-clip no cruza inline-block) */
 .h2 em:has(.w) { background: none; -webkit-text-fill-color: currentColor; animation: none; }
 .h2 em .w > span { background: var(--foil); background-size: 220% 100%; -webkit-background-clip: text; background-clip: text; -webkit-text-fill-color: transparent; padding-right: .06em; }
@@ -1049,7 +1126,7 @@ svg.bag { display: block; height: auto; aspect-ratio: 120 / 160; }
   *, *::before, *::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; }
   .reveal, .motion-ready .reveal:not(.in) { opacity: 1; transform: none; }
   .hero-title .line > span { transform: none; }
-  .door { display: none !important; }
+  .door, .loader { display: none !important; }
 }
 @media (prefers-contrast: more) {
   :root, .room { --line: rgba(210,174,109,.45); --line-2: rgba(210,174,109,.7); }

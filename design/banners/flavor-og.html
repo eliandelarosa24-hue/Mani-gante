@@ -35,7 +35,7 @@ if (q.get("main")) {
   const f = FLAVORS[0];
   og.style.setProperty("--c", recipe ? "#b8935f" : "#6e1a2c");
   og.innerHTML = `<div class="rosette">${guilloche()}</div><div class="copy"><div class="kick"><b>${recipe ? "Expediente" : "Casa"}</b>${recipe ? "La receta de la familia" : "Confitería de autor · Temuco"}</div>
-    <h1>${recipe ? "Cuatro pasos.<br><em>Cero atajos.</em>" : "Para gente<br><em>gánster</em><br>y elegante."}</h1></div>
+    <h1>${recipe ? "Cuatro pasos.<br><em>Cero atajos.</em>" : "Para gente<br>elegante<br>y <em>gánster.</em>"}</h1></div>
     ${bag(f.color, "doypack", { num: f.no })}${brand}`;
 } else {
   const f = [...FLAVORS, ...JAPANESE].find((x) => x.id === q.get("id")) || FLAVORS[0];

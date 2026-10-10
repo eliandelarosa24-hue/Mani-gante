@@ -1,4 +1,4 @@
-# Casa MANI-GANTE · Para gente gánster y elegante
+# Casa MANI-GANTE · Para gente elegante y gánster
 
 Sitio de MANI-GANTE (maní confitado artesanal, Temuco). Es estático, con módulos ES nativos y **sin build step**, más Netlify Functions para la IA, las reservas, el stock y el panel de Jorge.
 
@@ -116,6 +116,41 @@ Edita `design/tokens.json` y ejecuta `node design/build-tokens.mjs`, que regener
 
 Para regenerar las imágenes para compartir (una por sabor y las de la casa), ejecuta `node tests/serve.mjs . 8787` y luego `node scripts/og.mjs`.
 
+## Instagram en vivo (opcional)
+
+La sección "Lo último de la casa" muestra tus publicaciones y, si tu cuenta lo permite, tus historias activas.
+
+**Una sola vez:**
+1. Pasa @mani_gant a cuenta **profesional** (Creador o Empresa) desde la app de Instagram.
+2. En [Meta for Developers](https://developers.facebook.com/), crea una app de tipo **Empresa** y agrega el producto **Instagram → API setup with Instagram login**.
+3. En "Generate access tokens", agrega tu cuenta y genera el **token**.
+4. En Netlify, pégalo como variable de entorno `INSTAGRAM_TOKEN` y vuelve a publicar.
+
+**Después:**
+- Se actualiza solo: la web consulta cada 10 minutos.
+- El token se renueva automáticamente cada día, así que no vence.
+- Mientras no haya token, la sección muestra un botón para seguir a @mani_gant.
+
+> Las **destacadas** (highlights) no se pueden traer: Instagram no las entrega por su API oficial.
+
+## Horario, puntos de venta y otros proyectos
+
+Todo se configura en `js/catalog.mjs`.
+
+**`SCHEDULE`: horario en INACAP**
+
+| Día | Horario | Modalidad |
+|---|---|---|
+| Miércoles | 08:00–18:30 | Recorre el campus vendiendo (`campus`) |
+| Jueves | 08:00–17:00 | Recorre el campus vendiendo (`campus`) |
+| Martes | 08:00–17:00 | Solo entrega reservas (`reservas`) |
+| Viernes | 08:00–17:00 | Solo entrega reservas (`reservas`) |
+
+**Otros datos**
+- `BUSINESS.locations`: INACAP Temuco y Liceo Bicentenario James Mundell.
+- `BUSINESS.ventures`: Red Baeru. Pega el link en `url` y aparece automáticamente en "El Jefe" y en el pie.
+- `ALIASES`: el alias de cada sabor, con jerga dominicana.
+
 ## Publicar en Netlify
 
 1. Conecta el repositorio (o arrastra la carpeta). **No hace falta comando de build**: Netlify compila las funciones `.mts` sola.
@@ -131,6 +166,7 @@ Para regenerar las imágenes para compartir (una por sabor y las de la casa), ej
 | `WHATSAPP_TOKEN`, `WHATSAPP_PHONE_NUMBER_ID`, `OWNER_WHATSAPP` | No | WhatsApp Cloud API: aviso automático a Jorge por cada reserva |
 | `WHATSAPP_TEMPLATE`, `WHATSAPP_TEMPLATE_LANG` | No | Plantilla aprobada por Meta, para que el aviso llegue siempre |
 | `RESEND_API_KEY`, `OWNER_EMAIL`, `NOTIFY_FROM` | No | Aviso por email (Resend) de cada reserva |
+| `INSTAGRAM_TOKEN` | No | Publicaciones de Instagram en vivo en la web (ver arriba) |
 
 - Sin `ANTHROPIC_API_KEY`, el asistente funciona en modo básico: catálogo, precios, horario y FAQ.
 - Sin Netlify Blobs (por ejemplo en local), los datos del panel viven en memoria.

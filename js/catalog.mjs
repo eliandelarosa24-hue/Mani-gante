@@ -6,16 +6,17 @@
 
 // Versión del catálogo: súbela cada vez que cambies precios, sabores o reglas.
 // El panel admin y el agente la muestran; el historial queda en CATALOG_CHANGELOG.
-export const CATALOG_VERSION = "2026.10.3";
+export const CATALOG_VERSION = "2026.10.4";
 export const CATALOG_CHANGELOG = [
-  { version: "2026.10.3", date: "2026-10-10", note: "Identidad Casa Mani-Gante: alias y número de ficha por sabor, formatos El Clásico y La Reserva, eslogan 'Para gente gánster y elegante'." },
+  { version: "2026.10.4", date: "2026-10-10", note: "Horario real (mié/jue campus, mar/vie solo reservas), Liceo James Mundell, alias dominicanos, eslogan de la etiqueta y Red Baeru." },
+  { version: "2026.10.3", date: "2026-10-10", note: "Identidad Casa Mani-Gante: alias y número de ficha por sabor, formatos El Clásico y La Reserva, eslogan 'Para gente elegante y gánster'." },
   { version: "2026.10.2", date: "2026-10-09", note: "Capacidad por bloque de reserva, sabores nuevos marcados, alérgenos y promo de viernes como regla." },
   { version: "2026.10.1", date: "2026-10-09", note: "Catálogo unificado para web y agente IA." },
 ];
 
 export const BUSINESS = {
   name: "MANI-GANTE",
-  tagline: "Para gente gánster y elegante",
+  tagline: "Para gente elegante y gánster", // tal cual la etiqueta de las bolsas
   house: "Casa Mani-Gante",
   founder: "Jorge",
   whatsapp: "56958174288",
@@ -25,6 +26,15 @@ export const BUSINESS = {
   mercadoPago: "https://link.mercadopago.cl/manigante",
   city: "Temuco, Chile",
   campus: "INACAP Temuco",
+  // Dónde vende Jorge. El primero es el principal (con horario y reservas).
+  locations: [
+    { id: "inacap", name: "INACAP Temuco", main: true, detail: "Mié 08:00–18:30 y jue 08:00–17:00 recorriendo el campus · mar y vie solo con reserva" },
+    { id: "james-mundell", name: "Liceo Bicentenario James Mundell", main: false, detail: "Lunes a viernes, en horario escolar" },
+  ],
+  // Otros proyectos de Jorge (se muestran en "El Jefe" y en el pie). Deja url vacía hasta tener el link.
+  ventures: [
+    { name: "Red Baeru", role: "Fundador", url: "", text: "La otra casa de Jorge: más servicios y proyectos." },
+  ],
   timezone: "America/Santiago",
   url: "https://manigante.netlify.app/",
 };
@@ -36,14 +46,14 @@ export const FORMATS = {
 };
 export const PREMIUM_PRICE = 1500;
 
-// Horario en que Jorge recorre el campus (hora de Chile).
-// day: 0=domingo … 6=sábado. Ajusta a tu horario real.
+// Horario real de Jorge en INACAP Temuco (hora de Chile). day: 0=domingo … 6=sábado.
+// mode "campus": recorre el campus vendiendo y además entrega reservas.
+// mode "reservas": ese día no anda con maní para vender; solo entrega lo reservado.
 export const SCHEDULE = [
-  { day: 1, open: "09:00", close: "19:00" },
-  { day: 2, open: "09:00", close: "19:00" },
-  { day: 3, open: "09:00", close: "19:00" },
-  { day: 4, open: "09:00", close: "19:00" },
-  { day: 5, open: "09:00", close: "17:00" },
+  { day: 2, open: "08:00", close: "17:00", mode: "reservas" },
+  { day: 3, open: "08:00", close: "18:30", mode: "campus" },
+  { day: 4, open: "08:00", close: "17:00", mode: "campus" },
+  { day: 5, open: "08:00", close: "17:00", mode: "reservas" },
 ];
 
 // Reservas: con cuántos días de anticipación se aceptan.
@@ -51,7 +61,7 @@ export const RESERVATION_RULES = {
   minDaysAhead: 0, // 0 = se puede reservar para hoy (si queda horario)
   maxDaysAhead: 4,
   minLeadMinutes: 60, // reservas para hoy: al menos 1 hora antes
-  slots: ["09:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00"],
+  slots: ["08:00", "09:30", "11:00", "12:30", "14:00", "15:30", "17:00", "18:00"],
   meetingPoints: ["Biblioteca", "Patio central", "Hall de entrada", "Casino / cafetería", "Otro (lo coordinamos)"],
   maxBagsPerReservation: 60,
   slotCapacity: 6, // reservas máximas por bloque horario (Jorge camina solo)
@@ -108,15 +118,41 @@ const RAW_FLAVORS = [
 
 // Alias de cada sabor (la "ficha" de Los Más Buscados). Jorge puede cambiarlos cuando quiera.
 export const ALIASES = {
-  maracuya: "La Tropical", "chocolate-menta": "El Fresco", "chirimoya-alegre": "La Alegre", sandia: "La Veraniega",
-  frutilla: "La Clásica", cereza: "Doña Cereza", arandano: "El Morado", "arandano-azul": "Blue", naranja: "La Mecánica",
-  pistacho: "El Elegante", whisky: "Don Whisky", frambuesa: "La Perfumada", coco: "El Caribeño", "pasa-el-ron": "El Abuelo",
-  "pina-colada": "La Vacacionista", nutella: "El Italiano", mix: "El Indeciso", mocaccino: "El Nocturno", miel: "La Dorada",
-  "platano-c-cobertura-de-chocolate": "El Platanero", "naranja-c-cobertura-de-chocolate": "La Doble Vida", "chocolate-dubai": "El Jeque",
-  "lucuma-manjar-c-chocolate-blanco": "La Patrona", "frutilla-c-cobertura-de-chocolate": "La Seductora", "leche-con-platano": "El Nene",
-  "frutos-del-bosque": "La Silvestre", "natural-rojo": "El Original", cappuccino: "El Desvelado",
-  "mani-japones-salado": "El Serio", "mani-japones-barbecue": "El Ahumado", "mani-japones-habanero": "El Bravo",
-  "mani-japones-merken": "El Sureño", "mani-japones-mix": "La Pandilla",
+  // Confitados: jerga y sabor dominicano, que se peguen y digan a qué saben
+  maracuya: "La Chinola",                       // en RD el maracuyá se llama chinola
+  "chocolate-menta": "El Fresco",               // menta fresquita + "fresco" (atrevido) en dominicano
+  "chirimoya-alegre": "La Chercha",             // chercha: relajo y buena vibra
+  sandia: "La Patilla",                         // patilla: sandía en RD
+  frutilla: "La Jeva",                          // la de siempre, la que nunca falla
+  cereza: "La Malcriá",                         // dulce, pero con su toque ácido
+  arandano: "El Morao",                         // morado, bien dicho a lo dominicano
+  "arandano-azul": "Azul Jevi",                 // jevi: chévere, con estilo
+  naranja: "Morir Soñando",                     // el clásico dominicano de naranja con leche
+  pistacho: "El Licenciao",                     // el más fino del grupo
+  whisky: "El Patrón",                          // barrica, caramelo y respeto
+  frambuesa: "La Coqueta",                      // perfumada y llamativa
+  coco: "Coco Frío",                            // como el de la esquina en Santo Domingo
+  "pasa-el-ron": "La Mamajuana",                // ron y pasas: puro espíritu dominicano
+  "pina-colada": "El Jangueo",                  // piña y coco para salir de fiesta
+  nutella: "El Panita",                         // avellana y cacao: le cae bien a todo el mundo
+  mix: "El Sancocho",                           // de todo un poco, como el sancocho
+  mocaccino: "La Greca",                        // la greca: la cafetera de la casa dominicana
+  miel: "Melao",                                // dulce como el melao
+  "platano-c-cobertura-de-chocolate": "Tostón de Gala", // plátano, pero vestido de chocolate
+  "naranja-c-cobertura-de-chocolate": "La Doble Vida",  // cítrico de día, chocolate de noche
+  "chocolate-dubai": "El Jeque",                // el de moda, el que llega en carro caro
+  "lucuma-manjar-c-chocolate-blanco": "La Doña", // la que manda en la mesa
+  "frutilla-c-cobertura-de-chocolate": "La Bachata", // frutilla y chocolate: romántico
+  "leche-con-platano": "El Mangú",              // plátano y leche: desayuno de campeones
+  "frutos-del-bosque": "El Revolú",             // revolú: mezcla sabrosa de berries
+  "natural-rojo": "El Tíguere",                 // el confitado de calle de toda la vida
+  cappuccino: "El Amanecío",                    // para cuando hay que amanecerse estudiando
+  // Línea japonesa
+  "mani-japones-salado": "El Salao",
+  "mani-japones-barbecue": "El Chimi",          // ahumado como el chimi de la esquina
+  "mani-japones-habanero": "El Que Arde",
+  "mani-japones-merken": "El Sureño",
+  "mani-japones-mix": "El Combo",
 };
 
 export const FLAVORS = RAW_FLAVORS.map(
@@ -182,10 +218,11 @@ export const NUTRITION = [
 export const FAQ = [
   ["¿Puedo pedir con anticipación?", "Sí. Puedes reservar hasta con 4 días de anticipación desde la sección Reservar o con el asistente. Las reservas se confirman por WhatsApp y se pagan por transferencia o Mercado Pago."],
   ["¿Cómo sé que el maní está fresco?", "Se prepara en pequeños lotes durante la semana; no hay stock guardado por meses. La disponibilidad de cada sabor se actualiza en vivo en el catálogo."],
-  ["¿Dónde te encuentro?", "No hay puesto fijo: Jorge recorre el campus INACAP Temuco (biblioteca, patios, pasillos). Si reservas, eliges un punto de encuentro y la hora."],
+  ["¿Dónde y cuándo te encuentro?", "En INACAP Temuco: miércoles de 08:00 a 18:30 y jueves de 08:00 a 17:00 Jorge recorre el campus (biblioteca, patios, pasillos). Martes y viernes solo entrega reservas, así que pide la tuya con anticipación. También vende en el Liceo Bicentenario James Mundell de lunes a viernes."],
+  ["¿Puedo hacer un pedido grande?", "Sí. Para 10 bolsas o más, resérvalo (ideal para martes o viernes) o escríbele directo a Jorge por WhatsApp para coordinar."],
   ["¿Qué formas de pago aceptan?", "Cuenta RUT (BancoEstado), Mach, Mercado Pago (débito, crédito o saldo) y efectivo solo en compra presencial."],
   ["¿Puedo mezclar sabores?", "Sí. Agrega los sabores que quieras al carrito; se hace un solo pedido con el detalle completo."],
-  ["¿Hacen envíos fuera de INACAP?", "La entrega es personal dentro del campus INACAP Temuco. Si necesitas algo fuera de ese radio, escríbenos por WhatsApp y vemos la posibilidad."],
+  ["¿Hacen envíos fuera de INACAP?", "La entrega es personal en INACAP Temuco y en el Liceo Bicentenario James Mundell. Si necesitas algo fuera de eso, escríbenos por WhatsApp y vemos la posibilidad."],
 ];
 
 // ------------------------------------------------------------
@@ -274,13 +311,17 @@ const toMinutes = (hhmm) => {
 export function campusStatus(date = new Date()) {
   const now = zonedNow(date);
   const today = SCHEDULE.find((s) => s.day === now.weekday);
-  if (today && now.minutes >= toMinutes(today.open) && now.minutes < toMinutes(today.close)) {
+  const inHours = today && now.minutes >= toMinutes(today.open) && now.minutes < toMinutes(today.close);
+  if (inHours && today.mode !== "reservas") {
     return { open: true, label: `En el campus ahora · hasta las ${today.close}`, closesAt: today.close };
+  }
+  if (inHours) {
+    return { open: false, reserveOnly: true, label: `Hoy solo con reserva · entrega hasta las ${today.close}`, closesAt: today.close };
   }
   const days = ["domingo", "lunes", "martes", "miércoles", "jueves", "viernes", "sábado"];
   for (let i = 0; i < 8; i++) {
     const wd = (now.weekday + i) % 7;
-    const s = SCHEDULE.find((x) => x.day === wd);
+    const s = SCHEDULE.find((x) => x.day === wd && x.mode !== "reservas");
     if (!s) continue;
     if (i === 0 && now.minutes >= toMinutes(s.open)) continue;
     const when = i === 0 ? "hoy" : i === 1 ? "mañana" : `el ${days[wd]}`;

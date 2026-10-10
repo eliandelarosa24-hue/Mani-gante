@@ -7,6 +7,8 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 // Revelado al entrar en pantalla. Lo que ya está a la vista se marca antes de activar el modo,
 // así nada parpadea; si este módulo no carga, todo queda visible.
+// Más piezas entran con "reveal" (escalonadas dentro de su grupo).
+[".craft-step", ".steps li", ".pay-card", ".faq-item", ".spot", ".insta-post", ".section-head", ".box-sizes .size", ".ugc-card"].forEach((sel) => $$(sel).forEach((el) => { el.classList.add("reveal"); el.parentElement?.classList.add("stagger"); }));
 const vh = innerHeight;
 $$(".reveal").forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < vh && r.bottom > 0) el.classList.add("in"); });
 document.documentElement.classList.add("motion-ready");

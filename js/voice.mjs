@@ -1,5 +1,5 @@
 // ============================================================
-// Voz de marca · Casa Mani-Gante, "para gente gánster y elegante".
+// Voz de marca · Casa Mani-Gante, "para gente elegante y gánster".
 // Jorge es dominicano y vive hace 8 años en Chile. Tono de película de gánsteres con clase
 // (familia, trato, lealtad), nunca violento ni de drogas.
 // Cercana y cálida, mezcla suave de dominicano ("chévere", "dímelo", "mi pana")

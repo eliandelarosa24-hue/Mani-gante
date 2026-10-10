@@ -4,9 +4,12 @@
 // - bag(): bolsa doypack kraft o bolsa celofán con ventana, como el empaque real
 // ============================================================
 
+import { LABEL_DATA_URI } from "./label-data.mjs";
+
 let uid = 0;
 // En el navegador resuelve relativo al módulo; en el servidor (Netlify Function) usa la ruta pública.
-const LOGO = import.meta.url.startsWith("http") ? new URL("../assets/img/icon-192.png", import.meta.url).href : "/assets/img/icon-192.png";
+// La etiqueta real de las bolsas (logo oficial "Para gente elegante y gánster").
+const LOGO = import.meta.url.startsWith("http") ? new URL("../assets/img/label.png", import.meta.url).href : "/assets/img/label.png";
 const next = (p) => `${p}${++uid}`;
 
 export function shade(hex, amt) {
@@ -31,7 +34,7 @@ const CLUSTER = [[50, 58, 1, -18], [30, 48, .82, 24], [70, 46, .86, -40], [38, 7
 export function peanuts(color, cls = "swatch") {
   const id = next("pg");
   const nuts = CLUSTER.map(([x, y, s, r]) => nut(x, y, s, r, `url(#${id})`, shade(color, -60))).join("");
-  return `<svg class="${cls}" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="${cls}" viewBox="0 0 100 100" aria-hidden="true" focusable="false">
     <defs><radialGradient id="${id}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="${shade(color, 70)}"/><stop offset=".55" stop-color="${color}"/><stop offset="1" stop-color="${shade(color, -55)}"/></radialGradient></defs>
     <ellipse cx="50" cy="88" rx="32" ry="5" fill="#000" opacity=".12"/>${nuts}</svg>`;
 }
@@ -55,7 +58,7 @@ function fill(color, x0, y0, w, h, gradId) {
  * format: "doypack" (kraft con ventana y zipper) | "celofan" (transparente con amarra dorada)
  * num: número de ficha que se graba en la anilla (ej. "07")
  */
-export function bag(color, format = "doypack", { label = "", cls = "bag", num = "" } = {}) {
+export function bag(color, format = "doypack", { label = "", cls = "bag", num = "", logo = LOGO } = {}) {
   const g = next("bg"), clip = next("cl"), kraft = next("kr"), stick = next("st"), noise = next("nz"), light = next("lt"), shadeId = next("sh");
   const lightGrad = `<radialGradient id="${light}"><stop offset="0" stop-color="#fff" stop-opacity=".9"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>`;
   const nutGrad = `<radialGradient id="${g}" cx="35%" cy="30%" r="80%"><stop offset="0" stop-color="${shade(color, 70)}"/><stop offset=".55" stop-color="${color}"/><stop offset="1" stop-color="${shade(color, -55)}"/></radialGradient>`;
@@ -74,20 +77,18 @@ export function bag(color, format = "doypack", { label = "", cls = "bag", num = 
       <rect x="${x0}" y="${y}" width="${x1 - x0}" height="${h}" fill="url(#${wave})"/>
       <path d="M${x0} ${y + 2.4} H${x1} M${x0} ${y + h - 2.4} H${x1}" stroke="#6e1a2c" stroke-width="1.1"/>
       <path d="M${x0} ${y + .6} H${x1} M${x0} ${y + h - .6} H${x1}" stroke="#fff3cf" stroke-width=".5" opacity=".7"/>
-      ${num ? `<text x="${x0 + 8}" y="${cy + 2.4}" font-family="'Big Shoulders', 'Arial Narrow', sans-serif" font-weight="800" font-size="7" letter-spacing=".6" fill="#4a0f1c">Nº ${num}</text>
-      <text x="${x1 - 8}" y="${cy + 2.4}" text-anchor="end" font-family="'Big Shoulders', 'Arial Narrow', sans-serif" font-weight="800" font-size="7" letter-spacing=".6" fill="#4a0f1c">M·G</text>` : ""}
-      <ellipse cx="${cx}" cy="${cy}" rx="${r + 4.5}" ry="${r + 3}" fill="url(#${gold})" stroke="#6e1a2c" stroke-width=".9"/>
-      <ellipse cx="${cx}" cy="${cy}" rx="${r + 1.6}" ry="${r + .4}" fill="#6e1a2c"/>
-      <clipPath id="${stick}"><circle cx="${cx}" cy="${cy}" r="${r - 1.2}"/></clipPath>
-      <circle cx="${cx}" cy="${cy}" r="${r - .4}" fill="#f7e6bf"/>
-      <image href="${LOGO}" x="${cx - r}" y="${cy - r}" width="${r * 2}" height="${r * 2}" clip-path="url(#${stick})" preserveAspectRatio="xMidYMid slice"/>
-      <circle cx="${cx}" cy="${cy}" r="${r - .4}" fill="none" stroke="#d2ae6d" stroke-width=".8"/>
+      ${num ? `<text x="${x0 + 4}" y="${cy + 2.2}" font-family="'Big Shoulders', 'Arial Narrow', sans-serif" font-weight="800" font-size="6.2" letter-spacing=".6" fill="#4a0f1c">Nº ${num}</text>
+      <text x="${x1 - 4}" y="${cy + 2.2}" text-anchor="end" font-family="'Big Shoulders', 'Arial Narrow', sans-serif" font-weight="800" font-size="6.2" letter-spacing=".6" fill="#4a0f1c">M·G</text>` : ""}
+      <circle cx="${cx}" cy="${cy + 1.2}" r="${r + 2.4}" fill="#000" opacity=".28"/>
+      <circle cx="${cx}" cy="${cy}" r="${r + 1.8}" fill="url(#${gold})"/>
+      <image href="${logo}" x="${cx - r}" y="${cy - r}" width="${r * 2}" height="${r * 2}" preserveAspectRatio="xMidYMid meet"/>
+      <ellipse cx="${cx - r * .35}" cy="${cy - r * .45}" rx="${r * .45}" ry="${r * .2}" fill="#fff" opacity=".18" transform="rotate(-25 ${cx - r * .35} ${cy - r * .45})"/>
     </g>`;
   };
 
   if (format === "celofan") {
     const body = "M22 44 Q20 40 26 38 L94 38 Q100 40 98 44 L103 136 Q103 144 95 144 L25 144 Q17 144 17 136 Z";
-    return `<svg class="${cls}" viewBox="0 0 120 160" ${label ? `role="img" aria-label="${label}"` : `aria-hidden="true"`} focusable="false">
+    return `<svg xmlns="http://www.w3.org/2000/svg" class="${cls}" viewBox="0 0 120 160" ${label ? `role="img" aria-label="${label}"` : `aria-hidden="true"`} focusable="false">
       <defs>${nutGrad}${lightGrad}<clipPath id="${clip}"><path d="${body}"/></clipPath>
         <linearGradient id="${kraft}" x1="0" x2="1"><stop offset="0" stop-color="#fff" stop-opacity=".55"/><stop offset=".25" stop-color="#fff" stop-opacity=".05"/><stop offset=".7" stop-color="#fff" stop-opacity="0"/><stop offset=".92" stop-color="#fff" stop-opacity=".35"/></linearGradient></defs>
       <ellipse cx="60" cy="151" rx="46" ry="6" fill="#000" opacity=".08"/><ellipse cx="60" cy="149" rx="36" ry="3.5" fill="#000" opacity=".16"/>
@@ -96,7 +97,7 @@ export function bag(color, format = "doypack", { label = "", cls = "bag", num = 
       <path d="M26 38 L40 14 Q60 6 80 14 L94 38 Z" fill="rgba(255,255,255,.28)" stroke="rgba(255,255,255,.7)" stroke-width="1"/>
       <path d="M40 14 Q60 22 80 14" fill="none" stroke="rgba(255,255,255,.6)" stroke-width=".8"/>
       <rect x="44" y="33" width="32" height="7" rx="3.5" fill="#c8963e"/><rect x="44" y="33" width="32" height="2.5" rx="1.2" fill="#e8c27a"/>
-      ${band(66, 22, 19.5, 100.5, 60, 12)}
+      ${band(66, 22, 19.5, 100.5, 60, 21)}
       <path d="M30 50 Q28 95 32 132" stroke="#fff" stroke-width="3" stroke-linecap="round" opacity=".45" fill="none"/>
       <path d="M88 52 Q92 80 89 118" stroke="#fff" stroke-width="1.6" stroke-linecap="round" opacity=".3" fill="none"/>
       <g stroke="#fff" stroke-width=".7" fill="none" opacity=".45"><path d="M24 104 l9 -4 l7 5"/><path d="M78 124 l8 -5 l9 3"/><path d="M70 50 l6 4 l7 -3"/><path d="M36 128 l6 4"/></g>
@@ -106,7 +107,7 @@ export function bag(color, format = "doypack", { label = "", cls = "bag", num = 
   }
 
   const body = "M18 30 Q18 22 26 22 L94 22 Q102 22 102 30 L104 138 Q104 146 96 146 L24 146 Q16 146 16 138 Z";
-  return `<svg class="${cls}" viewBox="0 0 120 160" ${label ? `role="img" aria-label="${label}"` : `aria-hidden="true"`} focusable="false">
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="${cls}" viewBox="0 0 120 160" ${label ? `role="img" aria-label="${label}"` : `aria-hidden="true"`} focusable="false">
     <defs>${nutGrad}${lightGrad}
       <linearGradient id="${shadeId}" x1="0" x2="1"><stop offset="0" stop-color="#3a2410" stop-opacity=".28"/><stop offset=".22" stop-color="#3a2410" stop-opacity="0"/><stop offset=".7" stop-color="#fff" stop-opacity=".08"/><stop offset="1" stop-color="#3a2410" stop-opacity=".22"/></linearGradient>
       <linearGradient id="${kraft}" x1="0" x2="1"><stop offset="0" stop-color="#b98d58"/><stop offset=".18" stop-color="#d9b886"/><stop offset=".55" stop-color="#cfa872"/><stop offset=".85" stop-color="#c39762"/><stop offset="1" stop-color="#a87c4a"/></linearGradient>
@@ -122,7 +123,7 @@ export function bag(color, format = "doypack", { label = "", cls = "bag", num = 
     <g clip-path="url(#${clip})"><rect x="30" y="84" width="60" height="44" fill="${shade(color, 30)}" opacity=".5"/>${fill(color, 30, 84, 60, 44, g)}<rect x="30" y="84" width="60" height="44" fill="#fff" opacity=".12"/></g>
     <rect x="30" y="84" width="60" height="44" rx="6" fill="none" stroke="#8c6a3e" stroke-width="1" opacity=".45"/>
     <path d="M34 88 L46 88" stroke="#fff" stroke-width="2" stroke-linecap="round" opacity=".5"/>
-    ${band(47, 24, 16.5, 103.5, 60, 13)}
+    ${band(47, 24, 16.5, 103.5, 60, 22)}
     <path d="M22 44 Q20 90 22 132" stroke="#fff" stroke-width="2.5" stroke-linecap="round" opacity=".18" fill="none"/>
     <path d="${body}" fill="url(#${shadeId})"/>
     <path d="M18 132 Q60 150 102 132 L104 138 Q104 146 96 146 L24 146 Q16 146 16 138 Z" fill="#7a5530" opacity=".22"/>
@@ -160,7 +161,7 @@ export function guilloche({ cls = "guilloche", rings = 3, petals = 14, strands =
       paths.push(`<path d="${d}Z"/>`);
     }
   }
-  return `<svg class="${cls}" viewBox="-100 -100 200 200" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width=".4">${paths.join("")}</g>
+  return `<svg xmlns="http://www.w3.org/2000/svg" class="${cls}" viewBox="-100 -100 200 200" aria-hidden="true" focusable="false"><g fill="none" stroke="currentColor" stroke-width=".4">${paths.join("")}</g>
     <circle r="96" fill="none" stroke="currentColor" stroke-width=".6"/><circle r="99" fill="none" stroke="currentColor" stroke-width=".3"/></svg>`;
 }
 
@@ -175,4 +176,28 @@ export function monogram(cls = "monogram") {
     <circle r="31" fill="none" stroke="currentColor" stroke-width="1.2"/><circle r="28" fill="none" stroke="currentColor" stroke-width=".5"/>
     <text y="9" text-anchor="middle" font-family="'Bodoni Moda', Didot, serif" font-size="27" font-style="italic" font-weight="500" fill="currentColor">MG</text>
   </svg>`;
+}
+
+// ------------------------------------------------------------
+// Versiones <img> (rendimiento): cada ilustración se dibuja UNA vez como SVG, se guarda como blob y
+// se reutiliza como imagen. Así la página no carga miles de nodos SVG (el scroll queda fluido).
+// En el servidor (sin Blob/URL.createObjectURL) se devuelve el SVG en línea de siempre.
+// ------------------------------------------------------------
+const imgCache = new Map();
+const canBlob = typeof Blob !== "undefined" && typeof URL !== "undefined" && typeof URL.createObjectURL === "function";
+function asImg(key, make, cls, label) {
+  if (!canBlob) return make();
+  let url = imgCache.get(key);
+  if (!url) { url = URL.createObjectURL(new Blob([make()], { type: "image/svg+xml" })); imgCache.set(key, url); }
+  const a11y = label ? `alt="${label.replace(/"/g, "&quot;")}"` : `alt="" aria-hidden="true"`;
+  return `<img class="${cls}" src="${url}" ${a11y} decoding="async" draggable="false">`;
+}
+export function bagImg(color, format = "doypack", { label = "", cls = "bag", num = "" } = {}) {
+  return asImg(`bag|${color}|${format}|${num}`, () => bag(color, format, { cls, num, logo: LABEL_DATA_URI }), cls, label);
+}
+export function peanutsImg(color, cls = "swatch") {
+  return asImg(`nut|${color}`, () => peanuts(color, cls), cls, "");
+}
+export function guillocheImg(color = "#d2ae6d", cls = "guilloche") {
+  return asImg(`gui|${color}`, () => guilloche({ cls }).replace(/currentColor/g, color), cls, "");
 }

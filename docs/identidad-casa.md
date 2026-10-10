@@ -2,7 +2,7 @@
 
 **Problema.** La v3 tenía muchas funciones, pero se veía como una plantilla: fondo crema, serif suave, dorado y tarjetas redondeadas. Es el "look" que hoy delata una página hecha con IA.
 
-**Pedido de Jorge.** Una página premium, lujosa y única, con el eslogan **"Para gente gánster y elegante"**.
+**Pedido de Jorge.** Una página premium, lujosa y única, con el eslogan **"Para gente elegante y gánster"**.
 
 ## 1. Lo que investigamos
 

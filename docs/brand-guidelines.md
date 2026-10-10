@@ -1,7 +1,7 @@
 # Casa MANI-GANTE · Guía de marca v4.0
 
 > Última actualización: 2026-10-10 · Estado: activa
-> Eslogan: **"Para gente gánster y elegante."**
+> Eslogan: **"Para gente elegante y gánster."**
 > Dirección: **noir de lujo**. Un speakeasy de los años 20 con alma dominicana: terciopelo, oro champán, anillas de habano y grabado de billete. El "gánster" es estilo, lealtad y familia; nunca violencia ni nada ilegal.
 > Investigación y referencias detrás de cada decisión: [`docs/identidad-casa.md`](identidad-casa.md).
 
@@ -93,6 +93,12 @@ El papel (invitación, cuenta, periódico y telegrama) usa la clase `.paper-room
 | Test de sabor | **El interrogatorio** → "tus cómplices ideales" |
 | Promo de viernes | "Una oferta que no podrás rechazar" |
 | Formatos | **El Clásico** (celofán) y **La Reserva** (doypack) |
+
+### Alias de los sabores
+Los alias usan **jerga dominicana** y cuentan **a qué sabe** cada sabor. Tienen que pegarse y ser fáciles de recordar, como La Chinola, Morir Soñando, La Mamajuana, El Sancocho o El Mangú.
+- Máximo tres palabras.
+- Sin groserías.
+- Si un alias necesita explicación, no sirve.
 
 ### Mezcla dominicana-chilena
 - **Dosis:** máximo 1–2 modismos por mensaje.
