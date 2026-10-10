@@ -317,7 +317,7 @@ function renderPromo(bags) {
     promo.hidden = false;
     promo.innerHTML = `${VOICE.friday(fp.toNext, fp.free)}<div class="bar"><i style="width:${fp.free && bags % fp.group === 0 ? 100 : ((bags % fp.group) / fp.group) * 100}%"></i></div>`;
   } else if (bags > 0 && bags < 3) {
-    promo.hidden = false; promo.textContent = `Con ${3 - bags} más armas el Combo Estudiante para compartir.`;
+    promo.hidden = false; promo.textContent = `Con ${3 - bags} más completas el Combo Estudiante.`;
   } else promo.hidden = true;
 }
 

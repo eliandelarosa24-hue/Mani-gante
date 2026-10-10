@@ -25,7 +25,7 @@ export const VOICE = {
   networkError: () => "Uy, se cayó la conexión. Intenta de nuevo en un ratito.",
   sending: () => "Enviando…",
   reviewOk: () => "¡Gracias! Tu nota le llegó a Jorge",
-  emptyCart: "La cuenta está limpia todavía. Elige a uno de los más buscados, arma tu maletín o dímelo y te recomiendo.",
+  emptyCart: "La cuenta está limpia todavía. Elige a uno de los más buscados, llena tu maletín o dímelo y te recomiendo.",
   emptySearch: "Ese no está fichado (todavía). ¿Le preguntas al consigliere?",
   emptyHistory: "Aún no tienes pedidos guardados en este dispositivo. Cuando reserves o pidas, quedan aquí.",
   friday: (toNext, free) => free > 0 ? `Llevas ${free} bolsa${free > 1 ? "s" : ""} gratis por ser viernes. El Jefe la aplica al confirmar.` : `Una oferta que no podrás rechazar: te faltan ${toNext} para la bolsa gratis`,

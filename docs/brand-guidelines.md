@@ -83,7 +83,7 @@ El papel (invitación, cuenta, periódico y telegrama) usa la clase `.paper-room
 |---|---|
 | Tienda / top ventas | **Los más buscados** / "Más buscado" |
 | Sabor nuevo | "Recién llegado" |
-| Arma tu caja | **El maletín** |
+| Arma tu caja | **Llena tu maletín** (evitamos "arma": en clave gánster suena a armas) |
 | Reservar | **Pedir una cita con el Jefe** |
 | Carrito / boleta | **La cuenta de la casa** |
 | Formas de pago | **Así se cierra el trato** |
@@ -102,7 +102,7 @@ El papel (invitación, cuenta, periódico y telegrama) usa la clase `.paper-room
 - **Claridad primero:** en pagos, horarios y pasos de reserva, el juego de palabras nunca reemplaza el dato.
 
 ### Límites (no negociables)
-- **Nunca:** armas, violencia, drogas, "mercancía", "contrabando", "dealer", "soplón", ni nada que insinúe algo ilegal.
+- **Nunca:** armas (ni el verbo "armar" en titulares: decimos "llenar", "completar"), violencia, drogas, "mercancía", "contrabando", "dealer", "soplón", ni nada que insinúe algo ilegal.
 - El "gánster" es estilo, lealtad y elegancia.
 - Prohibido también: "el mejor del mundo", "garantizado", reseñas inventadas.
 

@@ -205,7 +205,7 @@ $("#aAlerts").addEventListener("click", (e) => { const b = e.target.closest("[da
 
 // ---------------- UGC ----------------
 function renderUgc() {
-  $("#aUgc").innerHTML = data.ugc.length ? data.ugc.map((u) => `<div class="a-ugc-item"><p>“${esc(u.quote)}”</p><small>— ${esc(u.author)} · ${esc(u.source)}</small><button type="button" class="a-btn ghost small" data-ugc="${u.id}">Quitar</button></div>`).join("") : `<p class="a-empty">Publica aquí opiniones reales (con permiso). Aparecen en la sección "¿Ya lo probaste?".</p>`;
+  $("#aUgc").innerHTML = data.ugc.length ? data.ugc.map((u) => `<div class="a-ugc-item"><p>“${esc(u.quote)}”</p><small>— ${esc(u.author)} · ${esc(u.source)}</small><button type="button" class="a-btn ghost small" data-ugc="${u.id}">Quitar</button></div>`).join("") : `<p class="a-empty">Publica aquí opiniones reales (con permiso). Aparecen en "La familia habla" de la web.</p>`;
 }
 $("#aUgcForm").addEventListener("submit", (e) => {
   e.preventDefault();

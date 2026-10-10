@@ -14,11 +14,11 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
 .a-tools { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 .a-tools .a-field input { background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.2); color: #f4ead6; }
 .a-main { max-width: 1240px; margin: 0 auto; padding: clamp(16px, 3vw, 32px); display: grid; gap: 20px; }
-.a-login { max-width: 420px; margin: 10vh auto; display: grid; gap: 14px; padding: 32px; border-radius: 24px; background: var(--surface); box-shadow: var(--elevation-raised); }
+.a-login { max-width: 420px; margin: 10vh auto; display: grid; gap: 14px; padding: 32px; border-radius: 4px; background: var(--surface); box-shadow: var(--elevation-raised); }
 .a-login h1 { font-family: "Bodoni Moda", "Bodoni Fallback", Georgia, serif; font-weight: 450; font-size: 2rem; }
 .a-login form { display: grid; gap: 12px; }
 .a-error { color: var(--color-destructive); font-weight: 700; }
-.a-card { background: var(--surface); border: 1px solid var(--line); border-radius: 22px; padding: clamp(16px, 2.4vw, 24px); box-shadow: var(--elevation-card); display: grid; gap: 14px; min-width: 0; align-content: start; }
+.a-card { background: var(--surface); border: 1px solid var(--line); border-radius: 4px; padding: clamp(16px, 2.4vw, 24px); box-shadow: var(--elevation-card); display: grid; gap: 14px; min-width: 0; align-content: start; }
 .a-card-head { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
 .a-card h2 { font-family: "Bodoni Moda", "Bodoni Fallback", Georgia, serif; font-weight: 500; font-size: 1.35rem; }
 .a-sub { font-size: .78rem; text-transform: uppercase; letter-spacing: .12em; color: var(--subtle); margin-top: 6px; }
@@ -31,19 +31,19 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
 .a-field.small { flex: 0 1 120px; } .a-field.wide { flex: 1 1 100%; }
 .a-field.inline { display: flex; align-items: center; gap: 6px; flex: 0 0 auto; }
 .a-field span { font-size: .72rem; font-weight: 800; letter-spacing: .1em; text-transform: uppercase; color: var(--subtle); }
-.a-field input, .a-field select { min-height: 44px; padding: 8px 12px; border-radius: 12px; border: 1px solid var(--line); background: var(--surface-2); }
-.a-btn { min-height: 44px; padding: 0 18px; border-radius: 99px; border: 1px solid var(--line); background: var(--surface-2); font-weight: 700; cursor: pointer; }
+.a-field input, .a-field select { min-height: 44px; padding: 8px 12px; border-radius: 2px; border: 1px solid var(--line); background: var(--surface-2); }
+.a-btn { min-height: 44px; padding: 0 18px; border-radius: 2px; font-family: "Big Shoulders", "Arial Narrow", sans-serif; letter-spacing: .12em; text-transform: uppercase; font-size: .95rem; border: 1px solid var(--line); background: var(--surface-2); font-weight: 700; cursor: pointer; }
 .a-btn.primary { background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)); color: var(--color-night); border: 0; }
 .a-btn.ghost { background: transparent; }
 .a-top .a-btn { color: #f4ead6; border-color: rgba(255,255,255,.25); background: transparent; }
 .a-btn.small { min-height: 36px; padding: 0 12px; font-size: .82rem; }
 .a-btn[disabled] { opacity: .4; cursor: not-allowed; }
 .a-kpis { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 14px; }
-.a-kpi { padding: 18px 20px; border-radius: 20px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--elevation-card); display: grid; }
+.a-kpi { padding: 18px 20px; border-radius: 4px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--elevation-card); display: grid; }
 .a-kpi span { font-size: .74rem; font-weight: 800; text-transform: uppercase; letter-spacing: .1em; color: var(--subtle); }
-.a-kpi strong { font-family: "Bodoni Moda", "Bodoni Fallback", Georgia, serif; font-weight: 450; font-size: 2.2rem; line-height: 1.1; }
+.a-kpi strong { font-family: "Big Shoulders", "Arial Narrow", sans-serif; font-weight: 800; font-size: 2.6rem; line-height: 1.1; }
 .a-kpi small { color: var(--muted); }
-.a-chip { font-size: .78rem; font-weight: 700; padding: 6px 12px; border-radius: 99px; background: var(--surface-2); border: 1px solid var(--line); }
+.a-chip { font-size: .78rem; font-weight: 700; padding: 6px 12px; border-radius: 2px; background: var(--surface-2); border: 1px solid var(--line); }
 .a-chip[data-tone="good"] { border-color: var(--color-status-good); }
 .a-chip[data-tone="critical"] { border-color: var(--color-status-critical); }
 .a-switch { display: inline-flex; align-items: center; gap: 10px; font-weight: 700; min-height: 44px; cursor: pointer; }
@@ -112,3 +112,9 @@ code { font-family: ui-monospace, Menlo, monospace; font-size: .85em; }
 .a-toast.bad { background: var(--color-destructive); }
 .a-tip { position: fixed; z-index: 40; padding: 6px 10px; border-radius: 8px; background: var(--color-night); color: #f4ead6; font-size: .8rem; font-weight: 700; pointer-events: none; }
 @media (max-width: 900px) { .a-grid2, .a-charts { grid-template-columns: minmax(0, 1fr); } .a-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); } .a-vitals { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+/* v4 · Casa Mani-Gante: el panel comparte materiales con la web */
+#aApp:not([hidden]) { display: grid; gap: 20px; }
+.a-top { border-bottom: 1px solid rgba(210,174,109,.35); }
+.a-card h2::before { content: "◆ "; color: var(--gold); font-size: .7em; vertical-align: middle; }
+.a-card, .a-kpi { border-color: rgba(210,174,109,.18); }

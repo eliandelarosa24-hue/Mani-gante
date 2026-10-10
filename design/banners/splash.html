@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>Splash · Casa Mani-Gante</title>
+<link rel="stylesheet" href="../../css/fonts.css">
+<style>
+html, body { margin: 0; }
+.s { position: relative; overflow: hidden; display: grid; place-items: center; background: radial-gradient(55% 45% at 50% 45%, #5a1424, transparent 72%), #0d0b09; color: #f2eadb; }
+.ros { position: absolute; color: rgba(210,174,109,.35); }
+.coin { position: relative; border-radius: 50%; box-shadow: 0 0 0 calc(var(--u) * .5) #d2ae6d, 0 0 0 calc(var(--u) * 1.4) #0d0b09, 0 0 0 calc(var(--u) * 1.7) rgba(210,174,109,.55), 0 calc(var(--u) * 6) calc(var(--u) * 10) rgba(0,0,0,.6); }
+.txt { position: absolute; left: 0; right: 0; text-align: center; }
+.name { font-family: "Bodoni Moda", serif; font-weight: 600; letter-spacing: .18em; }
+.name span { color: #d2ae6d; font-family: "Big Shoulders", sans-serif; }
+.slogan { font-family: "Bodoni Moda", serif; font-style: italic; color: #d9b676; margin-top: .4em; }
+</style></head>
+<body>
+<div class="s" id="s"></div>
+<script type="module">
+import { guilloche } from "../../js/art.mjs";
+const q = new URLSearchParams(location.search);
+const w = +q.get("w"), h = +q.get("h"), icon = q.has("icon");
+const s = document.getElementById("s");
+s.style.width = w + "px"; s.style.height = h + "px";
+const u = Math.min(w, h) / 100; s.style.setProperty("--u", u + "px");
+const coin = icon ? Math.round(w * .52) : Math.round(Math.min(w, h) * .34);
+const ros = icon ? Math.round(w * .92) : Math.round(Math.min(w, h) * .9);
+s.innerHTML = `<div class="ros" style="width:${ros}px;height:${ros}px">${guilloche()}</div>
+  <img class="coin" src="../../assets/img/icon-512.png" alt="" style="width:${coin}px;height:${coin}px">
+  ${icon ? "" : `<div class="txt" style="bottom:${Math.round(h * .16)}px"><div class="name" style="font-size:${Math.round(w * .075)}px">MANI<span>-</span>GANTE</div><div class="slogan" style="font-size:${Math.round(w * .045)}px">Para gente gánster y elegante</div></div>`}`;
+await document.fonts.ready;
+document.body.dataset.ready = "1";
+</script>
+</body></html>

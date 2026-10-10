@@ -184,7 +184,7 @@ export const FAQ = [
   ["¿Cómo sé que el maní está fresco?", "Se prepara en pequeños lotes durante la semana; no hay stock guardado por meses. La disponibilidad de cada sabor se actualiza en vivo en el catálogo."],
   ["¿Dónde te encuentro?", "No hay puesto fijo: Jorge recorre el campus INACAP Temuco (biblioteca, patios, pasillos). Si reservas, eliges un punto de encuentro y la hora."],
   ["¿Qué formas de pago aceptan?", "Cuenta RUT (BancoEstado), Mach, Mercado Pago (débito, crédito o saldo) y efectivo solo en compra presencial."],
-  ["¿Puedo mezclar sabores?", "Sí. Agrega los sabores que quieras al carrito; se arma un solo pedido con el detalle completo."],
+  ["¿Puedo mezclar sabores?", "Sí. Agrega los sabores que quieras al carrito; se hace un solo pedido con el detalle completo."],
   ["¿Hacen envíos fuera de INACAP?", "La entrega es personal dentro del campus INACAP Temuco. Si necesitas algo fuera de ese radio, escríbenos por WhatsApp y vemos la posibilidad."],
 ];
 

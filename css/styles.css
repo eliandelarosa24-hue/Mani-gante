@@ -1023,7 +1023,11 @@ svg.bag { display: block; height: auto; aspect-ratio: 120 / 160; }
   .has-cart .agent-fab { bottom: 84px; }
   .dock:not([hidden]) { display: flex; }
   .drawer { top: auto; left: 8px; right: 8px; bottom: 0; width: auto; max-height: 88svh; transform: translateY(calc(100% + 20px)); }
-  .footer-actions .btn { flex: 1; }
+  .footer-actions { width: 100%; }
+  .footer-actions .btn { flex: 1 1 100%; }
+  .drawer-body { min-height: 26svh; }
+  .drawer-foot { gap: 8px; padding: 12px 18px 20px; }
+  .drawer-foot .btn { --h: 48px; }
   .footer-cols { grid-template-columns: minmax(0, 1fr); }
   .letter-body { columns: 1; }
   .masthead-top span:nth-child(2) { display: none; }

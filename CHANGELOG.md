@@ -44,10 +44,17 @@ Identidad nueva y única. La investigación está en [`docs/identidad-casa.md`](
 - axe WCAG 2.2 AA sin violaciones en Noche y Marfil. Todos los contrastes están documentados.
 - El service worker (`mg-v4-2026.10.3`) limpia la caché de la v3, así nadie queda viendo el diseño anterior.
 
+**Pulido v4.1**
+- Splash screens de iOS e íconos maskable con roseta y moneda dorada (`scripts/pwa-art.mjs`).
+- Página sin conexión con la estética de la casa.
+- Panel de Jorge alineado con la identidad: esquinas rectas, cifras en Big Shoulders y rombos dorados.
+- Copys revisados: se quitó "armas el combo" y "Arma tu caja" (en clave gánster sonaban a armas). Ahora dicen "completas" y "Llena tu maletín".
+- En celular: botones del pie a ancho completo y la cuenta muestra más líneas de pedido.
+
 **Pendiente**
 - Jorge revisa los alias, el horario y `NEW_IDS`.
 - Foto de Jorge para El Diario (opcional).
-- Splash screens de iOS con la estética nueva.
+- El logo del elefante todavía dice "El gigante de los antojos". Si Jorge quiere, se hace una versión con el eslogan nuevo.
 
 ## v3.0 · catálogo 2026.10.2 (octubre 2026)
 
