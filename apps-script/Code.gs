@@ -61,3 +61,29 @@ function getReservasSheet_() {
 function json_(obj) {
   return ContentService.createTextOutput(JSON.stringify(obj)).setMimeType(ContentService.MimeType.JSON);
 }
+
+/**
+ * NUEVO · Aviso instantáneo de stock a la web (webhook).
+ * 1. En Apps Script → Configuración del proyecto → Propiedades de secuencia de comandos, agrega:
+ *      SITE_URL = https://manigante.netlify.app
+ *      STOCK_SECRET = (el mismo valor que STOCK_WEBHOOK_SECRET en Netlify)
+ * 2. Activadores → Agregar activador → función "pushStock" → Desde hoja de cálculo → Al editar.
+ * Así, apenas marcas "disponible", la web y el asistente lo ven al tiro y se avisa a quienes esperaban ese sabor.
+ */
+function pushStock() {
+  const props = PropertiesService.getScriptProperties();
+  const site = props.getProperty("SITE_URL");
+  const secret = props.getProperty("STOCK_SECRET");
+  if (!site || !secret) return;
+  const sheet = SpreadsheetApp.getActive().getSheetByName(STOCK_SHEET);
+  const [header, ...rows] = sheet.getDataRange().getValues();
+  const keys = header.map(String);
+  const sabores = rows.filter(r => r.some(c => c !== "")).map(r => Object.fromEntries(keys.map((k, i) => [k, r[i]])));
+  UrlFetchApp.fetch(site + "/api/stock", {
+    method: "post",
+    contentType: "application/json",
+    headers: { "x-stock-secret": secret },
+    payload: JSON.stringify({ sabores }),
+    muteHttpExceptions: true,
+  });
+}

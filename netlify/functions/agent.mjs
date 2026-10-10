@@ -10,11 +10,14 @@
 import Anthropic from "@anthropic-ai/sdk";
 import {
   BUSINESS, FORMATS, PREMIUM_PRICE, SCHEDULE, RESERVATION_RULES, PROMOS, COMBOS, FAQ, NUTRITION,
-  JAPANESE, CATEGORY_ORDER, campusStatus, reservableDays, buildReservation, unitPrice, formatCLP,
+  JAPANESE, CATEGORY_ORDER, unitPrice, formatCLP,
   slug, whatsappLink, zonedNow,
 } from "../../js/catalog.mjs";
-import { getLiveCatalog } from "../lib/stock.mjs";
-import { notifyReservation } from "../lib/notify.mjs";
+import { getLiveCatalog } from "../lib/catalog-live.mts";
+import { createReservation, slotAvailability } from "../lib/reservations.mts";
+import { liveCampus } from "../lib/settings.mts";
+import { rateLimit, clientIp, sameOrigin } from "../lib/http.mts";
+import { track } from "../lib/analytics.mts";
 
 const MODEL = process.env.MANIGANTE_MODEL || "claude-opus-5-5";
 const EFFORT = process.env.MANIGANTE_EFFORT || "low";
@@ -37,6 +40,8 @@ Reglas:
 - Horarios / "¿estás en el campus?": usa get_schedule.
 - Reservas: reúne nombre, día, hora, punto de encuentro, formato (si no lo dicen, Antojo Clásico) y sabores con cantidades. Si falta algo, pregúntalo todo en un solo mensaje. Cuando esté completo, llama a create_reservation. Si devuelve errores, explícalos y ofrece alternativas (otro sabor disponible u otro horario). Si sale bien, dile que toque el botón de WhatsApp para enviarla y que adjunte el comprobante de pago.
 - Si el cliente quiere comprar ahora o seguir mirando, puedes usar add_to_cart para dejarle los sabores en el carrito de la web.
+- Venta sugerida (una sola vez por conversación, sin insistir): cuando el cliente elige o reserva, ofrece un complemento concreto usando "pairs" de check_availability, o avisa si le falta poco para un combo o para la promo de viernes.
+- Cada bloque de reserva tiene cupos limitados: get_schedule muestra cuántos quedan ("left"). Si un bloque está lleno o Jorge no está en el campus, ofrece el siguiente disponible.
 - La web tiene: "Tienda" (#tienda, con vista rápida de cada sabor), "Encuentra tu sabor" (un test de 3 preguntas), "Arma tu caja" (#caja, cajas de 3, 6 o 10 bolsas que el cliente llena a su gusto) y "Reservar" (#reservar). Puedes sugerirlas cuando ayuden.
 - Si piden algo que no puedes resolver (envíos fuera de INACAP, pedidos grandes, reclamos), deriva a WhatsApp con amabilidad.
 - No compartas datos bancarios completos; indica que están en la sección "Cómo pagar" de la web o los entrega Jorge por WhatsApp.
@@ -146,38 +151,38 @@ async function runTool(name, input, emit) {
   if (!isObj(input)) throw new ToolInputError("Entrada inválida.");
   switch (name) {
     case "check_availability": {
-      const { catalog, source, updated } = await getLiveCatalog();
+      const { catalog, japanese, source, updated } = await getLiveCatalog();
       const q = typeof input.query === "string" ? slug(input.query) : "";
-      const all = [...catalog, ...JAPANESE];
+      const all = [...catalog, ...japanese];
+      const pairsFor = (f) => all.filter((x) => x.available && x.id !== f.id && (x.category === f.category || x.topVentas)).slice(0, 2).map((x) => x.id);
       const list = all
         .filter((f) => !q || slug(`${f.name} ${f.category}`).includes(q))
         .map((f) => ({
           id: f.id, name: f.name, category: f.category, available: f.available, top_ventas: f.topVentas,
-          price_clasico: unitPrice(f, "celofan"), price_reserva: unitPrice(f, "doypack"), notes: f.notes,
+          price_clasico: unitPrice(f, "celofan"), price_reserva: unitPrice(f, "doypack"), notes: f.notes, pairs: pairsFor(f),
         }));
       return { source, updated, total: list.length, available_count: list.filter((f) => f.available).length, flavors: list };
     }
     case "get_schedule": {
-      return { now_status: campusStatus(), reservable_days: reservableDays(), meeting_points: RESERVATION_RULES.meetingPoints };
+      const [now_status, reservable_days] = await Promise.all([liveCampus(), slotAvailability()]);
+      return { now_status, reservable_days, meeting_points: RESERVATION_RULES.meetingPoints };
     }
     case "create_reservation": {
       for (const k of ["name", "date", "time", "meeting_point", "format"])
         if (typeof input[k] !== "string" || !input[k].trim()) throw new ToolInputError(`Falta ${k}.`);
       const items = validItems(input.items);
-      const { catalog } = await getLiveCatalog();
-      const result = buildReservation(
+      const r = await createReservation(
         { name: input.name, date: input.date, time: input.time, meetingPoint: input.meeting_point, format: input.format, items, notes: typeof input.notes === "string" ? input.notes : "" },
-        catalog,
+        "asistente IA",
       );
-      if (!result.ok) return { ok: false, errors: result.errors };
-      const notified = await notifyReservation(result, "asistente IA");
-      emit({ type: "action", action: { kind: "reservation", reservation: result.reservation, url: result.whatsappUrl, label: "Enviar reserva por WhatsApp" } });
-      return { ok: true, code: result.reservation.code, total: result.reservation.total, bags: result.reservation.bags, owner_notified: notified.some((n) => n.ok) };
+      if (!r.ok) return { ok: false, errors: r.errors };
+      emit({ type: "action", action: { kind: "reservation", reservation: r.reservation, url: r.whatsappUrl, label: "Enviar reserva por WhatsApp" } });
+      return { ok: true, code: r.reservation.code, total: r.reservation.total, bags: r.reservation.bags, owner_notified: r.ownerNotified, slots_left: r.slotsLeft };
     }
     case "add_to_cart": {
       const items = validItems(input.items);
-      const { catalog } = await getLiveCatalog();
-      const byId = new Map([...catalog, ...JAPANESE].map((f) => [f.id, f]));
+      const { catalog, japanese } = await getLiveCatalog();
+      const byId = new Map([...catalog, ...japanese].map((f) => [f.id, f]));
       const added = [];
       const rejected = [];
       for (const it of items) {
@@ -194,16 +199,6 @@ async function runTool(name, input, emit) {
   }
 }
 
-// ---------- Rate limit básico por IP (best effort, por instancia) ----------
-const hits = new Map();
-function limited(ip) {
-  const now = Date.now();
-  const arr = (hits.get(ip) || []).filter((t) => now - t < 60_000);
-  arr.push(now);
-  hits.set(ip, arr);
-  return arr.length > 12;
-}
-
 function sanitizeHistory(raw) {
   if (!Array.isArray(raw)) return null;
   const msgs = raw
@@ -215,9 +210,9 @@ function sanitizeHistory(raw) {
   return msgs;
 }
 
-function contextNote(cart) {
+async function contextNote(cart) {
   const now = zonedNow();
-  const status = campusStatus();
+  const status = await liveCampus();
   const items = Array.isArray(cart) ? cart.filter((c) => isObj(c) && typeof c.id === "string").slice(0, 40) : [];
   const cartText = items.length ? items.map((c) => `${c.id} x${Math.floor(Number(c.qty) || 0)}`).join(", ") : "vacío";
   return `Contexto actual (no lo menciones salvo que sirva): hoy es ${DAYS[now.weekday]} ${now.iso}, hora Chile ${String(Math.floor(now.minutes / 60)).padStart(2, "0")}:${String(now.minutes % 60).padStart(2, "0")}. Estado: ${status.label}. Carrito del cliente en la web: ${cartText}.`;
@@ -226,8 +221,8 @@ function contextNote(cart) {
 export default async (req, context) => {
   if (req.method !== "POST") return new Response("Method Not Allowed", { status: 405 });
   if (!process.env.ANTHROPIC_API_KEY) return Response.json({ error: "not_configured" }, { status: 503 });
-  if (limited(context?.ip || req.headers.get("x-nf-client-connection-ip") || "anon"))
-    return Response.json({ error: "rate_limited" }, { status: 429 });
+  if (!sameOrigin(req)) return Response.json({ error: "forbidden" }, { status: 403 });
+  if (await rateLimit("agent", clientIp(req, context), 12)) return Response.json({ error: "rate_limited" }, { status: 429 });
 
   let body;
   try { body = await req.json(); } catch { return Response.json({ error: "bad_json" }, { status: 400 }); }
@@ -235,12 +230,13 @@ export default async (req, context) => {
   if (!history) return Response.json({ error: "bad_messages" }, { status: 400 });
 
   /** @type {import("@anthropic-ai/sdk").default.Beta.BetaMessageParam[]} */
-  const messages = [...history, { role: "system", content: contextNote(body.cart) }];
+  const messages = [...history, { role: "system", content: await contextNote(body.cart) }];
 
   const encoder = new TextEncoder();
   const stream = new ReadableStream({
     async start(controller) {
       const emit = (obj) => controller.enqueue(encoder.encode(JSON.stringify(obj) + "\n"));
+      track([{ name: "agent_message" }]).catch(() => {});
       try {
         for (let round = 0; round <= MAX_TOOL_ROUNDS; round++) {
           const s = client.beta.messages.stream({
@@ -271,6 +267,7 @@ export default async (req, context) => {
           for (const block of message.content) {
             if (block.type !== "tool_use") continue;
             emit({ type: "tool", name: block.name });
+            track([{ name: `agent_tool:${block.name}` }]).catch(() => {});
             try {
               const out = await runTool(block.name, block.input, emit);
               results.push({ type: "tool_result", tool_use_id: block.id, content: JSON.stringify(out) });

@@ -4,6 +4,14 @@
 // Edita aquí precios, horarios, sabores o datos de contacto.
 // ============================================================
 
+// Versión del catálogo: súbela cada vez que cambies precios, sabores o reglas.
+// El panel admin y el agente la muestran; el historial queda en CATALOG_CHANGELOG.
+export const CATALOG_VERSION = "2026.10.2";
+export const CATALOG_CHANGELOG = [
+  { version: "2026.10.2", date: "2026-10-09", note: "Capacidad por bloque de reserva, sabores nuevos marcados, alérgenos y promo de viernes como regla." },
+  { version: "2026.10.1", date: "2026-10-09", note: "Catálogo unificado para web y agente IA." },
+];
+
 export const BUSINESS = {
   name: "MANI-GANTE",
   tagline: "El Gigante de los Antojos",
@@ -44,10 +52,17 @@ export const RESERVATION_RULES = {
   slots: ["09:00", "10:30", "12:00", "13:30", "15:00", "16:30", "18:00"],
   meetingPoints: ["Biblioteca", "Patio central", "Hall de entrada", "Casino / cafetería", "Otro (lo coordinamos)"],
   maxBagsPerReservation: 60,
+  slotCapacity: 6, // reservas máximas por bloque horario (Jorge camina solo)
+};
+
+// Alérgenos: texto honesto. Ajusta si Jorge certifica trazas.
+export const ALLERGENS = {
+  contains: ["Maní"],
+  note: "Contiene maní. No tenemos certificación de trazas (frutos secos, leche, gluten): si tienes alergias, confírmalo con Jorge antes de comprar.",
 };
 
 export const PROMOS = [
-  { id: "friday", day: 5, title: "Promo de viernes", text: "Compra 4 bolsas y la 5ª va gratis (mientras dure la producción)." },
+  { id: "friday", day: 5, buy: 4, free: 1, title: "Promo de viernes", text: "Compra 4 bolsas y la 5ª va gratis (mientras dure la producción)." },
   { id: "tag", title: "10% por etiquetarnos", text: "Sube una historia etiquetando @mani_gant y muéstrala al pedir: 10% de descuento. No acumulable." },
 ];
 
@@ -94,6 +109,7 @@ export const FLAVORS = RAW_FLAVORS.map(
     id, name, color, category, topVentas, available, premium, notes,
     line: "confitado",
     order: index + 1,
+    isNew: false,
   }),
 );
 
@@ -115,7 +131,11 @@ export const JAPANESE = [
   premium: false,
   line: "japones",
   order: 100 + index,
+  isNew: true,
 }));
+
+// Sabores marcados como "nuevo" en la tienda (además de toda la línea japonesa).
+export const NEW_IDS = new Set([]); // ej: new Set(["chocolate-dubai"])
 
 export const CATEGORY_ORDER = ["Frutales", "Chocolate", "Clásicos", "Cócteles", "Cremosos", "Café", "Coberturas", "Maní Japonés"];
 
@@ -275,6 +295,25 @@ export function reservableDays(date = new Date()) {
   return out;
 }
 
+export function reservationCode() {
+  const alphabet = "ABCDEFGHJKLMNPQRSTUVWXYZ23456789"; // sin 0/O ni 1/I
+  const bytes = new Uint8Array(4);
+  (globalThis.crypto || { getRandomValues: (a) => a.map(() => Math.floor(Math.random() * 256)) }).getRandomValues(bytes);
+  return "MG-" + [...bytes].map((b) => alphabet[b % alphabet.length]).join("");
+}
+
+/** Viernes: cuántas bolsas gratis corresponden y cuánto falta para la siguiente. */
+export function fridayPromo(bags, date = new Date()) {
+  const promo = PROMOS.find((p) => p.id === "friday");
+  const active = zonedNow(date).weekday === promo.day;
+  const group = promo.buy + promo.free;
+  return { active, free: active ? Math.floor(bags / group) * promo.free : 0, toNext: group - (bags % group), group, promo };
+}
+
+export function isNewFlavor(f) {
+  return Boolean(f.isNew || NEW_IDS.has(f.id));
+}
+
 export function whatsappLink(text) {
   return `https://wa.me/${BUSINESS.whatsapp}?text=${encodeURIComponent(text)}`;
 }
@@ -310,7 +349,7 @@ export function buildReservation({ name, date, time, meetingPoint, format = "cel
   if (bags > RESERVATION_RULES.maxBagsPerReservation) errors.push(`Para más de ${RESERVATION_RULES.maxBagsPerReservation} bolsas escríbenos directo por WhatsApp.`);
 
   const total = lines.reduce((s, l) => s + l.subtotal, 0);
-  const code = "MG-" + Math.random().toString(36).slice(2, 6).toUpperCase();
+  const code = reservationCode();
   const point = String(meetingPoint || RESERVATION_RULES.meetingPoints[0]).slice(0, 60);
   const message = [
     `*Reserva MANI-GANTE* · ${code}`,
