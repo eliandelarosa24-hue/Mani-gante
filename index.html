@@ -67,7 +67,7 @@
      "@type": "OpeningHoursSpecification",
      "dayOfWeek": "Tuesday",
      "opens": "08:00",
-     "closes": "17:00"
+     "closes": "12:30"
     },
     {
      "@type": "OpeningHoursSpecification",
@@ -85,7 +85,7 @@
      "@type": "OpeningHoursSpecification",
      "dayOfWeek": "Friday",
      "opens": "08:00",
-     "closes": "17:00"
+     "closes": "12:30"
     }
    ],
    "sameAs": [
@@ -885,7 +885,7 @@
      "name": "¿Dónde y cuándo te encuentro?",
      "acceptedAnswer": {
       "@type": "Answer",
-      "text": "En INACAP Temuco: miércoles de 08:00 a 18:30 y jueves de 08:00 a 17:00 Jorge recorre el campus (biblioteca, patios, pasillos). Martes y viernes solo entrega reservas, así que pide la tuya con anticipación. También vende en el Liceo Bicentenario James Mundell de lunes a viernes."
+      "text": "En INACAP Temuco: miércoles de 08:00 a 18:30 y jueves de 08:00 a 17:00 Jorge recorre el campus (biblioteca, patios, pasillos). Martes y viernes, de 08:00 a 12:30, solo entrega reservas: avísale con anticipación, ideal el día anterior. También vende en el Liceo Bicentenario James Mundell de lunes a viernes."
      }
     },
     {
@@ -1096,6 +1096,8 @@
           <small id="heroStock">Sincronizando stock con la producción</small>
         </div>
       </div>
+      <p class="countdown" id="heroCountdown" aria-live="off" hidden></p>
+      <div class="again" id="heroAgain" hidden></div>
       <div class="hero-card-flavors" id="heroTop"></div>
       <a class="btn btn-block" href="#reservar"><svg><use href="#i-cal"/></svg> Pedir una cita</a>
     </aside>
@@ -1166,11 +1168,18 @@
         <h2 class="h2" id="shopTitle">Los más <em>buscados</em></h2>
         <p class="lead">Cada sabor tiene su ficha, su número y su alias. Todos confitados esta semana.</p>
       </div>
+      <div class="finders">
       <button class="finder" type="button" data-open-quiz>
         <span class="finder-icon"><svg><use href="#i-compass"/></svg></span>
         <span><strong>¿No sabes cuál?</strong><small>Pasa el interrogatorio: 4 preguntas</small></span>
         <svg class="finder-arrow"><use href="#i-arrow"/></svg>
       </button>
+      <button class="finder finder-slot" type="button" data-open-ruleta>
+        <span class="finder-icon" aria-hidden="true"><svg><use href="#i-shuffle"/></svg></span>
+        <span><strong>¿Indeciso?</strong><small>Tira la Ruleta de la Casa</small></span>
+        <svg class="finder-arrow"><use href="#i-arrow"/></svg>
+      </button>
+      </div>
     </header>
 
     <div class="shop-bar" id="shopBar">
@@ -1275,6 +1284,7 @@
           <div class="rc-label"><span>Hora</span></div>
           <div class="slot-picker" id="rfSlots" role="radiogroup" aria-label="Hora de la cita"></div>
         </div>
+        <div class="rf-notice" id="rfNotice" role="status" hidden></div>
         <div class="rc-section">
           <div class="rc-label"><span>Punto de encuentro</span></div>
           <div class="point-picker" id="rfPoints" role="radiogroup" aria-label="Punto de encuentro"></div>
@@ -1506,6 +1516,11 @@
 <!-- ===================== VISTA RÁPIDA ===================== -->
 <dialog class="modal quick" id="quick" aria-labelledby="qvName">
   <button class="icon-btn modal-close" type="button" data-close-modal aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
+  <span class="sheet-handle" aria-hidden="true"></span>
+  <div class="quick-nav">
+    <button class="icon-btn round" type="button" id="qvPrev" aria-label="Sabor anterior"><svg style="transform:scaleX(-1)"><use href="#i-arrow"/></svg></button>
+    <button class="icon-btn round" type="button" id="qvNext" aria-label="Sabor siguiente"><svg><use href="#i-arrow"/></svg></button>
+  </div>
   <div class="quick-grid">
     <div class="quick-media">
       <div class="quick-art" id="qvArt"></div>
@@ -1529,6 +1544,7 @@
       <div class="quick-ctas">
         <button class="btn btn-ghost" type="button" id="qvReserve"><svg><use href="#i-cal"/></svg> Pedir cita con este</button>
         <button class="btn btn-ghost" type="button" id="qvAsk"><svg><use href="#i-spark"/></svg> Consultar al consigliere</button>
+        <button class="btn btn-ghost" type="button" id="qvShare"><svg><use href="#i-arrow"/></svg> Mándaselo a tu pana</button>
       </div>
       <div class="quick-pair"><p class="rc-label"><span>Hace buena pareja con</span></p><div id="qvPair" class="pair-row"></div></div>
       <p class="allergen" id="qvAllergen"></p>
@@ -1551,6 +1567,25 @@
     <p class="rc-errors" id="alertErr" role="alert" hidden></p>
     <button class="btn btn-gold btn-lg" type="submit"><svg><use href="#i-bell"/></svg> Avísame</button>
   </form>
+</dialog>
+
+<!-- ===================== LA RULETA DE LA CASA ===================== -->
+<dialog class="modal small-modal ruleta room" id="ruleta" aria-labelledby="ruletaTitle">
+  <button class="icon-btn modal-close" type="button" data-close-modal aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
+  <div class="ruleta-body">
+    <p class="eyebrow" style="justify-content:center">Para indecisos</p>
+    <h2 class="h3" id="ruletaTitle">La Ruleta <em>de la Casa</em></h2>
+    <div class="reels" aria-hidden="true">
+      <div class="reel"><div class="reel-strip"></div></div>
+      <div class="reel"><div class="reel-strip"></div></div>
+      <div class="reel"><div class="reel-strip"></div></div>
+    </div>
+    <div class="ruleta-result" id="ruletaResult" aria-live="polite"></div>
+    <div class="ruleta-actions">
+      <button class="btn btn-gold btn-lg" type="button" id="ruletaAdd" disabled><svg><use href="#i-bag"/></svg> Agregar</button>
+      <button class="btn btn-ghost" type="button" id="ruletaSpin"><svg><use href="#i-shuffle"/></svg> Tirar otra vez</button>
+    </div>
+  </div>
 </dialog>
 
 <!-- ===================== MIS PEDIDOS ===================== -->

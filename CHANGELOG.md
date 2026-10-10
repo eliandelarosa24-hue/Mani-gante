@@ -1,5 +1,34 @@
 # Changelog · MANI-GANTE
 
+## v4.3 · 10 mejoras hacia la perfección (catálogo 2026.10.5)
+
+**Pedidos de Jorge**
+- **Horario:** martes y viernes de **08:00 a 12:30**, solo con reserva. La web pide avisar con anticipación (ideal el día anterior) en "Dónde encontrarme", en la invitación y en las preguntas frecuentes.
+- **Red Vaeru** (nombre corregido) con su link y una **ventana en vivo**: el sitio real en un monitor de época que se recorre solo, carga al acercarse y se pausa con el mouse.
+
+**Las 10 mejoras** (todas con animación propia y respetando "reducir movimiento")
+1. **Reloj en vivo** en el Parte del día ("Faltan 3 d 16 h", "En el campus · cierra en 45 min"). Los números cambian con animación y el día de hoy queda resaltado en la semana de la casa.
+2. **Lo de siempre:** quien ya compró ve su último pedido y lo repite en un toque.
+3. **La Ruleta de la Casa:** tragamonedas sobre fieltro para indecisos. Tres rodillos que frenan escalonados en el mismo sabor, que luego se agrega en un toque.
+4. **Índice de capítulos** (I…IX) en pantallas anchas, con barra de progreso dorada y nombre al pasar el mouse.
+5. **Vista rápida deslizable:** flechas, teclado (←/→) y gestos para recorrer los sabores. En el celular es una hoja inferior que se cierra deslizando hacia abajo.
+6. **"Mándaselo a tu pana":** compartir la ficha del sabor (menú nativo de compartir, copiar link o WhatsApp) con su imagen.
+7. **Invitación inteligente:**
+   - propone la hora con más cupos;
+   - recuerda el punto de encuentro;
+   - avisa en los días "solo reservas" y en los pedidos de 10 bolsas o más.
+8. **En racha:** insignia con brillo en los 3 sabores más agregados o vistos de la semana. Usa datos reales (mínimo 5 interacciones) y no redibuja la tienda.
+9. **Búsqueda que perdona:**
+   - ignora tildes;
+   - tolera errores de tipeo ("pistaco");
+   - entiende sinónimos ("fresa", "chinola", "picante");
+   - sugiere "¿Quisiste decir…?".
+10. **Instalar la casa en el teléfono** (desde la segunda visita o después de pedir; con instrucciones para iPhone) y **aviso de conexión**, que actualiza el stock al volver la señal.
+
+**Calidad**
+- 60 pruebas Playwright pasan: se sumaron las de búsqueda, ruleta, vista rápida, reloj y "lo de siempre". También pasa axe WCAG 2.2 AA.
+- Se quitó `content-visibility` porque confundía la hit-testing. El scroll sigue a 60 fps; la peor pausa medida es de 117 ms.
+
 ## v4.2 · Logo oficial, horario real y velocidad (catálogo 2026.10.4)
 
 **Marca**
@@ -27,7 +56,7 @@
 **Contenido**
 - 8 fotos nuevas del producto real en la galería, "La receta", "El Diario" y la vista rápida. Se quitaron las fotos antiguas que ya no se usaban.
 - **Instagram en vivo** (`/api/instagram`): publicaciones e historias con caché de 10 minutos y renovación automática del token. Las destacadas no son posibles por la API de Instagram.
-- **Red Baeru** en "El Jefe" y en el pie. El link queda pendiente, se configura en `BUSINESS.ventures`.
+- **Red Vaeru** en "El Jefe" y en el pie. El link queda pendiente, se configura en `BUSINESS.ventures`.
 
 **Rendimiento** (medido con el procesador 4 veces más lento)
 

@@ -143,12 +143,12 @@ Todo se configura en `js/catalog.mjs`.
 |---|---|---|
 | Miércoles | 08:00–18:30 | Recorre el campus vendiendo (`campus`) |
 | Jueves | 08:00–17:00 | Recorre el campus vendiendo (`campus`) |
-| Martes | 08:00–17:00 | Solo entrega reservas (`reservas`) |
-| Viernes | 08:00–17:00 | Solo entrega reservas (`reservas`) |
+| Martes | 08:00–12:30 | Solo entrega reservas, con aviso previo (`reservas`) |
+| Viernes | 08:00–12:30 | Solo entrega reservas, con aviso previo (`reservas`) |
 
 **Otros datos**
 - `BUSINESS.locations`: INACAP Temuco y Liceo Bicentenario James Mundell.
-- `BUSINESS.ventures`: Red Baeru. Pega el link en `url` y aparece automáticamente en "El Jefe" y en el pie.
+- `BUSINESS.ventures`: Red Vaeru (https://redvaeru.netlify.app/). Con `live: true` se muestra una ventana en vivo que recorre el sitio sola.
 - `ALIASES`: el alias de cada sabor, con jerga dominicana.
 
 ## Publicar en Netlify

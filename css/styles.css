@@ -109,7 +109,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .sr-only { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 
 .container { width: 100%; max-width: var(--container); margin-inline: auto; padding-inline: clamp(16px, 4vw, 48px); }
-.section { padding-block: clamp(96px, 12vw, 168px); position: relative; content-visibility: auto; contain-intrinsic-size: auto 1200px; }
+.section { padding-block: clamp(96px, 12vw, 168px); position: relative; }
 .reserve, .shop { overflow: clip; }
 
 /* ---------- Tipografía de la casa ---------- */
@@ -600,6 +600,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .spot-days b { font-family: var(--deco); font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--text); }
 .spot-days em { font-style: normal; font-family: var(--deco); font-weight: 700; letter-spacing: .1em; text-transform: uppercase; font-size: .72rem; color: var(--green); }
 .spot-days li.reservas em { color: var(--clay); }
+.spot-note { margin-top: 8px; font-size: .84rem; color: var(--clay); }
 .ventures { margin-top: 22px; display: grid; gap: 10px; }
 .venture { padding: 14px 16px; border: 1px solid rgba(23,18,14,.25); border-left: 3px solid #7a1e31; }
 .venture small { display: block; font-family: var(--deco); font-weight: 700; letter-spacing: .2em; text-transform: uppercase; font-size: .72rem; color: #5e5244; }
@@ -607,6 +608,22 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 a.venture-name { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
 .venture p { margin: 4px 0 0 !important; font-size: .92rem !important; }
 #footVentures a, #footVentures span { display: block; padding: 5px 0; color: #ddbb7c; }
+/* Ventana en vivo (Red Vaeru): monitor de época con el sitio real recorriéndose solo */
+.live-window { display: block; margin-top: 14px; background: #0d0b09; padding: 8px; box-shadow: 0 24px 40px -22px rgba(23,18,14,.7), inset 0 0 0 1px rgba(210,174,109,.45); transition: transform .5s var(--ease), box-shadow .5s var(--ease); }
+.live-window:hover { transform: translateY(-3px); box-shadow: 0 30px 50px -22px rgba(23,18,14,.8), inset 0 0 0 1px #d2ae6d; }
+.live-bar { display: flex; align-items: center; gap: 8px; padding: 4px 6px 8px; font-family: var(--deco); font-weight: 800; letter-spacing: .2em; text-transform: uppercase; font-size: .7rem; color: #f2eadb; }
+.live-bar i { width: 7px; height: 7px; border-radius: 50%; background: #e06a60; animation: livePulse 1.6s ease-in-out infinite; }
+.live-bar span { margin-left: auto; font-family: var(--sans); letter-spacing: 0; text-transform: none; font-weight: 500; color: #968a78; font-size: .74rem; }
+@keyframes livePulse { 50% { opacity: .25; transform: scale(.7); } }
+.live-viewport { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; background: radial-gradient(60% 60% at 50% 40%, #2a0a12, #0d0b09); }
+.live-viewport iframe { position: absolute; left: 0; top: 0; width: 1280px; height: 4200px; border: 0; transform-origin: 0 0; transform: scale(var(--s, .35)); pointer-events: none; opacity: 0; transition: opacity .8s var(--ease); background: #fff; }
+.live-window.ready iframe { opacity: 1; animation: liveScroll 42s ease-in-out 1.2s infinite alternate; animation-play-state: paused; }
+.live-window.ready.playing iframe { animation-play-state: running; }
+.live-window:hover iframe { animation-play-state: paused !important; }
+@keyframes liveScroll { from { transform: translateY(0) scale(var(--s)); } to { transform: translateY(var(--travel)) scale(var(--s)); } }
+.live-placeholder { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--deco); font-weight: 700; letter-spacing: .24em; text-transform: uppercase; font-size: .76rem; color: #968a78; }
+.live-cta { display: block; padding: 10px 6px 4px; font-family: var(--deco); font-weight: 800; letter-spacing: .16em; text-transform: uppercase; font-size: .86rem; color: #e8ce98; }
+@media (prefers-reduced-motion: reduce) { .live-window.ready iframe { animation: none; } }
 
 /* ---------- Capítulo V · El Jefe (el diario de la casa) ---------- */
 .story { background: #efe6d5; color: #17120e; overflow: hidden;
@@ -853,7 +870,8 @@ svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; he
 .quick-buy { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
 .quick-buy .btn { flex: 1; }
 .quick-ctas { display: flex; gap: 8px; flex-wrap: wrap; }
-.quick-ctas .btn { margin: 0; --h: 46px; font-size: .88rem; flex: 1; }
+.quick-ctas .btn { margin: 0; --h: 46px; font-size: .88rem; flex: 1 1 calc(50% - 4px); padding: 0 12px; }
+.quick-ctas #qvShare { flex-basis: 100%; }
 .pair-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .pair-row button { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border: 1px solid var(--line-2); font-size: .86rem; font-weight: 600; min-height: 40px; }
 .pair-row button:hover { border-color: var(--gold); }
@@ -971,6 +989,76 @@ svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; he
 .hero-card.is-loading .hero-card-flavors > * { display: none; }
 @keyframes shimmer { to { background-position: -200% 0; } }
 .skeleton { background: linear-gradient(100deg, var(--surface-2) 30%, var(--surface) 50%, var(--surface-2) 70%); background-size: 200% 100%; animation: shimmer 1.4s linear infinite; }
+
+/* v4.3 · En racha (popularidad real de la semana) */
+.badge.hot { background: linear-gradient(100deg, #6e1a2c 30%, #a3283f 50%, #6e1a2c 70%); background-size: 220% 100%; color: #f2eadb; border-color: #e2687c; animation: hotSheen 3.2s ease-in-out infinite; }
+@keyframes hotSheen { 50% { background-position: 100% 0; } }
+/* Búsqueda que perdona */
+.did-you-mean { color: var(--muted); animation: fade .4s var(--ease); }
+.did-you-mean button { color: var(--gold-ink); font-weight: 700; text-decoration: underline; text-underline-offset: 3px; min-height: 32px; }
+/* Vista rápida: navegar entre sabores */
+.quick-nav { position: absolute; z-index: 3; top: 14px; left: 14px; display: flex; gap: 6px; }
+.quick-nav .icon-btn { background: rgba(13,11,9,.72); color: #f2eadb; box-shadow: inset 0 0 0 1px rgba(210,174,109,.45); }
+.quick-nav .icon-btn:hover { box-shadow: inset 0 0 0 1px #d2ae6d; color: #e8ce98; }
+.sheet-handle { display: none; }
+/* Invitación inteligente */
+.rf-notice { display: grid; gap: 6px; padding: 12px 14px; border-left: 3px solid #7a1e31; background: rgba(110,26,44,.06); font-size: .9rem; color: #4a0f1c; animation: noticeIn .5s var(--ease); }
+@keyframes noticeIn { from { opacity: 0; transform: translateY(-6px); } }
+
+/* Reloj en vivo del Parte del día */
+.countdown { display: flex; align-items: baseline; gap: 6px; flex-wrap: wrap; margin: 10px 0 0; padding: 8px 10px; background: rgba(23,18,14,.06); font-size: .82rem; color: #4e4337; }
+.countdown i { width: 6px; height: 6px; border-radius: 50%; background: #1e6b4a; align-self: center; animation: livePulse 2s ease-in-out infinite; }
+.countdown b { display: inline-block; font-family: var(--deco); font-weight: 800; font-size: 1.05rem; letter-spacing: .06em; color: #17120e; }
+.countdown.soon i { background: #b3332b; } .countdown.soon b { color: #7a1e31; }
+/* Lo de siempre */
+.again { margin-top: 10px; animation: noticeIn .6s var(--ease); }
+.again-btn { width: 100%; display: flex; align-items: center; gap: 10px; padding: 10px 12px; border: 1px dashed rgba(23,18,14,.35); text-align: left; transition: background .25s, border-color .25s; }
+.again-btn:hover { background: rgba(110,26,44,.06); border-color: #7a1e31; }
+.again-ic { width: 30px; height: 30px; display: grid; place-items: center; border-radius: 50%; background: #17120e; color: #e8ce98; font-size: 1rem; transition: transform .6s var(--ease); }
+.again-btn:hover .again-ic { transform: rotate(-360deg); }
+.again-btn small { display: block; font-family: var(--deco); font-weight: 700; letter-spacing: .18em; text-transform: uppercase; font-size: .68rem; color: #5e5244; }
+.again-btn strong { font-size: .9rem; color: #17120e; }
+.again-btn em { margin-left: auto; font-style: normal; font-family: var(--deco); font-weight: 800; letter-spacing: .12em; text-transform: uppercase; font-size: .8rem; color: #7a1e31; }
+/* Dos buscadores: interrogatorio y ruleta */
+.finders { display: grid; gap: 10px; }
+.finder-slot .finder-icon { background: linear-gradient(135deg, #6e1a2c, #a3283f); color: #f2eadb; }
+/* La Ruleta de la Casa: tragamonedas sobre fieltro */
+.ruleta { background: radial-gradient(80% 70% at 50% 35%, #1e5a43, #0d2a1f 80%); }
+.ruleta-body { padding: clamp(30px, 5vw, 44px) clamp(18px, 4vw, 34px) 28px; text-align: center; display: grid; gap: 16px; }
+.ruleta .h3 { color: #f2eadb; }
+.reels { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; padding: 12px; background: #0d0b09; box-shadow: inset 0 0 0 1px rgba(210,174,109,.6), inset 0 0 0 5px #0d0b09, inset 0 0 0 6px rgba(210,174,109,.3), 0 20px 40px -18px rgba(0,0,0,.8); position: relative; }
+.reels::after { content: ""; position: absolute; left: 6px; right: 6px; top: 50%; height: 1px; background: rgba(226,104,124,.6); pointer-events: none; }
+.reel { height: 92px; overflow: hidden; background: linear-gradient(180deg, #1e1915, #2a231d 50%, #1e1915); box-shadow: inset 0 10px 14px -8px rgba(0,0,0,.8), inset 0 -10px 14px -8px rgba(0,0,0,.8); }
+.reel-strip { will-change: transform; }
+.reel-face { height: 92px; display: grid; place-items: center; }
+.reel-face img { width: 64px; height: 64px; }
+.ruleta-result { min-height: 112px; opacity: 0; transform: translateY(8px); transition: opacity .5s var(--ease), transform .5s var(--ease); }
+.ruleta-result.show { opacity: 1; transform: none; }
+.ruleta-result .h3 { font-size: 1.8rem; }
+.ruleta-alias { font-family: var(--serif); font-style: italic; font-size: 1.15rem; color: #ddbb7c; }
+.ruleta-result .muted { color: #d8e6dc; }
+.ruleta-actions { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+.ruleta-actions .btn-ghost { margin: 0; color: #f2eadb; }
+.ruleta .modal-close { background: transparent; color: #f2eadb; }
+/* Índice de capítulos (escritorio ancho: no compite con el contenido) */
+@media (max-width: 1379px) { .chapters { display: none; } }
+.chapters { position: fixed; z-index: 45; right: 18px; top: 50%; translate: 12px -50%; display: grid; gap: 4px; opacity: 0; pointer-events: none; transition: opacity .5s var(--ease), translate .5s var(--ease); }
+.chapters.show { opacity: 1; translate: 0 -50%; pointer-events: auto; }
+.chapters-line { position: absolute; right: 15px; top: 6px; bottom: 6px; width: 1px; background: var(--line-2); }
+.chapters-line i { position: absolute; inset: 0; background: var(--gold); transform-origin: top; transform: scaleY(0); }
+.chapters a { position: relative; display: flex; align-items: center; justify-content: flex-end; min-height: 30px; }
+.chapters a b { width: 31px; height: 26px; display: grid; place-items: center; font-family: var(--deco); font-weight: 800; font-size: .76rem; letter-spacing: .06em; color: var(--subtle); background: var(--bg); position: relative; transition: color .3s, transform .3s var(--ease); }
+.chapters a span { position: absolute; right: 42px; white-space: nowrap; font-family: var(--deco); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: .72rem; color: var(--gold-ink); background: color-mix(in srgb, var(--bg) 92%, transparent); padding: 4px 8px; opacity: 0; transform: translateX(8px); transition: opacity .3s, transform .3s var(--ease); pointer-events: none; }
+.chapters a:hover span, .chapters a:focus-visible span { opacity: 1; transform: none; }
+.chapters a.on b { color: var(--bg); background: var(--gold); transform: scale(1.08); }
+/* Instalar la casa */
+.install-card { position: fixed; z-index: 90; left: 16px; bottom: 16px; width: min(380px, calc(100vw - 32px)); display: grid; grid-template-columns: auto 1fr; gap: 12px; align-items: center; padding: 14px; background: #0d0b09; box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(210,174,109,.5); transform: translateY(140%); transition: transform .6s var(--ease); }
+.install-card.show { transform: none; }
+.install-card img { border-radius: 50%; box-shadow: 0 0 0 2px #d2ae6d; }
+.install-card strong { display: block; font-family: var(--serif); font-size: 1.08rem; }
+.install-card span { font-size: .86rem; color: #bfb3a1; }
+.install-actions { grid-column: 1 / -1; display: flex; gap: 12px; align-items: center; justify-content: flex-end; }
+.install-actions .btn { --h: 44px; font-size: .9rem; }
 
 /* Microanimaciones */
 .plus-one { position: fixed; z-index: 320; pointer-events: none; font-family: var(--deco); font-weight: 800; font-size: 1.3rem; letter-spacing: .06em; color: #e8ce98; text-shadow: 0 2px 10px rgba(0,0,0,.6); }
@@ -1095,6 +1183,12 @@ svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; he
   .quiz-result { gap: 6px; }
   .quiz-pick { padding: 8px 6px; }
   .agent { right: 0; bottom: 0; width: 100vw; height: 100svh; }
+  /* Vista rápida como hoja inferior: se desliza desde abajo y se cierra deslizando hacia abajo */
+  .modal.quick { margin: auto 0 0; width: 100vw; max-width: 100vw; max-height: 92svh; outline-offset: -6px; }
+  .modal.quick[open] { animation: sheetUp .5s var(--ease); }
+  @keyframes sheetUp { from { transform: translateY(40%); opacity: 0; } }
+  .sheet-handle { display: block; position: absolute; z-index: 4; top: 8px; left: 50%; width: 44px; height: 4px; translate: -50% 0; border-radius: 4px; background: rgba(242,234,219,.5); }
+  .quick-nav { top: 20px; }
   .agent-fab { right: 12px; bottom: 12px; padding: 5px; }
   .agent-fab-text { display: none; }
   .has-cart .agent-fab { bottom: 84px; }

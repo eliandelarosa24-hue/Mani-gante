@@ -51,7 +51,7 @@ test("sabor agotado ofrece 'Avísame' y registra la alerta", async ({ page }) =>
 
 test("test de sabor (4 preguntas) agrega 3 recomendaciones y guarda el resultado", async ({ page }) => {
   await page.goto("/");
-  await page.locator(".finder").click();
+  await page.locator(".finder[data-open-quiz]").click();
   for (const v of ["frutal", "suave", "bajon", "clasico"]) await page.locator(`.quiz-opt[data-v="${v}"]`).click();
   await expect(page.locator(".quiz-pick")).toHaveCount(3);
   await page.locator("#quizAdd").click();
@@ -116,4 +116,44 @@ test("identidad: fichas con alias, la Bolsa en vivo y eslogan", async ({ page })
   await expect(page.locator("#marqueeTrack .tk.down").first()).toBeAttached();
   await page.locator("#search").fill("jeque");
   await expect(page.locator("#grid .card")).toHaveCount(1);
+});
+
+test("v4.3: búsqueda que perdona, sugerencias y sinónimos", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("#search").fill("maracuya");
+  await expect(page.locator('#grid .card[data-id="maracuya"]')).toBeVisible();
+  await page.locator("#search").fill("fresa");
+  await expect(page.locator('#grid .card[data-id="frutilla"]')).toBeVisible();
+  await page.locator("#search").fill("pistaco");
+  await expect(page.locator('#grid .card[data-id="pistacho"]')).toBeVisible();
+  await page.locator("#search").fill("zzzzqqq");
+  await expect(page.locator("#empty")).toBeVisible();
+});
+
+test("v4.3: la ruleta elige un sabor disponible y lo agrega", async ({ page }) => {
+  await page.goto("/");
+  await page.locator("[data-open-ruleta]").click();
+  await expect(page.locator("#ruleta")).toBeVisible();
+  await expect(page.locator("#ruletaResult")).toHaveClass(/show/);
+  await page.locator("#ruletaAdd").click();
+  await expect(page.locator("#cartCount")).toHaveText("1");
+});
+
+test("v4.3: vista rápida pasa al siguiente sabor y el reloj en vivo aparece", async ({ page }) => {
+  await page.goto("/");
+  await page.locator('#grid [data-quick="maracuya"]').click();
+  await expect(page.locator("#qvName")).toHaveText("Maracuyá");
+  await page.locator("#qvNext").click();
+  await expect(page.locator("#qvName")).not.toHaveText("Maracuyá");
+  await page.keyboard.press("ArrowLeft");
+  await expect(page.locator("#qvName")).toHaveText("Maracuyá");
+  await page.keyboard.press("Escape");
+  await expect(page.locator("#heroCountdown")).toBeVisible();
+});
+
+test("v4.3: 'lo de siempre' repite el último pedido", async ({ page }) => {
+  await page.addInitScript(() => localStorage.setItem("mg-history-v1", JSON.stringify([{ id: "P-1", type: "pedido", items: [{ id: "coco", name: "Coco", qty: 2 }], format: "celofan", createdAt: new Date().toISOString() }])));
+  await page.goto("/");
+  await page.locator("#heroAgain button").click();
+  await expect(page.locator("#cartCount")).toHaveText("2");
 });

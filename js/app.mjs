@@ -62,7 +62,8 @@ const gridJp = $("#gridJp");
 function cardHTML(f) {
   const qty = state.cart.get(f.id) || 0;
   const [main, sub] = splitName(f.name);
-  const badge = !f.available ? `<span class="badge out">Agotado</span>` : isNewFlavor(f) ? `<span class="badge new">Recién llegado</span>` : f.topVentas ? `<span class="badge">Más buscado</span>` : "";
+  const hot = state.status?.hot?.includes(f.id);
+  const badge = !f.available ? `<span class="badge out">Agotado</span>` : isNewFlavor(f) ? `<span class="badge new">Recién llegado</span>` : hot ? `<span class="badge hot">En racha</span>` : f.topVentas ? `<span class="badge">Más buscado</span>` : "";
   const premium = f.premium ? `<span class="badge premium">Precio fijo</span>` : "";
   const control = !f.available
     ? `<button class="add-btn ghost" type="button" data-alert="${f.id}"><svg><use href="#i-bell"/></svg>Avísame</button>`
@@ -79,20 +80,45 @@ function cardHTML(f) {
   </article>`;
 }
 
+// Búsqueda que perdona: sin tildes, tolera errores de tipeo y entiende sinónimos ("fresa", "chinola", "picante"…).
+const SYNONYMS = { fresa: "frutilla", frutillas: "frutilla", maracuya: "maracuya chinola", chinola: "maracuya", patilla: "sandia", cafe: "cafe cappuccino mocaccino", picante: "habanero", dulce: "miel manjar", chocolate: "chocolate cobertura", ron: "pasa el ron", platano: "platano mangu", salado: "japones salado", berries: "frutos del bosque arandano", azul: "arandano azul" };
+function lev(a, b) {
+  if (Math.abs(a.length - b.length) > 2) return 9;
+  const d = Array.from({ length: a.length + 1 }, (_, i) => [i]);
+  for (let j = 1; j <= b.length; j++) d[0][j] = j;
+  for (let i = 1; i <= a.length; i++) for (let j = 1; j <= b.length; j++) d[i][j] = Math.min(d[i - 1][j] + 1, d[i][j - 1] + 1, d[i - 1][j - 1] + (a[i - 1] === b[j - 1] ? 0 : 1));
+  return d[a.length][b.length];
+}
+const haystack = (f) => slug(`${f.name} ${f.category} ${f.notes} ${f.alias || ""}`).replace(/-/g, " ");
+function fuzzyMatch(f, q) {
+  const words = haystack(f).split(" ");
+  return q.split(" ").filter(Boolean).every((t) => {
+    const alts = [t, ...(SYNONYMS[t] || "").split(" ").filter(Boolean)];
+    return alts.some((a) => words.some((w) => w.startsWith(a) || (a.length >= 4 && lev(a, w.slice(0, a.length + 1)) <= (a.length >= 7 ? 2 : 1))));
+  });
+}
+let searchSuggestions = [];
 function filtered() {
-  const q = slug(state.query);
+  const q = slug(state.query).replace(/-/g, " ").trim();
   const { available: onlyAv, top, new: onlyNew } = state.filters;
-  return state.catalog.filter((f) =>
-    (state.category === "todos" || slug(f.category) === state.category)
-    && (!q || slug(`${f.name} ${f.category} ${f.notes} ${f.alias || ""}`).includes(q))
+  const base = state.catalog.filter((f) => (state.category === "todos" || slug(f.category) === state.category)
     && (!onlyAv || f.available) && (!top || f.topVentas) && (!onlyNew || isNewFlavor(f)));
+  if (!q) { searchSuggestions = []; return base; }
+  const exact = base.filter((f) => haystack(f).includes(q));
+  const list = exact.length ? exact : base.filter((f) => fuzzyMatch(f, q));
+  searchSuggestions = list.length ? [] : [...state.catalog, ...state.japanese]
+    .map((f) => ({ f, d: Math.min(...[f.name, f.alias || ""].map((n) => lev(q.slice(0, 12), slug(n).replace(/-/g, " ").slice(0, q.length)))) }))
+    .sort((a, b) => a.d - b.d).slice(0, 3).map((x) => x.f);
+  return list;
 }
 function renderCatalog() {
   const list = filtered();
   grid.innerHTML = list.map(cardHTML).join("");
   const empty = $("#empty");
   empty.hidden = list.length > 0;
-  if (!list.length) empty.innerHTML = `${bag("#C8963E", "doypack", { cls: "bag empty-bag" })}<span>${VOICE.emptySearch}</span> <button type="button" data-open-agent>Consultar al consigliere</button>`;
+  if (!list.length) empty.innerHTML = `${bag("#C8963E", "doypack", { cls: "bag empty-bag" })}<span>${VOICE.emptySearch}</span>
+    ${searchSuggestions.length ? `<span class="did-you-mean">¿Quisiste decir ${searchSuggestions.map((f) => `<button type="button" data-suggest="${esc(f.name)}">${esc(f.name.replace("Maní Japonés ", "Japonés "))}</button>`).join(" · ")}?</span>` : ""}
+    <button type="button" data-open-agent>Consultar al consigliere</button>`;
   gridJp.innerHTML = state.japanese.map(cardHTML).join("");
   window.dispatchEvent(new CustomEvent("mg:catalog"));
 }
@@ -134,6 +160,7 @@ $("#chips").addEventListener("click", (e) => {
 });
 $("#formats").addEventListener("click", (e) => { const b = e.target.closest("[data-format]"); if (b) setFormat(b.dataset.format); });
 let searchTimer;
+$("#empty").addEventListener("click", (e) => { const b = e.target.closest("[data-suggest]"); if (!b) return; $("#search").value = b.dataset.suggest; state.query = b.dataset.suggest; renderCatalog(); });
 $("#search").addEventListener("input", (e) => { clearTimeout(searchTimer); searchTimer = setTimeout(() => { state.query = e.target.value; renderCatalog(); }, 120); });
 $("#filters").addEventListener("click", (e) => {
   const b = e.target.closest("[data-filter]"); if (!b) return;
@@ -216,12 +243,25 @@ async function loadStatus() {
   banner.hidden = !c?.away;
   if (c?.away) { $("#awayText").textContent = VOICE.away(c.label); document.body.classList.add("has-away"); }
   renderHero(); renderDays(); renderUgc();
+  markHot();
+}
+/** Agrega la insignia "En racha" solo a esas fichas (sin redibujar la tienda bajo el dedo del cliente). */
+function markHot() {
+  for (const id of state.status?.hot || []) {
+    const f = byId().get(id);
+    if (!f?.available || isNewFlavor(f)) continue;
+    $$(`.card[data-id="${id}"] .card-art`).forEach((art) => {
+      if (art.querySelector(".badge.hot, .badge.out, .badge.new")) return;
+      art.querySelector(".badge:not(.premium)")?.remove();
+      art.insertAdjacentHTML("afterbegin", `<span class="badge hot">En racha</span>`);
+    });
+  }
 }
 
 // ============================================================
 // Carrito / boleta
 // ============================================================
-function saveCart() { store.set("mg-cart-v2", Object.fromEntries(state.cart)); store.set("mg-cart-at", Date.now()); }
+function saveCart() { store.set("mg-cart-v2", Object.fromEntries(state.cart)); store.set("mg-cart-at", Date.now()); dispatchEvent(new CustomEvent("mg:cart")); }
 function pruneCart() {
   const m = byId(); const removed = [];
   for (const [id] of state.cart) {
@@ -398,6 +438,7 @@ $("#cartWa").addEventListener("click", () => {
   const { lines, bags, total } = cartTotals();
   saveOrder({ type: "pedido", items: lines.map(({ f, qty }) => ({ id: f.id, name: f.name, qty })), bags, total, format: state.format, payment: state.payment, whatsappUrl: $("#cartWa").href });
   track("order_whatsapp", { payment: state.payment });
+  dispatchEvent(new CustomEvent("mg:order"));
   stampMoment($("#cart"));
   setTimeout(() => toast(VOICE.orderSaved(), { tone: "success", action: { label: "Ver", onClick: openHistory } }), 400);
 });
@@ -475,12 +516,44 @@ function setMedia(which) {
   $$(".media-toggle [data-media]").forEach((b) => b.setAttribute("aria-selected", b.dataset.media === which));
   $("#qvArt").hidden = which !== "art"; $("#qvPhoto").hidden = which !== "photo";
 }
+function quickList() { const l = filtered(); return l.some((f) => f.id === qv?.id) ? l : [...state.catalog, ...state.japanese]; }
+function stepQuick(dir) {
+  const list = quickList(); const i = list.findIndex((f) => f.id === qv.id);
+  const next = list[(i + dir + list.length) % list.length]; if (!next) return;
+  qv = { id: next.id, qty: 1, format: qv.format };
+  const art = $("#qvArt");
+  renderQuick();
+  if (!reduceMotion) art.animate([{ transform: `translateX(${dir * 40}px)`, opacity: 0 }, { transform: "none", opacity: 1 }], { duration: 380, easing: "cubic-bezier(.2,.8,.2,1)" });
+  track("quick_view", { flavor: next.id });
+}
 function openQuick(id) {
   qv = { id, qty: 1, format: state.format };
   setMedia("art");
   renderQuick();
   quick.showModal();
   track("quick_view", { flavor: id });
+}
+$("#qvShare")?.addEventListener("click", async () => {
+  const f = byId().get(qv.id); if (!f) return;
+  const url = `${BUSINESS.url}sabor/${f.id}`;
+  const text = `${f.name}${f.alias ? `, alias «${f.alias}»` : ""}. MANI-GANTE: para gente elegante y gánster.`;
+  track("share_flavor", { flavor: f.id });
+  if (navigator.share) { try { await navigator.share({ title: `${f.name} · MANI-GANTE`, text, url }); return; } catch (e) { if (e?.name === "AbortError") return; } }
+  try { await navigator.clipboard.writeText(`${text} ${url}`); toast(VOICE.linkCopied(), { tone: "info" }); }
+  catch { window.open(`https://wa.me/?text=${encodeURIComponent(`${text} ${url}`)}`, "_blank", "noopener"); }
+});
+$("#qvPrev")?.addEventListener("click", () => stepQuick(-1));
+$("#qvNext")?.addEventListener("click", () => stepQuick(1));
+quick.addEventListener("keydown", (e) => { if (e.target.closest("input, textarea")) return; if (e.key === "ArrowRight") stepQuick(1); if (e.key === "ArrowLeft") stepQuick(-1); });
+{ // gestos: deslizar a los lados cambia de sabor; hacia abajo cierra (hoja inferior en el celular)
+  let x0 = 0, y0 = 0, t0 = 0;
+  quick.addEventListener("pointerdown", (e) => { if (e.pointerType === "mouse") return; x0 = e.clientX; y0 = e.clientY; t0 = Date.now(); }, { passive: true });
+  quick.addEventListener("pointerup", (e) => {
+    if (e.pointerType === "mouse" || !t0 || Date.now() - t0 > 600) return;
+    const dx = e.clientX - x0, dy = e.clientY - y0; t0 = 0;
+    if (Math.abs(dx) > 60 && Math.abs(dx) > Math.abs(dy) * 1.4) stepQuick(dx < 0 ? 1 : -1);
+    else if (dy > 110 && Math.abs(dy) > Math.abs(dx) * 1.6 && quick.scrollTop <= 0) quick.close();
+  }, { passive: true });
 }
 $(".media-toggle").addEventListener("click", (e) => { const b = e.target.closest("[data-media]"); if (b) setMedia(b.dataset.media); });
 $("#qvMinus").addEventListener("click", () => { qv.qty = Math.max(1, qv.qty - 1); renderQuick(); });
@@ -737,10 +810,31 @@ if ($("#heroPlate")) $("#heroPlate").textContent = `Ficha Nº ${heroFlavor.no} �
 const DAY_NAMES = ["Dom", "Lun", "Mar", "Mié", "Jue", "Vie", "Sáb"];
 if ($("#spots")) $("#spots").innerHTML = `<p class="rc-label"><span>Dónde encontrarme</span></p>` + BUSINESS.locations.map((l) => `
   <div class="spot${l.main ? " main" : ""}"><svg><use href="#i-pin"/></svg><div><strong>${esc(l.name)}</strong><span>${esc(l.detail)}</span>
-  ${l.main ? `<ul class="spot-days">${SCHEDULE.map((d) => `<li class="${d.mode}"><b>${DAY_NAMES[d.day]}</b>${d.open}–${d.close}<em>${d.mode === "reservas" ? "solo reservas" : "en el campus"}</em></li>`).join("")}</ul>` : ""}</div></div>`).join("");
+  ${l.main ? `<ul class="spot-days">${SCHEDULE.map((d) => `<li class="${d.mode}"><b>${DAY_NAMES[d.day]}</b>${d.open}–${d.close}<em>${d.mode === "reservas" ? "solo reservas" : "en el campus"}</em></li>`).join("")}</ul>
+  ${SCHEDULE.some((d) => d.notice) ? `<p class="spot-note">${SCHEDULE.filter((d) => d.notice).map((d) => DAY_NAMES[d.day]).join(" y ")}: ${esc(SCHEDULE.find((d) => d.notice).notice.toLowerCase())}.</p>` : ""}` : ""}</div></div>`).join("");
 const ventures = BUSINESS.ventures || [];
 const ventureLink = (v, cls = "") => v.url ? `<a class="${cls}" href="${esc(v.url)}" target="_blank" rel="noopener">${esc(v.name)} ↗</a>` : `<span class="${cls}">${esc(v.name)}</span>`;
-if ($("#ventures")) $("#ventures").innerHTML = ventures.map((v) => `<div class="venture"><small>${esc(v.role)} también de</small>${ventureLink(v, "venture-name")}<p>${esc(v.text)}</p></div>`).join("");
+if ($("#ventures")) $("#ventures").innerHTML = ventures.map((v) => `<div class="venture"><small>${esc(v.role)} también de</small>${ventureLink(v, "venture-name")}<p>${esc(v.text)}</p>
+  ${v.live && v.url ? `<a class="live-window" href="${esc(v.url)}" target="_blank" rel="noopener" aria-label="Abrir ${esc(v.name)} en una pestaña nueva">
+    <span class="live-bar"><i aria-hidden="true"></i>En vivo<span>${esc(v.url.replace(/^https?:\/\//, "").replace(/\/$/, ""))}</span></span>
+    <span class="live-viewport"><span class="live-placeholder">Abriendo ${esc(v.name)}…</span><iframe data-src="${esc(v.url)}" title="Vista en vivo de ${esc(v.name)}" tabindex="-1" aria-hidden="true" loading="lazy" referrerpolicy="no-referrer" sandbox="allow-scripts allow-same-origin"></iframe></span>
+    <span class="live-cta">Entrar a ${esc(v.name)} ↗</span></a>` : ""}</div>`).join("");
+// Ventana en vivo: carga el sitio solo al acercarse, lo escala como pantalla de escritorio y lo recorre solo.
+$$(".live-window").forEach((win) => {
+  const frame = win.querySelector("iframe"), vp = win.querySelector(".live-viewport");
+  const FRAME_W = 1280, FRAME_H = 4200;
+  const fit = () => {
+    const s = vp.clientWidth / FRAME_W;
+    win.style.setProperty("--s", s);
+    win.style.setProperty("--travel", `${-(FRAME_H * s - vp.clientHeight)}px`);
+  };
+  new ResizeObserver(fit).observe(vp);
+  const io = new IntersectionObserver(([en]) => {
+    if (en.isIntersecting && !frame.src) { frame.src = frame.dataset.src; frame.addEventListener("load", () => win.classList.add("ready"), { once: true }); }
+    win.classList.toggle("playing", en.isIntersecting);
+  }, { rootMargin: "300px 0px" });
+  io.observe(win);
+});
 if ($("#footVentures")) $("#footVentures").innerHTML = ventures.map((v) => ventureLink(v)).join("");
 $$("[data-guilloche]").forEach((el) => { el.innerHTML = guillocheImg(); });
 $$("[data-monogram]").forEach((el) => { el.innerHTML = monogram(); });
@@ -763,7 +857,7 @@ $$("[data-stamp]").forEach((el) => { el.innerHTML = stamp(el.dataset.stamp || un
 // ============================================================
 // Reservas: un solo flujo con ticket en vivo, cupos y medio de pago
 // ============================================================
-const rf = { day: null, slot: null, point: RESERVATION_RULES.meetingPoints[0] };
+const rf = { day: null, slot: null, point: RESERVATION_RULES.meetingPoints.includes(store.get("mg-point")) ? store.get("mg-point") : RESERVATION_RULES.meetingPoints[0], pickedSlot: false };
 function renderReserveItems() {
   const { lines, total } = cartTotals();
   const boxEl = $("#rfItems"); if (!boxEl) return;
@@ -776,6 +870,7 @@ function renderReserveItems() {
   }
   setMoney($("#rfTotal"), total);
   renderLive();
+  if (rf.day) renderRfNotice(liveDays().find((d) => d.iso === rf.day));
 }
 function liveDays() {
   // Prioriza los cupos reales del servidor; si no hay backend, usa el calendario local.
@@ -793,8 +888,8 @@ function bindReserve() {
   $("#rfItems").addEventListener("click", (e) => { const b = e.target.closest("[data-inc]"); if (b) changeQty(b.dataset.inc, +1, { from: b }); });
   $("#rfEditCart").addEventListener("click", openCart);
   $("#rfDays").addEventListener("click", (e) => { const b = e.target.closest("[data-day]"); if (b) { rf.day = b.dataset.day; renderDays(); } });
-  $("#rfSlots").addEventListener("click", (e) => { const b = e.target.closest("[data-slot]"); if (b) { rf.slot = b.dataset.slot; renderSlots(); } });
-  $("#rfPoints").addEventListener("click", (e) => { const b = e.target.closest("[data-point]"); if (b) { rf.point = b.dataset.point; renderPoints(); } });
+  $("#rfSlots").addEventListener("click", (e) => { const b = e.target.closest("[data-slot]"); if (b) { rf.slot = b.dataset.slot; rf.pickedSlot = true; renderSlots(); } });
+  $("#rfPoints").addEventListener("click", (e) => { const b = e.target.closest("[data-point]"); if (b) { rf.point = b.dataset.point; store.set("mg-point", rf.point); renderPoints(); } });
   $("#rfPay").addEventListener("click", (e) => { const b = e.target.closest("[data-pay]"); if (b) { state.payment = b.dataset.pay; store.set("mg-payment", state.payment); renderPayPicker(); renderCart(); } });
   $("#rfName").value = store.get("mg-name", "");
   $("#rfName").addEventListener("input", (e) => { e.target.removeAttribute("aria-invalid"); showErrors([]); });
@@ -815,13 +910,29 @@ function renderSlots() {
   const el = $("#rfSlots"); if (!el) return;
   const day = liveDays().find((d) => d.iso === rf.day);
   const slots = day?.slots || [];
-  if (!slots.includes(rf.slot)) rf.slot = slots[0] ?? null;
+  if (!slots.includes(rf.slot) || !rf.pickedSlot) {
+    // Sugerencia: la hora más temprana con más cupos libres (si el servidor informa cupos).
+    const best = [...slots].sort((a, b) => (day?.left?.[b] ?? 0) - (day?.left?.[a] ?? 0))[0];
+    rf.slot = (day?.left && best) || slots[0] || null;
+  }
+  renderRfNotice(day);
   el.innerHTML = slots.map((s) => {
     const left = day.left?.[s];
     const few = typeof left === "number" && left <= 2;
     return `<button type="button" class="slot${few ? " few" : ""}" role="radio" data-slot="${s}" aria-checked="${s === rf.slot}"${few ? ` aria-label="${s}, quedan ${left} cupos"` : ""}>${s}${few ? `<small>quedan ${left}</small>` : ""}</button>`;
   }).join("");
   renderLive();
+}
+function renderRfNotice(day) {
+  const el = $("#rfNotice"); if (!el) return;
+  const { bags } = cartTotals();
+  const wd = day ? new Date(`${day.iso}T12:00:00Z`).getUTCDay() : null;
+  const sched = SCHEDULE.find((d) => d.day === wd);
+  const msgs = [];
+  if (sched?.mode === "reservas") msgs.push(`${day.long.split(",")[0].replace(/^./, (c) => c.toUpperCase())}: Jorge solo entrega reservas de ${sched.open} a ${sched.close}. ${sched.notice || ""}`);
+  if (bags >= 10) msgs.push(`Pedido grande (${bags} bolsas): ideal reservarlo con un día de anticipación para que Jorge lo confite a tiempo.`);
+  el.hidden = !msgs.length;
+  el.innerHTML = msgs.map((m) => `<p>${esc(m)}</p>`).join("");
 }
 function renderPoints() {
   const el = $("#rfPoints"); if (!el) return;
@@ -868,6 +979,7 @@ async function submitReservation(e) {
   } catch { /* sin backend: validación local */ }
   btn.disabled = false; btn.removeAttribute("aria-busy"); label.textContent = "Reservar por WhatsApp";
   track("reservation_submit", { payment });
+  dispatchEvent(new CustomEvent("mg:order"));
   showReservationSuccess({ ...result, reservation: { ...result.reservation, payment } });
   loadStatus();
 }
@@ -1132,7 +1244,9 @@ window.MG = {
   getCart: () => [...state.cart].map(([id, qty]) => ({ id, qty })),
   getFormat: () => state.format,
   getCatalog: () => state.catalog,
+  resync: () => syncStock({ quiet: true }),
 };
+window.MGTrack = track;
 
 // ============================================================
 // Inicio
@@ -1145,6 +1259,7 @@ setInterval(() => { renderHero(); renderDays(); renderPromo(cartTotals().bags); 
 syncStock();
 loadStatus();
 track("page_view", { lang: getLang() });
+import("./extras.mjs");
 
 // Service worker: catálogo y fotos disponibles sin conexión
 if ("serviceWorker" in navigator && location.protocol === "https:") {

@@ -6,9 +6,10 @@
 
 // Versión del catálogo: súbela cada vez que cambies precios, sabores o reglas.
 // El panel admin y el agente la muestran; el historial queda en CATALOG_CHANGELOG.
-export const CATALOG_VERSION = "2026.10.4";
+export const CATALOG_VERSION = "2026.10.5";
 export const CATALOG_CHANGELOG = [
-  { version: "2026.10.4", date: "2026-10-10", note: "Horario real (mié/jue campus, mar/vie solo reservas), Liceo James Mundell, alias dominicanos, eslogan de la etiqueta y Red Baeru." },
+  { version: "2026.10.5", date: "2026-10-10", note: "Martes y viernes 08:00–12:30 solo reservas (con aviso previo) y Red Vaeru." },
+  { version: "2026.10.4", date: "2026-10-10", note: "Horario real (mié/jue campus, mar/vie solo reservas), Liceo James Mundell, alias dominicanos, eslogan de la etiqueta y Red Vaeru." },
   { version: "2026.10.3", date: "2026-10-10", note: "Identidad Casa Mani-Gante: alias y número de ficha por sabor, formatos El Clásico y La Reserva, eslogan 'Para gente elegante y gánster'." },
   { version: "2026.10.2", date: "2026-10-09", note: "Capacidad por bloque de reserva, sabores nuevos marcados, alérgenos y promo de viernes como regla." },
   { version: "2026.10.1", date: "2026-10-09", note: "Catálogo unificado para web y agente IA." },
@@ -28,12 +29,13 @@ export const BUSINESS = {
   campus: "INACAP Temuco",
   // Dónde vende Jorge. El primero es el principal (con horario y reservas).
   locations: [
-    { id: "inacap", name: "INACAP Temuco", main: true, detail: "Mié 08:00–18:30 y jue 08:00–17:00 recorriendo el campus · mar y vie solo con reserva" },
+    { id: "inacap", name: "INACAP Temuco", main: true, detail: "Mié 08:00–18:30 y jue 08:00–17:00 recorriendo el campus · mar y vie 08:00–12:30 solo con reserva (avisa con anticipación)" },
     { id: "james-mundell", name: "Liceo Bicentenario James Mundell", main: false, detail: "Lunes a viernes, en horario escolar" },
   ],
   // Otros proyectos de Jorge (se muestran en "El Jefe" y en el pie). Deja url vacía hasta tener el link.
   ventures: [
-    { name: "Red Baeru", role: "Fundador", url: "", text: "La otra casa de Jorge: más servicios y proyectos." },
+    { name: "Red Vaeru", role: "Fundador", url: "https://redvaeru.netlify.app/", live: true,
+      text: "El otro proyecto de Jorge. Míralo en vivo aquí abajo y entra a conocer todo lo que hacen." },
   ],
   timezone: "America/Santiago",
   url: "https://manigante.netlify.app/",
@@ -50,10 +52,10 @@ export const PREMIUM_PRICE = 1500;
 // mode "campus": recorre el campus vendiendo y además entrega reservas.
 // mode "reservas": ese día no anda con maní para vender; solo entrega lo reservado.
 export const SCHEDULE = [
-  { day: 2, open: "08:00", close: "17:00", mode: "reservas" },
+  { day: 2, open: "08:00", close: "12:30", mode: "reservas", notice: "Avísale con anticipación (ideal el día anterior)" },
   { day: 3, open: "08:00", close: "18:30", mode: "campus" },
   { day: 4, open: "08:00", close: "17:00", mode: "campus" },
-  { day: 5, open: "08:00", close: "17:00", mode: "reservas" },
+  { day: 5, open: "08:00", close: "12:30", mode: "reservas", notice: "Avísale con anticipación (ideal el día anterior)" },
 ];
 
 // Reservas: con cuántos días de anticipación se aceptan.
@@ -218,7 +220,7 @@ export const NUTRITION = [
 export const FAQ = [
   ["¿Puedo pedir con anticipación?", "Sí. Puedes reservar hasta con 4 días de anticipación desde la sección Reservar o con el asistente. Las reservas se confirman por WhatsApp y se pagan por transferencia o Mercado Pago."],
   ["¿Cómo sé que el maní está fresco?", "Se prepara en pequeños lotes durante la semana; no hay stock guardado por meses. La disponibilidad de cada sabor se actualiza en vivo en el catálogo."],
-  ["¿Dónde y cuándo te encuentro?", "En INACAP Temuco: miércoles de 08:00 a 18:30 y jueves de 08:00 a 17:00 Jorge recorre el campus (biblioteca, patios, pasillos). Martes y viernes solo entrega reservas, así que pide la tuya con anticipación. También vende en el Liceo Bicentenario James Mundell de lunes a viernes."],
+  ["¿Dónde y cuándo te encuentro?", "En INACAP Temuco: miércoles de 08:00 a 18:30 y jueves de 08:00 a 17:00 Jorge recorre el campus (biblioteca, patios, pasillos). Martes y viernes, de 08:00 a 12:30, solo entrega reservas: avísale con anticipación, ideal el día anterior. También vende en el Liceo Bicentenario James Mundell de lunes a viernes."],
   ["¿Puedo hacer un pedido grande?", "Sí. Para 10 bolsas o más, resérvalo (ideal para martes o viernes) o escríbele directo a Jorge por WhatsApp para coordinar."],
   ["¿Qué formas de pago aceptan?", "Cuenta RUT (BancoEstado), Mach, Mercado Pago (débito, crédito o saldo) y efectivo solo en compra presencial."],
   ["¿Puedo mezclar sabores?", "Sí. Agrega los sabores que quieras al carrito; se hace un solo pedido con el detalle completo."],
@@ -328,6 +330,25 @@ export function campusStatus(date = new Date()) {
     return { open: false, label: `Vuelve ${when} a las ${s.open}`, nextDay: wd, opensAt: s.open };
   }
   return { open: false, label: "Fuera de horario" };
+}
+
+/**
+ * Cuenta regresiva en vivo: minutos hasta que Jorge cierra (si está en el campus o entregando reservas)
+ * o hasta que vuelve a recorrer el campus. { kind: "closes"|"opens", minutes, at: "HH:MM", day }
+ */
+export function campusCountdown(date = new Date()) {
+  const now = zonedNow(date);
+  const today = SCHEDULE.find((s) => s.day === now.weekday);
+  if (today && now.minutes >= toMinutes(today.open) && now.minutes < toMinutes(today.close)) {
+    return { kind: "closes", minutes: toMinutes(today.close) - now.minutes, at: today.close, mode: today.mode };
+  }
+  for (let i = 0; i < 8; i++) {
+    const wd = (now.weekday + i) % 7;
+    const s = SCHEDULE.find((x) => x.day === wd && x.mode !== "reservas");
+    if (!s || (i === 0 && now.minutes >= toMinutes(s.open))) continue;
+    return { kind: "opens", minutes: i * 1440 + toMinutes(s.open) - now.minutes, at: s.open, day: wd };
+  }
+  return null;
 }
 
 /** Lista de días reservables: [{ iso, label, slots: [...] }] */
