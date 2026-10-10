@@ -5,7 +5,8 @@
 // ============================================================
 
 let uid = 0;
-const LOGO = new URL("../assets/img/icon-192.png", import.meta.url).href;
+// En el navegador resuelve relativo al módulo; en el servidor (Netlify Function) usa la ruta pública.
+const LOGO = import.meta.url.startsWith("http") ? new URL("../assets/img/icon-192.png", import.meta.url).href : "/assets/img/icon-192.png";
 const next = (p) => `${p}${++uid}`;
 
 export function shade(hex, amt) {

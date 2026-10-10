@@ -4,7 +4,10 @@
   "type": "module",
   "description": "MANI-GANTE · sitio web + agente de IA (Netlify)",
   "scripts": {
-    "dev": "netlify dev"
+    "dev": "netlify dev",
+    "seo": "node scripts/seo.mjs",
+    "typecheck": "tsc -p tsconfig.json",
+    "test": "playwright test"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",

@@ -933,3 +933,4 @@ svg.bag { display: block; height: auto; aspect-ratio: 120 / 160; }
   .toast { bottom: auto; top: calc(env(safe-area-inset-top, 0px) + 12px); transform: translateY(-20px); }
   .toast.show { transform: none; }
 }
+.craft-more { display: block; margin-top: 10px; }

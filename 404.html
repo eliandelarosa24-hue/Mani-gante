@@ -17,6 +17,10 @@
   h1 { font-family: Fraunces, Georgia, serif; font-weight: 450; font-size: clamp(2.4rem, 8vw, 3.6rem); line-height: 1; margin: 8px 0 0; letter-spacing: -.02em; }
   h1 em { color: var(--color-primary-light); }
   p { color: rgba(244,234,214,.72); margin: 0; }
+  .sugg { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; width: 100%; }
+  .sugg-card { display: grid; justify-items: center; gap: 6px; padding: 14px 8px; border-radius: 18px; background: rgba(244,234,214,.06); border: 1px solid rgba(244,234,214,.12); color: #f4ead6; font-weight: 700; font-size: .86rem; text-decoration: none; height: auto; margin: 0; transition: transform .3s; }
+  .sugg-card:hover { transform: translateY(-4px); }
+  .sugg-card .bag { width: 60%; transform: none; filter: none; }
   .hand { font-family: Caveat, cursive; font-size: 1.6rem; color: var(--color-primary-light); transform: rotate(-3deg); }
   a { display: inline-flex; align-items: center; height: 52px; padding: 0 26px; border-radius: 99px; background: linear-gradient(135deg, var(--color-primary-light), var(--color-primary)); color: var(--color-night); font-weight: 700; text-decoration: none; margin-top: 8px; }
 </style>
@@ -26,12 +30,16 @@
     <div id="art"></div>
     <p class="hand">404 · esta bolsa está vacía</p>
     <h1>Este antojo <em>no existe</em></h1>
-    <p>La página que buscas no está, pero quedan 28 sabores esperándote.</p>
+    <p>La página que buscas no está, pero quedan 28 sabores esperándote. ¿Probamos uno de estos?</p>
+    <div class="sugg" id="sugg" aria-label="Sabores sugeridos"></div>
     <a href="/#tienda">Volver a la tienda</a>
   </main>
   <script type="module">
     import { bag } from "/js/art.mjs";
+    import { FLAVORS } from "/js/catalog.mjs";
     document.getElementById("art").innerHTML = bag("#C8963E", "doypack");
+    const picks = FLAVORS.filter((f) => f.available).sort(() => Math.random() - .5).slice(0, 3);
+    document.getElementById("sugg").innerHTML = picks.map((f) => `<a class="sugg-card" href="/sabor/${f.id}">${bag(f.color, "celofan")}<span>${f.name}</span></a>`).join("");
   </script>
 </body>
 </html>

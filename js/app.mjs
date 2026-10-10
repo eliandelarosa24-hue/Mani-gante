@@ -424,6 +424,7 @@ function renderQuick() {
   $("#qvReserve").hidden = !f.available;
   $("#qvPair").innerHTML = pairsFor(f).map((p) => `<button type="button" data-pair="${p.id}">${swatch(p.color)}${esc(p.name)}</button>`).join("");
   $("#qvAllergen").innerHTML = `<strong>Alérgenos:</strong> ${esc(ALLERGENS.note)}`;
+  $("#qvPage").href = `/sabor/${f.id}`;
 }
 function setMedia(which) {
   $$(".media-toggle [data-media]").forEach((b) => b.setAttribute("aria-selected", b.dataset.media === which));

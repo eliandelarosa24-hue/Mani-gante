@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><title>OG por sabor</title>
+<link rel="stylesheet" href="../../css/fonts.css">
+<style>
+body { margin: 0; }
+.og { width: 1200px; height: 630px; position: relative; overflow: hidden; background: #140d08; color: #f4ead6; font-family: Manrope, sans-serif; }
+.og::before { content: ""; position: absolute; inset: 0; background: radial-gradient(60% 80% at 78% 55%, color-mix(in srgb, var(--c) 55%, transparent), transparent 70%); }
+.og::after { content: ""; position: absolute; inset: 0; opacity: .12; mix-blend-mode: overlay; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"); }
+.copy { position: absolute; left: 84px; top: 92px; width: 600px; z-index: 1; }
+.kick { font-size: 15px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: #e2b765; }
+h1 { font-family: Fraunces, serif; font-weight: 400; font-size: 92px; line-height: .95; letter-spacing: -.03em; margin: 22px 0 18px; font-variation-settings: "opsz" 144, "SOFT" 40; }
+p { font-size: 25px; color: rgba(244,234,214,.8); margin: 0; }
+.price { margin-top: 30px; display: inline-flex; gap: 14px; align-items: baseline; padding: 14px 26px; border-radius: 99px; background: #f4ead6; color: #140d08; font-weight: 800; font-size: 22px; }
+.price b { font-family: Fraunces, serif; font-size: 34px; font-weight: 500; }
+.bag { position: absolute; right: 120px; top: 70px; width: 330px; z-index: 1; filter: drop-shadow(0 40px 50px rgba(0,0,0,.55)); transform: rotate(-4deg); }
+.brand { position: absolute; left: 84px; bottom: 56px; display: flex; gap: 14px; align-items: center; font-family: Fraunces, serif; font-weight: 700; font-size: 24px; letter-spacing: .05em; z-index: 1; }
+.brand img { width: 50px; height: 50px; border-radius: 50%; box-shadow: 0 0 0 2px #c8963e; }
+.brand span { color: #c8963e; }
+</style></head>
+<body><div class="og" id="og"></div>
+<script type="module">
+import { FLAVORS, JAPANESE, unitPrice, formatCLP } from "../../js/catalog.mjs";
+import { bag } from "../../js/art.mjs";
+const id = new URLSearchParams(location.search).get("id");
+const f = [...FLAVORS, ...JAPANESE].find((x) => x.id === id) || FLAVORS[0];
+const og = document.getElementById("og");
+og.style.setProperty("--c", f.color);
+og.innerHTML = `<div class="copy"><div class="kick">${f.line === "japones" ? "Maní japonés" : "Maní confitado a mano"} · Temuco</div><h1>${f.name}</h1><p>${f.notes}</p><div class="price">desde <b>${formatCLP(unitPrice(f, "celofan"))}</b></div></div>
+  ${bag(f.color, f.line === "japones" ? "celofan" : "doypack").replace('class="bag"', 'class="bag"')}
+  <div class="brand"><img src="../../assets/img/icon-192.png" alt=""><b>MANI<span>-</span>GANTE</b></div>`;
+document.body.dataset.ready = "1";
+</script>
+</body></html>

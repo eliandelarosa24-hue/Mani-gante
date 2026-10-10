@@ -1,12 +1,25 @@
 {
   "name": "MANI-GANTE · El Gigante de los Antojos",
   "short_name": "MANI-GANTE",
-  "start_url": "/",
+  "description": "Maní confitado a mano en Temuco. Stock en vivo, arma tu caja y reserva en el campus INACAP.",
+  "lang": "es-CL",
+  "start_url": "/?utm_source=pwa",
+  "scope": "/",
   "display": "standalone",
+  "orientation": "portrait",
   "background_color": "#140d08",
   "theme_color": "#140d08",
+  "categories": ["food", "shopping"],
   "icons": [
-    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png" },
-    { "src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png" }
+    { "src": "/assets/img/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "/assets/img/icon-maskable-192.png", "sizes": "192x192", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/img/icon-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" },
+    { "src": "/assets/img/icon-monochrome-512.png", "sizes": "512x512", "type": "image/png", "purpose": "monochrome" }
+  ],
+  "shortcuts": [
+    { "name": "Tienda", "short_name": "Tienda", "url": "/#tienda", "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Reservar", "short_name": "Reservar", "url": "/#reservar", "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }] },
+    { "name": "Arma tu caja", "short_name": "Caja", "url": "/#caja", "icons": [{ "src": "/assets/img/icon-192.png", "sizes": "192x192" }] }
   ]
 }

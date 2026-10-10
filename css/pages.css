@@ -1,0 +1,38 @@
+/* Páginas secundarias: sabor individual, El oficio (blog), 404 */
+.page { background: var(--bg); }
+.page-nav { position: sticky; top: 0; z-index: 20; display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px clamp(16px, 4vw, 40px); background: color-mix(in srgb, var(--surface) 85%, transparent); backdrop-filter: blur(16px); border-bottom: 1px solid var(--line); }
+.page-nav .btn { --h: 44px; }
+.page main { max-width: var(--container); margin: 0 auto; padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 40px); }
+.crumbs { font-size: .86rem; color: var(--subtle); margin-bottom: 24px; }
+.crumbs a { color: var(--gold-ink); font-weight: 600; }
+.flavor-page { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 72px); align-items: center; }
+.flavor-art { aspect-ratio: 1; border-radius: 32px; display: grid; place-items: center; background: radial-gradient(55% 50% at 50% 56%, color-mix(in srgb, var(--c) 50%, transparent), transparent 72%), color-mix(in srgb, var(--c) 12%, var(--surface-2)); box-shadow: var(--shadow); }
+.flavor-art .bag { width: 56%; filter: drop-shadow(0 24px 30px rgba(40,25,10,.3)); }
+.flavor-info { display: grid; gap: 18px; }
+.flavor-info .lead { margin: 0; }
+.flavor-prices { list-style: none; display: grid; gap: 8px; }
+.flavor-prices li { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 14px 18px; border-radius: 16px; background: var(--surface); border: 1px solid var(--line); }
+.flavor-prices small { display: block; color: var(--subtle); font-size: .8rem; }
+.flavor-prices strong { font-family: var(--serif); font-size: 1.4rem; font-weight: 500; }
+.flavor-ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+.related { margin-top: clamp(48px, 7vw, 90px); }
+.related-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 14px; margin-top: 20px; }
+.related-card { display: grid; justify-items: center; gap: 8px; padding: 16px; border-radius: 22px; background: var(--surface); border: 1px solid var(--line); font-weight: 700; text-align: center; transition: transform .4s var(--ease), box-shadow .4s var(--ease); }
+.related-card:hover { transform: translateY(-4px); box-shadow: var(--shadow); }
+.related-card .bag { width: 56%; }
+.page-foot { text-align: center; padding: 40px 16px; color: var(--subtle); font-size: .86rem; border-top: 1px solid var(--line); display: grid; gap: 6px; }
+.page-foot a { color: var(--gold-ink); font-weight: 600; }
+.notfound { text-align: center; display: grid; gap: 16px; justify-items: center; padding: 10vh 0; }
+/* Blog "El oficio" */
+.article { max-width: 720px; margin: 0 auto; }
+.article header { margin-bottom: 40px; }
+.article h1 { margin: 12px 0 18px; }
+.article .meta { color: var(--subtle); font-size: .88rem; }
+.article h2 { font-family: var(--serif); font-weight: 450; font-size: clamp(1.6rem, 3vw, 2.2rem); margin: 48px 0 14px; letter-spacing: -.015em; }
+.article p { font-size: 1.08rem; line-height: 1.75; color: var(--muted); margin-bottom: 16px; }
+.article figure { margin: 32px 0; }
+.article figure img { width: 100%; border-radius: 22px; box-shadow: var(--shadow); }
+.article figcaption { font-family: var(--hand); font-size: 1.35rem; color: var(--clay); margin-top: 10px; }
+.article .note { padding: 18px 20px; border-radius: 16px; border: 1px dashed var(--line-2); background: var(--surface-2); font-size: .95rem; color: var(--muted); }
+.article .cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
+@media (max-width: 760px) { .flavor-page { grid-template-columns: minmax(0, 1fr); } .flavor-art { aspect-ratio: 4/3; } .flavor-art .bag { width: 34%; } }
