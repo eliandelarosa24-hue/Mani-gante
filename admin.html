@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Panel de Jorge · MANI-GANTE</title>
+<link rel="icon" type="image/png" href="/assets/img/icon-192.png">
+<link rel="preload" href="/assets/fonts/manrope-latin-wght-normal.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/css/fonts.css">
+<link rel="stylesheet" href="/css/tokens.css">
+<link rel="stylesheet" href="/css/admin.css">
+<script>try { const t = JSON.parse(localStorage.getItem("mg-theme") || "null"); if (t === "dark" || t === "light") document.documentElement.dataset.theme = t; } catch (e) {}</script>
+</head>
+<body>
+<header class="a-top">
+  <div class="a-brand"><img src="/assets/img/icon-192.png" alt="" width="36" height="36"><div><strong>Panel de Jorge</strong><small id="aVersion">MANI-GANTE</small></div></div>
+  <div class="a-tools" id="aTools" hidden>
+    <label class="a-field inline"><span>Día</span><input type="date" id="aDate"></label>
+    <button class="a-btn" id="aRefresh" type="button">Actualizar</button>
+    <button class="a-btn ghost" id="aLogout" type="button">Salir</button>
+  </div>
+</header>
+
+<main class="a-main">
+  <section class="a-login" id="aLogin">
+    <h1>Hola, Jorge</h1>
+    <p>Ingresa tu clave de administración (variable <code>ADMIN_TOKEN</code> en Netlify).</p>
+    <form id="aLoginForm"><label class="a-field"><span>Clave</span><input type="password" id="aToken" autocomplete="current-password" required minlength="12"></label>
+    <button class="a-btn primary" type="submit">Entrar</button></form>
+    <p class="a-error" id="aLoginErr" role="alert" hidden></p>
+  </section>
+
+  <div id="aApp" hidden>
+    <section class="a-kpis" aria-label="Resumen del día" id="aKpis"></section>
+
+    <section class="a-card" id="aCampusCard">
+      <div class="a-card-head"><h2>Campus</h2><span class="a-chip" id="aCampusState"></span></div>
+      <form class="a-row" id="aCampusForm">
+        <label class="a-switch"><input type="checkbox" id="aAway"><span></span>Jorge no está en el campus</label>
+        <label class="a-field"><span>Mensaje para clientes</span><input id="aAwayMsg" maxlength="140" placeholder="Hoy no estoy, vuelvo el miércoles"></label>
+        <label class="a-field"><span>Hasta (incluido)</span><input type="date" id="aAwayUntil"></label>
+        <button class="a-btn primary" type="submit">Guardar</button>
+      </form>
+    </section>
+
+    <section class="a-card">
+      <div class="a-card-head"><h2>Reservas del día</h2>
+        <div class="a-row tight"><label class="a-field inline"><span>Desde</span><input type="date" id="aFrom"></label><label class="a-field inline"><span>Hasta</span><input type="date" id="aTo"></label><button class="a-btn" id="aExport" type="button">Exportar CSV</button></div>
+      </div>
+      <div class="a-slots" id="aSlots"></div>
+      <div class="a-table-wrap"><table class="a-table" id="aRes"><thead><tr><th>Hora</th><th>Código</th><th>Nombre</th><th>Pedido</th><th>Total</th><th>Pago</th><th>Origen</th><th>Estado</th></tr></thead><tbody></tbody></table></div>
+    </section>
+
+    <div class="a-grid2">
+      <section class="a-card">
+        <div class="a-card-head"><h2>Stock manual</h2><small id="aStockSrc"></small></div>
+        <p class="a-help">"Auto" sigue Google Sheets. "Hay" o "Agotado" lo fuerzan desde aquí (útil si estás en el campus sin el computador). Al marcar "Hay", se avisa a quienes esperaban ese sabor.</p>
+        <div class="a-stock" id="aStock"></div>
+      </section>
+      <section class="a-card">
+        <div class="a-card-head"><h2>Lotes</h2></div>
+        <form class="a-row" id="aLotForm">
+          <label class="a-field"><span>Sabor</span><select id="aLotFlavor"></select></label>
+          <label class="a-field small"><span>Bolsas</span><input type="number" id="aLotBags" min="1" max="500" value="20" required></label>
+          <label class="a-field small"><span>Confitado el</span><input type="date" id="aLotDate" required></label>
+          <label class="a-field"><span>Nota</span><input id="aLotNote" maxlength="120" placeholder="Ej: lote con más canela"></label>
+          <button class="a-btn primary" type="submit">Agregar lote</button>
+        </form>
+        <div class="a-table-wrap"><table class="a-table" id="aLots"><thead><tr><th>Lote</th><th>Sabor</th><th>Confitado</th><th>Quedan</th><th>Vender</th></tr></thead><tbody></tbody></table></div>
+      </section>
+    </div>
+
+    <section class="a-card">
+      <div class="a-card-head"><h2>Métricas · últimos 14 días</h2><button class="a-btn ghost" type="button" id="aTableToggle" aria-pressed="false">Ver como tabla</button></div>
+      <div class="a-charts" id="aCharts"></div>
+      <div class="a-table-wrap" id="aMetricsTable" hidden></div>
+      <h3 class="a-sub">Web Vitals (usuarios reales, hoy)</h3>
+      <div class="a-vitals" id="aVitals"></div>
+    </section>
+
+    <div class="a-grid2">
+      <section class="a-card">
+        <div class="a-card-head"><h2>Avísame (stock)</h2></div>
+        <div id="aAlerts" class="a-alerts"></div>
+      </section>
+      <section class="a-card">
+        <div class="a-card-head"><h2>Opiniones destacadas</h2></div>
+        <form class="a-row" id="aUgcForm">
+          <label class="a-field wide"><span>Cita (real, con permiso)</span><input id="aUgcQuote" maxlength="280" required></label>
+          <label class="a-field"><span>Autor</span><input id="aUgcAuthor" maxlength="60" required></label>
+          <label class="a-field small"><span>Fuente</span><select id="aUgcSource"><option value="opinion">Opinión web</option><option value="instagram">Instagram</option><option value="whatsapp">WhatsApp</option></select></label>
+          <label class="a-field"><span>Link (opcional)</span><input id="aUgcUrl" type="url" maxlength="300"></label>
+          <button class="a-btn primary" type="submit">Publicar</button>
+        </form>
+        <div id="aUgc" class="a-ugc"></div>
+      </section>
+    </div>
+
+    <section class="a-card">
+      <div class="a-card-head"><h2>Versiones y cambios</h2></div>
+      <div class="a-grid2 inner"><div><h3 class="a-sub">Catálogo (código)</h3><ul class="a-log" id="aChangelog"></ul></div><div><h3 class="a-sub">Cambios desde el panel</h3><ul class="a-log" id="aVersions"></ul></div></div>
+    </section>
+  </div>
+</main>
+<div class="a-toast" id="aToast" role="status" aria-live="polite"></div>
+<div class="a-tip" id="aTip" role="tooltip" hidden></div>
+<script type="module" src="/js/admin.mjs"></script>
+</body>
+</html>
