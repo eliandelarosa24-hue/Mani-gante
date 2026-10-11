@@ -3,7 +3,7 @@
 //  1. Desplazamiento suave (Lenis, alojado en el sitio) en escritorio
 //  2. Cursor de la casa con etiquetas según lo que tienes debajo
 //  3. Profundidad del salón (capas que siguen al puntero) + luz según la hora del día
-//  4. Bienvenida personal ("Buenas tardes, Reina")
+//  4. Bienvenida personal ("Buenas tardes, Chiqui")
 //  5. El recorrido: Elegir · La cuenta · La cita · El trato
 //  6. La ceremonia: sobre y lacre al cerrar un pedido o una cita
 //  7. Sonidos de la casa (WebAudio, apagados por defecto)

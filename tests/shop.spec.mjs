@@ -171,10 +171,23 @@ test("v4.4: la casa habla en plural, sin rayita y con el recorrido", async ({ pa
 
 test("v4.4: bienvenida con el nombre y ceremonia al cerrar el trato", async ({ page }) => {
   await page.emulateMedia({ reducedMotion: "no-preference" });
-  await page.addInitScript(() => localStorage.setItem("mg-name", JSON.stringify("Reina de la Rosa")));
+  await page.addInitScript(() => localStorage.setItem("mg-name", JSON.stringify("Chiqui")));
   await page.goto("/?nodoor=1");
-  await expect(page.locator("#heroHello")).toContainText("Reina");
+  await expect(page.locator("#heroHello")).toContainText("Chiqui");
   await page.evaluate(() => dispatchEvent(new CustomEvent("mg:order")));
   await expect(page.locator(".ceremony")).toContainText("Trato hecho");
   await expect(page.locator("#reserveJourney li.done")).toHaveCount(4);
+});
+
+test("v4.4.2: con animaciones, las tarjetas de pago y la invitación se ven", async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: "no-preference" });
+  await page.goto("/?nodoor=1");
+  await page.locator(".pay-grid").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1800);
+  const ops = await page.locator(".pay-card").evaluateAll((els) => els.map((e) => Number(getComputedStyle(e).opacity)));
+  expect(ops.length).toBeGreaterThan(0);
+  expect(Math.min(...ops)).toBeGreaterThan(.95);
+  await page.locator(".ticket").scrollIntoViewIfNeeded();
+  await page.waitForTimeout(1500);
+  expect(Number(await page.locator(".ticket").evaluate((e) => getComputedStyle(e).opacity))).toBeGreaterThan(.95);
 });

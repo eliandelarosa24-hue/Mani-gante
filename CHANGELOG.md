@@ -1,9 +1,13 @@
 # Changelog · MANI-GANTE
 
+## v4.4.2 · Tarjetas de pago visibles y nuevo nombre de ejemplo
+- **Arreglo:** las tarjetas de "Así se cierra el trato" quedaban invisibles con animaciones activas, porque dos entradas distintas (revelado + GSAP) se pisaban. Ahora usan una sola animación con destino explícito, y lo mismo vale para el maletín, la invitación y el telegrama.
+- **Nombre de ejemplo:** "Ej: Chiqui", un apodo popular en República Dominicana y en Chile, en lugar de un nombre real.
+
 ## v4.4.1 · Red Vaeru y días de reserva (catálogo 2026.10.6)
 - **Red Vaeru** tiene su descripción real: construye el potencial de los alojamientos turísticos de La Araucanía con una presencia digital que es toda una experiencia, desde la primera mirada hasta el pago y la llegada. La etiqueta pasó de "Fundador también de" a "Creadores también de".
 - **Martes y viernes** (08:00–12:30): se aclara que esos días no llevamos maní para venta suelta y que solo entregamos reservas, que se pueden hacer cualquier día. Se ve en la cita, en los puntos de venta, en la letra chica y en el consigliere.
-- El formulario de opiniones ya decía "Ej: Reina de la Rosa" y "Tu telegrama para la casa" desde la v4.4.
+- El formulario de opiniones ya decía el nombre de ejemplo y "Tu telegrama para la casa" desde la v4.4.
 
 ## v4.4 · La experiencia de la Casa (2026-10-10)
 
@@ -11,7 +15,7 @@
 - Toda la web habla como **nosotros, la familia**, y suma a quien compra ("desde la primera bolsa, tú también eres de la familia"). Ya no se nombra a una persona: "Pide tu cita con la casa", "Estamos en el campus", "Escríbenos", "Dónde encontrarnos".
 - El Diario de la Casa lo firma **La Familia**. El consigliere (IA), los mensajes del servidor, las alertas de reposición y los links de WhatsApp también hablan en plural.
 - El único nombre propio que queda es el del **titular de las cuentas** en "Cómo pagar", porque el banco lo exige.
-- Nombre de ejemplo en los formularios: **Reina de la Rosa**.
+- Nombre de ejemplo en los formularios (cambiado en la v4.4.2 a **Chiqui**).
 
 **Sin la rayita**
 - Se quitó la línea delante de los textos chicos (eyebrows). En el salón, entre "Casa Mani-Gante" y "Confitería de autor", queda un rombo art déco.
@@ -21,10 +25,10 @@
 2. **Cursor de la casa:** un anillo dorado acompaña al puntero y cambia según lo que hay debajo: "Ver ficha", "Mirar", "Entrar", "Suerte", "Copiar" y "Pruébame".
 3. **Profundidad del salón:** la roseta, el halo, la bolsa y el titular se mueven a distintas distancias según el puntero.
 4. **Luz del día:** el salón cambia de luz según la hora en Temuco (mañana dorada, tarde ámbar, noche azul profundo).
-5. **Bienvenida personal:** "Buenas tardes, *Reina*. Qué bueno tenerte de vuelta en la casa." Usa el nombre de la última reserva, solo en este teléfono.
+5. **Bienvenida personal:** "Buenas tardes, *Chiqui*. Qué bueno tenerte de vuelta en la casa." Usa el nombre de la última reserva, solo en este teléfono.
 6. **Numerales de capítulo:** un I…IX grabado gigante detrás de cada sala, que viaja más lento que el contenido.
 7. **El recorrido** (I Elegir · II La cuenta · III La cita · IV El trato) en la cuenta y en la cita. Avanza solo.
-8. **La ceremonia:** al cerrar un pedido o una cita aparece un sobre de marfil, sale la tarjeta "Trato hecho · Ya eres de la familia, Reina" y cae el lacre MG.
+8. **La ceremonia:** al cerrar un pedido o una cita aparece un sobre de marfil, sale la tarjeta "Trato hecho · Ya eres de la familia, Chiqui" y cae el lacre MG.
 9. **Sonidos de la casa** (WebAudio, sin archivos): apagados por defecto; se encienden con el parlante del menú. Suenan un tintineo al agregar, el golpe del lacre más un acorde al cerrar el trato y un clic suave en los filtros.
 10. **El Diario se lee solo:** la cita del Diario se enciende palabra por palabra mientras bajas.
 

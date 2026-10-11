@@ -8,7 +8,7 @@ const reduce = matchMedia("(prefers-reduced-motion: reduce)").matches;
 // Revelado al entrar en pantalla. Lo que ya está a la vista se marca antes de activar el modo,
 // así nada parpadea; si este módulo no carga, todo queda visible.
 // Más piezas entran con "reveal" (escalonadas dentro de su grupo).
-[".craft-step", ".steps li", ".pay-card", ".faq-item", ".spot", ".insta-post", ".section-head", ".box-sizes .size", ".ugc-card"].forEach((sel) => $$(sel).forEach((el) => { el.classList.add("reveal"); el.parentElement?.classList.add("stagger"); }));
+[".craft-step", ".steps li", ".faq-item", ".spot", ".insta-post", ".section-head", ".box-sizes .size", ".ugc-card"].forEach((sel) => $$(sel).forEach((el) => { el.classList.add("reveal"); el.parentElement?.classList.add("stagger"); }));
 const vh = innerHeight;
 $$(".reveal").forEach((el) => { const r = el.getBoundingClientRect(); if (r.top < vh && r.bottom > 0) el.classList.add("in"); });
 document.documentElement.classList.add("motion-ready");
@@ -96,10 +96,11 @@ if (!reduce) {
     gsap.utils.toArray(".polaroid").forEach((p, i) => {
       gsap.fromTo(p, { yPercent: 6 * (i + 1) }, { yPercent: -6 * (i + 1), ease: "none", scrollTrigger: { trigger: ".story", scrub: .6 } });
     });
-    gsap.from(".box-stage", { y: 60, rotate: -2, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".box", start: "top 70%" } });
-    gsap.from(".ticket", { y: 60, rotate: 1.5, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".reserve", start: "top 70%" } });
-    gsap.from(".pay-card", { y: 50, rotate: (i) => (i % 2 ? 4 : -4), opacity: 0, duration: .9, stagger: .08, ease: "back.out(1.4)", scrollTrigger: { trigger: ".pay-grid", start: "top 80%" } });
-    gsap.from(".note-card", { y: 50, rotate: 3, opacity: 0, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".reviews", start: "top 70%" } });
+    gsap.fromTo(".box-stage", { y: 60, rotate: -2, opacity: 0 }, { y: 0, rotate: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".box", start: "top 70%" } });
+    gsap.fromTo(".ticket", { y: 60, rotate: 1.5, opacity: 0 }, { y: 0, rotate: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".reserve", start: "top 70%" } });
+    // fromTo con destino explícito: nunca quedan invisibles aunque otra regla las oculte al empezar
+    gsap.fromTo(".pay-card", { y: 50, rotate: (i) => (i % 2 ? 4 : -4), opacity: 0 }, { y: 0, rotate: 0, opacity: 1, duration: .9, stagger: .08, ease: "back.out(1.4)", scrollTrigger: { trigger: ".pay-grid", start: "top 80%" } });
+    gsap.fromTo(".note-card", { y: 50, rotate: 3, opacity: 0 }, { y: 0, rotate: 0, opacity: 1, duration: 1, ease: "power3.out", scrollTrigger: { trigger: ".reviews", start: "top 70%" } });
 
     // Numerales: viajan más lento que el contenido (profundidad entre salas)
     gsap.utils.toArray(".ch-numeral").forEach((n) => gsap.fromTo(n, { yPercent: 35 }, { yPercent: -35, ease: "none", scrollTrigger: { trigger: n.closest(".section"), start: "top bottom", end: "bottom top", scrub: .8 } }));
