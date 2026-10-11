@@ -11,10 +11,11 @@
 <link rel="stylesheet" href="/css/fonts.css">
 <link rel="stylesheet" href="/css/tokens.css">
 <style>
+  html { overflow-x: clip; }
   body { margin: 0; min-height: 100svh; display: grid; place-items: center; text-align: center; padding: 24px; color: #f2eadb; font-family: "Instrument Sans", system-ui, sans-serif; overflow-x: hidden;
     background: radial-gradient(60% 60% at 50% 40%, rgba(110,26,44,.5), transparent 70%), #0d0b09; }
   .wrap { max-width: 560px; display: grid; gap: 18px; justify-items: center; position: relative; }
-  .rosette { position: absolute; top: -40px; left: 50%; width: 360px; translate: -50% 0; color: rgba(210,174,109,.28); z-index: -1; animation: spin 120s linear infinite; }
+  .rosette { position: absolute; top: -40px; left: 50%; width: min(360px, 94vw); translate: -50% 0; color: rgba(210,174,109,.28); z-index: -1; animation: spin 120s linear infinite; }
   @keyframes spin { to { transform: rotate(360deg); } }
   .bag { width: 140px; transform: rotate(-8deg); filter: grayscale(.9) drop-shadow(0 24px 30px rgba(0,0,0,.6)); }
   .plate { font-family: "Big Shoulders", "Arial Narrow", sans-serif; font-weight: 800; letter-spacing: .3em; text-transform: uppercase; font-size: .86rem; color: #e2687c; border: 2px solid currentColor; padding: 6px 14px; transform: rotate(-4deg); }
@@ -37,7 +38,7 @@
     <div id="art" aria-hidden="true"></div>
     <p class="plate">Error 404 · Se fugó</p>
     <h1>Esta página <em>no está fichada</em></h1>
-    <p>Lo que buscas se nos escapó, pero los más buscados siguen en la casa. ¿Te presento a tres?</p>
+    <p>Lo que buscas se nos escapó, pero los más buscados siguen en la casa. ¿Te presentamos a tres?</p>
     <div class="sugg" id="sugg" aria-label="Sabores sugeridos"></div>
     <a class="cta" href="/#tienda">Volver a la casa</a>
   </main>

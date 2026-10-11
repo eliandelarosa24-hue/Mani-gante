@@ -37,3 +37,9 @@
 .article .note { padding: 18px 20px; border: 1px dashed var(--line-2); background: var(--surface-2); font-size: .95rem; color: var(--muted); }
 .article .cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 32px; }
 @media (max-width: 760px) { .flavor-page { grid-template-columns: minmax(0, 1fr); } .flavor-art { aspect-ratio: 4/3; } .flavor-art .bag { width: 34%; } }
+/* Celular: el logo y el botón del encabezado no se pisan */
+@media (max-width: 480px) {
+  .page-nav .brand-name { font-size: .92rem; letter-spacing: .12em; }
+  .page-nav .btn { --h: 40px; padding: 0 12px; font-size: .74rem; letter-spacing: .1em; }
+}
+@media (max-width: 359px) { .page-nav .brand-name { display: none; } }

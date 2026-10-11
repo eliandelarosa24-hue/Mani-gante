@@ -1,5 +1,13 @@
 # Changelog · MANI-GANTE
 
+## v4.4.4 · Revisión a fondo en celular
+Recorrido completo en dos teléfonos (iPhone 390 px y Android 360 px), con animaciones encendidas y en los temas Noche y Marfil: secciones, textos cortados, desbordes, imágenes, consola, y todos los flujos (menú, ficha, cuenta, cita, maletín, ruleta, interrogatorio, consigliere, preguntas, galería, pago, telegrama) más las páginas secundarias.
+- **Cita:** al confirmar, el ticket queda a la vista (antes la página saltaba al Diario en el celular). Prueba de regresión.
+- **Maletín:** "Sorpréndeme" y "Agregar maletín" se apilan en pantallas chicas (el texto se cortaba).
+- **Botones en celular:** menos relleno para que ningún texto se corte ("Mis pedidos", "Agregar · $1.000"). El precio de la ficha puede ir en dos líneas.
+- **Tarjetas de pago:** en pantallas táctiles el aviso "Copiar datos" queda siempre visible.
+- **Páginas secundarias:** el logo y el botón del encabezado ya no se pisan; la 404 no se desborda; "La receta" y la 404 hablan como la familia ("Lo queremos entero y parejo…", "¿Te presentamos a tres?").
+
 ## v4.4.3 · Pantalla de carga y tipografía legible
 - **Pantalla de carga en cada visita** (antes salía una sola vez por sesión): medalla con anillo grabado que gira, eslogan, contador 0→100 % y un telón de terciopelo que se abre. Dura al menos 1,5 s para leerse y nunca más de 2,6 s. En la primera visita sigue saliendo la puerta.
 - **Títulos legibles:** Bodoni Moda usa el tamaño óptico 20 en toda la web. En los títulos grandes, los trazos finos ya no desaparecen: la "t" no se confunde con la "l" ni la "e" con la "c".

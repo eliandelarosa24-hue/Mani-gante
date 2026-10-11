@@ -1004,6 +1004,9 @@ function showReservationSuccess({ reservation: r, whatsappUrl }) {
     <div class="ticket-stub"><span class="barcode" aria-hidden="true"></span>
       <a class="btn btn-wa btn-lg" href="${whatsappUrl}" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg><span>Enviar por WhatsApp</span></a>
       <p class="stub-links">${r.payment === "mercadopago" ? `<a class="link" href="${BUSINESS.mercadoPago}" target="_blank" rel="noopener">Pagar con Mercado Pago</a>` : `<a class="link" href="#pago">Ver cuentas para transferir</a>`}<button class="link" type="button" id="rfAgain">Hacer otra reserva</button></p></div>`;
+  // El formulario se achica al mostrar el ticket: lo dejamos a la vista (si no, en el celular queda abajo, en el Diario)
+  const navH = parseFloat(getComputedStyle(document.documentElement).getPropertyValue("--nav-h")) || 72;
+  scrollTo({ top: form.getBoundingClientRect().top + scrollY - navH - 12, behavior: "instant" });
   stampMoment(form);
   toast(VOICE.reserveOk(r.code), { tone: "success" });
   window.open(whatsappUrl, "_blank", "noopener");

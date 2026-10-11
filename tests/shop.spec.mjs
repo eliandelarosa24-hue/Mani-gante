@@ -77,6 +77,7 @@ test("reserva completa: valida, crea el código y queda en Mis pedidos", async (
   await page.locator("#rfName").fill("Test");
   await page.locator("#rfSubmit").click();
   await expect(page.locator(".rc-success code")).toHaveText(/^MG-[A-Z0-9]{4}$/);
+  await expect(page.locator(".rc-success code")).toBeInViewport(); // el ticket queda a la vista (en celular la página saltaba al Diario)
   await expect(page.locator('a[download$=".ics"]')).toHaveCount(1);
   const orders = await page.evaluate(() => JSON.parse(localStorage.getItem("mg-history-v1")));
   expect(orders[0].type).toBe("reserva");

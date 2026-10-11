@@ -1178,7 +1178,7 @@ svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; he
   .japanese::before { width: 44px; height: 44px; font-size: 1.05rem; }
   .palette { grid-template-columns: repeat(2, minmax(0, 1fr)); max-height: 380px; }
   .box-actions { width: 100%; }
-  .box-actions .btn { flex: 1; }
+  .box-actions .btn { flex: 1 1 100%; }
   .size { min-width: 0; flex: 1; padding: 12px 10px; }
   .rc-row { grid-template-columns: minmax(0, 1fr); }
   .ticket-stub .btn { width: 100%; }
@@ -1331,3 +1331,11 @@ html.lenis { scroll-behavior: auto; }
   .house-cursor, .ceremony { display: none !important; }
   .hero-hello { animation: none; }
 }
+
+/* Celular: botones con menos relleno para que ningún texto se corte; los de precio pueden ir en dos líneas */
+@media (max-width: 480px) {
+  .btn { padding: 0 16px; letter-spacing: .1em; }
+  #qvAdd { white-space: normal; height: auto; min-height: var(--h); padding-block: 10px; line-height: 1.15; text-align: center; }
+}
+/* Pantallas táctiles: sin "pasar el mouse", el aviso de copiar queda siempre a la vista */
+@media (hover: none) { .pay-hint { opacity: 1; } }
