@@ -62,7 +62,9 @@ Sin la clave de API, Vaeru IA funciona en **modo guiado**: cotiza con el mismo t
 - **Cambiar precios:** edite `SERVICES` en `src/pricing.js`.
 - **Nueva campaña:** cambie `CAMPAIGN.deadline` y `CAMPAIGN.text`. La barra superior se oculta sola después de la fecha.
 - **Editar una página de servicio:** use `src/services-content.js`.
-- **Poner imágenes propias (Gemini) en las muestras:** vea `docs/imagenes-muestras.md`.
+- **Poner imágenes propias (Gemini) en las muestras:** genere los collages de `docs/collages-gemini.md` y córtelos con `npm run collage -- collage.png --sample <slug> --grid 2x2 --names a,b,c,d`.
+- **Entregar una muestra como sitio aparte:** `npm run build && npm run pack -- <slug>` crea `entregas/<slug>.zip`, listo para arrastrar a app.netlify.com/drop.
+- **Muestras rediseñadas a medida:** viven en `src/samples/custom/<slug>/` (página, estilos y código propios); las demás usan la plantilla común.
 - **Tipo de cambio para precios en USD:** `USD_RATE` en `src/pricing.js`.
 
 ## Pendiente (requiere al dueño)

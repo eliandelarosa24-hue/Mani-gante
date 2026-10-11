@@ -39,4 +39,28 @@ Se corta en dos pasadas: `--names g1,g2,g3,- --ratio 4:3` y luego `--names -,-,-
 
 ---
 
-Las otras 9 muestras tendrán sus prompts cuando se rediseñe cada una.
+## Muestra 2 · Fogón Mapu (cocina mapuche contemporánea, Temuco)
+
+Son 16 espacios, repartidos en 4 collages de 2×2. Todos tienen la misma luz: fuego, brasas, fondos oscuros de madera y piedra, y vapor o humo suave. La paleta es carbón, ámbar, cobre y verde musgo.
+
+### Collage A: el lugar → `hero, chef, salon, cierre`
+
+Se corta en dos pasadas: `--names hero,-,salon,cierre --ratio 16:9` y luego `--names -,chef,-,- --ratio 4:5`.
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. A contemporary Mapuche fine-dining restaurant in Temuco, southern Chile, where everything is cooked over open fire. Top-left: a dramatic low-angle close-up of a wood-fire hearth (fogón) with glowing embers, flames and cast-iron pots, sparks rising into darkness. Top-right: an Indigenous Mapuche woman chef seen from behind and slightly to the side, wearing a dark linen apron and a silver trarilonko headband, tending the fire with a long iron tool, her face lit warm orange. Bottom-left: a long communal wooden table (like a trawün) in a dim restaurant with clay bowls, wool runners with Mapuche geometric patterns, candles and the fire glowing at the back, shot from the end of the table. Bottom-right: a wide atmospheric view of the dining room at night through drifting smoke, with warm pendant lights and silhouettes of diners. Cinematic food photography, chiaroscuro, deep shadows, warm amber and copper tones, shallow depth of field, 8K.
+
+### Collage B: menú degustación, primera parte → `tiempo-1..4` (`--ratio 1:1`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Four plated courses of a Mapuche-inspired tasting menu, shot from directly above (top-left and bottom-right) and at 45 degrees (top-right and bottom-left), on dark handmade ceramic and rough wood. Top-left: warm rustic flatbread «catuto» made of wheat mote, with a quenelle of red smoked merkén butter. Top-right: a bright ceviche of cochayuyo seaweed and wild changle mushrooms with herbs and edible flowers. Bottom-left: golden pumpkin sopaipillas with a fresh pebre of digüeñe mushrooms. Bottom-right: a velvety araucaria pine nut (piñón) cream in a black clay bowl with sautéed wild coigüe mushrooms and herb oil. Fine-dining plating, natural side light, steam rising, ultra detailed textures, 8K.
+
+### Collage C: menú degustación, segunda parte → `tiempo-5..8` (`--ratio 1:1`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Four plated courses of a Mapuche-inspired tasting menu, on dark handmade ceramic and rough wood, varied angles. Top-left: lake trout cooked inside a giant nalca leaf, opened at the table to show the pink fish with quinoa salad, steam rising. Top-right: slow-cooked lamb from the embers, glossy and dark, over a pine nut purée with charred leeks, shot at 45 degrees. Bottom-left: a small chilled glass of purple muday (fermented corn drink) with maqui berries and frost, as a pre-dessert, macro shot. Bottom-right: a dessert of mote with dried peach and deep purple maqui syrup, with murta berries and goat milk cream, shot from above. Fine-dining plating, chiaroscuro, warm firelight, ultra detailed, 8K.
+
+### Collage D: los productores → `comunidad-1..4` (`--ratio 4:5`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Ingredients and the hands of Mapuche producers in the Araucanía region of Chile, documentary style, no faces visible. Top-left: weathered hands holding freshly harvested araucaria pine nuts (piñones) beside a woven basket, with araucaria trees and snow in the background. Top-right: red chili peppers being smoked over a wooden fire to make merkén, with smoke and a hand stirring them. Bottom-left: bright orange digüeñe fungi growing on a mossy coigüe branch in a rainy forest, macro shot. Bottom-right: hands picking wild maqui berries into a clay bowl at golden hour, with a rural field behind. Natural light, rich earthy colors, shallow depth of field, ultra detailed, 8K.
+
+---
+
+Las otras 8 muestras tendrán sus prompts cuando se rediseñe cada una.

@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Fogón Mapu · Cocina mapuche contemporánea en Temuco · Muestra Red Vaeru</title>
+  <meta name="description" content="Restaurante de cocina mapuche contemporánea en Temuco: menú degustación de ocho tiempos, cordero al rescoldo y productos de doce comunidades. Muestra de concepto de Red Vaeru." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#120c09" />
+  <link rel="canonical" href="__SITE_URL__/muestras/fogon-mapu/" />
+  <meta property="og:title" content="Fogón Mapu · muestra de concepto de Red Vaeru" />
+  <meta property="og:image" content="__SITE_URL__/og.jpg" />
+  <link rel="icon" type="image/png" href="/brand/emblema-32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <!--ANALYTICS-->
+</head>
+<body>
+  <!-- Pantalla de carga: el kultrún se dibuja con brasas mientras el fogón se calienta -->
+  <div class="loader" aria-hidden="true">
+    <canvas class="loader__sparks"></canvas>
+    <svg class="loader__kultrun" viewBox="0 0 200 200">
+      <circle class="lk" cx="100" cy="100" r="86" />
+      <path class="lk" d="M100 14v172M14 100h172" />
+      <path class="lk" d="M88 26l12-12 12 12M88 174l12 12 12-12M26 88l-12 12 12 12M174 88l12 12-12 12" />
+      <circle class="lk" cx="58" cy="58" r="11" /><path class="lk" d="M131 47a13 13 0 1 0 12 16 10 10 0 1 1-12-16z" />
+      <path class="lk" d="M58 128l4 10 10 4-10 4-4 10-4-10-10-4 10-4z" /><path class="lk" d="M142 130c-8 0-8 18 0 18s8-18 0-18zM133 139h18" />
+    </svg>
+    <p class="loader__temp"><b data-load-n>20</b><span>°C</span></p>
+    <p class="loader__txt" data-load-label>Encendiendo el fogón</p>
+  </div>
+
+  <canvas class="embers" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+
+  <div class="demo"><img src="/brand/emblema-96.webp" alt="" width="20" height="20" /> Muestra de concepto diseñada por Red Vaeru · Negocio ficticio <a href="/muestras/">Ver todas las muestras</a> · <a href="/#contacto">Quiero un sitio así</a></div>
+
+  <header class="nav">
+    <a class="logo" href="#inicio" aria-label="Fogón Mapu, inicio">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" /><path d="M20 3v34M3 20h34" /><path class="logo__flame" d="M20 29c-4 0-6-3-6-6 0-4 4-5 3-10 4 2 5 5 5 7 1-1 2-2 2-4 2 2 3 4 3 7 0 3-3 6-7 6z" /></svg>
+      <span>Fogón Mapu<small>Cocina de territorio</small></span>
+    </a>
+    <nav class="nav__links" aria-label="Secciones">
+      <a href="#cocina">La cocina</a><a href="#temporadas">Temporadas</a><a href="#degustacion">Degustación</a><a href="#rescoldo">El rescoldo</a><a href="#carta">Carta</a>
+    </nav>
+    <a class="btn btn--ember btn--sm" href="#mesa">Reservar mesa</a>
+    <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+  </header>
+  <div class="menu" aria-hidden="true">
+    <a href="#cocina">La cocina</a><a href="#temporadas">Temporadas</a><a href="#degustacion">Degustación</a><a href="#rescoldo">El rescoldo</a><a href="#carta">Carta</a><a href="#mesa">Reservar mesa</a>
+  </div>
+
+  <main id="inicio">
+    <!-- HERO: la foto se ilumina donde pasa el cursor, como a la luz del fuego -->
+    <section class="hero" data-hero>
+      <div class="hero__bg" style="{{img:hero:1414235077428-338989a2e8c0}}"></div>
+      <div class="hero__lit" style="{{img:hero:1414235077428-338989a2e8c0}}" aria-hidden="true"></div>
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="wrap hero__inner">
+        <p class="kicker"><span class="ember-dot"></span> Cocina mapuche contemporánea · Temuco</p>
+        <h1 class="hero__title" data-fire-title>El fuego es<br /><em>nuestra memoria.</em></h1>
+        <p class="hero__lead">Ocho tiempos cocinados a la leña con piñón, merkén, digüeñes y changles de doce comunidades de la Araucanía. Una mesa larga, como el <i>trawün</i>.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--ember" href="#mesa">Elegir mi mesa <span aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="#degustacion">Ver el viaje de 8 tiempos</a>
+        </div>
+      </div>
+      <aside class="today" aria-live="polite">
+        <p class="today__k"><span class="today__dot" data-open-dot></span> Hoy en el fogón</p>
+        <strong data-open-status>—</strong>
+        <p class="today__line" data-open-line>—</p>
+        <div class="today__lamb">
+          <div class="today__bar"><span data-lamb-bar></span></div>
+          <p data-lamb-text>—</p>
+        </div>
+      </aside>
+      <p class="hero__hint" aria-hidden="true">Mueva el cursor: el fuego ilumina</p>
+    </section>
+
+    <div class="words" aria-label="Palabras en mapudungun">
+      <div class="words__track">
+        <span><b>Mari mari</b> hola</span><span><b>Kütral</b> fuego</span><span><b>Iyael</b> alimento</span><span><b>Pewen</b> araucaria</span><span><b>Ngülliw</b> piñón</span><span><b>Trawün</b> encuentro</span><span><b>Mapu</b> tierra</span><span><b>Kümelkalen</b> estar bien</span>
+        <span aria-hidden="true"><b>Mari mari</b> hola</span><span aria-hidden="true"><b>Kütral</b> fuego</span><span aria-hidden="true"><b>Iyael</b> alimento</span><span aria-hidden="true"><b>Pewen</b> araucaria</span><span aria-hidden="true"><b>Ngülliw</b> piñón</span><span aria-hidden="true"><b>Trawün</b> encuentro</span><span aria-hidden="true"><b>Mapu</b> tierra</span><span aria-hidden="true"><b>Kümelkalen</b> estar bien</span>
+      </div>
+    </div>
+
+    <!-- LA COCINA -->
+    <section class="sec cocina" id="cocina">
+      <div class="wrap cocina__grid">
+        <figure class="cocina__img rv"><span style="{{img:chef:1551218808-94e220e084d2}}" role="img" aria-label="La chef Rayén Ancamil frente al fogón"></span><figcaption>Rayén Ancamil, chef y fundadora</figcaption></figure>
+        <div class="cocina__txt">
+          <p class="eyebrow rv">I · La cocina</p>
+          <h2 class="h2 rv">Aprendí a cocinar <em>mirando la brasa.</em></h2>
+          <blockquote class="rv">«Mi abuela en Chol Chol no medía el tiempo con un reloj: lo medía por el color de la brasa. Fogón Mapu es su cocina, sentada a la mesa con todos.»</blockquote>
+          <p class="muted rv">Cocinamos solo con leña de hualle y roble caído. Cada plato dice de dónde viene y quién lo cultivó: trabajamos directo con doce comunidades mapuche, lafkenche y pewenche, y pagamos el precio justo antes de la cosecha.</p>
+          <dl class="stats rv">
+            <div><dt data-count="12">0</dt><dd>comunidades proveedoras</dd></div>
+            <div><dt data-count="90" data-suffix="%">0</dt><dd>productos de la región</dd></div>
+            <div><dt data-count="12" data-suffix=" h">0</dt><dd>de cordero al rescoldo</dd></div>
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- KULTRÚN DE TEMPORADAS -->
+    <section class="sec temporadas" id="temporadas">
+      <div class="wrap temporadas__grid">
+        <div class="temporadas__txt">
+          <p class="eyebrow rv">II · Las cuatro estaciones</p>
+          <h2 class="h2 rv">La carta gira <em>como el kultrún.</em></h2>
+          <p class="muted rv">El kultrún, el tambor ceremonial mapuche, dibuja el mundo dividido en cuatro. Nuestra cocina sigue el mismo ciclo: gire el tambor y descubra qué nos regala la tierra en cada estación.</p>
+          <div class="season rv" aria-live="polite">
+            <p class="season__k" data-season-k>—</p>
+            <h3 data-season-name>—</h3>
+            <ul class="season__list" data-season-list></ul>
+            <p class="season__dish" data-season-dish>—</p>
+          </div>
+        </div>
+        <div class="kultrun rv">
+          <div class="kultrun__pointer" aria-hidden="true"></div>
+          <svg class="kultrun__drum" viewBox="0 0 400 400" data-kultrun role="group" aria-label="Kultrún: elija una estación">
+            <defs>
+              <radialGradient id="hide" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#f3e3c4" /><stop offset=".75" stop-color="#d9bf93" /><stop offset="1" stop-color="#9c7a4c" /></radialGradient>
+            </defs>
+            <circle cx="200" cy="200" r="190" fill="#3b2415" />
+            <circle cx="200" cy="200" r="178" fill="url(#hide)" />
+            <g class="q" data-q="0" tabindex="0" role="button" aria-label="Pewü, primavera"><path d="M200 200 L200 22 A178 178 0 0 1 378 200 Z" /><path class="sym" d="M285 95l7 17 17 7-17 7-7 17-7-17-17-7 17-7z" /></g>
+            <g class="q" data-q="1" tabindex="0" role="button" aria-label="Walung, verano"><path d="M200 200 L378 200 A178 178 0 0 1 200 378 Z" /><circle class="sym" cx="290" cy="290" r="20" /><path class="sym sym--line" d="M290 255v-10M290 335v-10M255 290h-10M335 290h-10M265 265l-7-7M322 322l-7-7M265 315l-7 7M322 258l-7 7" /></g>
+            <g class="q" data-q="2" tabindex="0" role="button" aria-label="Rimü, otoño"><path d="M200 200 L200 378 A178 178 0 0 1 22 200 Z" /><path class="sym" d="M110 262c-14 0-14 32 0 32s14-32 0-32zM96 278h28" /><path class="sym sym--line" d="M110 262v-8" /></g>
+            <g class="q" data-q="3" tabindex="0" role="button" aria-label="Pukem, invierno"><path d="M200 200 L22 200 A178 178 0 0 1 200 22 Z" /><path class="sym" d="M100 92a24 24 0 1 0 22 30 19 19 0 1 1-22-30z" /></g>
+            <path class="cross" d="M200 22v356M22 200h356" />
+            <path class="cross" d="M186 40l14-16 14 16M186 360l14 16 14-16M40 186l-16 14 16 14M360 186l16 14-16 14" />
+            <circle cx="200" cy="200" r="12" fill="#5a2c17" />
+          </svg>
+          <p class="kultrun__help">Arrastre para girar o toque una estación</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- DEGUSTACIÓN: viaje por el Wallmapu -->
+    <section class="sec viaje" id="degustacion">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">III · Menú degustación</p><h2 class="h2">Ocho tiempos, <em>un viaje por el Wallmapu.</em></h2></div>
+          <p class="muted">Del mar lafkenche a las araucarias pewenche. Cada tiempo viene de un lugar y una familia: siga la ruta en el mapa mientras baja.</p>
+        </div>
+        <div class="viaje__grid">
+          <div class="viaje__map">
+            <svg viewBox="0 0 320 420" data-map aria-hidden="true">
+              <path class="sea" d="M0 0h70c-8 40 6 70-4 110s10 80 0 120 8 90-2 190H0z" />
+              <path class="land" d="M70 0h250v420H64c10-100-2-150 2-190s-10-80 0-120S62 40 70 0z" />
+              <path class="lake" d="M92 210c10-8 26-6 30 4s-8 22-20 20-18-16-10-24z" />
+              <path class="lake" d="M232 312c14-6 30 0 30 10s-18 16-30 12-12-18 0-22z" />
+              <g class="andes"><path d="M262 90l20-34 20 34z" /><path d="M248 160l26-46 26 46z" /><path class="snow" d="M266 136l8-14 8 14z" /><path d="M262 290l24-42 24 42z" /><path class="snow" d="M278 262l8-14 8 14z" /><path d="M276 220l18-30 18 30z" /></g>
+              <text x="236" y="74">Lonquimay</text><text x="268" y="178">Llaima</text><text x="258" y="306">Villarrica</text><text x="14" y="300" class="sea-t">Lafkenmapu</text>
+              <path class="route" data-route d="" />
+              <g data-pins></g>
+              <g class="temuco"><circle cx="160" cy="214" r="6" /><text x="172" y="218">Temuco · Fogón Mapu</text></g>
+            </svg>
+            <p class="viaje__km"><b data-km-total>0</b> km recorridos por sus ingredientes</p>
+          </div>
+          <ol class="viaje__steps" data-steps>
+            <li class="vstep" data-x="138" data-y="180" data-km="30"><div class="vstep__img" style="{{img:tiempo-1:1476224203421-9ac39bcb3327}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 1</span><h3>Catuto tibio</h3><p>Pan de trigo mote cocido al rescoldo, con mantequilla de campo y merkén ahumado tres días.</p><p class="vstep__from"><b>Chol Chol</b> · Familia Huenchumilla · 30 km</p></div></li>
+            <li class="vstep" data-x="104" data-y="220" data-km="85"><div class="vstep__img" style="{{img:tiempo-2:1540189549336-e6e99c3679fe}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 2</span><h3>Cochayuyo y changles</h3><p>Ceviche de alga cochayuyo y hongos changle, con limón de pica, cilantro y flores de la huerta.</p><p class="vstep__from"><b>Lago Budi</b> · Comunidad lafkenche de Puerto Saavedra · 85 km</p></div></li>
+            <li class="vstep" data-x="205" data-y="268" data-km="65"><div class="vstep__img" style="{{img:tiempo-3:1504674900247-0877df9cc836}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 3</span><h3>Sopaipilla y digüeñes</h3><p>Sopaipilla de zapallo camote con pebre de digüeñes recién cosechados en el bosque de coigües.</p><p class="vstep__from"><b>Cunco</b> · Recolectoras de Los Laureles · 65 km</p></div></li>
+            <li class="vstep" data-x="282" data-y="100" data-km="140"><div class="vstep__img" style="{{img:tiempo-4:1490645935967-10de6ba17061}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 4</span><h3>Crema de piñón</h3><p>Ngülliw cocido seis horas y emulsionado con caldo de hongos silvestres y aceite de hierbas.</p><p class="vstep__from"><b>Lonquimay</b> · Comunidad pewenche Quinquén · 140 km</p></div></li>
+            <li class="vstep" data-x="258" data-y="226" data-km="95"><div class="vstep__img" style="{{img:tiempo-5:1574484284002-952d92456975}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 5</span><h3>Trucha en nalca</h3><p>Trucha del lago cocida dentro de una hoja de nalca que se abre en la mesa, con quínoa del valle.</p><p class="vstep__from"><b>Melipeuco</b> · Piscicultura familiar Llaima · 95 km</p></div></li>
+            <li class="vstep" data-x="236" data-y="132" data-km="90"><div class="vstep__img" style="{{img:tiempo-6:1529692236671-f1f6cf9683ba}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 6</span><h3>Cordero al rescoldo</h3><p>Doce horas bajo tierra, sobre piedras de río, con puré de piñón y puerro asado en la brasa.</p><p class="vstep__from"><b>Curacautín</b> · Crianceros de Malalcahuello · 90 km</p></div></li>
+            <li class="vstep" data-x="170" data-y="232" data-km="5"><div class="vstep__img" style="{{img:tiempo-7:}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 7</span><h3>Muday helado</h3><p>Bebida ancestral de maíz fermentado servida helada con maqui. Limpia el paladar antes del final.</p><p class="vstep__from"><b>Padre Las Casas</b> · Huerta de la casa · 5 km</p></div></li>
+            <li class="vstep" data-x="98" data-y="110" data-km="110"><div class="vstep__img" style="{{img:tiempo-8:1488477181946-6428a0291777}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 8</span><h3>Mote, maqui y murta</h3><p>Mote con huesillo en almíbar de maqui, murta silvestre y crema de leche de cabra, terminado al fuego.</p><p class="vstep__from"><b>Purén</b> · Cooperativa Nahuelbuta · 110 km</p></div></li>
+          </ol>
+        </div>
+        <div class="tiers rv">
+          <article class="tier"><p>Cinco tiempos</p><h3>Raíz</h3><span class="tier__p">$39.000 <small>/ persona</small></span><ul><li>Cinco tiempos de temporada</li><li>Pan de la casa y mantequilla de merkén</li><li>Infusión de la huerta</li></ul></article>
+          <article class="tier tier--feat"><p>La experiencia completa</p><h3>Fogón</h3><span class="tier__p">$59.000 <small>/ persona</small></span><ul><li>Los ocho tiempos del viaje</li><li>Paso por la cocina con la chef</li><li>Postre terminado al fuego en su mesa</li></ul></article>
+          <article class="tier"><p>Con maridaje</p><h3>Fogón + vinos</h3><span class="tier__p">$89.000 <small>/ persona</small></span><ul><li>Menú Fogón completo</li><li>Cinco vinos del sur de Chile</li><li>Opción sin alcohol con fermentos</li></ul></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- EL RESCOLDO: doce horas bajo tierra -->
+    <section class="sec rescoldo" id="rescoldo">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">IV · El rescoldo</p><h2 class="h2">Doce horas <em>bajo la tierra.</em></h2></div>
+          <p class="muted">Así se cocina nuestro cordero, como en el campo: piedras calientes, brasas y hojas de nalca. Mueva el reloj y vea qué pasa hora a hora.</p>
+        </div>
+        <div class="pit rv">
+          <svg viewBox="0 0 800 420" class="pit__svg" data-pit aria-hidden="true">
+            <defs>
+              <linearGradient id="skyg" x1="0" y1="0" x2="0" y2="1"><stop offset="0" data-sky-a stop-color="#2a1c3a" /><stop offset="1" data-sky-b stop-color="#c36a3a" /></linearGradient>
+              <radialGradient id="emberg" cx="50%" cy="60%" r="60%"><stop offset="0" stop-color="#ffcf6b" /><stop offset=".45" stop-color="#ff6a1f" /><stop offset="1" stop-color="#7a1d06" stop-opacity="0" /></radialGradient>
+              <pattern id="soil" width="16" height="16" patternUnits="userSpaceOnUse"><rect width="16" height="16" fill="#3a2516" /><circle cx="4" cy="5" r="1.2" fill="#4d3220" /><circle cx="12" cy="11" r="1" fill="#2c1b10" /></pattern>
+            </defs>
+            <rect width="800" height="150" fill="url(#skyg)" />
+            <circle data-sun cx="120" cy="120" r="22" fill="#ffd9a0" />
+            <rect y="150" width="800" height="270" fill="url(#soil)" />
+            <path d="M0 150h800" stroke="#5f7d3a" stroke-width="6" />
+            <path class="pit__hole" d="M250 150c0 120 300 120 300 0z" fill="#21140b" />
+            <ellipse data-glow cx="400" cy="215" rx="150" ry="60" fill="url(#emberg)" opacity=".2" />
+            <g data-stones>
+              <circle cx="300" cy="205" r="16" /><circle cx="336" cy="228" r="18" /><circle cx="378" cy="240" r="17" /><circle cx="422" cy="241" r="18" /><circle cx="464" cy="230" r="17" /><circle cx="500" cy="207" r="16" />
+            </g>
+            <g data-fire><path d="M340 205c0-30 20-30 14-60 22 18 26 40 20 60z" /><path d="M392 210c-6-40 22-46 14-84 30 26 34 58 24 84z" /><path d="M444 206c-2-26 16-30 12-52 18 14 22 34 16 52z" /></g>
+            <g data-lamb opacity="0"><ellipse cx="400" cy="196" rx="92" ry="26" fill="#3f6b2c" /><path d="M318 196c30-16 134-16 164 0M330 186c24-8 116-8 140 0" stroke="#6f9a4a" stroke-width="3" fill="none" /><path d="M318 196c20 18 144 18 164 0" stroke="#2b4d1e" stroke-width="3" fill="none" /></g>
+            <path data-cover d="M250 150c0 0 300 0 300 0" fill="#3a2516" opacity="0" />
+            <g data-steam opacity="0"><path d="M360 140c-10-20 10-30 0-50M400 140c-10-24 12-34 0-60M440 140c-10-20 10-30 0-50" /></g>
+          </svg>
+          <div class="pit__panel">
+            <div class="pit__clock"><span>Hora</span><b data-pit-time>06:00</b></div>
+            <div class="pit__gauges">
+              <div><span>Piedras</span><b data-pit-stone>20 °C</b><i><em data-pit-stone-bar></em></i></div>
+              <div><span>Corazón de la carne</span><b data-pit-meat>—</b><i><em data-pit-meat-bar></em></i></div>
+            </div>
+            <p class="pit__stage" data-pit-stage>—</p>
+          </div>
+          <div class="pit__ctrl">
+            <button type="button" class="pit__play" data-pit-play aria-label="Reproducir las doce horas">▶</button>
+            <input type="range" min="0" max="12" step="0.05" value="0" data-pit-range aria-label="Hora de cocción" />
+            <div class="pit__ticks" aria-hidden="true"><span>06:00</span><span>09:00</span><span>12:00</span><span>15:00</span><span>18:00</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CARTA: un libro que se hojea -->
+    <section class="sec carta" id="carta">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">V · La carta</p><h2 class="h2">Hojee <em>nuestra carta.</em></h2></div>
+          <p class="muted">Almuerzo de martes a viernes. Platos para compartir al centro de la mesa. Toque la página o deslice para darla vuelta.</p>
+        </div>
+        <div class="book rv" data-book>
+          <div class="book__stage" data-book-stage></div>
+          <div class="book__ctrl">
+            <button type="button" data-book-prev aria-label="Página anterior">←</button>
+            <span data-book-page>Portada</span>
+            <button type="button" data-book-next aria-label="Página siguiente">→</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- COMUNIDADES -->
+    <section class="sec comunidades" id="comunidades">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">VI · Quién cultiva</p><h2 class="h2">Doce comunidades <em>en cada plato.</em></h2></div>
+          <p class="muted">Compramos directo, con precio acordado antes de la cosecha. Estas son cuatro de las familias que llenan nuestra despensa.</p>
+        </div>
+        <div class="farmers">
+          <article class="farmer rv"><div class="farmer__img" style="{{img:comunidad-1:}}"><svg viewBox="0 0 60 60" aria-hidden="true"><path d="M30 8c-10 0-14 14-14 26s6 18 14 18 14-6 14-18S40 8 30 8z" /><path d="M30 8v44M18 26h24M17 38h26" /></svg></div><div class="farmer__body"><p>Lonquimay · 140 km</p><h3>Piñones</h3><span>Comunidad pewenche Quinquén</span><p class="farmer__story">Recolectan el ngülliw del suelo, nunca del árbol, entre marzo y junio. Es la base de nuestro puré y nuestra crema.</p></div></article>
+          <article class="farmer rv"><div class="farmer__img" style="{{img:comunidad-2:}}"><svg viewBox="0 0 60 60" aria-hidden="true"><path d="M20 12c6 4 6 10 4 14-6 12-2 24 8 26 12 2 14-12 8-20-4-6-10-8-12-14" /><path d="M20 12c2-4 6-4 8-2" /></svg></div><div class="farmer__body"><p>Chol Chol · 30 km</p><h3>Merkén</h3><span>Familia Huenchumilla</span><p class="farmer__story">Ahúman el ají cacho de cabra durante tres días sobre leña de roble antes de molerlo con semillas de cilantro.</p></div></article>
+          <article class="farmer rv"><div class="farmer__img" style="{{img:comunidad-3:}}"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="22" cy="24" r="9" /><circle cx="38" cy="20" r="7" /><circle cx="34" cy="36" r="8" /><path d="M8 50c14-6 30-6 44 0" /></svg></div><div class="farmer__body"><p>Cunco · 65 km</p><h3>Digüeñes y changles</h3><span>Recolectoras de Los Laureles</span><p class="farmer__story">Cinco mujeres recorren el bosque nativo después de la lluvia. Solo cosechan lo que el bosque puede regenerar.</p></div></article>
+          <article class="farmer rv"><div class="farmer__img" style="{{img:comunidad-4:}}"><svg viewBox="0 0 60 60" aria-hidden="true"><circle cx="24" cy="34" r="6" /><circle cx="36" cy="32" r="6" /><circle cx="30" cy="42" r="6" /><circle cx="30" cy="25" r="5" /><path d="M30 20c0-8 6-12 12-12" /></svg></div><div class="farmer__body"><p>Purén · 110 km</p><h3>Maqui y murta</h3><span>Cooperativa Nahuelbuta</span><p class="farmer__story">Bayas silvestres del valle de Purén, secadas al sol para nuestros postres y para el muday de la casa.</p></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- BANDA: la mesa larga -->
+    <section class="band" style="{{img:salon:1517248135467-4c7edcad34c4}}">
+      <div class="wrap rv">
+        <p class="band__k">Trawün</p>
+        <p class="band__q">«En la mesa larga nadie es desconocido: el plato del centro se comparte, y la conversación también.»</p>
+      </div>
+    </section>
+
+    <!-- RESERVA CON PLANO DEL SALÓN -->
+    <section class="sec mesa" id="mesa">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">VII · Reservas</p><h2 class="h2">Elija su mesa <em>en el plano.</em></h2></div>
+          <p class="muted">Vea qué mesas quedan libres a la hora que quiere y escoja la suya: junto a la ventana, en la mesa larga o en la barra frente al fogón.</p>
+        </div>
+        <div class="mesa__grid">
+          <div class="plan rv">
+            <div class="plan__scroll"><svg viewBox="0 0 600 440" data-plan role="group" aria-label="Plano del salón">
+              <rect x="6" y="6" width="588" height="428" rx="18" class="plan__room" />
+              <path d="M6 70v300" class="plan__window" />
+              <text x="22" y="40" class="plan__lbl">Ventanal</text>
+              <g class="plan__kitchen"><rect x="430" y="20" width="150" height="120" rx="12" /><text x="505" y="86">Cocina</text></g>
+              <g class="plan__fire" transform="translate(300 300)"><circle r="44" class="plan__fire-ring" /><circle r="30" class="plan__fire-core" /><path class="plan__flame" d="M0 14c-10 0-14-8-12-14 2-8 8-8 6-20 10 6 12 12 10 18 4-2 6-6 6-10 6 6 6 12 4 18-2 6-8 8-14 8z" /><text y="68">Fogón</text></g>
+              <g data-tables></g>
+              <path d="M520 434v-6h50v6" class="plan__door" /><text x="545" y="418" class="plan__lbl" text-anchor="middle">Entrada</text>
+            </svg></div>
+            <p class="plan__swipe">Deslice el plano para ver todo el salón →</p>
+            <ul class="plan__legend"><li><i class="free"></i>Libre</li><li><i class="busy"></i>Ocupada</li><li><i class="sel"></i>Su mesa</li></ul>
+          </div>
+          <form class="res rv" data-res novalidate>
+            <div class="row">
+              <label class="field">Fecha<input type="date" name="date" /></label>
+              <label class="field">Personas<select name="people"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option><option>7</option><option>8</option></select></label>
+            </div>
+            <div class="field"><span>Hora</span><div class="slots" data-slots role="radiogroup" aria-label="Hora"></div></div>
+            <label class="field">Experiencia<select name="exp">
+              <option value="carta" data-price="18000">Carta de almuerzo · desde $18.000</option>
+              <option value="raiz" data-price="39000">Degustación Raíz · $39.000</option>
+              <option value="fogon" data-price="59000" selected>Degustación Fogón · $59.000</option>
+              <option value="vinos" data-price="89000">Fogón + vinos · $89.000</option>
+            </select></label>
+            <label class="check"><input type="checkbox" name="cake" /> Torta de celebración <span>$15.000</span></label>
+            <div class="res__sum" aria-live="polite">
+              <p class="res__table" data-r-table>Elija una mesa libre en el plano</p>
+              <dl>
+                <div><dt data-r-label>—</dt><dd data-r-base>—</dd></div>
+                <div><dt>Torta</dt><dd data-r-cake>$0</dd></div>
+                <div class="total"><dt>Total estimado</dt><dd data-r-total>—</dd></div>
+              </dl>
+              <p class="warn" data-r-warn></p>
+              <button class="btn btn--ember" type="button" data-demo>Reservar por WhatsApp</button>
+              <small>Se paga en el restaurante. Informe alergias al confirmar.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESEÑAS: libro de visitas -->
+    <section class="sec visitas" id="resenas">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">VIII · Libro de visitas</p><h2 class="h2">Lo que queda <em>escrito en la mesa.</em></h2></div>
+          <div class="score"><strong>4,9</strong><span>1.240 reseñas en Google</span></div>
+        </div>
+        <div class="notes">
+          <figure class="note rv"><blockquote>Una experiencia que emociona. Cada plato tiene una historia y un nombre, y la chef pasó por la mesa a contarlas.</blockquote><figcaption>Valentina S. · Santiago · menú Fogón</figcaption></figure>
+          <figure class="note rv"><blockquote>El cordero al rescoldo justifica el viaje a Temuco. Lo desenterraron frente a nosotros.</blockquote><figcaption>Martín G. · Buenos Aires · ruta gastronómica</figcaption></figure>
+          <figure class="note rv"><blockquote>Atención cálida, música en vivo el viernes y una carta de vinos del sur que no conocía.</blockquote><figcaption>Ignacia T. · Temuco · cumpleaños</figcaption></figure>
+        </div>
+      </div>
+    </section>
+
+    <!-- UBICACIÓN -->
+    <section class="sec donde" id="ubicacion">
+      <div class="wrap donde__grid">
+        <div class="rv">
+          <p class="eyebrow">IX · Cómo llegar</p>
+          <h2 class="h2">En el corazón <em>de Temuco.</em></h2>
+          <ul class="donde__list">
+            <li><span>Dirección</span>Av. Alemania 0000, sector gastronómico</li>
+            <li><span>Horario</span>Ma-vi 13:00 a 16:00 · Ju-sá 19:30 a 23:30</li>
+            <li><span>Estacionamiento</span>Convenio con el edificio vecino</li>
+            <li><span>Accesibilidad</span>Acceso y baño universal</li>
+            <li><span>Aeropuerto La Araucanía</span>25 minutos en auto</li>
+          </ul>
+        </div>
+        <div class="donde__map rv"><iframe title="Mapa de Fogón Mapu" loading="lazy" src="https://www.google.com/maps?q=Avenida%20Alemania,%20Temuco,%20Chile&output=embed"></iframe></div>
+      </div>
+    </section>
+
+    <!-- CIERRE -->
+    <section class="final" style="{{img:cierre:1514933651103-005eec06c04b}}">
+      <div class="wrap rv">
+        <p class="kicker"><span class="ember-dot"></span> Viernes con música en vivo</p>
+        <h2>La mesa larga <em>le espera.</em></h2>
+        <p>Los fines de semana se completan con dos semanas de anticipación.</p>
+        <a class="btn btn--ember" href="#mesa">Reservar mi mesa <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__grid">
+      <div><a class="logo" href="#inicio"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" /><path d="M20 3v34M3 20h34" /><path class="logo__flame" d="M20 29c-4 0-6-3-6-6 0-4 4-5 3-10 4 2 5 5 5 7 1-1 2-2 2-4 2 2 3 4 3 7 0 3-3 6-7 6z" /></svg><span>Fogón Mapu<small>Cocina de territorio</small></span></a><p>Cocina mapuche contemporánea en Temuco, con productos de doce comunidades de la Araucanía.</p></div>
+      <div><h4>Contacto</h4><p>+56 45 000 0000</p><p>reservas@fogonmapu.cl</p><p>Av. Alemania 0000, Temuco</p></div>
+      <div><h4>Horarios</h4><p>Martes a viernes 13:00 a 16:00</p><p>Jueves a sábado 19:30 a 23:30</p><p>Domingo y lunes descansa el fuego</p></div>
+    </div>
+    <div class="wrap foot__bottom"><span>© <span data-year>2026</span> Fogón Mapu · Negocio ficticio</span><span>Muestra de concepto diseñada por <a href="/">Red Vaeru</a> · Conectando culturas</span></div>
+  </footer>
+
+  <button class="wa" data-demo aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2s.2-1.1.1-1.2-.2-.2-.4-.3z"/></svg></button>
+  <div class="toast" role="status"><strong>Esto es una muestra</strong><p data-toast-text></p><div><a data-toast-wa href="https://wa.me/56952289117" target="_blank" rel="noopener">Quiero un sitio así</a><button type="button" data-toast-close>Seguir explorando</button></div></div>
+
+  <script type="module" src="/src/samples/custom/fogon-mapu/main.js"></script>
+</body>
+</html>
