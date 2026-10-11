@@ -229,12 +229,7 @@ function localAnswer(question) {
   return answer;
 }
 
-// Invitación sutil la primera vez
-setTimeout(() => {
-  if (sessionStorage.getItem("mg-agent-nudge") || panel.classList.contains("open")) return;
-  try { sessionStorage.setItem("mg-agent-nudge", "1"); } catch {}
-  fab.querySelector("small").textContent = "¿Te ayudo a elegir?";
-}, 12000);
+// El subtítulo del botón ("El asistente de la casa · 24/7") queda fijo: siempre se sabe qué es.
 
 // API para la carga diferida desde app.mjs: abre el panel y, si viene, envía una pregunta.
 window.MGAgent = {

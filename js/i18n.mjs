@@ -1,14 +1,14 @@
 // i18n ligero (es-CL por defecto + en): traduce la interfaz marcada con data-i18n / data-i18n-label.
-// El catálogo y las historias de Jorge quedan en español a propósito (es su voz).
+// El catálogo y las historias de la casa quedan en español a propósito (es su voz).
 const DICT = {
   en: {
     "hero.kicker": "Signature confectionery · Temuco",
-    "hero.shop": "Meet the most wanted", "hero.quiz": "Take the interrogation", "hero.reserve": "or book a meeting with the Boss",
+    "hero.shop": "See today's Bolsa", "hero.quiz": "Find your flavor", "hero.reserve": "or book your campus pickup",
     "filter.available": "Available", "filter.top": "Most wanted", "filter.new": "Just arrived",
     "nav.history": "My orders",
   },
 };
-const NAV_EN = { "#oficio": "The recipe", "#tienda": "Most wanted", "#caja": "The briefcase", "#reservar": "The meeting", "#historia": "The Boss" };
+const NAV_EN = { "#oficio": "The Recipe", "#tienda": "The Bolsa", "#caja": "The Briefcase", "#reservar": "The Pickup", "#historia": "The Family" };
 const originals = new Map();
 
 export function getLang() { try { return localStorage.getItem("mg-lang") || "es"; } catch { return "es"; } }

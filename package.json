@@ -6,6 +6,7 @@
   "scripts": {
     "dev": "netlify dev",
     "seo": "node scripts/seo.mjs",
+    "qr": "node scripts/qr.mjs",
     "typecheck": "tsc -p tsconfig.json",
     "test": "playwright test"
   },
@@ -20,6 +21,7 @@
     "@playwright/test": "^1.56.1",
     "@types/node": "^22.20.5",
     "lenis": "^1.3.26",
+    "qrcode": "^1.5.4",
     "typescript": "^5.9.3"
   }
 }

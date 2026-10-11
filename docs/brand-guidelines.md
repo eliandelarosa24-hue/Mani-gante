@@ -78,19 +78,21 @@ El papel (invitación, cuenta, periódico y telegrama) usa la clase `.paper-room
 | **Honesto** | Si se agota, lo dice. No inventa reseñas ni cifras. |
 
 ### El vocabulario de la casa
+El glosario oficial completo (con la jerarquía de botones) está en [`docs/glosario.md`](glosario.md) y en `GLOSSARY` de `js/catalog.mjs`.
+
 
 | En vez de… | Decimos… |
 |---|---|
-| Tienda / top ventas | **Los más buscados** / "Más buscado" |
+| Tienda / stock de hoy | **La Bolsa** ("Ver la Bolsa de hoy"); título de sección: "Los más buscados" |
 | Sabor nuevo | "Recién llegado" |
-| Arma tu caja | **Llena tu maletín** (evitamos "arma": en clave gánster suena a armas) |
-| Reservar | **Pedir una cita** / "Pide tu cita con la casa" |
-| Carrito / boleta | **La cuenta de la casa** |
+| Carrito / pedido | **El Maletín** ("Sumar al maletín", "Tu maletín · 3 bolsas"); la caja de combos: "Llena tu maletín" (nunca "arma") |
+| Reservar | **La Cita** · "Agendar con la casa" / "Reserva tu entrega en el campus"; la reserva confirmada es **El Ticket** |
+| Total | **La Cuenta** |
 | Formas de pago | **Así se cierra el trato** |
-| FAQ | **La letra chica** |
+| FAQ | **Cómo funciona el trato** |
 | Opiniones | **La familia habla** / "telegrama" |
-| Asistente IA | **El Gigante, tu consigliere** |
-| Test de sabor | **El interrogatorio** → "tus cómplices ideales" |
+| Asistente IA | **El Consigliere** · "El asistente de la casa · 24/7" (su nombre: El Gigante) |
+| Test de sabor | **Descubre tu sabor** / "El test de la casa" → "tus cómplices ideales" |
 | Promo de viernes | "Una oferta que no podrás rechazar" |
 | Formatos | **El Clásico** (celofán) y **La Reserva** (doypack) |
 

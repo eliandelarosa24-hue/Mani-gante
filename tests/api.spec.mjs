@@ -58,3 +58,18 @@ test("API eventos: acepta lotes válidos y limita abuso", async ({ request }) =>
   for (let i = 0; i < 70; i++) status = (await request.post("/api/events", { data: { events: [{ name: "page_view" }] }, headers: { "x-forwarded-for": "5.5.5.5" } })).status();
   expect(status).toBe(429);
 });
+
+test("API v4.5: el ticket informa su estado (sin datos personales) y la ficha del QR muestra el tip", async ({ request }) => {
+  const day = await nextDay(request);
+  const r = await request.post("/api/reserve", { data: { name: "Chiqui", date: day.iso, time: day.slots[0].time, items: [{ id: "maracuya", qty: 1 }] }, headers: { "x-forwarded-for": "9.9.9.1" } });
+  const { reservation } = await r.json();
+  const st = await (await request.get(`/api/reserve?code=${reservation.code}&date=${day.iso}`)).json();
+  expect(st.status).toBe("pendiente");
+  expect(JSON.stringify(st)).not.toContain("Chiqui");
+  await request.post("/api/admin", { headers: { authorization: "Bearer test-admin-token-123" }, data: { action: "reservation.status", date: day.iso, code: reservation.code, status: "pagada" } });
+  expect((await (await request.get(`/api/reserve?code=${reservation.code}&date=${day.iso}`)).json()).status).toBe("pagada");
+  expect((await request.get(`/api/reserve?code=MG-ZZZZ&date=${day.iso}`)).status()).toBe(404);
+  const html = await (await request.get("/sabor/maracuya?qr=1")).text();
+  expect(html).toContain("Escaneaste tu bolsa");
+  expect(html).toContain("Tip de la casa");
+});

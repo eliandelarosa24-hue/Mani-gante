@@ -240,7 +240,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .nav.hide { transform: translateY(-110%); }
 .brand { display: flex; align-items: center; gap: 12px; }
 .brand img { border-radius: 50%; box-shadow: 0 0 0 1.5px #d2ae6d, 0 0 0 4px rgba(13,11,9,.6), 0 0 0 5px rgba(210,174,109,.45); }
-.nav-links { display: flex; gap: 4px; margin-left: auto; }
+.nav-links { display: flex; gap: 4px; margin-left: auto; padding-left: 12px; }
 .nav-links a { padding: 10px 14px; font-family: var(--deco); font-weight: 700; font-size: .92rem; letter-spacing: .14em; text-transform: uppercase; opacity: .82; transition: opacity .2s, color .2s; position: relative; }
 .nav-links a::after { content: ""; position: absolute; left: 14px; right: 14px; bottom: 4px; height: 1px; background: var(--gold); transform: scaleX(0); transition: transform .4s var(--ease); }
 .nav-links a:hover, .nav-links a.active { opacity: 1; color: var(--gold-ink); }
@@ -254,7 +254,7 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .cart-count { position: absolute; top: 2px; right: 0; min-width: 19px; height: 19px; padding: 0 5px; border-radius: 99px; background: var(--gold); color: #0d0b09; font-family: var(--deco); font-size: .78rem; font-weight: 800; display: grid; place-items: center; }
 .cart-btn.bump { animation: bump .6s var(--ease-back); }
 @keyframes bump { 35% { transform: scale(1.3) rotate(-8deg); } }
-.menu-btn { display: none; flex-direction: column; gap: 5px; }
+.menu-btn { display: none; flex-direction: column; justify-content: center; align-items: center; gap: 5px; align-self: center; }
 .menu-btn span { display: block; width: 20px; height: 1.5px; background: currentColor; transition: transform .35s var(--ease); }
 .menu-btn[aria-expanded="true"] span:first-child { transform: translateY(3.25px) rotate(45deg); }
 .menu-btn[aria-expanded="true"] span:last-child { transform: translateY(-3.25px) rotate(-45deg); }
@@ -407,7 +407,9 @@ svg { width: 1.15em; height: 1.15em; flex-shrink: 0; }
 .grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px, 1fr)); gap: clamp(14px, 1.8vw, 24px); }
 .grid-sm { grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); }
 /* La ficha: cada sabor como "se busca" con fondo de rueda de reconocimiento */
-.card { position: relative; display: flex; flex-direction: column; padding: 10px 10px 16px; border-radius: var(--card-radius); background: linear-gradient(180deg, var(--surface-2), var(--surface)); border: 1px solid var(--line); transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .3s; transform-style: preserve-3d; will-change: transform; }
+.card { position: relative; display: flex; flex-direction: column; padding: 10px 10px 16px; border-radius: var(--card-radius); background: linear-gradient(180deg, var(--surface-2), var(--surface)); border: 1px solid var(--line); transition: transform .5s var(--ease), box-shadow .5s var(--ease), border-color .3s; }
+/* El 3D de la inclinación solo existe mientras el puntero está encima (antes: 1 capa por pieza de cada ficha, también en el celular) */
+@media (hover: hover) and (pointer: fine) { .card:hover, .card.tilting { transform-style: preserve-3d; will-change: transform; } }
 .card::before, .card::after { content: ""; position: absolute; width: 14px; height: 14px; border: 1px solid var(--gold); opacity: .55; pointer-events: none; }
 .card::before { top: 4px; left: 4px; border-right: 0; border-bottom: 0; }
 .card::after { bottom: 4px; right: 4px; border-left: 0; border-top: 0; }
@@ -879,7 +881,8 @@ svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; he
 .quick-buy .btn { flex: 1; }
 .quick-ctas { display: flex; gap: 8px; flex-wrap: wrap; }
 .quick-ctas .btn { margin: 0; --h: 46px; font-size: .88rem; flex: 1 1 calc(50% - 4px); padding: 0 12px; }
-.quick-ctas #qvShare { flex-basis: 100%; }
+.quick-ctas #qvShare, .quick-ctas #qvStory { flex-basis: 100%; }
+.quick-ctas .btn { white-space: normal; line-height: 1.15; height: auto; min-height: var(--h); padding-block: 8px; text-align: center; }
 .pair-row { display: flex; gap: 8px; flex-wrap: wrap; }
 .pair-row button { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px 6px 6px; border: 1px solid var(--line-2); font-size: .86rem; font-weight: 600; min-height: 40px; }
 .pair-row button:hover { border-color: var(--gold); }
@@ -932,13 +935,13 @@ svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; he
 .pill { font-family: var(--deco); font-size: .74rem; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; padding: 3px 10px; background: color-mix(in srgb, var(--green) 16%, transparent); color: var(--green); }
 
 /* ---------- El Gigante (asistente IA, tu consigliere) ---------- */
-.agent-fab { position: fixed; z-index: 60; right: 20px; bottom: 20px; display: flex; align-items: center; gap: 10px; padding: 6px 18px 6px 6px; border-radius: 99px; background: #0d0b09; color: #f2eadb; box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(210,174,109,.5); transition: transform .45s var(--ease), opacity .3s; }
+.agent-fab { position: fixed; z-index: 60; right: 20px; bottom: 20px; display: flex; align-items: center; gap: 14px; padding: 7px 22px 7px 7px; border-radius: 99px; background: #0d0b09; color: #f2eadb; box-shadow: var(--shadow-lg), inset 0 0 0 1px rgba(210,174,109,.5); transition: transform .45s var(--ease), opacity .3s; }
 .agent-fab:hover { transform: translateY(-3px); }
 .agent-fab-avatar { position: relative; width: 46px; height: 46px; border-radius: 50%; overflow: hidden; box-shadow: 0 0 0 2px #d2ae6d; }
 .agent-fab-avatar::after { content: ""; position: absolute; right: 3px; bottom: 3px; width: 10px; height: 10px; border-radius: 50%; background: #4fb386; border: 2px solid #0d0b09; }
-.agent-fab-text { display: grid; text-align: left; line-height: 1.15; }
-.agent-fab-text strong { font-family: var(--serif); font-size: 1rem; font-weight: 600; }
-.agent-fab-text small { font-family: var(--deco); font-weight: 700; letter-spacing: .14em; text-transform: uppercase; font-size: .72rem; color: #ddbb7c; }
+.agent-fab-text { display: grid; gap: 4px; text-align: left; line-height: 1.25; }
+.agent-fab-text strong { font-family: var(--serif); font-size: 1.02rem; font-weight: 600; letter-spacing: .01em; }
+.agent-fab-text small { font-family: var(--deco); font-weight: 700; letter-spacing: .16em; text-transform: uppercase; font-size: .68rem; color: #ddbb7c; opacity: .9; }
 .agent-fab.hidden { opacity: 0; transform: scale(.8); pointer-events: none; }
 .agent { position: fixed; z-index: 80; right: 20px; bottom: 20px; width: min(420px, calc(100vw - 24px)); height: min(680px, calc(100svh - 40px)); display: flex; flex-direction: column; overflow: hidden; background: var(--surface); border: 1px solid var(--line-2); box-shadow: var(--shadow-lg); transform-origin: bottom right; transform: scale(.85) translateY(20px); opacity: 0; pointer-events: none; transition: transform .5s var(--ease), opacity .3s; }
 .agent.open { transform: none; opacity: 1; pointer-events: auto; }
@@ -1164,7 +1167,8 @@ svg.bag, img.bag, img.mini-bag, img.slot-bag, img.empty-bag { display: block; he
   .card { padding: 6px 6px 12px; }
   .card h3 { font-size: 1.08rem; margin: 10px 4px 0; }
   .card-alias { font-size: .86rem; margin: 2px 4px 4px; }
-  .card p { display: none; }
+  .card p:not(.card-state) { display: none; }
+  .card-state { margin: 4px 4px 0; font-size: .64rem; }
   .card-art::before { display: none; }
   .card-no { font-size: .64rem; letter-spacing: .14em; padding: 2px 8px; bottom: 6px; }
   .card-foot { flex-direction: column; align-items: stretch; gap: 8px; margin: 10px 4px 0; padding-top: 10px; }
@@ -1339,3 +1343,103 @@ html.lenis { scroll-behavior: auto; }
 }
 /* Pantallas táctiles: sin "pasar el mouse", el aviso de copiar queda siempre a la vista */
 @media (hover: none) { .pay-hint { opacity: 1; } }
+
+/* ============================================================
+   v4.5 · Fluidez y experiencia (sin tocar el look de la casa)
+   ============================================================ */
+/* Estado de stock en la ficha */
+.card .card-state { flex: 1; display: flex; align-items: flex-start; gap: 7px; margin: 6px 6px 0; font-family: var(--deco); font-weight: 700; font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; line-height: 1.35; color: var(--color-success); }
+.card-state i { flex: none; width: 6px; height: 6px; margin-top: .35em; border-radius: 50%; background: currentColor; box-shadow: 0 0 0 3px color-mix(in srgb, currentColor 22%, transparent); }
+.card-state.low { color: var(--color-accent); }
+.card-state.edition { color: var(--gold-ink); }
+.card-state.out { color: var(--subtle); }
+.card-state.out i { box-shadow: none; opacity: .6; }
+.badge.edition { background: var(--foil); color: #0d0b09; }
+.add-btn.ghost { white-space: normal; line-height: 1.1; text-align: left; font-size: .72rem; padding-block: 6px; min-height: 44px; }
+/* Ticket de la cita: el maletín se edita aquí mismo */
+.rc-item em { margin-left: auto; font-style: normal; font-family: var(--deco); font-weight: 700; letter-spacing: .06em; }
+.rc-step { display: inline-flex; align-items: center; border: 1px solid var(--line-2); }
+.rc-step button { width: 36px; height: 36px; display: grid; place-items: center; color: inherit; }
+.rc-step button svg { width: 14px; height: 14px; }
+.rc-step output { min-width: 22px; text-align: center; font-family: var(--deco); font-weight: 800; }
+@media (pointer: coarse) { .rc-step button { width: 44px; height: 44px; } }
+/* Etiqueta del maletín en la barra (escritorio) */
+.cart-btn .cart-label { display: none; }
+@media (min-width: 1600px) {
+  .cart-btn:has(.cart-label:not([hidden])) { width: auto; padding: 0 14px 0 10px; gap: 8px; display: inline-flex; align-items: center; border: 1px solid color-mix(in srgb, currentColor 30%, transparent); }
+  .cart-btn .cart-label:not([hidden]) { display: inline; font-family: var(--deco); font-weight: 800; font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; white-space: nowrap; }
+  .cart-btn:has(.cart-label:not([hidden])) .cart-count { display: none; }
+}
+/* Cuando no estamos en el campus: acciones útiles */
+.hero-away { display: flex; flex-wrap: wrap; gap: 6px 16px; margin: 4px 0 10px; font-size: .84rem; }
+.hero-away .link { color: #6e1a2c; font-weight: 600; min-height: 32px; display: inline-flex; align-items: center; }
+.away-act { margin-left: 14px; font-weight: 700; text-decoration: underline; text-underline-offset: 3px; color: inherit; min-height: 32px; }
+
+/* Vista rápida: "Va bien con" + tip de la casa */
+.quick-moments { display: grid; gap: 8px; margin: 4px 0 2px; }
+.moment-row { display: flex; flex-wrap: wrap; gap: 6px; }
+.moment-row span { padding: 6px 12px; border: 1px solid var(--line-2); font-size: .82rem; color: var(--muted); }
+.quick-tip { font-size: .86rem; line-height: 1.5; color: var(--muted); }
+.quick-tip b { color: var(--gold-ink); font-weight: 700; }
+.quick-status.low { color: var(--color-accent); }
+.quick-status.edition { color: var(--gold-ink); }
+
+/* Unboxing digital: el maletín se abre y los sabores salen uno a uno */
+@keyframes unboxIn { from { opacity: 0; transform: translateY(12px) scale(.98); } }
+@keyframes flapOpen { from { transform: perspective(500px) rotateX(-70deg); opacity: .4; } }
+.drawer.open .drawer-head { transform-origin: top center; animation: flapOpen .55s var(--ease) both; }
+.drawer.open .line { animation: unboxIn .45s var(--ease) both; animation-delay: calc(120ms + var(--i, 0) * 55ms); }
+
+/* Primera vez en la casa · recorrido */
+.tour-card, .feedback-card { position: fixed; z-index: 95; left: 50%; bottom: calc(env(safe-area-inset-bottom, 0px) + 18px); width: min(420px, calc(100vw - 24px)); translate: -50% 0; padding: 20px 20px 16px; background: #0d0b09; color: #f2eadb; border: 1px solid rgba(210,174,109,.45); box-shadow: 0 30px 60px -20px rgba(0,0,0,.9), inset 0 0 0 4px #0d0b09, inset 0 0 0 5px rgba(210,174,109,.18); opacity: 0; transform: translateY(20px); transition: opacity .35s ease, transform .45s var(--ease); }
+.tour-card.show, .feedback-card.show { opacity: 1; transform: none; }
+.tour-kicker { font-family: var(--deco); font-weight: 800; font-size: .7rem; letter-spacing: .24em; text-transform: uppercase; color: #ddbb7c; }
+.tour-card h3, .feedback-card h3 { font-family: var(--serif); font-weight: 500; font-size: 1.5rem; margin: 6px 0 6px; }
+.tour-card p:not(.tour-kicker) { font-size: .92rem; line-height: 1.55; color: #bfb3a1; }
+.tour-dots { display: flex; gap: 6px; margin: 14px 0 12px; }
+.tour-dots i { width: 22px; height: 2px; background: rgba(210,174,109,.3); }
+.tour-dots i.on { background: #d2ae6d; }
+.tour-actions { display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.tour-actions .link { color: #bfb3a1; min-height: 44px; }
+.tour-spot { outline: 2px solid rgba(210,174,109,.75); outline-offset: 6px; transition: outline-color .3s; }
+.feedback-row { display: flex; flex-wrap: wrap; gap: 8px; margin: 12px 0 8px; }
+.feedback-row .chip { min-height: 44px; }
+.feedback-card .link { color: #bfb3a1; min-height: 40px; }
+.has-cart .tour-card, .has-cart .feedback-card { bottom: calc(env(safe-area-inset-bottom, 0px) + 84px); }
+
+/* Ritual post-pedido (tarjeta, no modal: la página sigue usable) */
+.ritual { position: fixed; z-index: 96; right: 20px; bottom: 20px; width: min(400px, calc(100vw - 24px)); padding: 24px 22px 20px; background: #f7f1e6; color: #17120e; box-shadow: 0 40px 80px -20px rgba(0,0,0,.85), inset 0 0 0 1px rgba(110,82,32,.3), inset 0 0 0 6px #f7f1e6, inset 0 0 0 7px rgba(110,82,32,.25); opacity: 0; transform: translateY(24px) rotate(.6deg); transition: opacity .4s ease, transform .55s var(--ease); }
+.ritual.show { opacity: 1; transform: rotate(-.4deg); }
+.ritual-close { position: absolute; top: 8px; right: 8px; color: #4e4337; }
+.ritual-kicker { font-family: var(--deco); font-weight: 800; font-size: .7rem; letter-spacing: .2em; text-transform: uppercase; color: #6e5220; padding-right: 40px; }
+.ritual h3 { font-family: var(--serif); font-weight: 500; font-size: 1.6rem; line-height: 1.1; margin: 8px 0; color: #6e1a2c; }
+.ritual-items, .ritual-when { font-size: .88rem; color: #4e4337; line-height: 1.5; }
+.ritual-when { font-weight: 600; margin-top: 4px; }
+.ritual-tip { margin-top: 10px; padding: 10px 12px; background: #efe5d2; font-size: .86rem; line-height: 1.5; color: #4e4337; }
+.ritual-tip b { color: #6e5220; }
+.ritual-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 16px; margin-top: 14px; }
+.ritual-actions .btn { --h: 44px; color: #17120e; border-color: rgba(110,82,32,.5); }
+.ritual-actions .link { color: #6e1a2c; font-weight: 600; }
+.ritual-sign { margin-top: 16px; font-family: "Pinyon Script", var(--serif); font-size: 1.55rem; line-height: 1.2; color: #17120e; }
+.ritual-by { font-family: var(--deco); font-weight: 700; font-size: .68rem; letter-spacing: .2em; text-transform: uppercase; color: #6e5220; margin-top: 4px; }
+@media (max-width: 600px) { .ritual { left: 12px; right: 12px; bottom: 12px; width: auto; } .has-cart .ritual { bottom: 84px; } }
+
+/* Estado del ticket en vivo (Mis pedidos) */
+.ticket-live { margin: 8px 0 4px; }
+.ticket-live ol { display: flex; gap: 6px; list-style: none; padding: 0; margin: 0 0 6px; }
+.ticket-live li { flex: 1; padding-top: 6px; border-top: 2px solid var(--line-2); font-family: var(--deco); font-weight: 700; font-size: .66rem; letter-spacing: .16em; text-transform: uppercase; color: var(--subtle); }
+.ticket-live li.done { border-color: var(--gold-ink); color: var(--gold-ink); }
+.ticket-live p { font-size: .84rem; color: var(--muted); }
+.ticket-live.off { font-size: .84rem; color: var(--color-accent); }
+@media (prefers-reduced-motion: reduce) { .drawer.open .drawer-head, .drawer.open .line { animation: none; } }
+/* Salas fuera de pantalla: animaciones en pausa (ver motion.mjs) */
+.anim-off, .anim-off *, .anim-off *::before, .anim-off *::after { animation-play-state: paused !important; }
+/* CLS: la tarjeta "Parte del día" reserva su alto final mientras carga el estado en vivo */
+.hero-card.is-loading { min-height: 470px; }
+.hero-away { flex-direction: column; gap: 2px; font-size: .82rem; }
+/* Pantallas táctiles: todo lo que se toca mide al menos 44 px */
+@media (pointer: coarse) {
+  .brand, .hero-link, #syncRetry, #rfEditCart, .venture-name, .hero-away .link, .away-act, .stub-links .link, .stub-links a { min-height: 44px; display: inline-flex; align-items: center; }
+  .hero-flavor, .rc-suggest button { min-height: 44px; }
+  .footer-cols nav a, .footer-cols nav button { min-height: 44px; display: flex; align-items: center; padding: 0; }
+}

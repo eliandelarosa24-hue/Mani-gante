@@ -5,6 +5,7 @@ import { stores } from "./store.mts";
 import { getOverrides, getLots } from "./settings.mts";
 
 const TTL_MS = 60_000;
+const LOW_STOCK = 5; // bolsas restantes para mostrar "Últimas unidades"
 interface Cached { at: number; rows: unknown[]; updated: string | null }
 let memo: { at: number; data: Awaited<ReturnType<typeof build>> } | null = null;
 
@@ -40,7 +41,10 @@ async function build() {
 
   const apply = (f: any) => {
     const o = (overrides as any)[f.id];
-    return { ...f, available: typeof o === "boolean" ? o : f.available, overridden: typeof o === "boolean" };
+    // "Últimas unidades": cuando el inventario por lotes del admin dice que quedan 5 o menos
+    const left = remaining[f.id];
+    const low = typeof left === "number" && left > 0 && left <= LOW_STOCK;
+    return { ...f, available: typeof o === "boolean" ? o : f.available, overridden: typeof o === "boolean", low };
   };
   return {
     catalog: base.map(apply),

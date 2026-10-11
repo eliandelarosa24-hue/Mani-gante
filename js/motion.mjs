@@ -31,6 +31,12 @@ const stepObserver = new IntersectionObserver((entries) => entries.forEach((en) 
 }), { rootMargin: "-40% 0px -45% 0px" });
 steps.forEach((s) => stepObserver.observe(s));
 
+// Rendimiento: las animaciones infinitas (brillos, pulsos, rosetas) se pausan cuando su sala no está en pantalla.
+// Se ven igual, pero el teléfono deja de repintar lo que nadie está mirando.
+const zones = $$("main > section, .hero, .ticker, footer");
+const zoneIO = new IntersectionObserver((entries) => entries.forEach((en) => en.target.classList.toggle("anim-off", !en.isIntersecting)), { rootMargin: "120px 0px" });
+zones.forEach((z) => zoneIO.observe(z));
+
 // Numerales de capítulo: un grabado gigante (I…IX) detrás de cada sala, decorativo
 $$(".section .eyebrow > span:first-child").forEach((tag) => {
   const m = /^Cap\.\s*([IVX]+)$/.exec(tag.textContent.trim());

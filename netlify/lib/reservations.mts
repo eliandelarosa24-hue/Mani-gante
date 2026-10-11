@@ -68,6 +68,13 @@ export async function createReservation(raw: unknown, origin: string) {
   return { ok: true as const, status: 200, reservation: r, message: result.message, whatsappUrl: result.whatsappUrl, ownerNotified: notified.some((n) => n.ok), slotsLeft: RESERVATION_RULES.slotCapacity - used - 1 };
 }
 
+/** Estado público de un ticket: nada de nombre ni pedido, solo en qué va. */
+export async function reservationStatus(date: string, code: string) {
+  const r = await stores.reservations().get<any>(`res/${date}/${code}`);
+  if (!r) return null;
+  return { status: r.status as Status, time: r.time as string, meetingPoint: r.meetingPoint as string, updatedAt: r.updatedAt || r.createdAt };
+}
+
 export async function setStatus(date: string, code: string, status: Status) {
   const store = stores.reservations();
   const r = await store.get<any>(`res/${date}/${code}`);

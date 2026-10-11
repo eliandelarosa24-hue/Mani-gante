@@ -32,7 +32,7 @@ export function trapFocus(panel) {
 }
 
 /** Sello "Hecho a mano" que cae sobre un elemento en un momento clave. */
-export function stampMoment(target, text = "HECHO A MANO · APROBADO POR JORGE · ") {
+export function stampMoment(target, text = "HECHO A MANO · APROBADO POR LA FAMILIA · ") {
   if (!target || matchMedia("(prefers-reduced-motion: reduce)").matches) return;
   import("./art.mjs").then(({ stamp }) => {
     const el = document.createElement("div");

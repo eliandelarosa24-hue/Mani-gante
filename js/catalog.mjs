@@ -87,6 +87,59 @@ export const COMBOS = [
   { id: "profe", name: "Combo Profe", bags: 10, price: 10000, text: "10 bolsas surtidas para la sala o una reunión." },
 ];
 
+// ------------------------------------------------------------
+// Glosario oficial de la casa (v4.5). Web, consigliere y mensajes de WhatsApp usan estas palabras.
+// ------------------------------------------------------------
+export const GLOSSARY = [
+  ["La Bolsa", "El stock de hoy: los sabores en circulación esta semana (y cada bolsa de maní)."],
+  ["El Maletín", "Tu pedido: lo que vas sumando antes de cerrar el trato."],
+  ["La Cuenta", "El total de tu maletín."],
+  ["La Cita", "Reservar tu entrega en el campus: día, hora y punto de encuentro."],
+  ["El Ticket", "La reserva confirmada, con su código (MG-XXXX)."],
+  ["El Trato", "El pago y la confirmación por WhatsApp."],
+  ["La Ficha", "El número de cada sabor (Ficha 01, Ficha J1…)."],
+  ["El Alias", "El apodo dominicano de cada sabor, que cuenta a qué sabe."],
+  ["En circulación", "Disponible esta semana."],
+  ["El Consigliere", "El asistente de la casa, 24/7."],
+  ["La Receta", "Cómo se confita: a mano, en lotes chicos."],
+  ["La Familia", "La casa y todos los que compran: desde la primera bolsa, tú también."],
+];
+
+// Momentos de campus: "Va bien con…" (por categoría) y el tip de disfrute de cada sabor.
+export const MOMENTS = {
+  "Frutales": ["el bajón de media tarde", "el patio con los amigos", "después de la prueba"],
+  "Chocolate": ["el estudio nocturno", "un café negro", "la once de la tarde"],
+  "Clásicos": ["la clase de las 8", "la micro de vuelta", "compartir en el grupo"],
+  "Cócteles": ["el viernes después de clases", "el patio con los amigos", "celebrar la nota"],
+  "Café": ["el estudio nocturno", "la previa de la prueba", "la clase de las 8"],
+  "Coberturas": ["darte un gusto", "regalar", "la once de la tarde"],
+  "Cremosos": ["la once de la tarde", "un té calentito", "el bajón de media tarde"],
+  "Maní Japonés": ["la previa con amigos", "una bebida bien helada", "el estudio nocturno"],
+};
+const CATEGORY_TIPS = {
+  "Frutales": "Está en su punto a temperatura ambiente. Ideal con agua bien fría o un té helado.",
+  "Chocolate": "Guárdalo lejos del sol para que el baño no se ablande. Con un café negro, queda de jefe.",
+  "Clásicos": "Crujiente desde la primera hasta la última. Cierra bien la bolsa entre antojo y antojo.",
+  "Cócteles": "Sin alcohol, puro sabor. Va perfecto para cerrar la semana.",
+  "Café": "Pruébalo con un espresso: el café y el maní se entienden solos.",
+  "Coberturas": "Mejor fresquito y lejos del calor, para que la cobertura quede firme.",
+  "Cremosos": "Sabe a once de la infancia. Con leche tibia es otro nivel.",
+  "Maní Japonés": "Crocante y salado: con una bebida bien helada desaparece al tiro.",
+};
+const FLAVOR_TIPS = {
+  "maracuya": "El Maracuyá está en su punto a temperatura ambiente. Ideal con un café negro o agua con gas.",
+  "chocolate-menta": "Fresquito es mejor: la menta se siente más. Va bien con la sesión de estudio nocturna.",
+  "pistacho": "Disfrútalo despacio: el tostado se nota al final.",
+  "chocolate-dubai": "Lejos del sol, que el chocolate se pone celoso. Con un café, queda de película.",
+};
+export const tipFor = (f) => (f && (FLAVOR_TIPS[f.id] || CATEGORY_TIPS[f.category])) || "Ábrelo con calma y compártelo (o no). Cierra bien la bolsa para que siga crujiente.";
+export const momentsFor = (f) => (f && MOMENTS[f.category]) || MOMENTS["Clásicos"];
+
+// Ediciones de la semana: ids de sabores "solo esta semana · cuando se acabe, se acabó".
+// Déjalo vacío si no hay edición especial; solo pon sabores que de verdad sean limitados.
+export const WEEKLY_EDITION = [];
+export const isWeeklyEdition = (f) => WEEKLY_EDITION.includes(f?.id);
+
 // [id, nombre, color, categoría, topVentas, disponible, premium, notas de sabor]
 const RAW_FLAVORS = [
   ["maracuya", "Maracuyá", "#F2A93B", "Frutales", true, true, false, "Ácido, tropical y brillante."],
@@ -310,13 +363,13 @@ const toMinutes = (hhmm) => {
   return h * 60 + m;
 };
 
-/** ¿Está Jorge en el campus ahora? + cuándo vuelve. */
+/** ¿Estamos en el campus ahora? + cuándo volvemos. */
 export function campusStatus(date = new Date()) {
   const now = zonedNow(date);
   const today = SCHEDULE.find((s) => s.day === now.weekday);
   const inHours = today && now.minutes >= toMinutes(today.open) && now.minutes < toMinutes(today.close);
   if (inHours && today.mode !== "reservas") {
-    return { open: true, label: `En el campus ahora · hasta las ${today.close}`, closesAt: today.close };
+    return { open: true, label: `Estamos en el campus · hasta las ${today.close}`, closesAt: today.close };
   }
   if (inHours) {
     return { open: false, reserveOnly: true, label: `Hoy solo con reserva · entrega hasta las ${today.close}`, closesAt: today.close };
@@ -328,7 +381,7 @@ export function campusStatus(date = new Date()) {
     if (!s) continue;
     if (i === 0 && now.minutes >= toMinutes(s.open)) continue;
     const when = i === 0 ? "hoy" : i === 1 ? "mañana" : `el ${days[wd]}`;
-    return { open: false, label: `Vuelve ${when} a las ${s.open}`, nextDay: wd, opensAt: s.open };
+    return { open: false, label: `Volvemos ${when} a las ${s.open}`, nextDay: wd, opensAt: s.open };
   }
   return { open: false, label: "Fuera de horario" };
 }
@@ -434,18 +487,19 @@ export function buildReservation({ name, date, time, meetingPoint, format = "cel
   const code = reservationCode();
   const point = String(meetingPoint || RESERVATION_RULES.meetingPoints[0]).slice(0, 60);
   const message = [
-    `*Reserva MANI-GANTE* · ${code}`,
+    `*Ticket MANI-GANTE* · ${code} (La Cita)`,
     ``,
     `👤 ${cleanName}`,
     `📅 ${day ? day.long : date} · ${time}`,
     `📍 ${point} (INACAP Temuco)`,
     `📦 ${FORMATS[format]?.name || ""}`,
     ``,
+    `*Mi maletín:*`,
     ...lines.map((l) => `▪ ${l.name} x${l.qty} (${formatCLP(l.price)} c/u)`),
     ``,
-    `*Total: ${formatCLP(total)}* · ${bags} bolsa${bags === 1 ? "" : "s"}`,
+    `*La cuenta: ${formatCLP(total)}* · ${bags} bolsa${bags === 1 ? "" : "s"}`,
     notes ? `📝 ${String(notes).slice(0, 200)}\n` : null,
-    `Pago: transferencia o Mercado Pago. Adjunto comprobante 👇`,
+    `Cierro el trato con transferencia o Mercado Pago. Adjunto comprobante.`,
   ].filter((l) => l !== null).join("\n");
 
   return {

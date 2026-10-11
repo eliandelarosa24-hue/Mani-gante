@@ -21,7 +21,7 @@ if (door && root.classList.contains("door-on")) {
       document.getElementById("heroTitle")?.closest("section")?.querySelector("a, button")?.focus({ preventScroll: true });
     }, fast ? 700 : 1500);
   };
-  setTimeout(() => open(), 8000); // nunca deja a nadie esperando en la puerta
+  setTimeout(() => open(), 4000); // micro-ritual: nunca deja a nadie esperando en la puerta
   enter?.addEventListener("click", () => open());
   document.getElementById("doorSkip")?.addEventListener("click", () => open(true));
   addEventListener("keydown", (e) => { if (e.key === "Escape") open(true); });

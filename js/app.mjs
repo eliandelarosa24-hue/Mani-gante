@@ -1,6 +1,6 @@
 import {
   BUSINESS, FORMATS, FLAVORS, JAPANESE, COMBOS, FAQ, NUTRITION, CATEGORY_ORDER, RESERVATION_RULES, STOCK_API_URL, ALLERGENS, SCHEDULE,
-  mergeRemoteStock, formatCLP, unitPrice, slug, campusStatus, reservableDays, buildReservation, whatsappLink, fridayPromo, isNewFlavor,
+  mergeRemoteStock, formatCLP, unitPrice, slug, campusStatus, reservableDays, buildReservation, whatsappLink, fridayPromo, isNewFlavor, isWeeklyEdition, tipFor, momentsFor,
 } from "./catalog.mjs";
 import { bagImg as bag, peanutsImg as swatch, stamp, guillocheImg, monogram } from "./art.mjs";
 import { VOICE } from "./voice.mjs";
@@ -59,23 +59,31 @@ function splitName(name) {
 const grid = $("#grid");
 const gridJp = $("#gridJp");
 
+// Estado de stock con palabras de la casa: en circulación · últimas unidades · se acabó esta semana
+function stockState(f) {
+  if (!f.available) return { cls: "out", text: "Se acabó esta semana" };
+  if (isWeeklyEdition(f)) return { cls: "edition", text: "Solo esta semana · cuando se acabe, se acabó" };
+  if (f.low) return { cls: "low", text: "Últimas unidades" };
+  return { cls: "on", text: "En circulación · disponible esta semana" };
+}
 function cardHTML(f) {
   const qty = state.cart.get(f.id) || 0;
   const [main, sub] = splitName(f.name);
   const hot = state.status?.hot?.includes(f.id);
-  const badge = !f.available ? `<span class="badge out">Agotado</span>` : isNewFlavor(f) ? `<span class="badge new">Recién llegado</span>` : hot ? `<span class="badge hot">En racha</span>` : f.topVentas ? `<span class="badge">Más buscado</span>` : "";
+  const badge = !f.available ? `<span class="badge out">Agotado</span>` : isWeeklyEdition(f) ? `<span class="badge edition">Edición de la semana</span>` : isNewFlavor(f) ? `<span class="badge new">Recién llegado</span>` : hot ? `<span class="badge hot">En racha</span>` : f.topVentas ? `<span class="badge">Más buscado</span>` : "";
   const premium = f.premium ? `<span class="badge premium">Precio fijo</span>` : "";
   const control = !f.available
-    ? `<button class="add-btn ghost" type="button" data-alert="${f.id}"><svg><use href="#i-bell"/></svg>Avísame</button>`
+    ? `<button class="add-btn ghost" type="button" data-alert="${f.id}" aria-label="Avísame cuando vuelva ${esc(f.name)}"><svg><use href="#i-bell"/></svg>Avísame cuando vuelva</button>`
     : qty > 0
-      ? `<div class="stepper"><button type="button" data-dec="${f.id}" aria-label="Quitar uno de ${esc(f.name)}"><svg><use href="#i-minus"/></svg></button><output aria-live="polite">${qty}</output><button type="button" data-inc="${f.id}" aria-label="Agregar uno de ${esc(f.name)}"><svg><use href="#i-plus"/></svg></button></div>`
-      : `<button class="add-btn" type="button" data-inc="${f.id}" aria-label="Agregar ${esc(f.name)}"><svg><use href="#i-plus"/></svg>Agregar</button>`;
+      ? `<div class="stepper"><button type="button" data-dec="${f.id}" aria-label="Quitar uno de ${esc(f.name)}"><svg><use href="#i-minus"/></svg></button><output aria-live="polite">${qty}</output><button type="button" data-inc="${f.id}" aria-label="Sumar uno de ${esc(f.name)}"><svg><use href="#i-plus"/></svg></button></div>`
+      : `<button class="add-btn" type="button" data-inc="${f.id}" aria-label="Sumar ${esc(f.name)} al maletín"><svg><use href="#i-plus"/></svg>Sumar</button>`;
   const fmt = formatOf(f);
+  const st = stockState(f);
+  // Progressive disclosure: aquí solo ficha, nombre, estado y precio; alias, notas y maridaje en la vista rápida
   return `<article class="card${f.available ? "" : " soldout"}${qty ? " in-cart" : ""}" data-id="${f.id}" data-tilt style="--c:${f.color}">
-    <button class="card-art" type="button" data-quick="${f.id}" aria-label="Ver detalle de ${esc(f.name)}">${badge}${premium}${bag(f.color, fmt, { label: "", num: f.no })}<span class="card-no" aria-hidden="true">Ficha Nº ${esc(f.no || "")}</span><span class="paper-sheen" aria-hidden="true"></span><span class="quick-hint" aria-hidden="true"><svg><use href="#i-eye"/></svg></span></button>
+    <button class="card-art" type="button" data-quick="${f.id}" aria-label="Ver la ficha de ${esc(f.name)}">${badge}${premium}${bag(f.color, fmt, { label: "", num: f.no })}<span class="card-no" aria-hidden="true">Ficha ${esc(f.no || "")}</span><span class="paper-sheen" aria-hidden="true"></span><span class="quick-hint" aria-hidden="true"><svg><use href="#i-eye"/></svg></span></button>
     <h3>${esc(main)}${sub ? `<small>c/ ${esc(sub)}</small>` : ""}</h3>
-    ${f.alias ? `<em class="card-alias">alias «${esc(f.alias)}»</em>` : ""}
-    <p>${esc(f.notes || "")}</p>
+    <p class="card-state ${st.cls}"><i aria-hidden="true"></i>${st.text}</p>
     <div class="card-foot"><span class="price">${formatCLP(unitPrice(f, fmt))}</span>${control}</div>
   </article>`;
 }
@@ -313,6 +321,13 @@ if (!reduceMotion && matchMedia("(hover: hover) and (pointer: fine)").matches) {
   }, { passive: true });
 }
 
+// Embudo (v4.5): cuánto tarda la gente en sumar su primer sabor y cuántos llegan a WhatsApp.
+let firstAddDone = false;
+function firstAdd(flavor) {
+  if (firstAddDone) return; firstAddDone = true;
+  track("funnel_first_add", { flavor, ms: Math.round(performance.now()) });
+}
+export function funnelWhatsApp(from) { track("funnel_whatsapp", { from, ms: Math.round(performance.now()), first_add: firstAddDone }); }
 function changeQty(id, delta, { from = null, silent = false } = {}) {
   const f = byId().get(id);
   if (!f || (delta > 0 && !f.available)) return;
@@ -321,6 +336,7 @@ function changeQty(id, delta, { from = null, silent = false } = {}) {
   saveCart(); refreshCard(id); renderCart(); renderReserveItems();
   if (delta > 0) {
     track("add_to_cart", { flavor: id });
+    firstAdd(id);
     if (!silent) {
       if (from) flyToCart(from, f.color); else bumpCart();
       if (q === 1) toast(VOICE.added(f.name), { color: f.color });
@@ -375,12 +391,12 @@ function orderMessage(lines, bags, total) {
   const fp = fridayPromo(bags);
   const pay = PAYMENTS.find((p) => p.id === state.payment);
   return [
-    `*Pedido MANI-GANTE* ✅`, `Formato: ${FORMATS[state.format].name}`, ``,
+    `*Mi maletín MANI-GANTE*`, `Formato: ${FORMATS[state.format].name}`, ``,
     ...lines.map(({ f, qty, price }) => `▪ ${f.name} x${qty} (${formatCLP(price)} c/u)`),
-    ``, `*Total: ${formatCLP(total)}* · ${bags} bolsas`,
+    ``, `*La cuenta: ${formatCLP(total)}* · ${bags} bolsas`,
     fp.free ? `🎁 Promo de viernes: ${fp.free} bolsa(s) gratis` : null,
     `Pago: ${pay.label}`, ``, `Mi nombre: `,
-    state.payment === "efectivo" ? "Pago en efectivo al recibir." : "Adjunto comprobante.",
+    state.payment === "efectivo" ? "Pago en efectivo al recibir." : "Cierro el trato: adjunto comprobante.",
   ].filter((x) => x !== null).join("\n");
 }
 
@@ -407,17 +423,20 @@ function renderPromo(bags) {
 function renderCart() {
   const { lines, bags, total } = cartTotals();
   $("#cartCount").hidden = bags === 0; $("#cartCount").textContent = bags;
+  // El maletín siempre a la vista: "Tu maletín · 3 bolsas · $3.000" (escritorio)
+  const cl = $("#cartLabel"); if (cl) { cl.hidden = bags === 0; cl.textContent = `Tu maletín · ${bags} bolsa${bags === 1 ? "" : "s"} · ${formatCLP(total)}`; }
+  $("#cartOpen").setAttribute("aria-label", bags ? `Abrir tu maletín: ${bags} bolsa${bags === 1 ? "" : "s"}, ${formatCLP(total)}` : "Abrir tu maletín");
   $("#cartSub").textContent = `N° ${String(bags).padStart(3, "0")} · ${bags} bolsa${bags === 1 ? "" : "s"} · ${FORMATS[state.format].name}`;
   setMoney($("#cartTotal"), total);
-  $("#dockCount").textContent = `${bags} bolsa${bags === 1 ? "" : "s"}`; setMoney($("#dockTotal"), total);
+  $("#dockCount").textContent = `${bags} bolsa${bags === 1 ? "" : "s"}`; $("#dockCart").setAttribute("aria-label", `Abrir tu maletín: ${bags} bolsa${bags === 1 ? "" : "s"}`); setMoney($("#dockTotal"), total);
   $("#dock").hidden = bags === 0;
   document.body.classList.toggle("has-cart", bags > 0);
   $("#cartFoot").hidden = bags === 0;
   renderPromo(bags);
 
   const ups = upsell(lines);
-  $("#cartItems").innerHTML = lines.length ? lines.map(({ f, qty, price, subtotal }) => `
-    <div class="line">${swatch(f.color)}
+  $("#cartItems").innerHTML = lines.length ? lines.map(({ f, qty, price, subtotal }, i) => `
+    <div class="line" style="--i:${i}">${swatch(f.color)}
       <div class="line-info"><strong>${esc(f.name)}</strong><small>${qty} × ${formatCLP(price)} ····· ${formatCLP(subtotal)}</small></div>
       <div class="stepper"><button type="button" data-dec="${f.id}" aria-label="Quitar uno de ${esc(f.name)}"><svg><use href="#i-minus"/></svg></button><output>${qty}</output><button type="button" data-inc="${f.id}" aria-label="Agregar uno de ${esc(f.name)}"><svg><use href="#i-plus"/></svg></button></div>
     </div>`).join("") + (ups.length ? `<div class="upsell"><p class="rc-label"><span>Va chévere con lo tuyo</span></p><div class="pair-row">${ups.map((u) => `<button type="button" data-inc="${u.id}">${swatch(u.color)}${esc(u.name)} <b>+</b></button>`).join("")}</div></div>` : "")
@@ -438,6 +457,7 @@ $("#cartWa").addEventListener("click", () => {
   const { lines, bags, total } = cartTotals();
   saveOrder({ type: "pedido", items: lines.map(({ f, qty }) => ({ id: f.id, name: f.name, qty })), bags, total, format: state.format, payment: state.payment, whatsappUrl: $("#cartWa").href });
   track("order_whatsapp", { payment: state.payment });
+  funnelWhatsApp("maletin");
   dispatchEvent(new CustomEvent("mg:order"));
   stampMoment($("#cart"));
   setTimeout(() => toast(VOICE.orderSaved(), { tone: "success", action: { label: "Ver", onClick: openHistory } }), 400);
@@ -497,16 +517,20 @@ function renderQuick() {
   $("#qvName").textContent = f.name;
   const qa = $("#qvAlias"); if (qa) qa.textContent = f.alias ? `alias «${f.alias}» · Ficha Nº ${f.no}` : "";
   $("#qvNotes").textContent = f.notes || "";
+  // Maridajes de campus + tip de disfrute (catalog.mjs: MOMENTS / tipFor)
+  const mo = $("#qvMoments");
+  if (mo) mo.innerHTML = `<p class="rc-label"><span>Va bien con</span></p><div class="moment-row">${momentsFor(f).map((m) => `<span>${esc(m)}</span>`).join("")}</div><p class="quick-tip"><b>Tip de la casa:</b> ${esc(tipFor(f))}</p>`;
   const st = $("#qvStatus");
-  st.className = `quick-status${f.available ? "" : " out"}`;
-  st.innerHTML = `<i></i>${f.available ? `Disponible hoy${state.stockSource === "live" ? " · stock en vivo" : ""}` : "Agotado por ahora"}`;
+  const ss = stockState(f);
+  st.className = `quick-status${f.available ? "" : " out"} ${ss.cls}`;
+  st.innerHTML = `<i></i>${ss.text}${f.available && state.stockSource === "live" ? " · stock en vivo" : ""}`;
   $("#qvFormats").hidden = f.line === "japones";
   $("#qvFormats").innerHTML = formatsHTML(fmt);
   $("#qvQty").textContent = qv.qty;
   $("#qvPrice").textContent = formatCLP(unitPrice(f, fmt) * qv.qty);
   const add = $("#qvAdd");
   add.disabled = false;
-  add.innerHTML = f.available ? `Agregar · <span id="qvPrice">${formatCLP(unitPrice(f, fmt) * qv.qty)}</span>` : `<svg><use href="#i-bell"/></svg> Avísame cuando vuelva`;
+  add.innerHTML = f.available ? `Sumar al maletín · <span id="qvPrice">${formatCLP(unitPrice(f, fmt) * qv.qty)}</span>` : `<svg><use href="#i-bell"/></svg> Avísame cuando vuelva`;
   $("#qvReserve").hidden = !f.available;
   $("#qvPair").innerHTML = pairsFor(f).map((p) => `<button type="button" data-pair="${p.id}">${swatch(p.color)}${esc(p.name)}</button>`).join("");
   $("#qvAllergen").innerHTML = `<strong>Alérgenos:</strong> ${esc(ALLERGENS.note)}`;
@@ -533,6 +557,8 @@ function openQuick(id) {
   quick.showModal();
   track("quick_view", { flavor: id });
 }
+// Mi antojo de hoy: tarjeta para la Story (experience.mjs se carga solo cuando se usa)
+$("#qvStory")?.addEventListener("click", () => import("./experience.mjs").then((m) => m.shareAntojo(byId().get(qv.id))));
 $("#qvShare")?.addEventListener("click", async () => {
   const f = byId().get(qv.id); if (!f) return;
   const url = `${BUSINESS.url}sabor/${f.id}`;
@@ -654,7 +680,7 @@ function renderQuiz(step = 0) {
   const prog = `<div class="quiz-progress" aria-hidden="true">${QUIZ.map((_, i) => `<i class="${i <= step ? "on" : ""}"></i>`).join("")}<i class="${step >= QUIZ.length ? "on" : ""}"></i></div>`;
   if (step < QUIZ.length) {
     const s = QUIZ[step];
-    body.innerHTML = `${prog}<p class="eyebrow" style="justify-content:center">El interrogatorio · pregunta ${step + 1} de ${QUIZ.length}</p><h2 class="quiz-q" id="quizTitle">${s.q}</h2>
+    body.innerHTML = `${prog}<p class="eyebrow" style="justify-content:center">El test de la casa · pregunta ${step + 1} de ${QUIZ.length}</p><h2 class="quiz-q" id="quizTitle">${s.q}</h2>
       <div class="quiz-opts">${s.opts.map((o) => `<button type="button" class="quiz-opt" data-v="${o.v}">${swatch(o.color)}<span>${o.label}</span><small>${o.hint}</small></button>`).join("")}</div>
       ${step > 0 ? `<button class="link quiz-back" type="button" id="quizBack">← Atrás</button>` : ""}`;
     body.querySelector(".quiz-opts").addEventListener("click", (e) => {
@@ -731,7 +757,7 @@ function renderBox() {
   $("#boxCount").textContent = `${filled.length} / ${box.size.bags}`;
   $("#boxName").textContent = box.size.name;
   $("#boxAdd").disabled = filled.length === 0;
-  $("#boxAdd").lastChild.textContent = filled.length === box.size.bags ? " Agregar maletín" : ` Agregar ${filled.length || ""} a la cuenta`;
+  $("#boxAdd").lastChild.textContent = filled.length === box.size.bags ? " Sumar al maletín" : ` Sumar ${filled.length || ""} al maletín`;
   if (filled.length === box.size.bags && !box.celebrated) { box.celebrated = true; stampMoment($(".box-stage"), "MALETÍN COMPLETO · A TU GUSTO · "); }
   if (filled.length < box.size.bags) box.celebrated = false;
 }
@@ -774,15 +800,21 @@ $("#boxAdd").addEventListener("click", () => {
 function renderHero() {
   const status = state.status?.campus || campusStatus();
   const pill = $("#livePill");
-  pill.dataset.open = status.open; pill.querySelector("span").textContent = status.open ? "En campus ahora" : status.label;
+  pill.dataset.open = status.open; pill.querySelector("span").textContent = status.open ? "Estamos en el campus" : status.label;
   $("#heroStatus").textContent = status.open ? "Estamos en el campus ahora" : status.label;
+  // Cuando no estamos: una salida útil, no solo el aviso
+  const away = $("#heroAway");
+  if (away) {
+    away.hidden = status.open;
+    if (!status.open) away.innerHTML = `<a href="#reservar" class="link">Deja tu pedido para cuando volvamos</a><button type="button" class="link" data-open-agent>Habla con el Consigliere</button>`;
+  }
   $("#heroLiveDot").classList.toggle("on", status.open);
   const avail = available();
   $("#statAvailable").textContent = avail.length;
   $("#heroStock").textContent = `${avail.length} de ${state.catalog.length} sabores disponibles${state.stockSource === "live" ? " · stock en vivo" : ""}`;
   const top = avail.filter((f) => f.topVentas).slice(0, 3);
   for (const f of avail) { if (top.length >= 3) break; if (!top.includes(f)) top.push(f); }
-  $("#heroTop").innerHTML = top.map((f) => `<button type="button" class="hero-flavor" data-inc="${f.id}">${swatch(f.color)}<span>${esc(f.name)}</span><em>+ Agregar</em></button>`).join("");
+  $("#heroTop").innerHTML = top.map((f) => `<button type="button" class="hero-flavor" data-inc="${f.id}">${swatch(f.color)}<span>${esc(f.name)}</span><em>+ Sumar</em></button>`).join("");
 }
 $("#heroTop").addEventListener("click", (e) => {
   const b = e.target.closest("[data-inc]"); if (b) changeQty(b.dataset.inc, +1, { from: b.querySelector(".swatch") });
@@ -863,10 +895,12 @@ function renderReserveItems() {
   const boxEl = $("#rfItems"); if (!boxEl) return;
   if (!lines.length) {
     const sugg = available().filter((f) => f.topVentas).slice(0, 4);
-    boxEl.innerHTML = `<div class="rc-empty">Aún no eliges sabores. <a href="#tienda">Ir a la tienda</a> o agrega uno de los favoritos:
+    boxEl.innerHTML = `<div class="rc-empty">Tu maletín está vacío. <a href="#tienda">Ver la Bolsa de hoy</a> o suma uno de los favoritos:
       <div class="rc-suggest">${sugg.map((f) => `<button type="button" data-inc="${f.id}">${swatch(f.color)}${esc(f.name)}</button>`).join("")}</div></div>`;
   } else {
-    boxEl.innerHTML = lines.map(({ f, qty, subtotal }) => `<div class="rc-item">${swatch(f.color)}<span>${esc(f.name)}</span><em>x${qty} · ${formatCLP(subtotal)}</em></div>`).join("");
+    // Editar aquí cambia el maletín (y al revés): una sola fuente de verdad, state.cart
+    boxEl.innerHTML = lines.map(({ f, qty, subtotal }) => `<div class="rc-item">${swatch(f.color)}<span>${esc(f.name)}</span><em>${formatCLP(subtotal)}</em>
+      <span class="rc-step"><button type="button" data-dec="${f.id}" aria-label="Quitar uno de ${esc(f.name)}"><svg><use href="#i-minus"/></svg></button><output>${qty}</output><button type="button" data-inc="${f.id}" aria-label="Sumar uno de ${esc(f.name)}"><svg><use href="#i-plus"/></svg></button></span></div>`).join("");
   }
   setMoney($("#rfTotal"), total);
   renderLive();
@@ -885,7 +919,7 @@ function renderLive() {
   el.textContent = day && rf.slot ? `${day.label} · ${rf.slot} · ${rf.point}${bags ? ` · ${bags} bolsa${bags === 1 ? "" : "s"}` : ""}` : "Reserva · INACAP Temuco";
 }
 function bindReserve() {
-  $("#rfItems").addEventListener("click", (e) => { const b = e.target.closest("[data-inc]"); if (b) changeQty(b.dataset.inc, +1, { from: b }); });
+  $("#rfItems").addEventListener("click", (e) => { const b = e.target.closest("[data-inc]"), d = e.target.closest("[data-dec]"); if (b) changeQty(b.dataset.inc, +1, { from: b }); if (d) changeQty(d.dataset.dec, -1); });
   $("#rfEditCart").addEventListener("click", openCart);
   $("#rfDays").addEventListener("click", (e) => { const b = e.target.closest("[data-day]"); if (b) { rf.day = b.dataset.day; renderDays(); } });
   $("#rfSlots").addEventListener("click", (e) => { const b = e.target.closest("[data-slot]"); if (b) { rf.slot = b.dataset.slot; rf.pickedSlot = true; renderSlots(); } });
@@ -970,15 +1004,16 @@ async function submitReservation(e) {
     if ((res.headers.get("content-type") || "").includes("application/json")) {
       const data = await res.json();
       if (!data.ok) {
-        btn.disabled = false; btn.removeAttribute("aria-busy"); label.textContent = "Reservar por WhatsApp";
+        btn.disabled = false; btn.removeAttribute("aria-busy"); label.textContent = "Enviar el ticket por WhatsApp";
         if (data.errors) { showErrors(data.errors); syncStock({ quiet: true }); loadStatus(); }
         return;
       }
       result = data;
     }
   } catch { /* sin backend: validación local */ }
-  btn.disabled = false; btn.removeAttribute("aria-busy"); label.textContent = "Reservar por WhatsApp";
+  btn.disabled = false; btn.removeAttribute("aria-busy"); label.textContent = "Enviar el ticket por WhatsApp";
   track("reservation_submit", { payment });
+  funnelWhatsApp("cita");
   dispatchEvent(new CustomEvent("mg:order"));
   showReservationSuccess({ ...result, reservation: { ...result.reservation, payment } });
   loadStatus();
@@ -988,7 +1023,7 @@ function showReservationSuccess({ reservation: r, whatsappUrl }) {
   const form = $("#reserveForm");
   saveOrder({ type: "reserva", code: r.code, items: (r.lines || []).map((l) => ({ id: l.id, name: l.name, qty: l.qty })), bags: r.bags, total: r.total, format: r.format, payment: r.payment, date: r.date, dateLabel: r.dateLabel, time: r.time, meetingPoint: r.meetingPoint, whatsappUrl });
   const pay = PAYMENTS.find((p) => p.id === r.payment);
-  form.innerHTML = `<div class="ticket-main"><div class="ticket-head"><span class="brand-name">MANI<span>-</span>GANTE</span><small>Reserva creada · ${esc(pay?.label || "")}</small></div>
+  form.innerHTML = `<div class="ticket-main"><div class="ticket-head"><span class="brand-name">MANI<span>-</span>GANTE</span><small>Ticket creado · ${esc(pay?.label || "")}</small></div>
     <div class="rc-success">
       <span class="ok"><svg><use href="#i-check"/></svg></span>
       <h3 class="h3">¡Dímelo, ${esc(r.name)}! Quedó lista</h3>
@@ -1025,9 +1060,10 @@ function renderHistory() {
   const list = getOrders();
   $("#historyList").innerHTML = list.length ? list.map((o) => `
     <article class="history-item">
-      <div class="history-top"><strong>${o.type === "reserva" ? `Reserva ${esc(o.code)}` : "Pedido"}</strong><span class="pill">${esc(STATUS_LABEL[o.status] || o.status)}</span></div>
+      <div class="history-top"><strong>${o.type === "reserva" ? `Ticket ${esc(o.code)}` : "Trato por WhatsApp"}</strong><span class="pill">${esc(STATUS_LABEL[o.status] || o.status)}</span></div>
       <small>${new Date(o.createdAt).toLocaleDateString("es-CL", { day: "numeric", month: "short" })}${o.dateLabel ? ` · para ${esc(o.dateLabel)} ${esc(o.time)}` : ""} · ${o.bags} bolsas · ${formatCLP(o.total)}</small>
       <p>${(o.items || []).map((i) => `${esc(i.name)} ×${i.qty}`).join(", ")}</p>
+      ${o.type === "reserva" ? `<div class="ticket-slot" data-live="${esc(o.id)}"></div>` : ""}
       <div class="history-actions">
         <button type="button" class="link" data-repeat="${esc(o.id)}">Repetir pedido</button>
         ${o.status === "enviado" ? `<button type="button" class="link" data-paid="${esc(o.id)}">Ya pagué</button>` : ""}
@@ -1037,7 +1073,15 @@ function renderHistory() {
       </div>
     </article>`).join("") : `<div class="drawer-empty">${bag("#C8963E", "celofan")}<p class="hand">${VOICE.emptyHistory}</p></div>`;
 }
-function openHistory() { renderHistory(); $("#historyDlg").showModal(); }
+function openHistory() { renderHistory(); $("#historyDlg").showModal(); liveTickets(); }
+// Estado del ticket en vivo (lo marca la casa desde el panel): recibido → preparando → entregado
+async function liveTickets() {
+  const m = await import("./experience.mjs");
+  for (const o of getOrders().filter((x) => x.type === "reserva").slice(0, 5)) {
+    const st = await m.ticketStatus(o); if (!st) continue;
+    const el = $(`#historyList [data-live="${CSS.escape(o.id)}"]`); if (el) el.innerHTML = m.statusHTML(st);
+  }
+}
 $("#historyOpen").addEventListener("click", openHistory);
 $("#historyList").addEventListener("click", (e) => {
   const t = e.target.closest("button"); if (!t) return;
@@ -1089,7 +1133,7 @@ const PHOTOS = [
 ];
 const gal = $("#gallery");
 gal.innerHTML = PHOTOS.map(([g, alt, cap, w, h]) => `<figure class="gallery-item" data-src="./assets/img/${g}-1600.webp">
-  <button type="button" class="gallery-open" aria-label="Ampliar foto: ${esc(alt)}"><img src="./assets/img/${g}-800.webp" alt="${esc(alt)}" loading="lazy" decoding="async" width="${w}" height="${h}" draggable="false"></button><figcaption>${esc(cap)}</figcaption></figure>`).join("");
+  <button type="button" class="gallery-open" aria-label="Ampliar foto: ${esc(alt)}"><img src="./assets/img/${g}-800.webp" srcset="./assets/img/${g}-800.webp 800w, ./assets/img/${g}-1600.webp 1600w" sizes="(max-width: 760px) 80vw, 420px" alt="${esc(alt)}" loading="lazy" decoding="async" width="${w}" height="${h}" draggable="false"></button><figcaption>${esc(cap)}</figcaption></figure>`).join("");
 // Instagram en vivo: se pide solo cuando la sección está por verse (no frena la carga inicial).
 function renderInsta(data) {
   const grid = $("#instaGrid"), st = $("#instaStories");
@@ -1243,10 +1287,11 @@ idle(() => loadAgent(), { timeout: 6000 });
 // ============================================================
 window.MG = {
   addItems, openCart,
-  toast: (text, color) => toast(text, { color }),
+  toast: (text, opt) => toast(text, typeof opt === "string" ? { color: opt } : (opt || {})),
   getCart: () => [...state.cart].map(([id, qty]) => ({ id, qty })),
   getFormat: () => state.format,
   getCatalog: () => state.catalog,
+  getFlavor: (id) => byId().get(id),
   resync: () => syncStock({ quiet: true }),
 };
 window.MGTrack = track;

@@ -64,7 +64,7 @@ function renderAgain() {
   host.hidden = false;
   host.querySelector("button").addEventListener("click", () => {
     MG().addItems?.(items.map(({ id, qty }) => ({ id, qty })), { format: last.format });
-    MG().toast?.("Lo de siempre, a la cuenta. Así se hace, mi pana.");
+    MG().toast?.("Lo de siempre, al maletín. Así se hace, mi pana.");
     MG().openCart?.();
     host.hidden = true;
   });
@@ -103,7 +103,7 @@ async function spin() {
     <h3 class="h3">${esc(f.name)}</h3><p class="ruleta-alias">alias «${esc(f.alias || "")}»</p><p class="muted">${esc(f.notes || "")}</p>`;
   result.classList.add("show");
   $("#ruletaAdd").disabled = false;
-  $("#ruletaAdd").lastChild.textContent = ` Agregar · ${formatCLP(unitPrice(f, MG().getFormat?.() || "celofan"))}`;
+  $("#ruletaAdd").lastChild.textContent = ` Sumar al maletín · ${formatCLP(unitPrice(f, MG().getFormat?.() || "celofan"))}`;
   rolling = false;
 }
 if (ruleta) {
@@ -117,7 +117,7 @@ if (ruleta) {
   $("#ruletaAdd").addEventListener("click", () => {
     if (!ruletaPick) return;
     MG().addItems?.([{ id: ruletaPick.id, qty: 1 }]);
-    MG().toast?.(`${ruletaPick.name} a la cuenta. La suerte está de tu lado.`, ruletaPick.color);
+    MG().toast?.(`${ruletaPick.name}, al maletín. La suerte está de tu lado.`, ruletaPick.color);
     ruleta.close();
   });
 }
@@ -125,7 +125,7 @@ if (ruleta) {
 // ------------------------------------------------------------
 // 4. Índice de capítulos (escritorio): I…IX con progreso
 // ------------------------------------------------------------
-const CHAPTERS = [["oficio", "La receta"], ["tienda", "Los más buscados"], ["caja", "El maletín"], ["reservar", "La cita"], ["historia", "La familia"], ["galeria", "Las pruebas"], ["pago", "El trato"], ["faq", "La letra chica"], ["opiniones", "La familia habla"]];
+const CHAPTERS = [["oficio", "La Receta"], ["tienda", "La Bolsa"], ["caja", "El Maletín"], ["reservar", "La Cita"], ["historia", "La Familia"], ["galeria", "Las Pruebas"], ["pago", "El Trato"], ["faq", "Cómo funciona"], ["opiniones", "La Familia habla"]];
 const ROMAN = ["I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX"];
 function buildIndex() {
   const nav = document.createElement("nav");
@@ -179,7 +179,7 @@ addEventListener("beforeinstallprompt", (e) => { e.preventDefault(); deferredPro
 addEventListener("mg:order", () => setTimeout(() => offerInstall("order"), 2500));
 if (isIOS && visits >= 2 && !navigator.webdriver) setTimeout(() => offerInstall("ios"), 15000);
 
-addEventListener("offline", () => MG().toast?.("Se fue la señal. Tranquilo: tu cuenta queda guardada en este teléfono."));
+addEventListener("offline", () => MG().toast?.("Se fue la señal. Tranquilo: tu maletín queda guardado en este teléfono."));
 addEventListener("online", () => { MG().toast?.("De vuelta en línea. Actualizando la Bolsa de hoy…"); MG().resync?.(); });
 
 // ------------------------------------------------------------
@@ -189,3 +189,5 @@ addEventListener("mg:cart", renderAgain);
 
 // v4.4 · La experiencia de la Casa (cursor, desplazamiento suave, ceremonia, sonidos…)
 import("./immersion.mjs").catch(() => {});
+// v4.5 · La experiencia completa (recorrido, ritual, Story, "¿cómo estuvo?")
+import("./experience.mjs").catch(() => {});

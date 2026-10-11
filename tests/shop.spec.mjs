@@ -113,7 +113,12 @@ test("la puerta: solo en la primera visita, accesible y se abre", async ({ page 
 test("identidad: fichas con alias, la Bolsa en vivo y eslogan", async ({ page }) => {
   await page.goto("/");
   await expect(page.locator("#heroTitle")).toContainText("gánster");
-  await expect(page.locator('#grid .card[data-id="maracuya"] .card-alias')).toHaveText("alias «La Chinola»");
+  // v4.5: la ficha muestra estado de stock; el alias vive en la vista rápida
+  await expect(page.locator('#grid .card[data-id="maracuya"] .card-state')).toContainText("En circulación");
+  await page.locator('#grid [data-quick="maracuya"]').click();
+  await expect(page.locator("#qvAlias")).toContainText("La Chinola");
+  await expect(page.locator("#qvMoments")).toContainText("Va bien con");
+  await page.keyboard.press("Escape");
   await expect(page.locator("#marqueeTrack .tk.down").first()).toBeAttached();
   await page.locator("#search").fill("jeque");
   await expect(page.locator("#grid .card")).toHaveCount(1);
@@ -191,4 +196,23 @@ test("v4.4.2: con animaciones, las tarjetas de pago y la invitación se ven", as
   await page.locator(".ticket").scrollIntoViewIfNeeded();
   await page.waitForTimeout(1500);
   expect(Number(await page.locator(".ticket").evaluate((e) => getComputedStyle(e).opacity))).toBeGreaterThan(.95);
+});
+
+test("v4.5: glosario en la navegación, el maletín se edita desde la cita y aparece el ritual", async ({ page, context }) => {
+  context.on("page", (p) => p.close());
+  await page.goto("/");
+  await expect(page.locator(".nav-links")).toContainText("La Bolsa");
+  await expect(page.locator(".hero-cta .btn-gold")).toContainText("Ver la Bolsa de hoy");
+  await page.locator('#grid [data-inc="coco"]').click();
+  await page.locator("#reservar").scrollIntoViewIfNeeded();
+  // Sumar desde el ticket de la cita cambia el maletín (una sola fuente de verdad)
+  await page.locator('#rfItems [data-inc="coco"]').click();
+  await expect(page.locator("#cartCount")).toHaveText("2");
+  await page.locator('#rfItems [data-dec="coco"]').click();
+  await expect(page.locator("#cartCount")).toHaveText("1");
+  await page.locator("#rfName").fill("Chiqui");
+  await page.locator("#rfSubmit").click();
+  await expect(page.locator(".rc-success code")).toBeVisible();
+  await expect(page.locator(".ritual")).toContainText("Tu antojo ya va camino a la casa");
+  await expect(page.locator(".ritual-sign")).toContainText("receta de la familia");
 });

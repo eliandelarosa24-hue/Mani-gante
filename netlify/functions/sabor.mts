@@ -1,5 +1,6 @@
 // GET /sabor/:id → página indexable de cada sabor (schema Product + Offer + Breadcrumb, OG propio).
-import { FLAVORS, JAPANESE, FORMATS, BUSINESS, ALLERGENS, unitPrice, formatCLP, whatsappLink } from "../../js/catalog.mjs";
+import { FLAVORS, JAPANESE, FORMATS, BUSINESS, ALLERGENS, unitPrice, formatCLP, whatsappLink, tipFor, momentsFor } from "../../js/catalog.mjs";
+import { track } from "../lib/analytics.mts";
 import { bag } from "../../js/art.mjs";
 import { getLiveCatalog } from "../lib/catalog-live.mts";
 import { page, esc } from "../lib/page.mts";
@@ -7,8 +8,11 @@ import { page, esc } from "../lib/page.mts";
 export default async (req: Request, context: { params?: { id?: string } }) => {
   const id = context.params?.id || new URL(req.url).pathname.split("/").filter(Boolean)[1];
   const base = [...FLAVORS, ...JAPANESE].find((f) => f.id === id);
+  // Puente físico-digital: los QR de las bolsas abren /sabor/:id?qr=1
+  const fromQr = new URL(req.url).searchParams.has("qr");
+  if (fromQr) await track([{ name: "qr_scan", props: { flavor: id || "" } }]).catch(() => {});
   if (!base) {
-    const body = `<section class="notfound"><p class="eyebrow">Error 404 · Se fugó</p><h1 class="h2">Ese sabor <em>no está fichado</em></h1><p class="lead">Pero hay ${FLAVORS.length} más buscados esperándote en la casa.</p><a class="btn btn-gold btn-lg" href="/#tienda">Ver a los más buscados</a></section>`;
+    const body = `<section class="notfound"><p class="eyebrow">Error 404 · Se fugó</p><h1 class="h2">Ese sabor <em>no está fichado</em></h1><p class="lead">Pero hay ${FLAVORS.length} más buscados esperándote en la casa.</p><a class="btn btn-gold btn-lg" href="/#tienda">Ver la Bolsa de hoy</a></section>`;
     return new Response(page({ title: "Sabor no encontrado · MANI-GANTE", description: "Ese sabor no existe.", path: "/404.html", image: "/assets/banners/og/editorial-1200x630.jpg", body, jsonld: [] }), { status: 404, headers: { "Content-Type": "text/html; charset=utf-8" } });
   }
 
@@ -40,22 +44,24 @@ export default async (req: Request, context: { params?: { id?: string } }) => {
   const body = `
   <nav class="crumbs" aria-label="Migas de pan"><a href="/">Inicio</a> / <a href="/#tienda">${esc(f.category)}</a> / <span aria-current="page">${esc(f.name)}</span></nav>
   <article class="flavor-page" style="--c:${f.color}">
-    <div class="flavor-art">${bag(f.color, f.line === "japones" ? "celofan" : "doypack", { label: `Bolsa de ${f.name}`, num: f.no })}<span class="card-no">Ficha Nº ${esc(f.no)}</span></div>
+    <div class="flavor-art">${bag(f.color, f.line === "japones" ? "celofan" : "doypack", { label: `Bolsa de ${f.name}`, num: f.no })}<span class="card-no">Ficha ${esc(f.no)}</span></div>
     <div class="flavor-info">
       <p class="eyebrow">${esc(f.line === "japones" ? "Maní japonés" : f.category)}${f.topVentas ? " · Más buscado" : ""}</p>
       <h1 class="h2">${esc(f.name)}</h1>
       ${f.alias ? `<p class="quick-alias">alias «${esc(f.alias)}»</p>` : ""}
       <p class="lead">${esc(f.notes)}</p>
-      <p class="quick-status${f.available ? "" : " out"}"><i></i>${f.available ? "Disponible esta semana" : "Agotado por ahora"}</p>
+      <p class="quick-status${f.available ? "" : " out"}"><i></i>${f.available ? (f.low ? "Últimas unidades" : "En circulación · disponible esta semana") : "Se acabó esta semana"}</p>
+      ${fromQr ? `<p class="qr-welcome">Escaneaste tu bolsa: esta es su ficha. Gracias por ser de la familia.</p>` : ""}
+      <div class="flavor-enjoy"><p class="eyebrow"><span>Tip de la casa</span></p><p>${esc(tipFor(f))}</p><p class="flavor-moments"><strong>Va bien con:</strong> ${momentsFor(f).map(esc).join(" · ")}</p></div>
       <ul class="flavor-prices">${formats.map((fm: any) => `<li><span>${esc(fm.name)}<small>${esc(fm.detail)}</small></span><strong>${formatCLP(unitPrice(f, fm.id))}</strong></li>`).join("")}</ul>
       <div class="flavor-ctas">
-        ${f.available ? `<a class="btn btn-gold btn-lg" href="/?pedido=${f.id}.1#reservar">Pedir cita con ${esc(f.name)}</a>` : `<a class="btn btn-gold btn-lg" href="/#tienda">Avísame cuando vuelva</a>`}
-        <a class="btn btn-wa btn-lg" href="${whatsappLink(`Hola MANI-GANTE, quiero ${f.name} 🥜`)}" target="_blank" rel="noopener">Pedir por WhatsApp</a>
+        ${f.available ? `<a class="btn btn-gold btn-lg" href="/?pedido=${f.id}.1#reservar">Agendar una cita con ${esc(f.name)}</a>` : `<a class="btn btn-gold btn-lg" href="/#tienda">Ver la Bolsa de hoy</a>`}
+        <a class="btn btn-wa btn-lg" href="${whatsappLink(`Hola MANI-GANTE, quiero ${f.name} 🥜`)}" target="_blank" rel="noopener">Cerrar el trato por WhatsApp</a>
       </div>
       <p class="allergen"><strong>Alérgenos:</strong> ${esc(ALLERGENS.note)}</p>
     </div>
   </article>
-  ${related.length ? `<section class="related"><h2 class="h3">Hace buena <em>pareja</em> con</h2><div class="related-grid">${related.map((r: any) => `<a class="related-card" href="/sabor/${r.id}" style="--c:${r.color}">${bag(r.color, "celofan", { label: "" })}<span>${esc(r.name)}</span></a>`).join("")}</div></section>` : ""}`;
+  ${related.length ? `<section class="related"><h2 class="h3">Va bien <em>con</em></h2><div class="related-grid">${related.map((r: any) => `<a class="related-card" href="/sabor/${r.id}" style="--c:${r.color}">${bag(r.color, "celofan", { label: "" })}<span>${esc(r.name)}</span></a>`).join("")}</div></section>` : ""}`;
 
   return new Response(page({ title: `${f.name} · Maní confitado artesanal | MANI-GANTE`, description: desc, path: `/sabor/${f.id}`, image: `/assets/og/${f.id}.jpg`, body, jsonld }), {
     headers: { "Content-Type": "text/html; charset=utf-8", "Cache-Control": "public, max-age=300", "Netlify-CDN-Cache-Control": "public, s-maxage=600, stale-while-revalidate=3600" },

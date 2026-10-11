@@ -1,5 +1,70 @@
 # Changelog · MANI-GANTE
 
+## v4.5 · Fluidez, glosario y experiencia completa (catálogo 2026.10.6)
+Diseño visual intacto: mismos colores, fuentes, tokens, ilustraciones y estructura de salas. Voz siempre en plural (la familia): los puntos del pedido que nombraban a una persona se resolvieron como "la casa".
+
+**Pedido directo**
+- Las 3 rayitas del menú quedan centradas (el botón no centraba su contenido).
+- El botón del Consigliere respira: más espacio entre título y subtítulo. Ahora dice "Habla con el Consigliere · El asistente de la casa · 24/7", siempre visible.
+
+**Bloque 1 · Flujo**
+1. La puerta sigue solo en la primera visita, pero ahora es un micro-ritual: se abre sola a los 4 s (antes, 8 s).
+2. y 8. El salón tiene un solo botón principal, "Ver la Bolsa de hoy" (oro). El secundario es "Descubre tu sabor" y el tercero, un enlace: "o agenda tu entrega en el campus".
+3. Navegación: La Receta · La Bolsa · El Maletín · La Cita · La Familia (también en el menú del celular, el pie y el índice de capítulos).
+4. El maletín siempre a la vista. En pantallas grandes la barra dice "Tu maletín · 3 bolsas · $3.000"; en el celular, la barra inferior muestra bolsas y cuenta.
+5. La Cita en un solo panel, en orden: día → hora → punto → maletín → pago → nombre → ticket → WhatsApp.
+6. Sincronización Maletín ↔ Cita: en el ticket de la cita se suma o se quita con +/−, y el maletín cambia al instante (y al revés).
+7. Estados de stock: "En circulación · disponible esta semana", "Últimas unidades" (cuando el inventario por lotes del panel dice que quedan 5 o menos) y "Se acabó esta semana", con "Avísame cuando vuelva".
+9. Fichas con progressive disclosure: ficha, nombre, estado y precio. El alias, las notas y el maridaje están en la vista rápida.
+10. La vista rápida permite sumar, cambiar formato, ver "Va bien con…", leer el tip de la casa, "Agendar una cita con este" y "Mi antojo de hoy".
+11. Cuando no estamos en el campus: "Deja tu pedido para cuando volvamos" y "Habla con el Consigliere", en la tarjeta del salón y en el aviso de ausencia.
+12. Al sumar: vuelo al maletín, toast corto con voz de la casa ("Maracuyá, al maletín. ¡Chévere!") y vibración breve.
+
+**Bloque 1 · Terminología**
+13. El Maletín (pedido) · La Cuenta (total) · El Ticket (reserva), en la web, el Consigliere y los mensajes de WhatsApp.
+14. "Pasar el interrogatorio" pasa a "Descubre tu sabor" / "El test de la casa".
+15. "Habla con el Consigliere" + "El asistente de la casa · 24/7".
+16. "Ficha 01 · Maracuyá": el alias solo en la vista rápida y en la página del sabor.
+17. Formatos consistentes: El Clásico ($1.000) y La Reserva ($1.500).
+18. "En circulación" con el apoyo "disponible esta semana".
+19. La Cita con subtítulo: "Reserva tu entrega en el campus" y "Agendar con la casa".
+20. Botones "Sumar al maletín" y "Cerrar el trato por WhatsApp".
+21. "La línea japonesa · Del otro lado de la familia".
+22. CTA final de la cita: "Enviar el ticket por WhatsApp".
+23. Live-pill: "Estamos en el campus" / "Volvemos el miércoles a las 08:00".
+24. "La letra chica" pasa a "Cómo funciona el trato".
+
+**Bloque 1 · Sistema**
+25. Glosario oficial: `GLOSSARY` en `js/catalog.mjs` (lo lee el Consigliere) y `docs/glosario.md`.
+26. Errores y vacíos con voz de la casa: maletín vacío, búsqueda sin resultados, sin señal, Mis pedidos vacío.
+27. y 34. Primera vez en la casa: a los 3 s, una invitación no bloqueante a un recorrido de 4 pasos (Bolsa → Maletín → Cita → Trato), que se puede saltar. Aparece una sola vez.
+28. El @mani_gant aparece en el ritual, en la tarjeta "Mi antojo de hoy" (con el 10 % por etiquetar) y en el cierre de los Reels.
+29. Jerarquía de botones: oro = comprar/reservar, verde = cerrar el trato, borde = explorar. El botón de cita de la tarjeta del salón pasó a oro.
+30. Analytics: `funnel_first_add` (ms hasta el primer "Sumar") y `funnel_whatsapp` (llegó a WhatsApp desde el maletín o la cita), además de `share_antojo`, `ritual_show`, `tour`, `feedback` y `qr_scan`.
+
+**Bloque 2 · Experiencia completa**
+31. y 40. Ritual post-pedido: después del sobre y el lacre aparece una tarjeta de marfil con el resumen, "Tu antojo ya va camino a la casa", el tip de disfrute del sabor y el cierre "Gracias por confiar en la receta de la familia. Que lo disfrutes. — La Familia". No bloquea la página.
+32. Unboxing digital: al abrir el maletín, la tapa se abre y los sabores salen uno a uno (sin movimiento con "reducir movimiento").
+33. Maridajes de campus por categoría ("Va bien con: el estudio nocturno, la once de la tarde…") en la vista rápida, en la página del sabor y en el Consigliere.
+35. Estado del ticket en vivo en Mis pedidos (Recibido → Preparando → Entregado), según lo que la casa marque en el panel. `GET /api/reserve?code&date` entrega solo el estado, sin datos personales.
+36. "Mi antojo de hoy": tarjeta 1080×1920 con la bolsa, la ficha, el alias y @mani_gant, lista para la Story (comparte nativo o descarga).
+37. "¿Cómo estuvo el [sabor]?": 24 h después de un pedido, 3 reacciones rápidas. La respuesta le llega a la casa como evento `feedback` en el panel.
+38. Ediciones de la semana: insignia "Edición de la semana" + "Solo esta semana · cuando se acabe, se acabó". Se activa poniendo el id en `WEEKLY_EDITION` (`js/catalog.mjs`). Viene vacío para no anunciar algo que no es cierto.
+39. Puente físico-digital: `npm run qr` genera `design/qr/etiquetas-qr.html`, una hoja A4 con 33 etiquetas QR. Cada QR abre la ficha del sabor (`/sabor/:id?qr=1`) con bienvenida, tip de la casa y "Va bien con".
+
+**Bloque 3 · Rendimiento y nitidez**
+- **Capas compuestas:** de 323 a 100. El 3D de la inclinación de las fichas solo se activa con el puntero encima; antes creaba una capa por cada pieza de cada ficha, también en el celular.
+- **Animaciones infinitas** (brillos dorados, pulsos, rosetas): se pausan cuando su sala sale de la pantalla.
+- **Medición con CPU 4× más lenta** en celular, en las mismas condiciones que v4.4.5:
+  - mediana de cuadro: 16,7 ms (antes, 33 ms);
+  - tirones: ~24 (antes, ~38);
+  - repintado y armado de capas: −40 %.
+- **Fotos con `srcset` (800w/1600w) y `sizes`:** retina y 4K reciben las de 1600 px y las pantallas chicas las de 800 px. Las bolsas son vectoriales y se ven nítidas a cualquier tamaño.
+- **CLS:** 0 en celular y ≤ 0,08 en tablet/escritorio. La tarjeta "Parte del día" reserva su alto mientras carga.
+- **Táctil:** todos los controles miden ≥ 44 px; solo quedan los enlaces dentro de una frase, que son una excepción válida.
+- **Pantallas revisadas:** 375, 390, 414, 768, 1024, 1280×720 (720p), 1440, 1920 y 4K, sin scroll horizontal.
+- 70 pruebas Playwright + axe WCAG 2.2 AA. Service worker `mg-v4.5-2026.10.6`.
+
 ## v4.4.5 · Adorno centrado
 - El adorno de rombos bajo el título de cada sección va centrado en todas las salas, y su animación crece desde el centro.
 

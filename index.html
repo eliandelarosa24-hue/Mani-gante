@@ -1010,7 +1010,7 @@
 </script>
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
 <div class="promo-ribbon" id="promoRibbon" role="status" hidden></div>
-<div class="away-banner" id="awayBanner" role="status" hidden><svg><use href="#i-pin"/></svg><span id="awayText"></span></div>
+<div class="away-banner" id="awayBanner" role="status" hidden><svg><use href="#i-pin"/></svg><span id="awayText"></span><a class="away-act" href="#reservar">Deja tu pedido</a><button type="button" class="away-act" data-open-agent>Consigliere</button></div>
 
 <!-- ===================== LA PUERTA (primera visita) ===================== -->
 <div class="door" id="door" role="dialog" aria-modal="true" aria-labelledby="doorTitle">
@@ -1033,35 +1033,35 @@
       <span class="brand-name">MANI<span>-</span>GANTE</span>
     </a>
     <nav class="nav-links" aria-label="Principal">
-      <a href="#oficio">La receta</a>
-      <a href="#tienda">Los más buscados</a>
-      <a href="#caja">El maletín</a>
-      <a href="#reservar">La cita</a>
-      <a href="#historia">La familia</a>
+      <a href="#oficio">La Receta</a>
+      <a href="#tienda">La Bolsa</a>
+      <a href="#caja">El Maletín</a>
+      <a href="#reservar">La Cita</a>
+      <a href="#historia">La Familia</a>
     </nav>
     <div class="nav-tools">
       <span class="live-pill" id="livePill" data-open="false"><i></i><span>Comprobando…</span></span>
       <button class="icon-btn lang-btn" id="langToggle" type="button" aria-label="Switch to English" lang="en">EN</button>
       <button class="icon-btn" id="themeToggle" type="button" aria-label="Cambiar tema"><svg><use href="#i-moon"/></svg></button>
       <button class="icon-btn" id="historyOpen" type="button" aria-label="Mis pedidos" data-i18n-label="nav.history"><svg><use href="#i-receipt"/></svg></button>
-      <button class="icon-btn cart-btn" id="cartOpen" type="button" aria-label="Abrir la cuenta de la casa">
-        <svg><use href="#i-bag"/></svg><b class="cart-count" id="cartCount" hidden>0</b>
+      <button class="icon-btn cart-btn" id="cartOpen" type="button" aria-label="Abrir tu maletín">
+        <svg><use href="#i-bag"/></svg><b class="cart-count" id="cartCount" hidden>0</b><span class="cart-label" id="cartLabel" hidden></span>
       </button>
       <button class="icon-btn menu-btn" id="menuBtn" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
     </div>
   </div>
   <div class="mobile-menu" id="mobileMenu">
-    <a href="#oficio"><small>I</small>La receta</a>
-    <a href="#tienda"><small>II</small>Los más buscados</a>
-    <a href="#caja"><small>III</small>El maletín</a>
-    <a href="#reservar"><small>IV</small>La cita</a>
-    <a href="#historia"><small>V</small>La familia</a>
-    <a href="#pago"><small>VII</small>El trato</a>
+    <a href="#oficio"><small>I</small>La Receta</a>
+    <a href="#tienda"><small>II</small>La Bolsa</a>
+    <a href="#caja"><small>III</small>El Maletín</a>
+    <a href="#reservar"><small>IV</small>La Cita</a>
+    <a href="#historia"><small>V</small>La Familia</a>
+    <a href="#pago"><small>VII</small>El Trato</a>
     <div class="mobile-menu-row">
       <button class="btn btn-ghost" type="button" data-action="history"><svg><use href="#i-receipt"/></svg> Mis pedidos</button>
       <button class="btn btn-ghost" type="button" data-action="lang" lang="en">English</button>
     </div>
-    <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Hablar con el consigliere</button>
+    <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Habla con el Consigliere</button>
   </div>
 </header>
 
@@ -1079,10 +1079,10 @@
       </h1>
       <p class="hero-lead reveal">Maní confitado a mano, en lotes chicos y con receta de la casa. 28 sabores con ficha y alias, una línea japonesa y un trato que se cierra por WhatsApp, directo en el campus INACAP.</p>
       <div class="hero-cta reveal">
-        <a class="btn btn-gold btn-lg" href="#tienda"><span data-i18n="hero.shop">Ver a los más buscados</span> <svg><use href="#i-arrow"/></svg></a>
-        <button class="btn btn-glass btn-lg" type="button" data-open-quiz><svg><use href="#i-compass"/></svg> <span data-i18n="hero.quiz">Pasar el interrogatorio</span></button>
+        <a class="btn btn-gold btn-lg" href="#tienda"><span data-i18n="hero.shop">Ver la Bolsa de hoy</span> <svg><use href="#i-arrow"/></svg></a>
+        <button class="btn btn-glass btn-lg" type="button" data-open-quiz><svg><use href="#i-compass"/></svg> <span data-i18n="hero.quiz">Descubre tu sabor</span></button>
       </div>
-      <a class="hero-link reveal" href="#reservar"><span data-i18n="hero.reserve">o pide tu cita</span> <svg><use href="#i-arrow"/></svg></a>
+      <a class="hero-link reveal" href="#reservar"><span data-i18n="hero.reserve">o agenda tu entrega en el campus</span> <svg><use href="#i-arrow"/></svg></a>
       <dl class="hero-stats reveal">
         <div><dt id="statAvailable">28</dt><dd>en circulación</dd></div>
         <div><dt>$1.000</dt><dd>la bolsa</dd></div>
@@ -1105,9 +1105,10 @@
         </div>
       </div>
       <p class="countdown" id="heroCountdown" aria-live="off" hidden></p>
+      <p class="hero-away" id="heroAway" hidden></p>
       <div class="again" id="heroAgain" hidden></div>
       <div class="hero-card-flavors" id="heroTop"></div>
-      <a class="btn btn-block" href="#reservar"><svg><use href="#i-cal"/></svg> Pedir una cita</a>
+      <a class="btn btn-gold btn-block" href="#reservar"><svg><use href="#i-cal"/></svg> Agendar con la casa</a>
     </aside>
     </div>
   </div>
@@ -1131,10 +1132,10 @@
     </header>
     <div class="craft-grid">
       <div class="craft-media" aria-hidden="true">
-        <figure class="craft-frame is-active" data-step="0"><img decoding="async" src="./assets/img/n7-800.webp" alt="" loading="lazy" width="800" height="1067"></figure>
-        <figure class="craft-frame" data-step="1"><img decoding="async" src="./assets/img/n3-800.webp" alt="" loading="lazy" width="800" height="800"></figure>
-        <figure class="craft-frame" data-step="2"><img decoding="async" src="./assets/img/n2-800.webp" alt="" loading="lazy" width="800" height="800"></figure>
-        <figure class="craft-frame" data-step="3"><img decoding="async" src="./assets/img/n4-800.webp" alt="" loading="lazy" width="800" height="800"></figure>
+        <figure class="craft-frame is-active" data-step="0"><img decoding="async" src="./assets/img/n7-800.webp" srcset="./assets/img/n7-800.webp 800w, ./assets/img/n7-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 600px" alt="" loading="lazy" width="800" height="1067"></figure>
+        <figure class="craft-frame" data-step="1"><img decoding="async" src="./assets/img/n3-800.webp" srcset="./assets/img/n3-800.webp 800w, ./assets/img/n3-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 600px" alt="" loading="lazy" width="800" height="800"></figure>
+        <figure class="craft-frame" data-step="2"><img decoding="async" src="./assets/img/n2-800.webp" srcset="./assets/img/n2-800.webp 800w, ./assets/img/n2-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 600px" alt="" loading="lazy" width="800" height="800"></figure>
+        <figure class="craft-frame" data-step="3"><img decoding="async" src="./assets/img/n4-800.webp" srcset="./assets/img/n4-800.webp 800w, ./assets/img/n4-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 600px" alt="" loading="lazy" width="800" height="800"></figure>
         <span class="confidential">Confidencial</span>
         <div class="craft-counter"><b id="craftNum">01</b><span>/ 04</span></div>
       </div>
@@ -1172,14 +1173,14 @@
   <div class="container">
     <header class="shop-head">
       <div>
-        <p class="eyebrow"><span>Cap. II</span><span>Stock en vivo</span></p>
+        <p class="eyebrow"><span>Cap. II</span><span>La Bolsa de hoy · stock en vivo</span></p>
         <h2 class="h2" id="shopTitle">Los más <em>buscados</em></h2>
         <p class="lead">Cada sabor tiene su ficha, su número y su alias. Todos confitados esta semana.</p>
       </div>
       <div class="finders">
       <button class="finder" type="button" data-open-quiz>
         <span class="finder-icon"><svg><use href="#i-compass"/></svg></span>
-        <span><strong>¿No sabes cuál?</strong><small>Pasa el interrogatorio: 4 preguntas</small></span>
+        <span><strong>¿No sabes cuál?</strong><small>El test de la casa: 4 preguntas</small></span>
         <svg class="finder-arrow"><use href="#i-arrow"/></svg>
       </button>
       <button class="finder finder-slot" type="button" data-open-ruleta>
@@ -1216,9 +1217,9 @@
     <div class="japanese room">
       <div class="japanese-head">
         <div>
-          <p class="eyebrow"><span>Socios</span><span>Del otro lado de la familia</span></p>
+          <p class="eyebrow"><span>La línea japonesa</span><span>Del otro lado de la familia</span></p>
           <h3 class="h3">Maní <em>japonés</em></h3>
-          <p class="muted">Crocante y salado, para los que no son de dulce. Entra a la misma cuenta.</p>
+          <p class="muted">Crocante y salado, para los que no son de dulce. Entra al mismo maletín.</p>
         </div>
       </div>
       <div class="grid grid-sm" id="gridJp"></div>
@@ -1243,7 +1244,7 @@
           <div><small>Tu maletín</small><strong id="boxTotal">$0</strong><span id="boxCount">0 / 6</span></div>
           <div class="box-actions">
             <button class="btn btn-ghost-dark" type="button" id="boxShuffle"><svg><use href="#i-shuffle"/></svg> Sorpréndeme</button>
-            <button class="btn btn-gold" type="button" id="boxAdd" disabled><svg><use href="#i-bag"/></svg> Agregar maletín</button>
+            <button class="btn btn-gold" type="button" id="boxAdd" disabled><svg><use href="#i-bag"/></svg> Sumar al maletín</button>
           </div>
         </div>
       </div>
@@ -1260,7 +1261,7 @@
   <div class="container reserve-grid">
     <div class="reserve-copy">
       <header class="section-head">
-        <p class="eyebrow"><span>Cap. IV</span><span>Reserva inteligente</span></p>
+        <p class="eyebrow"><span>Cap. IV</span><span>Reserva tu entrega en el campus</span></p>
         <h2 class="h2" id="reserveTitle">Pide tu cita <em>con la casa</em></h2>
         <p class="lead">Hasta 4 días de anticipación. Miércoles y jueves recorremos el campus; <strong>martes y viernes solo entregamos reservas</strong> (no llevamos maní para venta suelta), así que esos días tu cita es la vía. Reservar se puede siempre. El stock se valida en vivo y el WhatsApp queda listo para enviar.</p>
       </header>
@@ -1281,10 +1282,6 @@
           <small id="rfLive" aria-live="polite">Cita · INACAP Temuco</small>
         </div>
         <div class="rc-section">
-          <div class="rc-label"><span>Tu pedido</span><button type="button" class="link" id="rfEditCart">Editar</button></div>
-          <div class="rc-items" id="rfItems"></div>
-        </div>
-        <div class="rc-section">
           <div class="rc-label"><span>Día</span></div>
           <div class="day-picker" id="rfDays" role="radiogroup" aria-label="Día de la cita"></div>
         </div>
@@ -1296,6 +1293,10 @@
         <div class="rc-section">
           <div class="rc-label"><span>Punto de encuentro</span></div>
           <div class="point-picker" id="rfPoints" role="radiogroup" aria-label="Punto de encuentro"></div>
+        </div>
+        <div class="rc-section">
+          <div class="rc-label"><span>Tu maletín · se sincroniza solo</span><button type="button" class="link" id="rfEditCart">Abrir maletín</button></div>
+          <div class="rc-items" id="rfItems"></div>
         </div>
         <div class="rc-section">
           <div class="rc-label"><span>¿Cómo vas a pagar?</span></div>
@@ -1311,7 +1312,7 @@
       <div class="ticket-stub">
         <span class="wax" aria-hidden="true" data-monogram></span>
         <div><small>Total</small><strong id="rfTotal">$0</strong></div>
-        <button class="btn btn-wa btn-lg" type="submit" id="rfSubmit"><svg><use href="#i-wa"/></svg><span>Reservar por WhatsApp</span></button>
+        <button class="btn btn-wa btn-lg" type="submit" id="rfSubmit"><svg><use href="#i-wa"/></svg><span>Enviar el ticket por WhatsApp</span></button>
       </div>
     </form>
   </div>
@@ -1326,8 +1327,8 @@
     </div>
     <div class="story-grid">
       <div class="story-photos" aria-hidden="true">
-        <figure class="polaroid p1"><img decoding="async" src="./assets/img/n5-800.webp" alt="" loading="lazy" width="800" height="800"><figcaption>La mesa de los viernes</figcaption></figure>
-        <figure class="polaroid p2"><img decoding="async" src="./assets/img/n8-800.webp" alt="" loading="lazy" width="800" height="1422"><figcaption>Noche de bar</figcaption></figure>
+        <figure class="polaroid p1"><img decoding="async" src="./assets/img/n5-800.webp" srcset="./assets/img/n5-800.webp 800w, ./assets/img/n5-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 600px" alt="" loading="lazy" width="800" height="800"><figcaption>La mesa de los viernes</figcaption></figure>
+        <figure class="polaroid p2"><img decoding="async" src="./assets/img/n8-800.webp" srcset="./assets/img/n8-800.webp 800w, ./assets/img/n8-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 600px" alt="" loading="lazy" width="800" height="1422"><figcaption>Noche de bar</figcaption></figure>
         <div class="story-stamp" data-stamp="HECHO EN TEMUCO · RECETA DE LA CASA · "></div>
       </div>
       <article class="letter">
@@ -1416,11 +1417,11 @@
   <div class="container faq-grid">
     <div class="faq-aside">
       <header class="section-head">
-        <p class="eyebrow"><span>Cap. VIII</span><span>La letra chica</span></p>
+        <p class="eyebrow"><span>Cap. VIII</span><span>Cómo funciona el trato</span></p>
         <h2 class="h2" id="faqTitle">Antes de que <em>preguntes</em></h2>
         <p class="lead">¿No está tu duda? El consigliere responde al instante, a cualquier hora.</p>
       </header>
-      <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Consultar al consigliere</button>
+      <button class="btn btn-gold" type="button" data-open-agent><svg><use href="#i-spark"/></svg> Habla con el Consigliere</button>
     </div>
     <div>
       <div class="faq-list" id="faqList"></div>
@@ -1474,7 +1475,7 @@
     <div class="footer-cta">
       <h2 class="h2">La casa <em>te espera.</em></h2>
       <div class="footer-actions">
-        <a class="btn btn-gold btn-lg" href="#tienda">Ver a los más buscados</a>
+        <a class="btn btn-gold btn-lg" href="#tienda">Ver la Bolsa de hoy</a>
         <a class="btn btn-wa btn-lg" data-wa href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg> WhatsApp</a>
       </div>
     </div>
@@ -1483,8 +1484,8 @@
         <div class="brand"><img src="./assets/img/icon-192.png" alt="" width="44" height="44"><span class="brand-name">MANI<span>-</span>GANTE</span></div>
         <p class="hand footer-hand">Para gente elegante y gánster.</p>
       </div>
-      <nav aria-label="Pie de página"><strong>La casa</strong><a href="#tienda">Los más buscados</a><a href="#caja">El maletín</a><a href="#reservar">La cita</a><a href="#pago">El trato</a></nav>
-      <nav aria-label="Ayuda"><strong>Ayuda</strong><a href="#faq">La letra chica</a><button type="button" data-open-agent>El consigliere (IA)</button><a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a><span id="footVentures"></span></nav>
+      <nav aria-label="Pie de página"><strong>La casa</strong><a href="#tienda">La Bolsa</a><a href="#caja">El Maletín</a><a href="#reservar">La Cita</a><a href="#pago">El Trato</a></nav>
+      <nav aria-label="Ayuda"><strong>Ayuda</strong><a href="#faq">Cómo funciona el trato</a><button type="button" data-open-agent>El Consigliere · 24/7</button><a data-wa href="#" target="_blank" rel="noopener">WhatsApp</a><span id="footVentures"></span></nav>
       <div class="socials-col"><strong>Síguenos</strong>
         <div class="socials">
           <a href="https://www.instagram.com/mani_gant" target="_blank" rel="noopener" aria-label="Instagram"><svg><use href="#i-ig"/></svg></a>
@@ -1500,25 +1501,25 @@
 
 <!-- ===================== BOLETA (CARRITO) ===================== -->
 <div class="scrim" id="scrim" hidden></div>
-<aside class="drawer paper-room" id="cart" aria-label="La cuenta de la casa" aria-hidden="true">
+<aside class="drawer paper-room" id="cart" aria-label="Tu maletín" aria-hidden="true">
   <header class="drawer-head">
-    <div><p class="receipt-title">La cuenta de la casa</p><small id="cartSub">0 bolsas</small></div>
+    <div><p class="receipt-title">Tu maletín</p><small id="cartSub">0 bolsas</small></div>
     <button class="icon-btn" type="button" data-close-cart aria-label="Cerrar"><svg><use href="#i-close"/></svg></button>
   </header>
   <div class="drawer-promo" id="cartPromo" hidden></div>
   <div class="drawer-body" id="cartItems"></div>
   <footer class="drawer-foot" id="cartFoot">
     <div class="pay-pick" id="cartPay" role="radiogroup" aria-label="Medio de pago"></div>
-    <div class="total-row"><span>Total</span><strong id="cartTotal">$0</strong></div>
-    <a class="btn btn-gold btn-block" href="#reservar" id="cartReserve"><svg><use href="#i-cal"/></svg> Pedir cita: día y hora</a>
-    <a class="btn btn-wa btn-block" id="cartWa" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg> Pedir ahora por WhatsApp</a>
-    <div class="drawer-links"><button class="link" type="button" id="cartShare"><svg><use href="#i-arrow"/></svg> Guardar o compartir mi pedido</button><button class="link" type="button" id="cartClear">Vaciar la cuenta</button></div>
+    <div class="total-row"><span>La cuenta</span><strong id="cartTotal">$0</strong></div>
+    <a class="btn btn-gold btn-block" href="#reservar" id="cartReserve"><svg><use href="#i-cal"/></svg> Agendar la entrega · día y hora</a>
+    <a class="btn btn-wa btn-block" id="cartWa" href="#" target="_blank" rel="noopener"><svg><use href="#i-wa"/></svg> Cerrar el trato por WhatsApp</a>
+    <div class="drawer-links"><button class="link" type="button" id="cartShare"><svg><use href="#i-arrow"/></svg> Guardar o compartir mi maletín</button><button class="link" type="button" id="cartClear">Vaciar el maletín</button></div>
   </footer>
 </aside>
 
 <div class="dock" id="dock" hidden>
   <button type="button" id="dockCart"><svg><use href="#i-bag"/></svg><b id="dockCount">0</b> · <strong id="dockTotal">$0</strong></button>
-  <a class="btn btn-gold" href="#reservar">Cita</a>
+  <a class="btn btn-gold" href="#reservar">La Cita</a>
 </div>
 
 <!-- ===================== VISTA RÁPIDA ===================== -->
@@ -1532,7 +1533,7 @@
   <div class="quick-grid">
     <div class="quick-media">
       <div class="quick-art" id="qvArt"></div>
-      <figure class="quick-photo" id="qvPhoto" hidden><img decoding="async" src="./assets/img/n2-800.webp" alt="Bolsa real de MANI-GANTE con su etiqueta" loading="lazy" width="800" height="800"><figcaption>Así se ve en persona</figcaption></figure>
+      <figure class="quick-photo" id="qvPhoto" hidden><img decoding="async" src="./assets/img/n2-800.webp" srcset="./assets/img/n2-800.webp 800w, ./assets/img/n2-1600.webp 1600w" sizes="(max-width: 760px) 92vw, 600px" alt="Bolsa real de MANI-GANTE con su etiqueta" loading="lazy" width="800" height="800"><figcaption>Así se ve en persona</figcaption></figure>
       <div class="media-toggle" role="tablist" aria-label="Vista">
         <button type="button" role="tab" aria-selected="true" data-media="art">Ilustración</button>
         <button type="button" role="tab" aria-selected="false" data-media="photo">Foto real</button>
@@ -1543,16 +1544,18 @@
       <h2 class="h3" id="qvName">Sabor</h2>
       <p class="quick-alias" id="qvAlias"></p>
       <p class="quick-notes" id="qvNotes"></p>
+      <div class="quick-moments" id="qvMoments"></div>
       <div class="quick-status" id="qvStatus"></div>
       <div class="formats small" role="radiogroup" aria-label="Formato" id="qvFormats"></div>
       <div class="quick-buy">
         <div class="stepper big"><button type="button" id="qvMinus" aria-label="Menos"><svg><use href="#i-minus"/></svg></button><output id="qvQty">1</output><button type="button" id="qvPlus" aria-label="Más"><svg><use href="#i-plus"/></svg></button></div>
-        <button class="btn btn-gold btn-lg" type="button" id="qvAdd">Agregar · <span id="qvPrice">$1.000</span></button>
+        <button class="btn btn-gold btn-lg" type="button" id="qvAdd">Sumar al maletín · <span id="qvPrice">$1.000</span></button>
       </div>
       <div class="quick-ctas">
-        <button class="btn btn-ghost" type="button" id="qvReserve"><svg><use href="#i-cal"/></svg> Pedir cita con este</button>
+        <button class="btn btn-ghost" type="button" id="qvReserve"><svg><use href="#i-cal"/></svg> Agendar una cita con este</button>
         <button class="btn btn-ghost" type="button" id="qvAsk"><svg><use href="#i-spark"/></svg> Consultar al consigliere</button>
         <button class="btn btn-ghost" type="button" id="qvShare"><svg><use href="#i-arrow"/></svg> Mándaselo a tu pana</button>
+        <button class="btn btn-ghost" type="button" id="qvStory"><svg><use href="#i-download"/></svg> Mi antojo de hoy (para tu Story)</button>
       </div>
       <div class="quick-pair"><p class="rc-label"><span>Hace buena pareja con</span></p><div id="qvPair" class="pair-row"></div></div>
       <p class="allergen" id="qvAllergen"></p>
@@ -1590,7 +1593,7 @@
     </div>
     <div class="ruleta-result" id="ruletaResult" aria-live="polite"></div>
     <div class="ruleta-actions">
-      <button class="btn btn-gold btn-lg" type="button" id="ruletaAdd" disabled><svg><use href="#i-bag"/></svg> Agregar</button>
+      <button class="btn btn-gold btn-lg" type="button" id="ruletaAdd" disabled><svg><use href="#i-bag"/></svg> Sumar al maletín</button>
       <button class="btn btn-ghost" type="button" id="ruletaSpin"><svg><use href="#i-shuffle"/></svg> Tirar otra vez</button>
     </div>
   </div>
@@ -1615,7 +1618,7 @@
 <!-- ===================== AGENTE IA ===================== -->
 <button class="agent-fab" id="agentFab" type="button" aria-label="Abrir asistente" aria-expanded="false">
   <span class="agent-fab-avatar"><img src="./assets/img/icon-192.png" alt=""></span>
-  <span class="agent-fab-text"><strong>El Gigante</strong><small>Tu consigliere · IA</small></span>
+  <span class="agent-fab-text"><strong>Habla con el Consigliere</strong><small>El asistente de la casa · 24/7</small></span>
 </button>
 <section class="agent" id="agent" aria-label="El Gigante, consigliere de la casa" aria-hidden="true">
   <header class="agent-head">
