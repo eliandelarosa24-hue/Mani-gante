@@ -1,5 +1,6 @@
 // Domos Cielo Austral · comportamiento a medida
 import './style.css';
+import { initTrace } from './trace.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -100,7 +101,8 @@ emChars.forEach((c, i) => (c.style.backgroundPosition = `${(i / Math.max(1, emCh
 /* ───────────── Cielo vivo en canvas ───────────── */
 const sky = $('.sky');
 const ctx = sky.getContext('2d');
-let W = 0, H = 0, DPR = 1, stars = [], band = [], shooting = null, mouse = { x: 0, y: 0, tx: 0, ty: 0 }, running = true;
+let W = 0, H = 0, DPR = 1, stars = [], band = [], shooting = null, mouse = { x: 0, y: 0, tx: 0, ty: 0 }, running = true, waves = [];
+const cursor = { x: -999, y: -999, on: false };
 function seedSky() {
   DPR = Math.min(devicePixelRatio || 1, 1.5);
   W = innerWidth; H = innerHeight;
@@ -109,7 +111,7 @@ function seedSky() {
   const count = Math.min(900, Math.round((W * H) / 2300));
   stars = Array.from({ length: count }, () => {
     const z = Math.random();
-    return { x: Math.random() * W, y: Math.random() * H, r: 0.3 + z * 1.3, z, a: 0.35 + Math.random() * 0.65, p: Math.random() * Math.PI * 2, s: 0.4 + Math.random() * 1.6, hue: Math.random() < 0.12 ? (Math.random() < 0.5 ? '200,220,255' : '255,214,170') : '255,255,255' };
+    return { x: Math.random() * W, y: Math.random() * H, ox: 0, oy: 0, vx: 0, vy: 0, r: 0.3 + z * 1.3, z, a: 0.35 + Math.random() * 0.65, p: Math.random() * Math.PI * 2, s: 0.4 + Math.random() * 1.6, hue: Math.random() < 0.12 ? (Math.random() < 0.5 ? '200,220,255' : '255,214,170') : '255,255,255' };
   });
   // Banda de la Vía Láctea: estrellas tenues a lo largo de una diagonal
   band = Array.from({ length: Math.round(count * 0.9) }, () => {
@@ -127,15 +129,49 @@ function drawSky(time) {
     ctx.fillStyle = `rgba(210,200,255,${b.a})`;
     ctx.fillRect(b.x + mouse.x * 6, ((b.y - scrollShift * 0.5) % H + H) % H, b.r, b.r);
   }
+  const near = [];
   for (const s of stars) {
     const tw = reduced ? 1 : 0.65 + 0.35 * Math.sin(time * 0.001 * s.s + s.p);
-    const x = s.x + mouse.x * (6 + s.z * 22);
-    const y = ((s.y + mouse.y * (6 + s.z * 22) - scrollShift * (0.4 + s.z)) % H + H) % H;
+    const bx = s.x + mouse.x * (6 + s.z * 22);
+    const by = ((s.y + mouse.y * (6 + s.z * 22) - scrollShift * (0.4 + s.z)) % H + H) % H;
+    // Las estrellas se apartan del cursor como polvo estelar y vuelven a su lugar con un resorte suave.
+    if (cursor.on && !reduced) {
+      const dx = bx + s.ox - cursor.x, dy = by + s.oy - cursor.y, d2 = dx * dx + dy * dy;
+      if (d2 < 150 * 150) {
+        const d = Math.sqrt(d2) || 1, f = (1 - d / 150) * (2.2 + s.z * 3);
+        s.vx += (dx / d) * f; s.vy += (dy / d) * f;
+        if (s.r > 0.9 && d < 170) near.push([bx + s.ox, by + s.oy, d]);
+      }
+    }
+    s.vx = (s.vx - s.ox * 0.035) * 0.86; s.vy = (s.vy - s.oy * 0.035) * 0.86;
+    s.ox += s.vx; s.oy += s.vy;
+    const x = bx + s.ox, y = by + s.oy;
+    s.px = x; s.py = y;
+    const lit = Math.min(1, Math.hypot(s.ox, s.oy) / 30);
     ctx.beginPath();
     ctx.fillStyle = `rgba(${s.hue},${s.a * tw})`;
     ctx.arc(x, y, s.r, 0, Math.PI * 2);
     ctx.fill();
-    if (s.r > 1.25) { ctx.fillStyle = `rgba(${s.hue},${0.08 * tw})`; ctx.beginPath(); ctx.arc(x, y, s.r * 4, 0, Math.PI * 2); ctx.fill(); }
+    if (s.r > 1.25 || lit > 0.2) { ctx.fillStyle = `rgba(${lit > 0.2 ? '185,162,255' : s.hue},${0.08 * tw + lit * 0.12})`; ctx.beginPath(); ctx.arc(x, y, s.r * (4 + lit * 1.5), 0, Math.PI * 2); ctx.fill(); }
+  }
+  // Hilos de constelación entre el cursor y las estrellas más cercanas
+  if (near.length) {
+    near.sort((a, b) => a[2] - b[2]);
+    const pts = near.slice(0, 5);
+    ctx.lineWidth = 0.8;
+    pts.forEach(([x, y, d], i) => {
+      ctx.strokeStyle = `rgba(185,162,255,${0.5 * (1 - d / 170)})`;
+      ctx.beginPath(); ctx.moveTo(cursor.x, cursor.y); ctx.lineTo(x, y); ctx.stroke();
+      if (i) { const [px, py] = pts[i - 1]; ctx.strokeStyle = `rgba(143,227,255,${0.22 * (1 - d / 170)})`; ctx.beginPath(); ctx.moveTo(px, py); ctx.lineTo(x, y); ctx.stroke(); }
+    });
+    ctx.fillStyle = 'rgba(233,236,247,.9)'; ctx.beginPath(); ctx.arc(cursor.x, cursor.y, 1.6, 0, Math.PI * 2); ctx.fill();
+  }
+  // Ondas de choque al hacer clic
+  waves = waves.filter((w) => w.r < 420);
+  for (const w of waves) {
+    w.r += 9;
+    ctx.strokeStyle = `rgba(185,162,255,${0.35 * (1 - w.r / 420)})`; ctx.lineWidth = 1.2;
+    ctx.beginPath(); ctx.arc(w.x, w.y, w.r, 0, Math.PI * 2); ctx.stroke();
   }
   // Estrella fugaz ocasional
   if (!reduced) {
@@ -155,7 +191,21 @@ function drawSky(time) {
 function loop(t) { if (!running) return; drawSky(t); requestAnimationFrame(loop); }
 seedSky();
 addEventListener('resize', () => { seedSky(); if (reduced) drawSky(0); });
-addEventListener('pointermove', (e) => { mouse.tx = e.clientX / W - 0.5; mouse.ty = e.clientY / H - 0.5; }, { passive: true });
+addEventListener('pointermove', (e) => {
+  mouse.tx = e.clientX / W - 0.5; mouse.ty = e.clientY / H - 0.5;
+  cursor.x = e.clientX; cursor.y = e.clientY; cursor.on = e.pointerType === 'mouse';
+}, { passive: true });
+document.addEventListener('pointerleave', () => (cursor.on = false));
+// Un clic en el cielo (fuera de botones y formularios) dispara una onda y una estrella fugaz.
+addEventListener('pointerdown', (e) => {
+  if (reduced || e.target.closest('a, button, input, select, textarea, label, canvas[data-trace-canvas], .tonight, .lightbox')) return;
+  waves.push({ x: e.clientX, y: e.clientY, r: 0 });
+  for (const s of stars) {
+    const dx = (s.px ?? s.x) - e.clientX, dy = (s.py ?? s.y) - e.clientY, d = Math.hypot(dx, dy);
+    if (d < 260) { s.vx += (dx / (d || 1)) * (260 - d) * 0.09; s.vy += (dy / (d || 1)) * (260 - d) * 0.09; }
+  }
+  if (!shooting) shooting = { x: e.clientX + 120, y: e.clientY - 60, life: 0 };
+}, { passive: true });
 document.addEventListener('visibilitychange', () => { running = !document.hidden && !reduced; if (running) requestAnimationFrame(loop); });
 if (reduced) drawSky(0); else requestAnimationFrame(loop);
 
@@ -252,6 +302,8 @@ const stepIO = new IntersectionObserver((entries) => {
 }, { rootMargin: '-45% 0px -45% 0px' });
 steps.forEach((s) => stepIO.observe(s));
 showConstel('cruz');
+
+initTrace({ reduced });
 
 /* ───────────── Calendario cósmico (calculado) ───────────── */
 const SHOWERS = [

@@ -342,3 +342,37 @@ em { font-family: var(--serif); font-style: italic; font-weight: 400; }
   .rv, .hero__inner > *, .tonight, .hero__title .ch { opacity: 1 !important; transform: none !important; filter: none !important; }
   .loader { display: none; }
 }
+
+/* Planetario interactivo */
+.trace__ui { display: grid; grid-template-columns: minmax(280px, 380px) 1fr; gap: 28px; align-items: stretch; }
+.trace__panel { display: flex; flex-direction: column; gap: 18px; padding: 28px; border-radius: 24px; background: rgba(12,13,32,0.6); box-shadow: inset 0 0 0 1px rgba(185,162,255,0.18); backdrop-filter: blur(10px); }
+.trace__tabs { display: grid; grid-template-columns: 1fr 1fr; padding: 4px; border-radius: 999px; background: rgba(255,255,255,0.05); }
+.trace__tabs button { min-height: 42px; border: 0; border-radius: 999px; background: none; color: var(--muted); font: 600 14px var(--body); cursor: pointer; transition: background 0.3s, color 0.3s; }
+.trace__tabs [aria-selected="true"] { background: var(--violet); color: var(--night); }
+.trace__hint { margin: 0; font-size: 14px; color: var(--muted); }
+.trace__chips { display: flex; flex-direction: column; gap: 8px; }
+.trace__chips button { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; padding: 14px 16px; border: 0; border-radius: 14px; background: rgba(255,255,255,0.04); box-shadow: inset 0 0 0 1px rgba(233,236,247,0.12); color: var(--ink); font: 600 15px var(--body); text-align: left; cursor: pointer; transition: box-shadow 0.3s, background 0.3s; }
+.trace__chips button small { font-weight: 400; font-size: 12px; color: var(--muted); }
+.trace__chips button:hover { box-shadow: inset 0 0 0 1px rgba(185,162,255,0.5); }
+.trace__chips button.is-on { background: rgba(185,162,255,0.14); box-shadow: inset 0 0 0 1px var(--violet); }
+.trace__chips .hint { justify-content: center; background: none; box-shadow: none; color: var(--cyan); font-size: 13px; padding: 6px; }
+.trace__progress { height: 4px; border-radius: 4px; background: rgba(255,255,255,0.08); overflow: hidden; }
+.trace__progress span { display: block; height: 100%; width: 0; background: linear-gradient(90deg, var(--violet), var(--cyan)); transition: width 0.6s var(--ease); }
+.trace__status, .trace__count { margin: 0; font-size: 14px; color: var(--ink); }
+.trace__story { padding: 18px; border-radius: 16px; background: linear-gradient(140deg, rgba(185,162,255,0.16), rgba(143,227,255,0.08)); animation: storyIn 0.8s var(--ease); }
+.trace__story strong { font: 700 17px var(--display); }
+.trace__story p { margin: 8px 0 14px; font-size: 14px; color: var(--muted); }
+.trace__all { color: var(--cyan) !important; margin-bottom: 0 !important; }
+@keyframes storyIn { from { opacity: 0; transform: translateY(10px); } }
+.trace__name { display: grid; gap: 8px; font-size: 13px; color: var(--muted); }
+.trace__name input { min-height: 48px; padding: 0 16px; border: 0; border-radius: 12px; background: rgba(255,255,255,0.06); box-shadow: inset 0 0 0 1px rgba(233,236,247,0.15); color: var(--ink); font: 400 16px var(--body); }
+.trace__name input:focus { outline: 0; box-shadow: inset 0 0 0 1px var(--violet); }
+.trace__actions { display: flex; flex-wrap: wrap; gap: 8px; }
+.trace__sky { position: relative; min-height: 560px; border-radius: 28px; overflow: hidden; box-shadow: 0 40px 120px -40px rgba(122,92,255,0.55), inset 0 0 0 1px rgba(185,162,255,0.2); }
+.trace__sky canvas { position: absolute; inset: 0; width: 100%; height: 100%; touch-action: manipulation; cursor: crosshair; }
+.trace__coords { position: absolute; top: 18px; right: 22px; margin: 0; font: 600 11px var(--body); letter-spacing: 0.2em; text-transform: uppercase; color: rgba(233,236,247,0.5); pointer-events: none; }
+@media (max-width: 900px) {
+  .trace__ui { grid-template-columns: 1fr; }
+  .trace__sky { order: -1; min-height: 0; aspect-ratio: 1 / 1.05; }
+  .trace__panel { padding: 22px; }
+}

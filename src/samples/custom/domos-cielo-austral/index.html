@@ -38,13 +38,13 @@
       <span>Cielo Austral<small>Domos de astroturismo</small></span>
     </a>
     <nav class="nav__links" aria-label="Secciones">
-      <a href="#oscuridad">El cielo</a><a href="#domos">Domos</a><a href="#constelaciones">Constelaciones</a><a href="#calendario">Calendario</a><a href="#experiencias">Experiencias</a>
+      <a href="#oscuridad">El cielo</a><a href="#domos">Domos</a><a href="#constelaciones">Constelaciones</a><a href="#trazar">Trazar</a><a href="#calendario">Calendario</a><a href="#experiencias">Experiencias</a>
     </nav>
     <a class="btn btn--glow nav__cta" href="#reservar">Reservar noche</a>
     <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
   </header>
   <div class="menu" aria-hidden="true">
-    <a href="#oscuridad">El cielo</a><a href="#domos">Domos</a><a href="#constelaciones">Constelaciones</a><a href="#calendario">Calendario</a><a href="#experiencias">Experiencias</a><a href="#reservar">Reservar</a>
+    <a href="#oscuridad">El cielo</a><a href="#domos">Domos</a><a href="#constelaciones">Constelaciones</a><a href="#trazar">Trazar</a><a href="#calendario">Calendario</a><a href="#experiencias">Experiencias</a><a href="#reservar">Reservar</a>
   </div>
 
   <main>
@@ -184,11 +184,51 @@
       </div>
     </section>
 
+    <!-- TRAZAR CONSTELACIONES -->
+    <section class="sec trace" id="trazar">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">04 · Planetario interactivo</p><h2 class="h2">Trace su <em>propia constelación.</em></h2></div>
+          <p class="muted">Una estrella con otra: así nacieron todas las constelaciones. Descubra las del cielo austral uniendo sus estrellas, o invente la suya, póngale nombre y guárdela de recuerdo.</p>
+        </div>
+        <div class="trace__ui">
+          <aside class="trace__panel rv">
+            <div class="trace__tabs" role="tablist">
+              <button type="button" role="tab" aria-selected="true" data-trace-mode="reto">Descubrir</button>
+              <button type="button" role="tab" aria-selected="false" data-trace-mode="libre">Crear la mía</button>
+            </div>
+            <div data-trace-pane="reto">
+              <p class="trace__hint">Elija una constelación y una sus estrellas brillantes. Los trazos correctos quedan encendidos; los incorrectos se apagan.</p>
+              <div class="trace__chips" data-trace-chips></div>
+              <div class="trace__progress"><span data-trace-bar></span></div>
+              <p class="trace__status" data-trace-status aria-live="polite">Toque una estrella brillante y luego otra para unirlas.</p>
+              <div class="trace__story" data-trace-story hidden></div>
+            </div>
+            <div data-trace-pane="libre" hidden>
+              <p class="trace__hint">Toque una estrella y luego otra para unirlas. Toque dos veces una estrella (o pulse «Cortar trazo») para empezar otra figura.</p>
+              <label class="trace__name"><span>Nombre de su constelación</span><input type="text" maxlength="28" placeholder="La Cabaña de Ana" data-trace-name /></label>
+              <p class="trace__count" data-trace-count>0 estrellas unidas</p>
+              <div class="trace__actions">
+                <button type="button" class="btn btn--glow" data-trace-cut>Cortar trazo</button>
+                <button type="button" class="btn btn--glow" data-trace-undo>Deshacer</button>
+                <button type="button" class="btn btn--glow" data-trace-clear>Borrar</button>
+                <button type="button" class="btn btn--sm" data-trace-save>Guardar imagen</button>
+              </div>
+            </div>
+          </aside>
+          <div class="trace__sky rv">
+            <canvas data-trace-canvas aria-label="Cielo interactivo para unir estrellas" role="img"></canvas>
+            <p class="trace__coords" data-trace-coords>Cielo austral · −39,35° S</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CALENDARIO -->
     <section class="sec" id="calendario">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">04 · Calendario cósmico</p><h2 class="h2">Las mejores noches <em>de los próximos meses.</em></h2></div>
+          <div><p class="eyebrow">05 · Calendario cósmico</p><h2 class="h2">Las mejores noches <em>de los próximos meses.</em></h2></div>
           <p class="muted">Calculado en vivo: lunas nuevas (cielo más oscuro) y lluvias de estrellas visibles desde el hemisferio sur. Son las fechas que se agotan primero.</p>
         </div>
         <ul class="cosmic" data-cosmic></ul>
@@ -199,7 +239,7 @@
     <section class="sec" id="experiencias">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">05 · Experiencias astronómicas</p><h2 class="h2">Aprenda a <em>leer las estrellas.</em></h2></div>
+          <div><p class="eyebrow">06 · Experiencias astronómicas</p><h2 class="h2">Aprenda a <em>leer las estrellas.</em></h2></div>
           <p class="muted">Guiadas por nuestro astrónomo residente. No necesita saber nada: solo mirar hacia arriba.</p>
         </div>
         <div class="logs">
@@ -232,7 +272,7 @@
     <section class="sec" id="reservar">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">06 · Reserva directa</p><h2 class="h2">Elija la noche. <em>Le decimos cómo estará el cielo.</em></h2></div>
+          <div><p class="eyebrow">07 · Reserva directa</p><h2 class="h2">Elija la noche. <em>Le decimos cómo estará el cielo.</em></h2></div>
           <p class="muted">Si el pronóstico anuncia nubes, le avisamos 48 horas antes y cambiamos su fecha sin costo.</p>
         </div>
         <div class="book">
@@ -280,7 +320,7 @@
     <!-- GALERÍA -->
     <section class="sec" id="galeria">
       <div class="wrap">
-        <div class="head rv"><div><p class="eyebrow">07 · Galería</p><h2 class="h2">Noches que <em>no se olvidan.</em></h2></div><p class="muted">Toque una imagen para verla en grande.</p></div>
+        <div class="head rv"><div><p class="eyebrow">08 · Galería</p><h2 class="h2">Noches que <em>no se olvidan.</em></h2></div><p class="muted">Toque una imagen para verla en grande.</p></div>
         <div class="mosaic">
           <button class="m1 rv" aria-label="Vía Láctea sobre el valle"><span style="{{img:g1:1519681393784-d120267933ba}}"></span></button>
           <button class="m2 rv" aria-label="Domo iluminado de noche"><span style="{{img:g2:1504280390367-361c6d9f38f4}}"></span></button>
@@ -296,7 +336,7 @@
     <!-- RESEÑAS -->
     <section class="sec" id="resenas">
       <div class="wrap">
-        <div class="head rv"><div><p class="eyebrow">08 · Señales recibidas</p><h2 class="h2">Comentarios <em>desde el cosmos.</em></h2></div><div class="score"><strong>5,0</strong><span>94 reseñas en Google y Airbnb</span></div></div>
+        <div class="head rv"><div><p class="eyebrow">09 · Señales recibidas</p><h2 class="h2">Comentarios <em>desde el cosmos.</em></h2></div><div class="score"><strong>5,0</strong><span>94 reseñas en Google y Airbnb</span></div></div>
         <div class="signals">
           <blockquote class="signal rv"><p>“Vimos Saturno con sus anillos desde la cama. Mi hija ahora quiere ser astrónoma.”</p><footer><b>Carolina V.</b> · Viña del Mar · viaje en familia</footer></blockquote>
           <blockquote class="signal rv"><p>“Nos avisaron que venía nublado y nos cambiaron la fecha sin costo. Servicio de otro planeta.”</p><footer><b>Matías y Javiera</b> · Santiago · escapada</footer></blockquote>
@@ -310,7 +350,7 @@
     <section class="sec" id="preguntas">
       <div class="wrap split split--top">
         <div class="faq rv">
-          <p class="eyebrow">09 · Preguntas</p>
+          <p class="eyebrow">10 · Preguntas</p>
           <h2 class="h2">Antes de <em>mirar arriba.</em></h2>
           <details><summary>¿Qué pasa si está nublado?</summary><p>Le avisamos 48 horas antes y puede cambiar la fecha sin costo, sujeto a disponibilidad.</p></details>
           <details><summary>¿Hace frío dentro de los domos?</summary><p>No. Tienen losa radiante y aislación térmica: el interior se mantiene sobre 20 °C incluso en invierno.</p></details>

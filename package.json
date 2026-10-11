@@ -13,7 +13,8 @@
     "preview": "vite preview",
     "test": "node --test tests/*.test.js",
     "images": "NODE_USE_ENV_PROXY=1 node scripts/gen-images.mjs",
-    "collage": "node scripts/split-collage.mjs"
+    "collage": "node scripts/split-collage.mjs",
+    "pack": "node scripts/pack-sample.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",
