@@ -10,7 +10,7 @@
   <link rel="canonical" href="__SITE_URL__/muestras/fogon-mapu/" />
   <meta property="og:title" content="Fogón Mapu · muestra de concepto de Red Vaeru" />
   <meta property="og:image" content="__SITE_URL__/og.jpg" />
-  <link rel="icon" type="image/png" href="/brand/emblema-32.png" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23120c09'/%3E%3Ccircle cx='32' cy='32' r='24' fill='none' stroke='%23ffb65c' stroke-width='3'/%3E%3Cpath d='M32 8v48M8 32h48' stroke='%23ffb65c' stroke-width='2'/%3E%3Cpath d='M32 47c-6 0-10-4-10-9 0-7 7-8 5-17 7 4 9 9 9 12 2-2 3-4 3-7 4 4 5 8 5 12 0 5-5 9-12 9z' fill='%23ff7a2f'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://images.unsplash.com" />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..800;1,9..144,300..700&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -38,17 +38,18 @@
 
   <header class="nav">
     <a class="logo" href="#inicio" aria-label="Fogón Mapu, inicio">
-      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" /><path d="M20 3v34M3 20h34" /><path class="logo__flame" d="M20 29c-4 0-6-3-6-6 0-4 4-5 3-10 4 2 5 5 5 7 1-1 2-2 2-4 2 2 3 4 3 7 0 3-3 6-7 6z" /></svg>
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" /><circle cx="20" cy="20" r="11" class="logo__ring" /><path d="M20 2v7M20 31v7M2 20h7M31 20h7M17.5 4.5 20 2l2.5 2.5M17.5 35.5 20 38l2.5-2.5M4.5 17.5 2 20l2.5 2.5M35.5 17.5 38 20l-2.5 2.5" /><path class="logo__flame" d="M20 28c-3.6 0-5.6-2.6-5.6-5.4 0-3.8 3.8-4.6 2.8-9.6 3.8 2 4.8 5 4.8 6.8 1-.8 1.8-2 1.8-3.8 2 2 3 4.2 3 6.6 0 3-2.6 5.4-6.8 5.4z" /></svg>
       <span>Fogón Mapu<small>Cocina de territorio</small></span>
     </a>
     <nav class="nav__links" aria-label="Secciones">
-      <a href="#cocina">La cocina</a><a href="#temporadas">Temporadas</a><a href="#degustacion">Degustación</a><a href="#rescoldo">El rescoldo</a><a href="#carta">Carta</a>
+      <a href="#cocina">La cocina</a><a href="#temporadas">Temporadas</a><a href="#degustacion">Degustación</a><a href="#rescoldo">El rescoldo</a><a href="#carta">Carta</a><a href="#agenda">Agenda</a>
     </nav>
+    <button class="sound" type="button" data-sound aria-pressed="false" aria-label="Escuchar el fogón"><span class="sound__bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span class="sound__txt">Escuchar el fogón</span></button>
     <a class="btn btn--ember btn--sm" href="#mesa">Reservar mesa</a>
     <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
   </header>
   <div class="menu" aria-hidden="true">
-    <a href="#cocina">La cocina</a><a href="#temporadas">Temporadas</a><a href="#degustacion">Degustación</a><a href="#rescoldo">El rescoldo</a><a href="#carta">Carta</a><a href="#mesa">Reservar mesa</a>
+    <a href="#cocina">La cocina</a><a href="#temporadas">Temporadas</a><a href="#degustacion">Degustación</a><a href="#rescoldo">El rescoldo</a><a href="#merken">Merkén</a><a href="#carta">Carta</a><a href="#agenda">Agenda</a><a href="#regalo">Regalar</a><a href="#mesa">Reservar mesa</a>
   </div>
 
   <main id="inicio">
@@ -60,7 +61,7 @@
       <div class="wrap hero__inner">
         <p class="kicker"><span class="ember-dot"></span> Cocina mapuche contemporánea · Temuco</p>
         <h1 class="hero__title" data-fire-title>El fuego es<br /><em>nuestra memoria.</em></h1>
-        <p class="hero__lead">Ocho tiempos cocinados a la leña con piñón, merkén, digüeñes y changles de doce comunidades de la Araucanía. Una mesa larga, como el <i>trawün</i>.</p>
+        <p class="hero__lead">Ocho tiempos cocinados a la leña con piñón, merkén, digüeñes y changles de doce comunidades de la Araucanía. Una mesa larga, como el <abbr class="mz" tabindex="0" data-t="Encuentro o reunión de la comunidad">trawün</abbr>.</p>
         <div class="hero__ctas">
           <a class="btn btn--ember" href="#mesa">Elegir mi mesa <span aria-hidden="true">→</span></a>
           <a class="btn btn--ghost" href="#degustacion">Ver el viaje de 8 tiempos</a>
@@ -93,7 +94,7 @@
           <p class="eyebrow rv">I · La cocina</p>
           <h2 class="h2 rv">Aprendí a cocinar <em>mirando la brasa.</em></h2>
           <blockquote class="rv">«Mi abuela en Chol Chol no medía el tiempo con un reloj: lo medía por el color de la brasa. Fogón Mapu es su cocina, sentada a la mesa con todos.»</blockquote>
-          <p class="muted rv">Cocinamos solo con leña de hualle y roble caído. Cada plato dice de dónde viene y quién lo cultivó: trabajamos directo con doce comunidades mapuche, lafkenche y pewenche, y pagamos el precio justo antes de la cosecha.</p>
+          <p class="muted rv">Cocinamos solo con leña de hualle y roble caído. Cada plato dice de dónde viene y quién lo cultivó: trabajamos directo con doce comunidades mapuche, <abbr class="mz" tabindex="0" data-t="Gente del mar: mapuche de la costa">lafkenche</abbr> y <abbr class="mz" tabindex="0" data-t="Gente del pewen: mapuche de las araucarias cordilleranas">pewenche</abbr>, y pagamos el precio justo antes de la cosecha.</p>
           <dl class="stats rv">
             <div><dt data-count="12">0</dt><dd>comunidades proveedoras</dd></div>
             <div><dt data-count="90" data-suffix="%">0</dt><dd>productos de la región</dd></div>
@@ -142,8 +143,8 @@
     <section class="sec viaje" id="degustacion">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">III · Menú degustación</p><h2 class="h2">Ocho tiempos, <em>un viaje por el Wallmapu.</em></h2></div>
-          <p class="muted">Del mar lafkenche a las araucarias pewenche. Cada tiempo viene de un lugar y una familia: siga la ruta en el mapa mientras baja.</p>
+          <div><p class="eyebrow">III · Menú degustación</p><h2 class="h2">Ocho tiempos, <em>un viaje por el <abbr class="mz" tabindex="0" data-t="El territorio mapuche, a ambos lados de la cordillera">Wallmapu</abbr>.</em></h2></div>
+          <div class="viaje__head-r"><p class="muted">Del mar lafkenche a las araucarias pewenche. Cada tiempo viene de un lugar y una familia: siga la ruta en el mapa mientras baja.</p><label class="switch"><input type="checkbox" data-pairing /><span class="switch__ui" aria-hidden="true"></span> Ver maridaje sugerido</label></div>
         </div>
         <div class="viaje__grid">
           <div class="viaje__map">
@@ -161,14 +162,14 @@
             <p class="viaje__km"><b data-km-total>0</b> km recorridos por sus ingredientes</p>
           </div>
           <ol class="viaje__steps" data-steps>
-            <li class="vstep" data-x="138" data-y="180" data-km="30"><div class="vstep__img" style="{{img:tiempo-1:1476224203421-9ac39bcb3327}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 1</span><h3>Catuto tibio</h3><p>Pan de trigo mote cocido al rescoldo, con mantequilla de campo y merkén ahumado tres días.</p><p class="vstep__from"><b>Chol Chol</b> · Familia Huenchumilla · 30 km</p></div></li>
-            <li class="vstep" data-x="104" data-y="220" data-km="85"><div class="vstep__img" style="{{img:tiempo-2:1540189549336-e6e99c3679fe}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 2</span><h3>Cochayuyo y changles</h3><p>Ceviche de alga cochayuyo y hongos changle, con limón de pica, cilantro y flores de la huerta.</p><p class="vstep__from"><b>Lago Budi</b> · Comunidad lafkenche de Puerto Saavedra · 85 km</p></div></li>
-            <li class="vstep" data-x="205" data-y="268" data-km="65"><div class="vstep__img" style="{{img:tiempo-3:1504674900247-0877df9cc836}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 3</span><h3>Sopaipilla y digüeñes</h3><p>Sopaipilla de zapallo camote con pebre de digüeñes recién cosechados en el bosque de coigües.</p><p class="vstep__from"><b>Cunco</b> · Recolectoras de Los Laureles · 65 km</p></div></li>
-            <li class="vstep" data-x="282" data-y="100" data-km="140"><div class="vstep__img" style="{{img:tiempo-4:1490645935967-10de6ba17061}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 4</span><h3>Crema de piñón</h3><p>Ngülliw cocido seis horas y emulsionado con caldo de hongos silvestres y aceite de hierbas.</p><p class="vstep__from"><b>Lonquimay</b> · Comunidad pewenche Quinquén · 140 km</p></div></li>
-            <li class="vstep" data-x="258" data-y="226" data-km="95"><div class="vstep__img" style="{{img:tiempo-5:1574484284002-952d92456975}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 5</span><h3>Trucha en nalca</h3><p>Trucha del lago cocida dentro de una hoja de nalca que se abre en la mesa, con quínoa del valle.</p><p class="vstep__from"><b>Melipeuco</b> · Piscicultura familiar Llaima · 95 km</p></div></li>
-            <li class="vstep" data-x="236" data-y="132" data-km="90"><div class="vstep__img" style="{{img:tiempo-6:1529692236671-f1f6cf9683ba}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 6</span><h3>Cordero al rescoldo</h3><p>Doce horas bajo tierra, sobre piedras de río, con puré de piñón y puerro asado en la brasa.</p><p class="vstep__from"><b>Curacautín</b> · Crianceros de Malalcahuello · 90 km</p></div></li>
-            <li class="vstep" data-x="170" data-y="232" data-km="5"><div class="vstep__img" style="{{img:tiempo-7:}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 7</span><h3>Muday helado</h3><p>Bebida ancestral de maíz fermentado servida helada con maqui. Limpia el paladar antes del final.</p><p class="vstep__from"><b>Padre Las Casas</b> · Huerta de la casa · 5 km</p></div></li>
-            <li class="vstep" data-x="98" data-y="110" data-km="110"><div class="vstep__img" style="{{img:tiempo-8:1488477181946-6428a0291777}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 8</span><h3>Mote, maqui y murta</h3><p>Mote con huesillo en almíbar de maqui, murta silvestre y crema de leche de cabra, terminado al fuego.</p><p class="vstep__from"><b>Purén</b> · Cooperativa Nahuelbuta · 110 km</p></div></li>
+            <li class="vstep" data-x="138" data-y="180" data-km="30"><div class="vstep__img" style="{{img:tiempo-1:1476224203421-9ac39bcb3327}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 1</span><p class="vstep__wine"><b>Copa:</b> Espumante de Traiguén, valle de Malleco<br /><b>Sin alcohol:</b> Agua de canelo con burbujas</p><h3>Catuto tibio</h3><p>Pan de trigo mote cocido al rescoldo, con mantequilla de campo y merkén ahumado tres días.</p><p class="vstep__from"><b>Chol Chol</b> · Familia Huenchumilla · 30 km</p></div></li>
+            <li class="vstep" data-x="104" data-y="220" data-km="85"><div class="vstep__img" style="{{img:tiempo-2:1540189549336-e6e99c3679fe}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 2</span><p class="vstep__wine"><b>Copa:</b> Chardonnay de Malleco, mineral y fresco<br /><b>Sin alcohol:</b> Kombucha de murta</p><h3>Cochayuyo y changles</h3><p>Ceviche de alga cochayuyo y hongos changle, con limón de pica, cilantro y flores de la huerta.</p><p class="vstep__from"><b>Lago Budi</b> · Comunidad lafkenche de Puerto Saavedra · 85 km</p></div></li>
+            <li class="vstep" data-x="205" data-y="268" data-km="65"><div class="vstep__img" style="{{img:tiempo-3:1504674900247-0877df9cc836}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 3</span><p class="vstep__wine"><b>Copa:</b> Pipeño blanco del Itata, en greda<br /><b>Sin alcohol:</b> Mudai de maqui sin alcohol</p><h3>Sopaipilla y digüeñes</h3><p>Sopaipilla de zapallo camote con pebre de digüeñes recién cosechados en el bosque de coigües.</p><p class="vstep__from"><b>Cunco</b> · Recolectoras de Los Laureles · 65 km</p></div></li>
+            <li class="vstep" data-x="282" data-y="100" data-km="140"><div class="vstep__img" style="{{img:tiempo-4:1490645935967-10de6ba17061}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 4</span><p class="vstep__wine"><b>Copa:</b> Riesling del Biobío, con acidez de lluvia<br /><b>Sin alcohol:</b> Infusión fría de cedrón</p><h3>Crema de piñón</h3><p>Ngülliw cocido seis horas y emulsionado con caldo de hongos silvestres y aceite de hierbas.</p><p class="vstep__from"><b>Lonquimay</b> · Comunidad pewenche Quinquén · 140 km</p></div></li>
+            <li class="vstep" data-x="258" data-y="226" data-km="95"><div class="vstep__img" style="{{img:tiempo-5:1574484284002-952d92456975}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 5</span><p class="vstep__wine"><b>Copa:</b> Pinot noir de Malleco, servido fresco<br /><b>Sin alcohol:</b> Jugo de manzana de Purén</p><h3>Trucha en nalca</h3><p>Trucha del lago cocida dentro de una hoja de nalca que se abre en la mesa, con quínoa del valle.</p><p class="vstep__from"><b>Melipeuco</b> · Piscicultura familiar Llaima · 95 km</p></div></li>
+            <li class="vstep" data-x="236" data-y="132" data-km="90"><div class="vstep__img" style="{{img:tiempo-6:1529692236671-f1f6cf9683ba}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 6</span><p class="vstep__wine"><b>Copa:</b> Cepa País de secano, valle del Itata<br /><b>Sin alcohol:</b> Mote de maqui fermentado sin alcohol</p><h3>Cordero al rescoldo</h3><p>Doce horas bajo tierra, sobre piedras de río, con puré de piñón y puerro asado en la brasa.</p><p class="vstep__from"><b>Curacautín</b> · Crianceros de Malalcahuello · 90 km</p></div></li>
+            <li class="vstep" data-x="170" data-y="232" data-km="5"><div class="vstep__img" style="{{img:tiempo-7:}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 7</span><p class="vstep__wine"><b>Copa:</b> Él mismo es el maridaje: fermento de maíz de la casa<br /><b>Sin alcohol:</b> Té de canelo y menta</p><h3>Muday helado</h3><p>Bebida ancestral de maíz fermentado servida helada con maqui. Limpia el paladar antes del final.</p><p class="vstep__from"><b>Padre Las Casas</b> · Huerta de la casa · 5 km</p></div></li>
+            <li class="vstep" data-x="98" data-y="110" data-km="110"><div class="vstep__img" style="{{img:tiempo-8:1488477181946-6428a0291777}}"></div><div class="vstep__body"><span class="vstep__n">Tiempo 8</span><p class="vstep__wine"><b>Copa:</b> Moscatel tardío del Itata<br /><b>Sin alcohol:</b> Leche de piñón tibia</p><h3>Mote, maqui y murta</h3><p>Mote con huesillo en almíbar de maqui, murta silvestre y crema de leche de cabra, terminado al fuego.</p><p class="vstep__from"><b>Purén</b> · Cooperativa Nahuelbuta · 110 km</p></div></li>
           </ol>
         </div>
         <div class="tiers rv">
@@ -224,11 +225,44 @@
       </div>
     </section>
 
+    <!-- MERKÉN: mezcle el suyo -->
+    <section class="sec merken" id="merken">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">V · El merkén de la casa</p><h2 class="h2">Mezcle <em>su propio merkén.</em></h2></div>
+          <p class="muted">Ají cacho de cabra ahumado sobre roble, semillas de cilantro tostadas y sal de mar. Ajuste la receta, revuelva el pocillo con el dedo y descubra qué merkén le salió.</p>
+        </div>
+        <div class="mk rv">
+          <div class="mk__bowl">
+            <canvas data-mk-canvas aria-label="Pocillo de greda con el merkén mezclado" role="img"></canvas>
+            <p class="mk__hint">Revuelva arrastrando sobre el pocillo</p>
+          </div>
+          <div class="mk__panel">
+            <p class="mk__k">Su mezcla</p>
+            <h3 class="mk__name" data-mk-name>—</h3>
+            <p class="mk__use" data-mk-use>—</p>
+            <div class="mk__sliders">
+              <label><span>Ají cacho de cabra <b data-mk-v="aji">—</b></span><input type="range" min="0" max="100" value="70" data-mk="aji" /></label>
+              <label><span>Cilantro tostado <b data-mk-v="cil">—</b></span><input type="range" min="0" max="100" value="20" data-mk="cil" /></label>
+              <label><span>Sal de mar de Cáhuil <b data-mk-v="sal">—</b></span><input type="range" min="0" max="100" value="10" data-mk="sal" /></label>
+              <label><span>Comino del valle <b data-mk-v="com">—</b></span><input type="range" min="0" max="100" value="0" data-mk="com" /></label>
+              <label><span>Horas de humo <b data-mk-v="humo">—</b></span><input type="range" min="0" max="72" value="72" data-mk="humo" /></label>
+            </div>
+            <div class="mk__profile" data-mk-profile></div>
+            <div class="mk__actions">
+              <button type="button" class="btn btn--ghost btn--sm" data-mk-house>Receta de la abuela</button>
+              <button type="button" class="btn btn--ember btn--sm" data-demo="En el sitio real, el pedido del frasco con su receta de merkén llegaría al WhatsApp del restaurante para coordinar el retiro o el envío.">Pedir este frasco · $6.900</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- CARTA: un libro que se hojea -->
     <section class="sec carta" id="carta">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">V · La carta</p><h2 class="h2">Hojee <em>nuestra carta.</em></h2></div>
+          <div><p class="eyebrow">VI · La carta</p><h2 class="h2">Hojee <em>nuestra carta.</em></h2></div>
           <p class="muted">Almuerzo de martes a viernes. Platos para compartir al centro de la mesa. Toque la página o deslice para darla vuelta.</p>
         </div>
         <div class="book rv" data-book>
@@ -246,7 +280,7 @@
     <section class="sec comunidades" id="comunidades">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">VI · Quién cultiva</p><h2 class="h2">Doce comunidades <em>en cada plato.</em></h2></div>
+          <div><p class="eyebrow">VII · Quién cultiva</p><h2 class="h2">Doce comunidades <em>en cada plato.</em></h2></div>
           <p class="muted">Compramos directo, con precio acordado antes de la cosecha. Estas son cuatro de las familias que llenan nuestra despensa.</p>
         </div>
         <div class="farmers">
@@ -266,11 +300,22 @@
       </div>
     </section>
 
+    <!-- AGENDA -->
+    <section class="sec agenda" id="agenda">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">VIII · Junto al fuego</p><h2 class="h2">Lo que viene <em>en el fogón.</em></h2></div>
+          <p class="muted">Música en vivo los viernes, el trawün de cada mes y talleres para llevarse la cocina a casa. Las fechas se calculan solas: siempre verá las próximas.</p>
+        </div>
+        <ol class="events" data-events></ol>
+      </div>
+    </section>
+
     <!-- RESERVA CON PLANO DEL SALÓN -->
     <section class="sec mesa" id="mesa">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">VII · Reservas</p><h2 class="h2">Elija su mesa <em>en el plano.</em></h2></div>
+          <div><p class="eyebrow">IX · Reservas</p><h2 class="h2">Elija su mesa <em>en el plano.</em></h2></div>
           <p class="muted">Vea qué mesas quedan libres a la hora que quiere y escoja la suya: junto a la ventana, en la mesa larga o en la barra frente al fogón.</p>
         </div>
         <div class="mesa__grid">
@@ -316,11 +361,48 @@
       </div>
     </section>
 
+    <!-- TARJETA DE REGALO -->
+    <section class="sec regalo" id="regalo">
+      <div class="wrap regalo__grid">
+        <div>
+          <div class="rv"><p class="eyebrow">X · Regale el fuego</p><h2 class="h2">Una noche en el fogón, <em>de regalo.</em></h2>
+          <p class="muted">Diseñe la tarjeta aquí mismo: elija la experiencia, escriba su dedicatoria y descárguela al instante. Vale por seis meses.</p></div>
+          <form class="gift rv" data-gift novalidate>
+            <label class="field">Experiencia<select name="exp">
+              <option value="Degustación Raíz|39000|Cinco tiempos de temporada">Degustación Raíz · $39.000</option>
+              <option value="Degustación Fogón|59000|Ocho tiempos por el Wallmapu" selected>Degustación Fogón · $59.000</option>
+              <option value="Fogón + vinos|89000|Ocho tiempos con maridaje">Fogón + vinos · $89.000</option>
+              <option value="Taller de merkén|25000|Una mañana con la chef">Taller de merkén · $25.000</option>
+            </select></label>
+            <div class="row">
+              <label class="field">Para<input name="to" maxlength="22" placeholder="Camila" value="Camila" /></label>
+              <label class="field">Personas<select name="people"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label>
+            </div>
+            <label class="field">Dedicatoria<input name="msg" maxlength="70" value="Para que celebremos al calor del fuego." /></label>
+            <label class="field">De parte de<input name="from" maxlength="22" value="Tomás" /></label>
+            <div class="gift__styles" role="radiogroup" aria-label="Estilo de la tarjeta">
+              <button type="button" role="radio" aria-checked="true" data-style="brasa">Brasa</button>
+              <button type="button" role="radio" aria-checked="false" data-style="papel">Papel</button>
+              <button type="button" role="radio" aria-checked="false" data-style="noche">Noche</button>
+            </div>
+          </form>
+        </div>
+        <div class="gift__preview rv">
+          <canvas width="1200" height="760" data-gift-canvas role="img" aria-label="Vista previa de la tarjeta de regalo"></canvas>
+          <p class="gift__total">Total <b data-gift-total>—</b></p>
+          <div class="gift__actions">
+            <button type="button" class="btn btn--ghost" data-gift-dl>Descargar tarjeta</button>
+            <button type="button" class="btn btn--ember" data-demo="En el sitio real, la tarjeta se pagaría con un link de pago y llegaría lista para regalar, con su código y dedicatoria.">Comprar por WhatsApp</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- RESEÑAS: libro de visitas -->
     <section class="sec visitas" id="resenas">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">VIII · Libro de visitas</p><h2 class="h2">Lo que queda <em>escrito en la mesa.</em></h2></div>
+          <div><p class="eyebrow">XI · Libro de visitas</p><h2 class="h2">Lo que queda <em>escrito en la mesa.</em></h2></div>
           <div class="score"><strong>4,9</strong><span>1.240 reseñas en Google</span></div>
         </div>
         <div class="notes">
@@ -335,7 +417,7 @@
     <section class="sec donde" id="ubicacion">
       <div class="wrap donde__grid">
         <div class="rv">
-          <p class="eyebrow">IX · Cómo llegar</p>
+          <p class="eyebrow">XII · Cómo llegar</p>
           <h2 class="h2">En el corazón <em>de Temuco.</em></h2>
           <ul class="donde__list">
             <li><span>Dirección</span>Av. Alemania 0000, sector gastronómico</li>
@@ -361,8 +443,9 @@
   </main>
 
   <footer class="foot">
+    <p class="foot__giant" aria-hidden="true">Kütral</p>
     <div class="wrap foot__grid">
-      <div><a class="logo" href="#inicio"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="17" /><path d="M20 3v34M3 20h34" /><path class="logo__flame" d="M20 29c-4 0-6-3-6-6 0-4 4-5 3-10 4 2 5 5 5 7 1-1 2-2 2-4 2 2 3 4 3 7 0 3-3 6-7 6z" /></svg><span>Fogón Mapu<small>Cocina de territorio</small></span></a><p>Cocina mapuche contemporánea en Temuco, con productos de doce comunidades de la Araucanía.</p></div>
+      <div><a class="logo" href="#inicio"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="18" /><circle cx="20" cy="20" r="11" class="logo__ring" /><path d="M20 2v7M20 31v7M2 20h7M31 20h7M17.5 4.5 20 2l2.5 2.5M17.5 35.5 20 38l2.5-2.5M4.5 17.5 2 20l2.5 2.5M35.5 17.5 38 20l-2.5 2.5" /><path class="logo__flame" d="M20 28c-3.6 0-5.6-2.6-5.6-5.4 0-3.8 3.8-4.6 2.8-9.6 3.8 2 4.8 5 4.8 6.8 1-.8 1.8-2 1.8-3.8 2 2 3 4.2 3 6.6 0 3-2.6 5.4-6.8 5.4z" /></svg><span>Fogón Mapu<small>Cocina de territorio</small></span></a><p>Cocina mapuche contemporánea en Temuco, con productos de doce comunidades de la Araucanía.</p></div>
       <div><h4>Contacto</h4><p>+56 45 000 0000</p><p>reservas@fogonmapu.cl</p><p>Av. Alemania 0000, Temuco</p></div>
       <div><h4>Horarios</h4><p>Martes a viernes 13:00 a 16:00</p><p>Jueves a sábado 19:30 a 23:30</p><p>Domingo y lunes descansa el fuego</p></div>
     </div>

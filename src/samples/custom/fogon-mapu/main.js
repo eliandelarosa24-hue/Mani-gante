@@ -2,6 +2,9 @@
 import './style.css';
 import { initBook } from './book.js';
 import { initPlan } from './plan.js';
+import { initMerken } from './merken.js';
+import { initSound } from './sound.js';
+import { initGift } from './gift.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -150,7 +153,7 @@ addEventListener('pointermove', (e) => {
 }, { passive: true });
 document.addEventListener('pointerleave', () => (cursor.on = false));
 addEventListener('pointerdown', (e) => {
-  if (reduced || e.target.closest('a, button, input, select, label, svg, .book, .pit')) return;
+  if (reduced || e.target.closest('a, button, input, select, label, svg, canvas, .book, .pit, .gift')) return;
   for (let i = 0; i < 26; i++) {
     const a = Math.random() * 6.3, v = 1 + Math.random() * 4;
     embers.push({ x: e.clientX, y: e.clientY, vx: Math.cos(a) * v, vy: Math.sin(a) * v - 1, r: 0.6 + Math.random() * 1.6, life: 0.6, ph: a, hot: 1 });
@@ -326,7 +329,7 @@ function setHour(t) {
   $('[data-pit-stone-bar]').style.width = `${(stone / 400) * 100}%`;
   $('[data-pit-meat]').textContent = meat == null ? 'aún no entra' : `${Math.round(meat)} °C`;
   $('[data-pit-meat-bar]').style.width = `${meat == null ? 0 : (meat / 80) * 100}%`;
-  $('[data-pit-stage]').textContent = [...STAGES].reverse().find(([s]) => t >= s)[1];
+  $('[data-pit-stage]').textContent = ([...STAGES].reverse().find(([s]) => t >= s) || STAGES[0])[1];
   const heat = stone / 400;
   $$('[data-stones] circle', pit).forEach((c) => (c.style.fill = mix([74, 68, 64], [255, 110, 40], heat * 0.85)));
   $('[data-glow]', pit).setAttribute('opacity', (0.15 + heat * 0.85).toFixed(2));
@@ -349,7 +352,7 @@ function play() {
   let t = +range.value >= 12 ? 0 : +range.value, last = performance.now();
   $('[data-pit-play]').textContent = '❚❚';
   const step = (now) => {
-    t = Math.min(12, t + ((now - last) / 1000) * 1.3); last = now;
+    t = Math.min(12, t + (Math.max(0, now - last) / 1000) * 1.3); last = Math.max(last, now);
     setHour(t);
     if (t < 12) playing = requestAnimationFrame(step); else { playing = null; $('[data-pit-play]').textContent = '↺'; }
   };
@@ -363,6 +366,40 @@ new IntersectionObserver(([e], o) => { if (e.isIntersecting) { o.disconnect(); i
 /* ───────────── Carta en libro y plano del salón ───────────── */
 initBook();
 initPlan();
+initMerken({ reduced });
+initSound();
+initGift();
+
+/* ───────────── Maridaje sugerido ───────────── */
+$('[data-pairing]').addEventListener('change', (e) => $('.viaje').classList.toggle('is-pairing', e.target.checked));
+
+/* ───────────── Agenda junto al fuego (fechas calculadas) ───────────── */
+(function agenda() {
+  const ARTISTS = ['Dúo Wenu · trutruka y guitarra', 'Elisa Painemal · cantos del sur', 'Kalfu Ñi Ül · folk mapuche', 'Trío Lafken · cuerdas y kultrún'];
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const nth = (y, m, n) => { const d = new Date(y, m, 1); while (d.getDay() !== 6) d.setDate(d.getDate() + 1); d.setDate(d.getDate() + 7 * (n - 1)); return d; };
+  const ev = [];
+  for (let i = 0; i < 70; i++) {
+    const d = new Date(today); d.setDate(d.getDate() + i);
+    if (d.getDay() === 5) {
+      const wk = Math.floor(d.getTime() / 6048e5);
+      ev.push({ d, kind: 'Música en vivo', time: '21:00', title: ARTISTS[wk % ARTISTS.length], text: 'Concierto acústico junto al fogón durante la cena. Sin costo adicional con su reserva.', seats: null });
+    }
+  }
+  for (let m = 0; m < 3; m++) {
+    const y = today.getFullYear(), mo = today.getMonth() + m;
+    ev.push({ d: nth(y, mo, 1), kind: 'Trawün del mes', time: '20:00', title: 'La mesa larga a ciegas', text: 'Veinticuatro desconocidos, una mesa y ocho tiempos sorpresa que la chef decide esa misma mañana. $65.000 por persona.', seats: 24 });
+    ev.push({ d: nth(y, mo, 2), kind: 'Taller', time: '11:00', title: 'Taller de merkén', text: 'Ahumado, tostado y molienda con la chef. Se lleva su frasco y la receta familiar. $25.000.', seats: 12 });
+    ev.push({ d: nth(y, mo, 3), kind: 'Rescoldo abierto', time: '17:30', title: 'El desentierro del cordero', text: 'Vea cómo sale el cordero después de doce horas bajo tierra. Gratis con su reserva de cena.', seats: 30 });
+  }
+  const list = ev.filter((e) => e.d >= today).sort((a, b) => a.d - b.d).slice(0, 6);
+  const h = (s) => [...s].reduce((a, ch) => (a * 31 + ch.charCodeAt(0)) >>> 0, 7);
+  $('[data-events]').innerHTML = list.map((e) => {
+    const left = e.seats ? Math.max(2, Math.round(e.seats * (0.15 + (h(e.title + e.d.toDateString()) % 70) / 100))) : 0;
+    const seats = e.seats ? `<span class="ev__seats${left <= 4 ? ' is-low' : ''}">Quedan <b>${left}</b> de ${e.seats} cupos</span>` : '<span class="ev__seats">Entrada liberada con reserva</span>';
+    return `<li class="ev rv"><span class="ev__kind">${e.kind}</span><div class="ev__date"><b>${e.d.getDate()}</b><span><strong>${e.d.toLocaleDateString('es-CL', { weekday: 'long' })}</strong>${e.d.toLocaleDateString('es-CL', { month: 'long' })} · ${e.time}</span></div><div><h3>${e.title}</h3><p>${e.text}</p></div><footer>${seats}<button type="button" data-demo="En el sitio real, la inscripción a «${e.title}» llegaría al WhatsApp del restaurante con la fecha y los cupos.">${e.seats ? 'Reservar cupo' : 'Reservar mesa'}</button></footer></li>`;
+  }).join('');
+})();
 
 /* ───────────── Fotos de los productores ───────────── */
 $$('.farmer__img').forEach((f) => f.classList.toggle('has-photo', /\/img\/|unsplash/.test(f.getAttribute('style') || '')));
@@ -372,9 +409,10 @@ const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersec
 $$('.rv').forEach((el) => io.observe(el));
 const toast = $('.toast');
 document.addEventListener('click', (e) => {
-  if (!e.target.closest('[data-demo]')) return;
+  const demo = e.target.closest('[data-demo]');
+  if (!demo) return;
   e.preventDefault();
-  $('[data-toast-text]').textContent = 'En el sitio real, la reserva llegaría al WhatsApp del restaurante con la mesa, la hora, la experiencia y el total. Esta es una muestra de concepto diseñada por Red Vaeru.';
+  $('[data-toast-text]').textContent = demo.dataset.demo || 'En el sitio real, la reserva llegaría al WhatsApp del restaurante con la mesa, la hora, la experiencia y el total. Esta es una muestra de concepto diseñada por Red Vaeru.';
   $('[data-toast-wa]').href = `https://wa.me/56952289117?text=${encodeURIComponent('Hola Jorge, vi la muestra "Fogón Mapu" en Red Vaeru y quiero un sitio así para mi restaurante.')}`;
   toast.classList.add('is-in');
   clearTimeout(toast.t);
