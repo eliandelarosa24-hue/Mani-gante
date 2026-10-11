@@ -373,3 +373,74 @@ a { color: inherit; }
   .rv, .hero__inner > *, .status { opacity: 1 !important; transform: none !important; }
   .loader { display: none; }
 }
+
+/* Foto por tramo de la ruta */
+.readout__photo { position: relative; aspect-ratio: 16 / 9; overflow: hidden; background: var(--rock-3); }
+.readout__photo span { position: absolute; inset: 0; background-size: cover; background-position: center; opacity: 0; transform: scale(1.06); transition: opacity 0.8s var(--ease), transform 1.6s var(--ease); }
+.readout__photo span.is-on { opacity: 1; transform: none; }
+.readout__photo::after { content: ''; position: absolute; inset: 0; box-shadow: inset 0 0 0 1px var(--line); }
+
+/* Revisión de equipo */
+.check { display: grid; grid-template-columns: 1fr 1fr; margin-top: 18px; background: var(--rock-2); box-shadow: inset 0 0 0 1px var(--line); }
+.check__img { min-height: 380px; background-size: cover; background-position: center; }
+.check__body { padding: clamp(24px, 3vw, 40px); }
+.check__body h3 { margin: 0 0 18px; font: 900 clamp(30px, 3vw, 44px)/0.92 var(--display); font-stretch: 65%; text-transform: uppercase; }
+.check__body h3 em { font-style: normal; color: var(--lava); }
+.check__list { display: grid; grid-template-columns: 1fr 1fr; gap: 8px 18px; margin: 0; padding: 0; list-style: none; counter-reset: c; }
+.check__list li { position: relative; padding: 8px 0 8px 34px; font-size: 14px; color: var(--muted); border-bottom: 1px solid var(--line); counter-increment: c; transition: color 0.4s; }
+.check__list li::before { content: counter(c, decimal-leading-zero); position: absolute; left: 0; top: 9px; font: 600 11px var(--mono); color: rgba(238,243,246,0.4); transition: color 0.4s; }
+.check__list li.is-ok { color: var(--snow); }
+.check__list li.is-ok::before { content: '✓'; color: #6be38c; font-size: 14px; top: 7px; }
+
+/* Semana en Pucón */
+.week { display: grid; grid-template-columns: 1.2fr 1fr; gap: 24px; align-items: start; }
+.week__pick { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.wk { position: relative; display: grid; grid-template-columns: 92px 1fr; gap: 14px; align-items: center; padding: 10px; border: 0; background: var(--rock-2); box-shadow: inset 0 0 0 1px var(--line); color: var(--snow); text-align: left; cursor: pointer; transition: box-shadow 0.3s, background 0.3s, transform 0.3s var(--ease); }
+.wk:hover { transform: translateY(-2px); box-shadow: inset 0 0 0 1px rgba(238,243,246,0.35); }
+.wk[aria-pressed="true"] { background: rgba(255,91,46,0.1); box-shadow: inset 0 0 0 2px var(--lava); }
+.wk__img { aspect-ratio: 1; background-size: cover; background-position: center; }
+.wk b { display: block; font: 800 16px/1.05 var(--display); font-stretch: 80%; text-transform: uppercase; }
+.wk small { display: block; margin-top: 4px; font: 500 11px var(--mono); color: var(--muted); }
+.wk__tick { position: absolute; top: 8px; right: 8px; width: 22px; height: 22px; display: grid; place-items: center; background: rgba(255,255,255,0.08); font-size: 12px; color: transparent; }
+.wk[aria-pressed="true"] .wk__tick { background: var(--lava); color: #fff; }
+.week__plan { display: grid; gap: 16px; padding: 26px; background: var(--rock-2); box-shadow: inset 0 0 0 1px var(--line); }
+.week__days { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
+.week__days li { display: grid; grid-template-columns: 74px 1fr auto; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--line); animation: pop 0.45s var(--ease) both; }
+.week__days li span:first-child { font: 600 11px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--lava-2); }
+.week__days li b { font: 800 16px var(--display); font-stretch: 80%; text-transform: uppercase; }
+.week__days li small { display: block; font: 400 12px var(--body); color: var(--muted); }
+.week__days li em { font: 500 12px var(--mono); font-style: normal; color: var(--muted); }
+.week__days .empty { display: block; padding: 18px 0; font-size: 14px; color: var(--muted); border: 0; }
+.week__sum { display: grid; gap: 6px; margin: 0; }
+.week__sum div { display: flex; justify-content: space-between; font-size: 15px; color: var(--muted); }
+.week__sum dd { margin: 0; font-family: var(--mono); color: var(--snow); }
+.week__sum [data-week-disc] { color: #6be38c; }
+.week__sum .total { padding-top: 10px; border-top: 1px solid var(--line); }
+.week__sum .total dt { color: var(--snow); font-weight: 700; }
+.week__sum .total dd { font: 600 30px var(--mono); color: var(--lava); }
+
+/* Certificado */
+.cert { background: radial-gradient(ellipse at 75% 50%, rgba(255,91,46,0.12), transparent 60%); }
+.cert__grid { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(30px, 6vw, 90px); align-items: center; }
+.cert__form { display: grid; gap: 14px; margin-top: 28px; }
+.cert__fmt { display: flex; gap: 8px; }
+.cert__fmt button { flex: 1; min-height: 44px; border: 0; background: rgba(255,255,255,0.05); box-shadow: inset 0 0 0 1px var(--line); color: var(--snow); font: 700 12px var(--mono); letter-spacing: 0.08em; text-transform: uppercase; cursor: pointer; }
+.cert__fmt button[aria-checked="true"] { background: var(--snow); color: var(--rock); }
+.cert__preview { display: grid; justify-items: center; }
+.cert__preview canvas { width: min(100%, 440px); height: auto; box-shadow: 0 50px 100px -40px #000, 0 0 0 1px var(--line); transform: rotate(2deg); transition: transform 0.6s var(--ease); }
+.cert__preview canvas:hover { transform: none; }
+
+/* Cierre con el texto a la derecha (la foto deja al montañista a la izquierda) */
+.final--right { background-position: 30% 60%; }
+.final--right::before { background: linear-gradient(270deg, rgba(13,15,18,0.92) 10%, rgba(13,15,18,0.15) 70%), linear-gradient(180deg, var(--rock), transparent 25%); }
+.final--right .wrap { display: grid; justify-items: end; text-align: right; }
+
+@media (max-width: 900px) {
+  .check, .week, .cert__grid { grid-template-columns: 1fr; }
+  .check__img { min-height: 240px; }
+  .check__list { grid-template-columns: 1fr; }
+  .cert__preview { order: -1; }
+  .final--right .wrap { justify-items: start; text-align: left; }
+  .final--right::before { background: linear-gradient(0deg, rgba(13,15,18,0.92) 20%, rgba(13,15,18,0.2) 80%), linear-gradient(180deg, var(--rock), transparent 25%); }
+}
+@media (max-width: 600px) { .week__pick { grid-template-columns: 1fr; } .wk { grid-template-columns: 72px 1fr; } }

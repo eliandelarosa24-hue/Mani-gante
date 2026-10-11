@@ -39,13 +39,13 @@
       <span>PUCÓN<b>AVENTURA</b></span>
     </a>
     <nav class="nav__links" aria-label="Secciones">
-      <a href="#ruta">La ruta</a><a href="#tours">Tours</a><a href="#test">¿Cuál es la mía?</a><a href="#seguridad">Seguridad</a><a href="#salidas">Salidas</a>
+      <a href="#ruta">La ruta</a><a href="#tours">Tours</a><a href="#test">¿Cuál es la mía?</a><a href="#seguridad">Seguridad</a><a href="#semana">Combos</a><a href="#salidas">Salidas</a>
     </nav>
     <a class="btn btn--lava btn--sm" href="#reservar">Reservar</a>
     <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
   </header>
   <div class="menu" aria-hidden="true">
-    <a href="#ruta">La ruta al cráter</a><a href="#tours">Tours</a><a href="#test">¿Cuál es la mía?</a><a href="#mochila">Mochila</a><a href="#seguridad">Seguridad</a><a href="#salidas">Salidas</a><a href="#reservar">Reservar</a>
+    <a href="#ruta">La ruta al cráter</a><a href="#tours">Tours</a><a href="#test">¿Cuál es la mía?</a><a href="#mochila">Mochila</a><a href="#seguridad">Seguridad</a><a href="#salidas">Salidas</a><a href="#semana">Arme su semana</a><a href="#certificado">Certificado de cumbre</a><a href="#reservar">Reservar</a>
   </div>
 
   <main id="inicio">
@@ -150,6 +150,11 @@
               <div><dt>Calorías</dt><dd data-r-kcal>—</dd></div>
             </dl>
             <div class="readout__gear"><span>Equipo puesto</span><ul data-r-gear></ul></div>
+            <div class="readout__photo" aria-hidden="true">
+              <span data-r-ph="0" class="is-on" style="{{img:guias:}}"></span>
+              <span data-r-ph="1" style="{{img:tour-1:1464822759023-fed622ff2c3b}}"></span>
+              <span data-r-ph="2" style="{{img:cierre:1464822759023-fed622ff2c3b}}"></span>
+            </div>
             <div class="readout__stage"><b data-r-stage>—</b><p data-r-text>—</p></div>
             <button type="button" class="btn btn--ghost btn--sm" data-p-play>▶ Ver el ascenso completo</button>
           </div>
@@ -230,6 +235,16 @@
             <div class="lvl lvl--r"><b>Roja</b><span>Erupción en curso: zona evacuada.</span></div>
           </div>
         </div>
+        <div class="check rv">
+          <div class="check__img" style="{{img:guias:}}" role="img" aria-label="Guías revisando crampones, cascos y cuerdas junto a la van al amanecer"></div>
+          <div class="check__body">
+            <p class="eyebrow">Antes de cada salida</p>
+            <h3>Revisión de 10 puntos, <em>uno por uno.</em></h3>
+            <ol class="check__list" data-check>
+              <li>Pronóstico de montaña y viento en cumbre</li><li>Reporte del volcán (SERNAGEOMIN)</li><li>Crampones ajustados a su bota</li><li>Piolet y técnica de autodetención</li><li>Casco con talla correcta</li><li>Radio y GPS cargados</li><li>Botiquín de montaña completo</li><li>Máscara antigases para el cráter</li><li>Agua y comida de cada persona</li><li>Plan de retorno y hora límite de cumbre</li>
+            </ol>
+          </div>
+        </div>
         <div class="guarantees">
           <div class="gt rv"><b>1:4</b><span>Un guía cada cuatro personas en el volcán</span></div>
           <div class="gt rv"><b>WFR</b><span>Primeros auxilios en zonas remotas y rescate en río</span></div>
@@ -250,11 +265,37 @@
       </div>
     </section>
 
+    <!-- SEMANA EN PUCÓN -->
+    <section class="sec semana" id="semana">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">07 / Combina y ahorra</p><h2 class="h2">Arme su <em>semana en Pucón.</em></h2></div>
+          <p class="muted">Elija dos o más aventuras y le armamos el itinerario en el orden ideal: el volcán el día de mejor clima y las termas para recuperar las piernas. Dos tours: 10% menos. Tres o más: 15%.</p>
+        </div>
+        <div class="week rv">
+          <div class="week__pick" data-week-pick></div>
+          <aside class="week__plan">
+            <div class="row">
+              <label class="field">Llegada<input type="date" data-week-date /></label>
+              <label class="field">Personas<select data-week-people><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option><option>6</option></select></label>
+            </div>
+            <ol class="week__days" data-week-days></ol>
+            <dl class="week__sum">
+              <div><dt>Subtotal</dt><dd data-week-sub>$0</dd></div>
+              <div><dt data-week-dl>Descuento</dt><dd data-week-disc>$0</dd></div>
+              <div class="total"><dt>Total</dt><dd data-week-total>$0</dd></div>
+            </dl>
+            <button type="button" class="btn btn--lava" data-demo="En el sitio real, el itinerario completo con fechas, horarios y el descuento llegaría al WhatsApp del operador para confirmarlo con un solo abono.">Reservar mi semana</button>
+          </aside>
+        </div>
+      </div>
+    </section>
+
     <!-- RESERVA -->
     <section class="sec reservar" id="reservar">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">07 / Reserva</p><h2 class="h2">Reserve en <em>dos minutos.</em></h2></div>
+          <div><p class="eyebrow">08 / Reserva</p><h2 class="h2">Reserve en <em>dos minutos.</em></h2></div>
           <p class="muted">Paga el 30% para confirmar. Le enviamos por WhatsApp la lista de qué llevar y el punto de encuentro.</p>
         </div>
         <div class="book">
@@ -300,7 +341,7 @@
     <section class="sec resenas" id="resenas">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">08 / Bitácora de cumbre</p><h2 class="h2">Más de 18.000 <em>aventureros.</em></h2></div>
+          <div><p class="eyebrow">09 / Bitácora de cumbre</p><h2 class="h2">Más de 18.000 <em>aventureros.</em></h2></div>
           <div class="score"><strong>4,9</strong><span>3.400 reseñas en Google y TripAdvisor</span></div>
         </div>
         <div class="logs">
@@ -311,10 +352,34 @@
       </div>
     </section>
 
+    <!-- CERTIFICADO DE CUMBRE -->
+    <section class="sec cert" id="certificado">
+      <div class="wrap cert__grid">
+        <div class="rv">
+          <p class="eyebrow">10 / Para compartir</p>
+          <h2 class="h2">Su certificado <em>de cumbre.</em></h2>
+          <p class="muted">Todos los que llegan al cráter reciben su certificado firmado por el guía. Pruébelo: escriba su nombre y descárguelo listo para Instagram.</p>
+          <form class="cert__form" data-cert novalidate>
+            <label class="field">Nombre<input name="name" maxlength="26" value="Valentina Rojas" /></label>
+            <div class="row">
+              <label class="field">Fecha de cumbre<input type="date" name="date" /></label>
+              <label class="field">Hora en el cráter<input type="time" name="time" value="12:34" /></label>
+            </div>
+            <div class="cert__fmt" role="radiogroup" aria-label="Formato">
+              <button type="button" role="radio" aria-checked="true" data-fmt="post">Post 4:5</button>
+              <button type="button" role="radio" aria-checked="false" data-fmt="story">Historia 9:16</button>
+            </div>
+            <button type="button" class="btn btn--lava" data-cert-dl>Descargar certificado</button>
+          </form>
+        </div>
+        <div class="cert__preview rv"><canvas data-cert-canvas width="1080" height="1350" role="img" aria-label="Vista previa del certificado de cumbre"></canvas></div>
+      </div>
+    </section>
+
     <!-- PREGUNTAS -->
     <section class="sec faq" id="preguntas">
       <div class="wrap faq__grid">
-        <div class="rv"><p class="eyebrow">09 / Preguntas</p><h2 class="h2">Antes de <em>subir.</em></h2><p class="muted">Oficina en calle O’Higgins, Pucón. Abierta de 8:00 a 21:00 todo el año.</p></div>
+        <div class="rv"><p class="eyebrow">11 / Preguntas</p><h2 class="h2">Antes de <em>subir.</em></h2><p class="muted">Oficina en calle O’Higgins, Pucón. Abierta de 8:00 a 21:00 todo el año.</p></div>
         <div class="acc rv">
           <details><summary>¿Necesito experiencia para subir el volcán?</summary><p>No técnica, pero sí buena condición física: son 5 a 6 horas de subida. Si puede caminar 4 horas en cerro, puede subir.</p></details>
           <details><summary>¿Desde qué edad pueden participar niños?</summary><p>Rafting bajo y canopy desde 8 años; Huerquehue desde 10; volcán desde 14 con autorización de los padres.</p></details>
@@ -325,7 +390,7 @@
     </section>
 
     <!-- CIERRE -->
-    <section class="final" style="{{img:cierre:1464822759023-fed622ff2c3b}}">
+    <section class="final final--right" style="{{img:cierre:1464822759023-fed622ff2c3b}}">
       <div class="wrap rv">
         <p class="kicker"><span class="kicker__dot"></span> Temporada de verano · diciembre a marzo</p>
         <h2>La cumbre<br /><span class="hero__lava">le espera.</span></h2>

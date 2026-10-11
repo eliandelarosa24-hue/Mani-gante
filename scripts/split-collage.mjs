@@ -10,6 +10,7 @@
 //     --inset 0.02             recorte de cada borde para eliminar las líneas de unión (2 % por defecto)
 //     --width 1920             ancho final de cada imagen (se amplía con Lanczos + enfoque suave)
 //     --ratio 16:9             recorta cada celda a esa proporción, centrada (opcional)
+//     --pos 0.5,0.5            punto que se conserva al recortar a --ratio (x,y de 0 a 1; 0,0 = arriba a la izquierda)
 //     --sr modelo.pb           amplía primero con inteligencia artificial (scripts/superres.py, EDSR x2):
 //                              más nitidez y menos artefactos que solo Lanczos; tarda ~2 min por imagen
 //     --dry                    solo muestra qué haría
@@ -35,6 +36,7 @@ const inset = Number(opt('inset', '0.02'));
 const width = Number(opt('width', '1920'));
 const ratio = opt('ratio');
 const srModel = opt('sr');
+const [px, py] = opt('pos', '0.5,0.5').split(',').map(Number);
 
 function cells(w, h, cols, rows, inset) {
   const cw = w / cols, ch = h / rows, out = [];
@@ -63,10 +65,10 @@ for (const [i, box] of boxes.entries()) {
     const target = rw / rh;
     if (box.width / box.height > target) {
       const nw = Math.round(box.height * target);
-      crop = { ...box, left: box.left + Math.round((box.width - nw) / 2), width: nw };
+      crop = { ...box, left: box.left + Math.round((box.width - nw) * px), width: nw };
     } else {
       const nh = Math.round(box.width / target);
-      crop = { ...box, top: box.top + Math.round((box.height - nh) / 2), height: nh };
+      crop = { ...box, top: box.top + Math.round((box.height - nh) * py), height: nh };
     }
   }
   const out = join(dir, `${name}.webp`);

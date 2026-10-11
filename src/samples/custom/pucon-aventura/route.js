@@ -67,6 +67,8 @@ export function initRoute({ reduced }) {
       const fresh = WPS[stage].gear;
       $('[data-r-gear]').innerHTML = gear.map((g) => `<li${fresh.includes(g) && stage > 0 ? ' class="is-new"' : ''}>${g}</li>`).join('');
       $('[data-r-stage]').textContent = WPS[stage].name;
+      const ph = stage >= 5 ? 2 : stage >= 3 ? 1 : 0;
+      $$('[data-r-ph]').forEach((el) => el.classList.toggle('is-on', +el.dataset.rPh === ph));
       $('[data-r-text]').textContent = WPS[stage].text;
       lastStage = stage;
     }

@@ -3,6 +3,8 @@ import './style.css';
 import { initRoute } from './route.js';
 import { initQuiz, TOURS } from './quiz.js';
 import { initPack } from './pack.js';
+import { initWeek } from './week.js';
+import { initCert } from './cert.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -119,6 +121,12 @@ initRoute({ reduced });
 initQuiz({ onPick: pickTour });
 initPack();
 
+/* ───────────── Revisión de 10 puntos: se marcan uno a uno al aparecer ───────────── */
+new IntersectionObserver(([e], o) => {
+  if (!e.isIntersecting) return; o.disconnect();
+  $$('[data-check] li').forEach((li, i) => setTimeout(() => li.classList.add('is-ok'), reduced ? 0 : 300 + i * 230));
+}, { threshold: 0.4 }).observe($('[data-check]'));
+
 /* ───────────── Tours: filtros, nivel e inclinación ───────────── */
 $$('.tcard__lvl').forEach((l) => { const n = +l.dataset.lvl; l.insertAdjacentHTML('afterbegin', `<span class="bars" aria-hidden="true">${[1, 2, 3, 4, 5].map((i) => `<i class="${i <= n ? 'on' : ''}" style="height:${4 + i * 1.6}px"></i>`).join('')}</span>`); l.setAttribute('aria-label', `Dificultad ${n} de 5: ${l.textContent}`); });
 $$('[data-f]').forEach((b) => b.addEventListener('click', () => {
@@ -220,6 +228,9 @@ function pickTour(id) {
   form.tour.value = id; update();
   $('#reservar').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
 }
+
+initWeek({ weather });
+initCert();
 
 /* ───────────── Apariciones y aviso de muestra ───────────── */
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
