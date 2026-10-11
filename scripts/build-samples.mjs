@@ -310,7 +310,7 @@ function gallery() {
 
 export function card(s) {
   return `<a class="sample" href="/muestras/${s.slug}/" data-niche="${s.niche}">
-    ${ph(s, 'hero', s.hero.img, '', s.hero.alt)}
+    ${ph(s, s.cardSlot || 'hero', s.hero.img, '', s.hero.alt)}
     <span class="sample__tag">${esc(s.nicheLabel)}</span>
     <span class="sample__body"><span class="sample__place">${esc(s.place)}</span><strong>${esc(s.name)}</strong><span class="sample__line">${esc(s.tagline)}</span><span class="sample__go">Ver muestra ↗</span></span>
   </a>`;

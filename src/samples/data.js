@@ -85,6 +85,7 @@ export const SAMPLES = [
   // 3 ─────────────────────────────────────────────────────────────── Glamping astroturismo
   {
     slug: 'domos-cielo-austral',
+    cardSlot: 'unidad-1',
     name: 'Domos Cielo Austral',
     tagline: 'Glamping de astroturismo',
     niche: 'alojamiento', nicheLabel: 'Glamping',

@@ -63,4 +63,20 @@ Se corta en dos pasadas: `--names hero,-,salon,cierre --ratio 16:9` y luego `--n
 
 ---
 
-Las otras 8 muestras tendrán sus prompts cuando se rediseñe cada una.
+## Muestra 3 · Pucón Aventura (turismo aventura, Pucón)
+
+Son 7 espacios, en 2 collages de 2×2. El estilo es fotografía de aventura: acción real, luz natural intensa, colores vivos y cascos y ropa técnica de colores (naranjo, rojo).
+
+### Collage A: tours → `tour-1..4` (`--ratio 4:3`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Adventure tourism in Pucón, southern Chile. Top-left: a roped group of climbers with orange jackets, helmets and ice axes ascending the snowy slope of Villarrica volcano at sunrise, with the smoking crater above and Lake Villarrica far below, shot from behind and below. Top-right: an orange raft with six people in helmets crashing through a big white-water rapid on the Trancura river, between dark volcanic rock walls, action shot with water splashing. Bottom-left: a family with two children aged 9 and 11 laughing in a raft on calm turquoise rapids, with a guide at the back, sunny day and green forest. Bottom-right: a person on a zipline flying over a native forest canopy and turquoise waterfalls, shot from the platform behind. Professional adventure photography, vivid natural colors, sharp, 8K.
+
+### Collage B: naturaleza, termas y cierre → `tour-5, tour-6, cierre`
+
+Se corta en dos pasadas: `--names tour-5,tour-6,-,- --ratio 4:3` y luego `--names -,-,cierre,- --ratio 16:9` (la cuarta celda queda de reserva).
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Top-left: hikers on a trail among ancient araucaria trees beside a deep green mountain lake in Huerquehue National Park, Chile. Top-right: natural hot spring pools at night connected by red wooden walkways in a fern-covered canyon, lit by candles and lanterns, with steam rising (Termas Geométricas style). Bottom-left: a wide epic view from the summit crater rim of Villarrica volcano at sunrise, with a climber in an orange jacket silhouetted and a sea of clouds and other snowy volcanoes (Lanín) on the horizon. Bottom-right: guides in helmets preparing climbing gear (crampones, ice axes) beside a van at dawn. Professional adventure photography, vivid natural colors, 8K.
+
+---
+
+Las otras 7 muestras tendrán sus prompts cuando se rediseñe cada una.
