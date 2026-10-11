@@ -21,7 +21,7 @@ const START_CHIPS = [
 
 const FAQ = [
   { k: /plazo|tiempo|cu[aá]nto (se )?demora|cu[aá]ndo|semanas|listo/i, a: 'Una presencia esencial toma de 1 a 2 semanas, un sitio completo de 3 a 4 y una experiencia premium de 5 a 8. El plazo corre desde que tengo los textos y fotos de su negocio.' },
-  { k: /dominio|hosting|\.cl|servidor/i, a: 'El dominio se compra a su nombre (así siempre es suyo) y el hosting suele ser económico o gratuito. Ambos quedan detallados en la propuesta, sin sorpresas.' },
+  { k: /dominio|hosting|\.cl|servidor/i, a: 'Todos mis sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se compra aparte) y hosting con certificado de seguridad el primer año, todo a su nombre. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.' },
   { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Se paga en pesos chilenos (o USD fuera de Chile). Emito boleta o factura según lo que necesite; los impuestos y la forma de pago (transferencia o cuotas) quedan en la propuesta escrita antes de empezar.' },
   { k: /caribe|dominican|extranjero|fuera de chile|usd|d[oó]lar/i, a: 'Sí, trabajo con negocios del Caribe y República Dominicana de forma remota. Esos proyectos se cotizan en USD.' },
   { k: /presencial|online|regi[oó]n|viaj/i, a: 'Las capacitaciones son presenciales en la Araucanía (en otras regiones el traslado se cotiza aparte) u online en vivo para hasta 25 personas.' },
@@ -262,6 +262,18 @@ export class Chat {
     this.scroll();
   }
 
+  samples() {
+    this.bot('Tengo 10 muestras completas de distintos rubros: lodge, cabañas, glamping, hotel boutique, villa en el Caribe, restaurante, café, operador de aventura, viña y un portal para cámaras de turismo. Elija la más parecida a su negocio:');
+    const a = document.createElement('a');
+    a.className = 'btn btn--gold msg-cta';
+    a.href = '/muestras/';
+    a.textContent = 'Ver las 10 muestras ↗';
+    this.log.append(a);
+    this.scroll();
+    track('agent_samples');
+    this.startChips();
+  }
+
   // ---------- entrada ----------
   async send(raw) {
     const text = (raw || '').trim();
@@ -335,6 +347,7 @@ export class Chat {
     }
     if (/^tengo una duda$|^duda$|^pregunta$/i.test(text)) return this.faqMenu();
     if (/agendar|llamada|reuni[oó]n|videollamada/i.test(text)) return this.schedule();
+    if (/muestra|ejemplo|portafolio|trabajos|ver sitios|referencia/i.test(text)) return this.samples();
     const faq = FAQ.find((f) => f.k.test(text));
     const svc = KEYWORDS.find((k) => k.k.test(text));
     if (/precio|cotiz|presupuesto|cu[aá]nto cuesta|valor/i.test(text) && svc) return this.startService(svc.s);
@@ -351,7 +364,7 @@ export class Chat {
     this.bot('Con gusto. ¿Sobre qué tema?');
     const topics = [
       ['Plazos de entrega', 'plazo'], ['Dominio y hosting', 'dominio'], ['Pagos y boleta', 'pago'],
-      ['Precios de lanzamiento', 'lanzamiento'], ['Proyectos en el Caribe', 'caribe'], ['¿Quién está detrás?', 'jorge'],
+      ['Precios de lanzamiento', 'lanzamiento'], ['Ver muestras por rubro', 'muestras'], ['Proyectos en el Caribe', 'caribe'], ['¿Quién está detrás?', 'jorge'],
     ];
     this.setChips(topics.map(([label, q]) => ({ label, on: () => { this.user(label); this.guidedText(q); } })));
   }

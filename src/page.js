@@ -1,7 +1,8 @@
 // Páginas secundarias (servicios y privacidad): misma base visual y el agente disponible.
-import { initShared, revealOnScroll, splitLines, $, reduced, gsap, ScrollTrigger } from './shared.js';
+import { initShared, revealOnScroll, splitLines, initSampleFilters, $, reduced, gsap, ScrollTrigger } from './shared.js';
 
 initShared();
+initSampleFilters();
 const boot = () => {
   const title = $('[data-hero-title]');
   if (title && !reduced) {

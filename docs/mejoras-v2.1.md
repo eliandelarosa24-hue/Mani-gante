@@ -62,3 +62,32 @@
 3. **Registro automático en Google Sheets:** cada contacto, cotización y diagnóstico queda como fila en una planilla (descargable como Excel), con columnas de estado y notas para usarla como CRM. Nueva función `/api/lead` con límite de uso; configuración en `docs/google-sheets.md`.
 4. **Nueva línea de servicio "Automatización e IA":** agentes de IA 24/7, registro de reservas en Google Sheets, mensajes automáticos a huéspedes y el plan "Hospitalidad inteligente". Tiene su propia página, aparece en la página principal, en Vaeru IA y como extra de los sitios para alojamientos.
 5. **Boleta o factura:** los textos de precios, las preguntas frecuentes y el agente indican que se emite boleta o factura según lo que necesite el cliente.
+
+# Versión 2.3 · Dominio de regalo, 10 muestras y mejoras
+
+## 10 muestras de concepto (`/muestras/`)
+Sitios completos para negocios ficticios, cada uno con identidad propia (tipografías, colores y estilo):
+1. **Tierra Pehuén Lodge** (lodge de montaña, Malalcahuello): suites, experiencias con filtros, reserva con calendario y extras.
+2. **Cabañas Lago Azul** (cabañas familiares, Villarrica): cotizador de estadía con tinaja, desayuno y late check-out.
+3. **Domos Cielo Austral** (glamping de astroturismo, Curarrehue): fase lunar real calculada en vivo y experiencias astronómicas.
+4. **Hotel Casa Nogal** (hotel boutique patrimonial, Valdivia): habitaciones y carta del restaurante con pestañas.
+5. **Villa Coral Samaná** (villas en el Caribe, República Dominicana): precios en dólares y tours por tipo.
+6. **Fogón Mapu** (restaurante de autor, Temuco): carta interactiva, menú degustación y reserva de mesa por horario.
+7. **Kuchen Haus** (café y pastelería, Frutillar): carta y pedidos de kuchen enteros con despacho.
+8. **Pucón Aventura** (operador de turismo aventura): tours filtrables por nivel, seguridad, agenda y reserva por salida.
+9. **Viña Los Robles** (enoturismo, Colchagua): catas por niveles, catálogo de vinos y reserva de visita.
+10. **Destino Licán Ray** (portal de una cámara de turismo): directorio de socios, agenda de eventos e información útil.
+
+Todas incluyen galería con visor, reseñas ilustrativas, mapa, preguntas frecuentes, WhatsApp flotante y un aviso que explica que es una muestra, con un botón "Quiero un sitio así". Cada imagen se puede reemplazar por una propia (Gemini) sin tocar código (`docs/imagenes-muestras.md`).
+
+## 10 mejoras al sitio
+1. **Dominio de regalo y hosting el primer año** en todos los sitios: franja "Incluido", opciones de cada página de servicio, preguntas frecuentes y agente.
+2. **Sección "Muestras"** en la portada y **galería** `/muestras/`, con filtros por rubro.
+3. **Calculadora con modo restaurante**: comisiones de las apps de delivery (PedidosYa, Uber Eats) y retorno de la inversión.
+4. **Precios en CLP o USD** (para clientes del Caribe), con tipo de cambio editable (`USD_RATE`).
+5. **Barra inferior fija en el celular**, con WhatsApp y "Cotizar con IA".
+6. **Vaeru IA recomienda la muestra** más parecida al negocio del cliente.
+7. **Navegación instantánea**: las páginas se precargan cuando el visitante pasa el cursor por un enlace.
+8. **Carga diferida del chat** de la sección Vaeru IA (portada más liviana).
+9. **Manifiesto web**: se puede instalar en el celular con el logo de Red Vaeru.
+10. **Encabezados de seguridad**: nadie puede mostrar el sitio de Red Vaeru dentro de otro sitio, más permisos restringidos y HTTPS estricto.

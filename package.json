@@ -5,10 +5,10 @@
   "type": "module",
   "description": "Red Vaeru: estudio digital y asesoría para turismo y hospitalidad, con agente de IA cotizador.",
   "scripts": {
-    "pages": "node scripts/build-pages.mjs",
-    "predev": "node scripts/build-pages.mjs",
+    "pages": "node scripts/build-pages.mjs && node scripts/build-samples.mjs",
+    "predev": "npm run pages",
     "dev": "vite",
-    "prebuild": "node scripts/build-pages.mjs",
+    "prebuild": "npm run pages",
     "build": "vite build",
     "preview": "vite preview",
     "test": "node --test tests/*.test.js"

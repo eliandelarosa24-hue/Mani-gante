@@ -23,6 +23,8 @@ Sitio de Red Vaeru, el estudio digital de Jorge Vásquez para turismo y hospital
 | `netlify/functions/lead.mjs` | Envía cada lead (contacto, cotización, diagnóstico) a Google Sheets en `/api/lead` |
 | `src/leads.js` | Envío de leads a Netlify Forms y a Google Sheets a la vez |
 | `src/live.js` | Sección "En vivo": los sitios de los clientes funcionando dentro de la página |
+| `src/samples/` | Las 10 muestras de concepto: contenido (`data.js`), estilos y comportamiento compartidos |
+| `scripts/build-samples.mjs` | Genera `/muestras/*` y la galería (se ejecuta solo antes de `dev` y `build`) |
 | `public/brand/` | Logo oficial de Red Vaeru sin fondo (WebP y PNG) |
 | `public/__forms.html` | Registro de los formularios `cotizacion` y `diagnostico` para Netlify |
 | `docs/` | Análisis, plan para conseguir clientes, tarifario, investigación y registro de mejoras |
@@ -60,6 +62,8 @@ Sin la clave de API, Vaeru IA funciona en **modo guiado**: cotiza con el mismo t
 - **Cambiar precios:** edite `SERVICES` en `src/pricing.js`.
 - **Nueva campaña:** cambie `CAMPAIGN.deadline` y `CAMPAIGN.text`. La barra superior se oculta sola después de la fecha.
 - **Editar una página de servicio:** use `src/services-content.js`.
+- **Poner imágenes propias (Gemini) en las muestras:** vea `docs/imagenes-muestras.md`.
+- **Tipo de cambio para precios en USD:** `USD_RATE` en `src/pricing.js`.
 
 ## Pendiente (requiere al dueño)
 - [ ] Foto profesional de Jorge y fotos reales de los clientes (reemplazar Unsplash).

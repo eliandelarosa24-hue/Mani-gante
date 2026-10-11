@@ -1,4 +1,4 @@
-import { initShared, revealOnScroll, splitLines, $, $$, reduced, fine, gsap, ScrollTrigger, track } from './shared.js';
+import { initShared, revealOnScroll, splitLines, initSampleFilters, $, $$, reduced, fine, gsap, ScrollTrigger, track } from './shared.js';
 import { initHeroShader } from './hero-shader.js';
 import { initLive } from './live.js';
 import { Chat } from './chat.js';
@@ -83,21 +83,38 @@ function scrollAnimations() {
 
 // ---------- calculadora de comisiones con retorno de la inversión ----------
 const ota = $('[data-ota]');
-const webFrom = fromPrice('web_alojamiento');
+const OTA_MODES = {
+  aloj: { l: ['Reservas al mes por Booking, Airbnb u otras apps', 'Valor promedio de cada reserva', 'Comisión que le cobra la plataforma'], n: [2, 150, 1, 20], r: [20000, 500000, 5000, 90000], f: [10, 30, 18], web: 'web_alojamiento', unit: 'reserva' },
+  rest: { l: ['Pedidos al mes por PedidosYa, Uber Eats u otras apps', 'Valor promedio de cada pedido', 'Comisión de la app de delivery'], n: [10, 1500, 10, 300], r: [5000, 60000, 1000, 18000], f: [15, 35, 25], web: 'web_restaurante', unit: 'pedido' },
+};
+let otaMode = OTA_MODES.aloj;
 const updateOta = () => {
   const n = +ota.nights.value, r = +ota.rate.value, f = +ota.fee.value;
   const perBooking = r * (f / 100);
   const year = n * perBooking * 12;
-  $('[data-out="nights"]').textContent = n;
+  const webFrom = fromPrice(otaMode.web);
+  $('[data-out="nights"]').textContent = n.toLocaleString('es-CL');
   $('[data-out="rate"]').textContent = formatCLP(r);
   $('[data-out="fee"]').textContent = f + '%';
   $('[data-ota-total]').textContent = formatCLP(year);
-  $('[data-ota-hint]').textContent = `Si solo el 30% de esas reservas llegara directo, su negocio recuperaría ${formatCLP(year * 0.3)} al año.`;
+  $('[data-ota-hint]').textContent = `Si solo el 30% llegara directo, su negocio recuperaría ${formatCLP(year * 0.3)} al año.`;
   const payback = Math.max(1, Math.ceil(webFrom / perBooking));
-  $('[data-ota-payback]').textContent = `Un sitio desde ${formatCLP(webFrom)} se paga con ${payback} reserva${payback > 1 ? 's' : ''} directa${payback > 1 ? 's' : ''}.`;
+  $('[data-ota-payback]').textContent = `Un sitio desde ${formatCLP(webFrom)} se paga con ${payback} ${otaMode.unit}${payback > 1 ? 's' : ''} directo${payback > 1 ? 's' : ''}.`;
 };
+const setRange = (el, [min, max, step, val]) => { el.min = min; el.max = max; el.step = step; el.value = val; };
+$$('[data-ota-mode]').forEach((b) => b.addEventListener('click', () => {
+  $$('[data-ota-mode]').forEach((x) => x.setAttribute('aria-checked', String(x === b)));
+  otaMode = OTA_MODES[b.dataset.otaMode];
+  ['l1', 'l2', 'l3'].forEach((k, i) => ($(`[data-ota-${k}]`).textContent = otaMode.l[i]));
+  $('[data-ota-title]').innerHTML = b.dataset.otaMode === 'rest' ? '¿Cuánto le paga a las apps de delivery <em>cada año?</em>' : '¿Cuánto le paga a Booking y Airbnb <em>cada año?</em>';
+  setRange(ota.nights, otaMode.n);
+  setRange(ota.rate, otaMode.r);
+  setRange(ota.fee, [otaMode.f[0], otaMode.f[1], 1, otaMode.f[2]]);
+  updateOta();
+  track('ota_mode', { mode: b.dataset.otaMode });
+}));
 ota.addEventListener('input', updateOta);
-ota.addEventListener('change', () => track('ota_calculator', { reservas: +ota.nights.value }), { once: true });
+ota.addEventListener('change', () => track('ota_calculator', { valor: +ota.nights.value }), { once: true });
 updateOta();
 
 // ---------- servicios: imagen que sigue al cursor y cotización directa ----------
@@ -217,8 +234,14 @@ contact?.addEventListener('submit', async (e) => {
 });
 
 // ---------- agente en la sección y fondo ----------
-new Chat($('[data-agent-inline]'), { source: 'seccion' });
+// El chat de la sección se crea solo cuando el visitante se acerca (aliviana la carga inicial)
+new IntersectionObserver(([en], obs) => {
+  if (!en.isIntersecting) return;
+  obs.disconnect();
+  new Chat($('[data-agent-inline]'), { source: 'seccion' });
+}, { rootMargin: '600px' }).observe($('[data-agent-inline]'));
 initLive();
+initSampleFilters();
 initHeroShader($('.hero__canvas'));
 const boot = () => { intro(); scrollAnimations(); ScrollTrigger.refresh(); };
 if (document.fonts?.ready) document.fonts.ready.then(boot); else addEventListener('load', boot);

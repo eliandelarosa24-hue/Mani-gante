@@ -17,6 +17,11 @@ export const CAMPAIGN = {
   text: 'Temporada de verano: confirme su sitio antes del 30 de noviembre.',
 };
 
+// Tipo de cambio referencial para mostrar precios en USD (clientes del Caribe). Actualícelo cuando cambie.
+export const USD_RATE = 950;
+
+export const HOSTING_NOTE = 'Todos los sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se compra aparte en NIC Chile), hosting con certificado de seguridad el primer año y correo de contacto. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.';
+
 export const TAX_NOTE = 'Valores referenciales en pesos chilenos. Emito boleta o factura según lo que necesite su negocio; los impuestos que correspondan se detallan en la propuesta.';
 
 export const SERVICES = {
@@ -199,7 +204,7 @@ export function estimate(input) {
     notes: [
       TAX_NOTE,
       'El precio final y fijo llega por escrito en la propuesta, antes de pagar nada.',
-      'Dominio y hosting se compran a nombre del cliente; suelen costar entre $15.000 y $40.000 al año.',
+      HOSTING_NOTE,
       'Capacitaciones fuera de la Araucanía: traslado y viáticos se cotizan aparte.',
       'Proyectos fuera de Chile se cotizan en USD.',
     ],

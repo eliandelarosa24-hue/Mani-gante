@@ -62,7 +62,7 @@
         "mainEntity": [
           { "@type": "Question", "name": "¿Por qué no muestran todos los precios?", "acceptedAnswer": { "@type": "Answer", "text": "Cada negocio es distinto. Cada servicio muestra su valor desde y Vaeru IA entrega un rango para su caso. El precio fijo llega por escrito antes de pagar." } },
           { "@type": "Question", "name": "¿En cuánto tiempo está listo mi sitio?", "acceptedAnswer": { "@type": "Answer", "text": "Una presencia esencial toma de 1 a 2 semanas; un sitio completo, de 3 a 4; una experiencia premium, de 5 a 8, desde que se entregan textos y fotos." } },
-          { "@type": "Question", "name": "¿Incluye dominio y hosting?", "acceptedAnswer": { "@type": "Answer", "text": "El dominio se compra a nombre del cliente y el hosting suele ser económico o gratuito. Ambos quedan detallados en la propuesta." } },
+          { "@type": "Question", "name": "¿Incluye dominio y hosting?", "acceptedAnswer": { "@type": "Answer", "text": "Sí. Todos los sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se compra aparte) y hosting con certificado de seguridad el primer año, a nombre del cliente." } },
           { "@type": "Question", "name": "¿Las capacitaciones son presenciales?", "acceptedAnswer": { "@type": "Answer", "text": "Presenciales en la Araucanía (en otras regiones se cotiza el traslado) u online en vivo para hasta 25 personas." } },
           { "@type": "Question", "name": "¿Trabajan fuera de Chile?", "acceptedAnswer": { "@type": "Answer", "text": "Sí, especialmente en el Caribe y República Dominicana, de forma remota y con precios en USD." } }
         ]
@@ -70,6 +70,8 @@
     ]
   }
   </script>
+  <link rel="manifest" href="/manifest.webmanifest" />
+  <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
   <!--ANALYTICS-->
 </head>
 <body>
@@ -99,7 +101,7 @@
       <a href="#servicios">Servicios</a>
       <a href="#diagnostico">Diagnóstico</a>
       <a href="#trabajos">Trabajos</a>
-      <a href="#en-vivo">En vivo</a>
+      <a href="#muestras">Muestras</a>
       <a href="#nosotros">Sobre mí</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -112,6 +114,7 @@
       <a href="#servicios">Servicios</a>
       <a href="#diagnostico">Diagnóstico</a>
       <a href="#trabajos">Trabajos</a>
+      <a href="#muestras">Muestras</a>
       <a href="#agente">Vaeru IA</a>
       <a href="#nosotros">Sobre mí</a>
       <a href="#contacto">Contacto</a>
@@ -165,22 +168,26 @@
 
         <div class="ota">
           <div class="ota__copy">
-            <h2 class="h2">¿Cuánto le paga a Booking y Airbnb <em>cada año?</em></h2>
+            <h2 class="h2" data-ota-title>¿Cuánto le paga a Booking y Airbnb <em>cada año?</em></h2>
             <p>Mueva los valores con los números de su negocio. Es una cuenta simple, pero suele sorprender.</p>
           </div>
           <form class="ota__calc" data-ota onsubmit="return false" aria-label="Calculadora de comisiones">
+            <div class="ota__mode" role="radiogroup" aria-label="Tipo de negocio">
+              <button type="button" role="radio" aria-checked="true" data-ota-mode="aloj">Alojamiento</button>
+              <button type="button" role="radio" aria-checked="false" data-ota-mode="rest">Restaurante</button>
+            </div>
             <label>
-              <span>Reservas al mes por Booking, Airbnb u otras apps</span>
+              <span data-ota-l1>Reservas al mes por Booking, Airbnb u otras apps</span>
               <output data-out="nights">20</output>
               <input type="range" min="2" max="150" value="20" name="nights" />
             </label>
             <label>
-              <span>Valor promedio de cada reserva</span>
+              <span data-ota-l2>Valor promedio de cada reserva</span>
               <output data-out="rate">$90.000</output>
               <input type="range" min="20000" max="500000" step="5000" value="90000" name="rate" />
             </label>
             <label>
-              <span>Comisión que le cobra la plataforma</span>
+              <span data-ota-l3>Comisión que le cobra la plataforma</span>
               <output data-out="fee">18%</output>
               <input type="range" min="10" max="30" value="18" name="fee" />
             </label>
@@ -286,6 +293,12 @@
           </li>
         </ul>
 
+        <ul class="included" aria-label="Incluido en todos los sitios">
+          <li><strong>Dominio de regalo</strong><span>el primer año</span></li>
+          <li><strong>Hosting incluido</strong><span>el primer año, con SSL</span></li>
+          <li><strong>Diseño para celular</strong><span>donde reserva el huésped</span></li>
+          <li><strong>Todo a su nombre</strong><span>dominio, accesos y contenido</span></li>
+        </ul>
         <div class="launch" data-launch>
           <div>
             <p class="launch__tag">Precios de lanzamiento</p>
@@ -295,6 +308,7 @@
           <p>Estoy sumando mis primeros proyectos turísticos, por eso estos valores. A cambio pido tres cosas simples: un testimonio, permiso para mostrar el trabajo y compartir cómo le fue en reservas. Cuando se completen los cupos, los precios suben.</p>
           <button class="btn btn--gold" data-open-agent data-source="cupos">Reservar un cupo</button>
         </div>
+        <div class="currency" role="radiogroup" aria-label="Moneda"><span>Ver precios en</span><button type="button" role="radio" aria-checked="true" data-cur="CLP">CLP</button><button type="button" role="radio" aria-checked="false" data-cur="USD">USD</button></div>
         <p class="services__note">Valores referenciales en pesos chilenos. Emito boleta o factura; el precio fijo y los impuestos que correspondan llegan por escrito en la propuesta.</p>
       </div>
       <figure class="svc__float" aria-hidden="true"><img alt="" /></figure>
@@ -461,6 +475,29 @@
       </div>
     </section>
 
+    <!-- MUESTRAS -->
+    <section class="samples-sec dark" id="muestras">
+      <div class="wrap">
+        <div class="section-head samples-head">
+          <div>
+            <p class="eyebrow">Muestras de concepto</p>
+            <h2 class="h1" data-split>Diez rubros, <em>diez identidades.</em></h2>
+          </div>
+          <p class="samples-lead">Sitios completos diseñados para negocios ficticios del turismo chileno y caribeño: reservas con calendario, cartas interactivas, catas, tours y más. Elija su rubro y explore.</p>
+        </div>
+        <div class="sfilters" role="group" aria-label="Filtrar muestras por rubro">
+          <button aria-pressed="true" data-sf="todo">Todo</button>
+          <button aria-pressed="false" data-sf="alojamiento">Alojamiento</button>
+          <button aria-pressed="false" data-sf="gastronomia">Gastronomía</button>
+          <button aria-pressed="false" data-sf="experiencias">Experiencias</button>
+          <button aria-pressed="false" data-sf="caribe">Caribe</button>
+          <button aria-pressed="false" data-sf="destino">Destinos y gremios</button>
+        </div>
+        <div class="samples"><!--SAMPLES--></div>
+        <p class="samples-more"><a class="btn btn--line" href="/muestras/">Ver todas las muestras ↗</a> <span>Negocios ficticios creados para mostrar mi estilo de trabajo.</span></p>
+      </div>
+    </section>
+
     <!-- TESTIMONIOS -->
     <section class="quotes light">
       <div class="wrap">
@@ -583,7 +620,7 @@
           <details><summary>¿Por qué no muestran todos los precios?</summary><p>Porque cada negocio es distinto: no cuesta lo mismo una cabaña que un hotel boutique con tres idiomas. Vea el valor "desde" de cada servicio y pida a Vaeru IA un rango para su caso. El precio fijo siempre llega por escrito antes de pagar.</p></details>
           <details><summary>¿Por qué los precios de lanzamiento son tan accesibles?</summary><p>Porque estoy sumando mis primeros proyectos turísticos. A cambio pido un testimonio, permiso para mostrar el trabajo y compartir cómo le fue. Son cupos limitados; después los precios suben.</p></details>
           <details><summary>¿En cuánto tiempo está listo mi sitio?</summary><p>Una presencia esencial toma de 1 a 2 semanas; un sitio completo, de 3 a 4; una experiencia premium, de 5 a 8. El plazo corre cuando ya tengo textos y fotos de su negocio.</p></details>
-          <details><summary>¿Incluye dominio (.cl) y hosting?</summary><p>Le oriento para comprar el dominio a su nombre (así siempre es suyo). El hosting suele ser económico o gratuito; queda escrito en la propuesta para que no haya sorpresas.</p></details>
+          <details><summary>¿Incluye dominio y hosting?</summary><p>Sí. Todos mis sitios incluyen <strong>dominio de regalo el primer año</strong> (.com u otras extensiones; el .cl se compra aparte en NIC Chile) y <strong>hosting con certificado de seguridad</strong> el primer año, todo a su nombre. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.</p></details>
           <details><summary>¿Las capacitaciones son presenciales?</summary><p>Ambas. Presenciales en la Araucanía (en otras regiones, traslado y viáticos se cotizan aparte) u online en vivo para equipos de hasta 25 personas.</p></details>
           <details><summary>¿Trabaja fuera de Chile?</summary><p>Sí, especialmente en el Caribe y República Dominicana. Esos proyectos se cotizan en USD y se trabajan de forma remota.</p></details>
           <details><summary>¿Después puedo cambiar textos y fotos yo mismo?</summary><p>Sí. Le dejo una capacitación breve y una guía, y si prefiere no preocuparse, existe la mantención mensual.</p></details>
@@ -665,6 +702,10 @@
     </div>
   </footer>
 
+  <div class="mbar" aria-label="Acciones rápidas">
+    <a href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vengo%20del%20sitio%20de%20Red%20Vaeru." target="_blank" rel="noopener" data-from="barra-movil">WhatsApp</a>
+    <button type="button" data-open-agent data-source="barra-movil">Cotizar con IA</button>
+  </div>
   <button class="fab" data-open-agent data-source="flotante" aria-label="Abrir Vaeru IA">
     <img class="mark" src="/brand/emblema-96.webp" alt="" width="96" height="96" />
     <span>Vaeru IA</span>

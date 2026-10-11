@@ -1,12 +1,14 @@
 import { defineConfig } from 'vite';
-import { readdirSync, existsSync } from 'node:fs';
+import { readdirSync, existsSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 
 // URL pública: Netlify la entrega en el build (URL). Con dominio propio, defina SITE_URL.
 const SITE_URL = (process.env.SITE_URL || process.env.URL || 'https://redvaeru.netlify.app').replace(/\/$/, '');
 
 const servicePages = existsSync('servicios') ? readdirSync('servicios').map((d) => `servicios/${d}/index.html`) : [];
-const pages = ['index.html', 'privacidad/index.html', 'gracias/index.html', '404.html', ...servicePages];
+const samplePages = existsSync('muestras') ? readdirSync('muestras', { withFileTypes: true }).filter((d) => d.isDirectory()).map((d) => `muestras/${d.name}/index.html`) : [];
+const pages = ['index.html', 'privacidad/index.html', 'gracias/index.html', '404.html', 'muestras/index.html', ...servicePages, ...samplePages];
+const sampleCards = () => (existsSync('muestras/_cards.html') ? readFileSync('muestras/_cards.html', 'utf8') : '');
 
 function analyticsTag() {
   if (process.env.VITE_PLAUSIBLE_DOMAIN) {
@@ -22,9 +24,9 @@ function analyticsTag() {
 function site() {
   return {
     name: 'red-vaeru-site',
-    transformIndexHtml: (html) => html.replaceAll('__SITE_URL__', SITE_URL).replace('<!--ANALYTICS-->', analyticsTag()),
+    transformIndexHtml: (html) => html.replaceAll('__SITE_URL__', SITE_URL).replace('<!--ANALYTICS-->', analyticsTag()).replace('<!--SAMPLES-->', sampleCards()),
     generateBundle() {
-      const paths = ['/', ...servicePages.map((p) => '/' + p.replace(/index\.html$/, '')), '/privacidad'];
+      const paths = ['/', ...servicePages.map((p) => '/' + p.replace(/index\.html$/, '')), '/muestras/', '/privacidad'];
       const today = new Date().toISOString().slice(0, 10);
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n` });
       this.emitFile({

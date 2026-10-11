@@ -1,0 +1,14 @@
+{
+  "name": "Red Vaeru · Estudio digital de turismo",
+  "short_name": "Red Vaeru",
+  "description": "Sitios web, asesoría y capacitación para turismo y hospitalidad.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#0B110E",
+  "theme_color": "#0B110E",
+  "lang": "es-CL",
+  "icons": [
+    { "src": "/brand/emblema-192.webp", "sizes": "192x192", "type": "image/webp" },
+    { "src": "/brand/emblema-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" }
+  ]
+}

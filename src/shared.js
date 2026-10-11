@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { Chat } from './chat.js';
-import { fromPrice, formatCLP, launchLeft, LAUNCH, CAMPAIGN } from './pricing.js';
+import { fromPrice, formatCLP, launchLeft, LAUNCH, CAMPAIGN, USD_RATE } from './pricing.js';
 import { track, trackOutbound } from './analytics.js';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -25,10 +25,24 @@ export function initShared() {
   });
 
   // Precios "desde", cupos y año.
-  $$('[data-from]').forEach((el) => {
-    const v = fromPrice(el.dataset.from);
-    if (v) el.textContent = `desde ${formatCLP(v)}${el.hasAttribute('data-monthly') ? '/mes' : ''}`;
-  });
+  let cur = 'CLP';
+  try { cur = localStorage.getItem('rv-cur') || 'CLP'; } catch { /* sin almacenamiento */ }
+  const paintPrices = () => {
+    $$('[data-from]').forEach((el) => {
+      const v = fromPrice(el.dataset.from);
+      if (!v) return;
+      const txt = cur === 'USD' ? `US$${Math.round(v / USD_RATE)} aprox.` : formatCLP(v);
+      el.textContent = `desde ${txt}${el.hasAttribute('data-monthly') ? '/mes' : ''}`;
+    });
+    $$('[data-cur]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.cur === cur)));
+  };
+  $$('[data-cur]').forEach((b) => b.addEventListener('click', () => {
+    cur = b.dataset.cur;
+    try { localStorage.setItem('rv-cur', cur); } catch { /* sin almacenamiento */ }
+    paintPrices();
+    track('currency', { cur });
+  }));
+  paintPrices();
   $$('[data-launch-left]').forEach((el) => (el.textContent = launchLeft()));
   $$('[data-launch-total]').forEach((el) => (el.textContent = LAUNCH.slots));
   $$('[data-launch-bar]').forEach((el) => (el.style.transform = `scaleX(${LAUNCH.taken / LAUNCH.slots})`));
@@ -81,6 +95,7 @@ export function initShared() {
     nav?.classList.toggle('is-hidden', y > lastY && y > 400 && !menuOpen);
     lastY = y;
     fab?.classList.toggle('is-visible', y > innerHeight * 0.6);
+    $('.mbar')?.classList.toggle('is-visible', y > innerHeight * 0.6);
     if (progress) progress.style.transform = `scaleX(${Math.min(1, y / Math.max(1, document.documentElement.scrollHeight - innerHeight))})`;
   };
   addEventListener('scroll', onScroll, { passive: true });
@@ -239,3 +254,15 @@ export function revealOnScroll() {
 }
 
 export { gsap, ScrollTrigger, track };
+
+// Filtro de muestras por rubro (página principal y galería de muestras)
+export function initSampleFilters() {
+  $$('.sfilters').forEach((wrap) => {
+    const cards = $$('.sample', wrap.parentElement);
+    $$('button', wrap).forEach((b) => b.addEventListener('click', () => {
+      $$('button', wrap).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+      cards.forEach((c) => { c.hidden = b.dataset.sf !== 'todo' && c.dataset.niche !== b.dataset.sf; });
+      track('samples_filter', { niche: b.dataset.sf });
+    }));
+  });
+}
