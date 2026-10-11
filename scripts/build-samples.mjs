@@ -1,7 +1,7 @@
 // Genera las 10 muestras de concepto (/muestras/<slug>/) y la galería (/muestras/).
 // Contenido en src/samples/data.js. Imágenes: si existe public/muestras/<slug>/img/<nombre>.webp
 // (por ejemplo, una imagen generada con Gemini), reemplaza sola a la foto de respaldo.
-import { mkdirSync, writeFileSync, rmSync, existsSync } from 'node:fs';
+import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SAMPLES } from '../src/samples/data.js';
@@ -317,10 +317,25 @@ export function card(s) {
 }
 
 rmSync(join(root, 'muestras'), { recursive: true, force: true });
+// Muestras a medida: si existe src/samples/custom/<slug>/index.html se usa ese diseño propio.
+// Las marcas {{img:archivo:idUnsplash}} se convierten en imagen propia (si existe) o foto de respaldo.
+function custom(s) {
+  const tpl = join(root, 'src', 'samples', 'custom', s.slug, 'index.html');
+  if (!existsSync(tpl)) return null;
+  return readFileSync(tpl, 'utf8').replace(/\{\{img:([\w-]+):([\w-]*)\}\}/g, (_, slot, id) => {
+    const local = `/muestras/${s.slug}/img/${slot}.webp`;
+    const layers = [];
+    if (existsSync(join(root, 'public', local))) layers.push(`url('${local}')`);
+    if (id) layers.push(`url('https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=72')`);
+    layers.push(`linear-gradient(135deg, ${s.theme['--accent-2'] || '#2f4a3a'}, ${s.theme['--accent'] || '#8a5a2b'})`);
+    return `background-image:${layers.join(', ')}`;
+  });
+}
+
 for (const s of SAMPLES) {
   const file = join(root, 'muestras', s.slug, 'index.html');
   mkdirSync(dirname(file), { recursive: true });
-  writeFileSync(file, page(s));
+  writeFileSync(file, custom(s) || page(s));
 }
 writeFileSync(join(root, 'muestras', 'index.html'), gallery());
 // Tarjetas para la sección de muestras de la página principal (las inserta vite.config.js)

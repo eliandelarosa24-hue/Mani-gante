@@ -24,8 +24,12 @@ test('el generador crea las páginas, la galería y las tarjetas de la portada',
   for (const s of SAMPLES) {
     const html = readFileSync(`muestras/${s.slug}/index.html`, 'utf8');
     assert.match(html, /Muestra de concepto diseñada por Red Vaeru/);
-    assert.match(html, /:root:root\{/);
     assert.match(html, /noindex/);
+    if (existsSync(`src/samples/custom/${s.slug}/index.html`)) {
+      // Muestra rediseñada a medida: pantalla de carga propia y todas las imágenes resueltas.
+      assert.match(html, /class="loader"/, `${s.slug}: falta la pantalla de carga`);
+      assert.doesNotMatch(html, /\{\{img:/, `${s.slug}: quedó un marcador de imagen sin reemplazar`);
+    } else assert.match(html, /:root:root\{/);
   }
   assert.ok(existsSync('muestras/index.html'));
   assert.equal((readFileSync('muestras/_cards.html', 'utf8').match(/class="sample"/g) || []).length, 10);

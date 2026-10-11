@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Domos Cielo Austral · Glamping de astroturismo en Curarrehue · Muestra Red Vaeru</title>
+  <meta name="description" content="Glamping de astroturismo con domos geodésicos de techo transparente, telescopio propio y tinaja bajo el cielo más oscuro de la Araucanía andina. Muestra de concepto de Red Vaeru." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#04060d" />
+  <link rel="canonical" href="__SITE_URL__/muestras/domos-cielo-austral/" />
+  <meta property="og:title" content="Domos Cielo Austral · muestra de concepto de Red Vaeru" />
+  <meta property="og:image" content="__SITE_URL__/og.jpg" />
+  <link rel="icon" type="image/png" href="/brand/emblema-32.png" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@500;600;700;800&family=Instrument+Serif:ital@0;1&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet" />
+  <!--ANALYTICS-->
+</head>
+<body>
+  <!-- Pantalla de carga: la Cruz del Sur se dibuja estrella por estrella -->
+  <div class="loader" aria-hidden="true">
+    <svg class="loader__cross" viewBox="0 0 200 260">
+      <line class="lc" x1="100" y1="20" x2="100" y2="240" /><line class="lc" x1="40" y1="120" x2="165" y2="105" />
+      <circle class="ls" cx="100" cy="20" r="5" /><circle class="ls" cx="100" cy="240" r="7" /><circle class="ls" cx="40" cy="120" r="5" /><circle class="ls" cx="165" cy="105" r="6" /><circle class="ls small" cx="128" cy="150" r="3" />
+    </svg>
+    <p class="loader__txt"><span data-load-label>Alineando el telescopio</span> <b data-load-n>0</b>%</p>
+    <p class="loader__sub">Pünon Choike · la huella del ñandú</p>
+  </div>
+
+  <canvas class="sky" aria-hidden="true"></canvas>
+  <div class="glow" aria-hidden="true"></div>
+
+  <div class="demo"><img src="/brand/emblema-96.webp" alt="" width="20" height="20" /> Muestra de concepto diseñada por Red Vaeru · Negocio ficticio <a href="/muestras/">Ver todas las muestras</a> · <a href="/#contacto">Quiero un sitio así</a></div>
+
+  <header class="nav">
+    <a class="logo" href="#inicio" aria-label="Domos Cielo Austral, inicio">
+      <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="6" r="2.2"/><circle cx="20" cy="34" r="2.8"/><circle cx="8" cy="19" r="2.2"/><circle cx="32" cy="17" r="2.4"/><circle cx="25" cy="24" r="1.3"/><path d="M20 6v28M8 19l24-2"/></svg>
+      <span>Cielo Austral<small>Domos de astroturismo</small></span>
+    </a>
+    <nav class="nav__links" aria-label="Secciones">
+      <a href="#oscuridad">El cielo</a><a href="#domos">Domos</a><a href="#constelaciones">Constelaciones</a><a href="#calendario">Calendario</a><a href="#experiencias">Experiencias</a>
+    </nav>
+    <a class="btn btn--glow nav__cta" href="#reservar">Reservar noche</a>
+    <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
+  </header>
+  <div class="menu" aria-hidden="true">
+    <a href="#oscuridad">El cielo</a><a href="#domos">Domos</a><a href="#constelaciones">Constelaciones</a><a href="#calendario">Calendario</a><a href="#experiencias">Experiencias</a><a href="#reservar">Reservar</a>
+  </div>
+
+  <main>
+    <!-- INICIO -->
+    <section class="hero" id="inicio">
+      <div class="hero__inner">
+        <p class="kicker"><span class="dot"></span> Curarrehue · Araucanía andina · Cielo Bortle 2</p>
+        <h1 class="hero__title" data-stars-title>Duerma bajo<br /><em>la Vía Láctea</em></h1>
+        <p class="hero__lead">Cuatro domos geodésicos con techo transparente, telescopio propio y tinaja caliente en el valle más oscuro de los Andes del sur. Aquí la noche no se apaga: se enciende.</p>
+        <div class="hero__ctas">
+          <a class="btn btn--light" href="#reservar">Elegir mi noche <span aria-hidden="true">→</span></a>
+          <a class="btn btn--ghost" href="#constelaciones">Explorar el cielo</a>
+        </div>
+      </div>
+
+      <aside class="tonight" aria-label="El cielo esta noche">
+        <p class="tonight__title"><span class="pulse"></span> Esta noche en Curarrehue</p>
+        <div class="tonight__moon"><div class="moon" data-moon><i></i></div><div><strong data-moon-name>—</strong><span data-moon-illum>—</span></div></div>
+        <dl>
+          <div><dt>Puesta de sol</dt><dd data-sunset>—</dd></div>
+          <div><dt>Noche cerrada</dt><dd data-dark>—</dd></div>
+          <div><dt>Calidad del cielo</dt><dd><span class="meter"><i data-quality-bar></i></span> <b data-quality>—</b></dd></div>
+        </dl>
+        <p class="tonight__tip" data-moon-tip></p>
+      </aside>
+
+      <svg class="horizon" viewBox="0 0 1440 320" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="mtn" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#0b1022" /><stop offset="1" stop-color="#04060d" /></linearGradient>
+          <radialGradient id="domeglow" cx=".5" cy=".5" r=".5"><stop offset="0" stop-color="#ffcf8a" stop-opacity=".95" /><stop offset="1" stop-color="#ff9a4d" stop-opacity="0" /></radialGradient>
+        </defs>
+        <path d="M0 170 L120 120 L190 150 L300 70 L380 130 L460 95 L560 160 L640 110 L700 140 L780 40 L860 120 L930 100 L1010 150 L1100 90 L1180 140 L1260 110 L1340 150 L1440 120 L1440 320 L0 320Z" fill="#0a0f20" opacity=".9" />
+        <path d="M0 230 L160 190 L260 215 L380 175 L520 220 L650 190 L760 225 L900 185 L1040 215 L1180 180 L1300 210 L1440 190 L1440 320 L0 320Z" fill="url(#mtn)" />
+        <g class="domes">
+          <circle cx="430" cy="236" r="46" fill="url(#domeglow)" /><path d="M402 246a28 28 0 0 1 56 0z" fill="#ffd8a0" opacity=".85" />
+          <circle cx="760" cy="252" r="38" fill="url(#domeglow)" /><path d="M738 260a22 22 0 0 1 44 0z" fill="#ffd8a0" opacity=".8" />
+          <circle cx="1030" cy="240" r="44" fill="url(#domeglow)" /><path d="M1004 250a26 26 0 0 1 52 0z" fill="#ffd8a0" opacity=".85" />
+        </g>
+      </svg>
+      <a href="#oscuridad" class="scroll" aria-label="Bajar"><span></span></a>
+    </section>
+
+    <!-- CINTA -->
+    <div class="ticker" aria-hidden="true"><div class="ticker__track">
+      <span>Cruz del Sur</span><i>✦</i><span>Nubes de Magallanes</span><i>✦</i><span>Saturno</span><i>✦</i><span>Wenu Leufü</span><i>✦</i><span>Omega Centauri</span><i>✦</i><span>Orión</span><i>✦</i><span>Escorpión</span><i>✦</i><span>Júpiter</span><i>✦</i>
+      <span>Cruz del Sur</span><i>✦</i><span>Nubes de Magallanes</span><i>✦</i><span>Saturno</span><i>✦</i><span>Wenu Leufü</span><i>✦</i><span>Omega Centauri</span><i>✦</i><span>Orión</span><i>✦</i><span>Escorpión</span><i>✦</i><span>Júpiter</span><i>✦</i>
+    </div></div>
+
+    <!-- OSCURIDAD -->
+    <section class="sec dark-sky" id="oscuridad">
+      <div class="wrap split">
+        <div class="rv">
+          <p class="eyebrow">01 · El cielo más oscuro</p>
+          <h2 class="h2">En la ciudad ve 300 estrellas. <em>Aquí, más de 4.500.</em></h2>
+          <p class="muted">La escala de Bortle mide la oscuridad del cielo del 1 al 9. Santiago está en 9. Nuestro valle, rodeado de montañas y lejos de toda ciudad, está en 2: se ve la Vía Láctea proyectar sombras.</p>
+          <div class="bortle">
+            <label for="bortle">Mueva el control para viajar de la ciudad al valle</label>
+            <input id="bortle" type="range" min="2" max="9" value="9" step="1" data-bortle />
+            <div class="bortle__scale"><span>Curarrehue · 2</span><span>Pucón · 5</span><span>Santiago · 9</span></div>
+            <p class="bortle__read"><b data-bortle-n>300</b> estrellas visibles · <span data-bortle-name>Cielo de ciudad</span></p>
+          </div>
+        </div>
+        <div class="bortle__view rv"><canvas data-bortle-canvas aria-label="Simulación de estrellas visibles según la contaminación lumínica" role="img"></canvas><span class="bortle__glow" data-bortle-glow></span></div>
+      </div>
+    </section>
+
+    <!-- DOMOS -->
+    <section class="sec" id="domos">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">02 · Domos</p><h2 class="h2">Cuatro cápsulas <em>bajo el cosmos.</em></h2></div>
+          <p class="muted">Losa radiante, baño privado, cafetera y un telescopio Dobson de 8 pulgadas en cada domo. Techo transparente sobre la cama, orientado al sur celeste.</p>
+        </div>
+        <div class="domes">
+          <article class="dome rv">
+            <div class="dome__media" style="{{img:unidad-1:1504280390367-361c6d9f38f4}}"><svg class="geo" viewBox="0 0 100 60" aria-hidden="true"><use href="#geodesic" /></svg><span class="tag">Techo 100% transparente</span></div>
+            <div class="dome__body">
+              <p class="dome__coord">RA 05h 35m · Dec −05° 23'</p>
+              <h3>Domo Orión</h3>
+              <p>El más alto del predio, con terraza mirador hacia el volcán y tinaja privada de ciprés.</p>
+              <ul><li>2 personas</li><li>Tinaja privada</li><li>Telescopio Dobson</li><li>Mirador</li></ul>
+              <div class="dome__foot"><span class="price">$149.000 <small>/ noche</small></span><a class="btn btn--sm" href="#reservar" data-pick="0">Reservar</a></div>
+            </div>
+          </article>
+          <article class="dome rv">
+            <div class="dome__media" style="{{img:unidad-2:1478131143081-80f7f84ca84d}}"><svg class="geo" viewBox="0 0 100 60" aria-hidden="true"><use href="#geodesic" /></svg><span class="tag">Familias</span></div>
+            <div class="dome__body">
+              <p class="dome__coord">RA 12h 26m · Dec −63° 05'</p>
+              <h3>Domo Cruz del Sur</h3>
+              <p>Con altillo para niños y kit infantil de astronomía: carta celeste, linterna roja y libreta de observación.</p>
+              <ul><li>4 personas</li><li>Altillo</li><li>Kit infantil</li><li>Tinaja compartida</li></ul>
+              <div class="dome__foot"><span class="price">$169.000 <small>/ noche</small></span><a class="btn btn--sm" href="#reservar" data-pick="1">Reservar</a></div>
+            </div>
+          </article>
+          <article class="dome rv">
+            <div class="dome__media" style="{{img:unidad-3:1517824806704-9040b037703b}}"><svg class="geo" viewBox="0 0 100 60" aria-hidden="true"><use href="#geodesic" /></svg><span class="tag">El más aislado</span></div>
+            <div class="dome__body">
+              <p class="dome__coord">RA 00h 52m · Dec −72° 49'</p>
+              <h3>Domo Magallanes</h3>
+              <p>Cama king de cara al sur, ducha panorámica y vista directa a las Nubes de Magallanes.</p>
+              <ul><li>2 personas</li><li>Cama king</li><li>Ducha panorámica</li><li>Máxima privacidad</li></ul>
+              <div class="dome__foot"><span class="price">$139.000 <small>/ noche</small></span><a class="btn btn--sm" href="#reservar" data-pick="2">Reservar</a></div>
+            </div>
+          </article>
+          <article class="dome rv">
+            <div class="dome__media" style="{{img:unidad-4:1444703686981-a3abbc4d4fe3}}"><svg class="geo" viewBox="0 0 100 60" aria-hidden="true"><use href="#geodesic" /></svg><span class="tag">Nuevo</span></div>
+            <div class="dome__body">
+              <p class="dome__coord">RA 13h 26m · Dec −47° 28'</p>
+              <h3>Domo Centauri</h3>
+              <p>Pensado para astrofotografía: montura ecuatorial, escritorio de edición y enchufe en la terraza.</p>
+              <ul><li>2 personas</li><li>Montura ecuatorial</li><li>Escritorio</li><li>Tinaja privada</li></ul>
+              <div class="dome__foot"><span class="price">$159.000 <small>/ noche</small></span><a class="btn btn--sm" href="#reservar" data-pick="3">Reservar</a></div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONSTELACIONES -->
+    <section class="sec constel" id="constelaciones">
+      <div class="wrap constel__grid">
+        <div class="constel__sticky">
+          <p class="eyebrow">03 · Constelaciones</p>
+          <h2 class="h2">El cielo tiene <em>dos idiomas.</em></h2>
+          <p class="muted">Cada noche le contamos el cielo como lo leyeron los griegos y como lo leen desde siempre los pueblos mapuche y pehuenche de este valle.</p>
+          <div class="constel__art" aria-hidden="true">
+            <svg viewBox="0 0 400 400" data-constel-svg></svg>
+            <p class="constel__label" data-constel-label>Pünon Choike</p>
+          </div>
+        </div>
+        <ol class="constel__steps">
+          <li class="cstep" data-constel="cruz"><span class="cstep__n">I</span><h3>Pünon Choike <em>· Cruz del Sur</em></h3><p>Para la cosmovisión mapuche es la huella del ñandú: el choike corre por el cielo dejando su pisada. Es la constelación que marca el sur y la usamos para orientar los telescopios.</p><p class="cstep__when">Mejor época: abril a septiembre</p></li>
+          <li class="cstep" data-constel="orion"><span class="cstep__n">II</span><h3>Las Tres Marías <em>· Orión</em></h3><p>Desde el hemisferio sur, el cazador aparece de cabeza. Su cinturón son las Tres Marías y bajo ellas se esconde la nebulosa de Orión, una guardería de estrellas que verá en nuestro telescopio.</p><p class="cstep__when">Mejor época: diciembre a marzo</p></li>
+          <li class="cstep" data-constel="escorpion"><span class="cstep__n">III</span><h3>Escorpión <em>· el corazón rojo</em></h3><p>Antares, su estrella roja, es 700 veces más grande que el Sol. En invierno el escorpión cruza el cenit justo sobre los domos.</p><p class="cstep__when">Mejor época: mayo a agosto</p></li>
+          <li class="cstep" data-constel="wenu"><span class="cstep__n">IV</span><h3>Wenu Leufü <em>· el río del cielo</em></h3><p>Así se llama en mapudungun la Vía Láctea. En noches sin luna su centro brilla tanto sobre el valle que parece una nube iluminada.</p><p class="cstep__when">Mejor época: junio a agosto, sin luna</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section class="sec" id="calendario">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">04 · Calendario cósmico</p><h2 class="h2">Las mejores noches <em>de los próximos meses.</em></h2></div>
+          <p class="muted">Calculado en vivo: lunas nuevas (cielo más oscuro) y lluvias de estrellas visibles desde el hemisferio sur. Son las fechas que se agotan primero.</p>
+        </div>
+        <ul class="cosmic" data-cosmic></ul>
+      </div>
+    </section>
+
+    <!-- EXPERIENCIAS -->
+    <section class="sec" id="experiencias">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">05 · Experiencias astronómicas</p><h2 class="h2">Aprenda a <em>leer las estrellas.</em></h2></div>
+          <p class="muted">Guiadas por nuestro astrónomo residente. No necesita saber nada: solo mirar hacia arriba.</p>
+        </div>
+        <div class="logs">
+          <article class="log rv">
+            <header><span>Bitácora 01</span><span>45 min · todas las noches</span></header>
+            <h3>Paseo estelar</h3>
+            <p>Recorrido a ojo desnudo con láser astronómico: constelaciones, planetas visibles y las historias que los unen.</p>
+            <ul><li>Mantas y chocolate caliente</li><li>Desde 6 años</li></ul>
+            <footer><span class="price">$18.000 <small>/ persona</small></span></footer>
+          </article>
+          <article class="log log--feat rv">
+            <header><span>Bitácora 02 · La favorita</span><span>2 h · jueves a domingo</span></header>
+            <h3>Noche de telescopios</h3>
+            <p>Telescopio computarizado de 11 pulgadas: anillos de Saturno, cúmulos, nebulosas y la Luna con detalle de cráteres. Se lleva la foto en su celular.</p>
+            <ul><li>Sopaipillas y vino caliente</li><li>Foto de la Luna incluida</li><li>Máximo 8 personas</li></ul>
+            <footer><span class="price">$35.000 <small>/ persona</small></span></footer>
+          </article>
+          <article class="log rv">
+            <header><span>Bitácora 03</span><span>3 h · noches de luna nueva</span></header>
+            <h3>Taller de astrofotografía</h3>
+            <p>Fotografíe la Vía Láctea sobre el volcán. Cámara, trípode y montura de seguimiento incluidos, más edición básica.</p>
+            <ul><li>Equipo incluido</li><li>Su foto editada en alta resolución</li></ul>
+            <footer><span class="price">$59.000 <small>/ persona</small></span></footer>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- RESERVA -->
+    <section class="sec" id="reservar">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">06 · Reserva directa</p><h2 class="h2">Elija la noche. <em>Le decimos cómo estará el cielo.</em></h2></div>
+          <p class="muted">Si el pronóstico anuncia nubes, le avisamos 48 horas antes y cambiamos su fecha sin costo.</p>
+        </div>
+        <div class="book">
+          <form class="book__form rv" data-book novalidate>
+            <div class="row">
+              <label class="field">Llegada<input type="date" name="checkin" /></label>
+              <label class="field">Noches<select name="nights"><option>1</option><option selected>2</option><option>3</option><option>4</option><option>5</option></select></label>
+            </div>
+            <div class="row">
+              <label class="field">Domo<select name="dome">
+                <option data-price="149000" data-cap="2">Domo Orión · $149.000</option>
+                <option data-price="169000" data-cap="4">Domo Cruz del Sur · $169.000</option>
+                <option data-price="139000" data-cap="2">Domo Magallanes · $139.000</option>
+                <option data-price="159000" data-cap="2">Domo Centauri · $159.000</option>
+              </select></label>
+              <label class="field">Huéspedes<select name="guests"><option>1</option><option selected>2</option><option>3</option><option>4</option></select></label>
+            </div>
+            <fieldset class="extras"><legend>Experiencias para su noche</legend>
+              <label><input type="checkbox" data-price="35000" data-per="guest" /> Noche de telescopios <span>$35.000 / persona</span></label>
+              <label><input type="checkbox" data-price="59000" data-per="guest" /> Taller de astrofotografía <span>$59.000 / persona</span></label>
+              <label><input type="checkbox" data-price="28000" data-per="guest" /> Cena de campo en el domo <span>$28.000 / persona</span></label>
+              <label><input type="checkbox" data-price="25000" data-per="night" /> Tinaja bajo las estrellas <span>$25.000 / noche</span></label>
+            </fieldset>
+          </form>
+          <aside class="book__sum rv" aria-live="polite">
+            <div class="forecast">
+              <div class="moon moon--sm" data-f-moon><i></i></div>
+              <div><p class="forecast__t">Su primera noche</p><strong data-f-phase>—</strong><span data-f-quality>—</span></div>
+            </div>
+            <p class="forecast__tip" data-f-tip></p>
+            <dl>
+              <div><dt data-s-label>—</dt><dd data-s-base>—</dd></div>
+              <div><dt>Experiencias</dt><dd data-s-extras>$0</dd></div>
+              <div><dt>Aseo y leña</dt><dd>$10.000</dd></div>
+              <div class="total"><dt>Total</dt><dd data-s-total>—</dd></div>
+            </dl>
+            <p class="warn" data-s-warn></p>
+            <button class="btn btn--light" type="button" data-demo>Reservar por WhatsApp</button>
+            <small>Pague el 30% para confirmar. Cambio de fecha gratis si hay nubes.</small>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section class="sec" id="galeria">
+      <div class="wrap">
+        <div class="head rv"><div><p class="eyebrow">07 · Galería</p><h2 class="h2">Noches que <em>no se olvidan.</em></h2></div><p class="muted">Toque una imagen para verla en grande.</p></div>
+        <div class="mosaic">
+          <button class="m1 rv" aria-label="Vía Láctea sobre el valle"><span style="{{img:g1:1519681393784-d120267933ba}}"></span></button>
+          <button class="m2 rv" aria-label="Domo iluminado de noche"><span style="{{img:g2:1504280390367-361c6d9f38f4}}"></span></button>
+          <button class="m3 rv" aria-label="Cielo estrellado"><span style="{{img:g3:1444703686981-a3abbc4d4fe3}}"></span></button>
+          <button class="m4 rv" aria-label="Campamento bajo las estrellas"><span style="{{img:g4:1478131143081-80f7f84ca84d}}"></span></button>
+          <button class="m5 rv" aria-label="Luz cálida en la noche"><span style="{{img:g5:1517824806704-9040b037703b}}"></span></button>
+          <button class="m6 rv" aria-label="Cumbres al amanecer"><span style="{{img:g6:1464822759023-fed622ff2c3b}}"></span></button>
+        </div>
+      </div>
+    </section>
+    <div class="lightbox" role="dialog" aria-label="Imagen ampliada"><span class="lightbox__img"></span><p></p><button class="lb-close" aria-label="Cerrar">×</button><button class="lb-prev" aria-label="Anterior">‹</button><button class="lb-next" aria-label="Siguiente">›</button></div>
+
+    <!-- RESEÑAS -->
+    <section class="sec" id="resenas">
+      <div class="wrap">
+        <div class="head rv"><div><p class="eyebrow">08 · Señales recibidas</p><h2 class="h2">Comentarios <em>desde el cosmos.</em></h2></div><div class="score"><strong>5,0</strong><span>94 reseñas en Google y Airbnb</span></div></div>
+        <div class="signals">
+          <blockquote class="signal rv"><p>“Vimos Saturno con sus anillos desde la cama. Mi hija ahora quiere ser astrónoma.”</p><footer><b>Carolina V.</b> · Viña del Mar · viaje en familia</footer></blockquote>
+          <blockquote class="signal rv"><p>“Nos avisaron que venía nublado y nos cambiaron la fecha sin costo. Servicio de otro planeta.”</p><footer><b>Matías y Javiera</b> · Santiago · escapada</footer></blockquote>
+          <blockquote class="signal rv"><p>“La foto de la Vía Láctea del taller es mi fondo de pantalla desde entonces.”</p><footer><b>Lukas B.</b> · Múnich · mochilero</footer></blockquote>
+        </div>
+        <p class="fine">Reseñas ilustrativas de una muestra de concepto.</p>
+      </div>
+    </section>
+
+    <!-- PREGUNTAS Y UBICACIÓN -->
+    <section class="sec" id="preguntas">
+      <div class="wrap split split--top">
+        <div class="faq rv">
+          <p class="eyebrow">09 · Preguntas</p>
+          <h2 class="h2">Antes de <em>mirar arriba.</em></h2>
+          <details><summary>¿Qué pasa si está nublado?</summary><p>Le avisamos 48 horas antes y puede cambiar la fecha sin costo, sujeto a disponibilidad.</p></details>
+          <details><summary>¿Hace frío dentro de los domos?</summary><p>No. Tienen losa radiante y aislación térmica: el interior se mantiene sobre 20 °C incluso en invierno.</p></details>
+          <details><summary>¿Necesito saber de astronomía?</summary><p>Nada. Nuestro astrónomo explica todo desde cero y los telescopios se manejan con una pantalla.</p></details>
+          <details><summary>¿Pueden ir niños?</summary><p>Sí, en el Domo Cruz del Sur, con kit infantil de astronomía de regalo.</p></details>
+          <details><summary>¿Cómo se llega?</summary><p>A 40 minutos de Pucón por la ruta 199, con camino pavimentado hasta el portón.</p></details>
+        </div>
+        <div class="where rv">
+          <div class="map"><iframe title="Mapa de Curarrehue" loading="lazy" src="https://www.google.com/maps?q=Curarrehue,%20Chile&output=embed" referrerpolicy="no-referrer-when-downgrade"></iframe></div>
+          <dl class="coords"><div><dt>Latitud</dt><dd>39° 21′ S</dd></div><div><dt>Longitud</dt><dd>71° 35′ O</dd></div><div><dt>Altitud</dt><dd>410 m</dd></div><div><dt>Desde Pucón</dt><dd>40 min</dd></div></dl>
+        </div>
+      </div>
+    </section>
+
+    <!-- CIERRE -->
+    <section class="final" style="{{img:cierre:1519681393784-d120267933ba}}">
+      <div class="wrap rv">
+        <p class="kicker"><span class="dot"></span> Próxima luna nueva: <b data-next-new>—</b></p>
+        <h2>Las mejores noches <em>vuelan.</em></h2>
+        <p>Las fechas de luna nueva se agotan primero. Reserve directo y asegure su cielo oscuro.</p>
+        <a class="btn btn--light" href="#reservar">Reservar mi domo <span aria-hidden="true">→</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="wrap foot__grid">
+      <div><a class="logo" href="#inicio"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="6" r="2.2"/><circle cx="20" cy="34" r="2.8"/><circle cx="8" cy="19" r="2.2"/><circle cx="32" cy="17" r="2.4"/><circle cx="25" cy="24" r="1.3"/><path d="M20 6v28M8 19l24-2"/></svg><span>Cielo Austral<small>Domos de astroturismo</small></span></a><p>Glamping de astroturismo en el valle de Curarrehue, a 40 minutos de Pucón.</p></div>
+      <div><h4>Contacto</h4><p>+56 9 0000 0000</p><p>estrellas@cieloaustral.cl</p><p>Ruta 199, km 22, Curarrehue</p></div>
+      <div><h4>Horarios</h4><p>Recepción 14:00 a 23:00</p><p>Check-in 16:00 · Check-out 12:00</p><p>Observación todas las noches despejadas</p></div>
+    </div>
+    <div class="wrap foot__bottom"><span>© <span data-year>2026</span> Domos Cielo Austral · Negocio ficticio</span><span>Muestra de concepto diseñada por <a href="/">Red Vaeru</a> · Conectando culturas</span></div>
+  </footer>
+
+  <button class="wa" data-demo aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2s.2-1.1.1-1.2-.2-.2-.4-.3z"/></svg></button>
+  <div class="toast" role="status"><strong>Esto es una muestra</strong><p data-toast-text></p><div><a data-toast-wa href="https://wa.me/56952289117" target="_blank" rel="noopener">Quiero un sitio así</a><button type="button" data-toast-close>Seguir explorando</button></div></div>
+
+  <!-- Domo geodésico reutilizable -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="geodesic" viewBox="0 0 100 60">
+      <g fill="none" stroke="currentColor" stroke-width=".6" stroke-linejoin="round">
+        <path d="M5 58a45 45 0 0 1 90 0z" />
+        <path d="M5 58 L20 34 L35 58 L50 24 L65 58 L80 34 L95 58" /><path d="M20 34 L50 24 L80 34" /><path d="M20 34 L35 14 L50 24 L65 14 L80 34" /><path d="M35 14 L50 4 L65 14" /><path d="M35 58 L50 40 L65 58" /><path d="M20 34 L50 40 L80 34" />
+      </g>
+    </symbol>
+  </svg>
+
+  <script type="module" src="/src/samples/custom/domos-cielo-austral/main.js"></script>
+</body>
+</html>
