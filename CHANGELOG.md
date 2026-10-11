@@ -1,5 +1,8 @@
 # Changelog · MANI-GANTE
 
+## v4.4.5 · Adorno centrado
+- El adorno de rombos bajo el título de cada sección va centrado en todas las salas, y su animación crece desde el centro.
+
 ## v4.4.4 · Revisión a fondo en celular
 Recorrido completo en dos teléfonos (iPhone 390 px y Android 360 px), con animaciones encendidas y en los temas Noche y Marfil: secciones, textos cortados, desbordes, imágenes, consola, y todos los flujos (menú, ficha, cuenta, cita, maletín, ruleta, interrogatorio, consigliere, preguntas, galería, pago, telegrama) más las páginas secundarias.
 - **Cita:** al confirmar, el ticket queda a la vista (antes la página saltaba al Diario en el celular). Prueba de regresión.
