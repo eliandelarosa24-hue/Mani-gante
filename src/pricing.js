@@ -1,11 +1,23 @@
 // Tarifario interno de Red Vaeru.
 // Lo usan el cotizador guiado del sitio y el agente de IA (netlify/functions/agent.mjs).
 // El sitio solo muestra los valores "desde"; los rangos completos los entrega el agente.
-// Todos los montos en pesos chilenos (CLP), sin IVA. Edite aquí y se actualiza en todas partes.
+// Todos los montos en pesos chilenos (CLP), valores referenciales. Edite aquí y se actualiza en todas partes.
 // PRECIOS DE LANZAMIENTO: pensados para conseguir los primeros proyectos y casos de éxito.
 // Súbalos a medida que crezca el portafolio.
 
 export const CURRENCY = 'CLP';
+
+// Precios de lanzamiento con cupos. Actualice "taken" cada vez que cierre un proyecto de lanzamiento.
+export const LAUNCH = { slots: 5, taken: 0 };
+export const launchLeft = () => Math.max(0, LAUNCH.slots - LAUNCH.taken);
+
+// Campaña de temporada: la barra superior desaparece sola después de la fecha límite.
+export const CAMPAIGN = {
+  deadline: '2026-11-30',
+  text: 'Temporada de verano: confirme su sitio antes del 30 de noviembre.',
+};
+
+export const TAX_NOTE = 'Valores referenciales en pesos chilenos. El documento tributario (boleta de honorarios o factura) y su efecto en el precio se detallan en la propuesta.';
 
 export const SERVICES = {
   web_alojamiento: {
@@ -59,13 +71,13 @@ export const SERVICES = {
     short: 'Asesoría',
     for: 'Diagnóstico, canales de venta, tarifas, producto y experiencia del huésped',
     tiers: {
-      diagnostico: { label: 'Diagnóstico digital (sesión de 90 min + informe)', min: 25000, max: 35000, weeks: '1 semana' },
-      plan: { label: 'Plan de canal directo y OTAs (4 sesiones)', min: 70000, max: 110000, weeks: '4 semanas' },
-      mensual: { label: 'Acompañamiento mensual', min: 50000, max: 80000, weeks: 'mes a mes', monthly: true },
-      proyecto: { label: 'Formulación de proyecto o producto turístico', min: 120000, max: 220000, weeks: '4 a 8 semanas' },
+      diagnostico: { label: 'Diagnóstico digital (sesión de 90 min + informe)', min: 35000, max: 55000, weeks: '1 semana' },
+      plan: { label: 'Plan de canal directo y plataformas (4 sesiones)', min: 120000, max: 180000, weeks: '4 semanas' },
+      mensual: { label: 'Acompañamiento mensual', min: 80000, max: 120000, weeks: 'mes a mes', monthly: true },
+      proyecto: { label: 'Formulación de proyecto o producto turístico', min: 220000, max: 380000, weeks: '4 a 8 semanas' },
     },
     addons: {
-      terreno: { label: 'Visita en terreno (Araucanía)', min: 20000, max: 40000 },
+      terreno: { label: 'Visita en terreno (Araucanía)', min: 30000, max: 50000 },
     },
   },
   capacitacion: {
@@ -73,16 +85,16 @@ export const SERVICES = {
     short: 'Capacitación',
     for: 'Equipos de recepción, sala, housekeeping y atención turística',
     tiers: {
-      taller: { label: 'Taller de 4 horas (hasta 15 personas)', min: 90000, max: 140000, weeks: 'a coordinar' },
-      programa: { label: 'Programa de 3 módulos (12 horas)', min: 240000, max: 360000, weeks: '3 a 6 semanas' },
-      online: { label: 'Taller online en vivo (hasta 25 personas)', min: 70000, max: 110000, weeks: 'a coordinar' },
+      taller: { label: 'Taller de 4 horas (hasta 15 personas)', min: 150000, max: 220000, weeks: 'a coordinar' },
+      programa: { label: 'Programa de 3 módulos (12 horas)', min: 390000, max: 590000, weeks: '3 a 6 semanas' },
+      online: { label: 'Taller online en vivo (hasta 25 personas)', min: 110000, max: 160000, weeks: 'a coordinar' },
     },
     addons: {
-      manual: { label: 'Manual de estándares de servicio para su negocio', min: 50000, max: 90000 },
-      mystery: { label: 'Cliente incógnito (evaluación previa)', min: 35000, max: 60000 },
+      manual: { label: 'Manual de estándares de servicio para su negocio', min: 80000, max: 140000 },
+      mystery: { label: 'Cliente incógnito (evaluación previa)', min: 50000, max: 90000 },
     },
     // Personas adicionales sobre el cupo base del taller
-    extraPerson: { min: 4000, max: 7000, base: { taller: 15, programa: 15, online: 25 } },
+    extraPerson: { min: 6000, max: 10000, base: { taller: 15, programa: 15, online: 25 } },
   },
   mantencion: {
     name: 'Mantención y soporte web',
@@ -168,7 +180,7 @@ export function estimate(input) {
     timelines,
     errors,
     notes: [
-      'Valores referenciales en pesos chilenos, sin IVA.',
+      TAX_NOTE,
       'El precio final y fijo llega por escrito en la propuesta, antes de pagar nada.',
       'Dominio y hosting se compran a nombre del cliente; suelen costar entre $15.000 y $40.000 al año.',
       'Capacitaciones fuera de la Araucanía: traslado y viáticos se cotizan aparte.',

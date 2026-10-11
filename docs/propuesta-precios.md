@@ -1,6 +1,6 @@
 # Tarifario de lanzamiento
 
-Los valores viven en `src/pricing.js`. En el sitio solo se ve el valor **"desde"** de cada servicio, con la etiqueta "Precios de lanzamiento". Los rangos completos los entrega Vaeru IA según el caso. Todo en CLP, sin IVA.
+Los valores viven en `src/pricing.js`. Las webs y las redes tienen precio de lanzamiento con cupos (`LAUNCH`). Asesoría y capacitación se subieron a valores más creíbles para empresas, porque un precio demasiado bajo resta seriedad en esos servicios. En el sitio solo se ve el valor **"desde"** de cada servicio, con la etiqueta "Precios de lanzamiento". Los rangos completos los entrega Vaeru IA según el caso. Todo en CLP, sin IVA.
 
 ## Estrategia
 - **Etapa actual:** precios de entrada (webs desde $49.000) para conseguir los primeros proyectos, testimonios y casos de éxito.
@@ -17,18 +17,19 @@ Los valores viven en `src/pricing.js`. En el sitio solo se ve el valor **"desde"
 | | Experiencia premium | $180.000 – $260.000 |
 | Redes | Esencial (8 publicaciones) | $45.000 – $65.000 al mes |
 | | Pro (12 publicaciones + historias) | $75.000 – $110.000 al mes |
-| Asesoría | Diagnóstico (90 min + informe) | $25.000 – $35.000 |
-| | Plan de canal directo y OTAs (4 sesiones) | $70.000 – $110.000 |
-| | Acompañamiento mensual | $50.000 – $80.000 al mes |
-| | Formulación de proyecto turístico | $120.000 – $220.000 |
-| Capacitación | Taller 4 h (hasta 15 personas) | $90.000 – $140.000 |
-| | Programa 3 módulos (12 h) | $240.000 – $360.000 |
-| | Taller online (hasta 25 personas) | $70.000 – $110.000 |
+| Asesoría | Diagnóstico (90 min + informe) | $35.000 – $55.000 |
+| | Plan de canal directo y plataformas (4 sesiones) | $120.000 – $180.000 |
+| | Acompañamiento mensual | $80.000 – $120.000 al mes |
+| | Formulación de proyecto turístico | $220.000 – $380.000 |
+| Capacitación | Taller 4 h (hasta 15 personas) | $150.000 – $220.000 |
+| | Programa 3 módulos (12 h) | $390.000 – $590.000 |
+| | Taller online (hasta 25 personas) | $110.000 – $160.000 |
 | Mantención | Mensual | $12.000 – $20.000 al mes |
 
 **Extras:**
 - **Alojamiento:** motor de reservas $30.000–$60.000, check-in online $25.000–$45.000, guía local $20.000–$35.000, idioma adicional $20.000–$35.000 cada uno, SEO local $25.000–$45.000.
 - **Restaurante:** reservas de mesa $25.000–$50.000, pedidos por WhatsApp $30.000–$55.000, idioma adicional $15.000–$30.000 cada uno, SEO local $25.000–$45.000.
-- **Capacitación:** manual de estándares $50.000–$90.000, cliente incógnito $35.000–$60.000, cada participante adicional $4.000–$7.000.
+- **Capacitación:** manual de estándares $80.000–$140.000, cliente incógnito $50.000–$90.000, cada participante adicional $6.000–$10.000.
+- **Asesoría:** visita en terreno $30.000–$50.000.
 
 **No incluido a propósito:** no se menciona financiamiento SENCE, porque requiere estar registrado como OTEC.

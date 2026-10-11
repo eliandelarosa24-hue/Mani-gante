@@ -3,3 +3,7 @@ dist
 .netlify
 .env
 *.zip
+servicios/
+privacidad/
+gracias/
+404.html
