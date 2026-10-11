@@ -79,4 +79,30 @@ Se corta en dos pasadas: `--names tour-5,tour-6,-,- --ratio 4:3` y luego `--name
 
 ---
 
-Las otras 7 muestras tendrán sus prompts cuando se rediseñe cada una.
+## Muestra 4 · Kuchen Haus (café y pastelería alemana, Frutillar)
+
+Son 16 espacios, en 4 collages de 2×2. La luz es de día, cálida y luminosa, con madera clara, manteles blancos o de cuadros azules, porcelana con flores y el lago Llanquihue azul de fondo. Es lo opuesto a las muestras oscuras.
+
+### Collage A: el lugar → `vitrina, salon, abuela, lago`
+
+Se corta en dos pasadas: `--names vitrina,-,abuela,- --ratio 4:5` y luego `--names -,salon,-,lago --ratio 16:9`.
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. A traditional German-Chilean café and bakery in Frutillar, southern Chile, by Lake Llanquihue. Top-left: a glass pastry display case full of whole kuchen (raspberry, murta berry, apple with streusel, walnut) and Black Forest cake on lace doilies, warm morning light, shot at eye level. Top-right: the cosy café interior with light wooden tables, blue and white checkered tablecloths, porcelain cups with flowers and big windows showing the blue lake and the snowy Osorno volcano. Bottom-left: a vintage 1980s sepia-toned photograph of a smiling German-Chilean grandmother with an apron, holding a tray of kuchen in front of the bakery door. Bottom-right: the Frutillar lakeshore with colorful wooden German colonial houses, a wooden pier and the perfect cone of Osorno volcano across the lake, sunny day. Natural light, soft and warm, high detail, 8K.
+
+### Collage B: los kuchen → `k-murta, k-frambuesa, k-manzana, k-nuez` (`--ratio 1:1`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Four slices of German kuchen on vintage porcelain plates with small flowers, each on a light wooden table with soft daylight, varied angles. Top-left: murta berry kuchen with a golden butter crumble (streusel), shot at 45 degrees with a fork. Top-right: raspberry kuchen with custard and glossy fresh raspberries, shot from directly above. Bottom-left: apple and cinnamon kuchen with thin apple slices in a spiral and streusel, side view showing the layers. Bottom-right: caramelized walnut kuchen with a cup of coffee beside it, shot at 45 degrees. Food photography, appetizing, sharp detail, 8K.
+
+### Collage C: tortas y café → `selva, strudel, cafe, pretzel` (`--ratio 1:1`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. German-style café specialties in southern Chile, bright and cosy, with lake light from a window. Top-left: a tall slice of Black Forest cake with whipped cream, cherries and chocolate shavings, side view. Top-right: warm apple strudel dusted with icing sugar, with a scoop of vanilla ice cream and whipped cream, 45-degree angle. Bottom-left: a cappuccino with latte art in a porcelain cup with blue flowers, shot from above, with a sugar bowl. Bottom-right: a golden Bavarian pretzel with sweet mustard and a coffee on a blue and white checkered tablecloth. Food photography, natural light, 8K.
+
+### Collage D: el oficio y Frutillar → `manos, huerto, horno, teatro`
+
+Se corta en dos pasadas: `--names manos,huerto,horno,- --ratio 4:3` y luego `--names -,-,-,teatro --ratio 16:9`.
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Top-left: close-up of a baker's floury hands rubbing butter and flour into streusel crumbs in a ceramic bowl, with fresh raspberries beside it. Top-right: hands picking ripe raspberries in a sunny berry orchard in southern Chile, with the lake far behind. Bottom-left: a baker taking a large tray of golden fruit kuchen out of a wood-fired oven, warm light, slight steam. Bottom-right: the modern wooden Teatro del Lago concert hall in Frutillar on the lake at blue hour with warm lights reflecting on the water and Osorno volcano behind. Natural, high detail, 8K.
+
+---
+
+Las otras 6 muestras tendrán sus prompts cuando se rediseñe cada una.
