@@ -80,7 +80,7 @@ function splitLines(el) {
     const inner = document.createElement('span');
     ln.forEach((t, i) => { inner.append(t); if (i < ln.length - 1) inner.append(' '); });
     line.append(inner);
-    el.append(line);
+    el.append(line, ' '); // el espacio evita que los lectores de pantalla lean "quese"
   });
   return $$('.line > span', el);
 }

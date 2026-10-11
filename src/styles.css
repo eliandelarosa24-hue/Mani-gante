@@ -57,7 +57,7 @@ em { font-style: italic; }
   color: var(--gold);
   margin: 0 0 24px;
 }
-.light .eyebrow { color: #8a6d2c; }
+.light .eyebrow { color: #765b20; }
 
 .h1, .hero__title, .contact__title {
   font-family: var(--serif);
