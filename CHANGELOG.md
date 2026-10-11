@@ -1,5 +1,10 @@
 # Changelog · MANI-GANTE
 
+## v4.4.3 · Pantalla de carga y tipografía legible
+- **Pantalla de carga en cada visita** (antes salía una sola vez por sesión): medalla con anillo grabado que gira, eslogan, contador 0→100 % y un telón de terciopelo que se abre. Dura al menos 1,5 s para leerse y nunca más de 2,6 s. En la primera visita sigue saliendo la puerta.
+- **Títulos legibles:** Bodoni Moda usa el tamaño óptico 20 en toda la web. En los títulos grandes, los trazos finos ya no desaparecen: la "t" no se confunde con la "l" ni la "e" con la "c".
+- **Sin letras cortadas:** las máscaras de animación del salón y de los títulos dejan espacio para las colas de la g, la y y la p.
+
 ## v4.4.2 · Tarjetas de pago visibles y nuevo nombre de ejemplo
 - **Arreglo:** las tarjetas de "Así se cierra el trato" quedaban invisibles con animaciones activas, porque dos entradas distintas (revelado + GSAP) se pisaban. Ahora usan una sola animación con destino explícito, y lo mismo vale para el maletín, la invitación y el telegrama.
 - **Nombre de ejemplo:** "Ej: Chiqui", un apodo popular en República Dominicana y en Chile, en lugar de un nombre real.

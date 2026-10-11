@@ -940,8 +940,8 @@
   // Tema antes de pintar (Noche es el tema de la casa; Marfil es opcional) y la puerta solo en la primera visita.
   try { const t = JSON.parse(localStorage.getItem("mg-theme") || "null"); if (t === "light") document.documentElement.dataset.theme = t; } catch (e) {}
   try { if (!localStorage.getItem("mg-door") && !navigator.webdriver && !matchMedia("(prefers-reduced-motion: reduce)").matches && !/[?&](pedido|nodoor)=/.test(location.search)) document.documentElement.classList.add("door-on"); } catch (e) {}
-  // Pantalla de carga: una vez por sesión, solo si no toca la puerta (la puerta ya es la bienvenida).
-  try { var h = document.documentElement; if (!h.classList.contains("door-on") && !sessionStorage.getItem("mg-loaded") && !navigator.webdriver && !matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("loading"); } catch (e) {}
+  // Pantalla de carga: en cada visita (breve), salvo cuando toca la puerta (la puerta ya es la bienvenida).
+  try { var h = document.documentElement; if (!h.classList.contains("door-on") && !navigator.webdriver && !matchMedia("(prefers-reduced-motion: reduce)").matches) h.classList.add("loading"); } catch (e) {}
 </script>
 </head>
 <body>
@@ -977,27 +977,35 @@
 
 
 <div class="loader" id="loader" aria-hidden="true">
-  <div class="loader-coin"><img src="./assets/img/logo-mark.png" alt="" width="132" height="132"></div>
-  <p class="loader-word">MANI<span>-</span>GANTE</p>
-  <div class="loader-bar"><i id="loaderBar"></i></div>
-  <p class="loader-tag">Abriendo la casa…</p>
+  <span class="loader-curtain l"></span><span class="loader-curtain r"></span>
+  <div class="loader-inner">
+    <div class="loader-medal">
+      <svg class="loader-ring" viewBox="0 0 200 200"><circle cx="100" cy="100" r="96" fill="none" stroke="currentColor" stroke-width=".8" stroke-dasharray="1 5.2"/><circle cx="100" cy="100" r="90" fill="none" stroke="currentColor" stroke-width=".5"/><circle cx="100" cy="100" r="86" fill="none" stroke="currentColor" stroke-width="1.6" stroke-dasharray="40 14 6 14" pathLength="400"/></svg>
+      <div class="loader-coin"><img src="./assets/img/logo-mark.png" alt="" width="132" height="132"></div>
+    </div>
+    <p class="loader-word">MANI<span>-</span>GANTE</p>
+    <p class="loader-slogan">Para gente elegante y gánster</p>
+    <div class="loader-bar"><i id="loaderBar"></i></div>
+    <p class="loader-tag"><span id="loaderPct">0</span>% · Abriendo la casa</p>
+  </div>
 </div>
 <script>
-  // Cierra la pantalla de carga cuando la página está lista (mín. 0,9 s para que se lea, máx. 1,8 s para no hacer esperar).
+  // Cierra la pantalla de carga cuando la página está lista (mín. 1,5 s para que se lea, máx. 2,6 s para no hacer esperar).
   (function () {
     var h = document.documentElement; if (!h.classList.contains("loading")) return;
-    var t0 = Date.now(), done = false, bar = document.getElementById("loaderBar");
+    var t0 = Date.now(), done = false, bar = document.getElementById("loaderBar"), pct = document.getElementById("loaderPct"), shown = 0, target = 86;
+    (function count() { if (shown < target) { shown += Math.max(1, Math.round((target - shown) / 9)); if (pct) pct.textContent = Math.min(shown, 100); } if (h.classList.contains("loading")) requestAnimationFrame(count); })();
     function finish() {
       if (done) return; done = true;
-      var wait = Math.max(0, 900 - (Date.now() - t0));
+      var wait = Math.max(0, 1500 - (Date.now() - t0));
       setTimeout(function () {
-        if (bar) bar.style.transform = "scaleX(1)";
-        h.classList.add("loaded");
-        setTimeout(function () { h.classList.remove("loading", "loaded"); try { sessionStorage.setItem("mg-loaded", "1"); } catch (e) {} }, 750);
+        if (bar) bar.style.transform = "scaleX(1)"; target = 100;
+        setTimeout(function () { h.classList.add("loaded"); }, 260);
+        setTimeout(function () { h.classList.remove("loading", "loaded"); }, 1300);
       }, wait);
     }
     requestAnimationFrame(function () { if (bar) bar.style.transform = "scaleX(.85)"; });
-    addEventListener("load", finish); setTimeout(finish, 1800);
+    addEventListener("load", finish); setTimeout(finish, 2600);
   })();
 </script>
 <div class="progress" aria-hidden="true"><i id="progress"></i></div>
