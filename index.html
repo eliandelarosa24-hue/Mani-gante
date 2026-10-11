@@ -1,0 +1,473 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Red Vaeru · Estudio digital para turismo y hospitalidad</title>
+  <meta name="description" content="Sitios web, asesoría turística y capacitación en servicio al cliente para alojamientos, restaurantes y turismo. Del Caribe al sur de Chile. Cotice en un minuto con Vaeru IA." />
+  <meta name="theme-color" content="#0B110E" />
+  <meta name="author" content="Red Vaeru" />
+  <meta property="og:type" content="website" />
+  <meta property="og:site_name" content="Red Vaeru" />
+  <meta property="og:title" content="Red Vaeru · Hospitalidad que se reserva directo" />
+  <meta property="og:description" content="Estudio digital y asesoría para alojamientos, restaurantes y turismo. Del Caribe al sur de Chile." />
+  <meta property="og:image" content="/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:image" content="/og.jpg" />
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400;1,9..144,500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="/src/styles.css" />
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ProfessionalService",
+    "name": "Red Vaeru",
+    "description": "Estudio digital y asesoría para turismo y hospitalidad: sitios web para alojamientos y restaurantes, asesoría turística y capacitación en servicio al cliente.",
+    "email": "redvaeru@gmail.com",
+    "telephone": "+56952289117",
+    "areaServed": ["Chile", "República Dominicana", "Caribe"],
+    "address": { "@type": "PostalAddress", "addressRegion": "Araucanía", "addressCountry": "CL" },
+    "founder": { "@type": "Person", "name": "Jorge Vásquez" }
+  }
+  </script>
+</head>
+<body>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
+
+  <!-- Precarga -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__mark">
+      <svg viewBox="0 0 64 64" class="mark"><use href="#mark" /></svg>
+    </div>
+    <div class="loader__count"><span data-count>0</span><sup>%</sup></div>
+    <div class="loader__line"></div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><em></em></span></div>
+
+  <!-- Símbolo: palmera del Caribe + araucaria del sur -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="mark" viewBox="0 0 64 64">
+      <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="1.4" />
+      <path d="M32 54V22" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" />
+      <path d="M32 22c-4-5-10-6-15-4 5 0 9 2 15 4zm0 0c4-5 10-6 15-4-5 0-9 2-15 4zm0 0c-2-6-1-11 3-14-2 4-3 8-3 14zm0 0c-6-1-11 2-13 7 3-3 8-5 13-7zm0 0c6-1 11 2 13 7-3-3-8-5-13-7z" fill="currentColor" />
+      <path d="M32 32l-9 5m9 1l-11 6m11 1l-12 6M32 32l9 5m-9 1l11 6m-11 1l12 6" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" />
+      <path d="M12 46h40" stroke="#C4A35A" stroke-width="1.6" stroke-linecap="round" />
+    </symbol>
+  </svg>
+
+  <header class="nav" data-nav>
+    <a href="#inicio" class="nav__brand" aria-label="Red Vaeru, inicio">
+      <svg class="mark" viewBox="0 0 64 64"><use href="#mark" /></svg>
+      <span>Red Vaeru</span>
+    </a>
+    <nav class="nav__links" aria-label="Principal">
+      <a href="#servicios">Servicios</a>
+      <a href="#trabajos">Trabajos</a>
+      <a href="#metodo">Método</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#dudas">Dudas</a>
+    </nav>
+    <button class="btn btn--glow nav__cta" data-open-agent>
+      <span class="pulse"></span> Cotizar con IA
+    </button>
+    <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false" data-burger><span></span><span></span></button>
+  </header>
+
+  <div class="menu" data-menu aria-hidden="true">
+    <nav>
+      <a href="#servicios">Servicios</a>
+      <a href="#trabajos">Trabajos</a>
+      <a href="#metodo">Método</a>
+      <a href="#agente">Vaeru IA</a>
+      <a href="#nosotros">Nosotros</a>
+      <a href="#contacto">Contacto</a>
+    </nav>
+    <p>redvaeru@gmail.com · +56 9 5228 9117</p>
+  </div>
+
+  <main id="contenido">
+    <!-- HERO -->
+    <section class="hero dark" id="inicio">
+      <canvas class="hero__canvas" aria-hidden="true"></canvas>
+      <div class="hero__inner wrap">
+        <p class="eyebrow" data-fade>Estudio digital &amp; asesoría turística · Del Caribe al sur de Chile</p>
+        <h1 class="hero__title" data-split>
+          Hospitalidad que se <em>reserva directo.</em>
+        </h1>
+        <div class="hero__row">
+          <p class="hero__lead" data-fade>Diseñamos sitios para alojamientos y restaurantes, asesoramos su estrategia y capacitamos a su equipo, para que el huésped llegue por su canal y no por una comisión.</p>
+          <div class="hero__ctas" data-fade>
+            <button class="btn btn--gold" data-open-agent data-magnetic>Cotizar en 1 minuto <span aria-hidden="true">→</span></button>
+            <a class="btn btn--ghost" href="#trabajos" data-magnetic>Ver trabajos</a>
+          </div>
+        </div>
+      </div>
+      <div class="hero__collage" aria-hidden="true">
+        <figure class="ph ph--a"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=75" alt="" loading="eager" /></figure>
+        <figure class="ph ph--b"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=75" alt="" loading="eager" /></figure>
+        <figure class="ph ph--c"><img src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=800&q=75" alt="" loading="eager" /></figure>
+      </div>
+      <div class="hero__foot wrap">
+        <div class="hero__stat"><strong>15–25%</strong><span>comisión que se ahorra por reserva directa</span></div>
+        <div class="hero__stat"><strong>&lt; 24 h</strong><span>tiempo de respuesta, hábiles</span></div>
+        <div class="hero__stat"><strong>1</strong><span>interlocutor de principio a fin</span></div>
+        <a href="#manifiesto" class="hero__scroll" aria-label="Bajar"><span></span></a>
+      </div>
+    </section>
+
+    <!-- MARQUEE -->
+    <div class="marquee" aria-hidden="true">
+      <div class="marquee__track">
+        <span>Cabañas</span><i>✦</i><span>Hostales</span><i>✦</i><span>Glamping</span><i>✦</i><span>Hoteles boutique</span><i>✦</i><span>Restaurantes</span><i>✦</i><span>Asesoría turística</span><i>✦</i><span>Servicio al cliente</span><i>✦</i>
+        <span>Cabañas</span><i>✦</i><span>Hostales</span><i>✦</i><span>Glamping</span><i>✦</i><span>Hoteles boutique</span><i>✦</i><span>Restaurantes</span><i>✦</i><span>Asesoría turística</span><i>✦</i><span>Servicio al cliente</span><i>✦</i>
+      </div>
+    </div>
+
+    <!-- MANIFIESTO + CALCULADORA DE COMISIONES -->
+    <section class="manifesto light" id="manifiesto">
+      <div class="wrap">
+        <p class="eyebrow">01 · El problema</p>
+        <p class="manifesto__text" data-words>
+          Cada noche que vende por una plataforma le entrega hasta un 25% a alguien que no conoce a sus huéspedes. Construimos el canal que le devuelve ese margen y la relación directa con quien le visita.
+        </p>
+
+        <div class="ota">
+          <div class="ota__copy">
+            <h2 class="h2">¿Cuánto le deja a las plataformas <em>cada año?</em></h2>
+            <p>Mueva los valores. Es una cuenta simple, pero suele sorprender.</p>
+          </div>
+          <form class="ota__calc" data-ota onsubmit="return false">
+            <label>
+              <span>Reservas por OTA al mes</span>
+              <output data-out="nights">20</output>
+              <input type="range" min="2" max="150" value="20" name="nights" />
+            </label>
+            <label>
+              <span>Valor promedio por reserva</span>
+              <output data-out="rate">$90.000</output>
+              <input type="range" min="20000" max="500000" step="5000" value="90000" name="rate" />
+            </label>
+            <label>
+              <span>Comisión de la plataforma</span>
+              <output data-out="fee">18%</output>
+              <input type="range" min="10" max="30" value="18" name="fee" />
+            </label>
+            <div class="ota__result">
+              <span>Comisiones al año</span>
+              <strong data-ota-total>$3.888.000</strong>
+              <small data-ota-hint>Recuperar solo el 30% como reservas directas son $1.166.400 al año para su negocio.</small>
+            </div>
+          </form>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICIOS -->
+    <section class="services dark" id="servicios">
+      <div class="wrap">
+        <div class="section-head">
+          <p class="eyebrow">02 · Lo que hacemos</p>
+          <h2 class="h1" data-split>Todo lo que su negocio turístico <em>necesita para vender directo.</em></h2>
+        </div>
+        <ul class="svc" data-svc>
+          <li class="svc__row" data-img="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=700&q=75" data-ask="Quiero cotizar un sitio web para mi alojamiento">
+            <span class="svc__n">01</span>
+            <div class="svc__main">
+              <h3>Sitios web para alojamientos</h3>
+              <p>Cabañas, hostales, glamping, lodges y hoteles boutique. Diseño desde su territorio, reservas y WhatsApp como canal de cierre, check-in online y guía local.</p>
+              <ul class="tags"><li>Reserva directa</li><li>Multi-idioma</li><li>SEO local</li></ul>
+            </div>
+            <span class="svc__price" data-from="web_alojamiento">desde —</span>
+            <span class="svc__go" aria-hidden="true">↗</span>
+          </li>
+          <li class="svc__row" data-img="https://images.unsplash.com/photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=700&q=75" data-ask="Quiero cotizar un sitio web para mi restaurante">
+            <span class="svc__n">02</span>
+            <div class="svc__main">
+              <h3>Sitios web para restaurantes</h3>
+              <p>Carta digital con QR, reservas de mesa y pedidos guiados por WhatsApp. Su cocina contada con la misma intención con que se sirve.</p>
+              <ul class="tags"><li>Carta QR</li><li>Reservas</li><li>Pedidos</li></ul>
+            </div>
+            <span class="svc__price" data-from="web_restaurante">desde —</span>
+            <span class="svc__go" aria-hidden="true">↗</span>
+          </li>
+          <li class="svc__row" data-img="https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=700&q=75" data-ask="Necesito asesoría para mi negocio turístico">
+            <span class="svc__n">03</span>
+            <div class="svc__main">
+              <h3>Asesoría turística</h3>
+              <p>Diagnóstico de cómo vende hoy, estrategia de canal directo frente a OTAs, tarifas, fotografía, experiencia del huésped y formulación de producto turístico.</p>
+              <ul class="tags"><li>Diagnóstico</li><li>Canales y tarifas</li><li>Producto</li></ul>
+            </div>
+            <span class="svc__price" data-from="asesoria">desde —</span>
+            <span class="svc__go" aria-hidden="true">↗</span>
+          </li>
+          <li class="svc__row" data-img="https://images.unsplash.com/photo-1556761175-b413da4baf72?auto=format&fit=crop&w=700&q=75" data-ask="Quiero una capacitación en servicio al cliente para mi equipo">
+            <span class="svc__n">04</span>
+            <div class="svc__main">
+              <h3>Capacitación en servicio al cliente</h3>
+              <p>Talleres prácticos para recepción, sala y housekeeping: protocolos de bienvenida, manejo de reclamos, ventas cruzadas y estándares de servicio propios.</p>
+              <ul class="tags"><li>Presencial u online</li><li>Manual de estándares</li><li>Cliente incógnito</li></ul>
+            </div>
+            <span class="svc__price" data-from="capacitacion">desde —</span>
+            <span class="svc__go" aria-hidden="true">↗</span>
+          </li>
+          <li class="svc__row" data-img="https://images.unsplash.com/photo-1611162617213-7d7a39e9b1d7?auto=format&fit=crop&w=700&q=75" data-ask="Me interesa la gestión de redes sociales">
+            <span class="svc__n">05</span>
+            <div class="svc__main">
+              <h3>Redes sociales que llenan fechas</h3>
+              <p>Instagram y Facebook con calendario pensado para que el viajero escriba, no solo para juntar "me gusta". Reporte mensual simple y claro.</p>
+              <ul class="tags"><li>Calendario mensual</li><li>Piezas propias</li><li>Publicidad</li></ul>
+            </div>
+            <span class="svc__price" data-from="redes" data-monthly>desde —</span>
+            <span class="svc__go" aria-hidden="true">↗</span>
+          </li>
+        </ul>
+        <p class="services__note">Valores de referencia sin IVA. <button class="link" data-open-agent>Pida a Vaeru IA un rango exacto para su caso →</button></p>
+      </div>
+      <figure class="svc__float" aria-hidden="true"><img alt="" /></figure>
+    </section>
+
+    <!-- TRABAJOS -->
+    <section class="work dark" id="trabajos">
+      <div class="work__pin">
+        <div class="work__head wrap">
+          <p class="eyebrow">03 · Trabajos en el aire</p>
+          <h2 class="h1">Proyectos reales, <em>abiertos en vivo.</em></h2>
+        </div>
+        <div class="work__track" data-track>
+          <article class="case">
+            <a href="https://cabanasmiaynoah.netlify.app" target="_blank" rel="noopener" class="case__img" data-cursor="Ver sitio">
+              <img src="https://cabanasmiaynoah.netlify.app/img/mia-01.jpg" alt="Cabañas Miah y Noah en Curacautín" loading="lazy" />
+            </a>
+            <div class="case__meta"><span>Curacautín · Araucanía</span><span>Alojamiento</span></div>
+            <h3>Cabañas Miah y Noah</h3>
+            <dl>
+              <div><dt>Problema</dt><dd>Dependencia de plataformas y poca presencia propia.</dd></div>
+              <div><dt>Solución</dt><dd>Check-in digital, guía de zona y WhatsApp como canal de cierre.</dd></div>
+              <div><dt>Resultado</dt><dd>Canal propio activo y huéspedes reservando directo.</dd></div>
+            </dl>
+          </article>
+          <article class="case">
+            <a href="https://elrincondelospoetas.netlify.app" target="_blank" rel="noopener" class="case__img" data-cursor="Ver sitio">
+              <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1000&q=75" alt="Biblioteca antigua, inspiración del hostal El Rincón de los Poetas" loading="lazy" />
+            </a>
+            <div class="case__meta"><span>Nueva Imperial · Araucanía</span><span>Hostal familiar</span></div>
+            <h3>El Rincón de los Poetas</h3>
+            <dl>
+              <div><dt>Problema</dt><dd>Historia invisible y reservas casi solo por OTAs.</dd></div>
+              <div><dt>Solución</dt><dd>Narrativa literaria del hostal, reseñas y canal directo.</dd></div>
+              <div><dt>Resultado</dt><dd>Una historia que vende sola y reserva directa.</dd></div>
+            </dl>
+          </article>
+          <article class="case">
+            <a href="https://manigante.netlify.app" target="_blank" rel="noopener" class="case__img" data-cursor="Ver sitio">
+              <img src="https://manigante.netlify.app/assets/gallery/g1.jpg" alt="Maní confitado MANI-GANTE" loading="lazy" />
+            </a>
+            <div class="case__meta"><span>Catálogo digital</span><span>Comercio</span></div>
+            <h3>MANI-GANTE</h3>
+            <dl>
+              <div><dt>Problema</dt><dd>Venta informal y pedidos desordenados por redes.</dd></div>
+              <div><dt>Solución</dt><dd>Catálogo de 29 sabores con filtros y pedido guiado.</dd></div>
+              <div><dt>Resultado</dt><dd>Pedidos ordenados y catálogo siempre disponible.</dd></div>
+            </dl>
+          </article>
+          <article class="case">
+            <a href="https://misrecuerditos.netlify.app" target="_blank" rel="noopener" class="case__img" data-cursor="Ver sitio">
+              <img src="https://misrecuerditos.netlify.app/images/pulseras/volt-vip-rosa.jpg" alt="Pulseras personalizadas de Mis Recuerditos" loading="lazy" />
+            </a>
+            <div class="case__meta"><span>Tienda por categorías</span><span>Eventos</span></div>
+            <h3>Mis Recuerditos</h3>
+            <dl>
+              <div><dt>Problema</dt><dd>Catálogo solo en Instagram, difícil de convertir.</dd></div>
+              <div><dt>Solución</dt><dd>Tienda por categorías y pedido sin fricción.</dd></div>
+              <div><dt>Resultado</dt><dd>Tienda propia fuera de Instagram.</dd></div>
+            </dl>
+          </article>
+          <article class="case case--next">
+            <div class="case__cta">
+              <p class="eyebrow">Próximo proyecto</p>
+              <h3>¿El suyo?</h3>
+              <button class="btn btn--gold" data-open-agent>Conversemos con Vaeru IA</button>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="quotes light">
+      <div class="wrap">
+        <p class="eyebrow">04 · Lo que dicen</p>
+        <div class="quotes__grid">
+          <blockquote data-fade>
+            <p>"Nos ayudó a tener por fin un sitio propio para Cabañas Miah y Noah. Ahora nuestros huéspedes nos encuentran y <em>reservan directo.</em>"</p>
+            <footer><strong>Nicole</strong> · Co-anfitriona, Cabañas Miah y Noah</footer>
+          </blockquote>
+          <blockquote data-fade>
+            <p>"Pasamos de vender boca a boca a un catálogo ordenado con pedido por WhatsApp. Se siente <em>propio, no plantilla.</em>"</p>
+            <footer><strong>Equipo MANI-GANTE</strong> · Pedido digital por WhatsApp</footer>
+          </blockquote>
+        </div>
+        <p class="quotes__note">Solo testimonios reales de clientes. Sin reseñas inventadas.</p>
+      </div>
+    </section>
+
+    <!-- MÉTODO -->
+    <section class="method light" id="metodo">
+      <div class="wrap method__grid">
+        <div class="method__sticky">
+          <p class="eyebrow">05 · Método</p>
+          <h2 class="h1">Cuatro pasos. <em>Cero sorpresas.</em></h2>
+          <p class="method__lead">Precio fijo por escrito antes de pagar. Revisión incluida antes de publicar. Y una checklist final para que no dependa de nadie en lo básico.</p>
+          <div class="method__bar"><span data-method-bar></span></div>
+        </div>
+        <ol class="steps">
+          <li class="step" data-fade><span class="step__n">01</span><h3>Su lugar</h3><p>Conversamos sobre su negocio, su territorio y cómo recibe huéspedes hoy. Vaeru IA le da un rango de inversión en el primer minuto.</p></li>
+          <li class="step" data-fade><span class="step__n">02</span><h3>Propuesta</h3><p>Alcance, plazos y precio fijo por escrito en menos de 24 horas hábiles. Nada se paga antes de que usted esté de acuerdo.</p></li>
+          <li class="step" data-fade><span class="step__n">03</span><h3>Diseño y trabajo</h3><p>Construimos con su identidad y usted revisa en los puntos clave. En asesorías y capacitaciones, trabajamos con su equipo real.</p></li>
+          <li class="step" data-fade><span class="step__n">04</span><h3>Al aire</h3><p>Publicamos, medimos y le dejamos capacitado. Si quiere seguir creciendo, lo acompañamos mes a mes.</p></li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- AGENTE IA -->
+    <section class="agent dark" id="agente">
+      <div class="agent__glow" aria-hidden="true"></div>
+      <div class="wrap agent__grid">
+        <div class="agent__copy">
+          <p class="eyebrow">06 · Vaeru IA</p>
+          <h2 class="h1" data-split>Su presupuesto, <em>en una conversación.</em></h2>
+          <p class="agent__lead">Un asistente entrenado con nuestros servicios y tarifas. Le pregunta lo justo, calcula un rango real y le deja el resumen listo para enviar a Jorge por WhatsApp.</p>
+          <ul class="agent__list">
+            <li><span>✦</span> Cotiza webs, asesorías, capacitaciones y redes</li>
+            <li><span>✦</span> Responde dudas sobre plazos, dominio y forma de pago</li>
+            <li><span>✦</span> Disponible 24/7, también a medianoche en temporada alta</li>
+          </ul>
+        </div>
+        <div class="agent__panel" data-agent-inline></div>
+      </div>
+    </section>
+
+    <!-- NOSOTROS -->
+    <section class="about light" id="nosotros">
+      <div class="wrap about__grid">
+        <div class="about__visual" aria-hidden="true">
+          <div class="about__half about__half--caribe">
+            <img src="https://images.unsplash.com/photo-1519046904884-53103b34b206?auto=format&fit=crop&w=800&q=75" alt="" loading="lazy" />
+            <span>Caribe</span>
+          </div>
+          <div class="about__half about__half--sur">
+            <img src="https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=800&q=75" alt="" loading="lazy" />
+            <span>Sur de Chile</span>
+          </div>
+          <svg class="about__mark mark" viewBox="0 0 64 64"><use href="#mark" /></svg>
+        </div>
+        <div class="about__copy">
+          <p class="eyebrow">07 · Quién está detrás</p>
+          <h2 class="h1">Dos raíces. <em>Un solo oficio: la hospitalidad.</em></h2>
+          <p>Soy <strong>Jorge Vásquez</strong>, dominicano viviendo en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. El símbolo de Red Vaeru une la palmera del Caribe y la araucaria del sur: dos formas de recibir a quien llega.</p>
+          <p>Conozco el turismo porque lo estudio y porque trabajo con quienes reciben huéspedes. Por eso no hago solo sitios web: reviso cómo vende, cómo atiende y cómo se ve su negocio, y lo convierto en un plan concreto.</p>
+          <ul class="about__pillars">
+            <li><strong>Solo turismo.</strong> Alojamientos, restaurantes y experiencias. Nada de ferreterías ni clínicas.</li>
+            <li><strong>Habla con quien hace el trabajo.</strong> Propuesta, diseño, asesoría y capacitación: yo, sin intermediarios.</li>
+            <li><strong>Pocos proyectos a la vez.</strong> Para que cada uno tenga atención real.</li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section class="faq light" id="dudas">
+      <div class="wrap faq__grid">
+        <div>
+          <p class="eyebrow">08 · Dudas frecuentes</p>
+          <h2 class="h1">Antes de <em>escribirnos.</em></h2>
+          <p class="faq__aside">¿No está su pregunta? <button class="link" data-open-agent>Pregúntele a Vaeru IA →</button></p>
+        </div>
+        <div class="faq__list">
+          <details><summary>¿Por qué no muestran todos los precios?</summary><p>Porque cada negocio es distinto: no cuesta lo mismo una cabaña que un hotel boutique con tres idiomas. Vea los valores "desde" en cada servicio y pida a Vaeru IA un rango para su caso. El precio fijo siempre llega por escrito antes de pagar.</p></details>
+          <details><summary>¿En cuánto tiempo está listo mi sitio?</summary><p>Una presencia esencial toma de 1 a 2 semanas; un sitio completo, de 3 a 4; una experiencia premium, de 5 a 8. El plazo corre cuando ya tenemos textos y fotos de su negocio.</p></details>
+          <details><summary>¿Incluye dominio (.cl) y hosting?</summary><p>Le orientamos para comprar el dominio a su nombre (así siempre es suyo). El hosting suele ser económico o gratuito; queda escrito en la propuesta para que no haya sorpresas.</p></details>
+          <details><summary>¿Las capacitaciones son presenciales?</summary><p>Ambas. Presenciales en la Araucanía (en otras regiones, traslado y viáticos se cotizan aparte) u online en vivo para equipos de hasta 25 personas.</p></details>
+          <details><summary>¿Trabajan fuera de Chile?</summary><p>Sí, especialmente en el Caribe y República Dominicana. Esos proyectos se cotizan en USD y se trabajan de forma remota.</p></details>
+          <details><summary>¿Después puedo cambiar textos y fotos yo mismo?</summary><p>Sí. Le dejamos una capacitación breve y una checklist, y si prefiere no preocuparse, existe la mantención mensual.</p></details>
+          <details><summary>¿Cómo se paga?</summary><p>En pesos chilenos (o USD fuera de Chile). La forma exacta (transferencia, cuotas) queda en la propuesta escrita antes de empezar. Nada de cobros sorpresa a mitad de camino.</p></details>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section class="contact dark" id="contacto">
+      <div class="wrap">
+        <p class="eyebrow">09 · Contacto</p>
+        <h2 class="contact__title" data-split>Hablemos de su <em>próxima temporada.</em></h2>
+        <div class="contact__grid">
+          <div class="contact__ways">
+            <a class="way" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vengo%20del%20sitio%20de%20Red%20Vaeru" target="_blank" rel="noopener" data-magnetic>
+              <span>WhatsApp</span><strong>+56 9 5228 9117</strong><i>↗</i>
+            </a>
+            <a class="way" href="mailto:redvaeru@gmail.com" data-magnetic>
+              <span>Correo</span><strong>redvaeru@gmail.com</strong><i>↗</i>
+            </a>
+            <button class="way" data-open-agent data-magnetic>
+              <span>Vaeru IA · 24/7</span><strong>Cotizar ahora</strong><i>↗</i>
+            </button>
+          </div>
+          <form class="form" name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/gracias.html">
+            <input type="hidden" name="form-name" value="contacto" />
+            <p class="hidden"><label>No llenar: <input name="bot-field" /></label></p>
+            <div class="form__row">
+              <label><span>Nombre</span><input name="nombre" required autocomplete="name" /></label>
+              <label><span>Correo</span><input type="email" name="correo" required autocomplete="email" /></label>
+            </div>
+            <div class="form__row">
+              <label><span>Tipo de negocio</span>
+                <select name="negocio">
+                  <option>Alojamiento</option><option>Restaurante</option><option>Operador / experiencia turística</option><option>Otro proyecto turístico</option>
+                </select>
+              </label>
+              <label><span>Me interesa</span>
+                <select name="servicio">
+                  <option>Sitio web</option><option>Asesoría turística</option><option>Capacitación</option><option>Redes sociales</option><option>Orientarme</option>
+                </select>
+              </label>
+            </div>
+            <label><span>Cuéntenos de su negocio</span><textarea name="mensaje" rows="4" required></textarea></label>
+            <button type="submit" class="btn btn--gold" data-magnetic>Enviar mensaje <span aria-hidden="true">→</span></button>
+            <small>Le respondemos en menos de 24 horas hábiles.</small>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer dark">
+    <div class="wrap">
+      <div class="footer__top">
+        <p>Estudio digital y asesoría para turismo y hospitalidad.<br />Araucanía, Chile · Caribe.</p>
+        <nav aria-label="Pie de página">
+          <a href="#servicios">Servicios</a><a href="#trabajos">Trabajos</a><a href="#agente">Vaeru IA</a><a href="#contacto">Contacto</a>
+        </nav>
+      </div>
+      <p class="footer__word" aria-hidden="true">Red Vaeru</p>
+      <div class="footer__bottom"><span>© <span data-year>2026</span> Red Vaeru</span><a href="#inicio">Volver arriba ↑</a></div>
+    </div>
+  </footer>
+
+  <!-- Agente flotante -->
+  <button class="fab" data-open-agent aria-label="Abrir Vaeru IA">
+    <svg class="mark" viewBox="0 0 64 64"><use href="#mark" /></svg>
+    <span>Vaeru IA</span>
+  </button>
+  <div class="drawer" data-drawer aria-hidden="true">
+    <div class="drawer__backdrop" data-close-agent></div>
+    <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Vaeru IA" data-agent-drawer></div>
+  </div>
+
+  <script type="module" src="/src/main.js"></script>
+</body>
+</html>
