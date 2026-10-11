@@ -12,7 +12,7 @@
     "build": "vite build",
     "preview": "vite preview",
     "test": "node --test tests/*.test.js",
-    "images": "node scripts/gen-images.mjs"
+    "images": "NODE_USE_ENV_PROXY=1 node scripts/gen-images.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.133.0",

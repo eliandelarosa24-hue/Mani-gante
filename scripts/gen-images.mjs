@@ -5,7 +5,9 @@
 //   GEMINI_API_KEY=… npm run images -- --sample domos-cielo-austral
 //   OPENAI_API_KEY=… npm run images -- --sample all --provider openai --only hero,cierre
 //   Opciones: --provider gemini|openai  --sample <slug>|all  --only hero,g1  --force  --dry
-//   Modelos (opcional): GEMINI_IMAGE_MODEL (por defecto gemini-2.5-flash-image), OPENAI_IMAGE_MODEL (por defecto gpt-image-1)
+//   Modelos (opcional): GEMINI_IMAGE_MODEL (por defecto gemini-2.5-flash-image; también gemini-3-pro-image),
+//   OPENAI_IMAGE_MODEL (por defecto gpt-image-1; también gpt-image-2). Ambas APIs cobran por imagen:
+//   la cuenta necesita saldo o facturación activa, si no responden 429.
 import { mkdirSync, existsSync, writeFileSync } from 'node:fs';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
