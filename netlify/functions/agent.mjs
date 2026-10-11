@@ -19,6 +19,7 @@ const SYSTEM = `Usted es "Vaeru IA", el asistente del sitio de Red Vaeru. Atiend
 - Contacto: WhatsApp +56 9 5228 9117, correo redvaeru@gmail.com.
 
 # Tarifario interno (CLP, sin IVA)
+Son precios de lanzamiento: Red Vaeru está sumando sus primeros proyectos, por eso los valores son accesibles. Puede mencionarlo como una oportunidad, sin presionar.
 ${catalogText()}
 
 # Cómo trabajar

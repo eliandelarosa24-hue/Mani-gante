@@ -2,6 +2,8 @@
 // Lo usan el cotizador guiado del sitio y el agente de IA (netlify/functions/agent.mjs).
 // El sitio solo muestra los valores "desde"; los rangos completos los entrega el agente.
 // Todos los montos en pesos chilenos (CLP), sin IVA. Edite aquí y se actualiza en todas partes.
+// PRECIOS DE LANZAMIENTO: pensados para conseguir los primeros proyectos y casos de éxito.
+// Súbalos a medida que crezca el portafolio.
 
 export const CURRENCY = 'CLP';
 
@@ -11,16 +13,16 @@ export const SERVICES = {
     short: 'Web alojamiento',
     for: 'Cabañas, hostales, glamping, lodges y hoteles boutique',
     tiers: {
-      landing: { label: 'Presencia esencial (1 página)', min: 220000, max: 320000, weeks: '1 a 2 semanas' },
-      completo: { label: 'Sitio completo multi-sección', min: 450000, max: 750000, weeks: '3 a 4 semanas' },
-      premium: { label: 'Experiencia premium a medida', min: 850000, max: 1400000, weeks: '5 a 8 semanas' },
+      landing: { label: 'Presencia esencial (1 página)', min: 49000, max: 79000, weeks: '1 a 2 semanas' },
+      completo: { label: 'Sitio completo multi-sección', min: 89000, max: 149000, weeks: '3 a 4 semanas' },
+      premium: { label: 'Experiencia premium a medida', min: 190000, max: 290000, weeks: '5 a 8 semanas' },
     },
     addons: {
-      reservas: { label: 'Integración de motor de reservas o calendario', min: 150000, max: 300000 },
-      checkin: { label: 'Check-in online para huéspedes', min: 120000, max: 200000 },
-      guia: { label: 'Guía local / blog del destino', min: 80000, max: 150000 },
-      idioma: { label: 'Idioma adicional (por idioma)', min: 90000, max: 150000, perUnit: true },
-      seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 120000, max: 220000 },
+      reservas: { label: 'Integración de motor de reservas o calendario', min: 30000, max: 60000 },
+      checkin: { label: 'Check-in online para huéspedes', min: 25000, max: 45000 },
+      guia: { label: 'Guía local / blog del destino', min: 20000, max: 35000 },
+      idioma: { label: 'Idioma adicional (por idioma)', min: 20000, max: 35000, perUnit: true },
+      seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
     },
   },
   web_restaurante: {
@@ -28,15 +30,15 @@ export const SERVICES = {
     short: 'Web restaurante',
     for: 'Restaurantes, cafeterías, bares y cocinas de destino',
     tiers: {
-      carta: { label: 'Carta digital con QR', min: 150000, max: 250000, weeks: '1 semana' },
-      sitio: { label: 'Sitio completo de restaurante', min: 380000, max: 650000, weeks: '2 a 4 semanas' },
-      premium: { label: 'Experiencia gastronómica premium', min: 750000, max: 1200000, weeks: '4 a 6 semanas' },
+      carta: { label: 'Carta digital con QR', min: 49000, max: 69000, weeks: '1 semana' },
+      sitio: { label: 'Sitio completo de restaurante', min: 89000, max: 139000, weeks: '2 a 4 semanas' },
+      premium: { label: 'Experiencia gastronómica premium', min: 180000, max: 260000, weeks: '4 a 6 semanas' },
     },
     addons: {
-      reservas: { label: 'Reservas de mesa en línea', min: 120000, max: 250000 },
-      pedidos: { label: 'Pedidos / delivery guiado por WhatsApp', min: 150000, max: 280000 },
-      idioma: { label: 'Idioma adicional (por idioma)', min: 70000, max: 120000, perUnit: true },
-      seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 120000, max: 220000 },
+      reservas: { label: 'Reservas de mesa en línea', min: 25000, max: 50000 },
+      pedidos: { label: 'Pedidos / delivery guiado por WhatsApp', min: 30000, max: 55000 },
+      idioma: { label: 'Idioma adicional (por idioma)', min: 15000, max: 30000, perUnit: true },
+      seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
     },
   },
   redes: {
@@ -45,11 +47,11 @@ export const SERVICES = {
     for: 'Instagram y Facebook con foco en reservas directas',
     monthly: true,
     tiers: {
-      esencial: { label: 'Esencial: 8 publicaciones al mes', min: 150000, max: 220000, weeks: 'mes a mes' },
-      pro: { label: 'Pro: 12 publicaciones, historias y respuestas', min: 260000, max: 380000, weeks: 'mes a mes' },
+      esencial: { label: 'Esencial: 8 publicaciones al mes', min: 45000, max: 65000, weeks: 'mes a mes' },
+      pro: { label: 'Pro: 12 publicaciones, historias y respuestas', min: 75000, max: 110000, weeks: 'mes a mes' },
     },
     addons: {
-      ads: { label: 'Gestión de publicidad pagada (sin incluir inversión)', min: 90000, max: 160000, monthly: true },
+      ads: { label: 'Gestión de publicidad pagada (sin incluir inversión)', min: 25000, max: 45000, monthly: true },
     },
   },
   asesoria: {
@@ -57,13 +59,13 @@ export const SERVICES = {
     short: 'Asesoría',
     for: 'Diagnóstico, canales de venta, tarifas, producto y experiencia del huésped',
     tiers: {
-      diagnostico: { label: 'Diagnóstico digital (sesión de 90 min + informe)', min: 70000, max: 110000, weeks: '1 semana' },
-      plan: { label: 'Plan de canal directo y OTAs (4 sesiones)', min: 280000, max: 450000, weeks: '4 semanas' },
-      mensual: { label: 'Acompañamiento mensual', min: 180000, max: 300000, weeks: 'mes a mes', monthly: true },
-      proyecto: { label: 'Formulación de proyecto o producto turístico', min: 450000, max: 900000, weeks: '4 a 8 semanas' },
+      diagnostico: { label: 'Diagnóstico digital (sesión de 90 min + informe)', min: 25000, max: 35000, weeks: '1 semana' },
+      plan: { label: 'Plan de canal directo y OTAs (4 sesiones)', min: 70000, max: 110000, weeks: '4 semanas' },
+      mensual: { label: 'Acompañamiento mensual', min: 50000, max: 80000, weeks: 'mes a mes', monthly: true },
+      proyecto: { label: 'Formulación de proyecto o producto turístico', min: 120000, max: 220000, weeks: '4 a 8 semanas' },
     },
     addons: {
-      terreno: { label: 'Visita en terreno (Araucanía)', min: 60000, max: 120000 },
+      terreno: { label: 'Visita en terreno (Araucanía)', min: 20000, max: 40000 },
     },
   },
   capacitacion: {
@@ -71,16 +73,16 @@ export const SERVICES = {
     short: 'Capacitación',
     for: 'Equipos de recepción, sala, housekeeping y atención turística',
     tiers: {
-      taller: { label: 'Taller de 4 horas (hasta 15 personas)', min: 320000, max: 480000, weeks: 'a coordinar' },
-      programa: { label: 'Programa de 3 módulos (12 horas)', min: 850000, max: 1300000, weeks: '3 a 6 semanas' },
-      online: { label: 'Taller online en vivo (hasta 25 personas)', min: 240000, max: 360000, weeks: 'a coordinar' },
+      taller: { label: 'Taller de 4 horas (hasta 15 personas)', min: 90000, max: 140000, weeks: 'a coordinar' },
+      programa: { label: 'Programa de 3 módulos (12 horas)', min: 240000, max: 360000, weeks: '3 a 6 semanas' },
+      online: { label: 'Taller online en vivo (hasta 25 personas)', min: 70000, max: 110000, weeks: 'a coordinar' },
     },
     addons: {
-      manual: { label: 'Manual de estándares de servicio para su negocio', min: 180000, max: 320000 },
-      mystery: { label: 'Cliente incógnito (evaluación previa)', min: 120000, max: 220000 },
+      manual: { label: 'Manual de estándares de servicio para su negocio', min: 50000, max: 90000 },
+      mystery: { label: 'Cliente incógnito (evaluación previa)', min: 35000, max: 60000 },
     },
     // Personas adicionales sobre el cupo base del taller
-    extraPerson: { min: 15000, max: 25000, base: { taller: 15, programa: 15, online: 25 } },
+    extraPerson: { min: 4000, max: 7000, base: { taller: 15, programa: 15, online: 25 } },
   },
   mantencion: {
     name: 'Mantención y soporte web',
@@ -88,7 +90,7 @@ export const SERVICES = {
     for: 'Cambios de contenido, respaldo, monitoreo y soporte',
     monthly: true,
     tiers: {
-      basica: { label: 'Mantención mensual', min: 25000, max: 45000, weeks: 'mes a mes' },
+      basica: { label: 'Mantención mensual', min: 12000, max: 20000, weeks: 'mes a mes' },
     },
     addons: {},
   },
@@ -106,7 +108,7 @@ export function formatCLP(n) {
 }
 
 // Redondea a miles para que los rangos se lean limpios.
-const round = (n) => Math.round(n / 5000) * 5000;
+const round = (n) => Math.round(n / 1000) * 1000;
 
 /**
  * Calcula un presupuesto estimado y determinista.

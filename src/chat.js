@@ -283,7 +283,7 @@ export class Chat {
     const g = this.guided;
     const est = estimate({ items: [{ service: g.service, tier: g.tier, addons: [...g.addons], participants }] });
     const s = SERVICES[g.service];
-    this.bot(`Listo. Esta es una estimación para ${s.name.toLowerCase()} (plazo aproximado: ${s.tiers[g.tier].weeks}). Si me envía el resumen, Jorge le responde en menos de 24 horas hábiles con una propuesta fija.`);
+    this.bot(`Listo. Esta es una estimación con precios de lanzamiento para ${s.name.toLowerCase()} (plazo aproximado: ${s.tiers[g.tier].weeks}). Si me envía el resumen, Jorge le responde en menos de 24 horas hábiles con una propuesta fija.`);
     this.quote(est);
     this.guided = null;
     this.setChips([

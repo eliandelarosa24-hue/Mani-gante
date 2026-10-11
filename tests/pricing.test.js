@@ -30,7 +30,7 @@ test('ignora entradas inválidas sin romperse', () => {
 test('urgencia suma 20% solo sobre pagos únicos', () => {
   const base = estimate({ items: [{ service: 'web_restaurante', tier: 'sitio' }] });
   const urg = estimate({ items: [{ service: 'web_restaurante', tier: 'sitio' }], urgent: true });
-  assert.equal(urg.oneTime.min, Math.round((base.oneTime.min * 1.2) / 5000) * 5000);
+  assert.equal(urg.oneTime.min, Math.round((base.oneTime.min * 1.2) / 1000) * 1000);
 });
 
 test('precios desde y catálogo para el agente', () => {

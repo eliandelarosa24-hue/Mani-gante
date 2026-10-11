@@ -40,7 +40,7 @@ Sin la clave, Vaeru IA sigue funcionando en **modo guiado**: cotiza con el mismo
 Cada conversación cuesta del orden de centavos de dólar. El prompt del sistema se guarda en caché para abaratar los mensajes siguientes. Se recomienda poner un límite de gasto mensual en la consola de Anthropic.
 
 ## Antes de publicar: revisar
-- [ ] Aprobar o ajustar los precios de `src/pricing.js` (ver `docs/propuesta-precios.md`).
+- [ ] Revisar los precios de lanzamiento en `src/pricing.js` (ver `docs/propuesta-precios.md`) y subirlos cuando haya más casos de éxito.
 - [ ] Reemplazar las fotos de stock (Unsplash) por fotos propias o de clientes cuando las tenga.
 - [ ] Agregar una foto profesional de Jorge en la sección "Nosotros".
 - [ ] Cuando tenga dominio propio, cambiar `og:image` en `index.html` por la URL completa.
