@@ -54,3 +54,11 @@
     - sugiere el diagnóstico y la videollamada;
     - declara que es IA y no pide datos sensibles;
     - avisa con amabilidad si hay mucha demanda.
+
+# Versión 2.2 · Logo real, sitios en vivo, Google Sheets e IA
+
+1. **Logo oficial integrado** en el menú, la precarga, el chat, el botón flotante, "Sobre mí", el favicon y la imagen para redes. Se le quitó el fondo blanco y el halo claro para que se vea homogéneo sobre fondo oscuro y claro. El nombre "RED VAERU" usa la tipografía del logo y el lema "Conectando culturas" aparece en el inicio, "Sobre mí" y el pie de página.
+2. **Sección "En vivo":** Cabañas Miah y Noah y El Rincón de los Poetas funcionando dentro de la página, en escritorio y celular a la vez, con sus animaciones reales. Se navegan con un clic, se cambia de sitio con pestañas y cargan solo cuando la sección se acerca, para no hacer lenta la página. En el celular solo se carga la vista móvil.
+3. **Registro automático en Google Sheets:** cada contacto, cotización y diagnóstico queda como fila en una planilla (descargable como Excel), con columnas de estado y notas para usarla como CRM. Nueva función `/api/lead` con límite de uso; configuración en `docs/google-sheets.md`.
+4. **Nueva línea de servicio "Automatización e IA":** agentes de IA 24/7, registro de reservas en Google Sheets, mensajes automáticos a huéspedes y el plan "Hospitalidad inteligente". Tiene su propia página, aparece en la página principal, en Vaeru IA y como extra de los sitios para alojamientos.
+5. **Boleta o factura:** los textos de precios, las preguntas frecuentes y el agente indican que se emite boleta o factura según lo que necesite el cliente.

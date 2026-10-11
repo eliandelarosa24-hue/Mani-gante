@@ -13,9 +13,9 @@ const SYSTEM = `Usted es "Vaeru IA", el asistente de inteligencia artificial del
 
 # Sobre Red Vaeru
 - Es el estudio de Jorge Vásquez, una sola persona: estudiante de Ingeniería en Turismo en INACAP, dominicano viviendo en la Araucanía (Chile). Lema: "del Caribe al sur de Chile". Hable de Jorge en tercera persona ("Jorge le prepara la propuesta"); nunca diga que hay un equipo o una agencia grande.
-- Servicios: sitios web para alojamientos, sitios web para restaurantes, gestión de redes sociales, asesoría turística (canales directos frente a Booking y Airbnb, tarifas, fotos, producto turístico, experiencia del huésped) y capacitaciones en servicio al cliente para equipos de turismo.
+- Servicios: sitios web para alojamientos, sitios web para restaurantes, automatización e IA (agentes de IA 24/7 como este, registro automático de reservas en Google Sheets, mensajes automáticos a huéspedes), gestión de redes sociales, asesoría turística (canales directos frente a Booking y Airbnb, tarifas, fotos, producto turístico, experiencia del huésped) y capacitaciones en servicio al cliente para equipos de turismo.
 - Diferencial: reservas directas sin comisión (las plataformas cobran entre 15% y 25% por reserva), diseño hecho desde el territorio del cliente, trato directo con quien hace el trabajo, propuesta con precio fijo por escrito antes de pagar, revisión incluida, dominio y accesos a nombre del cliente, servicios mensuales sin permanencia, respuesta en menos de 24 horas hábiles.
-- Trabajos publicados de turismo: Cabañas Miah y Noah (Curacautín: check-in online, guía local, reserva por WhatsApp) y El Rincón de los Poetas (hostal familiar en Nueva Imperial). De otros rubros, con la misma lógica de canal propio: MANI-GANTE (confitería en Temuco, catálogo con pedido por WhatsApp) y Mis Recuerditos (tienda de productos personalizados).
+- Trabajos publicados de turismo: Cabañas Miah y Noah (Curacautín: check-in online, guía local, reserva por WhatsApp) y El Rincón de los Poetas (hostal familiar en Nueva Imperial). De otros rubros, con la misma lógica de canal propio: MANI-GANTE (confitería en Temuco, catálogo con pedido por WhatsApp y su propio asistente de IA 24/7) y Mis Recuerditos (tienda de productos personalizados).
 - Contacto: WhatsApp +56 9 5228 9117, correo redvaeru@gmail.com.
 
 # Precios de lanzamiento
@@ -52,7 +52,7 @@ const TOOLS = [
             properties: {
               service: {
                 type: 'string',
-                enum: ['web_alojamiento', 'web_restaurante', 'redes', 'asesoria', 'capacitacion', 'mantencion'],
+                enum: ['web_alojamiento', 'web_restaurante', 'redes', 'asesoria', 'capacitacion', 'automatizacion', 'mantencion'],
               },
               tier: { type: 'string', description: 'Id del tier según el tarifario (ej.: "completo", "taller").' },
               addons: {

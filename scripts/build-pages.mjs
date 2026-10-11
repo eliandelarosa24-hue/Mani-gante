@@ -10,16 +10,6 @@ const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
 const strip = (s) => s.replace(/<[^>]+>/g, '');
 
-const SYMBOL = `<svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <symbol id="mark" viewBox="0 0 64 64">
-      <circle cx="32" cy="32" r="30" fill="none" stroke="currentColor" stroke-width="1.4" />
-      <path d="M32 54V22" stroke="currentColor" stroke-width="1.6" fill="none" stroke-linecap="round" />
-      <path d="M32 22c-4-5-10-6-15-4 5 0 9 2 15 4zm0 0c4-5 10-6 15-4-5 0-9 2-15 4zm0 0c-2-6-1-11 3-14-2 4-3 8-3 14zm0 0c-6-1-11 2-13 7 3-3 8-5 13-7zm0 0c6-1 11 2 13 7-3-3-8-5-13-7z" fill="currentColor" />
-      <path d="M32 32l-9 5m9 1l-11 6m11 1l-12 6M32 32l9 5m-9 1l11 6m-11 1l12 6" stroke="currentColor" stroke-width="1.3" fill="none" stroke-linecap="round" />
-      <path d="M12 46h40" stroke="#C4A35A" stroke-width="1.6" stroke-linecap="round" />
-    </symbol>
-  </svg>`;
-
 const head = ({ title, description, path, jsonld }) => `<!DOCTYPE html>
 <html lang="es-CL">
 <head>
@@ -37,7 +27,8 @@ const head = ({ title, description, path, jsonld }) => `<!DOCTYPE html>
   <meta property="og:description" content="${esc(description)}" />
   <meta property="og:image" content="__SITE_URL__/og.jpg" />
   <meta name="twitter:card" content="summary_large_image" />
-  <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+  <link rel="icon" type="image/png" sizes="32x32" href="/brand/emblema-32.png" />
+  <link rel="apple-touch-icon" href="/brand/emblema-512.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;0,9..144,500;1,9..144,300;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet" />
@@ -54,9 +45,8 @@ const chrome = `<a class="skip" href="#contenido">Saltar al contenido</a>
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
   <div class="grain" aria-hidden="true"></div>
   <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><em></em></span></div>
-  ${SYMBOL}
   <header class="nav" data-nav>
-    <a href="/" class="nav__brand" aria-label="Red Vaeru, inicio"><svg class="mark" viewBox="0 0 64 64"><use href="#mark" /></svg><span>Red Vaeru</span></a>
+    <a href="/" class="nav__brand" aria-label="Red Vaeru, inicio"><img class="mark" src="/brand/emblema-96.webp" alt="" width="96" height="96" /><span>Red Vaeru</span></a>
     <nav class="nav__links" aria-label="Principal">
       <a href="/#servicios">Servicios</a><a href="/#diagnostico">Diagnóstico</a><a href="/#trabajos">Trabajos</a><a href="/#nosotros">Sobre mí</a><a href="/#contacto">Contacto</a>
     </nav>
@@ -71,14 +61,14 @@ const chrome = `<a class="skip" href="#contenido">Saltar al contenido</a>
 const footer = `<footer class="footer dark">
     <div class="wrap">
       <div class="footer__top">
-        <p>Estudio digital y asesoría para turismo y hospitalidad.<br />Araucanía, Chile · Caribe.</p>
+        <p><strong class="footer__tag">Conectando culturas.</strong><br />Estudio digital y asesoría para turismo y hospitalidad.<br />Araucanía, Chile · Caribe.</p>
         <nav aria-label="Servicios">${PAGES.map((p) => `<a href="/servicios/${p.slug}/">${esc(SERVICES[p.service].name)}</a>`).join('')}</nav>
       </div>
       <p class="footer__word" aria-hidden="true">Red Vaeru</p>
       <div class="footer__bottom"><span>© <span data-year>2026</span> Red Vaeru · Jorge Vásquez</span><span><a href="/privacidad">Privacidad</a> · <a href="/">Inicio</a></span></div>
     </div>
   </footer>
-  <button class="fab" data-open-agent data-source="flotante" aria-label="Abrir Vaeru IA"><svg class="mark" viewBox="0 0 64 64"><use href="#mark" /></svg><span>Vaeru IA</span></button>
+  <button class="fab" data-open-agent data-source="flotante" aria-label="Abrir Vaeru IA"><img class="mark" src="/brand/emblema-96.webp" alt="" width="96" height="96" /><span>Vaeru IA</span></button>
   <div class="drawer" data-drawer aria-hidden="true">
     <div class="drawer__backdrop" data-close-agent></div>
     <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Vaeru IA" data-agent-drawer></div>
@@ -166,7 +156,7 @@ function servicePage(p) {
           </article>`).join('\n          ')}
         </div>
         ${Object.keys(s.addons).length ? `<p class="addons">Extras disponibles: ${Object.values(s.addons).map((a) => esc(a.label.toLowerCase())).join(' · ')}.</p>` : ''}
-        <p class="services__note">Valores referenciales en pesos chilenos. El precio fijo y el documento tributario llegan por escrito en la propuesta.</p>
+        <p class="services__note">Valores referenciales en pesos chilenos. Emito boleta o factura; el precio fijo y los impuestos que correspondan llegan por escrito en la propuesta.</p>
       </div>
     </section>
 

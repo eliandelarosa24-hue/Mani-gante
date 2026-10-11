@@ -17,7 +17,7 @@ export const CAMPAIGN = {
   text: 'Temporada de verano: confirme su sitio antes del 30 de noviembre.',
 };
 
-export const TAX_NOTE = 'Valores referenciales en pesos chilenos. El documento tributario (boleta de honorarios o factura) y su efecto en el precio se detallan en la propuesta.';
+export const TAX_NOTE = 'Valores referenciales en pesos chilenos. Emito boleta o factura según lo que necesite su negocio; los impuestos que correspondan se detallan en la propuesta.';
 
 export const SERVICES = {
   web_alojamiento: {
@@ -35,6 +35,8 @@ export const SERVICES = {
       guia: { label: 'Guía local / blog del destino', min: 20000, max: 35000 },
       idioma: { label: 'Idioma adicional (por idioma)', min: 20000, max: 35000, perUnit: true },
       seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
+      agente: { label: 'Agente IA 24/7 que responde y cotiza en su sitio', min: 120000, max: 200000 },
+      sheets: { label: 'Registro automático de reservas en Google Sheets', min: 40000, max: 70000 },
     },
   },
   web_restaurante: {
@@ -95,6 +97,21 @@ export const SERVICES = {
     },
     // Personas adicionales sobre el cupo base del taller
     extraPerson: { min: 6000, max: 10000, base: { taller: 15, programa: 15, online: 25 } },
+  },
+  automatizacion: {
+    name: 'Automatización e IA para turismo',
+    short: 'IA y automatización',
+    for: 'Agentes de IA, registro automático de reservas y procesos sin planillas manuales',
+    tiers: {
+      sheets: { label: 'Registro automático de reservas y consultas en Google Sheets', min: 60000, max: 100000, weeks: '1 semana' },
+      agente: { label: 'Agente IA 24/7 entrenado con su negocio', min: 150000, max: 250000, weeks: '2 a 3 semanas' },
+      integral: { label: 'Hospitalidad inteligente: agente IA + automatizaciones + panel de reservas', min: 290000, max: 450000, weeks: '3 a 5 semanas' },
+    },
+    addons: {
+      operacion: { label: 'Operación mensual del agente (incluye consumo moderado de IA)', min: 25000, max: 45000, monthly: true },
+      recordatorios: { label: 'Mensajes automáticos a huéspedes (confirmación, llegada, reseña)', min: 40000, max: 70000 },
+      reporte: { label: 'Reporte mensual automático de reservas y consultas', min: 30000, max: 50000 },
+    },
   },
   mantencion: {
     name: 'Mantención y soporte web',

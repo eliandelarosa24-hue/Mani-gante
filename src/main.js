@@ -1,7 +1,9 @@
 import { initShared, revealOnScroll, splitLines, $, $$, reduced, fine, gsap, ScrollTrigger, track } from './shared.js';
 import { initHeroShader } from './hero-shader.js';
+import { initLive } from './live.js';
 import { Chat } from './chat.js';
 import { fromPrice, formatCLP } from './pricing.js';
+import { submitLead } from './leads.js';
 
 const { openAgent } = initShared();
 
@@ -183,12 +185,11 @@ if (quiz) {
     const btn = f.querySelector('button');
     btn.disabled = true;
     btn.textContent = 'Enviando…';
-    try {
-      const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams(new FormData(f)).toString() });
-      if (!res.ok) throw new Error(String(res.status));
-      track('lead_submitted', { source: 'diagnostico' });
+    const data = Object.fromEntries(new FormData(f));
+    delete data['form-name'];
+    if (await submitLead('diagnostico', data)) {
       f.innerHTML = '<p class="lead__ok">Recibido. Jorge le enviará su plan de mejora por WhatsApp en menos de 24 horas hábiles.</p>';
-    } catch {
+    } else {
       btn.disabled = false;
       btn.textContent = 'Enviar por WhatsApp';
       window.open(`https://wa.me/56952289117?text=${encodeURIComponent(`Hola Jorge, hice el diagnóstico en Red Vaeru: ${f.puntaje.value}. ¿Me ayuda con un plan de mejora?`)}`, '_blank', 'noopener');
@@ -203,10 +204,21 @@ $$('[data-intent]').forEach((b) => b.addEventListener('click', () => {
   $$('[data-intent]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
   waLink.href = `https://wa.me/56952289117?text=${encodeURIComponent(`Hola Jorge, vengo del sitio de Red Vaeru. ${b.dataset.intent}`)}`;
 }));
-$('form[name=contacto]')?.addEventListener('submit', () => track('lead_submitted', { source: 'formulario' }));
+const contact = $('form[name=contacto]');
+contact?.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (!contact.reportValidity()) return;
+  const btn = contact.querySelector('button[type=submit]');
+  btn.disabled = true;
+  const data = Object.fromEntries(new FormData(contact));
+  delete data['form-name'];
+  if (await submitLead('contacto', data, 'formulario')) location.href = '/gracias';
+  else { btn.disabled = false; HTMLFormElement.prototype.submit.call(contact); } // respaldo: envío normal del navegador
+});
 
 // ---------- agente en la sección y fondo ----------
 new Chat($('[data-agent-inline]'), { source: 'seccion' });
+initLive();
 initHeroShader($('.hero__canvas'));
 const boot = () => { intro(); scrollAnimations(); ScrollTrigger.refresh(); };
 if (document.fonts?.ready) document.fonts.ready.then(boot); else addEventListener('load', boot);

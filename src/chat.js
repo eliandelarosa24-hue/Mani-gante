@@ -3,6 +3,7 @@
 // con el mismo tarifario, así el cotizador funciona siempre.
 import { SERVICES, estimate, formatCLP, launchLeft, TAX_NOTE } from './pricing.js';
 import { track } from './analytics.js';
+import { submitLead } from './leads.js';
 
 const WHATSAPP = '56952289117';
 const API = '/api/agent';
@@ -14,26 +15,28 @@ const START_CHIPS = [
   { label: 'Asesoría turística', service: 'asesoria' },
   { label: 'Capacitar a mi equipo', service: 'capacitacion' },
   { label: 'Redes sociales', service: 'redes' },
+  { label: 'Agente IA y automatización', service: 'automatizacion' },
   { label: 'Tengo una duda', faq: true },
 ];
 
 const FAQ = [
   { k: /plazo|tiempo|cu[aá]nto (se )?demora|cu[aá]ndo|semanas|listo/i, a: 'Una presencia esencial toma de 1 a 2 semanas, un sitio completo de 3 a 4 y una experiencia premium de 5 a 8. El plazo corre desde que tengo los textos y fotos de su negocio.' },
   { k: /dominio|hosting|\.cl|servidor/i, a: 'El dominio se compra a su nombre (así siempre es suyo) y el hosting suele ser económico o gratuito. Ambos quedan detallados en la propuesta, sin sorpresas.' },
-  { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Se paga en pesos chilenos (o USD fuera de Chile). El documento tributario y la forma de pago (transferencia o cuotas) quedan en la propuesta escrita antes de empezar.' },
+  { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Se paga en pesos chilenos (o USD fuera de Chile). Emito boleta o factura según lo que necesite; los impuestos y la forma de pago (transferencia o cuotas) quedan en la propuesta escrita antes de empezar.' },
   { k: /caribe|dominican|extranjero|fuera de chile|usd|d[oó]lar/i, a: 'Sí, trabajo con negocios del Caribe y República Dominicana de forma remota. Esos proyectos se cotizan en USD.' },
   { k: /presencial|online|regi[oó]n|viaj/i, a: 'Las capacitaciones son presenciales en la Araucanía (en otras regiones el traslado se cotiza aparte) u online en vivo para hasta 25 personas.' },
   { k: /cambiar|editar|actualizar|yo mismo/i, a: 'Sí, le dejo una capacitación breve y una checklist para cambiar textos y fotos. Si prefiere no preocuparse, existe la mantención mensual desde ' + formatCLP(SERVICES.mantencion.tiers.basica.min) + '.' },
   { k: /qui[eé]n|jorge|equipo|agencia/i, a: 'Red Vaeru es el estudio de Jorge Vásquez, dominicano en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. Usted habla siempre con quien hace el trabajo.' },
   { k: /booking|airbnb|comisi[oó]n|plataforma/i, a: 'Las plataformas cobran entre 15% y 25% por reserva. Un sitio propio con WhatsApp y reserva directa le devuelve ese margen y la relación con el huésped.' },
   { k: /lanzamiento|cupo|descuento|barato/i, a: () => `Son precios de lanzamiento mientras sumo mis primeros proyectos turísticos. Quedan ${launchLeft()} cupos. A cambio pido un testimonio y permiso para mostrar el trabajo.` },
-  { k: /privacidad|datos|ia|inteligencia/i, a: 'Soy un asistente de IA. Uso lo que me escribe solo para responderle y preparar su cotización; no comparta datos sensibles. Detalles en la política de privacidad.' },
+  { k: /privacidad|mis datos|qu[eé] hacen con/i, a: 'Soy un asistente de IA. Uso lo que me escribe solo para responderle y preparar su cotización; no comparta datos sensibles. Detalles en la política de privacidad.' },
 ];
 
 const KEYWORDS = [
   { k: /restaurant|carta|men[uú]|cafeter|bar\b|comida|cocina/i, s: 'web_restaurante' },
   { k: /capacita|taller|curso|servicio al cliente|atenci[oó]n|equipo|personal/i, s: 'capacitacion' },
   { k: /asesor|consult|diagn[oó]stico|estrategia|tarifa|proyecto tur/i, s: 'asesoria' },
+  { k: /agente|inteligencia artificial|\bia\b|automatiz|google sheets|planilla|excel|chatbot|bot\b/i, s: 'automatizacion' },
   { k: /redes|instagram|facebook|publicaci|social/i, s: 'redes' },
   { k: /mantenci|soporte/i, s: 'mantencion' },
   { k: /web|sitio|p[aá]gina|caba[nñ]a|hostal|glamping|hotel|lodge|alojamiento|hospedaje/i, s: 'web_alojamiento' },
@@ -60,7 +63,7 @@ export class Chat {
     root.innerHTML = `
       <div class="chat">
         <div class="chat__head">
-          <div class="chat__avatar"><svg class="mark" viewBox="0 0 64 64"><use href="#mark"/></svg></div>
+          <div class="chat__avatar"><img class="mark" src="/brand/emblema-96.webp" alt="" width="96" height="96" /></div>
           <div class="chat__title"><strong>Vaeru IA</strong><span><i class="pulse"></i> Asistente de IA de Red Vaeru</span></div>
           ${closable ? '<button class="chat__close" aria-label="Cerrar asistente">×</button>' : ''}
         </div>
@@ -129,7 +132,7 @@ export class Chat {
   startChips() { this.setChips(START_CHIPS.map((c) => ({ label: c.label, on: () => this.pickStart(c) }))); }
   afterQuoteChips() {
     this.setChips([
-      { label: '＋ Sumar otro servicio', on: () => { this.user('Sumar otro servicio'); this.bot('¿Qué más le interesa?'); this.setChips(START_CHIPS.slice(0, 5).map((c) => ({ label: c.label, on: () => this.pickStart(c) }))); } },
+      { label: '＋ Sumar otro servicio', on: () => { this.user('Sumar otro servicio'); this.bot('¿Qué más le interesa?'); this.setChips(START_CHIPS.slice(0, 6).map((c) => ({ label: c.label, on: () => this.pickStart(c) }))); } },
       { label: 'Agendar videollamada', on: () => this.schedule() },
       { label: 'Tengo una duda', on: () => { this.user('Tengo una duda'); this.faqMenu(); } },
       { label: 'Empezar de nuevo', on: () => this.restart() },
@@ -165,7 +168,7 @@ export class Chat {
       </div>`;
     card.querySelector('[data-wa]').href = wa(this.summary(est));
     card.querySelector('[data-print]').addEventListener('click', () => this.print(est, card.querySelector('[name=nombre]').value, card.querySelector('[name=negocio]').value));
-    card.querySelector('.lead').addEventListener('submit', (e) => this.submitLead(e, est));
+    card.querySelector('.lead').addEventListener('submit', (e) => this.sendLead(e, est));
     this.log.append(card);
     this.scroll();
   }
@@ -183,7 +186,7 @@ export class Chat {
     ].filter(Boolean).join('\n');
   }
 
-  async submitLead(e, est) {
+  async sendLead(e, est) {
     e.preventDefault();
     const f = e.target;
     const nombre = f.nombre.value.trim();
@@ -197,23 +200,15 @@ export class Chat {
     btn.disabled = true;
     btn.textContent = 'Enviando…';
     const { one, mon } = rangeOf(est);
-    const body = new URLSearchParams({
-      'form-name': 'cotizacion',
+    const ok = await submitLead('cotizacion', {
       nombre,
       whatsapp,
       negocio: f.negocio.value.trim(),
       servicios: est.lines.map((l) => l.label).join(' | '),
       estimacion: [one, mon].filter(Boolean).join(' + '),
       conversacion: this.history.filter((m) => m.role === 'user').map((m) => m.content).join(' / ').slice(0, 1500),
-      origen: location.pathname,
-    });
-    let ok = false;
-    try {
-      const res = await fetch('/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: body.toString() });
-      ok = res.ok;
-    } catch { ok = false; }
+    }, 'agente');
     if (ok) {
-      track('lead_submitted', { source: 'agente' });
       f.innerHTML = `<p class="lead__ok">Listo, ${esc(nombre.split(' ')[0])}. Jorge recibió su cotización y le escribe a su WhatsApp en menos de 24 horas hábiles.</p>`;
     } else {
       // Sin Netlify Forms (por ejemplo en desarrollo), el respaldo es WhatsApp con el resumen.

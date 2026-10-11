@@ -1,6 +1,6 @@
 # Tarifario de lanzamiento
 
-Los valores viven en `src/pricing.js`. Las webs y las redes tienen precio de lanzamiento con cupos (`LAUNCH`). Asesoría y capacitación se subieron a valores más creíbles para empresas, porque un precio demasiado bajo resta seriedad en esos servicios. En el sitio solo se ve el valor **"desde"** de cada servicio, con la etiqueta "Precios de lanzamiento". Los rangos completos los entrega Vaeru IA según el caso. Todo en CLP, sin IVA.
+Los valores viven en `src/pricing.js`. Las webs y las redes tienen precio de lanzamiento con cupos (`LAUNCH`). Asesoría y capacitación se subieron a valores más creíbles para empresas, porque un precio demasiado bajo resta seriedad en esos servicios. En el sitio solo se ve el valor **"desde"** de cada servicio, con la etiqueta "Precios de lanzamiento". Los rangos completos los entrega Vaeru IA según el caso. Todo en CLP. Red Vaeru emite boleta o factura; los impuestos que correspondan se detallan en cada propuesta.
 
 ## Estrategia
 - **Etapa actual:** precios de entrada (webs desde $49.000) para conseguir los primeros proyectos, testimonios y casos de éxito.
@@ -24,12 +24,16 @@ Los valores viven en `src/pricing.js`. Las webs y las redes tienen precio de lan
 | Capacitación | Taller 4 h (hasta 15 personas) | $150.000 – $220.000 |
 | | Programa 3 módulos (12 h) | $390.000 – $590.000 |
 | | Taller online (hasta 25 personas) | $110.000 – $160.000 |
+| Automatización e IA | Registro automático de reservas en Google Sheets | $60.000 – $100.000 |
+| | Agente IA 24/7 entrenado con el negocio | $150.000 – $250.000 |
+| | Hospitalidad inteligente (agente + automatizaciones + panel) | $290.000 – $450.000 |
 | Mantención | Mensual | $12.000 – $20.000 al mes |
 
 **Extras:**
-- **Alojamiento:** motor de reservas $30.000–$60.000, check-in online $25.000–$45.000, guía local $20.000–$35.000, idioma adicional $20.000–$35.000 cada uno, SEO local $25.000–$45.000.
+- **Alojamiento:** motor de reservas $30.000–$60.000, check-in online $25.000–$45.000, guía local $20.000–$35.000, idioma adicional $20.000–$35.000 cada uno, SEO local $25.000–$45.000, agente IA en el sitio $120.000–$200.000, reservas a Google Sheets $40.000–$70.000.
 - **Restaurante:** reservas de mesa $25.000–$50.000, pedidos por WhatsApp $30.000–$55.000, idioma adicional $15.000–$30.000 cada uno, SEO local $25.000–$45.000.
 - **Capacitación:** manual de estándares $80.000–$140.000, cliente incógnito $50.000–$90.000, cada participante adicional $6.000–$10.000.
 - **Asesoría:** visita en terreno $30.000–$50.000.
+- **Automatización e IA:** operación mensual del agente (incluye consumo moderado de IA) $25.000–$45.000 al mes, mensajes automáticos a huéspedes $40.000–$70.000, reporte mensual automático $30.000–$50.000.
 
 **No incluido a propósito:** no se menciona financiamiento SENCE, porque requiere estar registrado como OTEC.
