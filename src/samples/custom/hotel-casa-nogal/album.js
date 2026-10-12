@@ -6,6 +6,7 @@ export const PAGES = [
   { text: ['Álbum de la casa', 'Lo encontramos en el altillo del torreón durante la restauración, con doce fotografías de los Schüler. Seguimos pegando las nuestras.', 'Isla Teja, 1910 –'] },
   { ph: 'archivo', cap: 'La casa recién terminada', d: 'Marzo de 1910' },
   { ph: 'hero', cap: 'La misma casa, una noche de lluvia', d: 'Junio de 2024' },
+  { ph: 'llaves', cap: 'La recepción y sus doce llaves', d: 'Atendida las 24 horas' },
   { ph: 'escalera', cap: 'La escalera y los vitrales de Múnich', d: '1911 · restaurada en 2021' },
   { ph: 'rio', cap: 'El muelle y el Calle-Calle', d: 'Mayo de 2023' },
   { ph: 'hab-clasica', cap: 'Nº 1 · Collico', d: 'Clásica · vista al jardín' },
@@ -16,6 +17,7 @@ export const PAGES = [
   { ph: 'merluza', cap: 'Merluza austral', d: 'Carta de invierno' },
   { ph: 'kuchen', cap: 'Kuchen de murta, 17:00', d: 'Kaffee und Kuchen' },
   { ph: 'desayuno', cap: 'Desayuno a la cama', d: 'Todos los días, hasta las 11' },
+  { ph: 'lluvia', cap: 'Desde la ventana de la Calle-Calle', d: 'Una tarde cualquiera de junio' },
   { text: ['', 'Las páginas que siguen las escribe usted.', ''] },
   { back: true },
 ];

@@ -12,7 +12,8 @@ const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const clp = (n) => '$' + Math.round(n).toLocaleString('es-CL');
-const hash = (s) => [...String(s)].reduce((a, c) => (a * 31 + c.charCodeAt(0)) >>> 0, 7) / 4294967295;
+// Hash FNV-1a con mezcla final: valores bien repartidos incluso entre fechas consecutivas
+const hash = (s) => { let h = 2166136261; for (const ch of String(s)) { h ^= ch.charCodeAt(0); h = Math.imul(h, 16777619); } h ^= h >>> 15; h = Math.imul(h, 2246822507); h ^= h >>> 13; return (h >>> 0) / 4294967295; };
 const pad = (n) => String(n).padStart(2, '0');
 const byNo = Object.fromEntries(ROOMS.map((r) => [r.no, r]));
 const TZ = 'America/Santiago';
@@ -77,7 +78,7 @@ $$('[data-year]').forEach((e) => (e.textContent = new Date().getFullYear()));
 
 /* ───────────── Hero: vidrio con lluvia ───────────── */
 firstUrl('hero').then((url) => initGlass({ box: $('[data-hero]'), fogCv: $('[data-fog]'), dropCv: $('[data-drops]'), url, reduced, intro: true }));
-firstUrl('rio').then((url) => initGlass({ box: $('[data-end]'), fogCv: null, dropCv: $('[data-end-drops]'), url, reduced, wipe: false }));
+firstUrl('lluvia').then((url) => initGlass({ box: $('[data-end]'), fogCv: null, dropCv: $('[data-end-drops]'), url, reduced, wipe: false }));
 $('[data-hero]').addEventListener('pointermove', () => $('[data-hint]').classList.add('is-gone'), { once: true });
 if (!reduced) addEventListener('scroll', () => {
   const y = scrollY; if (y > innerHeight * 1.3) return;

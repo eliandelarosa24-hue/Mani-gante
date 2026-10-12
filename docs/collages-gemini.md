@@ -177,4 +177,26 @@ Son 16 espacios, en 4 collages de 2×2. El estilo es fotografía editorial de ho
 
 ---
 
-Las otras 3 muestras tendrán sus prompts cuando se rediseñe cada una.
+## Muestra 8 · Villa Coral Samaná (cinco villas frente al mar, Las Terrenas, República Dominicana)
+
+Son 16 espacios, en 4 collages de 2×2. El estilo es fotografía de revista de viajes de lujo: Caribe luminoso con colores vivos pero naturales, turquesa, arena blanca, palmeras, persianas de madera pintadas y fachadas en tonos coral, ámbar y azul larimar. Sin personas mirando a cámara, sin texto. Todo se corta a 16:9; descargue cada imagen en tamaño completo.
+
+### Collage A: la playa y tres villas → `hero, villa-coral, villa-ambar, villa-larimar`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Las Terrenas, Samaná peninsula, Dominican Republic, luxury travel magazine style. Top-left: aerial drone view of a private white-sand beach with bands of turquoise and deep blue water, tall coconut palms and five small luxury villas with private pools hidden among the palms, morning light. Top-right: a beachfront villa painted soft coral with white louvered wooden shutters and an infinity pool facing the sea, palm shadows on the walls. Bottom-left: a two-bedroom villa with warm amber wood, a palm-thatched bohío pavilion and loungers by a small pool, golden afternoon light. Bottom-right: a large modern white villa with larimar-blue shutters and a long infinity pool merging with the Caribbean at sunset. Vivid but natural colors, 8K.
+
+### Collage B: dos villas e interiores → `villa-mango, villa-ballena, int-sala, int-dormitorio`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Luxury villas in Samaná, Dominican Republic, interior design magazine style. Top-left: a small romantic garden villa among mango and banana trees with a plunge pool and a hammock, lush green. Top-right: a grand villa on a hill above the bay with a wide terrace and an infinity pool, the tail of a humpback whale visible far out at sea. Bottom-left: an open-air living room with white walls, teak furniture, linen cushions in turquoise and coral, ceiling fans and the sea framed by tall open doors. Bottom-right: a serene bedroom with a four-poster bed and white mosquito net, wooden louvered shutters open to palm trees, morning light. 8K.
+
+### Collage C: Samaná → `ballena, limon, rincon, haitises`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Samaná, Dominican Republic, nature documentary style. Top-left: a humpback whale breaching out of the deep blue water of Samaná Bay with dramatic spray. Top-right: El Limón waterfall, a 40-meter cascade falling into a jungle pool. Bottom-left: Playa Rincón, an empty crescent of white sand lined with coconut palms and calm turquoise water, aerial view. Bottom-right: Los Haitises National Park, jungle-covered limestone islets rising from emerald water with mangroves and a small wooden boat. 8K.
+
+### Collage D: la vida en la villa → `chef, piscina, pescadores, cierre`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Life at a private villa in Las Terrenas, Dominican Republic. Top-left: a plate of Dominican fish in coconut sauce with tostones and rice on a rustic wooden table by the beach. Top-right: a private infinity pool at blue hour with floating candles and the sea beyond. Bottom-left: the colorful wooden fishermen's houses of Las Terrenas on the beach with painted fishing boats. Bottom-right: a breathtaking Caribbean sunset with silhouetted coconut palms and a hammock on the beach. Warm, cinematic, 8K.
+
+---
+
+Las otras 2 muestras tendrán sus prompts cuando se rediseñe cada una.
