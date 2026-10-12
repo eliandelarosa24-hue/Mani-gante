@@ -522,3 +522,13 @@ body { background: #fff8f1; }
   .polaroid--r1, .polaroid--r2 { position: relative; display: inline-block; top: 0; right: 0; width: 46%; margin: 0 1% 18px; }
   .card__head { padding-right: 0; }
 }
+
+/* Título que entra palabra por palabra con rebote suave */
+.hero__title .w { display: inline-block; opacity: 0; transform: translateY(0.5em) rotate(3deg); }
+.is-ready .hero__title .w { animation: bounceIn 0.9s var(--ease) forwards; }
+@keyframes bounceIn { 60% { opacity: 1; transform: translateY(-0.06em) rotate(-1deg); } 100% { opacity: 1; transform: none; } }
+.hero__txt > .hero__title { opacity: 1; transform: none; }
+/* El kuchen se mece apenas sobre su plato */
+[data-kuchen] { animation: sway2 7s ease-in-out infinite; transform-origin: 50% 50%; }
+@keyframes sway2 { 50% { transform: rotate(5deg); } }
+@media (prefers-reduced-motion: reduce) { .hero__title .w { opacity: 1; transform: none; } [data-kuchen] { animation: none; } }

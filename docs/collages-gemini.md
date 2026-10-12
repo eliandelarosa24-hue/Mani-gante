@@ -105,4 +105,30 @@ Se corta en dos pasadas: `--names manos,huerto,horno,- --ratio 4:3` y luego `--n
 
 ---
 
-Las otras 6 muestras tendrán sus prompts cuando se rediseñe cada una.
+## Muestra 5 · Viña Los Robles (enoturismo, valle de Colchagua)
+
+Son 16 espacios, en 4 collages de 2×2. El estilo es elegante y cálido: luz dorada de atardecer, madera de roble, adobe, terracota y vino tinto profundo. **No debe aparecer texto en etiquetas ni carteles.** Descargue cada imagen en tamaño completo.
+
+### Collage A: la viña → `hero, cava, casona, enologa`
+
+Se corta en dos pasadas: `--names hero,cava,-,- --ratio 16:9` y luego `--names -,-,casona,enologa --ratio 4:5`.
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. A family boutique winery in the Colchagua Valley, Chile. Top-left: rows of old carménère vines at golden hour with long shadows, the Andes mountains hazy in the background, warm sunlight. Top-right: an underground adobe wine cellar with rows of French oak barrels lit by candles and warm lamps, arched brick ceiling. Bottom-left: a traditional Chilean colonial adobe country house (casona) with a long corridor, wooden columns, terracotta roof tiles and bougainvillea, in the afternoon. Bottom-right: a young woman winemaker in a linen apron drawing red wine from a barrel with a glass wine thief in the cellar, lit softly from the side. Elegant, cinematic, warm tones, shallow depth of field, 8K.
+
+### Collage B: las experiencias → `cata, almuerzo, bici, mezcla` (`--ratio 4:3`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Wine tourism experiences in a Chilean vineyard. Top-left: a wine tasting table in a candlelit cellar with five glasses of red and white wine in a row, a spittoon and a tasting sheet with no readable text. Top-right: a long lunch table set among the vines with a white tablecloth, terracotta plates, wine glasses and summer food, guests laughing, soft afternoon light. Bottom-left: a couple riding electric bicycles along a dirt road between vineyard rows at sunset, from behind. Bottom-right: a blending workshop with glass graduated cylinders, pipettes and wine glasses on an oak table, hands mixing red wines. Elegant, warm, natural light, 8K.
+
+### Collage C: la vendimia → `uvas, cosecha, pisada, copa` (`--ratio 1:1`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Grape harvest (vendimia) in Chile in autumn. Top-left: macro of a ripe dark carménère grape bunch on the vine with morning dew and backlight. Top-right: weathered hands cutting a grape bunch with pruning shears into a wooden harvest crate. Bottom-left: happy visitors stomping grapes barefoot in a large wooden vat, purple juice splashing, festive. Bottom-right: a glass of deep red wine being swirled, with the sunset vineyard blurred behind. Vivid autumn colors, warm, 8K.
+
+### Collage D: el valle → `cierre, barricas, queso, otono`
+
+Se corta en dos pasadas: `--names cierre,barricas,-,- --ratio 16:9` y luego `--names -,-,queso,otono --ratio 4:3`.
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Colchagua Valley, Chile. Top-left: a breathtaking sunset over endless vineyard hills with a lone old oak tree (roble) and the Andes glowing pink. Top-right: a long symmetric aisle of stacked oak barrels in a dim cellar with dramatic light. Bottom-left: a rustic pairing board with local goat cheeses, olives, walnuts, honey and a glass of red wine on an oak table. Bottom-right: a vineyard in autumn with red, orange and yellow vine leaves in perfect rows. Cinematic, warm, 8K.
+
+---
+
+Las otras 5 muestras tendrán sus prompts cuando se rediseñe cada una.

@@ -78,6 +78,20 @@ setTimeout(() => document.body.classList.add('is-ready'), 6000);
 })();
 function fmtLeft(hours) { const mm = Math.round(hours * 60); return mm >= 60 ? `${Math.floor(mm / 60)} h ${mm % 60} min` : `${mm} min`; }
 
+/* ───────────── Título palabra por palabra ───────────── */
+(function words() {
+  const t = $('.hero__title'); let k = 0;
+  t.setAttribute('aria-label', t.textContent.replace(/\s+/g, ' ').trim());
+  const wrap = (node) => [...node.childNodes].forEach((c) => {
+    if (c.nodeType === 3) {
+      const f = document.createDocumentFragment();
+      c.textContent.split(/(\s+)/).forEach((w) => { if (!w) return; if (/^\s+$/.test(w)) { f.append(' '); return; } const s = document.createElement('span'); s.className = 'w'; s.setAttribute('aria-hidden', 'true'); s.textContent = w; s.style.animationDelay = `${0.1 + k++ * 0.09}s`; f.append(s); });
+      c.replaceWith(f);
+    } else if (c.nodeType === 1) wrap(c);
+  });
+  wrap(t);
+})();
+
 /* ───────────── Chispas de azúcar en el hero ───────────── */
 const SWEET = ['#f3bfca', '#b9d3ec', '#f2c46b', '#c2475a', '#dcefe3', '#ffffff', '#e7a9b6'];
 if (!reduced) {
