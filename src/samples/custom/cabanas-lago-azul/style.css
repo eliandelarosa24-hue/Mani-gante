@@ -29,8 +29,8 @@ img { display: block; max-width: 100%; }
 .label { margin: 0; font: 500 11px/1.4 var(--mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
 
 /* Pantalla de carga: la marea sube y abre la página */
-.tide { position: fixed; inset: 0; z-index: 300; background: var(--chalk); clip-path: inset(0 0 0 0); transition: clip-path 1.1s var(--ease) 0.15s; }
-.is-ready .tide { clip-path: inset(0 0 100% 0); }
+.loader { position: fixed; inset: 0; z-index: 300; background: var(--chalk); clip-path: inset(0 0 0 0); transition: clip-path 1.1s var(--ease) 0.15s; }
+.is-ready .loader { clip-path: inset(0 0 100% 0); }
 .tide__water { position: absolute; left: 0; right: 0; bottom: 0; height: 0; background: var(--lake); transition: height 0.2s linear; }
 .tide__in { position: absolute; left: var(--pad); right: var(--pad); bottom: 22vh; display: grid; gap: 14px; mix-blend-mode: difference; color: #fff; }
 .tide__mark { margin: 0; font: 300 clamp(48px, 9vw, 140px)/0.9 var(--serif); letter-spacing: -0.03em; }
@@ -420,6 +420,6 @@ img { display: block; max-width: 100%; }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { transition-duration: 0.01ms !important; animation-duration: 0.01ms !important; }
   .rv, .hero__img, .hero__title .w, .ln > span { opacity: 1 !important; transform: none !important; clip-path: none !important; }
-  .tide { display: none; }
+  .loader { display: none; }
   .hero__water { display: none; }
 }
