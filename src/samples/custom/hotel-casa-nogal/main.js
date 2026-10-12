@@ -78,7 +78,7 @@ $$('[data-year]').forEach((e) => (e.textContent = new Date().getFullYear()));
 
 /* ───────────── Hero: vidrio con lluvia ───────────── */
 firstUrl('hero').then((url) => initGlass({ box: $('[data-hero]'), fogCv: $('[data-fog]'), dropCv: $('[data-drops]'), url, reduced, intro: true }));
-firstUrl('lluvia').then((url) => initGlass({ box: $('[data-end]'), fogCv: null, dropCv: $('[data-end-drops]'), url, reduced, wipe: false }));
+firstUrl('rio').then((url) => initGlass({ box: $('[data-end]'), fogCv: null, dropCv: $('[data-end-drops]'), url, reduced, wipe: false }));
 $('[data-hero]').addEventListener('pointermove', () => $('[data-hint]').classList.add('is-gone'), { once: true });
 if (!reduced) addEventListener('scroll', () => {
   const y = scrollY; if (y > innerHeight * 1.3) return;
