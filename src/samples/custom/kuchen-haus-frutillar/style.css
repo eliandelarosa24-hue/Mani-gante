@@ -408,3 +408,117 @@ a { color: inherit; }
 /* Piezas del kuchen dibujado: aparecen una a una (solo opacidad, para no pisar sus transformaciones) */
 [data-kuchen] .pc { animation: pcIn 0.45s ease-out both; }
 @keyframes pcIn { from { opacity: 0; } }
+
+/* ═══════════ Paleta pastel: cada sección con su color, más dulce y vintage ═══════════ */
+:root {
+  --rose: #f9dde3;
+  --rose-2: #f3bfca;
+  --powder: #dbe9f6;
+  --powder-2: #b9d3ec;
+  --mint: #dcefe3;
+  --vanilla: #fdf1d6;
+  --lilac: #ece2f4;
+  --blue: #4472b3;
+  --cocoa: #4a2f2c;
+}
+body { background: #fff8f1; }
+
+/* Bordes ondulados como encaje de papel (blonda) entre secciones */
+.sweet { position: relative; }
+.sweet::before { content: ''; position: absolute; left: 0; right: 0; top: -17px; height: 18px; background: radial-gradient(circle at 12px 18px, var(--bg) 12px, transparent 12.5px) 0 0 / 24px 18px repeat-x; pointer-events: none; z-index: 1; }
+
+/* Hero rosa con chispas de azúcar */
+.hero { background: radial-gradient(ellipse at 85% 30%, var(--rose) 0%, transparent 55%), radial-gradient(ellipse at 10% 90%, var(--powder) 0%, transparent 50%), #fff8f1; overflow: hidden; }
+.sprinkles { position: absolute; inset: 0; pointer-events: none; }
+.sprinkles i { position: absolute; top: -20px; width: 4px; height: 12px; border-radius: 4px; opacity: 0.75; animation: fall linear infinite; }
+@keyframes fall { to { transform: translateY(110vh) rotate(540deg); } }
+
+/* Vitrina celeste con mantel de cuadros */
+.vitrina { --bg: var(--powder); background: linear-gradient(90deg, rgba(68,114,179,0.08) 50%, transparent 0) 0 0 / 28px 28px, linear-gradient(rgba(68,114,179,0.08) 50%, transparent 0) 0 0 / 28px 28px, var(--powder); }
+.case__detail { background: #fff; }
+
+/* Arme su kuchen sobre rosa con lunares */
+.arme { --bg: var(--rose); background: radial-gradient(circle, rgba(194,71,90,0.12) 2.5px, transparent 3px) 0 0 / 26px 26px, var(--rose); }
+.opt { background: #fff; }
+.builder__foot { background: var(--berry); }
+.builder__foot b { color: #fff; }
+
+/* Kaffee und Kuchen en azul pastel con rombos bávaros */
+.hora { --bg: var(--powder-2); background: var(--powder-2); color: var(--ink); }
+.hora::before { opacity: 0.35; }
+.hora .eyebrow { color: var(--blue); }
+.hora .h2 em { color: var(--berry); }
+.hora .muted { color: var(--muted); }
+.countdown { color: var(--berry); }
+.countdown b { color: var(--ink); }
+.pair { background: rgba(255,255,255,0.65); box-shadow: inset 0 0 0 1px rgba(255,255,255,0.9), 0 20px 40px -30px rgba(47,36,30,0.5); }
+.pair__opts button { background: #fff; color: var(--ink); box-shadow: inset 0 0 0 1.5px var(--line); }
+.pair__opts button[aria-pressed="true"] { background: var(--berry); color: #fff; box-shadow: none; }
+.pair__res { color: var(--ink); }
+.pair__res b { color: var(--berry); }
+.clock { position: relative; }
+.clock__rim { fill: #e7a9b6; }
+
+/* Taza con vapor sobre el reloj */
+.cup { position: absolute; right: 4%; bottom: 2%; z-index: 2; width: 92px; height: 110px; }
+.cup__body { position: absolute; left: 10px; bottom: 16px; width: 64px; height: 50px; border-radius: 0 0 30px 30px; background: #fff; box-shadow: inset -8px 0 0 rgba(68,114,179,0.12), 0 12px 20px -10px rgba(47,36,30,0.4); }
+.cup__body::before { content: ''; position: absolute; left: 6px; right: 6px; top: 12px; height: 8px; background: repeating-linear-gradient(90deg, var(--blue) 0 6px, transparent 6px 12px); opacity: 0.5; border-radius: 4px; }
+.cup__body::after { content: ''; position: absolute; right: -16px; top: 8px; width: 18px; height: 22px; border: 5px solid #fff; border-left: 0; border-radius: 0 14px 14px 0; }
+.cup__plate { position: absolute; left: 0; bottom: 8px; width: 86px; height: 12px; border-radius: 50%; background: #fff; box-shadow: 0 6px 12px -6px rgba(47,36,30,0.4); }
+.steam { position: absolute; left: 28px; bottom: 66px; width: 8px; height: 34px; border-radius: 8px; background: linear-gradient(180deg, transparent, rgba(255,255,255,0.95)); filter: blur(2px); animation: steam 2.6s ease-in-out infinite; }
+.steam--2 { left: 42px; animation-delay: 0.9s; } .steam--3 { left: 56px; animation-delay: 1.7s; }
+@keyframes steam { 0% { opacity: 0; transform: translateY(10px) scaleY(0.6); } 40% { opacity: 1; } 100% { opacity: 0; transform: translateY(-30px) translateX(6px) scaleY(1.2); } }
+
+/* Receta sobre vainilla */
+.receta { --bg: var(--vanilla); background: var(--vanilla); }
+
+/* Historia en lila suave */
+.historia { --bg: var(--lilac); background: var(--lilac); }
+.timeline__track::before { background: repeating-linear-gradient(90deg, #9b7fbf 0 10px, transparent 10px 18px); }
+.tl__y { background: #8a6fb3; }
+
+/* Pedidos en menta */
+.pedidos { --bg: var(--mint); background: var(--mint); }
+.order__tray, .order__form { background: #fff; }
+
+/* Postales sobre rosa */
+.postales { --bg: var(--rose); background: var(--rose); }
+
+/* Ubicación en crema */
+.donde { --bg: #fff8f1; background: #fff8f1; }
+
+/* Pie color cacao */
+.foot { background: var(--cocoa); }
+
+/* Animaciones dulces */
+.btn { position: relative; }
+.btn--berry:hover { animation: jelly 0.6s var(--ease); }
+@keyframes jelly { 30% { transform: scale(1.06, 0.94); } 55% { transform: scale(0.97, 1.03); } 80% { transform: scale(1.02, 0.98); } }
+.item__plate span { transition: transform 0.6s var(--ease); }
+.item:hover .item__plate span { transform: rotate(12deg) scale(1.04); }
+.rv.in { animation: rise 0.9s var(--ease) both; }
+@keyframes rise { 0% { opacity: 0; transform: translateY(36px) scale(0.98); } 70% { transform: translateY(-4px) scale(1.005); } 100% { opacity: 1; transform: none; } }
+.card.rv.in { animation: none; }
+.post.rv.in { animation: none; }
+.confetti { position: fixed; z-index: 95; width: 6px; height: 10px; border-radius: 3px; pointer-events: none; }
+@media (prefers-reduced-motion: reduce) { .sprinkles { display: none; } .rv.in { animation: none; } }
+@media (max-width: 900px) { .cup { right: 6%; transform: scale(0.8); transform-origin: bottom right; } }
+
+/* Polaroids */
+.polaroid { position: absolute; z-index: 3; margin: 0; padding: 8px 8px 0; background: #fff; box-shadow: 0 18px 30px -14px rgba(47,36,30,0.55); }
+.polaroid span { display: block; aspect-ratio: 4 / 5; background-size: cover; background-position: center; }
+.polaroid figcaption { padding: 4px 2px 8px; font: 700 17px/1.1 var(--hand); color: var(--ink); text-align: center; }
+.polaroid::before { content: ''; position: absolute; top: -10px; left: 50%; width: 64px; height: 20px; transform: translateX(-50%) rotate(-4deg); background: rgba(243,191,202,0.8); }
+.polaroid--hero { right: -40px; top: 34%; width: 150px; transform: rotate(7deg); transition: transform 0.6s var(--ease); }
+.polaroid--hero:hover { transform: rotate(0) scale(1.05); }
+.polaroid--r1, .polaroid--r2 { width: 150px; }
+.polaroid--r1 { right: -30px; top: -60px; transform: rotate(6deg); }
+.polaroid--r2 { right: 120px; top: -40px; transform: rotate(-5deg); }
+.polaroid--r1 span, .polaroid--r2 span { aspect-ratio: 4 / 3; }
+.card__head { padding-right: 300px; }
+@media (max-width: 1200px) { .polaroid--hero { right: -14px; width: 120px; } }
+@media (max-width: 900px) {
+  .polaroid--hero { right: -6px; top: 6%; width: 104px; }
+  .polaroid--r1, .polaroid--r2 { position: relative; display: inline-block; top: 0; right: 0; width: 46%; margin: 0 1% 18px; }
+  .card__head { padding-right: 0; }
+}

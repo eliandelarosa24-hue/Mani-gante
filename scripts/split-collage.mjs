@@ -13,6 +13,7 @@
 //     --pos 0.5,0.5            punto que se conserva al recortar a --ratio (x,y de 0 a 1; 0,0 = arriba a la izquierda)
 //     --sr modelo.pb           amplía primero con inteligencia artificial (scripts/superres.py, EDSR x2):
 //                              más nitidez y menos artefactos que solo Lanczos; tarda ~2 min por imagen
+//     --sr-passes 2            aplica la ampliación con IA dos veces (para collages muy pequeños)
 //     --dry                    solo muestra qué haría
 import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -36,6 +37,7 @@ const inset = Number(opt('inset', '0.02'));
 const width = Number(opt('width', '1920'));
 const ratio = opt('ratio');
 const srModel = opt('sr');
+const srPasses = Number(opt('sr-passes', '1'));
 const [px, py] = opt('pos', '0.5,0.5').split(',').map(Number);
 
 function cells(w, h, cols, rows, inset) {
@@ -76,9 +78,11 @@ for (const [i, box] of boxes.entries()) {
   let input = await sharp(resolve(file)).extract(crop).png().toBuffer();
   if (srModel) {
     const a = join(tmpdir(), `sr-${process.pid}-${i}.png`), b = a.replace('.png', '-x.png');
-    writeFileSync(a, input);
-    execFileSync('python3', [join(root, 'scripts', 'superres.py'), resolve(srModel), a, b], { stdio: 'inherit' });
-    input = await sharp(b).toBuffer();
+    for (let k = 0; k < srPasses; k++) {
+      writeFileSync(a, input);
+      execFileSync('python3', [join(root, 'scripts', 'superres.py'), resolve(srModel), a, b], { stdio: 'inherit' });
+      input = await sharp(b).toBuffer();
+    }
     rmSync(a); rmSync(b);
   }
   const img = await sharp(input)

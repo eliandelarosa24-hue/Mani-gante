@@ -78,6 +78,24 @@ setTimeout(() => document.body.classList.add('is-ready'), 6000);
 })();
 function fmtLeft(hours) { const mm = Math.round(hours * 60); return mm >= 60 ? `${Math.floor(mm / 60)} h ${mm % 60} min` : `${mm} min`; }
 
+/* ───────────── Chispas de azúcar en el hero ───────────── */
+const SWEET = ['#f3bfca', '#b9d3ec', '#f2c46b', '#c2475a', '#dcefe3', '#ffffff', '#e7a9b6'];
+if (!reduced) {
+  $('[data-sprinkles]').innerHTML = Array.from({ length: 34 }, () => `<i style="left:${(Math.random() * 100).toFixed(1)}%;background:${SWEET[Math.floor(Math.random() * SWEET.length)]};animation-duration:${(9 + Math.random() * 10).toFixed(1)}s;animation-delay:-${(Math.random() * 18).toFixed(1)}s"></i>`).join('');
+}
+function confetti(el) {
+  if (reduced || !el) return;
+  const r = el.getBoundingClientRect(), cx = r.left + r.width / 2, cy = r.top + r.height / 2;
+  for (let i = 0; i < 22; i++) {
+    const c = document.createElement('span');
+    c.className = 'confetti';
+    c.style.cssText = `left:${cx}px;top:${cy}px;background:${SWEET[i % SWEET.length]}`;
+    document.body.append(c);
+    const a = Math.random() * Math.PI * 2, v = 60 + Math.random() * 90;
+    c.animate([{ transform: 'translate(0,0) rotate(0)', opacity: 1 }, { transform: `translate(${Math.cos(a) * v}px, ${Math.sin(a) * v + 80}px) rotate(${Math.random() * 720}deg)`, opacity: 0 }], { duration: 900 + Math.random() * 400, easing: 'cubic-bezier(.2,.7,.3,1)' }).onfinish = () => c.remove();
+  }
+}
+
 /* ───────────── Navegación ───────────── */
 const nav = $('.nav');
 addEventListener('scroll', () => nav.classList.toggle('is-solid', scrollY > 30), { passive: true });
@@ -105,6 +123,7 @@ function addToTray(item, from) {
     fly.animate([{ left: `${a.left + a.width / 2 - 28}px`, top: `${a.top + a.height / 2 - 28}px`, opacity: 1, transform: 'scale(1.2)' }, { left: `${b.left - 5}px`, top: `${b.top - 5}px`, opacity: 0.2, transform: 'scale(0.4)' }], { duration: 750, easing: 'cubic-bezier(.5,0,.2,1)' });
   }
   trayBtn.classList.remove('is-bump'); void trayBtn.offsetWidth; trayBtn.classList.add('is-bump');
+  confetti(from);
 }
 function renderTray() {
   $('[data-tray-n]').textContent = tray.reduce((a, x) => a + x.qty, 0);

@@ -57,6 +57,7 @@
   <main id="inicio">
     <!-- HERO: la ventana al lago cambia con la hora real de Frutillar -->
     <section class="hero">
+      <div class="sprinkles" aria-hidden="true" data-sprinkles></div>
       <div class="wrap hero__grid">
         <div class="hero__txt">
           <p class="kicker"><span class="frak">Seit</span> 1987 · Frente al lago Llanquihue</p>
@@ -98,6 +99,7 @@
             </svg>
             <div class="window__sill"><span class="window__pot"></span><span class="window__pot window__pot--2"></span></div>
           </div>
+          <figure class="polaroid polaroid--hero" aria-hidden="true"><span style="{{img:vitrina:1509440159596-0249088772ff}}"></span><figcaption>la vitrina, 9:00</figcaption></figure>
           <div class="window__card" aria-live="polite">
             <p><span class="dot" data-open-dot></span> <span data-now>—</span> en Frutillar</p>
             <strong data-open>—</strong>
@@ -108,7 +110,7 @@
     </section>
 
     <!-- VITRINA DEL DÍA -->
-    <section class="sec vitrina" id="vitrina">
+    <section class="sec vitrina sweet" id="vitrina">
       <div class="wrap">
         <div class="head rv">
           <div><p class="eyebrow">Die Vitrine · La vitrina de hoy</p><h2 class="h2">Recién salido <em>del horno.</em></h2></div>
@@ -125,7 +127,7 @@
     </section>
 
     <!-- ARME SU KUCHEN -->
-    <section class="sec arme" id="arme">
+    <section class="sec arme sweet" id="arme">
       <div class="wrap">
         <div class="head rv">
           <div><p class="eyebrow">Ihr Kuchen · Hecho para usted</p><h2 class="h2">Arme <em>su kuchen.</em></h2></div>
@@ -150,9 +152,10 @@
     </section>
 
     <!-- KAFFEE UND KUCHEN -->
-    <section class="sec hora" id="hora">
+    <section class="sec hora sweet" id="hora">
       <div class="wrap hora__grid">
         <div class="clock rv" aria-hidden="true">
+          <div class="cup"><span class="steam"></span><span class="steam steam--2"></span><span class="steam steam--3"></span><div class="cup__body"></div><div class="cup__plate"></div></div>
           <svg viewBox="0 0 300 300">
             <circle cx="150" cy="150" r="140" class="clock__rim" />
             <circle cx="150" cy="150" r="124" class="clock__face" />
@@ -178,13 +181,15 @@
     </section>
 
     <!-- LA RECETA DE LA ABUELA -->
-    <section class="sec receta" id="receta">
+    <section class="sec receta sweet" id="receta">
       <div class="wrap">
         <div class="head rv">
           <div><p class="eyebrow">Omas Rezept · La receta de la abuela</p><h2 class="h2">Hornee <em>en su casa.</em></h2></div>
           <p class="muted">Ilse nos dejó compartir una: el kuchen de frambuesa de 1987. Elija para cuántos y las cantidades se ajustan solas. Marque cada paso a medida que avanza.</p>
         </div>
         <article class="card rv">
+          <figure class="polaroid polaroid--r1" aria-hidden="true"><span style="{{img:huerto:}}"></span><figcaption>frambuesas de Frutillar Alto</figcaption></figure>
+          <figure class="polaroid polaroid--r2" aria-hidden="true"><span style="{{img:horno:}}"></span><figcaption>¡recién salido!</figcaption></figure>
           <div class="card__head">
             <h3>Kuchen de frambuesa <span>de la abuela Ilse</span></h3>
             <div class="serves" role="radiogroup" aria-label="Porciones"><span>Para</span><button type="button" role="radio" aria-checked="false" data-serves="8">8</button><button type="button" role="radio" aria-checked="true" data-serves="12">12</button><button type="button" role="radio" aria-checked="false" data-serves="24">24</button><span>personas</span></div>
@@ -199,7 +204,7 @@
     </section>
 
     <!-- HISTORIA -->
-    <section class="sec historia" id="historia">
+    <section class="sec historia sweet" id="historia">
       <div class="wrap">
         <div class="head rv">
           <div><p class="eyebrow">Unsere Geschichte · Nuestra historia</p><h2 class="h2">Del Rin <em>al Llanquihue.</em></h2></div>
@@ -212,7 +217,7 @@
           <li class="tl"><span class="tl__y">1856</span><div class="tl__img tl__img--plain"><span class="frak">Frutillar</span></div><h3>Nace Frutillar</h3><p>El pueblo toma el nombre de las frutillas silvestres que cubrían la ribera.</p></li>
           <li class="tl"><span class="tl__y">1968</span><div class="tl__img tl__img--plain tl__img--music"><span>♪</span></div><h3>Semanas Musicales</h3><p>Comienzan los conciertos de verano que hasta hoy llenan el pueblo cada enero y febrero.</p></li>
           <li class="tl"><span class="tl__y">1987</span><div class="tl__img" style="{{img:abuela:}}"></div><h3>Ilse abre el salón</h3><p>Cinco recetas de Baviera, una vitrina y tres mesas con vista al lago.</p></li>
-          <li class="tl"><span class="tl__y">2004</span><div class="tl__img" style="{{img:k-murta:}}"></div><h3>El kuchen de murta</h3><p>La receta de murta con crumble se vuelve la más pedida del salón.</p></li>
+          <li class="tl"><span class="tl__y">2004</span><div class="tl__img" style="{{img:k-murta:1565958011703-44f9829ba187}}"></div><h3>El kuchen de murta</h3><p>La receta de murta con crumble se vuelve la más pedida del salón.</p></li>
           <li class="tl"><span class="tl__y">2010</span><div class="tl__img" style="{{img:teatro:}}"></div><h3>Teatro del Lago</h3><p>A dos cuadras abre el teatro. Antes de cada concierto, el salón se llena.</p></li>
           <li class="tl"><span class="tl__y">2019</span><div class="tl__img" style="{{img:manos:}}"></div><h3>Sofía toma el horno</h3><p>La nieta de Ilse suma recetas nuevas sin cambiar las de siempre.</p></li>
           <li class="tl tl--now"><span class="tl__y">Hoy</span><div class="tl__img" style="{{img:salon:1517433670267-08bbd4be890f}}"></div><h3>Su mesa le espera</h3><p>La misma vitrina, las mismas recetas y el mismo lago.</p></li>
@@ -221,7 +226,7 @@
     </section>
 
     <!-- PEDIDOS Y MESAS -->
-    <section class="sec pedidos" id="pedidos">
+    <section class="sec pedidos sweet" id="pedidos">
       <div class="wrap">
         <div class="head rv">
           <div><p class="eyebrow">Bestellen · Pedidos</p><h2 class="h2">Su bandeja <em>y su mesa.</em></h2></div>
@@ -275,7 +280,7 @@
     </section>
 
     <!-- RESEÑAS: postales -->
-    <section class="sec postales" id="resenas">
+    <section class="sec postales sweet" id="resenas">
       <div class="wrap">
         <div class="head rv">
           <div><p class="eyebrow">Grüße aus Frutillar</p><h2 class="h2">Postales <em>de nuestros clientes.</em></h2></div>
@@ -290,7 +295,7 @@
     </section>
 
     <!-- UBICACIÓN -->
-    <section class="sec donde" id="ubicacion">
+    <section class="sec donde sweet" id="ubicacion">
       <div class="wrap donde__grid">
         <div class="rv">
           <p class="eyebrow">Wo wir sind</p>
