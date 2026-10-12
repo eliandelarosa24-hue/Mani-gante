@@ -3,79 +3,100 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Lago Azul · Seis cabañas en la orilla del lago Villarrica · Muestra Red Vaeru</title>
-  <meta name="description" content="Seis cabañas de arquitectura contemporánea en la orilla sur del lago Villarrica. Planos interactivos, disponibilidad en vivo y reserva directa. Muestra de concepto de Red Vaeru." />
+  <title>Lago Azul · Seis casas en la orilla del lago Villarrica · Muestra Red Vaeru</title>
+  <meta name="description" content="Seis casas de madera en la orilla norte del lago Villarrica, frente al volcán. Plano del predio, fichas con planos, disponibilidad en vivo y reserva directa. Muestra de concepto de Red Vaeru." />
   <meta name="robots" content="noindex, follow" />
-  <meta name="theme-color" content="#f3f2ee" />
+  <meta name="theme-color" content="#cfd9e1" />
   <link rel="canonical" href="__SITE_URL__/muestras/cabanas-lago-azul/" />
   <meta property="og:title" content="Lago Azul · muestra de concepto de Red Vaeru" />
   <meta property="og:image" content="__SITE_URL__/og.jpg" />
-  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23f3f2ee'/%3E%3Cpath d='M12 40 L32 18 L52 40' fill='none' stroke='%231d2a30' stroke-width='3'/%3E%3Cpath d='M8 47 q6 -4 12 0 t12 0 t12 0 t12 0' fill='none' stroke='%23e2572b' stroke-width='3'/%3E%3C/svg%3E" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%23cfd9e1'/%3E%3Cpath d='M14 40 L32 16 L50 40' fill='none' stroke='%231d2a30' stroke-width='3'/%3E%3Cpath d='M8 48 q6 -4 12 0 t12 0 t12 0 t12 0' fill='none' stroke='%23e2572b' stroke-width='3'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://images.unsplash.com" />
   <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,200..700;1,6..72,200..600&family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&display=swap" rel="stylesheet" />
   <!--ANALYTICS-->
 </head>
 <body>
-  <!-- Pantalla de carga: una línea de agua que sube y abre la página -->
+  <!-- Pantalla de carga: se dibujan las curvas de profundidad del lago -->
   <div class="loader" aria-hidden="true">
-    <div class="tide__water"></div>
-    <div class="tide__in">
-      <p class="tide__mark">Lago Azul</p>
-      <p class="tide__meta"><span>39°16′ S · 72°13′ O</span><span data-load-n>000</span></p>
-      <div class="tide__line"><span data-load-line></span></div>
+    <svg class="loader__chart" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" data-load-chart></svg>
+    <div class="loader__in">
+      <p class="loader__k">Carta del predio · hoja 1 de 1</p>
+      <p class="loader__mark">Lago Azul</p>
+      <p class="loader__meta"><span>39°15′ S · 72°07′ O</span><span>Sondeando <b data-load-n>000</b> m</span></p>
     </div>
   </div>
 
-  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
-    <filter id="ripple" x="0" y="0" width="100%" height="100%"><feTurbulence type="fractalNoise" baseFrequency="0.006 0.045" numOctaves="2" seed="4" result="noise" data-turb /><feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G" data-disp /></filter>
-  </svg>
+  <canvas class="stars" data-stars aria-hidden="true"></canvas>
 
   <div class="demo"><img src="/brand/emblema-96.webp" alt="" width="20" height="20" /> Muestra de concepto diseñada por Red Vaeru · Negocio ficticio <a href="/muestras/">Ver todas las muestras</a> · <a href="/#contacto">Quiero un sitio así</a></div>
 
-  <div class="strip" aria-hidden="true"><span>39°16′ S · 72°13′ O</span><span>Orilla sur · Lago Villarrica</span><span data-strip-time>—</span></div>
   <header class="nav">
     <a class="mark" href="#inicio" aria-label="Lago Azul, inicio"><svg viewBox="0 0 40 28" aria-hidden="true"><path d="M6 18 L20 4 L34 18" /><path class="mark__w" d="M2 23 q4.5 -3 9 0 t9 0 t9 0 t9 0" /></svg><span>Lago Azul</span></a>
+    <div class="dial" aria-hidden="true" title="La página avanza como un día en la orilla">
+      <svg viewBox="0 0 120 40"><path class="dial__arc" d="M8 36 A52 52 0 0 1 112 36" /><path class="dial__hz" d="M2 36 H118" /><circle class="dial__sun" r="4.2" cx="8" cy="36" data-dial-sun /></svg>
+      <p><b data-dial-time>06:40</b><span data-dial-name>Amanecer</span></p>
+    </div>
     <nav class="nav__links" aria-label="Secciones">
-      <a href="#cabanas"><i>01</i>Cabañas</a><a href="#comparar"><i>02</i>Comparar</a><a href="#disponibilidad"><i>03</i>Disponibilidad</a><a href="#vivir"><i>04</i>Vivir aquí</a><a href="#llegar"><i>05</i>Llegar</a>
+      <a href="#predio">El predio</a><a href="#casas">Las casas</a><a href="#dia">Un día</a><a href="#disponibilidad">Disponibilidad</a><a href="#llegar">Llegar</a>
     </nav>
     <a class="nav__cta" href="#disponibilidad">Reservar <span aria-hidden="true">↘</span></a>
     <button class="nav__menu" type="button" aria-expanded="false" aria-label="Abrir menú">Menú</button>
   </header>
   <div class="sheet" aria-hidden="true">
-    <a href="#cabanas"><i>01</i>Las cabañas</a><a href="#comparar"><i>02</i>Comparar</a><a href="#disponibilidad"><i>03</i>Disponibilidad</a><a href="#vivir"><i>04</i>Vivir aquí</a><a href="#galeria"><i>05</i>Galería</a><a href="#llegar"><i>06</i>Cómo llegar</a>
+    <a href="#predio"><i>09:00</i>El predio</a><a href="#casas"><i>10:30</i>Las casas</a><a href="#comparar"><i>11:45</i>Comparar</a><a href="#dia"><i>13:00</i>Un día en la orilla</a><a href="#disponibilidad"><i>22:15</i>Disponibilidad</a><a href="#llegar"><i>23:00</i>Cómo llegar</a>
   </div>
 
   <main id="inicio">
-    <!-- HERO -->
-    <section class="hero">
-      <div class="hero__text">
-        <p class="label">Seis casas de madera · desde 1998</p>
-        <h1 class="hero__title"><span>Seis casas</span> <span>junto al</span> <span><i>agua.</i></span></h1>
-        <p class="hero__lead">En la orilla sur del lago Villarrica, entre arrayanes y frente al volcán. Cada cabaña fue pensada para una manera distinta de pasar los días.</p>
-        <ol class="hero__index" data-hero-index></ol>
+    <!-- 06:40 · HERO -->
+    <section class="hero" data-h="6.6" data-name="Amanecer">
+      <div class="hero__ph" data-hero-ph style="{{img:hero:1501785888041-af3ef285b470}}"><canvas class="hero__gl" data-ripple aria-hidden="true"></canvas></div>
+      <div class="hero__shade" aria-hidden="true"></div>
+      <div class="hero__top">
+        <p class="hero__k"><span>06:40</span> Muelle norte · el lago todavía duerme</p>
+        <h1 class="hero__title"><span>Seis casas</span> <span>junto al <i>agua.</i></span></h1>
       </div>
-      <figure class="hero__fig" data-hero-fig>
-        <div class="hero__img" style="{{img:hero:1501785888041-af3ef285b470}}"></div>
-        <div class="hero__water" style="{{img:hero:1501785888041-af3ef285b470}}"></div>
-        <figcaption><span>Muelle norte</span><span data-hero-time>—</span></figcaption>
-      </figure>
-      <aside class="today" aria-live="polite">
-        <p class="label">El lago hoy</p>
-        <dl>
-          <div><dt>Puesta de sol</dt><dd data-t-sunset>—</dd></div>
+      <div class="hero__bot">
+        <p class="hero__lead">En la orilla norte del lago Villarrica, frente al volcán. Seis casas de madera, cada una pensada para una manera distinta de pasar el día. <em>Toque el agua.</em></p>
+        <dl class="inst" aria-live="polite">
+          <div><dt>Ahora en el lago</dt><dd data-t-now>—</dd></div>
+          <div><dt>Sale el sol</dt><dd data-t-sunrise>—</dd></div>
+          <div><dt>Se pone</dt><dd data-t-sunset>—</dd></div>
           <div><dt>Hora dorada</dt><dd data-t-golden>—</dd></div>
           <div><dt>Agua</dt><dd data-t-water>—</dd></div>
           <div><dt>Viento</dt><dd data-t-wind>—</dd></div>
         </dl>
-        <p class="today__k" data-t-kayak>—</p>
-      </aside>
+        <p class="hero__tip" data-t-kayak>—</p>
+      </div>
+      <p class="hero__scroll" aria-hidden="true"><span>Baje y el día avanza</span><i></i></p>
     </section>
 
-    <!-- 01 CABAÑAS -->
-    <section class="sec" id="cabanas">
-      <header class="shead"><span class="shead__n">01</span><p class="label">Las cabañas</p><h2>Seis maneras de estar en el lago.</h2><p class="shead__d">Toque una cabaña para abrir su ficha: plano, fotografías, equipamiento y fechas libres.</p></header>
-      <div class="filters" role="group" aria-label="Filtrar cabañas" data-filters>
+    <!-- 07:40 · LA MAÑANA -->
+    <section class="morning sec" data-h="7.6" data-name="Mañana">
+      <header class="sh"><p class="sh__h"><b>07:40</b><span>La mañana</span></p><h2>Antes de las nueve el lago es un espejo.</h2></header>
+      <div class="morning__grid">
+        <figure class="mframe mframe--a"><div class="mframe__ph" style="{{img:niebla:1470071459604-3b5ec3a7fe05}}"></div><figcaption><b>07:10</b> La niebla se levanta desde la orilla de los coigües. Entre abril y junio, casi todos los días.</figcaption></figure>
+        <figure class="mframe mframe--b"><div class="mframe__ph" style="{{img:kayak:1501785888041-af3ef285b470}}"></div><figcaption><b>08:00</b> Seis kayaks dobles y tres tablas de SUP en el galpón junto a la playa. Incluidos, con chalecos de todas las tallas.</figcaption></figure>
+        <p class="morning__q">«El volcán se ve dos veces: una en el cielo y otra en el agua.»</p>
+      </div>
+    </section>
+
+    <!-- 09:00 · EL PREDIO -->
+    <section class="sec" id="predio" data-h="9" data-name="Mañana">
+      <header class="sh"><p class="sh__h"><b>09:00</b><span>El predio</span></p><h2>Cuatro hectáreas, seis casas, un kilómetro de orilla.</h2><p class="sh__d">Esta es la carta del lugar. Pase sobre una casa para verla; tóquela para abrir su ficha. El lago responde al cursor.</p></header>
+      <div class="site">
+        <div class="site__map" data-site-wrap>
+          <svg class="chart" viewBox="0 0 1200 640" data-site role="img" aria-label="Plano del predio con las seis casas, el muelle, el sendero y la orilla del lago"></svg>
+          <div class="site__card" data-site-card aria-hidden="true"><div class="site__card-ph" data-site-ph></div><p data-site-txt></p></div>
+        </div>
+        <ol class="site__list" data-site-list></ol>
+      </div>
+    </section>
+
+    <!-- 10:30 · LAS CASAS -->
+    <section class="sec" id="casas" data-h="10.4" data-name="Media mañana">
+      <header class="sh"><p class="sh__h"><b>10:30</b><span>Las casas</span></p><h2>Primero fueron un dibujo.</h2><p class="sh__d">Seis proyectos de un mismo arquitecto de Temuco, cada uno con su forma. Toque una casa para abrir su plano, fotografías y fechas libres.</p></header>
+      <div class="filters" role="group" aria-label="Filtrar casas" data-filters>
         <button type="button" aria-pressed="true" data-f="todas">Todas <sup>6</sup></button>
         <button type="button" aria-pressed="false" data-f="dos">Para dos</button>
         <button type="button" aria-pressed="false" data-f="familia">Familias</button>
@@ -83,23 +104,55 @@
         <button type="button" aria-pressed="false" data-f="tinaja">Con tinaja</button>
         <button type="button" aria-pressed="false" data-f="mascotas">Mascotas</button>
       </div>
-      <div class="cabins" data-cabins></div>
+      <div class="houses" data-houses></div>
     </section>
 
-    <!-- 02 COMPARAR -->
-    <section class="sec sec--paper" id="comparar">
-      <header class="shead"><span class="shead__n">02</span><p class="label">Comparar</p><h2>Dos cabañas, frente a frente.</h2><p class="shead__d">Elija dos y vea en qué se diferencian. Las barras muestran dónde gana cada una.</p></header>
+    <!-- 11:45 · COMPARAR -->
+    <section class="sec" id="comparar" data-h="11.75" data-name="Mediodía">
+      <header class="sh"><p class="sh__h"><b>11:45</b><span>Comparar</span></p><h2>Dos casas, a la misma escala.</h2><p class="sh__d">Elija dos. Las fachadas se dibujan en metros reales, junto a una persona de 1,75 m; las barras muestran dónde gana cada una.</p></header>
       <div class="cmp" data-cmp>
-        <div class="cmp__pick"><label><span class="label">A</span><select data-cmp-a></select></label><label><span class="label">B</span><select data-cmp-b></select></label></div>
+        <div class="cmp__pick"><label><span>A</span><select data-cmp-a></select></label><label><span>B</span><select data-cmp-b></select></label></div>
+        <div class="cmp__elev" data-cmp-elev></div>
         <div class="cmp__rows" data-cmp-rows></div>
       </div>
     </section>
 
-    <!-- 03 DISPONIBILIDAD -->
-    <section class="sec" id="disponibilidad">
-      <header class="shead"><span class="shead__n">03</span><p class="label">Disponibilidad</p><h2>Las próximas cuatro semanas, de un vistazo.</h2><p class="shead__d">Arrastre sobre la fila de una cabaña para elegir sus noches. Lo que está en gris ya tiene huéspedes.</p></header>
+    <!-- 13:00 → atardecer · UN DÍA -->
+    <section class="day" id="dia" data-h="12.6" data-name="Tarde" data-day>
+      <div class="day__pin">
+        <div class="day__sky" aria-hidden="true"><svg viewBox="0 0 1000 160" preserveAspectRatio="none"><path class="day__arc" d="M20 150 Q500 -40 980 150" /><path class="day__hz" d="M0 150 H1000" /></svg><i class="day__sun" data-day-sun></i><span class="day__t" data-day-rise>—</span><span class="day__t day__t--r" data-day-set>—</span></div>
+        <header class="day__head"><p class="sh__h"><b data-day-clock>13:00</b><span>Un día en la orilla</span></p></header>
+        <div class="day__track" data-day-track>
+          <article class="moment moment--intro"><h2>Lo que pasa entre el almuerzo y la última luz.</h2><p>Nada está programado. Pero hay cosas que, a cierta hora, conviene no perderse.</p><span class="moment__go">Siga bajando →</span></article>
+          <article class="moment" data-at="13"><div class="moment__ph" style="{{img:muelle-ninos:1476514525535-07fb3b4ae5f1}}"></div><div class="moment__tx"><b>13:00</b><h3>El muelle de los niños</h3><p>Fondo de arena, agua transparente a 21 °C en enero y un salvavidas de 12:00 a 19:00.</p><span>Enero y febrero</span></div></article>
+          <article class="moment" data-at="16.5"><div class="moment__ph" style="{{img:otono:1469474968028-56623f02e42e}}"></div><div class="moment__tx"><b>16:30</b><h3>Sendero de arrayanes</h3><p>Novecientos metros de bosque nativo hasta la punta del predio. Los troncos se encienden naranjos con la luz baja.</p><span>Todo el año · 25 min</span></div></article>
+          <article class="moment" data-at="19.3"><div class="moment__ph" style="{{img:quincho:1470071459604-3b5ec3a7fe05}}"></div><div class="moment__tx"><b>19:20</b><h3>Se enciende el quincho</h3><p>Parrilla, fogón y mesa larga. Leña seca de regalo la primera noche y luces que se prenden solas.</p><span>Uno por casa familiar</span></div></article>
+          <article class="moment" data-at="sunset"><div class="moment__ph" style="{{img:cierre:1476514525535-07fb3b4ae5f1}}"></div><div class="moment__tx"><b data-sunset-b>20:04</b><h3>La última luz, desde el muelle</h3><p>Hoy el sol se pone a las <span data-sunset-s>—</span>. El volcán se queda rosado unos minutos más.</p><span>Calculado para hoy</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- 21:00 · GALERÍA -->
+    <section class="sec" id="galeria" data-h="21" data-name="Anochecer">
+      <header class="sh"><p class="sh__h"><b>21:00</b><span>Cuaderno</span></p><h2>Una temporada en dieciséis fotografías.</h2><p class="sh__d">Arrastre la tira. Toque una fotografía para verla completa.</p></header>
+      <div class="film" data-film tabindex="0" aria-label="Galería: arrastre o use las flechas"><div class="film__track" data-film-track></div></div>
+      <div class="film__meta"><span data-film-count>01 / 16</span><div class="film__bar"><span data-film-bar></span></div><span>Arrastre →</span></div>
+    </section>
+
+    <!-- 21:40 · HUÉSPEDES -->
+    <section class="sec" id="huespedes" data-h="21.6" data-name="Noche">
+      <header class="sh"><p class="sh__h"><b>21:40</b><span>Huéspedes</span></p><h2>186 opiniones, 4,8 de promedio.</h2></header>
+      <div class="voices" data-voices>
+        <div class="voices__q" aria-live="polite"><blockquote data-v-q>—</blockquote><p data-v-a>—</p></div>
+        <ol class="voices__list" data-v-list></ol>
+      </div>
+    </section>
+
+    <!-- 22:15 · DISPONIBILIDAD -->
+    <section class="sec" id="disponibilidad" data-h="22.2" data-name="Noche">
+      <header class="sh"><p class="sh__h"><b>22:15</b><span>Disponibilidad</span></p><h2>Las próximas cuatro semanas, de un vistazo.</h2><p class="sh__d">Arrastre sobre la fila de una casa para elegir sus noches. En pantallas táctiles, toque la llegada y luego la última noche.</p></header>
       <div class="avail">
-        <div class="matrix" data-matrix role="grid" aria-label="Disponibilidad por cabaña y noche"></div>
+        <div class="matrix" data-matrix role="grid" aria-label="Disponibilidad por casa y noche"></div>
         <aside class="quote" data-quote aria-live="polite">
           <p class="label">Su estadía</p>
           <h3 data-q-cabin>Elija noches en la tabla</h3>
@@ -107,7 +160,7 @@
           <div class="quote__row"><label>Huéspedes<select data-q-guests></select></label></div>
           <fieldset class="quote__extras" data-q-extras>
             <label><input type="checkbox" data-x="25000" data-per="night" /> Tinaja caliente <span>$25.000 / noche</span></label>
-            <label><input type="checkbox" data-x="9000" data-per="guestnight" /> Desayuno a la cabaña <span>$9.000 / persona</span></label>
+            <label><input type="checkbox" data-x="9000" data-per="guestnight" /> Desayuno a la casa <span>$9.000 / persona</span></label>
             <label><input type="checkbox" data-x="15000" data-per="once" /> Salida tardía 16:00 <span>$15.000</span></label>
             <label><input type="checkbox" data-x="10000" data-per="once" /> Mascota <span>$10.000</span></label>
           </fieldset>
@@ -118,47 +171,15 @@
             <div class="total"><dt>Total</dt><dd data-q-total>—</dd></div>
           </dl>
           <p class="quote__warn" data-q-warn></p>
-          <button type="button" class="btn" data-demo="En el sitio real, la solicitud llegaría al WhatsApp de Lago Azul con la cabaña, las noches, los huéspedes y el total, y el pago del 50 % se haría con un enlace seguro.">Solicitar estas noches <span aria-hidden="true">↘</span></button>
+          <button type="button" class="btn" data-demo="En el sitio real, la solicitud llegaría al WhatsApp de Lago Azul con la casa, las noches, los huéspedes y el total, y el pago del 50 % se haría con un enlace seguro.">Solicitar estas noches <span aria-hidden="true">↘</span></button>
           <p class="quote__note">50 % al reservar, saldo al llegar. Sin comisiones de plataformas.</p>
         </aside>
       </div>
     </section>
 
-    <!-- 04 VIVIR AQUÍ -->
-    <section class="sec sec--slate" id="vivir">
-      <header class="shead"><span class="shead__n">04</span><p class="label">Vivir aquí</p><h2>Lo que pasa entre el desayuno y la última luz.</h2></header>
-      <ol class="index" data-index>
-        <li data-img="kayak"><span class="index__n">i.</span><h3>Kayak y SUP al amanecer</h3><p>Seis kayaks dobles y tres tablas, con chalecos de todas las tallas. El lago está quieto antes de las nueve.</p><span class="index__m">Incluido</span></li>
-        <li data-img="quincho"><span class="index__n">ii.</span><h3>El quincho de cada cabaña</h3><p>Parrilla, mesa larga y leña seca de regalo la primera noche. Las luces se encienden solas al atardecer.</p><span class="index__m">Incluido</span></li>
-        <li data-img="tinaja"><span class="index__n">iii.</span><h3>Tinaja bajo las estrellas</h3><p>Agua a 38 °C calentada a leña de roble. La preparamos dos horas antes de la hora que usted elija.</p><span class="index__m">$25.000 / noche</span></li>
-        <li data-img="muelle-ninos"><span class="index__n">iv.</span><h3>El muelle de los niños</h3><p>Fondo de arena, agua transparente y un salvavidas en temporada, de 12:00 a 19:00.</p><span class="index__m">Enero y febrero</span></li>
-        <li data-img="otono"><span class="index__n">v.</span><h3>Sendero de arrayanes</h3><p>Novecientos metros de bosque nativo hasta la punta del predio. En otoño los troncos se ven naranjos.</p><span class="index__m">Todo el año</span></li>
-        <li data-img="niebla"><span class="index__n">vi.</span><h3>Mañanas de niebla</h3><p>De abril a junio el lago amanece cubierto. Café en la terraza y nada más que hacer.</p><span class="index__m">Otoño</span></li>
-      </ol>
-      <div class="index__float" data-float aria-hidden="true"></div>
-    </section>
-
-    <!-- 05 GALERÍA -->
-    <section class="sec" id="galeria">
-      <header class="shead"><span class="shead__n">05</span><p class="label">Galería</p><h2>Cuaderno de temporada.</h2><p class="shead__d">Arrastre la tira para recorrerla. Toque una fotografía para verla completa.</p></header>
-      <div class="film" data-film tabindex="0" aria-label="Galería: arrastre o use las flechas">
-        <div class="film__track" data-film-track></div>
-      </div>
-      <div class="film__meta"><span data-film-count>01 / 12</span><div class="film__bar"><span data-film-bar></span></div><span>Arrastre →</span></div>
-    </section>
-
-    <!-- 06 HUÉSPEDES -->
-    <section class="sec sec--paper" id="huespedes">
-      <header class="shead"><span class="shead__n">06</span><p class="label">Huéspedes</p><h2>186 opiniones, 4,8 de promedio.</h2></header>
-      <div class="voices" data-voices>
-        <div class="voices__q" aria-live="polite"><blockquote data-v-q>—</blockquote><p data-v-a>—</p></div>
-        <ol class="voices__list" data-v-list></ol>
-      </div>
-    </section>
-
-    <!-- 07 LLEGAR -->
-    <section class="sec" id="llegar">
-      <header class="shead"><span class="shead__n">07</span><p class="label">Cómo llegar</p><h2>Camino Villarrica–Pucón, kilómetro 8.</h2></header>
+    <!-- 23:00 · LLEGAR -->
+    <section class="sec" id="llegar" data-h="22.9" data-name="Noche">
+      <header class="sh"><p class="sh__h"><b>23:00</b><span>Cómo llegar</span></p><h2>Camino Villarrica–Pucón, kilómetro 8.</h2></header>
       <div class="arrive">
         <ul class="times">
           <li><span>Villarrica centro</span><b>10 min</b></li><li><span>Pucón</span><b>20 min</b></li><li><span>Aeródromo de Pucón</span><b>25 min</b></li><li><span>Temuco</span><b>1 h 15</b></li><li><span>Santiago</span><b>8 h</b></li>
@@ -173,17 +194,18 @@
       </div>
     </section>
 
-    <!-- CIERRE -->
-    <section class="end" style="{{img:cierre:1476514525535-07fb3b4ae5f1}}">
+    <!-- 23:30 · CIERRE -->
+    <section class="end" data-h="23.4" data-name="Medianoche">
+      <div class="end__ph" style="{{img:tinaja:1470071459604-3b5ec3a7fe05}}"></div>
       <div class="end__in">
-        <p class="label">Temporada de verano</p>
+        <p class="sh__h"><b>23:30</b><span>La tinaja todavía está tibia</span></p>
         <h2>Enero se reserva en octubre.</h2>
-        <a class="btn btn--light" href="#disponibilidad">Ver fechas libres <span aria-hidden="true">↘</span></a>
+        <a class="btn btn--light" href="#disponibilidad">Ver noches libres <span aria-hidden="true">↘</span></a>
       </div>
     </section>
   </main>
 
-  <footer class="foot">
+  <footer class="foot" data-h="23.8" data-name="Medianoche">
     <p class="foot__word" aria-hidden="true">Lago Azul</p>
     <div class="foot__grid">
       <div><p class="label">Dirección</p><p>Camino Villarrica–Pucón km 8<br />Región de la Araucanía, Chile</p></div>
@@ -191,11 +213,11 @@
       <div><p class="label">Horarios</p><p>Llegada 15:00 · Salida 11:00<br />Atención 9:00 a 21:00</p></div>
       <div><p class="label">Muestra</p><p>Negocio ficticio. Concepto diseñado por <a href="/">Red Vaeru</a> · Conectando culturas</p></div>
     </div>
-    <p class="foot__end"><span>© <span data-year>2026</span> Lago Azul</span><span>39°16′ S · 72°13′ O</span></p>
+    <p class="foot__end"><span>© <span data-year>2026</span> Lago Azul</span><span>39°15′ S · 72°07′ O</span></p>
   </footer>
 
-  <!-- Ficha de cabaña (se abre al tocar una) -->
-  <div class="dossier" data-dossier aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ficha de la cabaña">
+  <!-- Ficha de casa -->
+  <div class="dossier" data-dossier aria-hidden="true" role="dialog" aria-modal="true" aria-label="Ficha de la casa">
     <div class="dossier__scrim" data-close></div>
     <article class="dossier__panel" data-dossier-panel tabindex="-1"></article>
   </div>

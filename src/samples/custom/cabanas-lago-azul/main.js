@@ -3,6 +3,10 @@ import './style.css';
 import { CABINS, VOICES, FILM } from './data.js';
 import { planSVG, ensureHatch } from './plan.js';
 import { initLake, santiagoParts, hhmm } from './lake.js';
+import { initSky, fmtH } from './sky.js';
+import { initRipple } from './ripple.js';
+import { drawChart, SPOTS, POIS, shore } from './site.js';
+import { houseRow, elevationSVG } from './houses.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -16,43 +20,50 @@ const byId = Object.fromEntries(CABINS.map((c) => [c.id, c]));
 const tpl = $('template[data-photos]').content;
 const photo = (slot) => tpl.querySelector(`[data-p="${slot}"]`)?.getAttribute('style') || '';
 
-/* ───────────── Pantalla de carga: sube el nivel del agua ───────────── */
-const minTime = reduced ? 0 : 2200, t0 = performance.now();
-(function rise(now) {
+/* ───────────── Pantalla de carga: se dibujan las isobatas del lago ───────────── */
+(function loader() {
+  const svg = $('[data-load-chart]');
+  let d = '';
+  for (let i = 0; i < 9; i++) {
+    let p = '';
+    for (let x = -20; x <= 1220; x += 20) p += `${x === -20 ? 'M' : 'L'}${x} ${(220 + i * 46 + (30 - i * 2) * Math.sin(x / 170 + i * 0.5) + 10 * Math.sin(x / 61 + i)).toFixed(1)} `;
+    d += `<path d="${p}" pathLength="1" style="--i:${i}"/>`;
+  }
+  svg.innerHTML = d;
+})();
+const minTime = reduced ? 0 : 2300, t0 = performance.now();
+(function count(now) {
   if (document.body.classList.contains('is-ready')) return;
   const k = Math.min(1, (now - t0) / Math.max(1, minTime));
-  const e = 1 - Math.pow(1 - k, 2.4);
-  $('.tide__water').style.height = `${e * 100}%`;
-  $('[data-load-n]').textContent = String(Math.round(e * 100)).padStart(3, '0');
-  $('[data-load-line]').style.width = `${e * 100}%`;
-  requestAnimationFrame(rise);
+  $('[data-load-n]').textContent = String(Math.round((1 - Math.pow(1 - k, 2)) * 167)).padStart(3, '0');
+  requestAnimationFrame(count);
 })(t0);
 const ready = () => setTimeout(() => document.body.classList.add('is-ready'), Math.max(0, minTime - (performance.now() - t0)));
 if (document.readyState === 'complete') ready(); else addEventListener('load', ready);
 setTimeout(() => document.body.classList.add('is-ready'), 6000);
 
-/* ───────────── Título por palabras ───────────── */
+/* ───────────── Título por líneas ───────────── */
 $$('.hero__title > span').forEach((s, i) => {
   const w = document.createElement('span');
-  w.className = 'w'; w.style.transitionDelay = `${0.35 + i * 0.12}s`;
+  w.className = 'w'; w.style.transitionDelay = `${0.3 + i * 0.14}s`;
   while (s.firstChild) w.append(s.firstChild);
   s.append(w);
 });
 
-/* ───────────── Reloj de Villarrica y lago hoy ───────────── */
-function clock() {
-  const now = new Date(), p = santiagoParts(now);
-  const day = new Intl.DateTimeFormat('es-CL', { timeZone: 'America/Santiago', weekday: 'short', day: 'numeric', month: 'short' }).format(now).replace(/\./g, '').replace(/,/g, '');
-  $('[data-strip-time]').textContent = `Villarrica ${hhmm(now)} · ${day}`;
-  $('[data-hero-time]').textContent = `${pad(p.h)}:${pad(p.min)} · hoy`;
-}
-clock(); setInterval(clock, 20000);
-initLake(hash);
+/* ───────────── El lago hoy y el cielo de la página ───────────── */
+const SUN = initLake(hash);
+$('[data-day-rise]').textContent = `Sale ${SUN.riseTxt}`;
+$('[data-day-set]').textContent = `Se pone ${SUN.setTxt}`;
+$('[data-sunset-b]').textContent = SUN.setTxt; $('[data-sunset-s]').textContent = SUN.setTxt;
+const daySec = $('[data-day]');
+let dayHour = null; // la sección "Un día" fija su propia hora mientras se recorre
+initSky({ sunrise: SUN.sunrise, sunset: SUN.sunset, reduced, override: (s) => (s === daySec ? dayHour : null) });
+setInterval(() => { const n = $('[data-t-now]'); if (n) n.textContent = hhmm(new Date()); }, 30000);
 $$('[data-year]').forEach((e) => (e.textContent = new Date().getFullYear()));
 
 /* ───────────── Navegación y menú ───────────── */
 const nav = $('.nav');
-const onScroll = () => nav.classList.toggle('is-solid', scrollY > 120);
+const onScroll = () => nav.classList.toggle('is-solid', scrollY > 80);
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 const menuBtn = $('.nav__menu'), sheet = $('.sheet');
 const setMenu = (open) => {
@@ -75,28 +86,26 @@ document.addEventListener('click', (e) => {
   const d = e.target.closest('[data-demo]');
   if (!d) return;
   e.preventDefault();
-  toast(d.dataset.demo || 'En el sitio real, este botón abriría WhatsApp con un mensaje listo: cabaña, fechas y número de huéspedes.');
+  toast(d.dataset.demo || 'En el sitio real, este botón abriría WhatsApp con un mensaje listo: casa, fechas y número de huéspedes.');
 });
 
-/* ───────────── Hero: el reflejo del agua se ondula y responde al cursor ───────────── */
-(function ripple() {
-  const fig = $('[data-hero-fig]'), turb = $('[data-turb]'), disp = $('[data-disp]');
-  if (reduced || !fig) return;
-  let near = 0, target = 0, visible = true, t = 0;
-  fig.addEventListener('pointermove', (e) => {
-    const r = fig.getBoundingClientRect();
-    target = Math.max(0, Math.min(1, (e.clientY - r.top) / r.height - 0.45) * 2.2);
+/* Primera URL que carga de una fotografía (local → Unsplash) */
+const urlsOf = (slot) => [...photo(slot).matchAll(/url\((['"]?)([^'")]+)\1\)/g)].map((m) => m[2]);
+function firstUrl(slot) {
+  const urls = urlsOf(slot);
+  return new Promise((res) => {
+    const tryUrl = (k) => { if (k >= urls.length) return res(null); const im = new Image(); im.onload = () => res(urls[k]); im.onerror = () => tryUrl(k + 1); im.src = urls[k]; };
+    tryUrl(0);
   });
-  fig.addEventListener('pointerleave', () => (target = 0));
-  new IntersectionObserver(([e]) => (visible = e.isIntersecting)).observe(fig);
-  (function loop() {
-    requestAnimationFrame(loop);
-    if (!visible) return;
-    t += 0.012; near += (target - near) * 0.06;
-    turb.setAttribute('baseFrequency', `${(0.006 + Math.sin(t * 0.7) * 0.0012).toFixed(5)} ${(0.045 + Math.sin(t) * 0.006 + near * 0.012).toFixed(5)}`);
-    disp.setAttribute('scale', (9 + near * 22 + Math.sin(t * 1.3) * 2).toFixed(2));
-  })();
-})();
+}
+
+/* ───────────── Hero: el agua responde al tacto ───────────── */
+firstUrl('hero').then((url) => initRipple({ box: $('[data-hero-ph]'), area: $('.hero'), canvas: $('[data-ripple]'), url, horizon: 0.5, reduced }));
+if (!reduced) addEventListener('scroll', () => {
+  const y = scrollY; if (y > innerHeight * 1.2) return;
+  $('[data-hero-ph]').style.transform = `translate3d(0, ${y * 0.28}px, 0) scale(${1 + y / 9000})`;
+  $('.hero__top').style.transform = `translate3d(0, ${y * 0.12}px, 0)`;
+}, { passive: true });
 
 /* ───────────── Ocupación simulada (estable durante el día) ───────────── */
 const TODAY = (() => { const p = santiagoParts(); return Date.UTC(p.y, p.m, p.d); })();
@@ -118,25 +127,76 @@ const BUSY = Object.fromEntries(CABINS.map((c) => {
 }));
 const minNights = (i) => ([0, 1].includes(dayDate(i).getUTCMonth()) ? 4 : 2);
 
-/* ───────────── Índice del hero y tarjetas de cabañas ───────────── */
+/* ───────────── Carta del predio ───────────── */
 ensureHatch();
-$('[data-hero-index]').innerHTML = CABINS.map((c) => `<li><a href="#cabanas" data-open="${c.id}"><b>${c.n}</b><span>${c.paxTxt} pers · ${c.agua} m al agua</span></a></li>`).join('');
-const grid = $('[data-cabins]');
-grid.innerHTML = CABINS.map((c) => `
-  <article class="cabin" data-id="${c.id}" tabindex="0" role="button" aria-label="Abrir la ficha de la cabaña ${c.n}">
-    <div class="cabin__ph"><span style="${photo(c.slot)}"></span><div class="cabin__plan">${planSVG(c, { labels: false })}</div><em class="cabin__free" data-free="${c.id}"></em></div>
-    <div class="cabin__meta"><span class="cabin__n">${c.no}</span><h3>${c.n}</h3><span class="cabin__p">${clp(c.price)}<small> / noche</small></span></div>
-    <p class="cabin__spec">${c.paxTxt} personas · ${c.dormTxt} dorm. · ${c.m2} m² · ${c.agua} m al agua</p>
-    <p class="cabin__line">${c.line}</p>
-    <span class="cabin__open">Abrir ficha <span aria-hidden="true">→</span></span>
-  </article>`).join('');
-// Primera noche libre de cada cabaña, como dato vivo sobre la foto
+(function chart() {
+  const svg = $('[data-site]'), wrap = $('[data-site-wrap]'), card = $('[data-site-card]');
+  drawChart(svg, CABINS);
+  const list = $('[data-site-list]');
+  list.innerHTML = CABINS.map((c) => `<li><button type="button" data-sl="${c.id}"><i>${c.no}</i><b>${c.n}</b><span>${c.paxTxt} pers · ${c.m2} m² · ${c.agua} m al agua</span><em>${clp(c.price)}</em></button></li>`).join('');
+  const toSvg = (x, y) => { const r = svg.getBoundingClientRect(), wr = wrap.getBoundingClientRect(); return [r.left - wr.left + (x / 1200) * r.width + wrap.scrollLeft, r.top - wr.top + (y / 640) * r.height]; };
+  const show = (kind, id) => {
+    let x, y, ph, txt;
+    if (kind === 'h') {
+      const c = byId[id]; x = SPOTS[id].x; y = SPOTS[id].y; ph = c.slot;
+      txt = `<b>${c.no} · ${c.n}</b>${c.paxTxt} personas · ${c.m2} m² · a ${c.agua} m del agua<br><small>Toque para abrir la ficha</small>`;
+    } else { const p = POIS.find((q) => q.id === id); x = p.x; y = p.y; ph = p.ph; txt = `<b>${p.n}</b>${p.d}`; }
+    $$('[data-house]', svg).forEach((g) => g.classList.toggle('is-on', kind === 'h' && g.dataset.house === id));
+    $$('[data-sl]', list).forEach((b) => b.classList.toggle('is-on', kind === 'h' && b.dataset.sl === id));
+    $('[data-site-ph]').setAttribute('style', photo(ph));
+    $('[data-site-txt]').innerHTML = txt;
+    const [px, py] = toSvg(x, y);
+    const left = px > wrap.clientWidth * 0.6 + wrap.scrollLeft;
+    card.style.left = `${px}px`; card.style.top = `${py}px`;
+    card.classList.toggle('is-left', left); card.classList.toggle('is-low', y < 200);
+    card.classList.add('is-on');
+  };
+  const hide = () => { card.classList.remove('is-on'); $$('.is-on', svg).forEach((g) => g.classList.remove('is-on')); $$('[data-sl]', list).forEach((b) => b.classList.remove('is-on')); };
+  svg.addEventListener('pointerover', (e) => {
+    const h = e.target.closest('[data-house]'), p = e.target.closest('[data-poi]');
+    if (h) show('h', h.dataset.house); else if (p) show('p', p.dataset.poi);
+  });
+  svg.addEventListener('pointerleave', hide);
+  svg.addEventListener('focusin', (e) => { const h = e.target.closest('[data-house]'), p = e.target.closest('[data-poi]'); if (h) show('h', h.dataset.house); else if (p) show('p', p.dataset.poi); });
+  svg.addEventListener('click', (e) => { const h = e.target.closest('[data-house]'); if (h) openDossier(h.dataset.house); else { const p = e.target.closest('[data-poi]'); if (p) show('p', p.dataset.poi); } });
+  svg.addEventListener('keydown', (e) => { const h = e.target.closest('[data-house]'); if (h && e.key === 'Enter') openDossier(h.dataset.house); });
+  list.addEventListener('pointerover', (e) => { const b = e.target.closest('[data-sl]'); if (b) show('h', b.dataset.sl); });
+  list.addEventListener('pointerleave', hide);
+  list.addEventListener('click', (e) => { const b = e.target.closest('[data-sl]'); if (b) openDossier(b.dataset.sl); });
+  // Ondas en el agua de la carta
+  if (!reduced) {
+    let last = 0;
+    const ring = (x, y, big) => {
+      const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle');
+      c.setAttribute('cx', x); c.setAttribute('cy', y); c.setAttribute('r', big ? 4 : 2); c.setAttribute('class', `ch-ring${big ? ' is-big' : ''}`);
+      svg.append(c); setTimeout(() => c.remove(), 2400);
+    };
+    svg.addEventListener('pointermove', (e) => {
+      const r = svg.getBoundingClientRect(), x = ((e.clientX - r.left) / r.width) * 1200, y = ((e.clientY - r.top) / r.height) * 640;
+      if (y < shore(x) + 6) return;
+      const now = performance.now(); if (now - last < 140) return; last = now; ring(x.toFixed(1), y.toFixed(1));
+    });
+    svg.addEventListener('pointerdown', (e) => {
+      const r = svg.getBoundingClientRect(), x = ((e.clientX - r.left) / r.width) * 1200, y = ((e.clientY - r.top) / r.height) * 640;
+      if (y > shore(x) + 6) { ring(x.toFixed(1), y.toFixed(1), true); setTimeout(() => ring(x.toFixed(1), y.toFixed(1), true), 260); }
+    });
+  }
+  // En pantallas angostas la carta se recorre de lado: empieza centrada en el muelle
+  requestAnimationFrame(() => { if (wrap.scrollWidth > wrap.clientWidth) wrap.scrollLeft = (wrap.scrollWidth - wrap.clientWidth) * 0.3; });
+  new IntersectionObserver(([e], o) => { if (e.isIntersecting) { svg.classList.add('is-drawn'); o.disconnect(); } }, { threshold: 0.2 }).observe(svg);
+})();
+
+/* ───────────── Las casas: del dibujo a la fotografía ───────────── */
+const grid = $('[data-houses]');
+grid.innerHTML = CABINS.map((c) => houseRow(c, photo(c.slot), planSVG(c, { labels: false }))).join('');
 CABINS.forEach((c) => {
   let i = 0; while (BUSY[c.id].has(i) && i < DAYS) i++;
   $(`[data-free="${c.id}"]`).textContent = i === 0 ? 'Libre esta noche' : `Libre desde el ${fmt(i, { weekday: 'short', day: 'numeric' })}`;
 });
-grid.addEventListener('click', (e) => { const c = e.target.closest('.cabin'); if (c) openDossier(c.dataset.id); });
-grid.addEventListener('keydown', (e) => { const c = e.target.closest('.cabin'); if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDossier(c.dataset.id); } });
+grid.addEventListener('click', (e) => { const c = e.target.closest('.house'); if (c) openDossier(c.dataset.id); });
+grid.addEventListener('keydown', (e) => { const c = e.target.closest('.house'); if (c && (e.key === 'Enter' || e.key === ' ')) { e.preventDefault(); openDossier(c.dataset.id); } });
+const built = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('is-built'); built.unobserve(e.target); } }), { rootMargin: '0px 0px -25% 0px' });
+$$('.house', grid).forEach((h) => built.observe(h));
 document.addEventListener('click', (e) => { const a = e.target.closest('[data-open]'); if (a) { e.preventDefault(); openDossier(a.dataset.open); } });
 
 // Filtros
@@ -149,15 +209,14 @@ filters.addEventListener('click', (e) => {
   const b = e.target.closest('button'); if (!b) return;
   $$('button', filters).forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
   const f = b.dataset.f;
-  $$('.cabin', grid).forEach((el, i) => {
+  $$('.house', grid).forEach((el) => {
     const on = f === 'todas' || byId[el.dataset.id].tags.includes(f);
-    el.style.transitionDelay = `${i * 50}ms`;
-    el.classList.toggle('is-dim', !on);
+    el.classList.toggle('is-off', !on);
     el.setAttribute('tabindex', on ? '0' : '-1');
   });
 });
 
-/* ───────────── Ficha de la cabaña ───────────── */
+/* ───────────── Ficha de la casa ───────────── */
 const dossier = $('[data-dossier]'), panel = $('[data-dossier-panel]');
 let current = null, lastFocus = null;
 function openDossier(id) {
@@ -166,7 +225,7 @@ function openDossier(id) {
   const strip = Array.from({ length: 14 }, (_, d) => `<span class="${BUSY[id].has(d) ? 'busy' : ''}" title="${BUSY[id].has(d) ? 'Ocupada' : 'Libre'}">${fmt(d, { weekday: 'narrow' })}<b>${dayDate(d).getUTCDate()}</b></span>`).join('');
   const free = 14 - Array.from({ length: 14 }, (_, d) => BUSY[id].has(d)).filter(Boolean).length;
   panel.innerHTML = `
-    <div class="ds__top"><span class="label">Cabaña ${c.no} / 06</span><div class="ds__nav"><button type="button" data-ds-go="-1">← Anterior</button><button type="button" data-ds-go="1">Siguiente →</button><button type="button" data-close>Cerrar ✕</button></div></div>
+    <div class="ds__top"><span class="label">Casa ${c.no} / 06</span><div class="ds__nav"><button type="button" data-ds-go="-1">← Anterior</button><button type="button" data-ds-go="1">Siguiente →</button><button type="button" data-close>Cerrar ✕</button></div></div>
     <div class="ds__hero" style="${photo(c.slot)}"></div>
     <div class="ds__body">
       <div class="ds__col">
@@ -203,7 +262,7 @@ function openDossier(id) {
   });
   showRoom('r0');
   $$('[data-ds-ph]', panel).forEach((s) => {
-    const open = () => openViewer(c.photos.map((p) => [p, `Cabaña ${c.n}`]), +s.dataset.dsPh);
+    const open = () => openViewer(c.photos.map((p) => [p, `Casa ${c.n}`]), +s.dataset.dsPh);
     s.addEventListener('click', open); s.addEventListener('keydown', (e) => e.key === 'Enter' && open());
   });
   $$('[data-ds-go]', panel).forEach((b) => b.addEventListener('click', () => {
@@ -277,8 +336,10 @@ const ROWS = [
   A.innerHTML = opts; B.innerHTML = opts; A.value = 'muelle'; B.value = 'mirador';
   rows.innerHTML = ROWS.map(([n]) => `<div class="cmp__row"><div class="cmp__side cmp__side--a"><b>—</b><div class="cmp__bar"><i></i></div></div><span>${n}</span><div class="cmp__side cmp__side--b"><b>—</b><div class="cmp__bar"><i></i></div></div></div>`).join('')
     + `<div class="cmp__foot"><button type="button" class="cmp__swap" data-cmp-swap>⇄ Intercambiar</button><p data-cmp-sum></p><div class="cmp__open"><button type="button" data-cmp-open="a">Ficha A →</button><button type="button" data-cmp-open="b">Ficha B →</button></div></div>`;
+  const elev = $('[data-cmp-elev]');
   function render() {
     const a = byId[A.value], b = byId[B.value];
+    elev.innerHTML = elevationSVG(a, b);
     let wa = 0, wb = 0;
     $$('.cmp__row', rows).forEach((row, k) => {
       const [, val, txt, dir] = ROWS[k];
@@ -291,7 +352,7 @@ const ROWS = [
       sa.classList.toggle('win', d > 0); sb.classList.toggle('win', d < 0);
       if (d > 0) wa++; if (d < 0) wb++;
     });
-    $('[data-cmp-sum]').textContent = a === b ? 'Elija dos cabañas distintas.' : `${wa > wb ? a.n : wb > wa ? b.n : 'Empate'}${wa !== wb ? ` gana en ${Math.max(wa, wb)} de ${ROWS.length}` : ` · ${wa} a ${wb}`}. ${a.agua < b.agua ? a.n : b.n} está más cerca del agua.`;
+    $('[data-cmp-sum]').textContent = a === b ? 'Elija dos casas distintas.' : `${wa > wb ? a.n : wb > wa ? b.n : 'Empate'}${wa !== wb ? ` gana en ${Math.max(wa, wb)} de ${ROWS.length}` : ` · ${wa} a ${wb}`}. ${a.agua < b.agua ? a.n : b.n} está más cerca del agua.`;
   }
   A.addEventListener('change', render); B.addEventListener('change', render);
   $('[data-cmp-swap]').addEventListener('click', () => { [A.value, B.value] = [B.value, A.value]; render(); });
@@ -299,7 +360,7 @@ const ROWS = [
   render();
 })();
 
-/* ───────────── Disponibilidad: matriz de 6 cabañas × 28 noches ───────────── */
+/* ───────────── Disponibilidad: matriz de 6 casas × 28 noches ───────────── */
 const mx = $('[data-matrix]');
 const sel = { id: null, a: null, b: null };
 (function matrix() {
@@ -366,7 +427,7 @@ const sel = { id: null, a: null, b: null };
   });
 })();
 
-// Desde la ficha: elige la primera ventana libre de la cabaña y lleva a la tabla
+// Desde la ficha: elige la primera ventana libre de la casa y lleva a la tabla
 function bookCabin(id) {
   const need = 2;
   let a = 0;
@@ -398,7 +459,7 @@ function quote() {
     const off = (isPet && !c.tags.includes('mascotas'));
     inp.disabled = off; if (off) inp.checked = false;
     l.classList.toggle('is-off', off);
-    l.title = off ? 'Esta cabaña no recibe mascotas' : isTin && c.tags.includes('tinaja') ? 'Esta cabaña tiene tinaja privada' : '';
+    l.title = off ? 'Esta casa no recibe mascotas' : isTin && c.tags.includes('tinaja') ? 'Esta casa tiene tinaja privada' : '';
   });
   void pet;
   let x = 0;
@@ -409,14 +470,14 @@ function quote() {
   });
   const base = c.price * nights, total = base + x + 15000;
   const q = $('[data-quote]');
-  $('[data-q-cabin]').textContent = `Cabaña ${c.n}`;
+  $('[data-q-cabin]').textContent = `Casa ${c.n}`;
   $('[data-q-dates]').textContent = `${fmt(sel.a, { weekday: 'short', day: 'numeric', month: 'short' })} → ${fmt(sel.b + 1, { weekday: 'short', day: 'numeric', month: 'short' })}`;
   $('[data-q-nights]').textContent = `${nights} ${nights === 1 ? 'noche' : 'noches'} × ${clp(c.price)}`;
   $('[data-q-base]').textContent = clp(base);
   $('[data-q-x]').textContent = clp(x);
   count($('[data-q-total]'), total);
   const min = minNights(sel.a);
-  warn.textContent = nights < min ? `La estadía mínima es de ${min} noches. ${BUSY[c.id].has(sel.b + 1) ? 'La noche siguiente ya está tomada: pruebe otra fecha o cabaña.' : 'Arrastre una noche más.'}` : '';
+  warn.textContent = nights < min ? `La estadía mínima es de ${min} noches. ${BUSY[c.id].has(sel.b + 1) ? 'La noche siguiente ya está tomada: pruebe otra fecha o casa.' : 'Arrastre una noche más.'}` : '';
   q.classList.toggle('is-set', true);
   q.classList.remove('pulse'); void q.offsetWidth; q.classList.add('pulse');
 }
@@ -434,24 +495,38 @@ function count(el, to) {
   })(t0);
 }
 
-/* ───────────── Vivir aquí: imagen que sigue al cursor ───────────── */
-(function index() {
-  const list = $('[data-index]'), fl = $('[data-float]');
-  $$('li', list).forEach((li) => li.insertAdjacentHTML('beforeend', `<div class="index__img" style="${photo(li.dataset.img)}"></div>`));
-  if (!matchMedia('(hover: hover)').matches) return;
-  let x = innerWidth / 2, y = innerHeight / 2, fx = x, fy = y, on = false, raf = 0;
-  const loop = () => {
-    fx += (x - fx) * 0.14; fy += (y - fy) * 0.14;
-    const tilt = Math.max(-8, Math.min(8, (x - fx) * 0.08));
-    fl.style.left = `${fx}px`; fl.style.top = `${fy}px`; fl.style.rotate = `${tilt}deg`;
-    raf = on || Math.abs(x - fx) > 0.5 ? requestAnimationFrame(loop) : 0;
+/* ───────────── Un día en la orilla: recorrido horizontal con el sol ───────────── */
+(function day() {
+  const sec = daySec, track = $('[data-day-track]'), sun = $('[data-day-sun]'), clock = $('[data-day-clock]');
+  const moments = $$('.moment[data-at]', track);
+  const ats = moments.map((m) => (m.dataset.at === 'sunset' ? SUN.sunset : +m.dataset.at));
+  const wide = matchMedia('(min-width: 861px)');
+  const place = (h) => {
+    const k = Math.max(0, Math.min(1, (h - SUN.sunrise) / (SUN.sunset - SUN.sunrise)));
+    // Sobre la curva cuadrática del arco (20,150)–(500,-40)–(980,150)
+    const x = (1 - k) ** 2 * 20 + 2 * (1 - k) * k * 500 + k * k * 980, y = (1 - k) ** 2 * 150 + 2 * (1 - k) * k * -40 + k * k * 150;
+    sun.style.left = `${x / 10}%`; sun.style.top = `${(y / 160) * 100}%`;
+    clock.textContent = fmtH(h);
   };
-  list.addEventListener('pointermove', (e) => { x = e.clientX + 170; y = e.clientY; if (!raf) raf = requestAnimationFrame(loop); });
-  $$('li', list).forEach((li) => li.addEventListener('pointerenter', () => {
-    fl.setAttribute('style', photo(li.dataset.img)); fl.classList.add('is-on'); on = true;
-    $$('li', list).forEach((o) => o.classList.toggle('is-dim', o !== li));
-  }));
-  list.addEventListener('pointerleave', () => { fl.classList.remove('is-on'); on = false; $$('li', list).forEach((o) => o.classList.remove('is-dim')); });
+  function update() {
+    if (!wide.matches) { track.style.transform = ''; sec.style.height = ''; dayHour = null; return; }
+    const r = sec.getBoundingClientRect(), span = sec.offsetHeight - innerHeight;
+    const k = Math.max(0, Math.min(1, (-r.top / Math.max(1, span) - 0.06) / 0.86));
+    const max = track.scrollWidth - innerWidth;
+    track.style.transform = `translate3d(${-k * max}px,0,0)`;
+    // La hora sigue a la tarjeta que está al centro
+    const mid = innerWidth / 2;
+    let h = 12.6;
+    const cs = moments.map((m) => { const b = m.getBoundingClientRect(); return b.left + b.width / 2; });
+    for (let i = 0; i < cs.length; i++) {
+      if (cs[i] <= mid) h = ats[i];
+      if (cs[i] > mid) { const prev = i ? cs[i - 1] : cs[0] - innerWidth * 0.8, hp = i ? ats[i - 1] : 12.6; h = hp + (ats[i] - hp) * Math.max(0, Math.min(1, (mid - prev) / (cs[i] - prev))); break; }
+    }
+    dayHour = r.top <= 0 && r.bottom >= innerHeight ? h : null;
+    place(h);
+    moments.forEach((m, i) => m.classList.toggle('is-now', Math.abs(cs[i] - mid) < innerWidth * 0.3));
+  }
+  addEventListener('scroll', update, { passive: true }); addEventListener('resize', update); update();
 })();
 
 /* ───────────── Galería: tira arrastrable con inercia ───────────── */
@@ -528,8 +603,8 @@ function count(el, to) {
 })();
 
 /* ───────────── Apariciones ───────────── */
-$$('.shead h2').forEach((h) => { h.innerHTML = `<span class="ln"><span>${h.innerHTML}</span></span>`; });
-$$('.shead, .cabin, .cmp, .avail, .index li, .film__meta, .voices, .arrive, .end__in, .foot__grid').forEach((el) => el.classList.add('rv'));
+$$('.sh h2, .moment--intro h2').forEach((h) => { h.innerHTML = `<span class="ln"><span>${h.innerHTML}</span></span>`; });
+$$('.sh, .mframe, .morning__q, .site, .filters, .cmp, .avail, .film__meta, .voices, .arrive, .end__in, .foot__grid').forEach((el) => el.classList.add('rv'));
 const io = new IntersectionObserver((es) => es.forEach((e) => {
   if (!e.isIntersecting) return;
   e.target.classList.add('in'); io.unobserve(e.target);
@@ -550,6 +625,6 @@ $$('.rv').forEach((el) => io.observe(el));
   const e = $('.end'); if (reduced) return;
   addEventListener('scroll', () => {
     const r = e.getBoundingClientRect(); if (r.top > innerHeight || r.bottom < 0) return;
-    e.style.backgroundPosition = `center ${50 + (r.top / innerHeight) * 18}%`;
+    $('.end__ph').style.transform = `translate3d(0, ${(r.top / innerHeight) * -60}px, 0) scale(1.12)`;
   }, { passive: true });
 })();

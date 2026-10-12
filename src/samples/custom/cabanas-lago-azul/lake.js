@@ -1,6 +1,6 @@
-// "El lago hoy": puesta de sol calculada para la orilla sur del Villarrica, hora dorada,
+// "El lago hoy": puesta de sol calculada para la orilla norte del Villarrica, hora dorada,
 // temperatura del agua según el mes y un viento simulado de forma estable para cada día.
-const LAT = -39.28, LNG = -72.23, TZ = 'America/Santiago';
+const LAT = -39.25, LNG = -72.12, TZ = 'America/Santiago';
 const WATER = [21, 22, 19, 15, 12, 10, 9, 9, 10, 12, 15, 18];
 const rad = Math.PI / 180;
 
@@ -11,7 +11,8 @@ export function santiagoParts(d = new Date()) {
 export const hhmm = (date) => new Intl.DateTimeFormat('es-CL', { timeZone: TZ, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(date);
 
 // Ecuación de la salida y puesta del sol (algoritmo de Meeus simplificado)
-export function sunset({ y, m, d }) {
+export function sunset(p) { return sunTimes(p).set; }
+export function sunTimes({ y, m, d }) {
   const J = Date.UTC(y, m, d, 12) / 864e5 + 2440587.5;
   const n = Math.round(J - 2451545 + 0.0008);
   const Js = n - LNG / 360;
@@ -22,17 +23,21 @@ export function sunset({ y, m, d }) {
   const dec = Math.asin(Math.sin(L * rad) * Math.sin(23.44 * rad));
   const cw = (Math.sin(-0.833 * rad) - Math.sin(LAT * rad) * Math.sin(dec)) / (Math.cos(LAT * rad) * Math.cos(dec));
   const w = Math.acos(Math.max(-1, Math.min(1, cw))) / rad;
-  return new Date((Jt + w / 360 - 2440587.5) * 864e5);
+  const at = (j) => new Date((j - 2440587.5) * 864e5);
+  return { rise: at(Jt - w / 360), set: at(Jt + w / 360) };
 }
+export const hourOf = (date) => { const s = santiagoParts(date); return s.h + s.min / 60; };
 
 export function initLake(hash) {
   const now = new Date(), p = santiagoParts(now);
-  const set = sunset(p), golden = new Date(set - 60 * 60e3);
+  const { rise, set } = sunTimes(p), golden = new Date(set - 60 * 60e3);
   const key = `${p.y}-${p.m}-${p.d}`;
   const wind = Math.round(4 + hash('viento' + key) * 18);
   const dir = ['N', 'NO', 'O', 'SO', 'S'][Math.floor(hash('dir' + key) * 5)];
   const q = (s) => document.querySelector(s);
   q('[data-t-sunset]').textContent = hhmm(set);
+  q('[data-t-sunrise]').textContent = hhmm(rise);
+  q('[data-t-now]').textContent = hhmm(now);
   q('[data-t-golden]').textContent = hhmm(golden);
   q('[data-t-water]').textContent = `${WATER[p.m]} °C`;
   q('[data-t-wind]').textContent = `${wind} km/h ${dir}`;
@@ -44,4 +49,5 @@ export function initLake(hash) {
   else if (wind < 16) k = 'Brisa suave: conviene remar cerca de la orilla y volver antes de las 16:00.';
   else k = `Viento ${dir === 'N' || dir === 'NO' ? 'del norte' : 'fuerte'}: hoy es día de quincho, libro y tinaja.`;
   q('[data-t-kayak]').textContent = k;
+  return { sunrise: hourOf(rise), sunset: hourOf(set), setTxt: hhmm(set), riseTxt: hhmm(rise) };
 }
