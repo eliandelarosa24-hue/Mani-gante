@@ -155,4 +155,26 @@ Se corta en dos pasadas: `--names hero,-,-,cierre --ratio 16:9` y luego `--names
 
 ---
 
-Las otras 4 muestras tendrán sus prompts cuando se rediseñe cada una.
+## Muestra 7 · Hotel Casa Nogal (casona alemana de 1910, Valdivia)
+
+Son 16 espacios, en 4 collages de 2×2. El estilo es fotografía editorial de hotel patrimonial: luz cálida de lámparas contra el gris azulado de la lluvia valdiviana, madera de roble oscura, latón, vitrales, tonos burdeos y verde musgo. Sin personas mirando a cámara, sin texto. Todo se corta a 16:9; descargue cada imagen en tamaño completo.
+
+### Collage A: la casona → `hero, rio, archivo, escalera`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. A restored 1910 German-style wooden mansion turned boutique hotel in Valdivia, southern Chile, beside the Calle-Calle river. Top-left: the front of the mansion at blue hour in light rain, steep roof, a corner tower, white wooden facade with dark green shutters, every window glowing warm, wet garden path reflecting the lights. Top-right: the wide dark river seen from the hotel's garden terrace, wooden jetty, a small vintage boat, misty green hills, moody grey sky. Bottom-left: an authentic-looking sepia archival photograph from 1910 of the same mansion, with a horse carriage in front, aged paper texture. Bottom-right: the original oak staircase inside with carved banisters and a tall colored stained-glass window glowing. Cinematic, high detail, 8K.
+
+### Collage B: habitaciones → `hab-clasica, hab-rio, hab-suite, hab-torreon`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Four different rooms of a heritage boutique hotel in a 1910 mansion in Valdivia, Chile, interior design magazine style. Top-left: a cozy classic room with an antique oak writing desk, brass lamp, white bed with burgundy throw and a window to a rainy garden. Top-right: a superior room with tall windows over a wide river, two reading armchairs beside a small fireplace. Bottom-left: a luxury suite in a former library with floor-to-ceiling bookshelves, a white claw-foot bathtub and a velvet sofa. Bottom-right: a romantic attic room in the round tower with a sloped wooden ceiling, a round window and a reading nook, soft morning light. Warm lamps, oak, brass, 8K.
+
+### Collage C: comer en la casona → `restaurante, merluza, kuchen, desayuno`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. The restaurant of a heritage hotel in Valdivia, southern Chile, food magazine style. Top-left: an elegant dining room in the old mansion at night with a lit fireplace, white tablecloths, candles and dark wood paneling, empty and inviting. Top-right: a plated dish of austral hake with creamy potato puree and beurre blanc sauce on a dark ceramic plate, overhead light. Bottom-left: a slice of murta berry German kuchen with a cup of coffee on an antique lace tablecloth by a rainy window. Bottom-right: a breakfast tray on a white bed with fresh bread, local cheese, jams, fruit and coffee in a silver pot, morning light. Warm, appetizing, 8K.
+
+### Collage D: Valdivia → `navegacion, mercado, llaves, lluvia`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Valdivia, southern Chile. Top-left: a small wooden tour boat sailing on the wide Calle-Calle river at sunset, golden light, wetland reeds and colorful old houses on the shore. Top-right: the riverside fish market of Valdivia with fresh fish on wooden stalls and sea lions resting on the dock beside it, morning light. Bottom-left: an antique hotel reception desk with a wall of brass room keys with numbered tassels hanging on hooks, a brass service bell and an old ledger, warm lamplight. Bottom-right: raindrops running down an old wooden-framed window with the blurred river and warm interior lights reflected, very moody. Cinematic, 8K.
+
+---
+
+Las otras 3 muestras tendrán sus prompts cuando se rediseñe cada una.
