@@ -131,4 +131,28 @@ Se corta en dos pasadas: `--names cierre,barricas,-,- --ratio 16:9` y luego `--n
 
 ---
 
-Las otras 5 muestras tendrán sus prompts cuando se rediseñe cada una.
+## Muestra 6 · Cabañas Lago Azul (seis cabañas, lago Villarrica)
+
+Son 16 espacios, en 4 collages de 2×2. El estilo es fotografía de arquitectura para revista de diseño: luz natural suave, encuadres limpios y simétricos, madera nativa clara, grandes ventanales y paleta fría y serena (azul lago, gris niebla, verde arrayán). Sin personas mirando a cámara, sin texto. Descargue cada imagen en tamaño completo.
+
+### Collage A: cuatro cabañas → `cab-muelle, cab-bosque, cab-arrayan, cab-mirador` (`--ratio 4:3`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Architectural photography of four different contemporary wooden cabins on the shore of Lake Villarrica, Chile, each a different design, published in a design magazine. Top-left: a low cabin with a large covered deck right at the water's edge and a small wooden pier, the snow-capped Villarrica volcano across the lake, soft morning light. Top-right: a larger two-story family cabin among native arrayán trees with cinnamon-colored bark, a stone barbecue area beside it. Bottom-left: a tiny minimalist black timber cabin for couples in a green clearing, with one big window. Bottom-right: a cabin raised on a slope with a floor-to-ceiling glass corner facing the volcano and a wooden hot tub on its terrace, at golden hour. Natural light, calm, high detail, 8K.
+
+### Collage B: dos cabañas e interiores → `cab-playa, cab-refugio, int-living, int-dormitorio` (`--ratio 4:3`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Lake Villarrica, Chile, interior design magazine style. Top-left: a light wooden cabin with a sliding glass door opening directly onto a dark volcanic sand beach, kayaks resting on the sand. Top-right: a small A-frame loft cabin in the forest at dusk with warm light inside and smoke from the chimney. Bottom-left: a bright cabin living room with pale wood walls, a cast-iron wood stove, a linen sofa and a huge window framing the lake and the volcano. Bottom-right: a serene bedroom with white linen bedding, wool blankets, a wooden ceiling and a window to the trees, morning light. Calm, Scandinavian-Chilean style, 8K.
+
+### Collage C: la vida en el lago → `kayak, quincho, tinaja, muelle-ninos` (`--ratio 4:3`)
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Life at a lakeside cabin resort in southern Chile, editorial documentary style, people seen from behind or far away. Top-left: two kayaks gliding on a glassy lake at dawn with mist and the volcano reflected. Top-right: a family barbecue at dusk in a wooden quincho with a fire, string lights and a long table, seen from a distance. Bottom-left: a wooden hot tub steaming at night under the stars next to a cabin with warm windows. Bottom-right: children jumping off a wooden pier into the clear lake on a sunny summer afternoon, seen from behind. Natural colors, 8K.
+
+### Collage D: el lago → `hero, niebla, otono, cierre`
+
+Se corta en dos pasadas: `--names hero,-,-,cierre --ratio 16:9` y luego `--names -,niebla,otono,- --ratio 4:5`.
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Lake Villarrica, Chile. Top-left: a wide, calm, minimalist view of the lake at blue hour with a long wooden pier, the perfect snow-capped cone of Villarrica volcano reflected in still water. Top-right: early morning fog over the lake between dark trees, very quiet and moody. Bottom-left: a forest path of arrayán trees with orange bark in autumn light leading to the lake. Bottom-right: a sunset over the lake from the end of the pier, orange and pink sky, the volcano silhouette. Fine art landscape photography, 8K.
+
+---
+
+Las otras 4 muestras tendrán sus prompts cuando se rediseñe cada una.
