@@ -5,6 +5,7 @@ const $$ = (s, r = document) => [...r.querySelectorAll(s)];
 const LEAF = 'M0 0 C-6 4 -16 6 -18 16 C-12 16 -12 22 -16 28 C-8 26 -4 30 0 36 C4 30 8 26 16 28 C12 22 12 16 18 16 C16 6 6 4 0 0z';
 const STAGES = ['la poda', 'la brotación', 'la floración', 'el envero', 'la vendimia', 'el otoño'];
 const GRAPE = [['#9fcf6a', '#4f7d2a'], ['#9fcf6a', '#4f7d2a'], ['#9fcf6a', '#4f7d2a'], ['#a35a8a', '#4a2340'], ['#6a2a64', '#2a0a22'], ['#6a2a64', '#2a0a22']];
+const SEASON = ['#dfe4e8', '#e3eed2', '#f4ecd2', '#e9dceb', '#ecd2dc', '#f3dcc2'];
 const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
 
 export function initVine() {
@@ -29,6 +30,7 @@ export function initVine() {
 
   const set = (st) => {
     vine.dataset.stage = st;
+    vine.closest('.ano').style.setProperty('--season', SEASON[st]);
     $('[data-gr1]', vine).setAttribute('stop-color', GRAPE[st][0]);
     $('[data-gr2]', vine).setAttribute('stop-color', GRAPE[st][1]);
   };

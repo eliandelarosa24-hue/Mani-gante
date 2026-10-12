@@ -36,14 +36,14 @@
       <span>Los Robles<small>Viña familiar · Colchagua</small></span>
     </a>
     <nav class="nav__links" aria-label="Secciones">
-      <a href="#vina">La viña</a><a href="#ano">El año</a><a href="#catas">Catas</a><a href="#ensamblaje">Su ensamblaje</a><a href="#vinos">Vinos</a>
+      <a href="#recorridos">Recorridos</a><a href="#proceso">El vino</a><a href="#catas">Experiencias</a><a href="#cocina">Cocina</a><a href="#vinos">Vinos</a><a href="#dia">Su día</a>
     </nav>
     <a class="caja" href="#vinos" data-case-btn aria-label="Su caja de vinos"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 8h16v12H4zM4 8l3-4h10l3 4M12 8v12" /></svg><b data-case-n>0</b></a>
     <a class="btn btn--wine btn--sm" href="#reservar">Reservar cata</a>
     <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false"><span></span><span></span></button>
   </header>
   <div class="menu" aria-hidden="true">
-    <a href="#vina">La viña</a><a href="#ano">El año en la viña</a><a href="#catas">Catas y experiencias</a><a href="#ensamblaje">Cree su ensamblaje</a><a href="#vinos">Nuestros vinos</a><a href="#reservar">Reservar</a>
+    <a href="#vina">La viña</a><a href="#recorridos">Recorridos por la finca</a><a href="#ano">El año en la viña</a><a href="#proceso">Del racimo a la copa</a><a href="#catas">Catas y experiencias</a><a href="#cocina">La cocina de la viña</a><a href="#dia">Su día en Colchagua</a><a href="#ensamblaje">Cree su ensamblaje</a><a href="#vinos">Nuestros vinos</a><a href="#reservar">Reservar</a>
   </div>
 
   <main id="inicio">
@@ -71,12 +71,18 @@
       </dl>
     </section>
 
+    <div class="marquee" aria-hidden="true"><div class="marquee__track">
+      <span>Carménère</span><i></i><span>Cabernet Sauvignon</span><i></i><span>Syrah</span><i></i><span>Malbec</span><i></i><span>Sauvignon Blanc</span><i></i><span>Cosecha tardía</span><i></i>
+      <span>Carménère</span><i></i><span>Cabernet Sauvignon</span><i></i><span>Syrah</span><i></i><span>Malbec</span><i></i><span>Sauvignon Blanc</span><i></i><span>Cosecha tardía</span><i></i>
+    </div></div>
+
     <!-- LA VIÑA -->
     <section class="sec vina" id="vina">
       <div class="wrap vina__grid">
         <div class="vina__imgs rv">
           <div class="vina__a" style="{{img:casona:1510812431401-41d2bd2722f3}}" role="img" aria-label="La casona de adobe de la viña"></div>
           <div class="vina__b" style="{{img:enologa:1506377247377-2a5b3b417ebb}}" role="img" aria-label="La enóloga sacando vino de la barrica"></div>
+          <div class="vina__c" style="{{img:cava:1510812431401-41d2bd2722f3}}" role="img" aria-label="La cava de adobe"></div>
           <span class="vina__stamp" aria-hidden="true">Desde<b>1952</b></span>
         </div>
         <div class="vina__txt">
@@ -89,7 +95,56 @@
             <li><b>1988</b><span>Su hija Isabel construye la cava de adobe</span></li>
             <li><b>2015</b><span>Daniela vuelve de Burdeos como enóloga</span></li>
           </ol>
+          <dl class="vina__nums rv"><div><dt data-count="70">0</dt><dd>hectáreas</dd></div><div><dt data-count="14">0</dt><dd>etiquetas</dd></div><div><dt data-count="12">0</dt><dd>kilos por caja, a mano</dd></div></dl>
           <p class="signature rv">Daniela Robles <span>enóloga, tercera generación</span></p>
+        </div>
+      </div>
+    </section>
+
+    <!-- RECORRIDOS: mapa ilustrado de la finca -->
+    <section class="sec finca" id="recorridos">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">II · Recorridos por la finca</p><h2 class="h2">Setenta hectáreas <em>para descubrir.</em></h2></div>
+          <p class="muted">Elija cómo recorrer la viña y vea la ruta dibujarse sobre el mapa. Toque cada lugar para conocer su historia.</p>
+        </div>
+        <div class="finca__ui rv">
+          <div class="finca__tours" role="tablist" aria-label="Tipo de recorrido">
+            <button type="button" role="tab" aria-selected="true" data-tour="pie"><b>A pie</b><span>1 h · 3 km · todas las edades</span></button>
+            <button type="button" role="tab" aria-selected="false" data-tour="bici"><b>En bicicleta eléctrica</b><span>2 h 30 · 11 km · hasta el mirador</span></button>
+            <button type="button" role="tab" aria-selected="false" data-tour="caballo"><b>A caballo</b><span>2 h · 7 km · con huaso de la zona</span></button>
+          </div>
+          <div class="map">
+            <svg viewBox="0 0 1000 620" data-map role="group" aria-label="Mapa ilustrado de la viña">
+              <defs>
+                <pattern id="rows" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-8)"><rect width="10" height="10" fill="#9fae6a" /><path d="M0 5 H10" stroke="#5f7a34" stroke-width="3.2" stroke-linecap="round" /></pattern>
+                <pattern id="rows2" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(12)"><rect width="10" height="10" fill="#aab874" /><path d="M0 5 H10" stroke="#667f38" stroke-width="3.2" stroke-linecap="round" /></pattern>
+                <pattern id="rows3" width="10" height="10" patternUnits="userSpaceOnUse" patternTransform="rotate(-20)"><rect width="10" height="10" fill="#b2a66a" /><path d="M0 5 H10" stroke="#7a6f34" stroke-width="3.2" stroke-linecap="round" /></pattern>
+              </defs>
+              <rect width="1000" height="620" fill="#e3d6b4" />
+              <path class="map__andes" d="M0 70 L80 30 L150 62 L240 18 L330 58 L420 22 L520 66 L610 24 L700 60 L800 20 L890 58 L1000 28 V0 H0z" />
+              <path class="map__andes-snow" d="M218 30 L240 18 L262 32 L250 36 L240 30 L230 37z M398 34 L420 22 L442 36 L430 39 L420 33 L410 40z M588 36 L610 24 L632 38 L620 41 L610 35 L600 42z M778 32 L800 20 L822 34 L810 37 L800 31 L790 38z" />
+              <path class="map__hill" d="M0 120 C200 90 380 140 560 110 S880 90 1000 120 V170 C800 150 600 180 400 160 S100 150 0 170z" />
+              <g class="map__blocks">
+                <path d="M70 200 L330 186 L344 330 L82 346z" fill="url(#rows)" data-poi-block="car" />
+                <path d="M370 184 L620 172 L628 300 L380 312z" fill="url(#rows2)" />
+                <path d="M660 170 L930 162 L940 320 L668 330z" fill="url(#rows3)" />
+                <path d="M90 392 L360 378 L372 560 L100 574z" fill="url(#rows2)" />
+                <path d="M620 372 L930 360 L944 560 L632 572z" fill="url(#rows)" />
+              </g>
+              <g class="map__labels"><text x="205" y="272">Carménère 1952</text><text x="500" y="246">Cabernet</text><text x="800" y="250">Syrah</text><text x="230" y="480">Malbec</text><text x="785" y="470">Carménère joven</text></g>
+              <ellipse cx="500" cy="500" rx="80" ry="40" class="map__lake" />
+              <path class="map__road" d="M0 360 C200 352 380 364 500 350 S800 340 1000 352" />
+              <path class="map__road map__road--thin" d="M500 350 C505 300 500 250 505 170" />
+              <g class="map__house"><rect x="440" y="372" width="120" height="40" rx="4" /><path d="M432 376 L500 352 L568 376z" /></g>
+              <g class="map__cava"><path d="M560 120 a40 26 0 0 1 80 0 v18 h-80z" /></g>
+              <g class="map__oak"><circle cx="880" cy="110" r="26" /><circle cx="900" cy="96" r="18" /><circle cx="862" cy="94" r="16" /><rect x="876" y="120" width="8" height="22" fill="#6b4d33" /></g>
+              <path class="route" data-route d="" />
+              <circle class="rider" data-rider r="9" cx="-20" cy="-20" />
+              <g data-pois></g>
+            </svg>
+          </div>
+          <aside class="poi" data-poi aria-live="polite"></aside>
         </div>
       </div>
     </section>
@@ -98,7 +153,7 @@
     <section class="sec ano" id="ano">
       <div class="wrap ano__grid">
         <div class="ano__sticky">
-          <p class="eyebrow">II · El año en la viña</p>
+          <p class="eyebrow">III · El año en la viña</p>
           <h2 class="h2">Una parra, <em>doce meses.</em></h2>
           <p class="ano__now" data-now-stage>—</p>
           <div class="vine" data-vine data-stage="0">
@@ -136,18 +191,64 @@
       </div>
     </section>
 
+    <!-- DEL RACIMO A LA COPA: recorrido horizontal con el scroll -->
+    <section class="proceso" id="proceso" data-proc>
+      <div class="proceso__pin">
+        <div class="proceso__head wrap"><p class="eyebrow">IV · Del racimo a la copa</p><h2 class="h2">Así nace <em>nuestro vino.</em></h2></div>
+        <div class="proceso__bar" aria-hidden="true"><span data-proc-bar></span><i class="proceso__drop" data-proc-drop></i></div>
+        <ol class="proceso__track" data-proc-track>
+          <li class="pstep"><div class="pstep__art pstep__art--photo" style="{{img:cosecha:1506377247377-2a5b3b417ebb}}"><div class="falling" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="pstep__txt"><span>01 · Marzo</span><h3>La vendimia</h3><p>Cosechamos a mano al amanecer, cuando la uva está fría. Cada racimo pasa por las manos de alguien que lo mira antes de cortarlo.</p><b>12 kg por caja</b></div></li>
+          <li class="pstep"><div class="pstep__art"><svg viewBox="0 0 200 200" class="destem" aria-hidden="true"><path class="destem__stem" d="M100 20 V70 M100 40 L70 70 M100 50 L130 80 M100 65 L80 95 M100 70 L122 104" /><g class="destem__g"><circle cx="70" cy="76" r="9" /><circle cx="130" cy="86" r="9" /><circle cx="80" cy="102" r="9" /><circle cx="122" cy="110" r="9" /><circle cx="100" cy="80" r="9" /><circle cx="104" cy="122" r="9" /></g><path class="destem__tray" d="M40 170 h120 l-10 16 h-100z" /></svg></div><div class="pstep__txt"><span>02 · El mismo día</span><h3>Despalillado</h3><p>Separamos los granos del escobajo, uno a uno, en una mesa de selección. Lo que no está perfecto, no entra.</p><b>2 de cada 10 racimos se descartan</b></div></li>
+          <li class="pstep"><div class="pstep__art"><svg viewBox="0 0 200 220" class="tank" aria-hidden="true"><rect x="50" y="20" width="100" height="180" rx="14" class="tank__body" /><rect x="56" y="70" width="88" height="124" rx="10" class="tank__wine" /><g class="tank__bubbles"><circle cx="80" cy="190" r="4" /><circle cx="100" cy="190" r="3" /><circle cx="120" cy="190" r="5" /><circle cx="90" cy="190" r="2.5" /><circle cx="110" cy="190" r="3.5" /></g><text x="100" y="54" class="tank__t" data-ferm>26 °C</text></svg></div><div class="pstep__txt"><span>03 · Dos semanas</span><h3>Fermentación</h3><p>Las levaduras nativas de la viña convierten el azúcar en vino. Dos veces al día bajamos el sombrero de hollejos a mano para sacarles color y aroma.</p><b>Levaduras nativas, sin agregados</b></div></li>
+          <li class="pstep"><div class="pstep__art"><svg viewBox="0 0 200 220" class="press" aria-hidden="true"><rect x="40" y="40" width="120" height="20" rx="3" class="press__frame" /><path class="press__frame" d="M50 60 V190 M150 60 V190" /><g class="press__plate"><rect x="60" y="70" width="80" height="14" rx="3" /><path d="M100 40 V70" /></g><path class="press__basket" d="M58 120 h84 v60 h-84z" /><rect x="58" y="150" width="84" height="30" class="press__must" /><path class="press__flow" d="M100 182 V206" /></svg></div><div class="pstep__txt"><span>04 · Al terminar</span><h3>Prensado suave</h3><p>Una prensa antigua de madera extrae lo que queda en los hollejos, sin romper las semillas para no sumar amargor.</p><b>Prensa de 1952, aún en uso</b></div></li>
+          <li class="pstep"><div class="pstep__art pstep__art--photo" style="{{img:barricas:1510812431401-41d2bd2722f3}}"><div class="months"><b data-months>0</b><span>meses en barrica</span></div></div><div class="pstep__txt"><span>05 · Más de un año</span><h3>Crianza en roble</h3><p>El vino descansa en barricas de roble francés en la cava de adobe, a 14 °C todo el año. Probamos cada barrica una vez al mes.</p><b>14 meses para el Gran Reserva</b></div></li>
+          <li class="pstep"><div class="pstep__art"><svg viewBox="0 0 160 240" class="fill" aria-hidden="true"><defs><clipPath id="fillclip"><path d="M64 16 h32 v56 c0 16 34 22 34 52 v96 c0 6 -4 10 -10 10 H40 c-6 0 -10 -4 -10 -10 v-96 c0 -30 34 -36 34 -52z" /></clipPath></defs><g clip-path="url(#fillclip)"><rect x="0" y="0" width="160" height="240" fill="#1c1a16" /><rect class="fill__wine" x="0" y="240" width="160" height="240" /></g><path d="M64 16 h32 v56 c0 16 34 22 34 52 v96 c0 6 -4 10 -10 10 H40 c-6 0 -10 -4 -10 -10 v-96 c0 -30 34 -36 34 -52z" class="fill__line" /><path class="fill__stream" d="M80 0 V30" /></svg></div><div class="pstep__txt"><span>06 · En invierno</span><h3>Embotellado</h3><p>Llenamos, encorchamos y etiquetamos a mano. Después, otros seis meses de reposo en botella antes de salir.</p><b>Corcho natural de alcornoque</b></div></li>
+          <li class="pstep pstep--last"><div class="pstep__art pstep__art--photo" style="{{img:copa:1510812431401-41d2bd2722f3}}"></div><div class="pstep__txt"><span>07 · Hoy</span><h3>Su copa</h3><p>Dos años después de aquella mañana de marzo, el vino llega a su mesa. Y la historia vuelve a empezar.</p><a class="btn btn--gold btn--sm" href="#catas">Venga a probarlo</a></div></li>
+        </ol>
+      </div>
+    </section>
+
     <!-- CATAS -->
     <section class="sec catas" id="catas">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">III · Catas y experiencias</p><h2 class="h2">Elija <em>su visita.</em></h2></div>
+          <div><p class="eyebrow">V · Catas y experiencias</p><h2 class="h2">Elija <em>su visita.</em></h2></div>
           <p class="muted">Jueves a domingo. Todas incluyen recorrido por la cava de adobe y una copa de cristal de regalo.</p>
         </div>
         <div class="exps">
           <article class="exp rv" data-exp="clasica"><div class="exp__img" style="{{img:cata:1510812431401-41d2bd2722f3}}"></div><div class="exp__body"><p class="exp__k">1 hora</p><h3>Cata Clásica</h3><p>Recorrido por viñedos y cava, tres vinos reserva y copa de regalo.</p><footer><span>$25.000 <small>/ persona</small></span><button type="button" data-pick-exp="clasica">Reservar</button></footer></div></article>
           <article class="exp exp--feat rv" data-exp="almuerzo"><div class="exp__img" style="{{img:almuerzo:1414235077428-338989a2e8c0}}"><span class="exp__tag">La más elegida</span></div><div class="exp__body"><p class="exp__k">3 horas</p><h3>Cata y Almuerzo</h3><p>Cinco vinos y almuerzo de tres tiempos entre parras, con quesos de Colchagua.</p><footer><span>$65.000 <small>/ persona</small></span><button type="button" data-pick-exp="almuerzo">Reservar</button></footer></div></article>
           <article class="exp rv" data-exp="bici"><div class="exp__img" style="{{img:bici:1506377247377-2a5b3b417ebb}}"></div><div class="exp__body"><p class="exp__k">Medio día</p><h3>Ruta en bicicleta</h3><p>Bicicleta eléctrica, picnic en el mirador del roble y cata al regreso.</p><footer><span>$48.000 <small>/ persona</small></span><button type="button" data-pick-exp="bici">Reservar</button></footer></div></article>
+          <article class="exp rv" data-exp="caballo"><div class="exp__img" style="{{img:otono:1506377247377-2a5b3b417ebb}}"></div><div class="exp__body"><p class="exp__k">2 horas</p><h3>Cabalgata entre viñas</h3><p>Con un huaso de la zona, por los cuarteles y el estero, con mote con huesillo al volver.</p><footer><span>$55.000 <small>/ persona</small></span><button type="button" data-pick-exp="caballo">Reservar</button></footer></div></article>
+          <article class="exp rv" data-exp="picnic"><div class="exp__img" style="{{img:queso:1510812431401-41d2bd2722f3}}"><span class="exp__tag">Al atardecer</span></div><div class="exp__body"><p class="exp__k">2 horas</p><h3>Picnic bajo el roble</h3><p>Canasta con quesos de Colchagua, pan amasado y una botella, en el mirador del roble centenario.</p><footer><span>$38.000 <small>/ persona</small></span><button type="button" data-pick-exp="picnic">Reservar</button></footer></div></article>
           <article class="exp rv" data-exp="enologo"><div class="exp__img" style="{{img:mezcla:1510812431401-41d2bd2722f3}}"><span class="exp__tag exp__tag--gold">Exclusiva</span></div><div class="exp__body"><p class="exp__k">Día completo</p><h3>Enólogo por un día</h3><p>Taller de mezcla con Daniela: crea, embotella y etiqueta su propio vino.</p><footer><span>$120.000 <small>/ persona</small></span><button type="button" data-pick-exp="enologo">Reservar</button></footer></div></article>
+        </div>
+      </div>
+    </section>
+
+    <!-- LA COCINA DE LA VIÑA -->
+    <section class="sec cocina" id="cocina">
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">VI · La cocina de la viña</p><h2 class="h2">Cada plato, <em>con su copa.</em></h2></div>
+          <p class="muted">El almuerzo entre parras es un menú de maridaje de cuatro tiempos con productos del valle. Elija un tiempo y vea qué vino lo acompaña y por qué funciona.</p>
+        </div>
+        <div class="menu-pair rv">
+          <div class="mp__img" style="{{img:almuerzo:1414235077428-338989a2e8c0}}" role="img" aria-label="Almuerzo entre parras"><span class="mp__steam" aria-hidden="true"></span></div>
+          <div class="mp__courses" role="tablist" data-courses></div>
+          <div class="mp__detail" aria-live="polite">
+            <svg viewBox="0 0 120 200" class="mp__glass" aria-hidden="true"><defs><clipPath id="mpc"><path d="M24 14 h72 c4 40 0 72 -36 86 c-36 -14 -40 -46 -36 -86z" /></clipPath></defs><g clip-path="url(#mpc)"><rect data-mp-wine x="0" y="100" width="120" height="100" /></g><path d="M24 14 h72 c4 40 0 72 -36 86 c-36 -14 -40 -46 -36 -86z M60 100 V176 M36 182 h48" class="mp__gl" /></svg>
+            <p class="mp__k" data-mp-k>—</p>
+            <h3 data-mp-dish>—</h3>
+            <p class="mp__desc" data-mp-desc>—</p>
+            <p class="mp__wine"><span>Su copa</span><b data-mp-wine-name>—</b></p>
+            <p class="mp__why" data-mp-why>—</p>
+          </div>
+        </div>
+        <div class="extras-food">
+          <article class="ef rv"><span class="ef__n">Domingos</span><h3>Asado de campo</h3><p>Costillar y cordero al palo en el quincho de la casona, con ensaladas de la huerta y pebre cuchareado.</p></article>
+          <article class="ef rv"><span class="ef__n">Sábados</span><h3>Empanadas de horno de barro</h3><p>Clase con la cocinera de la viña: amasamos, pinchamos y horneamos. Se las lleva con una botella de carménère.</p></article>
+          <article class="ef rv"><span class="ef__n">Todo el año</span><h3>Huerta y despensa</h3><p>Aceite de oliva de nuestros olivos, mermelada de membrillo y miel de las colmenas entre las parras.</p></article>
         </div>
       </div>
     </section>
@@ -156,7 +257,7 @@
     <section class="sec blend" id="ensamblaje">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">IV · Enólogo por un día</p><h2 class="h2">Cree <em>su ensamblaje.</em></h2></div>
+          <div><p class="eyebrow">VII · Enólogo por un día</p><h2 class="h2">Cree <em>su ensamblaje.</em></h2></div>
           <p class="muted">Mezcle las cuatro cepas de la viña como lo hace Daniela. Le decimos cómo sabrá, con qué comerlo, y le diseñamos la etiqueta. En la experiencia completa, lo embotella usted mismo.</p>
         </div>
         <div class="blend__grid rv">
@@ -200,7 +301,7 @@
     <section class="sec vinos" id="vinos">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">V · Nuestros vinos</p><h2 class="h2">Catorce etiquetas, <em>un terroir.</em></h2></div>
+          <div><p class="eyebrow">VIII · Nuestros vinos</p><h2 class="h2">Catorce etiquetas, <em>un terroir.</em></h2></div>
           <p class="muted">Elija un vino y la rueda le muestra sus aromas. Arme su caja: con seis botellas el despacho es gratis a todo Chile.</p>
         </div>
         <div class="cellar rv">
@@ -224,11 +325,35 @@
       </div>
     </section>
 
+    <!-- SU DÍA EN COLCHAGUA: itinerario animado -->
+    <section class="sec dia" id="dia" data-dia>
+      <div class="dia__sky" data-dia-sky aria-hidden="true"></div>
+      <div class="wrap">
+        <div class="head rv">
+          <div><p class="eyebrow">IX · Su día en Colchagua</p><h2 class="h2">Un día <em>de sol a sol.</em></h2></div>
+          <div class="dia__plans" role="tablist" aria-label="Tipo de día">
+            <button type="button" role="tab" aria-selected="true" data-plan="clasico">Día clásico</button>
+            <button type="button" role="tab" aria-selected="false" data-plan="enologo">Día del enólogo</button>
+            <button type="button" role="tab" aria-selected="false" data-plan="vendimia">Día de vendimia</button>
+          </div>
+        </div>
+        <div class="dia__arc">
+          <svg viewBox="0 0 1000 260" aria-hidden="true"><path class="arc" d="M40 240 Q500 -60 960 240" /><circle class="sun" data-sun r="22" cx="40" cy="240" /><g data-arc-dots></g></svg>
+          <p class="dia__clock" data-dia-clock>10:00</p>
+        </div>
+        <div class="dia__grid">
+          <div class="dia__card" data-dia-card aria-live="polite"></div>
+          <ol class="dia__list" data-dia-list></ol>
+        </div>
+        <div class="dia__foot"><button type="button" class="btn btn--ghost btn--sm" data-dia-play>▶ Ver el día completo</button><b data-dia-total>—</b><button type="button" class="btn btn--gold btn--sm" data-dia-book>Reservar este día</button></div>
+      </div>
+    </section>
+
     <!-- RESERVA -->
     <section class="sec reservar" id="reservar">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">VI · Reservas</p><h2 class="h2">Reserve <em>su visita.</em></h2></div>
+          <div><p class="eyebrow">X · Reservas</p><h2 class="h2">Reserve <em>su visita.</em></h2></div>
           <p class="muted">Abrimos de jueves a domingo. Le confirmamos por WhatsApp y le enviamos cómo llegar. Coordinamos traslado desde el Tren del Vino.</p>
         </div>
         <div class="res rv">
@@ -243,6 +368,8 @@
               <option value="clasica" data-price="25000">Cata Clásica · $25.000</option>
               <option value="almuerzo" data-price="65000" selected>Cata y Almuerzo · $65.000</option>
               <option value="bici" data-price="48000">Ruta en bicicleta · $48.000</option>
+              <option value="caballo" data-price="55000">Cabalgata entre viñas · $55.000</option>
+              <option value="picnic" data-price="38000">Picnic bajo el roble · $38.000</option>
               <option value="enologo" data-price="120000">Enólogo por un día · $120.000</option>
             </select></label>
             <div class="row">
@@ -266,7 +393,7 @@
     <section class="sec notas" id="resenas">
       <div class="wrap">
         <div class="head rv">
-          <div><p class="eyebrow">VII · Notas de cata</p><h2 class="h2">Brindis <em>de nuestros visitantes.</em></h2></div>
+          <div><p class="eyebrow">XI · Notas de cata</p><h2 class="h2">Brindis <em>de nuestros visitantes.</em></h2></div>
           <div class="score"><strong>4,9</strong><span>860 reseñas en Google y TripAdvisor</span></div>
         </div>
         <div class="tn">
@@ -281,7 +408,7 @@
     <section class="sec donde" id="ubicacion">
       <div class="wrap donde__grid">
         <div class="rv">
-          <p class="eyebrow">VIII · Cómo llegar</p>
+          <p class="eyebrow">XII · Cómo llegar</p>
           <h2 class="h2">En el corazón <em>de Colchagua.</em></h2>
           <ul class="donde__list">
             <li><b>Dirección</b>Ruta I-50, km 12, camino a Lolol</li>
@@ -316,6 +443,25 @@
 
   <button class="wa" data-demo aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2zm4.5 12.1c-.2-.1-1.5-.7-1.7-.8s-.4-.1-.6.1-.7.8-.8 1-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.7 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2s.2-1.1.1-1.2-.2-.2-.4-.3z"/></svg></button>
   <div class="toast" role="status"><strong>Esto es una muestra</strong><p data-toast-text></p><div><a data-toast-wa href="https://wa.me/56952289117" target="_blank" rel="noopener">Quiero un sitio así</a><button type="button" data-toast-close>Seguir explorando</button></div></div>
+
+  <template data-photos>
+    <i data-p="hero" style="{{img:hero:1506377247377-2a5b3b417ebb}}"></i>
+    <i data-p="casona" style="{{img:casona:1510812431401-41d2bd2722f3}}"></i>
+    <i data-p="enologa" style="{{img:enologa:1510812431401-41d2bd2722f3}}"></i>
+    <i data-p="cava" style="{{img:cava:1510812431401-41d2bd2722f3}}"></i>
+    <i data-p="cata" style="{{img:cata:1510812431401-41d2bd2722f3}}"></i>
+    <i data-p="almuerzo" style="{{img:almuerzo:1414235077428-338989a2e8c0}}"></i>
+    <i data-p="bici" style="{{img:bici:1506377247377-2a5b3b417ebb}}"></i>
+    <i data-p="mezcla" style="{{img:mezcla:1510812431401-41d2bd2722f3}}"></i>
+    <i data-p="uvas" style="{{img:uvas:1506377247377-2a5b3b417ebb}}"></i>
+    <i data-p="cosecha" style="{{img:cosecha:1506377247377-2a5b3b417ebb}}"></i>
+    <i data-p="pisada" style="{{img:pisada:1506377247377-2a5b3b417ebb}}"></i>
+    <i data-p="copa" style="{{img:copa:1510812431401-41d2bd2722f3}}"></i>
+    <i data-p="cierre" style="{{img:cierre:1506377247377-2a5b3b417ebb}}"></i>
+    <i data-p="barricas" style="{{img:barricas:1510812431401-41d2bd2722f3}}"></i>
+    <i data-p="queso" style="{{img:queso:1510812431401-41d2bd2722f3}}"></i>
+    <i data-p="otono" style="{{img:otono:1506377247377-2a5b3b417ebb}}"></i>
+  </template>
 
   <script type="module" src="/src/samples/custom/vina-los-robles/main.js"></script>
 </body>

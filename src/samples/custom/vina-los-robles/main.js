@@ -4,6 +4,7 @@ import { initGlass } from './glass.js';
 import { initVine } from './vine.js';
 import { initBlend } from './blend.js';
 import { initWines } from './wines.js';
+import { initFinca, initProceso, initCocina, initDia } from './experiences.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -62,9 +63,28 @@ initWines({
   },
 });
 
+initFinca();
+initProceso({ reduced });
+initCocina();
+initDia({ reduced, onBook: (plan) => pickExp(plan === 'enologo' ? 'enologo' : 'almuerzo') });
+
+/* ───────────── La viña: fotos en paralaje y contadores ───────────── */
+(function vina() {
+  const imgs = $$('.vina__imgs > div'), box = $('.vina__imgs');
+  if (!reduced) addEventListener('scroll', () => {
+    const r = box.getBoundingClientRect(); if (r.bottom < 0 || r.top > innerHeight) return;
+    const k = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+    imgs.forEach((el, i) => (el.style.transform = `translateY(${k * [30, -50, -90][i]}px)`));
+  }, { passive: true });
+  new IntersectionObserver(([e], o) => {
+    if (!e.isIntersecting) return; o.disconnect();
+    $$('[data-count]', e.target).forEach((el) => { const to = +el.dataset.count, t1 = performance.now(); const step = (t) => { const p = Math.min(1, (t - t1) / 1600); el.textContent = Math.round(to * (1 - (1 - p) ** 3)); if (p < 1) requestAnimationFrame(step); }; requestAnimationFrame(step); });
+  }, { threshold: 0.4 }).observe($('.vina__nums'));
+})();
+
 /* ───────────── Reserva con calendario (jueves a domingo) ───────────── */
 const form = $('[data-res]');
-const SLOTS = { clasica: ['10:30', '12:30', '15:30', '17:00'], almuerzo: ['12:30'], bici: ['10:30', '15:30'], enologo: ['10:00'] };
+const SLOTS = { clasica: ['10:30', '12:30', '15:30', '17:00'], almuerzo: ['12:30'], bici: ['10:30', '15:30'], caballo: ['10:00', '16:00'], picnic: ['17:30'], enologo: ['10:00'] };
 const today = new Date(); today.setHours(0, 0, 0, 0);
 let view = new Date(today.getFullYear(), today.getMonth(), 1), sel = null, slot = null;
 const open = (d) => [4, 5, 6, 0].includes(d.getDay()) && d > today;
