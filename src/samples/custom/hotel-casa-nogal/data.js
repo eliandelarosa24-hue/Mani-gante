@@ -19,11 +19,11 @@ export const ROOMS = [
   { no: 9, n: 'Corral', cat: 'rio', floor: 'Segundo piso', m2: 30, bed: 'King', view: 'Río', feats: ['Vigas a la vista', 'Tina', 'Cama mirando al río'], d: 'Vigas de roble pellín a la vista y la cama de frente al agua.' },
   { no: 10, n: 'Mancera', cat: 'suite', floor: 'Segundo piso', m2: 42, bed: 'King', view: 'Río y jardín', feats: ['Tina en la lucarna', 'Living', 'Tocadiscos', 'Vigas originales'], d: 'La suite bajo el techo: una tina en la lucarna, un living y un tocadiscos con jazz de los cincuenta.' },
   { no: 11, n: 'Pichoy', cat: 'clasica', floor: 'Segundo piso · torreón', m2: 20, bed: 'Queen', view: 'Jardín y techos', feats: ['Buhardilla', 'Claraboya', 'La más económica'], d: 'Una buhardilla íntima con claraboya: de noche se escucha la lluvia sobre las tejuelas.' },
-  { no: 12, n: 'Torreón', cat: 'torreon', floor: 'Lo alto del torreón', m2: 26, bed: 'King', view: '360° sobre Valdivia', feats: ['Tres ventanas redondas', 'Escalera propia', 'Vista al río y la ciudad'], d: 'Se sube por una escalera propia. Tres ventanas redondas y toda Valdivia alrededor.' },
+  { no: 12, n: 'Torreón', cat: 'torreon', floor: 'Lo alto del torreón', m2: 26, bed: 'King', view: '360° sobre Valdivia', feats: ['Antiguo estanque de agua', 'Rincón de lectura', 'Escalera propia', 'Tres ventanas redondas'], d: 'Aquí estaba el estanque de la casa: el torreón guardaba cuatro mil litros de agua de lluvia. Hoy es un rincón de lectura con escalera propia y toda Valdivia alrededor.' },
 ];
 
 export const LEDGER = [
-  { d: '12.03.1910', t: 'Ernst Schüler, maestro cervecero de Hamburgo, termina la casa frente al Calle-Calle. Roble pellín, alerce y tejuelas.' },
+  { d: '12.03.1910', t: 'Ernst Schüler, maestro cervecero de Hamburgo, termina la casa frente al Calle-Calle. Roble pellín, alerce, tejuelas y un torreón que guarda el agua de lluvia de la casa.' },
   { d: '04.11.1911', t: 'Llegan los vitrales de la escalera, desde Múnich, en tres cajas de madera. Uno se rompe en el viaje.' },
   { d: '22.05.1960', t: '15:11 h. Terremoto de magnitud 9,5. Cae la chimenea norte y media Valdivia. La casa queda en pie.' },
   { d: '1961–2017', t: 'Pensión, escuela de música y oficinas. Siete capas de pintura sobre el roble.' },
@@ -74,7 +74,7 @@ export const RITUALS = {
     ['11:00', 'La biblioteca', 'Chimenea encendida, 1.200 libros y mantas de lana de Chiloé.', 'hab-suite'],
     ['17:00', 'Kaffee und Kuchen', 'La hora más alemana de la casa: kuchen de murta y café de filtro.', 'kuchen'],
     ['19:00', 'Cata en la cava', 'Cinco cervezas del valle de Valdivia en la bodega de piedra de 1910.', 'restaurante'],
-    ['23:00', 'Bolsa de agua caliente', 'La dejamos entre las sábanas mientras usted cena.', 'lluvia'],
+    ['23:00', 'Bolsa de agua caliente', 'La dejamos entre las sábanas mientras usted cena.', 'hab-clasica'],
   ],
   sol: [
     ['08:00', 'Mercado fluvial', 'A cinco minutos a pie, cuando llegan los botes y los lobos marinos.', 'mercado'],

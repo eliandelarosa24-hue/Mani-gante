@@ -5,6 +5,8 @@ import { initGlass } from './rain.js';
 import { drawSection, SPACES } from './house.js';
 import { initKeys } from './keys.js';
 import { initPostcards } from './postcards.js';
+import { initAlbum } from './album.js';
+import { toggleSound } from './sound.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -74,8 +76,8 @@ paintWx(); setInterval(paintWx, 30000);
 $$('[data-year]').forEach((e) => (e.textContent = new Date().getFullYear()));
 
 /* ───────────── Hero: vidrio con lluvia ───────────── */
-firstUrl('hero').then((url) => initGlass({ box: $('[data-hero]'), fogCv: $('[data-fog]'), dropCv: $('[data-drops]'), url, reduced }));
-firstUrl('lluvia').then((url) => initGlass({ box: $('[data-end]'), fogCv: null, dropCv: $('[data-end-drops]'), url, reduced, wipe: false }));
+firstUrl('hero').then((url) => initGlass({ box: $('[data-hero]'), fogCv: $('[data-fog]'), dropCv: $('[data-drops]'), url, reduced, intro: true }));
+firstUrl('rio').then((url) => initGlass({ box: $('[data-end]'), fogCv: null, dropCv: $('[data-end-drops]'), url, reduced, wipe: false }));
 $('[data-hero]').addEventListener('pointermove', () => $('[data-hint]').classList.add('is-gone'), { once: true });
 if (!reduced) addEventListener('scroll', () => {
   const y = scrollY; if (y > innerHeight * 1.3) return;
@@ -255,7 +257,20 @@ $('[data-room-ph]').addEventListener('click', () => openViewer(CATS[byNo[current
   });
 })();
 
-/* ───────────── V · Postales ───────────── */
+/* ───────────── V · El álbum de la casa ───────────── */
+initAlbum({
+  bookEl: $('[data-book]'), stripEl: $('[data-album-strip]'), photo, reduced,
+  ctl: { prev: $('[data-book-prev]'), next: $('[data-book-next]'), n: $('[data-book-n]') },
+  onPhoto: (el) => openViewer(el.dataset.ph, el.closest('.pg').querySelector('.pg__cap')?.textContent || ''),
+});
+
+/* ───────────── Sonido ambiente ───────────── */
+(function sound() {
+  const b = $('[data-sound]'); let on = false;
+  b.addEventListener('click', () => { on = !on; toggleSound(on); b.setAttribute('aria-pressed', String(on)); b.querySelector('span').textContent = on ? 'Lluvia y chimenea' : 'Escuchar la lluvia'; });
+})();
+
+/* ───────────── VI · Postales ───────────── */
 initPostcards({ stackEl: $('[data-stack]'), listEl: $('[data-pc-list]'), cards: POSTCARDS, photo });
 
 /* ───────────── VI · La lluvia, mes a mes, y los rituales ───────────── */
@@ -374,7 +389,7 @@ addEventListener('keydown', (e) => { if (e.key === 'Escape') { closeViewer(); se
   .forEach(([s, slot, cap]) => $(s)?.addEventListener('click', () => openViewer(slot, cap)));
 
 /* ───────────── Apariciones y parallax ───────────── */
-$$('.plate, .casona__intro, .then, .ledger, .stair, .corte__head, .corte__wrap, .keys__head, .board, .mesa__intro, .menu, .mesa__strip figure, .valdivia__intro, .stack, .lluvia__head, .rituals, .book__form, .receipt, .guests__score, .gbook, .arrive__grid > *, .end__in, .foot__grid').forEach((el) => el.classList.add('rv'));
+$$('.plate, .casona__intro, .then, .ledger, .stair, .corte__head, .corte__wrap, .keys__head, .board, .mesa__intro, .menu, .mesa__strip figure, .album__head, .book, .valdivia__intro, .stack, .lluvia__head, .rituals, .book__form, .receipt, .guests__score, .gbook, .arrive__grid > *, .end__in, .foot__grid').forEach((el) => el.classList.add('rv'));
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
 $$('.rv, .ln').forEach((el) => io.observe(el));
 if (!reduced) addEventListener('scroll', () => {

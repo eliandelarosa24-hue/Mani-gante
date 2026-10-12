@@ -1,7 +1,7 @@
 // Lluvia sobre un vidrio antiguo. Dos lienzos: el vaho (la foto desenfocada que el cursor limpia
 // y que vuelve a empañarse lentamente) y las gotas, que se forman, crecen y bajan dejando un
 // surco limpio en el vaho. Las gotas actúan como lentes: muestran la foto invertida y nítida.
-export function initGlass({ box, fogCv, dropCv, url, reduced, wipe = true }) {
+export function initGlass({ box, fogCv, dropCv, url, reduced, wipe = true, intro = false }) {
   if (!box || !url) return;
   const img = new Image(); img.crossOrigin = 'anonymous'; img.src = url;
   img.onload = () => start(img);
@@ -50,6 +50,20 @@ export function initGlass({ box, fogCv, dropCv, url, reduced, wipe = true }) {
       box.dataset.wiped = '1';
     });
     box.addEventListener('pointerleave', () => (last = null));
+    // Una mano invisible limpia el vidrio una vez, para mostrar la casa y enseñar el gesto
+    if (intro && fog && !reduced) setTimeout(() => {
+      if (box.dataset.wiped) return;
+      const t0 = performance.now(), D = 1500;
+      (function hand(now) {
+        const k = Math.min(1, (now - t0) / D);
+        for (let j = 0; j < 3; j++) {
+          const q = Math.max(0, k - j * 0.012);
+          const x = W * (0.5 + 0.2 * Math.sin(q * Math.PI * 1.6 - 0.8)), y = H * (0.36 + q * 0.26);
+          clear(x, y, Math.min(W, H) * 0.1);
+        }
+        if (k < 1) requestAnimationFrame(hand);
+      })(t0);
+    }, 3300);
 
     // Gotas
     const drops = [];
