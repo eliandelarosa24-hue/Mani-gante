@@ -75,6 +75,12 @@ function scrollAnimations() {
   gsap.from('.showcase__list .sample', { x: -40, opacity: 0, duration: 1, stagger: 0.05, ease: 'expo.out', scrollTrigger: { trigger: '.showcase__grid', start: 'top 80%' } });
   gsap.from('.real__tabs', { y: 30, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.real__tabs', start: 'top 90%' } });
   gsap.from('.founder__copy > *', { y: 40, opacity: 0, duration: 1, stagger: 0.08, ease: 'expo.out', scrollTrigger: { trigger: '.founder', start: 'top 75%' } });
+  $$('[data-count-to]').forEach((el) => {
+    const to = +el.dataset.countTo, o = { v: 0 };
+    el.textContent = '0';
+    gsap.to(o, { v: to, duration: 1.6, ease: 'power3.out', scrollTrigger: { trigger: el, start: 'top 90%' }, onUpdate: () => (el.textContent = Math.round(o.v)) });
+  });
+  gsap.from('.proof li', { y: 40, opacity: 0, duration: 1, stagger: 0.08, ease: 'expo.out', scrollTrigger: { trigger: '.proof', start: 'top 90%' } });
   gsap.from('.next', { scale: 0.92, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.next', start: 'top 85%' } });
   gsap.from('.footer__word', { yPercent: 60, opacity: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '.footer', start: 'top 90%' } });
   gsap.to('[data-method-bar]', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.steps', start: 'top 70%', end: 'bottom 70%', scrub: true } });

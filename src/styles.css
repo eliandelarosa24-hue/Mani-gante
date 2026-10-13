@@ -892,3 +892,16 @@ em { font-style: italic; }
   .real__tabs button small { display: none; }
   .stage__info { grid-template-columns: 1fr; }
 }
+
+/* Servicios: ejemplos en vivo de cada servicio */
+.svc__ex { margin: 12px 0 0; font-size: 13px; color: var(--muted-d); }
+.svc__ex a, .svc__ex .link { color: var(--gold-2); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: rgba(196,163,90,0.4); font-size: 13px; }
+.svc__ex a:hover { text-decoration-color: var(--gold); }
+/* Cifras del portafolio */
+.proof { list-style: none; margin: clamp(56px, 7vw, 90px) 0 0; padding: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 1px solid var(--line-d); }
+.proof li { padding: 26px 22px 6px 0; border-right: 1px solid var(--line-d); margin-right: 22px; }
+.proof li:last-child { border-right: 0; margin-right: 0; }
+.proof strong { display: block; font: 300 clamp(56px, 7vw, 104px)/1 var(--serif); letter-spacing: -0.04em; color: var(--gold-2); }
+.proof span { display: block; margin-top: 8px; font-size: 14px; color: var(--muted-d); max-width: 22ch; }
+.footer__top nav { display: grid; gap: 10px; align-content: start; }
+@media (max-width: 900px) { .proof { grid-template-columns: 1fr 1fr; } .proof li:nth-child(2) { border-right: 0; margin-right: 0; } }

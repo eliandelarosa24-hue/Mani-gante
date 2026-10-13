@@ -90,7 +90,7 @@ export function initWarp() {
     if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0 || a.target === '_blank') return;
     const href = a.getAttribute('href'); if (href === '/muestras/') return;
     const slug = href.split('/')[2];
-    const card = $(`[data-showcase-list] .sample[data-slug="${slug}"]`);
+    const card = $(`[data-showcase-list] .sample[data-slug="${slug}"]`) || $(`.sample[data-slug="${slug}"]`);
     const src = a.closest('[data-stage]') ? $('[data-stage] .stage__media') : (a.querySelector('.ph') || a);
     if (!card || !src) return;
     e.preventDefault();
