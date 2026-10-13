@@ -335,7 +335,8 @@ rmSync(join(root, 'muestras'), { recursive: true, force: true });
 function custom(s) {
   const tpl = join(root, 'src', 'samples', 'custom', s.slug, 'index.html');
   if (!existsSync(tpl)) return null;
-  return readFileSync(tpl, 'utf8').replace(/\{\{img:([\w-]+):([\w-]*)\}\}/g, (_, slot, id) => {
+  const og = existsSync(join(root, 'public', 'muestras', s.slug, 'og.jpg')) ? `__SITE_URL__/muestras/${s.slug}/og.jpg` : '__SITE_URL__/og.jpg';
+  return readFileSync(tpl, 'utf8').replaceAll('__SITE_URL__/og.jpg', og).replace(/\{\{img:([\w-]+):([\w-]*)\}\}/g, (_, slot, id) => {
     const local = `/muestras/${s.slug}/img/${slot}.webp`;
     const layers = [];
     const own = existsSync(join(root, 'public', local));
