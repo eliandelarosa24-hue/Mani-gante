@@ -49,19 +49,27 @@ function sunset({ year: y, month: m, day: d }) {
 
 /* ───────────── Pantalla de carga: el vuelo llega y se levanta la cortina ───────────── */
 (function loader() {
+  // El vuelo avanza solo hasta el 85 % mientras carga la foto de portada; cuando está lista, aterriza.
+  // Así nunca queda detenido esperando todas las imágenes de la página.
   const min = reduced ? 0 : 1700, t0 = performance.now(), path = $('[data-load-path]'), alt = $('[data-load-alt]');
+  let ready = false, k = 0, done = false;
   (function fly(now) {
-    const k = Math.min(1, (now - t0) / Math.max(1, min)), e = 1 - (1 - k) ** 2;
-    path.style.strokeDashoffset = String(1 - e);
-    alt.textContent = `Altitud ${Math.round(11000 * (1 - e) / 100) * 100 || 0} m`;
-    if (k < 1) requestAnimationFrame(fly);
+    const target = ready && now - t0 >= min ? 1 : Math.min(0.85, (now - t0) / Math.max(1, min) * 0.85);
+    k += (target - k) * (reduced ? 1 : 0.08);
+    if (target === 1 && 1 - k < 0.004) k = 1;
+    path.style.strokeDashoffset = String(1 - k);
+    alt.textContent = `Altitud ${Math.round(11000 * (1 - k) / 100) * 100 || 0} m`;
+    if (k < 1) return requestAnimationFrame(fly);
+    if (done) return; done = true;
+    document.body.classList.add('is-shade');
+    setTimeout(() => document.body.classList.add('is-ready'), reduced ? 0 : 900);
   })(t0);
-  const go = () => {
-    const wait = Math.max(0, min - (performance.now() - t0));
-    setTimeout(() => document.body.classList.add('is-shade'), wait);
-    setTimeout(() => document.body.classList.add('is-ready'), wait + (reduced ? 0 : 900));
-  };
-  if (document.readyState === 'complete') go(); else addEventListener('load', go);
+  firstUrl('hero').then((url) => {
+    if (!url) { ready = true; return; }
+    const im = new Image(); im.src = url;
+    (im.decode ? im.decode() : Promise.resolve()).catch(() => {}).then(() => (ready = true));
+  });
+  setTimeout(() => (ready = true), 3200);
   setTimeout(() => document.body.classList.add('is-shade', 'is-ready'), 7000);
 })();
 $$('.hero__title > span:first-child').forEach((s, i) => { const w = document.createElement('span'); w.className = 'w'; w.style.transitionDelay = `${0.5 + i * 0.18}s`; while (s.firstChild) w.append(s.firstChild); s.append(w); });

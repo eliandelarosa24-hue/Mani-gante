@@ -17,8 +17,10 @@ const fmt = (n, cur) => (cur === 'USD' ? 'US$' + n.toLocaleString('en-US') : '$'
 function ph(s, slot, id, extra = '', label = '') {
   const local = `/muestras/${s.slug}/img/${slot}.webp`;
   const layers = [];
-  if (existsSync(join(root, 'public', local))) layers.push(`url('${local}')`);
-  if (id) layers.push(`url('https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=70')`);
+  const own = existsSync(join(root, 'public', local));
+  if (own) layers.push(`url('${local}')`);
+  // La foto de respaldo solo se agrega si no hay foto propia: así cada imagen se descarga una sola vez
+  else if (id) layers.push(`url('https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=70')`);
   layers.push(`linear-gradient(135deg, ${s.theme['--accent-2'] || '#2f4a3a'}, ${s.theme['--accent'] || '#8a5a2b'})`);
   return `<div class="ph" role="img" aria-label="${esc(label)}" style="background-image:${layers.join(', ')};${extra}"></div>`;
 }
@@ -336,8 +338,9 @@ function custom(s) {
   return readFileSync(tpl, 'utf8').replace(/\{\{img:([\w-]+):([\w-]*)\}\}/g, (_, slot, id) => {
     const local = `/muestras/${s.slug}/img/${slot}.webp`;
     const layers = [];
-    if (existsSync(join(root, 'public', local))) layers.push(`url('${local}')`);
-    if (id) layers.push(`url('https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=72')`);
+    const own = existsSync(join(root, 'public', local));
+    if (own) layers.push(`url('${local}')`);
+    else if (id) layers.push(`url('https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=72')`);
     layers.push(`linear-gradient(135deg, ${s.theme['--accent-2'] || '#2f4a3a'}, ${s.theme['--accent'] || '#8a5a2b'})`);
     return `background-image:${layers.join(', ')}`;
   });
