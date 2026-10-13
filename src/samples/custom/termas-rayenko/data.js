@@ -65,3 +65,64 @@ export const FAQ = [
 
 // Análisis referencial del agua (muestra de concepto)
 export const WATER = [['pH', '8,7', 'alcalina'], ['Temperatura en vertiente', '68 °C', ''], ['Sílice', '92 mg/L', 'piel suave'], ['Bicarbonato', '210 mg/L', ''], ['Sulfato', '64 mg/L', ''], ['Litio', 'trazas', '']];
+
+// ───────── La cocina de la quebrada ─────────
+// m: meses de temporada (0 = enero). Si el mes actual está en m, el plato se marca "de temporada".
+export const MENU = [
+  { id: 'cafe', name: 'Cafetería', when: 'Todo el día · 9:00 a 23:30', slot: 'te', items: [
+    { n: 'Huevo de vertiente', d: 'Cocido 30 minutos en el agua de la vertiente a 68 °C. Con pan amasado, merkén y sal de Cáhuil.', p: 4900, tag: 'De la casa' },
+    { n: 'Sopaipillas con pebre', d: 'Recién fritas, con pebre cuchareado y chancho en piedra.', p: 3900, tag: 'Vegetariano' },
+    { n: 'Empanada de piñón y queso', d: 'Masa de horno de barro, piñones de la cordillera y queso de Panguipulli.', p: 4500, m: [2, 3, 4, 5, 6] },
+    { n: 'Kuchen de murta', d: 'Murta silvestre de los cerros de Liquiñe, crumble de avena.', p: 4200, m: [3, 4, 5] },
+    { n: 'Té de hierbas del huerto', d: 'Matico, cedrón o menta, endulzado con miel de ulmo.', p: 2800, tag: 'Sin cafeína' },
+    { n: 'Chocolate caliente con canela', d: 'Para salir del pozón y entrar en calor otra vez.', p: 3500 },
+  ] },
+  { id: 'almuerzo', name: 'Almuerzo', when: 'Bloques de mañana y tarde · 13:00 a 16:00', slot: 'cocina', items: [
+    { n: 'Digüeñes salteados', d: 'El hongo de la primavera en el coigüe, con cebollín, huevo de campo y ají cacho de cabra.', p: 9800, m: [8, 9, 10], tag: 'Vegetariano' },
+    { n: 'Cazuela de cordero de Neltume', d: 'Con zapallo, papa nativa, choclo y chuchoca.', p: 12500 },
+    { n: 'Trucha del estero a la mantequilla', d: 'Trucha arcoíris de cultivo local, papas cocidas al vapor termal y ensalada chilena.', p: 13900, tag: 'Sin gluten' },
+    { n: 'Charquicán de la casa', d: 'Con huevo frito y pebre. El plato de los que vuelven del río.', p: 8900 },
+    { n: 'Ensalada de quinoa y avellana', d: 'Quinoa, avellana chilena tostada, betarraga y queso de cabra.', p: 9200, tag: 'Vegetariano' },
+  ] },
+  { id: 'fogon', name: 'Cena en el fogón', when: 'Atardecer y noche · con reserva', slot: 'cordero', items: [
+    { n: 'Cordero al palo', d: 'Seis horas junto al fuego de ulmo, con papas al rescoldo y chancho en piedra.', p: 19000, tag: 'Para compartir' },
+    { n: 'Pan de rescoldo', d: 'Horneado bajo la ceniza del fogón, con mantequilla ahumada.', p: 3500 },
+    { n: 'Curanto en olla del sur', d: 'Mariscos, cerdo ahumado, longaniza, milcao y chapalele.', p: 18500, m: [4, 5, 6, 7] },
+    { n: 'Piñones al rescoldo', d: 'Con sal de mar y merkén ahumado.', p: 4800, m: [2, 3, 4, 5, 6] },
+    { n: 'Sopa de quinoa y hongos', d: 'Para la noche más fría, con hongos del bosque.', p: 8500, tag: 'Vegano' },
+    { n: 'Leche asada con miel de ulmo', d: 'Al horno de barro, el postre de las abuelas.', p: 4500 },
+  ] },
+];
+export const DRINKS = [
+  ['Cerveza Ámbar del Estero', 'Cervecería artesanal de Panguipulli', 4900],
+  ['Vino tinto Pinot Noir', 'Valle de Osorno, por copa', 6500],
+  ['Navegado', 'Vino caliente con naranja y canela', 4500],
+  ['Mote con huesillo', 'En verano, helado', 3200],
+];
+// Los vecinos que abastecen la cocina: [producto, productor, lugar, km, ángulo en grados]
+export const PRODUCERS = [
+  ['Digüeñes y murta', 'Recolectoras de Liquiñe', 'Liquiñe', 18, 210],
+  ['Miel de ulmo', 'Apícola Los Chucaos', 'Coñaripe', 48, 300],
+  ['Cordero', 'Familia Antilef', 'Neltume', 36, 150],
+  ['Queso y mantequilla', 'Lechería El Encanto', 'Panguipulli', 88, 250],
+  ['Trucha', 'Piscicultura Río Fuy', 'Choshuenco', 62, 175],
+  ['Cerveza', 'Ámbar del Estero', 'Panguipulli', 88, 265],
+  ['Piñones', 'Comunidad pehuenche de Curarrehue', 'Curarrehue', 95, 345],
+];
+
+// Lo que nos hace distintos
+export const WHY = [
+  ['7', 'temperaturas', 'De 11 a 42 °C en un solo recorrido: nadie más ofrece el circuito completo en la zona.'],
+  ['60', 'personas por bloque, máximo', 'Aforo limitado y visible en la web: nunca un pozón lleno.'],
+  ['0', 'comisiones', 'Reserva directa, pago en línea y pulsera al WhatsApp en dos minutos.'],
+  ['365', 'días abiertos', 'Con nieve, con lluvia y con luna llena. El agua siempre sale a 68 °C.'],
+  ['km 0', 'en la cocina', 'Siete productores vecinos y el agua del volcán como un ingrediente más.'],
+  ['4,9', 'en Google', '1.240 reseñas. Respondemos cada una, con nombre y apellido.'],
+];
+
+// Guía del visitante (contenido que posiciona en buscadores)
+export const GUIDES = [
+  { slot: 'nieve', k: 'Invierno', t: 'Qué llevar a unas termas en invierno', min: 4, body: ['Traje de baño, sandalias con suela de goma y un gorro de lana: la cabeza es lo que más siente el frío entre pozón y pozón.', 'Lleve cadenas en el auto entre junio y septiembre y revise el estado de la ruta antes de salir. En recepción arrendamos bata y toalla, y las duchas son de agua termal.', 'Hidrátese: después de un bloque completo en agua caliente se pierde más líquido del que parece. El té de matico de la cafetería está para eso.'] },
+  { slot: 'llegada', k: 'Familias', t: 'Termas con niños en Los Ríos: guía rápida', min: 3, body: ['Elija los bloques de mañana o tarde: el de la noche es solo para adultos.', 'El Pozón Familiar está a 35 °C y tiene escalones anchos. Los niños menores de 12 pagan la mitad.', 'Planifique la poza del río como una aventura corta: treinta segundos y de vuelta al agua tibia. Ellos siempre quieren repetir.'] },
+  { slot: 'volcan', k: 'Ruta', t: 'Dos días de volcanes y termas en Panguipulli', min: 6, body: ['Día 1: Panguipulli, la costanera del lago Calafquén y Coñaripe. Almuerzo en ruta y llegada a Rayenko para el bloque del atardecer.', 'Noche en una cabaña de la quebrada, con acceso libre a los pozones hasta las 9:00.', 'Día 2: desayuno con huevo de vertiente, sendero al mirador del Mocho-Choshuenco y regreso por Liquiñe con una parada para comprar miel de ulmo.'] },
+];

@@ -14,6 +14,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link rel="preconnect" href="https://images.unsplash.com" />
   <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":["TouristAttraction","HealthAndBeautyBusiness"],"name":"Termas Rayenko","description":"Siete pozones termales entre 11 y 42 °C en una quebrada de bosque nativo cerca de Liquiñe, con cocina de temporada, cabañas y reserva en línea por bloque horario.","url":"__SITE_URL__/muestras/termas-rayenko/","telephone":"+56 63 000 0000","priceRange":"$$","address":{"@type":"PostalAddress","streetAddress":"Camino Liquiñe km 18","addressLocality":"Panguipulli","addressRegion":"Los Ríos","addressCountry":"CL"},"geo":{"@type":"GeoCoordinates","latitude":-39.73,"longitude":-71.85},"openingHoursSpecification":[{"@type":"OpeningHoursSpecification","dayOfWeek":["Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"],"opens":"09:00","closes":"24:00"}],"amenityFeature":[{"@type":"LocationFeatureSpecification","name":"Pozones termales","value":true},{"@type":"LocationFeatureSpecification","name":"Sauna","value":true},{"@type":"LocationFeatureSpecification","name":"Restaurante","value":true}],"isAccessibleForFree":false},{"@type":"Restaurant","name":"Cocina de la Quebrada · Termas Rayenko","servesCuisine":["Chilena","Cocina del sur"],"hasMenu":"__SITE_URL__/muestras/termas-rayenko/#cocina"},{"@type":"FAQPage","mainEntity":[{"@type":"Question","name":"¿Hay que reservar?","acceptedAnswer":{"@type":"Answer","text":"Sí. Cada bloque tiene aforo limitado; se reserva en línea y la pulsera de acceso llega por WhatsApp."}},{"@type":"Question","name":"¿Pueden ir niñas y niños?","acceptedAnswer":{"@type":"Answer","text":"Sí, desde los 4 años en los bloques de día, con un pozón familiar a 35 °C."}},{"@type":"Question","name":"¿Se necesitan cadenas para llegar?","acceptedAnswer":{"@type":"Answer","text":"Entre junio y septiembre pueden exigirse en la ruta a Liquiñe cuando nieva."}}]}]}</script>
   <!--ANALYTICS-->
 </head>
 <body>
@@ -38,6 +39,16 @@
         <path d="M22 37c-5-6 5-9 0-16M32 35c-5-7 5-10 0-19M42 37c-5-6 5-9 0-16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
       </symbol>
       <filter id="heat" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.06" numOctaves="1" seed="3" data-heat /><feDisplacementMap in="SourceGraphic" scale="6" /></filter>
+      <!-- Fronda de helecho (primer plano del hero y del cierre) -->
+      <symbol id="fern" viewBox="0 0 300 520"><path d="M150 520 C150 380 160 230 200 20" fill="none" stroke="currentColor" stroke-width="5" /><g fill="currentColor">
+        <path d="M151 480 C110 470 60 474 18 490 C60 456 110 450 152 460Z" /><path d="M152 470 C190 452 240 448 282 458 C240 474 196 482 152 482Z" />
+        <path d="M153 420 C116 406 70 404 32 414 C70 388 118 386 154 400Z" /><path d="M154 410 C190 394 236 390 274 398 C236 414 192 422 155 422Z" />
+        <path d="M156 360 C122 344 82 340 48 346 C84 324 126 324 158 340Z" /><path d="M157 350 C190 334 230 330 264 336 C230 352 190 360 158 362Z" />
+        <path d="M160 300 C130 284 96 278 66 282 C98 264 134 264 162 280Z" /><path d="M161 290 C190 276 222 272 252 276 C222 292 190 300 162 302Z" />
+        <path d="M165 240 C140 226 112 220 88 222 C114 206 144 206 167 222Z" /><path d="M167 232 C190 220 216 216 240 218 C216 232 190 240 168 242Z" />
+        <path d="M172 180 C152 168 130 164 112 166 C132 152 156 152 174 166Z" /><path d="M174 172 C192 162 210 158 228 160 C210 172 192 180 175 182Z" />
+        <path d="M180 120 C166 110 150 106 136 108 C150 96 168 96 182 108Z" /><path d="M182 114 C194 106 206 102 218 104 C206 114 194 120 183 122Z" />
+        <path d="M190 64 C182 58 172 56 164 56 C174 48 184 48 192 56Z" /><path d="M192 60 C200 54 206 52 214 52 C206 60 200 64 193 66Z" /></g></symbol>
       <radialGradient id="poolg" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".35" /><stop offset="1" stop-color="#fff" stop-opacity="0" /></radialGradient>
     </defs>
   </svg>
@@ -46,21 +57,25 @@
 
   <header class="nav">
     <a class="brand" href="#inicio" aria-label="Termas Rayenko, inicio"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#mark" /></svg><span><b>Rayenko</b><small>Termas · Liquiñe</small></span></a>
-    <nav class="nav__links" aria-label="Secciones"><a href="#quebrada">Los pozones</a><a href="#ritual">El ritual</a><a href="#origen">El agua</a><a href="#cabanas">Cabañas</a><a href="#llegar">Cómo llegar</a></nav>
+    <nav class="nav__links" aria-label="Secciones"><a href="#quebrada">Los pozones</a><a href="#ritual">El ritual</a><a href="#cocina">Cocina</a><a href="#cabanas">Cabañas</a><a href="#llegar">Cómo llegar</a></nav>
     <p class="nav__now" data-nav-now>Agua <b>39 °C</b></p>
     <a class="heat-btn heat-btn--sm" href="#reservar"><span>Reservar bloque</span></a>
     <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false" data-burger><i></i><i></i></button>
   </header>
-  <div class="drawer" data-drawer aria-hidden="true"><a href="#quebrada">Los pozones</a><a href="#ritual">El ritual</a><a href="#origen">De dónde viene el agua</a><a href="#reservar">Reservar</a><a href="#cabanas">Cabañas</a><a href="#regalo">Regalar</a><a href="#llegar">Cómo llegar</a></div>
+  <div class="drawer" data-drawer aria-hidden="true"><a href="#quebrada">Los pozones</a><a href="#ritual">El ritual</a><a href="#origen">De dónde viene el agua</a><a href="#cocina">La cocina</a><a href="#lunas">Lunas llenas</a><a href="#reservar">Reservar</a><a href="#cabanas">Cabañas</a><a href="#regalo">Regalar</a><a href="#llegar">Cómo llegar</a></div>
 
   <!-- Termómetro del recorrido: la página es el circuito, de 42 °C al río -->
+  <div class="cursor" aria-hidden="true"><i></i></div>
   <div class="thermo" aria-hidden="true"><span class="thermo__v" data-thermo-v>42°</span><div class="thermo__tube"><i data-thermo-fill></i></div><span class="thermo__l" data-thermo-l>Pozón del Fuego</span></div>
 
   <main id="inicio">
     <!-- ───────────── Hero ───────────── -->
     <section class="hero" data-hero>
       <div class="hero__ph" style="{{img:hero:1470071459604-3b5ec3a7fe05}}"></div>
+      <div class="hero__stars" aria-hidden="true"></div>
       <canvas class="hero__steam" data-steam></canvas>
+      <svg class="fern fern--l" viewBox="0 0 300 520" aria-hidden="true" data-fern="1"><use href="#fern" /></svg>
+      <svg class="fern fern--r" viewBox="0 0 300 520" aria-hidden="true" data-fern="-1"><use href="#fern" /></svg>
       <div class="hero__shade"></div>
       <div class="hero__in">
         <p class="hero__k">Termas de montaña · Liquiñe · Región de Los Ríos</p>
@@ -133,6 +148,22 @@
       </div>
     </section>
 
+    <!-- ───────────── Lo que nos hace distintos ───────────── -->
+    <section class="sec sec--dark why" id="distintos" data-temp="38" data-tl="Pozón Helecho">
+      <header class="sh rv"><p class="sh__k">Por qué Rayenko</p><h2>Hay muchas termas en el sur. <em>Esta es distinta.</em></h2></header>
+      <div class="why__grid" data-why></div>
+      <div class="direct rv">
+        <p class="direct__t">Reservar directo <em>siempre conviene.</em></p>
+        <table class="direct__tbl"><thead><tr><th></th><th>En rayenko.cl</th><th>Por terceros</th></tr></thead><tbody>
+          <tr><td>Precio</td><td>Tarifa directa</td><td>Hasta 18% más</td></tr>
+          <tr><td>Cupos en tiempo real</td><td>Sí, por bloque</td><td>A veces</td></tr>
+          <tr><td>Cambio de fecha</td><td>Gratis hasta 48 h antes</td><td>Con cargo</td></tr>
+          <tr><td>Toalla y bata</td><td>De regalo en su primera visita</td><td>Se arrienda</td></tr>
+          <tr><td>Respuesta por WhatsApp</td><td>En minutos, por la recepción</td><td>Por el intermediario</td></tr>
+        </tbody></table>
+      </div>
+    </section>
+
     <!-- ───────────── Reserva por bloques ───────────── -->
     <section class="sec sec--steam" id="reservar" data-temp="37" data-tl="Pozón Luna">
       <header class="sh rv"><p class="sh__deg" aria-hidden="true">37°</p><p class="sh__k">Reservar</p><h2>Elija el día <em>y la hora del agua.</em></h2><p class="sh__lead">Cuatro bloques al día, con aforo limitado para que la quebrada siga en calma. Precio directo, sin intermediarios.</p></header>
@@ -163,9 +194,59 @@
       </div>
     </section>
 
+    <!-- ───────────── La cocina de la quebrada ───────────── -->
+    <section class="sec cocina" id="cocina" data-temp="36" data-tl="Pozón Luna">
+      <header class="sh rv"><p class="sh__deg" aria-hidden="true">68°</p><p class="sh__k">La cocina de la quebrada</p><h2>Se cocina con el agua <em>del volcán.</em></h2><p class="sh__lead">Cafetería todo el día, almuerzo de campo y cena alrededor del fuego. Productos de siete vecinos y un ingrediente que nadie más tiene: la vertiente a 68 °C.</p></header>
+      <div class="egg rv" data-egg>
+        <div class="egg__fig">
+          <svg viewBox="0 0 400 400" aria-hidden="true">
+            <defs><clipPath id="potclip"><path d="M60 170 L340 170 L322 352 Q318 372 298 372 L102 372 Q82 372 78 352 Z" /></clipPath></defs>
+            <g class="egg__steam"><path d="M150 150 c-14 -20 14 -30 0 -54 c-10 -16 8 -28 2 -44" /><path d="M200 146 c-14 -22 14 -32 0 -58 c-10 -16 8 -28 2 -46" /><path d="M250 150 c-14 -20 14 -30 0 -54 c-10 -16 8 -28 2 -44" /></g>
+            <path d="M60 170 L340 170 L322 352 Q318 372 298 372 L102 372 Q82 372 78 352 Z" class="egg__pot" />
+            <g clip-path="url(#potclip)"><rect x="40" y="196" width="320" height="200" class="egg__water" /><g data-egg-bubbles></g></g>
+            <path d="M52 170 L348 170" class="egg__rim" />
+            <g transform="translate(200 268)"><ellipse rx="62" ry="80" class="egg__white" data-egg-white /><circle r="30" cy="10" class="egg__yolk" data-egg-yolk /><ellipse rx="62" ry="80" class="egg__shell" /></g>
+          </svg>
+          <p class="egg__temp">68 °C <small>agua de la vertiente</small></p>
+        </div>
+        <div class="egg__tx">
+          <p class="sh__k">El huevo de vertiente</p>
+          <p class="egg__t" data-egg-t>Clara sedosa, yema de crema.</p>
+          <p class="egg__d" data-egg-d></p>
+          <label class="egg__range"><span>Minutos en la vertiente</span><input type="range" min="5" max="50" value="30" data-egg-min aria-label="Minutos de cocción" /><output data-egg-out>30 min</output></label>
+          <p class="egg__fine">La clara y la yema cuajan a temperaturas distintas. A 68 °C la yema queda cremosa antes de que la clara se endurezca: por eso en Japón cuecen así los huevos en las aguas termales. Aquí lo servimos con pan amasado y merkén.</p>
+        </div>
+      </div>
+      <div class="menu rv">
+        <div class="menu__tabs" role="tablist" aria-label="Carta" data-menu-tabs></div>
+        <div class="menu__body">
+          <div class="menu__ph" data-menu-ph></div>
+          <div class="menu__list" data-menu-list aria-live="polite"></div>
+        </div>
+        <div class="drinks" data-drinks></div>
+      </div>
+      <div class="km rv">
+        <div class="km__copy"><p class="sh__k">Kilómetro cero</p><h3>Siete vecinos <em>en la mesa.</em></h3><p>Todo lo que cocinamos viene de menos de cien kilómetros. Pase el cursor por cada productor.</p><p class="km__read" data-km-read>Digüeñes y murta · Recolectoras de Liquiñe · 18 km</p></div>
+        <svg class="km__svg" viewBox="-70 0 580 440" data-km role="img" aria-label="Productores locales y su distancia a las termas"></svg>
+      </div>
+      <div class="plates">
+        <figure class="rv" data-zoom="huevos"><div class="ph" style="{{img:huevos:1482049016688-2d3e1b311543}}"></div><figcaption>Huevos de vertiente, recién salidos del agua</figcaption></figure>
+        <figure class="rv" data-zoom="cordero"><div class="ph" style="{{img:cordero:1544025162-d76694265947}}"></div><figcaption>Cordero al palo en el fogón</figcaption></figure>
+        <figure class="rv" data-zoom="mesa"><div class="ph" style="{{img:mesa:1414235077428-338989a2e8c0}}"></div><figcaption>La mesa larga del comedor de madera</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ───────────── Lunas llenas ───────────── -->
+    <section class="sec lunas" id="lunas" data-temp="37" data-tl="Pozón Luna">
+      <canvas class="lunas__sky" data-sky aria-hidden="true"></canvas>
+      <header class="sh rv"><p class="sh__k">Noches de luna llena</p><h2>Una vez al mes, <em>el bosque se ilumina solo.</em></h2><p class="sh__lead">En cada luna llena apagamos los faroles del Pozón Luna, encendemos velas y tocamos música en vivo junto al fogón. Cuarenta cupos, solo adultos.</p></header>
+      <div class="moons" data-moons></div>
+    </section>
+
     <!-- ───────────── Estaciones ───────────── -->
     <section class="seasons" data-seasons data-temp="35" data-tl="Pozón Familiar">
       <div class="seasons__ph" data-season-ph></div>
+      <canvas class="seasons__fx" data-season-fx aria-hidden="true"></canvas>
       <div class="seasons__in">
         <p class="sh__k">Cuatro estaciones</p>
         <h2 class="seasons__t" data-season-t></h2>
@@ -216,6 +297,12 @@
       </div>
     </section>
 
+    <!-- ───────────── Guía del visitante ───────────── -->
+    <section class="sec sec--deep" id="guia" data-temp="18" data-tl="Bajando al río">
+      <header class="sh rv"><p class="sh__k">Guía del visitante</p><h2>Antes de venir, <em>lea esto.</em></h2></header>
+      <div class="guides" data-guides></div>
+    </section>
+
     <!-- ───────────── Reseñas y preguntas ───────────── -->
     <section class="sec sec--deep" id="resenas" data-temp="15" data-tl="Bajando al río">
       <div class="rev rv" data-reviews></div>
@@ -226,6 +313,7 @@
     <!-- ───────────── Cierre ───────────── -->
     <section class="end" data-temp="11" data-tl="Poza del Río">
       <div class="end__ph" style="{{img:cierre:1519681393784-d120267933ba}}"></div>
+      <svg class="fern fern--l fern--end" viewBox="0 0 300 520" aria-hidden="true"><use href="#fern" /></svg>
       <div class="end__in">
         <p class="sh__k">Poza del Río · 11 °C</p>
         <h2>Llegó al final <em>del circuito.</em></h2>
@@ -266,6 +354,10 @@
     <i data-p="volcan" style="{{img:volcan:1464822759023-fed622ff2c3b}}"></i>
     <i data-p="bosque" style="{{img:bosque:1441974231531-c6227db76b6e}}"></i>
     <i data-p="cabana" style="{{img:cabana:1449158743715-0a90ebb6d2d8}}"></i>
+    <i data-p="cocina" style="{{img:cocina:1504674900247-0877df9cc836}}"></i>
+    <i data-p="huevos" style="{{img:huevos:1482049016688-2d3e1b311543}}"></i>
+    <i data-p="cordero" style="{{img:cordero:1544025162-d76694265947}}"></i>
+    <i data-p="mesa" style="{{img:mesa:1414235077428-338989a2e8c0}}"></i>
     <i data-p="cierre" style="{{img:cierre:1519681393784-d120267933ba}}"></i>
   </template>
 

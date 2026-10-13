@@ -1,6 +1,6 @@
 // Termas Rayenko · comportamiento a medida
 import './style.css';
-import { POOLS, BLOCKS, PRICES, EXTRAS, CABINS, AIR, HIGH, MONTHS, SEASONS, REVIEWS, FAQ, WATER } from './data.js';
+import { POOLS, BLOCKS, PRICES, EXTRAS, CABINS, AIR, HIGH, MONTHS, SEASONS, REVIEWS, FAQ, WATER, MENU, DRINKS, PRODUCERS, WHY, GUIDES } from './data.js';
 import { initSteam } from './steam.js';
 import { toggleSound } from './sound.js';
 
@@ -97,7 +97,8 @@ const blockStart = (b) => +b.from.slice(0, 2);
 
 /* Revelado al desplazar */
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { threshold: 0.12, rootMargin: '0px 0px -6% 0px' });
-const watch = () => $$('.rv:not(.in)').forEach((el) => io.observe(el));
+const watch = () => $$('.rv:not(.in), .seasons, .end').forEach((el) => io.observe(el));
+let seasonFx = () => {};
 
 /* ───────────── Termómetro del recorrido ───────────── */
 (function thermo() {
@@ -110,7 +111,7 @@ const watch = () => $$('.rv:not(.in)').forEach((el) => io.observe(el));
     if (s === cur) return; cur = s;
     const t = +s.dataset.temp;
     v.textContent = `${t}°`; l.textContent = s.dataset.tl;
-    th.style.setProperty('--t', tempColor(t));
+    th.style.setProperty('--t', tempColor(t)); document.body.style.setProperty('--ct', tempColor(t));
     fill.style.setProperty('--h', `${((t - 8) / 34) * 100}%`);
   };
   addEventListener('scroll', upd, { passive: true }); upd();
@@ -147,7 +148,7 @@ const watch = () => $$('.rv:not(.in)').forEach((el) => io.observe(el));
   g += POOLS.map((p) => {
     const c = tempColor(p.temp), wisps = p.temp >= 36 ? 3 : p.temp >= 30 ? 1 : 0;
     const w = Array.from({ length: wisps }, (_, i) => `<path class="wisp" style="animation-delay:${(i * 1.1 + hash(p.id) * 2).toFixed(2)}s" d="M${p.x - 16 + i * 16} ${p.y - 8} c-6 -10 6 -14 0 -24" />`).join('');
-    return `<g class="pl" data-pool-id="${p.id}" tabindex="0" role="button" aria-label="${p.name}, ${p.temp} grados"><path class="pl__w" d="${blob(p.x, p.y, p.r, p.id)}" fill="${c}" /><path d="${blob(p.x, p.y, p.r * 0.8, p.id + 'i')}" fill="url(#poolg)" pointer-events="none" /><text class="pl__n" x="${p.x}" y="${p.y + 8}">${p.n}</text><text class="pl__t" x="${p.x}" y="${p.y + p.r + 24}">${p.temp} °C</text>${w}</g>`;
+    return `<g class="pl" data-pool-id="${p.id}" tabindex="0" role="button" aria-label="${p.name}, ${p.temp} grados"><path class="pl__w" d="${blob(p.x, p.y, p.r, p.id)}" fill="${c}" /><path d="${blob(p.x, p.y, p.r * 0.8, p.id + 'i')}" fill="url(#poolg)" pointer-events="none" /><circle class="rip" cx="${p.x}" cy="${p.y}" r="${(p.r * 0.55).toFixed(0)}" style="animation-delay:${(hash(p.id + 'r') * 4).toFixed(2)}s" /><circle class="rip" cx="${p.x + 8}" cy="${p.y - 6}" r="${(p.r * 0.4).toFixed(0)}" style="animation-delay:${(hash(p.id + 's') * 4 + 2).toFixed(2)}s" /><text class="pl__n" x="${p.x}" y="${p.y + 8}">${p.n}</text><text class="pl__t" x="${p.x}" y="${p.y + p.r + 24}">${p.temp} °C</text>${w}</g>`;
   }).join('');
   g += '<circle class="walker" r="7" cx="-20" cy="-20" data-walker />';
   svg.innerHTML = g;
@@ -188,13 +189,14 @@ const watch = () => $$('.rv:not(.in)').forEach((el) => io.observe(el));
   const dial = $('[data-dial]'), arc = $('[data-arc]'), ph = $('[data-phase]'), tm = $('[data-time]'), cue = $('[data-cue]'), steps = $('[data-steps]'), round = $('[data-round]'), btn = $('[data-ritual]');
   const PH = [['hot', 10, 'Pozón del Fuego', '#e8a35a', 'Inhale en cuatro, exhale en seis'], ['cold', 4, 'Poza del Río', '#6ea3c6', 'Sesenta segundos. Usted puede.'], ['rest', 6, 'Descanso', '#7d8c63', 'Envuélvase y escuche el estero']];
   const total = 3 * PH.reduce((s, p) => s + p[1], 0);
+  dial.insertAdjacentHTML('beforeend', '<div class="dial__fill" aria-hidden="true"><i></i></div>');
   let raf = 0, t0 = 0;
   const fmt = (s) => `${Math.floor(s / 60)}:${String(Math.ceil(s % 60) % 60 === 0 && s % 60 > 0 ? 0 : Math.ceil(s % 60)).padStart(2, '0')}`;
   function stop(done) {
     cancelAnimationFrame(raf); raf = 0; dial.classList.remove('breathe'); steps.classList.remove('running'); $$('li', steps).forEach((l) => l.classList.remove('on'));
     btn.querySelector('span').textContent = done ? 'Repetir el ritual' : 'Comenzar el ritual';
     ph.textContent = done ? 'Circuito completo' : 'Listo'; tm.textContent = done ? '0:00' : '1:00'; cue.textContent = done ? 'Así se siente salir de Rayenko' : 'Respire con el círculo';
-    arc.style.strokeDashoffset = done ? '0' : '1';
+    arc.style.strokeDashoffset = done ? '0' : '1'; dial.style.setProperty('--lvl', '0%');
     round.textContent = done ? 'Vuelta 3 de 3' : 'Vuelta 0 de 3';
   }
   btn.addEventListener('click', () => {
@@ -208,6 +210,7 @@ const watch = () => $$('.rv:not(.in)').forEach((el) => io.observe(el));
       while (w >= PH[i][1]) { w -= PH[i][1]; i++; }
       const [id, , name, col, c] = PH[i];
       dial.style.setProperty('--rc', col); ph.textContent = name; cue.textContent = c;
+      dial.style.setProperty('--lvl', `${id === 'cold' ? 100 - (w / PH[i][1]) * 70 : id === 'hot' ? 30 + (w / PH[i][1]) * 70 : 30}%`);
       tm.textContent = `0:${String(Math.ceil(total - el)).padStart(2, '0')}`.replace('0:60', '1:00');
       arc.style.strokeDashoffset = String(1 - el / total);
       round.textContent = `Vuelta ${r + 1} de 3`;
@@ -300,6 +303,11 @@ const watch = () => $$('.rv:not(.in)').forEach((el) => io.observe(el));
   blocksEl.addEventListener('click', (e) => { const b = e.target.closest('[data-b]'); if (!b || b.disabled) return; st.block = b.dataset.b; $$('.blk', blocksEl).forEach((x) => x.setAttribute('aria-checked', x === b)); band.innerHTML = ''; sum(); });
   $('[data-who]').addEventListener('click', (e) => { const b = e.target.closest('[data-p]'); if (!b) return; const k = b.dataset.p; st[k] = clamp(st[k] + +b.dataset.d, k === 'ad' ? (st.se ? 0 : 1) : 0, 8); if (k === 'se' && !st.ad && !st.se) st.ad = 1; $(`[data-o="${k}"]`).textContent = st[k]; $('[data-o="ad"]').textContent = st.ad; band.innerHTML = ''; paint(); });
   $('[data-extras]').addEventListener('change', (e) => { const c = e.target.closest('[data-x]'); if (!c) return; c.checked ? st.x.add(c.dataset.x) : st.x.delete(c.dataset.x); sum(); });
+  addEventListener('rk:book', (e) => {
+    const { t, block } = e.detail; if (!days.includes(t)) return;
+    st.day = t; st.block = block; st.ch = 0; $('[data-o="ch"]').textContent = 0;
+    $$('[data-t]', daysEl).forEach((x) => x.setAttribute('aria-checked', +x.dataset.t === t)); band.innerHTML = ''; paint();
+  });
   paint();
 })();
 
@@ -310,9 +318,9 @@ const watch = () => $$('.rv:not(.in)').forEach((el) => io.observe(el));
   tabs.innerHTML = SEASONS.map((s) => `<button role="tab" aria-selected="${s === cur}" data-s="${s.id}">${s.name}${s === cur ? '<i>ahora</i>' : ''}</button>`).join('');
   const pick = (s, first) => {
     $$('[data-s]', tabs).forEach((b) => b.setAttribute('aria-selected', b.dataset.s === s.id));
-    const apply = () => { ph.setAttribute('style', photo(s.slot)); $('[data-season-t]').textContent = s.name; $('[data-season-d]').innerHTML = `${s.t}<b>Aire ${s.air} · agua siempre a 39 °C</b>`; ph.classList.remove('fade'); };
+    const apply = () => { ph.setAttribute('style', photo(s.slot)); $('[data-season-t]').innerHTML = s.name.split('').map((c, i) => `<span class="w" style="--i:${i}">${c}</span>`).join(''); seasonFx(s.id); $('[data-season-d]').innerHTML = `${s.t}<b>Aire ${s.air} · agua siempre a 39 °C</b>`; ph.classList.remove('fade'); };
     if (first || reduced) return apply();
-    ph.classList.add('fade'); setTimeout(apply, 450);
+    ph.classList.add('fade'); setTimeout(() => { const sec = $('[data-seasons]'); sec.classList.remove('in'); apply(); void sec.offsetWidth; sec.classList.add('in'); }, 450);
   };
   tabs.addEventListener('click', (e) => { const b = e.target.closest('[data-s]'); if (b) pick(SEASONS.find((s) => s.id === b.dataset.s)); });
   pick(cur, true);
@@ -385,3 +393,174 @@ const sb = $('[data-sound]');
 sb.addEventListener('click', () => { const on = toggleSound(); sb.setAttribute('aria-pressed', on); sb.textContent = `Sonido de la quebrada: ${on ? 'encendido' : 'apagado'}`; });
 $('[data-yr]').textContent = P.year;
 watch();
+
+/* ═════════════ Afinado: capas animadas, cocina, lunas, distintos y guía ═════════════ */
+
+/* Títulos que emergen del vapor, palabra por palabra */
+function splitWords(el) {
+  let i = 0;
+  const walk = (node) => [...node.childNodes].forEach((n) => {
+    if (n.nodeType === 3) {
+      const frag = document.createDocumentFragment();
+      n.textContent.split(/(\s+)/).forEach((w) => { if (!w) return; if (/^\s+$/.test(w)) frag.append(w); else { const sp = document.createElement('span'); sp.className = 'w'; sp.style.setProperty('--i', i++); sp.textContent = w; frag.append(sp); } });
+      n.replaceWith(frag);
+    } else walk(n);
+  });
+  walk(el);
+}
+$$('.sh.rv h2, .end h2').forEach(splitWords);
+
+/* Niebla que se desliza entre secciones */
+$$('main > section[data-temp]').forEach((s, i) => { if (i % 2 === 0) s.insertAdjacentHTML('beforebegin', '<div class="fog" aria-hidden="true"></div>'); });
+
+/* Cursor que toma la temperatura de la sección */
+(function cursor() {
+  if (reduced || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  const c = $('.cursor'); document.body.classList.add('has-cursor');
+  let x = -100, y = -100, cx = -100, cy = -100;
+  addEventListener('pointermove', (e) => { x = e.clientX; y = e.clientY; c.classList.add('on'); c.classList.toggle('hot', !!e.target.closest('a, button, .pl, input, [data-zoom], label')); });
+  document.addEventListener('pointerleave', () => c.classList.remove('on'));
+  (function f() { cx += (x - cx) * 0.22; cy += (y - cy) * 0.22; c.style.transform = `translate(${cx.toFixed(1)}px, ${cy.toFixed(1)}px)`; requestAnimationFrame(f); })();
+})();
+
+/* Hero: noche estrellada si en Liquiñe ya es de noche, y helechos que se mecen */
+if (HOUR >= 20 || HOUR < 7) document.body.classList.add('is-night');
+(function ferns() {
+  const fs = $$('[data-fern]'), hero = $('[data-hero]'); if (reduced || !fs.length) return;
+  let mx = 0, vis = true;
+  hero.addEventListener('pointermove', (e) => { mx = e.clientX / innerWidth - 0.5; });
+  new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe(hero);
+  (function f(t) {
+    requestAnimationFrame(f); if (!vis) return;
+    const sy = scrollY / innerHeight;
+    fs.forEach((el) => { const d = +el.dataset.fern; el.style.transform = `${d < 0 ? 'scaleX(-1) ' : ''}translateY(${sy * -60}px) rotate(${(Math.sin(t / 1900 + d) * 2.2 + mx * 6 * d).toFixed(2)}deg)`; });
+  })(0);
+})();
+
+/* Lo que nos hace distintos */
+(function why() {
+  const g = $('[data-why]');
+  g.innerHTML = WHY.map(([n, u, d]) => `<div class="why__c rv"><b data-n="${/^\d+$/.test(n) ? n : ''}">${n}</b><span>${u}</span><p>${d}</p></div>`).join('');
+  const o = new IntersectionObserver((es) => es.forEach((e) => {
+    if (!e.isIntersecting) return; o.unobserve(e.target);
+    const b = e.target.querySelector('b'), to = +b.dataset.n; if (!b.dataset.n || reduced) return;
+    const t0 = performance.now(); (function f(now) { const p = clamp((now - t0) / 1600); b.textContent = Math.round(to * (1 - (1 - p) ** 3)); if (p < 1) requestAnimationFrame(f); })(t0);
+  }), { threshold: 0.5 });
+  $$('.why__c', g).forEach((c) => o.observe(c));
+})();
+
+/* ───────────── Huevo de vertiente: cocción a 68 °C ───────────── */
+(function egg() {
+  const r = $('[data-egg-min]'), out = $('[data-egg-out]'), white = $('[data-egg-white]'), yolk = $('[data-egg-yolk]'), tt = $('[data-egg-t]'), dd = $('[data-egg-d]'), bub = $('[data-egg-bubbles]');
+  const STATES = [
+    [0, 'Clara transparente, yema cruda.', 'Todavía falta: a esta temperatura el huevo se toma su tiempo, y eso es lo bueno.'],
+    [12, 'Clara lechosa, yema tibia.', 'Como un huevo a la copa muy suave. La clara recién empieza a ponerse blanca.'],
+    [23, 'Clara sedosa, yema de crema.', 'El punto de la casa: la yema se unta como mantequilla tibia y la clara tiembla en la cuchara.'],
+    [36, 'Yema firme, clara todavía tierna.', 'Para quienes prefieren la yema cuajada. A 68 °C la clara nunca llega a ponerse dura como goma.'],
+  ];
+  function paint() {
+    const m = +r.value, w = clamp((m - 6) / 26), y = clamp((m - 18) / 26);
+    out.textContent = `${m} min`;
+    white.style.fill = `rgba(${Math.round(lerp(255, 251, w))},${Math.round(lerp(250, 247, w))},${Math.round(lerp(235, 238, w))},${lerp(0.25, 0.97, w).toFixed(2)})`;
+    yolk.style.fill = `rgb(${Math.round(lerp(247, 242, y))},${Math.round(lerp(150, 190, y))},${Math.round(lerp(20, 80, y))})`;
+    yolk.setAttribute('r', (30 - y * 3).toFixed(1));
+    const s = STATES.filter(([a]) => m >= a).pop(); tt.textContent = s[1]; dd.textContent = s[2];
+  }
+  r.addEventListener('input', paint); paint();
+  if (reduced) return;
+  let vis = false; new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe($('[data-egg]'));
+  const bs = Array.from({ length: 14 }, (_, i) => { const c = document.createElementNS('http://www.w3.org/2000/svg', 'circle'); c.setAttribute('class', 'egg__bub'); bub.append(c); return { c, x: 80 + hash('bx' + i) * 240, y: 380 + hash('by' + i) * 180, r: 2 + hash('br' + i) * 5, v: 0.6 + hash('bv' + i) * 1.2 }; });
+  (function f() { requestAnimationFrame(f); if (!vis) return; bs.forEach((b) => { b.y -= b.v; if (b.y < 196) { b.y = 380; b.x = 80 + Math.random() * 240; } b.c.setAttribute('cx', (b.x + Math.sin(b.y / 14) * 3).toFixed(1)); b.c.setAttribute('cy', b.y.toFixed(1)); b.c.setAttribute('r', b.r); }); })();
+})();
+
+/* ───────────── La carta ───────────── */
+(function menu() {
+  const tabs = $('[data-menu-tabs]'), list = $('[data-menu-list]'), ph = $('[data-menu-ph]');
+  tabs.innerHTML = MENU.map((c) => `<button role="tab" aria-selected="false" data-m="${c.id}">${c.name}<small>${c.when}</small></button>`).join('');
+  function pick(id, first) {
+    const c = MENU.find((x) => x.id === id);
+    $$('[data-m]', tabs).forEach((b) => b.setAttribute('aria-selected', b.dataset.m === id));
+    list.innerHTML = c.items.map((d, i) => `<div class="dish" style="--i:${i}"><h4>${d.n}${d.m?.includes(M) ? '<em class="season">De temporada</em>' : d.tag ? `<em>${d.tag}</em>` : ''}</h4><b>${clp(d.p)}</b><p>${d.d}</p></div>`).join('');
+    const set = () => { ph.setAttribute('style', photo(c.slot)); ph.classList.remove('fade'); };
+    if (first || reduced) set(); else { ph.classList.add('fade'); setTimeout(set, 350); }
+  }
+  tabs.addEventListener('click', (e) => { const b = e.target.closest('[data-m]'); if (b) pick(b.dataset.m); });
+  pick(HOUR < 13 ? 'cafe' : HOUR < 17 ? 'almuerzo' : 'fogon', true);
+  $('[data-drinks]').innerHTML = DRINKS.map(([n, d, p]) => `<p><b>${n}</b>${d} · <i>${clp(p)}</i></p>`).join('');
+})();
+
+/* ───────────── Kilómetro cero ───────────── */
+(function km() {
+  const svg = $('[data-km]'), read = $('[data-km-read]'), C = 220, R = (k) => 36 + k * 1.75;
+  let g = [25, 50, 100].map((k) => `<circle class="ring" cx="${C}" cy="${C}" r="${R(k)}" /><text x="${C + 4}" y="${C - R(k) - 4}" opacity=".5">${k} km</text>`).join('');
+  g += PRODUCERS.map(([prod, who, place, k, a], i) => {
+    const rr = R(k), x = C + Math.sin((a * Math.PI) / 180) * rr, y = C - Math.cos((a * Math.PI) / 180) * rr, right = x >= C;
+    return `<g data-k="${i}"><line class="ray" pathLength="1" x1="${C}" y1="${C}" x2="${x.toFixed(1)}" y2="${y.toFixed(1)}" style="transition-delay:${i * 0.12}s" /><circle class="pd" cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="7" tabindex="0" /><text x="${(x + (right ? 12 : -12)).toFixed(1)}" y="${(y + 4).toFixed(1)}" text-anchor="${right ? 'start' : 'end'}">${prod}</text></g>`;
+  }).join('');
+  g += `<circle class="ctr" cx="${C}" cy="${C}" r="10" /><text class="ctrt" x="${C}" y="${C + 34}" text-anchor="middle">Rayenko</text>`;
+  svg.innerHTML = g;
+  const on = (i) => { $$('g[data-k]', svg).forEach((x) => x.classList.toggle('on', +x.dataset.k === i)); const [prod, who, place, k] = PRODUCERS[i]; read.textContent = `${prod} · ${who}, ${place} · ${k} km`; };
+  svg.addEventListener('pointerover', (e) => { const t = e.target.closest('g[data-k]'); if (t) on(+t.dataset.k); });
+  svg.addEventListener('focusin', (e) => { const t = e.target.closest('g[data-k]'); if (t) on(+t.dataset.k); });
+  on(0);
+})();
+
+/* ───────────── Lunas llenas (fechas reales) ───────────── */
+(function moons() {
+  const SYN = 29.530588853, ref = Date.UTC(2000, 0, 6, 18, 14), half = (SYN / 2) * DAY;
+  const n0 = Math.ceil((Date.now() - ref - half) / (SYN * DAY));
+  const cl = (t) => { const q = Object.fromEntries(new Intl.DateTimeFormat('en-US', { timeZone: 'America/Santiago', year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(new Date(t)).map((x) => [x.type, +x.value])); return Date.UTC(q.year, q.month - 1, q.day); };
+  const list = [0, 1, 2].map((i) => cl(ref + half + (n0 + i) * SYN * DAY));
+  const nb = BLOCKS.find((b) => b.night);
+  $('[data-moons]').innerHTML = list.map((t, i) => {
+    const left = blockLeft(t, nb), soon = (t - TODAY) / DAY < 14;
+    return `<article class="moon rv" style="transition-delay:${i * 0.12}s"><div class="moon__disc"></div><p class="moon__k">${i === 0 ? 'Próxima luna llena' : 'Luna llena'}</p><p class="moon__d">${fmtDay(t).replace(/^./, (c) => c.toUpperCase())}</p><p class="moon__h">Velas desde las 21:00 · música junto al fogón</p><div class="moon__cap"><i style="--f:${((1 - left / nb.cap) * 100).toFixed(0)}%"></i>${left} cupos</div>${soon ? `<button type="button" class="heat-btn heat-btn--sm" data-moon="${t}"><span>Reservar esa noche</span></button>` : '<button type="button" class="heat-btn heat-btn--sm" data-demo="En el sitio real, aquí deja su correo o WhatsApp y le avisamos cuando se abran las reservas de esa luna llena."><span>Avisarme</span></button>'}</article>`;
+  }).join('');
+  $('[data-moons]').addEventListener('click', (e) => { const b = e.target.closest('[data-moon]'); if (!b) return; dispatchEvent(new CustomEvent('rk:book', { detail: { t: +b.dataset.moon, block: 'n' } })); $('#reservar').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' }); });
+  // Cielo estrellado con alguna estrella fugaz
+  const cv = $('[data-sky]'), c = cv.getContext('2d'); let W = 0, H = 0, stars = [], shoot = null, vis = false;
+  const size = () => { W = cv.clientWidth; H = cv.clientHeight; cv.width = W; cv.height = H; stars = Array.from({ length: Math.round((W * H) / 5000) }, (_, i) => ({ x: hash('sx' + i) * W, y: hash('sy' + i) * H, r: 0.3 + hash('sr' + i) * 1.2, p: hash('sp' + i) * 6.28 })); };
+  size(); addEventListener('resize', size);
+  new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe(cv);
+  (function f(t) {
+    requestAnimationFrame(f); if (!vis && t) return;
+    c.clearRect(0, 0, W, H);
+    stars.forEach((s) => { c.globalAlpha = 0.35 + Math.sin(t / 900 + s.p) * 0.3 + 0.3; c.fillStyle = '#e8ecff'; c.beginPath(); c.arc(s.x, s.y, s.r, 0, 6.283); c.fill(); });
+    if (!reduced) {
+      if (!shoot && Math.random() < 0.004) shoot = { x: Math.random() * W * 0.7, y: Math.random() * H * 0.3, l: 0 };
+      if (shoot) { shoot.l += 0.03; const k = shoot.l, x = shoot.x + k * 260, y = shoot.y + k * 110; const gr = c.createLinearGradient(x - 90, y - 38, x, y); gr.addColorStop(0, 'rgba(255,255,255,0)'); gr.addColorStop(1, `rgba(255,255,255,${0.9 * (1 - k)})`); c.globalAlpha = 1; c.strokeStyle = gr; c.lineWidth = 1.5; c.beginPath(); c.moveTo(x - 90, y - 38); c.lineTo(x, y); c.stroke(); if (k >= 1) shoot = null; }
+    }
+    c.globalAlpha = 1;
+  })(0);
+})();
+
+/* ───────────── Estaciones: nieve, hojas, polen o motas de sol ───────────── */
+(function seasonParticles() {
+  const cv = $('[data-season-fx]'), c = cv.getContext('2d'); let W = 0, H = 0, kind = 'primavera', ps = [], vis = false;
+  const size = () => { W = cv.clientWidth; H = cv.clientHeight; cv.width = W; cv.height = H; };
+  size(); addEventListener('resize', size);
+  new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe(cv);
+  const COL = { otono: ['#c2552d', '#d98a3a', '#a33b22', '#e3b04b'], verano: ['#ffe2a8'], primavera: ['#f4f1dc', '#d8ecc4'], invierno: ['#ffffff'] };
+  const make = (top) => ({ x: Math.random() * W, y: top ? -20 : Math.random() * H, s: kind === 'otono' ? 5 + Math.random() * 6 : kind === 'invierno' ? 1 + Math.random() * 3 : 1 + Math.random() * 2, vy: kind === 'primavera' || kind === 'verano' ? -0.15 - Math.random() * 0.3 : 0.5 + Math.random() * 1.2, ph: Math.random() * 6.28, rot: Math.random() * 6.28, c: COL[kind][Math.floor(Math.random() * COL[kind].length)] });
+  seasonFx = (k) => { kind = k; ps = Array.from({ length: k === 'otono' ? 40 : k === 'invierno' ? 140 : 70 }, () => make(false)); };
+  seasonFx(SEASONS.find((s) => s.months.includes(M)).id);
+  if (reduced) return;
+  (function f(t) {
+    requestAnimationFrame(f); if (!vis) return;
+    c.clearRect(0, 0, W, H);
+    ps.forEach((p) => {
+      p.y += p.vy; p.x += Math.sin(t / 1200 + p.ph) * (kind === 'otono' ? 1.1 : 0.4); p.rot += 0.02;
+      if (p.y > H + 20) Object.assign(p, make(true)); if (p.y < -20) Object.assign(p, make(false), { y: H + 10 });
+      c.fillStyle = p.c;
+      if (kind === 'otono') { c.save(); c.translate(p.x, p.y); c.rotate(p.rot); c.globalAlpha = 0.85; c.beginPath(); c.ellipse(0, 0, p.s, p.s * 0.45, 0, 0, 6.283); c.fill(); c.restore(); }
+      else { c.globalAlpha = kind === 'invierno' ? 0.85 : 0.5 + Math.sin(t / 700 + p.ph) * 0.3; c.beginPath(); c.arc(p.x, p.y, p.s, 0, 6.283); c.fill(); }
+    });
+    c.globalAlpha = 1;
+  })(0);
+})();
+
+/* ───────────── Guía del visitante ───────────── */
+$('[data-guides]').innerHTML = GUIDES.map((g) => `<article class="guide rv"><div class="guide__ph" style="${photo(g.slot)}"></div><div class="guide__tx"><p class="guide__k">${g.k} · ${g.min} min de lectura</p><h3>${g.t}</h3><details><summary>Leer la guía ▾</summary>${g.body.map((p) => `<p>${p}</p>`).join('')}</details></div></article>`).join('');
+
+watch();
+
