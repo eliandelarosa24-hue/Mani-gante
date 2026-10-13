@@ -1,7 +1,7 @@
 import { initShared, revealOnScroll, splitLines, initSampleFilters, $, $$, reduced, fine, gsap, ScrollTrigger, track } from './shared.js';
 import { initHeroShader } from './hero-shader.js';
 import { initReal } from './real.js';
-import { initReel, initShowcase, initWarp } from './showcase.js';
+import { initReel, initShowcase, initWarp, attachVideo } from './showcase.js';
 import { fromPrice, formatCLP } from './pricing.js';
 import { submitLead } from './leads.js';
 
@@ -133,6 +133,10 @@ if (fine && !reduced) {
   $$('.svc__row').forEach((row) => {
     row.addEventListener('pointerenter', () => {
       floatImg.src = row.dataset.img;
+      const fv = float.querySelector('video');
+      if (!row.dataset.video) { fv.classList.remove('is-on'); fv.pause(); }
+      else if (fv.dataset.src?.includes(`/${row.dataset.video}.`)) { fv.classList.add('is-on'); fv.play().catch(() => {}); }
+      else attachVideo(fv, row.dataset.video);
       gsap.to(float, { opacity: 1, scale: 1, rotate: gsap.utils.random(-6, 6), duration: 0.5, ease: 'expo.out' });
     });
     row.addEventListener('pointerleave', () => gsap.to(float, { opacity: 0, scale: 0.6, duration: 0.4, ease: 'power3' }));
@@ -240,6 +244,48 @@ contact?.addEventListener('submit', async (e) => {
 });
 
 // ---------- agente en la sección y fondo ----------
+// ---------- franja cinética: avanza sola y se acelera y se inclina con la velocidad del scroll ----------
+(function kinetic() {
+  const tracks = $$('[data-kinetic] .kinetic__track'); if (!tracks.length || reduced) return;
+  const pos = tracks.map(() => 0); let lastY = scrollY, vel = 0, vis = true;
+  new IntersectionObserver(([e]) => (vis = e.isIntersecting)).observe($('[data-kinetic]'));
+  gsap.ticker.add(() => {
+    const dy = scrollY - lastY; lastY = scrollY; vel += (dy - vel) * 0.12;
+    if (!vis) return;
+    tracks.forEach((t, i) => {
+      const dir = +t.dataset.k, half = t.scrollWidth / 2;
+      pos[i] -= dir * (0.6 + Math.min(18, Math.abs(vel)) * 0.35);
+      if (pos[i] <= -half) pos[i] += half; if (pos[i] > 0) pos[i] -= half;
+      t.style.transform = `translate3d(${pos[i].toFixed(1)}px,0,0) skewX(${(-vel * 0.25 * dir).toFixed(2)}deg)`;
+    });
+  });
+})();
+
+// ---------- índice de capítulos: aparece tras la portada y marca la sección actual ----------
+(function chapters() {
+  const nav = $('[data-chapters]'); if (!nav) return;
+  const links = $$('a', nav), bar = $('[data-chapters-bar]', nav);
+  const secs = links.map((a) => $(a.getAttribute('href')));
+  const upd = () => {
+    const mid = innerHeight * 0.45;
+    nav.classList.toggle('is-on', scrollY > innerHeight * 0.8 && scrollY < document.documentElement.scrollHeight - innerHeight * 1.6);
+    let k = 0; secs.forEach((s, i) => { if (s && s.getBoundingClientRect().top < mid) k = i; });
+    links.forEach((a, i) => a.classList.toggle('is-on', i === k));
+    const cur = secs[k];
+    document.documentElement.classList.toggle('has-light', !!cur?.closest('.light') && cur.getBoundingClientRect().top < mid);
+    const first = secs[0].offsetTop, last = secs[secs.length - 1].offsetTop;
+    bar.style.transform = `scaleY(${Math.min(1, Math.max(0, (scrollY + mid - first) / Math.max(1, last - first)))})`;
+  };
+  addEventListener('scroll', upd, { passive: true }); upd();
+})();
+
+// ---------- relojes: Araucanía y Santo Domingo ----------
+(function clocks() {
+  const els = $$('[data-clock]'); if (!els.length) return;
+  const paint = () => els.forEach((el) => { el.textContent = new Intl.DateTimeFormat('es-CL', { timeZone: el.dataset.clock, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date()); });
+  paint(); setInterval(paint, 15000);
+})();
+
 initReal();
 initSampleFilters();
 initReel();

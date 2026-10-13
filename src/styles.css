@@ -908,3 +908,44 @@ em { font-style: italic; }
 .live__cover .live__poster { background-size: cover; background-position: top center; background-repeat: no-repeat; background-color: var(--ink-3); }
 .live__pvideo { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 0.8s; pointer-events: none; }
 .live__pvideo.is-on { opacity: 1; }
+
+/* Franja cinética doble: reacciona a la velocidad del scroll */
+.marquee { display: none; }
+.kinetic { position: relative; z-index: 2; margin: -10px 0; overflow: hidden; }
+.kinetic__row { overflow: hidden; }
+.kinetic__row--a { background: var(--gold); color: var(--ink); padding: 20px 0; transform: rotate(-1.4deg) scale(1.03); }
+.kinetic__row--b { background: var(--ink); color: transparent; padding: 18px 0; transform: rotate(1deg) scale(1.03); margin-top: -6px; border-top: 1px solid var(--line-d); border-bottom: 1px solid var(--line-d); }
+.kinetic__track { display: flex; align-items: center; gap: 30px; width: max-content; white-space: nowrap; will-change: transform; }
+.kinetic__row--a .kinetic__track { font: 300 clamp(28px, 3.4vw, 46px)/1 var(--serif); }
+.kinetic__row--a i { font-style: normal; font-size: 0.55em; }
+.kinetic__row--b .kinetic__track { font: 300 italic clamp(34px, 4.6vw, 70px)/1 var(--serif); -webkit-text-stroke: 1px rgba(196,163,90,0.7); }
+.kinetic__row--b img { width: 44px; height: 44px; opacity: 0.9; }
+/* Índice de capítulos */
+.chapters { position: fixed; z-index: 40; left: 18px; top: 50%; transform: translate(-130%, -50%); display: grid; gap: 2px; padding: 10px 0 10px 14px; transition: transform 0.7s var(--ease); }
+.chapters.is-on { transform: translate(0, -50%); }
+.chapters a { display: flex; align-items: center; gap: 10px; padding: 4px 0; text-decoration: none; color: var(--muted-d); font: 500 11px var(--sans); letter-spacing: 0.08em; }
+.chapters a b { font-weight: 600; color: inherit; transition: color 0.3s; }
+.chapters a span { opacity: 0; transform: translateX(-6px); transition: opacity 0.3s, transform 0.4s var(--ease); white-space: nowrap; }
+.chapters:hover a span { opacity: 1; transform: none; }
+.chapters:hover { background: linear-gradient(90deg, rgba(11,17,14,0.92), rgba(11,17,14,0.6) 70%, transparent); padding-right: 40px; }
+.has-light .chapters:hover { background: linear-gradient(90deg, rgba(242,235,223,0.95), rgba(242,235,223,0.7) 70%, transparent); }
+.chapters a.is-on { color: var(--gold-2); }
+.chapters a.is-on b::before { content: ''; display: inline-block; width: 18px; height: 1px; margin-right: 8px; vertical-align: middle; background: var(--gold); }
+.chapters__bar { position: absolute; left: 0; top: 10px; bottom: 10px; width: 1px; background: var(--line-d); }
+.chapters__bar i { display: block; width: 100%; height: 100%; background: var(--gold); transform-origin: top; transform: scaleY(0); }
+.has-light .chapters a { color: rgba(11,17,14,0.55); }
+.has-light .chapters a.is-on { color: #765b20; }
+.has-light .chapters__bar { background: var(--line-l); }
+@media (max-width: 1279px) { .chapters { display: none; } }
+/* Relojes Chile y República Dominicana */
+.clocks { display: inline-flex; align-items: center; gap: 22px; margin: -24px 0 clamp(40px, 5vw, 70px); padding: 14px 22px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--line-d); }
+.clocks span { display: grid; }
+.clocks small { font: 600 10px var(--sans); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted-d); }
+.clocks b { font: 300 30px/1.1 var(--serif); font-variant-numeric: tabular-nums; color: var(--cream); }
+.clocks__mark img { width: 34px; height: 34px; animation: spin 40s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+/* Servicios: el video de la muestra sigue al cursor */
+.svc__float video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.4s; }
+.svc__float video.is-on { opacity: 1; }
+.clocks small { white-space: nowrap; }
+@media (max-width: 600px) { .clocks { gap: 12px; padding: 12px 16px; border-radius: 20px; } .clocks small { font-size: 9px; letter-spacing: 0.1em; } .clocks b { font-size: 26px; } }
