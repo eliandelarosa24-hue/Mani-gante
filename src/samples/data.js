@@ -210,6 +210,7 @@ export const SAMPLES = [
   // 7 ─────────────────────────────────────────────────────────────── Café y pastelería
   {
     slug: 'kuchen-haus-frutillar',
+    cardSlot: 'vitrina',
     name: 'Kuchen Haus',
     tagline: 'Café y pastelería alemana',
     niche: 'gastronomia', nicheLabel: 'Café y pastelería',
@@ -240,6 +241,7 @@ export const SAMPLES = [
   // 8 ─────────────────────────────────────────────────────────────── Operador de aventura
   {
     slug: 'pucon-aventura',
+    cardSlot: 'cierre',
     name: 'Pucón Aventura',
     tagline: 'Operador de turismo aventura',
     niche: 'experiencias', nicheLabel: 'Tours y aventura',

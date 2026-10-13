@@ -1,7 +1,7 @@
 import { initShared, revealOnScroll, splitLines, initSampleFilters, $, $$, reduced, fine, gsap, ScrollTrigger, track } from './shared.js';
 import { initHeroShader } from './hero-shader.js';
-import { initLive } from './live.js';
-import { Chat } from './chat.js';
+import { initReal } from './real.js';
+import { initReel, initShowcase, initWarp } from './showcase.js';
 import { fromPrice, formatCLP } from './pricing.js';
 import { submitLead } from './leads.js';
 
@@ -19,16 +19,22 @@ function intro() {
     loader?.remove();
   } else {
     const counter = { v: 0 };
-    tl.to(counter, { v: 100, duration: 0.9, ease: 'power2.inOut', onUpdate: () => { $('[data-count]').textContent = Math.round(counter.v); } })
-      .to('.loader__line', { scaleX: 1, duration: 0.9, ease: 'power2.inOut' }, 0)
-      .from('.loader__mark', { scale: 0.6, opacity: 0, rotate: -40, duration: 0.9, ease: 'expo.out' }, 0)
-      .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 0.8, ease: 'expo.inOut' })
+    const word = $('.loader__word');
+    if (word) word.innerHTML = [...word.textContent].map((c) => `<span>${c === ' ' ? '&nbsp;' : c}</span>`).join('');
+    tl.to(counter, { v: 100, duration: 1.3, ease: 'power2.inOut', onUpdate: () => { $('[data-count]').textContent = Math.round(counter.v); } })
+      .to('.loader__line', { scaleX: 1, duration: 1.3, ease: 'power2.inOut' }, 0)
+      .to('.loader__ring circle', { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut' }, 0)
+      .from('.loader__mark', { scale: 0.6, opacity: 0, rotate: -40, duration: 1, ease: 'expo.out' }, 0)
+      .to('.loader__word span', { opacity: 1, y: 0, duration: 0.6, stagger: 0.018, ease: 'expo.out' }, 0.2)
+      .to('.loader__mark, .loader__ring, .loader__word, .loader__count', { opacity: 0, y: -14, duration: 0.45, ease: 'power2.in' })
+      .to(loader, { clipPath: 'inset(50% 0 50% 0)', duration: 0.9, ease: 'expo.inOut' }, '-=0.1')
       .add(() => loader.remove());
   }
   tl.from(heroLines, { yPercent: 110, duration: 1.2, stagger: 0.08, ease: 'expo.out' }, seen ? 0 : '-=0.4')
     .from('.hero [data-fade]', { y: 30, opacity: 0, duration: 1, stagger: 0.08, ease: 'expo.out' }, '-=0.95')
-    .from('.ph', { clipPath: 'inset(100% 0 0 0)', duration: 1.3, stagger: 0.1, ease: 'expo.inOut' }, '-=1.2')
-    .from('.ph img', { scale: 1.5, duration: 1.6, stagger: 0.1, ease: 'expo.out' }, '<')
+    .from('.reel__frame', { clipPath: 'inset(100% 0 0 0 round 26px)', duration: 1.4, ease: 'expo.inOut' }, '-=1.2')
+    .from('.reel__slides', { scale: 1.4, duration: 1.8, ease: 'expo.out' }, '<')
+    .from('.reel__rec', { opacity: 0, y: 10, duration: 0.8, ease: 'expo.out' }, '-=0.6')
     .from('.hero__foot > *', { y: 20, opacity: 0, duration: 0.8, stagger: 0.05, ease: 'power3.out' }, '-=1');
 }
 
@@ -40,7 +46,7 @@ function wordsOf(el) {
 
 function scrollAnimations() {
   if (reduced) return;
-  ['a', 'b', 'c'].forEach((k, i) => gsap.to(`.ph--${k}`, { yPercent: [-18, -40, -8][i], ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } }));
+  ScrollTrigger.matchMedia({ '(min-width: 1081px)': () => { gsap.to('.reel', { yPercent: -62, rotate: -2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } }); } });
   gsap.to('.hero__inner', { yPercent: 18, opacity: 0.2, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
 
   revealOnScroll();
@@ -54,31 +60,25 @@ function scrollAnimations() {
   gsap.from('.promise', { y: 50, opacity: 0, duration: 1, stagger: 0.07, ease: 'expo.out', scrollTrigger: { trigger: '.promises', start: 'top 80%' } });
   gsap.from('.about__half', { clipPath: 'inset(100% 0 0 0)', duration: 1.6, stagger: 0.15, ease: 'expo.inOut', scrollTrigger: { trigger: '.about__visual', start: 'top 80%' } });
   gsap.from('.about__mark', { scale: 0, rotate: -180, duration: 1.4, ease: 'expo.out', delay: 0.6, scrollTrigger: { trigger: '.about__visual', start: 'top 80%' } });
-  gsap.from('.agent__panel', { y: 80, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.agent', start: 'top 70%' } });
+  // Las secciones claras se abren como un panel al entrar
+  ScrollTrigger.matchMedia({ '(min-width: 901px)': () => {
+    $$('main > .light').filter((sec) => sec.previousElementSibling?.classList.contains('dark')).forEach((sec) => {
+      sec.classList.add('reveal-panel');
+      gsap.fromTo(sec, { clipPath: 'inset(6% 3% 0% 3% round 40px)' }, { clipPath: 'inset(0% 0% 0% 0% round 0px)', ease: 'none', scrollTrigger: { trigger: sec, start: 'top bottom', end: 'top 35%', scrub: true } });
+    });
+  } });
+  // Medios que se revelan con una cortina
+  [['.stage', 'top 85%'], ['.real__stage', 'top 85%'], ['.founder__img', 'top 85%']].forEach(([sel, start]) => {
+    if (!$(sel)) return;
+    gsap.from(sel, { clipPath: 'inset(0 0 100% 0 round 20px)', y: 60, duration: 1.5, ease: 'expo.inOut', scrollTrigger: { trigger: sel, start } });
+  });
+  gsap.from('.showcase__list .sample', { x: -40, opacity: 0, duration: 1, stagger: 0.05, ease: 'expo.out', scrollTrigger: { trigger: '.showcase__grid', start: 'top 80%' } });
+  gsap.from('.real__tabs', { y: 30, opacity: 0, duration: 1, ease: 'expo.out', scrollTrigger: { trigger: '.real__tabs', start: 'top 90%' } });
+  gsap.from('.founder__copy > *', { y: 40, opacity: 0, duration: 1, stagger: 0.08, ease: 'expo.out', scrollTrigger: { trigger: '.founder', start: 'top 75%' } });
+  gsap.from('.next', { scale: 0.92, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.next', start: 'top 85%' } });
   gsap.from('.footer__word', { yPercent: 60, opacity: 0, duration: 1.6, ease: 'expo.out', scrollTrigger: { trigger: '.footer', start: 'top 90%' } });
   gsap.to('[data-method-bar]', { scaleX: 1, ease: 'none', scrollTrigger: { trigger: '.steps', start: 'top 70%', end: 'bottom 70%', scrub: true } });
 
-  // Trabajos: desplazamiento horizontal fijado con contador (escritorio)
-  ScrollTrigger.matchMedia({
-    '(min-width: 901px)': () => {
-      const track = $('[data-track]');
-      const cards = $$('.case', track);
-      const count = $('[data-work-count]');
-      const bar = $('[data-work-bar]');
-      const dist = () => track.scrollWidth - innerWidth;
-      gsap.to(track, {
-        x: () => -dist(),
-        ease: 'none',
-        scrollTrigger: {
-          trigger: '.work__pin', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 1, invalidateOnRefresh: true,
-          onUpdate: (st) => {
-            bar.style.transform = `scaleX(${st.progress})`;
-            count.textContent = String(Math.min(cards.length, Math.floor(st.progress * (cards.length - 0.01)) + 1)).padStart(2, '0');
-          },
-        },
-      });
-    },
-  });
 }
 
 // ---------- calculadora de comisiones con retorno de la inversión ----------
@@ -234,14 +234,11 @@ contact?.addEventListener('submit', async (e) => {
 });
 
 // ---------- agente en la sección y fondo ----------
-// El chat de la sección se crea solo cuando el visitante se acerca (aliviana la carga inicial)
-new IntersectionObserver(([en], obs) => {
-  if (!en.isIntersecting) return;
-  obs.disconnect();
-  new Chat($('[data-agent-inline]'), { source: 'seccion' });
-}, { rootMargin: '600px' }).observe($('[data-agent-inline]'));
-initLive();
+initReal();
 initSampleFilters();
+initReel();
+initShowcase();
+initWarp();
 initHeroShader($('.hero__canvas'));
 const boot = () => { intro(); scrollAnimations(); ScrollTrigger.refresh(); };
 if (document.fonts?.ready) document.fonts.ready.then(boot); else addEventListener('load', boot);

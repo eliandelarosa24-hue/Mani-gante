@@ -84,7 +84,9 @@
   <div class="progress" aria-hidden="true"><span data-progress></span></div>
 
   <div class="loader" aria-hidden="true">
+    <svg class="loader__ring" viewBox="0 0 100 100"><circle cx="50" cy="50" r="48" pathLength="1" /></svg>
     <div class="loader__mark"><img class="mark" src="/brand/emblema-192.webp" alt="" width="192" height="192" /></div>
+    <p class="loader__word">Red Vaeru · Conectando culturas</p>
     <div class="loader__count"><span data-count>0</span><sup>%</sup></div>
     <div class="loader__line"></div>
   </div>
@@ -98,10 +100,10 @@
       <span>Red Vaeru</span>
     </a>
     <nav class="nav__links" aria-label="Principal">
-      <a href="#servicios">Servicios</a>
-      <a href="#diagnostico">Diagnóstico</a>
-      <a href="#trabajos">Trabajos</a>
       <a href="#muestras">Muestras</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#metodo">Método</a>
       <a href="#nosotros">Sobre mí</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -111,11 +113,11 @@
 
   <div class="menu" data-menu aria-hidden="true">
     <nav aria-label="Menú móvil">
-      <a href="#servicios">Servicios</a>
-      <a href="#diagnostico">Diagnóstico</a>
-      <a href="#trabajos">Trabajos</a>
       <a href="#muestras">Muestras</a>
-      <a href="#agente">Vaeru IA</a>
+      <a href="#problema">El problema</a>
+      <a href="#servicios">Servicios</a>
+      <a href="#proyectos">Proyectos</a>
+      <a href="#metodo">Método</a>
       <a href="#nosotros">Sobre mí</a>
       <a href="#contacto">Contacto</a>
     </nav>
@@ -130,38 +132,87 @@
         <p class="eyebrow" data-fade>Conectando culturas · Del Caribe al sur de Chile</p>
         <h1 class="hero__title">Hospitalidad que se <em>reserva directo.</em></h1>
         <div class="hero__row">
-          <p class="hero__lead" data-fade>Soy Jorge Vásquez. Diseño sitios para alojamientos y restaurantes, asesoro su estrategia y capacito a su equipo para que el huésped llegue por su canal y no por una comisión.</p>
+          <p class="hero__lead" data-fade>Soy Jorge Vásquez. Diseño sitios para alojamientos, restaurantes y experiencias, asesoro su estrategia y capacito a su equipo para que el huésped llegue por su canal y no por una comisión.</p>
           <p class="pill" data-fade data-launch><span class="pulse"></span> Precios de lanzamiento · quedan <strong data-launch-left>5</strong> de <span data-launch-total>5</span> cupos</p>
           <div class="hero__ctas" data-fade>
-            <button class="btn btn--gold" data-open-agent data-source="inicio" data-magnetic>Cotizar en 1 minuto <span aria-hidden="true">→</span></button>
-            <a class="btn btn--ghost" href="#diagnostico" data-magnetic>Diagnóstico gratis</a>
+            <a class="btn btn--gold" href="#muestras" data-magnetic>Ver los proyectos <span aria-hidden="true">↓</span></a>
+            <button class="btn btn--ghost" data-open-agent data-source="inicio" data-magnetic>Cotizar en 1 minuto</button>
           </div>
         </div>
       </div>
-      <div class="hero__collage" aria-hidden="true">
-        <figure class="ph ph--a"><img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?auto=format&fit=crop&w=900&q=75" alt="" width="900" height="960" fetchpriority="high" /></figure>
-        <figure class="ph ph--b"><img src="https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=800&q=75" alt="" width="800" height="720" /></figure>
-        <figure class="ph ph--c"><img src="https://images.unsplash.com/photo-1449158743715-0a90ebb6d2d8?auto=format&fit=crop&w=800&q=75" alt="" width="800" height="760" /></figure>
-      </div>
+      <!-- Showreel: aquí va el video montaje de las muestras (/video/reel.mp4). Mientras tanto, las portadas se suceden. -->
+      <a class="reel" href="#muestras" data-reel aria-label="Ver las muestras" data-cursor="Ver proyectos">
+        <span class="reel__frame">
+          <video class="reel__video" data-video="reel" muted loop playsinline preload="none" aria-hidden="true"></video>
+          <span class="reel__slides" data-reel-slides></span>
+          <span class="reel__shade"></span>
+          <span class="reel__cap"><small data-reel-rubro>Termas</small><b data-reel-name>Termas Rayenko</b></span>
+          <span class="reel__ticks" data-reel-ticks></span>
+        </span>
+        <span class="reel__rec" aria-hidden="true"><i></i> Showreel · 12 proyectos</span>
+      </a>
       <div class="hero__foot wrap">
+        <div class="hero__stat"><strong>12</strong><span>proyectos turísticos: 2 en el aire y 10 muestras</span></div>
         <div class="hero__stat"><strong>15–25%</strong><span>comisión que se ahorra por reserva directa</span></div>
         <div class="hero__stat"><strong>&lt; 24 h</strong><span>tiempo de respuesta, días hábiles</span></div>
-        <div class="hero__stat"><strong>1</strong><span>persona de principio a fin: yo</span></div>
-        <a href="#manifiesto" class="hero__scroll" aria-label="Bajar a la siguiente sección"><span></span></a>
+        <a href="#muestras" class="hero__scroll" aria-label="Bajar a los proyectos"><span></span></a>
       </div>
     </section>
 
     <div class="marquee" aria-hidden="true">
       <div class="marquee__track">
-        <span>Cabañas</span><i>✦</i><span>Hostales</span><i>✦</i><span>Glamping</span><i>✦</i><span>Hoteles boutique</span><i>✦</i><span>Restaurantes</span><i>✦</i><span>Asesoría turística</span><i>✦</i><span>Servicio al cliente</span><i>✦</i>
-        <span>Cabañas</span><i>✦</i><span>Hostales</span><i>✦</i><span>Glamping</span><i>✦</i><span>Hoteles boutique</span><i>✦</i><span>Restaurantes</span><i>✦</i><span>Asesoría turística</span><i>✦</i><span>Servicio al cliente</span><i>✦</i>
+        <span>Cabañas</span><i>✦</i><span>Glamping</span><i>✦</i><span>Hoteles boutique</span><i>✦</i><span>Termas</span><i>✦</i><span>Villas en el Caribe</span><i>✦</i><span>Restaurantes</span><i>✦</i><span>Viñas</span><i>✦</i><span>Tours</span><i>✦</i>
+        <span>Cabañas</span><i>✦</i><span>Glamping</span><i>✦</i><span>Hoteles boutique</span><i>✦</i><span>Termas</span><i>✦</i><span>Villas en el Caribe</span><i>✦</i><span>Restaurantes</span><i>✦</i><span>Viñas</span><i>✦</i><span>Tours</span><i>✦</i>
       </div>
     </div>
 
-    <!-- EL PROBLEMA -->
-    <section class="manifesto light" id="manifiesto">
+    <!-- 01 · MUESTRAS -->
+    <section class="showcase dark" id="muestras">
       <div class="wrap">
-        <p class="eyebrow">01 · El problema</p>
+        <div class="section-head showcase__head">
+          <div>
+            <p class="eyebrow">01 · Muestras</p>
+            <h2 class="h1" data-split>Diez rubros, <em>diez identidades.</em></h2>
+          </div>
+          <p class="showcase__lead" data-fade>Sitios completos creados para negocios ficticios del turismo chileno y caribeño. Ninguno se parece al otro: cada uno nace de su territorio. Más abajo, los proyectos reales que ya están en el aire.</p>
+        </div>
+        <div class="sfilters" role="group" aria-label="Filtrar muestras por rubro">
+          <button aria-pressed="true" data-sf="todo">Todo</button>
+          <button aria-pressed="false" data-sf="alojamiento">Alojamiento</button>
+          <button aria-pressed="false" data-sf="bienestar">Termas</button>
+          <button aria-pressed="false" data-sf="caribe">Caribe</button>
+          <button aria-pressed="false" data-sf="gastronomia">Gastronomía</button>
+          <button aria-pressed="false" data-sf="experiencias">Experiencias</button>
+          <button aria-pressed="false" data-sf="asesoria">Servicios</button>
+        </div>
+        <div class="showcase__grid">
+          <div class="samples showcase__list" data-showcase-list><!--SAMPLES--></div>
+          <!-- Escenario: muestra la muestra activa. Aquí va el video de cada una (data-video="muestra-<slug>"). -->
+          <div class="stage" data-stage aria-live="polite">
+            <a class="stage__screen" data-stage-link href="/muestras/termas-rayenko/" data-cursor="Entrar">
+              <span class="stage__bar" aria-hidden="true"><i></i><i></i><i></i><em data-stage-url>redvaeru.cl/muestras/termas-rayenko</em></span>
+              <span class="stage__media">
+                <span class="stage__img" data-stage-img></span>
+                <video class="stage__video" data-stage-video muted loop playsinline preload="none" aria-hidden="true"></video>
+              </span>
+            </a>
+            <div class="stage__info">
+              <p class="stage__k"><span data-stage-n>01</span> / 10 · <span data-stage-rubro>Termas</span></p>
+              <h3 class="stage__name" data-stage-name>Termas Rayenko</h3>
+              <p class="stage__place" data-stage-place>Liquiñe · Los Ríos</p>
+              <ul class="stage__hl" data-stage-hl></ul>
+              <a class="btn btn--gold" data-stage-go href="/muestras/termas-rayenko/">Entrar a la muestra <span aria-hidden="true">→</span></a>
+            </div>
+          </div>
+        </div>
+        <p class="samples-more"><a class="btn btn--line" href="/muestras/">Galería completa de muestras ↗</a> <span>Negocios ficticios creados para mostrar mi forma de trabajar.</span></p>
+      </div>
+    </section>
+
+    <!-- 02 · EL PROBLEMA -->
+    <section class="manifesto light" id="problema">
+      <div class="wrap">
+        <p class="eyebrow">02 · El problema</p>
         <p class="manifesto__text" data-words>
           Cada noche que vende por una plataforma le entrega hasta un 25% a alguien que no conoce a sus huéspedes. Construyo el canal que le devuelve ese margen y la relación directa con quien le visita.
         </p>
@@ -220,6 +271,48 @@
             </ul>
           </div>
         </div>
+
+        <div class="diag" id="diagnostico">
+          <div class="diag__grid">
+            <div>
+              <p class="eyebrow">Diagnóstico gratuito</p>
+              <h2 class="h1" data-split>¿Qué tan independiente es <em>su negocio?</em></h2>
+              <p class="diag__lead">Seis preguntas, un minuto. Recibe un puntaje y las tres mejoras que más le conviene hacer primero, sin compromiso.</p>
+            </div>
+            <div class="quiz" data-quiz>
+              <div class="quiz__bar"><span data-quiz-bar></span></div>
+              <div data-quiz-body>
+                <p class="quiz__step" data-quiz-step>Pregunta 1 de 6</p>
+                <p class="quiz__q" data-quiz-q tabindex="-1"></p>
+                <div class="quiz__opts" data-quiz-o></div>
+              </div>
+              <div class="quiz__result" data-quiz-result hidden aria-live="polite">
+                <div class="quiz__score"><strong data-quiz-score>0</strong><span>/100</span></div>
+                <p class="quiz__level" data-quiz-level></p>
+                <p class="quiz__desc" data-quiz-desc></p>
+                <p class="quiz__sub">Lo primero que haría en su lugar:</p>
+                <ol class="quiz__tips" data-quiz-tips></ol>
+                <form name="diagnostico" class="quiz__form" novalidate>
+                  <input type="hidden" name="form-name" value="diagnostico" />
+                  <input type="hidden" name="puntaje" />
+                  <input type="hidden" name="respuestas" />
+                  <p class="hidden"><label>No llenar: <input name="bot-field" /></label></p>
+                  <p class="quiz__sub">Reciba su plan de mejora personalizado por WhatsApp:</p>
+                  <div class="lead__row">
+                    <label><span class="sr">Nombre</span><input name="nombre" placeholder="Su nombre" required autocomplete="name" /></label>
+                    <label><span class="sr">WhatsApp</span><input name="whatsapp" type="tel" placeholder="WhatsApp (+56 9…)" required autocomplete="tel" /></label>
+                  </div>
+                  <button class="btn btn--gold" type="submit">Quiero mi plan</button>
+                  <small>Al enviar acepta la <a href="/privacidad">política de privacidad</a>.</small>
+                </form>
+                <div class="quiz__actions">
+                  <button class="btn btn--line-d" type="button" data-quiz-agent>Preguntarle a Vaeru IA</button>
+                  <button class="link" type="button" data-quiz-restart>Repetir el diagnóstico</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       </div>
     </section>
 
@@ -227,7 +320,7 @@
     <section class="services dark" id="servicios">
       <div class="wrap">
         <div class="section-head">
-          <p class="eyebrow">02 · Lo que hago</p>
+          <p class="eyebrow">03 · Lo que hago</p>
           <h2 class="h1" data-split>Todo lo que su negocio turístico <em>necesita para vender directo.</em></h2>
         </div>
         <ul class="svc">
@@ -314,221 +407,61 @@
       <figure class="svc__float" aria-hidden="true"><img alt="" /></figure>
     </section>
 
-    <!-- DIAGNÓSTICO -->
-    <section class="diag light" id="diagnostico">
-      <div class="wrap diag__grid">
-        <div>
-          <p class="eyebrow">03 · Diagnóstico gratuito</p>
-          <h2 class="h1" data-split>¿Qué tan independiente es <em>su negocio?</em></h2>
-          <p class="diag__lead">Seis preguntas, un minuto. Recibe un puntaje y las tres mejoras que más le conviene hacer primero, sin compromiso.</p>
-        </div>
-        <div class="quiz" data-quiz>
-          <div class="quiz__bar"><span data-quiz-bar></span></div>
-          <div data-quiz-body>
-            <p class="quiz__step" data-quiz-step>Pregunta 1 de 6</p>
-            <p class="quiz__q" data-quiz-q tabindex="-1"></p>
-            <div class="quiz__opts" data-quiz-o></div>
+    <!-- 04 · PROYECTOS REALES -->
+    <section class="real dark" id="proyectos">
+      <div class="wrap">
+        <div class="section-head real__head">
+          <div>
+            <p class="eyebrow"><span class="live__dot"></span> 04 · En el aire</p>
+            <h2 class="h1" data-split>Proyectos reales, <em>funcionando de verdad.</em></h2>
           </div>
-          <div class="quiz__result" data-quiz-result hidden aria-live="polite">
-            <div class="quiz__score"><strong data-quiz-score>0</strong><span>/100</span></div>
-            <p class="quiz__level" data-quiz-level></p>
-            <p class="quiz__desc" data-quiz-desc></p>
-            <p class="quiz__sub">Lo primero que haría en su lugar:</p>
-            <ol class="quiz__tips" data-quiz-tips></ol>
-            <form name="diagnostico" class="quiz__form" novalidate>
-              <input type="hidden" name="form-name" value="diagnostico" />
-              <input type="hidden" name="puntaje" />
-              <input type="hidden" name="respuestas" />
-              <p class="hidden"><label>No llenar: <input name="bot-field" /></label></p>
-              <p class="quiz__sub">Reciba su plan de mejora personalizado por WhatsApp:</p>
-              <div class="lead__row">
-                <label><span class="sr">Nombre</span><input name="nombre" placeholder="Su nombre" required autocomplete="name" /></label>
-                <label><span class="sr">WhatsApp</span><input name="whatsapp" type="tel" placeholder="WhatsApp (+56 9…)" required autocomplete="tel" /></label>
+          <p class="real__lead" data-fade>Negocios turísticos de la Araucanía que hoy reciben huéspedes con su propio sitio. Recórralos aquí mismo, en escritorio y en celular.</p>
+        </div>
+        <div class="real__tabs" role="tablist" aria-label="Proyectos en el aire">
+          <button role="tab" aria-selected="true" data-real="miah"><small>01</small> Cabañas Miah y Noah</button>
+          <button role="tab" aria-selected="false" data-real="poetas"><small>02</small> El Rincón de los Poetas</button>
+        </div>
+        <div class="real__grid live" data-live>
+          <div class="real__stage">
+            <div class="live__desk frame">
+              <span class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><em data-live-url>cabanasmiaynoah.netlify.app</em><b class="live__badge">● EN VIVO</b></span>
+              <div class="live__viewport" data-live-vp="1280x800">
+                <iframe title="Sitio en vivo, versión escritorio" data-live-frame loading="lazy" tabindex="-1" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
               </div>
-              <button class="btn btn--gold" type="submit">Quiero mi plan</button>
-              <small>Al enviar acepta la <a href="/privacidad">política de privacidad</a>.</small>
-            </form>
-            <div class="quiz__actions">
-              <button class="btn btn--line-d" type="button" data-quiz-agent>Preguntarle a Vaeru IA</button>
-              <button class="link" type="button" data-quiz-restart>Repetir el diagnóstico</button>
+              <!-- Portada del proyecto mientras no se explora; aquí va su video (data-video="real-miah" / "real-poetas"). -->
+              <button class="live__cover live__cover--poster" type="button" data-live-cover><span class="live__poster" data-real-poster></span><span class="live__cta">Explorar en vivo</span><small>Clic para navegar el sitio aquí mismo</small></button>
+            </div>
+            <div class="live__phone">
+              <div class="live__notch" aria-hidden="true"></div>
+              <div class="live__viewport" data-live-vp="390x844">
+                <iframe title="Sitio en vivo, versión celular" data-live-frame loading="lazy" tabindex="-1" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
+              </div>
+              <button class="live__cover live__cover--poster" type="button" data-live-cover><span class="live__poster" data-real-poster></span><span class="live__cta">Ver en celular</span></button>
             </div>
           </div>
+          <article class="real__case" data-real-case aria-live="polite"></article>
         </div>
-      </div>
-    </section>
 
-    <!-- TRABAJOS -->
-    <section class="work dark" id="trabajos">
-      <div class="work__pin">
-        <div class="work__head wrap">
-          <div>
-            <p class="eyebrow">04 · Trabajos en el aire</p>
-            <h2 class="h1">Proyectos reales, <em>abiertos en vivo.</em></h2>
+        <div class="founder">
+          <a class="founder__img frame" href="https://manigante.netlify.app" target="_blank" rel="noopener" data-cursor="Ver sitio">
+            <span class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><em>manigante.netlify.app</em></span>
+            <img src="/img/casos/manigante.webp" alt="Portada del sitio de MANI-GANTE, confitería de autor en Temuco" loading="lazy" width="1000" height="672" />
+          </a>
+          <div class="founder__copy">
+            <p class="eyebrow">Proyecto propio</p>
+            <h3>Fundador de <em>MANI-GANTE.</em></h3>
+            <p>Antes de ofrecer este método, lo probé en mi propio negocio. MANI-GANTE es la confitería de autor que fundé en Temuco: 28 sabores, catálogo propio, pedidos guiados por WhatsApp y un asistente que atiende a cualquier hora.</p>
+            <p>Lo que funciona en MANI-GANTE es lo mismo que le propongo a su cabaña o su restaurante: un canal que es suyo, ordenado y sin comisiones.</p>
+            <a class="btn btn--line" href="https://manigante.netlify.app" target="_blank" rel="noopener">Visitar MANI-GANTE ↗</a>
           </div>
-          <div class="work__count" aria-hidden="true"><span data-work-count>01</span> / 06<div class="work__bar"><span data-work-bar></span></div></div>
         </div>
-        <div class="work__track" data-track>
-          <article class="case">
-            <a href="https://cabanasmiaynoah.netlify.app" target="_blank" rel="noopener" class="case__img frame" data-cursor="Ver sitio">
-              <span class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><em>cabanasmiaynoah.netlify.app</em></span>
-              <img src="https://cabanasmiaynoah.netlify.app/img/mia-01.jpg" alt="Cabañas Miah y Noah en Curacautín" loading="lazy" width="1000" height="760" />
-            </a>
-            <div class="case__meta"><span>Curacautín · Araucanía</span><span class="case__tag">Turismo</span></div>
-            <h3>Cabañas Miah y Noah</h3>
-            <dl>
-              <div><dt>Problema</dt><dd>Dependencia de plataformas y poca presencia propia.</dd></div>
-              <div><dt>Solución</dt><dd>Check-in digital, guía de zona y WhatsApp como canal de cierre.</dd></div>
-              <div><dt>Resultado</dt><dd>Canal propio activo y huéspedes reservando directo.</dd></div>
-            </dl>
-          </article>
-          <article class="case">
-            <a href="https://elrincondelospoetas.netlify.app" target="_blank" rel="noopener" class="case__img frame" data-cursor="Ver sitio">
-              <span class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><em>elrincondelospoetas.netlify.app</em></span>
-              <img src="https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1000&q=75" alt="Biblioteca antigua, inspiración del hostal El Rincón de los Poetas" loading="lazy" width="1000" height="760" />
-            </a>
-            <div class="case__meta"><span>Nueva Imperial · Araucanía</span><span class="case__tag">Turismo</span></div>
-            <h3>El Rincón de los Poetas</h3>
-            <dl>
-              <div><dt>Problema</dt><dd>Historia invisible y reservas casi solo por plataformas.</dd></div>
-              <div><dt>Solución</dt><dd>Narrativa literaria del hostal, reseñas y canal directo.</dd></div>
-              <div><dt>Resultado</dt><dd>Una historia que vende sola y reserva directa.</dd></div>
-            </dl>
-          </article>
-          <article class="case case--divider">
-            <div class="case__note">
-              <p class="eyebrow">Otros rubros</p>
-              <h3>La misma lógica, <em>fuera del turismo.</em></h3>
-              <p>Mi foco es la hospitalidad. Estos proyectos aplican el mismo método de canal propio en comercio, y muestran que el sistema funciona.</p>
-            </div>
-          </article>
-          <article class="case">
-            <a href="https://manigante.netlify.app" target="_blank" rel="noopener" class="case__img frame" data-cursor="Ver sitio">
-              <span class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><em>manigante.netlify.app</em></span>
-              <img src="/img/casos/manigante.webp" alt="Portada del sitio de MANI-GANTE, confitería de autor en Temuco" loading="lazy" width="1000" height="672" />
-            </a>
-            <div class="case__meta"><span>Temuco · Confitería</span><span class="case__tag case__tag--alt">Otros rubros</span></div>
-            <h3>MANI-GANTE</h3>
-            <dl>
-              <div><dt>Problema</dt><dd>Venta informal y pedidos desordenados por redes.</dd></div>
-              <div><dt>Solución</dt><dd>Catálogo de 28 sabores, pedido guiado por WhatsApp y asistente 24/7.</dd></div>
-              <div><dt>Resultado</dt><dd>Pedidos ordenados y catálogo siempre disponible.</dd></div>
-            </dl>
-          </article>
-          <article class="case">
-            <a href="https://misrecuerditos.netlify.app" target="_blank" rel="noopener" class="case__img frame" data-cursor="Ver sitio">
-              <span class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><em>misrecuerditos.netlify.app</em></span>
-              <img src="https://misrecuerditos.netlify.app/images/pulseras/volt-vip-rosa.jpg" alt="Pulseras personalizadas de Mis Recuerditos" loading="lazy" width="1000" height="760" />
-            </a>
-            <div class="case__meta"><span>Tienda por categorías</span><span class="case__tag case__tag--alt">Otros rubros</span></div>
-            <h3>Mis Recuerditos</h3>
-            <dl>
-              <div><dt>Problema</dt><dd>Catálogo solo en Instagram, difícil de convertir.</dd></div>
-              <div><dt>Solución</dt><dd>Tienda por categorías y pedido sin fricción.</dd></div>
-              <div><dt>Resultado</dt><dd>Tienda propia fuera de Instagram.</dd></div>
-            </dl>
-          </article>
-          <article class="case case--next">
-            <div class="case__cta">
-              <p class="eyebrow">Próximo proyecto</p>
-              <h3>¿El suyo?</h3>
-              <p>Quedan <span data-launch-left>5</span> cupos con precio de lanzamiento.</p>
-              <button class="btn btn--gold" data-open-agent data-source="trabajos">Conversemos con Vaeru IA</button>
-            </div>
-          </article>
-        </div>
-      </div>
-    </section>
 
-    <!-- EN VIVO -->
-    <section class="live dark" id="en-vivo">
-      <div class="wrap">
-        <div class="live__head">
-          <div>
-            <p class="eyebrow"><span class="live__dot"></span> En vivo ahora</p>
-            <h2 class="h1" data-split>Recorra mis sitios turísticos, <em>funcionando de verdad.</em></h2>
-          </div>
-          <div class="live__tabs" role="tablist" aria-label="Sitios en vivo">
-            <button role="tab" aria-selected="true" data-live-tab="https://cabanasmiaynoah.netlify.app" data-live-name="Cabañas Miah y Noah · Curacautín">Cabañas Miah y Noah</button>
-            <button role="tab" aria-selected="false" data-live-tab="https://elrincondelospoetas.netlify.app" data-live-name="El Rincón de los Poetas · Nueva Imperial">El Rincón de los Poetas</button>
-          </div>
+        <div class="next">
+          <p class="eyebrow">Próximo proyecto</p>
+          <h3>¿El suyo?</h3>
+          <p>Quedan <span data-launch-left>5</span> cupos con precio de lanzamiento.</p>
+          <button class="btn btn--gold" data-open-agent data-source="proyectos">Conversemos con Vaeru IA</button>
         </div>
-        <div class="live__stage" data-live>
-          <div class="live__desk frame">
-            <span class="frame__bar" aria-hidden="true"><i></i><i></i><i></i><em data-live-url>cabanasmiaynoah.netlify.app</em><b class="live__badge">● EN VIVO</b></span>
-            <div class="live__viewport" data-live-vp="1280x800">
-              <iframe title="Sitio en vivo, versión escritorio" data-live-frame loading="lazy" tabindex="-1" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
-            </div>
-            <button class="live__cover" type="button" data-live-cover><span>Explorar en vivo</span><small>Clic para navegar el sitio aquí mismo</small></button>
-          </div>
-          <div class="live__phone">
-            <div class="live__notch" aria-hidden="true"></div>
-            <div class="live__viewport" data-live-vp="390x844">
-              <iframe title="Sitio en vivo, versión celular" data-live-frame loading="lazy" tabindex="-1" sandbox="allow-scripts allow-same-origin allow-popups allow-forms"></iframe>
-            </div>
-            <button class="live__cover" type="button" data-live-cover><span>Ver en celular</span></button>
-          </div>
-        </div>
-        <div class="live__foot">
-          <p data-live-caption>Cabañas Miah y Noah · Curacautín</p>
-          <a class="btn btn--line" data-live-open href="https://cabanasmiaynoah.netlify.app" target="_blank" rel="noopener">Abrir en una pestaña nueva ↗</a>
-        </div>
-      </div>
-    </section>
-
-    <!-- MUESTRAS -->
-    <section class="samples-sec dark" id="muestras">
-      <div class="wrap">
-        <div class="section-head samples-head">
-          <div>
-            <p class="eyebrow">Muestras de concepto</p>
-            <h2 class="h1" data-split>Diez rubros, <em>diez identidades.</em></h2>
-          </div>
-          <p class="samples-lead">Sitios completos diseñados para negocios ficticios del turismo chileno y caribeño: reservas con calendario, cartas interactivas, catas, tours y más. Elija su rubro y explore.</p>
-        </div>
-        <div class="sfilters" role="group" aria-label="Filtrar muestras por rubro">
-          <button aria-pressed="true" data-sf="todo">Todo</button>
-          <button aria-pressed="false" data-sf="alojamiento">Alojamiento</button>
-          <button aria-pressed="false" data-sf="gastronomia">Gastronomía</button>
-          <button aria-pressed="false" data-sf="experiencias">Experiencias</button>
-          <button aria-pressed="false" data-sf="caribe">Caribe</button>
-          <button aria-pressed="false" data-sf="destino">Destinos y gremios</button>
-        </div>
-        <div class="samples"><!--SAMPLES--></div>
-        <p class="samples-more"><a class="btn btn--line" href="/muestras/">Ver todas las muestras ↗</a> <span>Negocios ficticios creados para mostrar mi estilo de trabajo.</span></p>
-      </div>
-    </section>
-
-    <!-- TESTIMONIOS -->
-    <section class="quotes light">
-      <div class="wrap">
-        <p class="eyebrow">05 · Lo que dicen</p>
-        <div class="quotes__grid">
-          <blockquote data-fade>
-            <p>"Nos ayudó a tener por fin un sitio propio para Cabañas Miah y Noah. Ahora nuestros huéspedes nos encuentran y <em>reservan directo.</em>"</p>
-            <footer><span class="avatar" aria-hidden="true">N</span><span><strong>Nicole</strong> · Co-anfitriona, Cabañas Miah y Noah</span></footer>
-          </blockquote>
-          <blockquote data-fade>
-            <p>"Pasamos de vender boca a boca a un catálogo ordenado con pedido por WhatsApp. Se siente <em>propio, no plantilla.</em>"</p>
-            <footer><span class="avatar" aria-hidden="true">MG</span><span><strong>Equipo MANI-GANTE</strong> · Pedido digital por WhatsApp</span></footer>
-          </blockquote>
-        </div>
-        <p class="quotes__note">Solo testimonios reales de clientes. Sin reseñas inventadas.</p>
-      </div>
-    </section>
-
-    <!-- GARANTÍAS -->
-    <section class="promises-wrap light">
-      <div class="wrap">
-        <p class="eyebrow">06 · Mis compromisos</p>
-        <h2 class="h2">Trabajar conmigo es <em>sin letra chica.</em></h2>
-        <ul class="promises">
-          <li class="promise"><span>01</span><h3>Precio fijo por escrito</h3><p>Antes de pagar nada recibe alcance, plazo y precio. Lo que dice la propuesta es lo que paga.</p></li>
-          <li class="promise"><span>02</span><h3>Revisión incluida</h3><p>Si el diseño no se siente de su negocio, lo ajusto antes de publicar.</p></li>
-          <li class="promise"><span>03</span><h3>Todo queda a su nombre</h3><p>Dominio, accesos y contenidos son suyos. Nunca queda "secuestrado" por un proveedor.</p></li>
-          <li class="promise"><span>04</span><h3>Sin permanencia</h3><p>Los servicios mensuales se pueden pausar o terminar con aviso de 30 días.</p></li>
-          <li class="promise"><span>05</span><h3>Respuesta en menos de 24 h</h3><p>Días hábiles. Por WhatsApp o correo, como le acomode.</p></li>
-          <li class="promise"><span>06</span><h3>Usted queda capacitado</h3><p>Le dejo una guía para cambiar textos y fotos sin depender de mí en lo básico.</p></li>
-        </ul>
       </div>
     </section>
 
@@ -536,7 +469,7 @@
     <section class="method light" id="metodo">
       <div class="wrap method__grid">
         <div class="method__sticky">
-          <p class="eyebrow">07 · Método</p>
+          <p class="eyebrow">05 · Método</p>
           <h2 class="h1">Cuatro pasos. <em>Cero sorpresas.</em></h2>
           <p class="method__lead">Así avanza un proyecto conmigo, desde la primera conversación hasta que su sitio está en el aire y usted sabe manejarlo.</p>
           <div class="method__bar"><span data-method-bar></span></div>
@@ -560,23 +493,19 @@
       </div>
     </section>
 
-    <!-- AGENTE -->
-    <section class="agent dark" id="agente">
-      <div class="agent__glow" aria-hidden="true"></div>
-      <div class="wrap agent__grid">
-        <div class="agent__copy">
-          <p class="eyebrow">08 · Vaeru IA</p>
-          <h2 class="h1" data-split>Su presupuesto, <em>en una conversación.</em></h2>
-          <p class="agent__lead">Mi asistente de IA conoce mis servicios y tarifas. Le pregunta lo justo, calcula un rango real y me envía su cotización para que yo le prepare la propuesta.</p>
-          <ul class="agent__list">
-            <li><span>✦</span> Cotiza sitios, asesorías, capacitaciones y redes, incluso combinados</li>
-            <li><span>✦</span> Responde dudas sobre plazos, dominio y forma de pago</li>
-            <li><span>✦</span> Le entrega su cotización en PDF y agenda una videollamada</li>
-            <li><span>✦</span> Disponible 24/7, también a medianoche en temporada alta</li>
-            <li><span>✦</span> <a href="/servicios/automatizacion-ia-turismo/">¿Quiere uno así para su negocio? →</a></li>
-          </ul>
-        </div>
-        <div class="agent__panel" data-agent-inline></div>
+    <!-- GARANTÍAS -->
+    <section class="promises-wrap light promises-wrap--joined">
+      <div class="wrap">
+        <p class="eyebrow">Mis compromisos</p>
+        <h2 class="h2">Trabajar conmigo es <em>sin letra chica.</em></h2>
+        <ul class="promises">
+          <li class="promise"><span>01</span><h3>Precio fijo por escrito</h3><p>Antes de pagar nada recibe alcance, plazo y precio. Lo que dice la propuesta es lo que paga.</p></li>
+          <li class="promise"><span>02</span><h3>Revisión incluida</h3><p>Si el diseño no se siente de su negocio, lo ajusto antes de publicar.</p></li>
+          <li class="promise"><span>03</span><h3>Todo queda a su nombre</h3><p>Dominio, accesos y contenidos son suyos. Nunca queda "secuestrado" por un proveedor.</p></li>
+          <li class="promise"><span>04</span><h3>Sin permanencia</h3><p>Los servicios mensuales se pueden pausar o terminar con aviso de 30 días.</p></li>
+          <li class="promise"><span>05</span><h3>Respuesta en menos de 24 h</h3><p>Días hábiles. Por WhatsApp o correo, como le acomode.</p></li>
+          <li class="promise"><span>06</span><h3>Usted queda capacitado</h3><p>Le dejo una guía para cambiar textos y fotos sin depender de mí en lo básico.</p></li>
+        </ul>
       </div>
     </section>
 
@@ -595,7 +524,7 @@
           <img class="about__mark" src="/brand/emblema-192.webp" alt="" width="192" height="192" loading="lazy" />
         </div>
         <div class="about__copy">
-          <p class="eyebrow">09 · Quién está detrás</p>
+          <p class="eyebrow">06 · Quién está detrás</p>
           <h2 class="h1">Dos raíces. <em>Un solo oficio: la hospitalidad.</em></h2>
           <p>Soy <strong>Jorge Vásquez</strong>, dominicano viviendo en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. Red Vaeru es mi estudio, y su lema lo resume: <em>conectando culturas</em>. El emblema une la palmera del Caribe y la araucaria del sur: dos formas de recibir a quien llega.</p>
           <p>Conozco el turismo porque lo estudio y porque trabajo con quienes reciben huéspedes. Por eso no hago solo sitios web: reviso cómo vende, cómo atiende y cómo se ve su negocio, y lo convierto en un plan concreto.</p>
@@ -603,8 +532,23 @@
             <li><strong>Especialista en hospitalidad.</strong> Alojamientos, restaurantes y experiencias turísticas son mi foco.</li>
             <li><strong>Habla con quien hace el trabajo.</strong> Propuesta, diseño, asesoría y capacitación: yo, sin intermediarios.</li>
             <li><strong>Pocos proyectos a la vez.</strong> Para que cada uno tenga atención real.</li>
+            <li><strong>Emprendedor, no solo asesor.</strong> Fundé MANI-GANTE, confitería de autor en Temuco: aplico en mi propio negocio lo mismo que le propongo al suyo.</li>
           </ul>
         </div>
+      </div>
+    </section>
+
+    <!-- TESTIMONIOS -->
+    <section class="quotes light">
+      <div class="wrap">
+        <p class="eyebrow">07 · Lo que dicen</p>
+        <div class="quotes__grid quotes__grid--one">
+          <blockquote data-fade>
+            <p>"Nos ayudó a tener por fin un sitio propio para Cabañas Miah y Noah. Ahora nuestros huéspedes nos encuentran y <em>reservan directo.</em>"</p>
+            <footer><span class="avatar" aria-hidden="true">N</span><span><strong>Nicole</strong> · Co-anfitriona, Cabañas Miah y Noah</span></footer>
+          </blockquote>
+        </div>
+        <p class="quotes__note">Solo testimonios reales de clientes. Sin reseñas inventadas.</p>
       </div>
     </section>
 
@@ -612,7 +556,7 @@
     <section class="faq light" id="dudas">
       <div class="wrap faq__grid">
         <div>
-          <p class="eyebrow">10 · Dudas frecuentes</p>
+          <p class="eyebrow">08 · Dudas frecuentes</p>
           <h2 class="h1">Antes de <em>escribirme.</em></h2>
           <p class="faq__aside">¿No está su pregunta? <button class="link" data-open-agent data-source="dudas">Pregúntele a Vaeru IA →</button></p>
         </div>
@@ -633,7 +577,7 @@
     <!-- CONTACTO -->
     <section class="contact dark" id="contacto">
       <div class="wrap">
-        <p class="eyebrow">11 · Contacto</p>
+        <p class="eyebrow">09 · Contacto</p>
         <h2 class="contact__title" data-split>Hablemos de su <em>próxima temporada.</em></h2>
         <div class="contact__grid">
           <div class="contact__ways">

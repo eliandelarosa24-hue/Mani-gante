@@ -4,7 +4,10 @@
 import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { SAMPLES } from '../src/samples/data.js';
+import { SAMPLES as RAW } from '../src/samples/data.js';
+import { SHOWCASE, ORDER } from '../src/samples/showcase.js';
+// Orden de la galería: el de la portada; las que no estén en ORDER van al final.
+const SAMPLES = [...RAW].sort((a, b) => (ORDER.indexOf(a.slug) + 1 || 99) - (ORDER.indexOf(b.slug) + 1 || 99));
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -309,8 +312,15 @@ function gallery() {
 `;
 }
 
+// Portada de la tarjeta: la foto propia si existe, si no la de respaldo.
+function cover(s) {
+  const slot = s.cardSlot || 'hero', local = `/muestras/${s.slug}/img/${slot}.webp`;
+  return existsSync(join(root, 'public', local)) ? local : `https://images.unsplash.com/photo-${s.hero.img}?auto=format&fit=crop&w=1600&q=70`;
+}
+
 export function card(s) {
-  return `<a class="sample" href="/muestras/${s.slug}/" data-niche="${s.niche}">
+  const hl = esc(JSON.stringify(SHOWCASE[s.slug] || []));
+  return `<a class="sample" href="/muestras/${s.slug}/" data-niche="${s.niche}" data-slug="${s.slug}" data-name="${esc(s.name)}" data-rubro="${esc(s.nicheLabel)}" data-place="${esc(s.place)}" data-cover="${cover(s)}" data-accent="${s.theme['--accent']}" data-hl="${hl}">
     ${ph(s, s.cardSlot || 'hero', s.hero.img, '', s.hero.alt)}
     <span class="sample__tag">${esc(s.nicheLabel)}</span>
     <span class="sample__body"><span class="sample__place">${esc(s.place)}</span><strong>${esc(s.name)}</strong><span class="sample__line">${esc(s.tagline)}</span><span class="sample__go">Ver muestra ↗</span></span>
