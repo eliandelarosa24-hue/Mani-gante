@@ -48,28 +48,43 @@ export function initHeroShader(canvas) {
   const mouse = { x: 0.5, y: 0.5, tx: 0.5, ty: 0.5 };
   window.addEventListener('pointermove', (e) => { mouse.tx = e.clientX / innerWidth; mouse.ty = 1 - e.clientY / innerHeight; }, { passive: true });
 
+  // Se dibuja a resolución reducida (las curvas son suaves: el navegador la escala sin que se note)
+  // y se adapta al equipo: si un cuadro tarda demasiado, baja la resolución y, si no basta, queda fija.
+  let scale = matchMedia('(max-width: 900px)').matches ? 0.45 : 0.6;
   const resize = () => {
-    const dpr = Math.min(devicePixelRatio || 1, 1.5);
-    canvas.width = canvas.clientWidth * dpr;
-    canvas.height = canvas.clientHeight * dpr;
+    canvas.width = Math.max(1, Math.round(canvas.clientWidth * scale));
+    canvas.height = Math.max(1, Math.round(canvas.clientHeight * scale));
     gl.viewport(0, 0, canvas.width, canvas.height);
   };
   resize();
   window.addEventListener('resize', resize);
 
-  let visible = true, raf = 0;
-  new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf) loop(); }).observe(canvas);
+  let visible = true, raf = 0, last = 0, slow = 0, frozen = false;
   const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
   const start = performance.now();
-  function loop() {
-    raf = 0;
-    mouse.x += (mouse.tx - mouse.x) * 0.04;
-    mouse.y += (mouse.ty - mouse.y) * 0.04;
+  const draw = (now) => {
+    mouse.x += (mouse.tx - mouse.x) * 0.08;
+    mouse.y += (mouse.ty - mouse.y) * 0.08;
     gl.uniform2f(uR, canvas.width, canvas.height);
-    gl.uniform1f(uT, reduced ? 8 : (performance.now() - start) / 1000);
+    gl.uniform1f(uT, reduced || frozen ? 8 : (now - start) / 1000);
     gl.uniform2f(uM, mouse.x, mouse.y);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
-    if (visible && !reduced) raf = requestAnimationFrame(loop);
+  };
+  function loop(now) {
+    raf = 0;
+    if (!visible || frozen) return;
+    raf = requestAnimationFrame(loop);
+    if (now - last < 33) return; // ~30 cuadros por segundo bastan para un fondo lento
+    const gap = now - last; last = now;
+    const t0 = performance.now(); draw(now); gl.finish?.();
+    const cost = performance.now() - t0;
+    if (cost > 14 || gap > 80) slow++; else slow = Math.max(0, slow - 1);
+    if (slow > 12) { slow = 0; if (scale > 0.3) { scale *= 0.7; resize(); } else { frozen = true; draw(now); } }
   }
-  loop();
+  new IntersectionObserver(([en]) => { visible = en.isIntersecting; if (visible && !raf && !reduced) raf = requestAnimationFrame(loop); }).observe(canvas);
+  draw(start);
+  if (reduced) return;
+  // El movimiento parte cuando el navegador queda libre después de la carga
+  const go = () => { if (!raf) raf = requestAnimationFrame(loop); };
+  if ('requestIdleCallback' in window) requestIdleCallback(go, { timeout: 2500 }); else setTimeout(go, 1500);
 }

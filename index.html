@@ -72,6 +72,7 @@
   </script>
   <link rel="manifest" href="/manifest.webmanifest" />
   <script type="speculationrules">{"prerender":[{"where":{"href_matches":"/*"},"eagerness":"moderate"}]}</script>
+  <script>document.documentElement.classList.add('is-booting');setTimeout(function(){document.documentElement.classList.remove('is-booting')},3000)</script>
   <!--ANALYTICS-->
 </head>
 <body>
@@ -200,7 +201,7 @@
           <div class="samples showcase__list" data-showcase-list><!--SAMPLES--></div>
           <!-- Escenario: muestra la muestra activa. Aquí va el video de cada una (data-video="muestra-<slug>"). -->
           <div class="stage" data-stage aria-live="polite">
-            <a class="stage__screen" data-stage-link href="/muestras/termas-rayenko/" data-cursor="Entrar">
+            <a class="stage__screen" data-stage-link href="/muestras/termas-rayenko/" data-cursor="Entrar" aria-label="Entrar a la muestra Termas Rayenko">
               <span class="stage__bar" aria-hidden="true"><i></i><i></i><i></i><em data-stage-url>redvaeru.cl/muestras/termas-rayenko</em></span>
               <span class="stage__media">
                 <span class="stage__img" data-stage-img></span>

@@ -94,6 +94,7 @@ export function initShowcase() {
     [nm, pl].forEach((x) => { x.classList.remove('is-swap'); void x.offsetWidth; x.classList.add('is-swap'); });
     $('[data-stage-hl]', stage).innerHTML = d.hl.map((h) => `<li>${h}</li>`).join('');
     link.href = go.href = d.href;
+    link.setAttribute('aria-label', `Entrar a la muestra ${d.name}`);
     attachVideo($('[data-stage-video]', stage), `muestra-${d.slug}`);
   };
   items.forEach((d, k) => {

@@ -21,13 +21,13 @@ function intro() {
     const counter = { v: 0 };
     const word = $('.loader__word');
     if (word) word.innerHTML = [...word.textContent].map((c) => `<span>${c === ' ' ? '&nbsp;' : c}</span>`).join('');
-    tl.to(counter, { v: 100, duration: 1.3, ease: 'power2.inOut', onUpdate: () => { $('[data-count]').textContent = Math.round(counter.v); } })
-      .to('.loader__line', { scaleX: 1, duration: 1.3, ease: 'power2.inOut' }, 0)
-      .to('.loader__ring circle', { strokeDashoffset: 0, duration: 1.3, ease: 'power2.inOut' }, 0)
+    tl.to(counter, { v: 100, duration: 0.95, ease: 'power2.inOut', onUpdate: () => { $('[data-count]').textContent = Math.round(counter.v); } })
+      .to('.loader__line', { scaleX: 1, duration: 0.95, ease: 'power2.inOut' }, 0)
+      .to('.loader__ring circle', { strokeDashoffset: 0, duration: 0.95, ease: 'power2.inOut' }, 0)
       .from('.loader__mark', { scale: 0.6, opacity: 0, rotate: -40, duration: 1, ease: 'expo.out' }, 0)
       .to('.loader__word span', { opacity: 1, y: 0, duration: 0.6, stagger: 0.018, ease: 'expo.out' }, 0.2)
-      .to('.loader__mark, .loader__ring, .loader__word, .loader__count', { opacity: 0, y: -14, duration: 0.45, ease: 'power2.in' })
-      .to(loader, { clipPath: 'inset(50% 0 50% 0)', duration: 0.9, ease: 'expo.inOut' }, '-=0.1')
+      .to('.loader__mark, .loader__ring, .loader__word, .loader__count', { opacity: 0, y: -14, duration: 0.35, ease: 'power2.in' })
+      .to(loader, { clipPath: 'inset(50% 0 50% 0)', duration: 0.75, ease: 'expo.inOut' }, '-=0.1')
       .add(() => loader.remove());
   }
   tl.from(heroLines, { yPercent: 110, duration: 1.2, stagger: 0.08, ease: 'expo.out' }, seen ? 0 : '-=0.4')
@@ -52,7 +52,7 @@ function scrollAnimations() {
   revealOnScroll();
 
   $$('[data-words]').forEach((el) => {
-    gsap.to(wordsOf(el), { opacity: 1, stagger: 0.05, ease: 'none', scrollTrigger: { trigger: el, start: 'top 75%', end: 'bottom 45%', scrub: true } });
+    gsap.to(wordsOf(el), { color: '#0b110e', stagger: 0.05, ease: 'none', scrollTrigger: { trigger: el, start: 'top 75%', end: 'bottom 45%', scrub: true } });
   });
   gsap.from('.svc__row', { y: 40, opacity: 0, duration: 1, stagger: 0.08, ease: 'expo.out', scrollTrigger: { trigger: '.svc', start: 'top 80%' } });
   gsap.from('.ota__calc', { y: 80, rotate: 2, opacity: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: '.ota', start: 'top 80%' } });
@@ -293,5 +293,5 @@ initShowcase();
 initCases();
 initWarp();
 initHeroShader($('.hero__canvas'));
-const boot = () => { intro(); scrollAnimations(); ScrollTrigger.refresh(); };
+const boot = () => { document.documentElement.classList.remove('is-booting'); intro(); scrollAnimations(); ScrollTrigger.refresh(); };
 if (document.fonts?.ready) document.fonts.ready.then(boot); else addEventListener('load', boot);
