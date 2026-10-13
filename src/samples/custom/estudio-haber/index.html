@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Estudio Haber · Contabilidad y tributación para pymes en Temuco · Muestra Red Vaeru</title>
+  <meta name="description" content="Estudio contable y tributario para pymes de La Araucanía: contabilidad mensual, F29, Operación Renta, remuneraciones e inicio de actividades. Calendario tributario, calculadoras y diagnóstico gratuito. Muestra de concepto de Red Vaeru." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#f3eee2" />
+  <link rel="canonical" href="__SITE_URL__/muestras/estudio-haber/" />
+  <meta property="og:title" content="Estudio Haber · muestra de concepto de Red Vaeru" />
+  <meta property="og:image" content="__SITE_URL__/og.jpg" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='6' fill='%231f5a45'/%3E%3Cpath d='M20 14v36M44 14v36M20 32h24' stroke='%23f3eee2' stroke-width='5' stroke-linecap='square'/%3E%3Cpath d='M10 54h44' stroke='%23e0745e' stroke-width='3'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,300..700;1,6..72,300..600&family=Instrument+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&family=Caveat:wght@500;700&display=swap" rel="stylesheet" />
+  <!--ANALYTICS-->
+</head>
+<body>
+  <!-- Pantalla de carga: un asiento contable que se cuadra y se timbra -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__sheet">
+      <p class="loader__h"><span>Libro diario</span><span>Folio 0001</span></p>
+      <div class="loader__cols"><span>Debe</span><span>Haber</span></div>
+      <div class="loader__rows" data-load-rows></div>
+      <div class="loader__sum"><span data-load-d>0</span><span data-load-h>0</span></div>
+      <p class="loader__diff">Diferencia <b data-load-diff>$0</b></p>
+      <div class="loader__stamp" data-load-stamp><span>Cuadrado</span><small>Estudio Haber · Temuco</small></div>
+      <i class="loader__perf"></i>
+    </div>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- Marca: las dos columnas del libro (Debe y Haber) unidas por la H -->
+      <symbol id="mark" viewBox="0 0 64 64">
+        <rect x="2" y="2" width="60" height="60" rx="5" fill="currentColor" />
+        <path d="M21 13v38M43 13v38M21 32h22" fill="none" style="stroke: var(--mark-ink, #f3eee2)" stroke-width="5" />
+        <path d="M11 55h42" fill="none" style="stroke: var(--mark-line, #e0745e)" stroke-width="2.6" />
+      </symbol>
+      <filter id="ink"><feTurbulence type="fractalNoise" baseFrequency="0.9" numOctaves="2" seed="4" /><feDisplacementMap in="SourceGraphic" scale="3.2" /></filter>
+      <filter id="rough"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="2" seed="9" result="n" /><feDisplacementMap in="SourceGraphic" in2="n" scale="2.4" /></filter>
+    </defs>
+  </svg>
+
+  <div class="demo"><img src="/brand/emblema-96.webp" alt="" width="20" height="20" /> Muestra de concepto diseñada por Red Vaeru · Negocio ficticio <a href="/muestras/">Ver todas las muestras</a> · <a href="/#contacto">Quiero un sitio así</a></div>
+
+  <header class="nav">
+    <a class="brand" href="#inicio" aria-label="Estudio Haber, inicio"><svg class="brand__mark" viewBox="0 0 64 64" aria-hidden="true"><use href="#mark" /></svg><span><b>Estudio Haber</b><small>Contadores · Temuco · desde 2009</small></span></a>
+    <nav class="nav__links" aria-label="Secciones">
+      <a href="#calendario">Calendario</a><a href="#calculadoras">Calculadoras</a><a href="#planes">Planes</a><a href="#clientes">Clientes</a><a href="#estudio">El estudio</a>
+    </nav>
+    <a class="nav__due" href="#calendario" data-due-chip><span class="dot"></span><span data-due-chip-t>F29</span></a>
+    <a class="stamp-btn stamp-btn--sm" href="#agenda"><span>Agendar diagnóstico</span></a>
+    <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false" data-burger><i></i><i></i></button>
+  </header>
+  <div class="drawer" data-drawer aria-hidden="true">
+    <a href="#calendario">Calendario tributario</a><a href="#calculadoras">Calculadoras</a><a href="#regimen">¿Qué régimen me conviene?</a><a href="#planes">Planes</a><a href="#clientes">Clientes</a><a href="#estudio">El estudio</a><a href="#agenda">Agendar diagnóstico</a>
+  </div>
+
+  <main id="inicio">
+    <!-- ───────────── Hero: de la caja de zapatos al balance ───────────── -->
+    <section class="hero" data-hero>
+      <div class="hero__stage" data-stage>
+        <div class="hero__ph" style="{{img:hero:1454165804606-c3d57bc86b40}}" data-hero-ph></div>
+        <div class="hero__veil"></div>
+        <div class="hero__copy" data-hero-copy>
+          <p class="hero__k"><span>Estudio contable y tributario</span><span>Temuco · La Araucanía</span></p>
+          <h1 class="hero__title"><span class="l1"><span>De la caja de zapatos</span></span><span class="l2"><span>al <em>balance.</em></span></span></h1>
+          <p class="hero__lead">Contabilidad mensual, impuestos y remuneraciones para pymes del sur. Con un contador que conoce su negocio por el nombre y contesta el WhatsApp.</p>
+          <div class="hero__cta"><a class="stamp-btn" href="#agenda"><span>Diagnóstico gratis · 30 min</span></a><a class="pencil-link" href="#calendario">¿Cuándo vence mi IVA?</a></div>
+          <p class="hero__hint" data-hero-hint><span>Ordene la caja</span> <i aria-hidden="true">↓</i></p>
+        </div>
+        <div class="receipts" data-receipts aria-hidden="true"></div>
+        <div class="ledger" data-ledger aria-label="Libro de compras de septiembre ordenado">
+          <div class="ledger__h"><p><b>Libro de compras</b> · Septiembre 2026</p><p class="ledger__c">Panadería Las Encinas · RUT 76.xxx.xxx-x</p></div>
+          <div class="ledger__t" role="table">
+            <div class="ledger__r ledger__r--h" role="row"><span role="columnheader">Fecha</span><span role="columnheader">Proveedor</span><span role="columnheader">Doc.</span><span role="columnheader">Neto</span><span role="columnheader">IVA crédito</span><span role="columnheader">Total</span></div>
+            <div data-ledger-rows></div>
+            <div class="ledger__r ledger__r--sum" role="row"><span></span><span>Totales del mes</span><span></span><span data-sum-net>$0</span><span data-sum-iva>$0</span><span data-sum-tot>$0</span></div>
+          </div>
+          <p class="ledger__note"><span class="hand">las boletas no dan crédito fiscal, ¡pida factura!</span></p>
+          <div class="ledger__stamp" data-ledger-stamp><span>Al día</span><small>Sept. 2026</small></div>
+        </div>
+        <p class="hero__done" data-hero-done>Así le entregamos cada mes: <b>ordenado, cuadrado y explicado.</b></p>
+      </div>
+    </section>
+
+    <!-- Franja: cifras del estudio -->
+    <section class="tape" aria-label="El estudio en cifras">
+      <div class="tape__in">
+        <p><b data-count="180">0</b><span>pymes llevan su contabilidad con nosotros</span></p>
+        <p><b data-count="16">0</b><span>años en Temuco, desde 2009</span></p>
+        <p><b data-count="2160" data-sep>0</b><span>F29 presentados el último año, todos a tiempo</span></p>
+        <p><b data-count="24" data-suffix=" h">0</b><span>máximo para responder su WhatsApp</span></p>
+      </div>
+    </section>
+
+    <!-- ───────────── 01 · Calendario tributario ───────────── -->
+    <section class="sec sec--paper" id="calendario">
+      <header class="fh rv">
+        <p class="fh__no">Folio 01</p>
+        <h2>El calendario que <em>nunca se le pasa.</em></h2>
+        <p class="fh__note hand">el 20 de cada mes, sin falta</p>
+      </header>
+      <p class="sec__lead rv">Las fechas del SII calculadas para hoy, con feriados y fines de semana. Arranque las hojas del taco para ver cómo se acercan los vencimientos.</p>
+
+      <div class="cal">
+        <div class="pad rv" data-pad>
+          <div class="pad__ring"><i></i><i></i><i></i><i></i><i></i></div>
+          <div class="pad__stack" data-pad-stack></div>
+          <div class="pad__ctrl"><button type="button" class="key" data-pad-back aria-label="Volver a hoy">Hoy</button><button type="button" class="key key--ink" data-pad-tear>Arrancar hoja →</button></div>
+        </div>
+        <div class="due rv" data-due>
+          <p class="due__k" data-due-k>Próximo vencimiento</p>
+          <p class="due__big"><span data-due-n>0</span><small data-due-unit>días</small></p>
+          <p class="due__what" data-due-what></p>
+          <ul class="due__list" data-due-list></ul>
+          <p class="due__fine">Fechas referenciales para contribuyentes con facturación electrónica. Si el vencimiento cae en sábado, domingo o feriado, se corre al día hábil siguiente.</p>
+        </div>
+      </div>
+
+      <div class="month rv" data-month>
+        <div class="month__h"><button type="button" class="key" data-m-prev aria-label="Mes anterior">←</button><p data-m-title></p><button type="button" class="key" data-m-next aria-label="Mes siguiente">→</button></div>
+        <div class="month__dow"><span>lu</span><span>ma</span><span>mi</span><span>ju</span><span>vi</span><span>sá</span><span>do</span></div>
+        <div class="month__grid" data-m-grid></div>
+        <div class="month__leg"><span class="lg lg--iva">IVA · F29</span><span class="lg lg--prev">Cotizaciones</span><span class="lg lg--hol">Feriado</span><span class="lg lg--year">Hito anual</span></div>
+      </div>
+
+      <div class="year rv">
+        <p class="year__t">El año tributario, mes a mes</p>
+        <div class="year__strip" data-year role="tablist" aria-label="Meses del año tributario"></div>
+        <div class="year__card" data-year-card aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 02 · Calculadoras ───────────── -->
+    <section class="sec sec--cover" id="calculadoras">
+      <header class="fh fh--light rv">
+        <p class="fh__no">Folio 02</p>
+        <h2>Calculadoras <em>de bolsillo.</em></h2>
+        <p class="fh__note hand">las mismas que usamos en la oficina</p>
+      </header>
+      <div class="calc rv" data-calc>
+        <div class="calc__body">
+          <div class="calc__tabs" role="tablist" aria-label="Calculadoras">
+            <button role="tab" aria-selected="true" data-mode="iva">IVA 19%</button>
+            <button role="tab" aria-selected="false" data-mode="hon">Boleta de honorarios</button>
+            <button role="tab" aria-selected="false" data-mode="late">F29 atrasado</button>
+          </div>
+          <div class="calc__screen"><span class="calc__lbl" data-c-lbl>Monto</span><span class="calc__val" data-c-val>$0</span></div>
+          <div class="calc__opts" data-c-opts></div>
+          <div class="calc__pad" data-c-pad>
+            <button type="button" data-k="7">7</button><button type="button" data-k="8">8</button><button type="button" data-k="9">9</button><button type="button" data-k="del" class="op">⌫</button>
+            <button type="button" data-k="4">4</button><button type="button" data-k="5">5</button><button type="button" data-k="6">6</button><button type="button" data-k="c" class="op">C</button>
+            <button type="button" data-k="1">1</button><button type="button" data-k="2">2</button><button type="button" data-k="3">3</button><button type="button" data-k="000" class="op">000</button>
+            <button type="button" data-k="0" class="wide">0</button><button type="button" data-k="=" class="eq">Imprimir</button>
+          </div>
+          <label class="calc__type"><span>o escriba el monto</span><input type="text" inputmode="numeric" autocomplete="off" data-c-input aria-label="Monto en pesos" /></label>
+        </div>
+        <div class="calc__tape" aria-live="polite">
+          <div class="tape-roll"><i></i></div>
+          <div class="tape-paper" data-tape><p class="tape-head">Estudio Haber · cálculo referencial</p></div>
+          <button type="button" class="tape-tear" data-tape-tear>Cortar la tira ✂</button>
+        </div>
+      </div>
+      <p class="calc__fine rv" data-c-fine></p>
+    </section>
+
+    <!-- ───────────── 03 · Régimen ───────────── -->
+    <section class="sec sec--paper sec--ruled" id="regimen">
+      <header class="fh rv">
+        <p class="fh__no">Folio 03</p>
+        <h2>¿Qué régimen <em>le conviene?</em></h2>
+        <p class="fh__note hand">4 preguntas, sin letra chica</p>
+      </header>
+      <form class="form29 rv" data-regime novalidate>
+        <div class="form29__h"><p><b>Formulario H-14</b> · Diagnóstico de régimen tributario</p><p>Folio N° <span data-regime-folio>000000</span></p></div>
+        <fieldset class="box">
+          <legend><span class="code">Cód. 01</span> Ventas anuales aproximadas</legend>
+          <div class="range"><input type="range" min="0" max="5000" step="10" value="240" data-sales aria-label="Ventas anuales en millones de pesos" /><output data-sales-out>$240 millones</output></div>
+          <p class="box__help" data-sales-uf></p>
+        </fieldset>
+        <fieldset class="box">
+          <legend><span class="code">Cód. 02</span> ¿Quiénes son los dueños?</legend>
+          <label class="chk"><input type="radio" name="own" value="nat" checked /><span>Solo personas naturales</span></label>
+          <label class="chk"><input type="radio" name="own" value="co" /><span>Alguna empresa es socia</span></label>
+        </fieldset>
+        <fieldset class="box">
+          <legend><span class="code">Cód. 03</span> ¿Qué hace con las utilidades?</legend>
+          <label class="chk"><input type="radio" name="use" value="out" checked /><span>Las retiro casi todas</span></label>
+          <label class="chk"><input type="radio" name="use" value="in" /><span>Reinvierto en el negocio</span></label>
+        </fieldset>
+        <fieldset class="box">
+          <legend><span class="code">Cód. 04</span> ¿Cuántas personas trabajan con usted?</legend>
+          <div class="steps" data-workers><button type="button" data-w="-1" aria-label="Menos">−</button><output data-w-out>0</output><button type="button" data-w="1" aria-label="Más">+</button></div>
+        </fieldset>
+        <div class="verdict" data-verdict aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- ───────────── 04 · Antes y después ───────────── -->
+    <section class="sec sec--paper" id="metodo">
+      <header class="fh rv">
+        <p class="fh__no">Folio 04</p>
+        <h2>Así <em>trabajamos.</em></h2>
+        <p class="fh__note hand">arrastre la línea →</p>
+      </header>
+      <div class="ba rv" data-ba>
+        <div class="ba__img ba__img--a" style="{{img:caja:1554224155-6726b3ff858f}}"></div>
+        <div class="ba__img ba__img--b" style="{{img:orden:1586281380349-632531db7ed4}}" data-ba-b></div>
+        <span class="ba__tag ba__tag--a">Lo que nos trae</span><span class="ba__tag ba__tag--b">Lo que le devolvemos</span>
+        <div class="ba__bar" data-ba-bar><span aria-hidden="true">⇆</span></div>
+        <input class="ba__range" type="range" min="0" max="100" value="50" aria-label="Comparar antes y después" data-ba-range />
+      </div>
+      <ol class="steps4">
+        <li class="rv"><span class="steps4__n">1</span><h3>Diagnóstico gratis</h3><p>Treinta minutos, presencial o por videollamada. Revisamos su situación en el SII y le decimos, con números, cuánto cuesta ponerse al día.</p></li>
+        <li class="rv"><span class="steps4__n">2</span><h3>Ordenamos la caja</h3><p>Recibimos los papeles como vengan. Los digitalizamos, los cuadramos con el registro del SII y declaramos lo pendiente.</p></li>
+        <li class="rv"><span class="steps4__n">3</span><h3>Cada mes, un WhatsApp</h3><p>El día 15 le llega su resumen: cuánto IVA paga, cuánto vendió y qué viene. Usted aprueba y nosotros declaramos.</p></li>
+        <li class="rv"><span class="steps4__n">4</span><h3>Abril sin sustos</h3><p>Preparamos la Renta desde febrero. Revisamos el F22 con usted antes de enviarlo y seguimos su devolución.</p></li>
+      </ol>
+      <div class="chat rv" data-chat>
+        <div class="phone">
+          <div class="phone__top"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#mark" /></svg><p><b>Carolina · Estudio Haber</b><small data-chat-status>en línea</small></p></div>
+          <div class="phone__body" data-chat-body></div>
+        </div>
+        <div class="chat__side">
+          <p class="hand chat__note">esto es lo que recibe el día 15 de cada mes</p>
+          <p>Sin planillas que no entiende ni correos con adjuntos raros: un mensaje claro, con el monto, la fecha y una pregunta. Si responde «ok», declaramos.</p>
+          <button type="button" class="pencil-link" data-chat-replay>Ver el mensaje de nuevo ↺</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── 05 · Planes ───────────── -->
+    <section class="sec sec--kraft" id="planes">
+      <header class="fh rv">
+        <p class="fh__no">Folio 05</p>
+        <h2>Una carpeta <em>para cada etapa.</em></h2>
+        <p class="fh__note hand">sin permanencia mínima</p>
+      </header>
+      <div class="folders" data-folders role="tablist" aria-label="Planes"></div>
+      <div class="builder rv">
+        <div class="builder__in">
+          <div class="box">
+            <p class="box__lbl"><span class="code">Cód. 10</span> Trabajadores con contrato</p>
+            <div class="steps" data-b-workers><button type="button" data-w="-1" aria-label="Menos">−</button><output data-b-w>0</output><button type="button" data-w="1" aria-label="Más">+</button></div>
+          </div>
+          <div class="box">
+            <p class="box__lbl"><span class="code">Cód. 11</span> Documentos al mes (boletas, facturas, notas)</p>
+            <div class="range"><input type="range" min="10" max="800" step="10" value="90" data-b-docs aria-label="Documentos al mes" /><output data-b-docs-out>90</output></div>
+          </div>
+          <div class="box">
+            <p class="box__lbl"><span class="code">Cód. 12</span> Una sola vez</p>
+            <label class="chk"><input type="checkbox" data-b-x="ini" value="35000" /><span>Creación de empresa e inicio de actividades · $35.000</span></label>
+            <label class="chk"><input type="checkbox" data-b-x="reg" value="180000" /><span>Regularizar años anteriores · desde $180.000</span></label>
+          </div>
+        </div>
+        <div class="receipt" data-b-receipt aria-live="polite"></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 06 · Clientes ───────────── -->
+    <section class="sec sec--paper" id="clientes">
+      <header class="fh rv">
+        <p class="fh__no">Folio 06</p>
+        <h2>Pymes que hoy <em>duermen tranquilas.</em></h2>
+        <p class="fh__note hand">expedientes reales*</p>
+      </header>
+      <div class="cases" data-cases></div>
+      <p class="cases__fine">*Casos ilustrativos de una muestra de concepto. Nombres y cifras ficticios.</p>
+
+      <div class="map rv">
+        <div class="map__copy">
+          <p class="map__k">De Angol a Valdivia</p>
+          <h3>Atendemos a toda <em>La Araucanía.</em></h3>
+          <p>La mitad de nuestros clientes no vive en Temuco. Trabajamos por videollamada y WhatsApp, y salimos a terreno cuando un campo, un taller o un hotel lo necesitan.</p>
+          <ul class="map__list" data-map-list></ul>
+        </div>
+        <div class="map__fig"><svg viewBox="0 0 400 460" data-map role="img" aria-label="Mapa de clientes por comuna"></svg><p class="map__tip" data-map-tip></p></div>
+      </div>
+    </section>
+
+    <!-- ───────────── 07 · El estudio ───────────── -->
+    <section class="sec sec--paper" id="estudio">
+      <header class="fh rv">
+        <p class="fh__no">Folio 07</p>
+        <h2>Siete contadores, <em>una casa de madera.</em></h2>
+        <p class="fh__note hand">pase, hay café</p>
+      </header>
+      <div class="house">
+        <figure class="house__a rv" data-zoom="oficina"><div class="ph" style="{{img:oficina:1497366216548-37526070297c}}"></div><figcaption>La casa de calle Bulnes, de 1928, restaurada en 2019</figcaption></figure>
+        <figure class="house__b rv" data-zoom="equipo"><div class="ph" style="{{img:equipo:1522071820081-009f0129c71c}}"></div><figcaption>La mesa larga del segundo piso</figcaption></figure>
+        <figure class="house__c rv" data-zoom="reunion"><div class="ph" style="{{img:reunion:1556761175-5973dc0f32e7}}"></div><figcaption>Diagnóstico con una clienta de Padre Las Casas</figcaption></figure>
+        <div class="house__story rv">
+          <p class="drop">Carolina Painemal abrió el estudio en 2009, en una oficina de doce metros cuadrados sobre una zapatería del centro. Sus primeros clientes fueron los locatarios de la Feria Pinto: llegaban con bolsas de boletas y se iban con sus papeles en orden y sus números explicados.</p>
+          <p>Dieciséis años después somos siete y atendemos a 180 pymes, pero la regla es la misma: cada cliente tiene un contador con nombre y apellido, y nadie sale de la oficina sin entender lo que firma.</p>
+        </div>
+      </div>
+      <div class="team" data-team></div>
+      <div class="craft">
+        <figure class="rv" data-zoom="sello"><div class="ph" style="{{img:sello:1450101499163-c8848c66ca85}}"></div><figcaption>Cada balance sale firmado y timbrado</figcaption></figure>
+        <figure class="rv" data-zoom="libro"><div class="ph" style="{{img:libro:1543286386-713bdd548da4}}"></div><figcaption>El primer libro diario del estudio, 2009</figcaption></figure>
+        <figure class="rv" data-zoom="temuco"><div class="ph" style="{{img:temuco:1449824913935-59a10b8d2000}}"></div><figcaption>Temuco desde el cerro Ñielol</figcaption></figure>
+        <figure class="rv" data-zoom="feria"><div class="ph" style="{{img:feria:1488459716781-31db52582fe9}}"></div><figcaption>La Feria Pinto, donde empezó todo</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ───────────── 08 · Notas de clientes ───────────── -->
+    <section class="sec sec--cork" id="notas">
+      <header class="fh fh--light rv">
+        <p class="fh__no">Folio 08</p>
+        <h2>Notas pegadas <em>en el diario mural.</em></h2>
+        <p class="fh__note hand">las guardamos todas</p>
+      </header>
+      <div class="notes" data-notes></div>
+      <p class="score rv"><b>4,9</b> <span>★★★★★</span> 126 reseñas en Google</p>
+    </section>
+
+    <!-- ───────────── 09 · Preguntas ───────────── -->
+    <section class="sec sec--paper sec--ruled" id="preguntas">
+      <header class="fh rv">
+        <p class="fh__no">Folio 09</p>
+        <h2>Lo que nos preguntan <em>en abril.</em></h2>
+        <p class="fh__note hand">y el resto del año</p>
+      </header>
+      <div class="faq" data-faq></div>
+    </section>
+
+    <!-- ───────────── 10 · Agenda ───────────── -->
+    <section class="sec sec--end" id="agenda">
+      <div class="end__ph" style="{{img:cierre:1497366811353-6870744d04b2}}"></div>
+      <div class="end__in">
+        <header class="fh fh--light rv">
+          <p class="fh__no">Folio 10</p>
+          <h2>Traiga la caja. <em>Nosotros ponemos el café.</em></h2>
+          <p class="fh__note hand">el diagnóstico es gratis</p>
+        </header>
+        <form class="book rv" data-book novalidate>
+          <div class="book__col">
+            <p class="book__k">1 · Elija el día</p>
+            <div class="book__days" data-days role="radiogroup" aria-label="Día"></div>
+            <p class="book__k">2 · Elija la hora</p>
+            <div class="book__slots" data-slots role="radiogroup" aria-label="Hora"></div>
+          </div>
+          <div class="book__col">
+            <p class="book__k">3 · ¿Cómo prefiere?</p>
+            <div class="book__mode">
+              <label class="chk"><input type="radio" name="mode" value="Presencial en calle Bulnes" checked /><span>En la oficina</span></label>
+              <label class="chk"><input type="radio" name="mode" value="Videollamada" /><span>Videollamada</span></label>
+              <label class="chk"><input type="radio" name="mode" value="Llamada por WhatsApp" /><span>WhatsApp</span></label>
+            </div>
+            <label class="field"><span>Su nombre</span><input type="text" name="name" autocomplete="name" placeholder="Rosa Muñoz" /></label>
+            <label class="field"><span>Su negocio</span><input type="text" name="biz" placeholder="Panadería, taller, cabañas…" /></label>
+            <button type="submit" class="stamp-btn stamp-btn--light"><span>Reservar diagnóstico</span></button>
+          </div>
+          <div class="voucher" data-voucher aria-live="polite"></div>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__top"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#mark" /></svg><p class="foot__word">Estudio <em>Haber</em></p><p class="foot__motto hand">que le cuadren las cuentas</p></div>
+    <div class="foot__grid">
+      <div><p class="label">Oficina</p><p>Bulnes 0000, Temuco<br />Región de La Araucanía</p></div>
+      <div><p class="label">Contacto</p><p>+56 45 000 0000<br />hola@estudiohaber.cl</p></div>
+      <div><p class="label">Horario</p><p>Lunes a viernes 9:00 a 18:30<br />Abril: también sábados 10:00 a 14:00</p></div>
+      <div><p class="label">Muestra</p><p>Negocio ficticio. Concepto diseñado por <a href="/">Red Vaeru</a> · Conectando culturas</p></div>
+    </div>
+    <p class="foot__end"><span>© <span data-yr>2026</span> Estudio Haber SpA</span><span>La información tributaria de este sitio es referencial y no reemplaza una asesoría.</span><button type="button" class="foot__snd" data-sound aria-pressed="false">Sonido de oficina: apagado</button></p>
+  </footer>
+
+  <div class="viewer" data-viewer aria-hidden="true" role="dialog" aria-modal="true" aria-label="Fotografía ampliada"><button type="button" class="viewer__x" data-viewer-close>Cerrar ✕</button><div class="viewer__img" data-viewer-img></div><p class="viewer__cap" data-viewer-cap></p></div>
+  <a class="wa" href="#agenda" data-demo aria-label="Escribir por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 8.5c0 4 3 7 7 7l1-1.6-2-1-1 1c-1.4-.6-2.4-1.6-3-3l1-1-1-2z" fill="currentColor"/></svg><span>Hablemos</span></a>
+  <div class="note" role="status"><p data-note-text></p><div><a href="https://wa.me/56952289117" target="_blank" rel="noopener">Quiero un sitio así</a><button type="button" data-note-close>Cerrar</button></div></div>
+
+  <template data-photos>
+    <i data-p="hero" style="{{img:hero:1454165804606-c3d57bc86b40}}"></i>
+    <i data-p="oficina" style="{{img:oficina:1497366216548-37526070297c}}"></i>
+    <i data-p="equipo" style="{{img:equipo:1522071820081-009f0129c71c}}"></i>
+    <i data-p="reunion" style="{{img:reunion:1556761175-5973dc0f32e7}}"></i>
+    <i data-p="caja" style="{{img:caja:1554224155-6726b3ff858f}}"></i>
+    <i data-p="orden" style="{{img:orden:1586281380349-632531db7ed4}}"></i>
+    <i data-p="sello" style="{{img:sello:1450101499163-c8848c66ca85}}"></i>
+    <i data-p="libro" style="{{img:libro:1543286386-713bdd548da4}}"></i>
+    <i data-p="panaderia" style="{{img:panaderia:1509440159596-0249088772ff}}"></i>
+    <i data-p="taller" style="{{img:taller:1486262715619-67b85e0b08d3}}"></i>
+    <i data-p="campo" style="{{img:campo:1498579397066-22750a3cb424}}"></i>
+    <i data-p="almacen" style="{{img:almacen:1604719312566-8912e9227c6a}}"></i>
+    <i data-p="temuco" style="{{img:temuco:1449824913935-59a10b8d2000}}"></i>
+    <i data-p="feria" style="{{img:feria:1488459716781-31db52582fe9}}"></i>
+    <i data-p="firma" style="{{img:firma:1450101499163-c8848c66ca85}}"></i>
+    <i data-p="cierre" style="{{img:cierre:1497366811353-6870744d04b2}}"></i>
+  </template>
+
+  <script type="module" src="/src/samples/custom/estudio-haber/main.js"></script>
+</body>
+</html>
