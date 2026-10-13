@@ -42,6 +42,7 @@ export function initReal() {
     $$('[data-real-poster]', root).forEach((el) => (el.style.backgroundImage = `url('${p.poster}-${el.dataset.realPoster}.webp')`));
     $('[data-live-url]', root).textContent = new URL(p.url).host;
     caseEl.innerHTML = `<p class="real__meta"><span>${p.place}</span><span>${p.tag}</span></p><h3>${p.name}</h3><dl>${p.dl.map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl><a class="btn btn--line" href="${p.url}" target="_blank" rel="noopener">Abrir el sitio ↗</a>`;
+    attachVideo($('[data-real-video]', root), `real-${key}`);
     caseEl.classList.remove('is-swap'); void caseEl.offsetWidth; caseEl.classList.add('is-swap');
     covers();
     if (started) load();
@@ -57,6 +58,4 @@ export function initReal() {
     key = b.dataset.real; paint(); track('live_tab', { site: PROJECTS[key].url });
   }));
   paint();
-  // Cuando existan, los videos de cada proyecto reemplazan la portada (data-video="real-miah" / "real-poetas")
-  void attachVideo;
 }

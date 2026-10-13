@@ -9,14 +9,18 @@ const cardsData = () => $$('[data-showcase-list] .sample').map((a) => ({
 // Videos: cuando exista /video/<nombre>.mp4 se reproduce sobre la portada; si no existe, queda la imagen.
 export function attachVideo(video, name) {
   if (!video || reduced) return;
-  const src = `/video/${name}.mp4`;
+  // MP4 (H.264) para Safari y la mayoría; WebM (VP9) para navegadores sin H.264
+  const h264 = video.canPlayType('video/mp4; codecs="avc1.42E01E"');
+  const src = `/video/${name}.${h264 ? 'mp4' : 'webm'}`;
   if (video.dataset.src === src) return;
   video.dataset.src = src;
   video.classList.remove('is-on');
   fetch(src, { method: 'HEAD' }).then((r) => {
     if (!r.ok || !(r.headers.get('content-type') || '').startsWith('video')) return;
+    video.preload = 'auto';
+    video.addEventListener('playing', () => video.classList.add('is-on'), { once: true });
     video.src = src;
-    video.addEventListener('canplay', () => { video.classList.add('is-on'); video.play().catch(() => {}); }, { once: true });
+    video.play().catch(() => {});
   }).catch(() => {});
 }
 
@@ -27,8 +31,8 @@ export function initReel() {
   const slides = $('[data-reel-slides]', reel), ticks = $('[data-reel-ticks]', reel), cap = $('.reel__cap', reel);
   slides.innerHTML = items.map((d) => `<span style="background-image:url('${d.cover}')"></span>`).join('');
   ticks.innerHTML = items.map(() => '<i></i>').join('');
-  const S = $$('span', slides), T = $$('i', ticks), D = 3400;
-  let i = 0, timer = 0, vis = true;
+  const S = $$('span', slides), T = $$('i', ticks);
+  let D = 3400, i = 0, timer = 0, vis = true, onVideo = false;
   const show = (k) => {
     i = (k + items.length) % items.length;
     S.forEach((s, j) => s.classList.toggle('is-on', j === i));
@@ -38,10 +42,14 @@ export function initReel() {
     $('[data-reel-rubro]', reel).textContent = items[i].rubro;
     cap.classList.remove('is-swap'); void cap.offsetWidth; cap.classList.add('is-swap');
   };
-  const loop = () => { clearTimeout(timer); if (!vis || reduced) return; timer = setTimeout(() => { show(i + 1); loop(); }, D); };
+  const loop = () => { clearTimeout(timer); if (!vis || reduced || onVideo) return; timer = setTimeout(() => { show(i + 1); loop(); }, D); };
   new IntersectionObserver(([e]) => { vis = e.isIntersecting; loop(); }).observe(reel);
   show(0); loop();
-  attachVideo($('[data-video="reel"]', reel), 'reel');
+  // Con el video del showreel (2,6 s por muestra, en el mismo orden), el rótulo sigue al video
+  const v = $('[data-video="reel"]', reel);
+  v?.addEventListener('playing', () => { onVideo = true; D = 2600; clearTimeout(timer); });
+  v?.addEventListener('timeupdate', () => { const k = Math.floor(v.currentTime / 2.6) % items.length; if (k !== i) show(k); });
+  attachVideo(v, 'reel');
 }
 
 // ---------- Galería: la muestra activa se ve en grande en el escenario ----------

@@ -906,3 +906,5 @@ em { font-style: italic; }
 .footer__top nav { display: grid; gap: 10px; align-content: start; }
 @media (max-width: 900px) { .proof { grid-template-columns: 1fr 1fr; } .proof li:nth-child(2) { border-right: 0; margin-right: 0; } }
 .live__cover .live__poster { background-size: cover; background-position: top center; background-repeat: no-repeat; background-color: var(--ink-3); }
+.live__pvideo { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; object-position: top; opacity: 0; transition: opacity 0.8s; pointer-events: none; }
+.live__pvideo.is-on { opacity: 1; }
