@@ -6,12 +6,12 @@ import { attachVideo } from './showcase.js';
 const PROJECTS = {
   miah: {
     url: 'https://cabanasmiaynoah.netlify.app', name: 'Cabañas Miah y Noah', place: 'Curacautín · Araucanía', tag: 'Cabañas',
-    poster: 'https://cabanasmiaynoah.netlify.app/img/mia-01.jpg',
+    poster: '/img/casos/miah',
     dl: [['Problema', 'Dependencia de plataformas y poca presencia propia.'], ['Solución', 'Sitio propio con check-in digital, guía de la zona y WhatsApp como canal de cierre.'], ['Resultado', 'Canal propio activo y huéspedes reservando directo.']],
   },
   poetas: {
-    url: 'https://elrincondelospoetas.netlify.app', name: 'El Rincón de los Poetas', place: 'Nueva Imperial · Araucanía', tag: 'Hostal',
-    poster: 'https://images.unsplash.com/photo-1481627834876-b7833e8f5570?auto=format&fit=crop&w=1400&q=75',
+    url: 'https://elrincondelospoetas.netlify.app', name: 'El Rincón de los Poetas', place: 'Almagro, Nueva Imperial · Araucanía', tag: 'Hostal',
+    poster: '/img/casos/poetas',
     dl: [['Problema', 'Una historia invisible y reservas casi solo por plataformas.'], ['Solución', 'Narrativa literaria del hostal, reseñas y canal directo.'], ['Resultado', 'Una historia que vende sola y reserva directa.']],
   },
 };
@@ -39,7 +39,7 @@ export function initReal() {
   };
   function paint() {
     const p = PROJECTS[key];
-    $$('[data-real-poster]', root).forEach((el) => (el.style.backgroundImage = `url('${p.poster}')`));
+    $$('[data-real-poster]', root).forEach((el) => (el.style.backgroundImage = `url('${p.poster}-${el.dataset.realPoster}.webp')`));
     $('[data-live-url]', root).textContent = new URL(p.url).host;
     caseEl.innerHTML = `<p class="real__meta"><span>${p.place}</span><span>${p.tag}</span></p><h3>${p.name}</h3><dl>${p.dl.map(([a, b]) => `<div><dt>${a}</dt><dd>${b}</dd></div>`).join('')}</dl><a class="btn btn--line" href="${p.url}" target="_blank" rel="noopener">Abrir el sitio ↗</a>`;
     caseEl.classList.remove('is-swap'); void caseEl.offsetWidth; caseEl.classList.add('is-swap');
