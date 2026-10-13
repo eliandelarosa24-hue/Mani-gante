@@ -20,7 +20,7 @@ const QA = [
   },
   {
     q: '¿Quién está detrás de Red Vaeru?',
-    a: () => 'Jorge Vásquez, dominicano en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. Es un estudio pequeño a propósito: usted habla con quien diseña y construye su sitio. Yo soy su asistente de IA, y Jorge revisa personalmente cada cotización.',
+    a: () => 'Jorge Vásquez, dominicano en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. Es un estudio pequeño a propósito: usted habla con quien diseña y construye su sitio. Yo soy su asistente virtual, y Jorge revisa personalmente cada cotización.',
   },
   {
     q: '¿Qué muestra se parece a mi negocio?',

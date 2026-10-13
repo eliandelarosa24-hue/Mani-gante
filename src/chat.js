@@ -1,12 +1,14 @@
 // Interfaz de Vaeru IA.
-// Usa el agente con Claude (/api/agent). Si no está configurado o falla, sigue en modo guiado
-// con el mismo tarifario, así el cotizador funciona siempre.
+// Por defecto responde en modo local (sin costo): preguntas frecuentes, recomendación de muestra
+// y cotizador guiado con el tarifario. Para activar la conversación con Claude (/api/agent, tiene costo
+// por uso), defina en Netlify VITE_AI=on y ANTHROPIC_API_KEY. Si la IA falla, vuelve al modo local.
 import { SERVICES, estimate, formatCLP, launchLeft, TAX_NOTE, GUARANTEE } from './pricing.js';
 import { track } from './analytics.js';
 import { submitLead } from './leads.js';
 
 const WHATSAPP = '56952289117';
 const API = '/api/agent';
+const AI_ON = import.meta.env?.VITE_AI === 'on';
 const wa = (text) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}`;
 
 const START_CHIPS = [
@@ -31,7 +33,25 @@ const FAQ = [
   { k: /garant|riesgo|y si no me gusta|no me convence/i, a: `${GUARANTEE.title}: ${GUARANTEE.text}` },
   { k: /esencial|completo|firma|diferencia|qu[eé] plan|cu[aá]l (me )?conviene/i, a: 'Esencial es una página con todo lo necesario para que le escriban. Completo suma secciones, galería, mapa y reservas directas: es el que más conviene a cabañas, hostales y restaurantes. Firma es una experiencia a medida, como las muestras, para termas, hoteles boutique, viñas o glamping. Cuénteme de su negocio y le digo cuál le conviene.' },
   { k: /lanzamiento|cupo|descuento|barato/i, a: () => `Son precios de lanzamiento mientras sumo mis primeros proyectos turísticos. Quedan ${launchLeft()} cupos. A cambio pido un testimonio y permiso para mostrar el trabajo.` },
-  { k: /privacidad|mis datos|qu[eé] hacen con/i, a: 'Soy un asistente de IA. Uso lo que me escribe solo para responderle y preparar su cotización; no comparta datos sensibles. Detalles en la política de privacidad.' },
+  { k: /mantenci[oó]n|mensual|despu[eé]s de publicar|soporte/i, a: () => `Hay dos planes de mantención, sin permanencia: Cuidado, ${formatCLP(SERVICES.mantencion.tiers.cuidado.min)} al mes (hosting, dominio, respaldo y un cambio al mes), y Crecimiento, ${formatCLP(SERVICES.mantencion.tiers.crecimiento.min)} al mes (los cambios del mes, su ficha de Google al día y un informe de visitas y consultas).` },
+  { k: /eres (una )?(ia|persona|robot|humano)|hablo con (una )?persona|qui[eé]n responde/i, a: 'Soy Vaeru IA, el asistente virtual de Red Vaeru. Respondo dudas y armo cotizaciones referenciales; Jorge revisa personalmente cada una y le responde por WhatsApp en menos de 24 horas hábiles.' },
+  { k: /^(hola|buenas|buen d[ií]a|buenas tardes|buenas noches|hey|wena)\b/i, a: 'Hola, qué gusto. Cuénteme qué tipo de negocio tiene (cabañas, restaurante, termas, hotel…) y le recomiendo un plan, o elija una opción de abajo.' },
+  { k: /^(gracias|muchas gracias|ok|listo|perfecto|genial)\b/i, a: 'A usted. Si quiere avanzar, Jorge le prepara la propuesta fija por WhatsApp. Aquí estoy para lo que necesite.' },
+  { k: /privacidad|mis datos|qu[eé] hacen con/i, a: 'Uso lo que me escribe solo para responderle y preparar su cotización; no comparta datos sensibles. Detalles en la política de privacidad.' },
+];
+
+// Muestra más parecida según el rubro que menciona la persona.
+const SAMPLE_FOR = [
+  { k: /terma|spa|piscina|pozon|aguas? calientes?|bienestar/i, slug: 'termas-rayenko', name: 'Termas Rayenko' },
+  { k: /caribe|dominican|samana|punta cana|playa|villa/i, slug: 'villa-coral-samana', name: 'Villa Coral Samaná' },
+  { k: /hotel|patrimon|casona|boutique/i, slug: 'hotel-casa-nogal', name: 'Hotel Casa Nogal' },
+  { k: /glamping|domo|astro|estrella/i, slug: 'domos-cielo-austral', name: 'Domos Cielo Austral' },
+  { k: /vi[nñ]a|vino|enoturismo|cata/i, slug: 'vina-los-robles', name: 'Viña Los Robles' },
+  { k: /aventura|rafting|trekking|tour|excursi|volc[aá]n|operador|kayak/i, slug: 'pucon-aventura', name: 'Pucón Aventura' },
+  { k: /pasteler|caf[eé]|kuchen|torta|panader|reposter/i, slug: 'kuchen-haus-frutillar', name: 'Kuchen Haus' },
+  { k: /restaurant|cocina|carta|men[uú]|picada|bar\b/i, slug: 'fogon-mapu', name: 'Fogón Mapu' },
+  { k: /contador|contab|asesor[ií]a contable|estudio jur|abogad|consultor/i, slug: 'estudio-haber', name: 'Estudio Haber' },
+  { k: /caba[nñ]a|hostal|lodge|hospedaje|alojamiento|casa de arriendo|camping/i, slug: 'cabanas-lago-azul', name: 'Cabañas Lago Azul' },
 ];
 
 const KEYWORDS = [
@@ -57,7 +77,7 @@ export class Chat {
     this.root = root;
     this.source = source;
     this.history = [];
-    this.mode = 'ai'; // 'ai' | 'guided'
+    this.mode = AI_ON ? 'ai' : 'guided'; // 'ai' | 'guided'
     this.busy = false;
     this.guided = null;
     this.cart = [];
@@ -67,7 +87,7 @@ export class Chat {
       <div class="chat">
         <div class="chat__head">
           <div class="chat__avatar"><img class="mark" src="/brand/emblema-96.webp" alt="" width="96" height="96" /></div>
-          <div class="chat__title"><strong>Vaeru IA</strong><span><i class="pulse"></i> Asistente de IA de Red Vaeru</span></div>
+          <div class="chat__title"><strong>Vaeru IA</strong><span><i class="pulse"></i> ${AI_ON ? 'Asistente de IA de Red Vaeru' : 'Asistente virtual de Red Vaeru'}</span></div>
           ${closable ? '<button class="chat__close" aria-label="Cerrar asistente">×</button>' : ''}
         </div>
         <div class="chat__log" aria-live="polite" data-lenis-prevent></div>
@@ -76,7 +96,7 @@ export class Chat {
           <input name="q" autocomplete="off" placeholder="Escriba su consulta…" aria-label="Mensaje para Vaeru IA" maxlength="1500" />
           <button type="submit" aria-label="Enviar">→</button>
         </form>
-        <p class="chat__mode">Asistente de IA · estimaciones referenciales · <a href="/privacidad">privacidad</a></p>
+        <p class="chat__mode">${AI_ON ? 'Asistente de IA' : 'Asistente virtual'} · estimaciones referenciales · <a href="/privacidad">privacidad</a></p>
       </div>`;
     this.log = root.querySelector('.chat__log');
     this.chips = root.querySelector('.chips');
@@ -84,7 +104,7 @@ export class Chat {
     this.input = this.form.q;
     this.form.addEventListener('submit', (e) => { e.preventDefault(); this.send(this.input.value); });
     root.querySelector('.chat__close')?.addEventListener('click', () => onClose?.());
-    this.bot('Hola, soy Vaeru IA, el asistente de Jorge. Le ayudo a estimar la inversión para su negocio turístico o a resolver dudas. ¿Qué necesita?');
+    this.bot('Hola, soy Vaeru IA, el asistente virtual de Jorge. Le ayudo a estimar la inversión para su negocio turístico o a resolver dudas. ¿Qué necesita?');
     this.startChips();
   }
 
@@ -266,7 +286,7 @@ export class Chat {
   }
 
   samples() {
-    this.bot('Tengo 10 muestras completas de distintos rubros: lodge, cabañas, glamping, hotel boutique, villa en el Caribe, restaurante, café, operador de aventura, viña y un portal para cámaras de turismo. Elija la más parecida a su negocio:');
+    this.bot('Hay 10 muestras completas de distintos rubros: termas, villa en el Caribe, hotel boutique, estudio contable, cabañas, glamping, restaurante, viña, operador de aventura y pastelería. Elija la más parecida a su negocio:');
     const a = document.createElement('a');
     a.className = 'btn btn--gold msg-cta';
     a.href = '/muestras/';
@@ -350,7 +370,8 @@ export class Chat {
     }
     if (/^tengo una duda$|^duda$|^pregunta$/i.test(text)) return this.faqMenu();
     if (/agendar|llamada|reuni[oó]n|videollamada/i.test(text)) return this.schedule();
-    if (/muestra|ejemplo|portafolio|trabajos|ver sitios|referencia/i.test(text)) return this.samples();
+    const like = SAMPLE_FOR.find((x) => x.k.test(text));
+    if (/muestra|ejemplo|portafolio|trabajos|ver sitios|referencia|se parece/i.test(text)) return like ? this.recommend(like) : this.samples();
     const faq = FAQ.find((f) => f.k.test(text));
     const svc = KEYWORDS.find((k) => k.k.test(text));
     if (/precio|cotiz|presupuesto|cu[aá]nto cuesta|valor/i.test(text) && svc) return this.startService(svc.s);
@@ -358,16 +379,39 @@ export class Chat {
       this.bot(typeof faq.a === 'function' ? faq.a() : faq.a);
       return this.setChips([...START_CHIPS.slice(0, 4).map((c) => ({ label: c.label, on: () => this.pickStart(c) })), { label: 'Agendar videollamada', on: () => this.schedule() }]);
     }
+    if (like && !/precio|cotiz|presupuesto|cu[aá]nto/i.test(text)) return this.recommend(like);
     if (svc) return this.startService(svc.s);
-    this.bot('Para ayudarle mejor, elija una opción o cuénteme qué tipo de negocio tiene (alojamiento, restaurante u otro proyecto turístico).');
+    this.bot('Esa se la responde mejor Jorge directo por WhatsApp. Le dejo el mensaje listo; también puede elegir una opción de abajo.');
+    this.ctaLink(wa(`Hola Jorge, vengo del sitio de Red Vaeru. Tengo una consulta: ${text}`), 'Escribirle a Jorge ↗', 'duda');
     this.startChips();
+  }
+
+  ctaLink(href, label, from) {
+    const a = document.createElement('a');
+    a.className = 'btn btn--gold msg-cta';
+    if (/^https?:/.test(href)) { a.target = '_blank'; a.rel = 'noopener'; }
+    a.dataset.from = from;
+    a.href = href;
+    a.textContent = label;
+    this.log.append(a);
+    this.scroll();
+  }
+
+  // Recomienda la muestra más parecida y el plan que suele convenir a ese rubro.
+  recommend(x) {
+    const firma = /termas|hotel|domos|vina|villa/.test(x.slug);
+    this.bot(`Para su negocio le recomiendo mirar ${x.name}: es la muestra más parecida. ${firma ? 'Ese nivel corresponde al plan Firma, aunque también puede partir con Completo y crecer después.' : 'Para un negocio así, el plan Completo suele ser el que más conviene.'} ¿Le preparo una cotización?`);
+    this.ctaLink(`/muestras/${x.slug}/`, `Ver ${x.name} ↗`, 'recomendacion');
+    track('agent_sample_pick', { slug: x.slug });
+    const svc = x.slug === 'fogon-mapu' || x.slug === 'kuchen-haus-frutillar' ? 'web_restaurante' : 'web_alojamiento';
+    this.setChips([{ label: 'Cotizar mi sitio', on: () => { this.user('Cotizar mi sitio'); this.startService(svc); } }, { label: 'Agendar videollamada', on: () => this.schedule() }, { label: 'Tengo una duda', on: () => { this.user('Tengo una duda'); this.faqMenu(); } }]);
   }
 
   faqMenu() {
     this.bot('Con gusto. ¿Sobre qué tema?');
     const topics = [
       ['Plazos de entrega', 'plazo'], ['Dominio y hosting', 'dominio'], ['Pagos y boleta', 'pago'],
-      ['Precios de lanzamiento', 'lanzamiento'], ['Ver muestras por rubro', 'muestras'], ['Proyectos en el Caribe', 'caribe'], ['¿Quién está detrás?', 'jorge'],
+      ['Planes Esencial, Completo y Firma', 'qué plan'], ['Garantía de portada', 'garantía'], ['Mantención mensual', 'mantención'], ['Precios de lanzamiento', 'lanzamiento'], ['Ver muestras por rubro', 'muestras'], ['Proyectos en el Caribe', 'caribe'], ['¿Quién está detrás?', 'jorge'],
     ];
     this.setChips(topics.map(([label, q]) => ({ label, on: () => { this.user(label); this.guidedText(q); } })));
   }

@@ -214,7 +214,7 @@ function privacyPage() {
         <h2>Con quién se procesan</h2>
         <ul>
           <li><strong>Netlify</strong>: aloja el sitio y almacena los formularios.</li>
-          <li><strong>Anthropic</strong>: procesa los mensajes de Vaeru IA para generar las respuestas. No comparta datos sensibles en el chat.</li>
+          <li><strong>Anthropic</strong>: solo si la conversación con IA de Vaeru IA está activa, procesa sus mensajes para generar las respuestas. En el modo habitual, Vaeru IA responde en su propio navegador. No comparta datos sensibles en el chat.</li>
           <li><strong>WhatsApp (Meta)</strong>: si usted decide escribirme por esa vía.</li>
         </ul>
         <h2>Cuánto tiempo los guardo</h2>
