@@ -1,7 +1,7 @@
 // Interfaz de Vaeru IA.
 // Usa el agente con Claude (/api/agent). Si no está configurado o falla, sigue en modo guiado
 // con el mismo tarifario, así el cotizador funciona siempre.
-import { SERVICES, estimate, formatCLP, launchLeft, TAX_NOTE } from './pricing.js';
+import { SERVICES, estimate, formatCLP, launchLeft, TAX_NOTE, GUARANTEE } from './pricing.js';
 import { track } from './analytics.js';
 import { submitLead } from './leads.js';
 
@@ -20,14 +20,16 @@ const START_CHIPS = [
 ];
 
 const FAQ = [
-  { k: /plazo|tiempo|cu[aá]nto (se )?demora|cu[aá]ndo|semanas|listo/i, a: 'Una presencia esencial toma de 1 a 2 semanas, un sitio completo de 3 a 4 y una experiencia premium de 5 a 8. El plazo corre desde que tengo los textos y fotos de su negocio.' },
+  { k: /plazo|tiempo|cu[aá]nto (se )?demora|cu[aá]ndo|semanas|listo/i, a: 'Un sitio Esencial toma de 1 a 2 semanas, uno Completo de 3 a 4 y uno Firma de 5 a 8. El plazo corre desde que tengo los textos y fotos de su negocio.' },
   { k: /dominio|hosting|\.cl|servidor/i, a: 'Todos mis sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se compra aparte) y hosting con certificado de seguridad el primer año, todo a su nombre. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.' },
   { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Se paga en pesos chilenos (o USD fuera de Chile). Emito boleta o factura según lo que necesite; los impuestos y la forma de pago (transferencia o cuotas) quedan en la propuesta escrita antes de empezar.' },
   { k: /caribe|dominican|extranjero|fuera de chile|usd|d[oó]lar/i, a: 'Sí, trabajo con negocios del Caribe y República Dominicana de forma remota. Esos proyectos se cotizan en USD.' },
   { k: /presencial|online|regi[oó]n|viaj/i, a: 'Las capacitaciones son presenciales en la Araucanía (en otras regiones el traslado se cotiza aparte) u online en vivo para hasta 25 personas.' },
-  { k: /cambiar|editar|actualizar|yo mismo/i, a: 'Sí, le dejo una capacitación breve y una checklist para cambiar textos y fotos. Si prefiere no preocuparse, existe la mantención mensual desde ' + formatCLP(SERVICES.mantencion.tiers.basica.min) + '.' },
+  { k: /cambiar|editar|actualizar|yo mismo/i, a: 'Sí, le dejo una capacitación breve y una checklist para cambiar textos y fotos. Si prefiere no preocuparse, existe la mantención mensual desde ' + formatCLP(SERVICES.mantencion.tiers.cuidado.min) + '.' },
   { k: /qui[eé]n|jorge|equipo|agencia/i, a: 'Red Vaeru es el estudio de Jorge Vásquez, dominicano en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. Usted habla siempre con quien hace el trabajo.' },
   { k: /booking|airbnb|comisi[oó]n|plataforma/i, a: 'Las plataformas cobran entre 15% y 25% por reserva. Un sitio propio con WhatsApp y reserva directa le devuelve ese margen y la relación con el huésped.' },
+  { k: /garant|riesgo|y si no me gusta|no me convence/i, a: `${GUARANTEE.title}: ${GUARANTEE.text}` },
+  { k: /esencial|completo|firma|diferencia|qu[eé] plan|cu[aá]l (me )?conviene/i, a: 'Esencial es una página con todo lo necesario para que le escriban. Completo suma secciones, galería, mapa y reservas directas: es el que más conviene a cabañas, hostales y restaurantes. Firma es una experiencia a medida, como las muestras, para termas, hoteles boutique, viñas o glamping. Cuénteme de su negocio y le digo cuál le conviene.' },
   { k: /lanzamiento|cupo|descuento|barato/i, a: () => `Son precios de lanzamiento mientras sumo mis primeros proyectos turísticos. Quedan ${launchLeft()} cupos. A cambio pido un testimonio y permiso para mostrar el trabajo.` },
   { k: /privacidad|mis datos|qu[eé] hacen con/i, a: 'Soy un asistente de IA. Uso lo que me escribe solo para responderle y preparar su cotización; no comparta datos sensibles. Detalles en la política de privacidad.' },
 ];
@@ -42,11 +44,12 @@ const KEYWORDS = [
   { k: /web|sitio|p[aá]gina|caba[nñ]a|hostal|glamping|hotel|lodge|alojamiento|hospedaje/i, s: 'web_alojamiento' },
 ];
 
+const span = (a, b) => (a === b ? formatCLP(a) : `${formatCLP(a)} – ${formatCLP(b)}`);
 const clean = (s) => s.replace(/\*\*(.+?)\*\*/g, '$1').replace(/^#+\s*/gm, '');
 const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
 const rangeOf = (est) => ({
-  one: est.oneTime.max ? `${formatCLP(est.oneTime.min)} – ${formatCLP(est.oneTime.max)}` : '',
-  mon: est.monthly.max ? `${formatCLP(est.monthly.min)} – ${formatCLP(est.monthly.max)} al mes` : '',
+  one: est.oneTime.max ? span(est.oneTime.min, est.oneTime.max) : '',
+  mon: est.monthly.max ? `${span(est.monthly.min, est.monthly.max)} al mes` : '',
 });
 
 export class Chat {
@@ -151,7 +154,7 @@ export class Chat {
       <div class="quote__label">Estimación referencial · precios de lanzamiento</div>
       ${one ? `<div class="quote__total">${one}</div>` : ''}
       ${mon ? `<div class="quote__monthly">${mon}</div>` : ''}
-      <ul>${est.lines.map((l) => `<li><span>${esc(l.label)}</span><b>${formatCLP(l.min)} – ${formatCLP(l.max)}${l.monthly ? '/mes' : ''}</b></li>`).join('')}</ul>
+      <ul>${est.lines.map((l) => `<li><span>${esc(l.label)}</span><b>${span(l.min, l.max)}${l.monthly ? '/mes' : ''}</b></li>`).join('')}</ul>
       <form class="lead" novalidate>
         <p class="lead__title">¿Se la envío a Jorge para preparar su propuesta fija?</p>
         <div class="lead__row">
@@ -239,7 +242,7 @@ export class Chat {
       <header><div><small>RED VAERU · Estudio digital para turismo</small><h1>Cotización referencial</h1></div><small>${fmt(today)}</small></header>
       ${nombre || negocio ? `<p>Preparada para: <strong>${esc(nombre)}</strong>${negocio ? ` · ${esc(negocio)}` : ''}</p>` : ''}
       <table><tr><th>Servicio</th><th>Rango</th></tr>
-      ${est.lines.map((l) => `<tr><td>${esc(l.label)}</td><td>${formatCLP(l.min)} – ${formatCLP(l.max)}${l.monthly ? '/mes' : ''}</td></tr>`).join('')}</table>
+      ${est.lines.map((l) => `<tr><td>${esc(l.label)}</td><td>${span(l.min, l.max)}${l.monthly ? '/mes' : ''}</td></tr>`).join('')}</table>
       <div class="box">${one ? `<p class="muted">Inversión única estimada</p><p class="total">${one}</p>` : ''}${mon ? `<p class="muted">Mensual estimado</p><p class="total">${mon}</p>` : ''}</div>
       <p class="muted">${esc(TAX_NOTE)} Rango válido hasta el ${fmt(until)}. El precio fijo y el alcance llegan por escrito en la propuesta, antes de pagar nada.</p>
       <p class="muted">Jorge Vásquez · Red Vaeru · WhatsApp +56 9 5228 9117 · redvaeru@gmail.com</p>

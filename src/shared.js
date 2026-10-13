@@ -3,7 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
 import { Chat } from './chat.js';
-import { fromPrice, formatCLP, launchLeft, LAUNCH, CAMPAIGN, USD_RATE } from './pricing.js';
+import { fromPrice, formatCLP, launchLeft, LAUNCH, CAMPAIGN, USD_RATE, SERVICES, priceOf } from './pricing.js';
 import { track, trackOutbound } from './analytics.js';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -33,6 +33,16 @@ export function initShared() {
       if (!v) return;
       const txt = cur === 'USD' ? `US$${Math.round(v / USD_RATE)} aprox.` : formatCLP(v);
       el.textContent = `desde ${txt}${el.hasAttribute('data-monthly') ? '/mes' : ''}`;
+    });
+    // Precio de cada plan: el de lanzamiento destacado y el normal tachado mientras queden cupos.
+    const money = (v) => (cur === 'USD' ? `US$${Math.round(v / USD_RATE).toLocaleString('es-CL')}` : formatCLP(v));
+    $$('[data-tier-price]').forEach((el) => {
+      const [sid, tid] = el.dataset.tierPrice.split(':');
+      const t = SERVICES[sid]?.tiers?.[tid]; if (!t) return;
+      const p = priceOf(t), per = el.hasAttribute('data-monthly') ? '<small>/mes</small>' : '';
+      el.innerHTML = el.closest('.plan')
+        ? `<span>desde</span><strong>${money(p.min)}${per}</strong>${p !== t ? `<s>Precio normal desde ${money(t.min)}</s>` : ''}`
+        : `${money(p.min)}${per}`;
     });
     $$('[data-cur]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.cur === cur)));
   };

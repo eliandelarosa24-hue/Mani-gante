@@ -19,10 +19,10 @@ export const PAGES = [
       ['Se ve bien en el celular', 'La mayoría de los viajeros reserva desde el teléfono.'],
       ['Aparece en Google', 'Textos y datos preparados para búsquedas como "cabañas en Pucón".'],
     ],
-    tiers: { landing: ['Dominio de regalo y hosting el primer año', 'Portada con su alojamiento, fotos, ubicación y contacto', 'Botón de WhatsApp y formulario', 'Conexión segura y textos para Google', 'Una ronda de revisión'], completo: ['Dominio de regalo y hosting el primer año', 'Varias secciones: unidades, servicios, entorno y contacto', 'Galería por espacios y mapa', 'Enlaces a sus canales de reserva', 'Sesión de asesoría y guía para editar'], premium: ['Dominio de regalo y hosting el primer año', 'Diseño a medida con animaciones y storytelling', 'Motor de reservas o calendario integrado', 'Multi-idioma y guía del destino', 'Estrategia de lanzamiento incluida'] },
+    tiers: { esencial: ['Dominio de regalo y hosting el primer año', 'Una página con su alojamiento, fotos, ubicación y contacto', 'Botón de WhatsApp y formulario', 'Conexión segura y textos para Google', 'Una ronda de revisión'], completo: ['Todo lo de Esencial', 'Varias secciones: unidades, servicios, entorno y contacto', 'Galería por espacios y mapa', 'Reservas por WhatsApp o enlace a su sistema', 'Ficha de Google configurada y guía para editar'], firma: ['Todo lo de Completo', 'Concepto y diseño a medida, como las muestras', 'Animaciones e interacción propias de su lugar', 'Motor de reservas o calendario integrado', 'Segundo idioma, precios en USD y estrategia de lanzamiento'] },
     faq: [
       ['¿Necesito dejar Booking o Airbnb?', 'No. La idea es sumar un canal propio: las plataformas le traen visibilidad y su sitio convierte a quienes ya lo conocen en reservas sin comisión.'],
-      ['¿Puedo recibir pagos en el sitio?', 'Sí, en el plan premium o como extra se puede integrar un motor de reservas o un enlace de pago. Lo vemos según su volumen.'],
+      ['¿Puedo recibir pagos en el sitio?', 'Sí, en el plan Firma o como extra se puede integrar un motor de reservas o un enlace de pago. Lo vemos según su volumen.'],
       ['¿Qué pasa si no tengo buenas fotos?', 'Le doy una guía para tomarlas con su celular, o coordinamos una sesión. Las fotos son lo más importante del sitio.'],
     ],
   },
@@ -44,7 +44,7 @@ export const PAGES = [
       ['Pedidos ordenados', 'Pedidos guiados que llegan claros, sin mensajes sueltos.'],
       ['Turistas que lo encuentran', 'Aparece en Google cuando buscan dónde comer en su ciudad.'],
     ],
-    tiers: { carta: ['Dominio de regalo y hosting el primer año', 'Carta digital por categorías con fotos', 'Código QR listo para imprimir', 'Horarios, ubicación y WhatsApp', 'Actualizaciones simples'], sitio: ['Dominio de regalo y hosting el primer año', 'Sitio con historia, carta, galería y ubicación', 'Botón de reservas y WhatsApp', 'Textos para Google y redes', 'Guía para editar la carta'], premium: ['Experiencia visual a medida', 'Reservas y pedidos integrados', 'Multi-idioma para turistas', 'Estrategia de lanzamiento'] },
+    tiers: { esencial: ['Dominio de regalo y hosting el primer año', 'Carta digital por categorías con fotos', 'Código QR listo para imprimir', 'Página con horarios, ubicación y WhatsApp', 'Actualizaciones simples'], completo: ['Todo lo de Esencial', 'Sitio con historia, carta, galería y ubicación', 'Reservas de mesa y WhatsApp', 'Ficha de Google configurada', 'Guía para editar la carta'], firma: ['Todo lo de Completo', 'Experiencia visual a medida, como las muestras', 'Reservas y pedidos integrados', 'Segundo idioma para turistas', 'Estrategia de lanzamiento'] },
     faq: [
       ['¿Puedo cambiar la carta yo mismo?', 'Sí. Le dejo una forma simple de actualizar platos y precios, o lo hago yo con la mantención mensual.'],
       ['¿El QR deja de funcionar si cambio la carta?', 'No. El QR apunta siempre a la misma dirección y muestra la carta vigente.'],

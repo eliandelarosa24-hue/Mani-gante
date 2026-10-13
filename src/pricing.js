@@ -2,14 +2,24 @@
 // Lo usan el cotizador guiado del sitio y el agente de IA (netlify/functions/agent.mjs).
 // El sitio solo muestra los valores "desde"; los rangos completos los entrega el agente.
 // Todos los montos en pesos chilenos (CLP), valores referenciales. Edite aquí y se actualiza en todas partes.
-// PRECIOS DE LANZAMIENTO: pensados para conseguir los primeros proyectos y casos de éxito.
-// Súbalos a medida que crezca el portafolio.
+// Los sitios web se venden en tres productos (Esencial, Completo y Firma) más la mantención mensual.
+// Cada producto tiene precio normal (min/max) y precio de lanzamiento (launch) mientras queden cupos.
 
 export const CURRENCY = 'CLP';
 
 // Precios de lanzamiento con cupos. Actualice "taken" cada vez que cierre un proyecto de lanzamiento.
 export const LAUNCH = { slots: 5, taken: 0 };
 export const launchLeft = () => Math.max(0, LAUNCH.slots - LAUNCH.taken);
+
+// Garantía de portada: el cliente ve el diseño de su portada antes de pagar.
+export const GUARANTEE = {
+  title: 'Garantía de portada',
+  short: 'Primero ve su portada. Si no le convence, no paga nada.',
+  text: 'Antes de cobrar, diseño la portada de su sitio con sus fotos y su historia. Si no le convence, no paga nada y no queda comprometido. Si le gusta, paga el 50% para continuar y el resto al publicar.',
+};
+
+// Precio vigente de una opción: el de lanzamiento mientras queden cupos, si existe.
+export const priceOf = (tier) => (tier?.launch && launchLeft() > 0 ? tier.launch : tier);
 
 // Campaña de temporada: la barra superior desaparece sola después de la fecha límite.
 export const CAMPAIGN = {
@@ -24,15 +34,22 @@ export const HOSTING_NOTE = 'Todos los sitios incluyen dominio de regalo el prim
 
 export const TAX_NOTE = 'Valores referenciales en pesos chilenos. Emito boleta o factura según lo que necesite su negocio; los impuestos que correspondan se detallan en la propuesta.';
 
+// Los tres productos de sitio web y la mantención, como se presentan en la portada.
+export const PLANS = [
+  { id: 'esencial', name: 'Esencial', for: 'Para el negocio que hoy solo tiene Instagram o un aviso en Booking.', includes: ['Una página con fotos, ubicación y contacto', 'Botón de WhatsApp y formulario', 'Carta digital con QR para restaurantes', 'Textos para aparecer en Google', 'Dominio y hosting el primer año', 'Una ronda de revisión'] },
+  { id: 'completo', name: 'Completo', featured: true, for: 'Para cabañas, hostales y restaurantes que quieren recibir reservas directas.', includes: ['Todo lo de Esencial', 'Varias secciones: unidades o carta, servicios, entorno', 'Galería por espacios y mapa', 'Reservas por WhatsApp o enlace a su sistema', 'Ficha de Google configurada', 'Guía para editar textos y fotos'] },
+  { id: 'firma', name: 'Firma', for: 'Para termas, hoteles boutique, viñas y glamping que quieren una web única.', includes: ['Todo lo de Completo', 'Concepto y diseño a medida, como las muestras', 'Animaciones e interacción propias del lugar', 'Reservas o calendario integrado', 'Segundo idioma y precios en USD', 'Estrategia de lanzamiento'] },
+];
+
 export const SERVICES = {
   web_alojamiento: {
     name: 'Sitio web para alojamiento',
     short: 'Web alojamiento',
     for: 'Cabañas, hostales, glamping, lodges y hoteles boutique',
     tiers: {
-      landing: { label: 'Presencia esencial (1 página)', min: 49000, max: 79000, weeks: '1 a 2 semanas' },
-      completo: { label: 'Sitio completo multi-sección', min: 89000, max: 149000, weeks: '3 a 4 semanas' },
-      premium: { label: 'Experiencia premium a medida', min: 190000, max: 290000, weeks: '5 a 8 semanas' },
+      esencial: { label: 'Esencial: una página con todo lo necesario', min: 149000, max: 249000, launch: { min: 49000, max: 79000 }, weeks: '1 a 2 semanas' },
+      completo: { label: 'Completo: sitio de varias secciones', min: 390000, max: 690000, launch: { min: 149000, max: 249000 }, weeks: '3 a 4 semanas' },
+      firma: { label: 'Firma: experiencia a medida como las muestras', min: 1200000, max: 2800000, launch: { min: 590000, max: 990000 }, weeks: '5 a 8 semanas' },
     },
     addons: {
       reservas: { label: 'Integración de motor de reservas o calendario', min: 30000, max: 60000 },
@@ -49,9 +66,9 @@ export const SERVICES = {
     short: 'Web restaurante',
     for: 'Restaurantes, cafeterías, bares y cocinas de destino',
     tiers: {
-      carta: { label: 'Carta digital con QR', min: 49000, max: 69000, weeks: '1 semana' },
-      sitio: { label: 'Sitio completo de restaurante', min: 89000, max: 139000, weeks: '2 a 4 semanas' },
-      premium: { label: 'Experiencia gastronómica premium', min: 180000, max: 260000, weeks: '4 a 6 semanas' },
+      esencial: { label: 'Esencial: carta digital con QR y página', min: 149000, max: 249000, launch: { min: 49000, max: 79000 }, weeks: '1 a 2 semanas' },
+      completo: { label: 'Completo: sitio de restaurante con carta, historia y reservas', min: 390000, max: 690000, launch: { min: 149000, max: 249000 }, weeks: '3 a 4 semanas' },
+      firma: { label: 'Firma: experiencia gastronómica a medida', min: 1200000, max: 2800000, launch: { min: 590000, max: 990000 }, weeks: '5 a 8 semanas' },
     },
     addons: {
       reservas: { label: 'Reservas de mesa en línea', min: 25000, max: 50000 },
@@ -124,7 +141,8 @@ export const SERVICES = {
     for: 'Cambios de contenido, respaldo, monitoreo y soporte',
     monthly: true,
     tiers: {
-      basica: { label: 'Mantención mensual', min: 12000, max: 20000, weeks: 'mes a mes' },
+      cuidado: { label: 'Cuidado: hosting, dominio, respaldo y un cambio al mes', min: 25000, max: 25000, weeks: 'mes a mes' },
+      crecimiento: { label: 'Crecimiento: cambios del mes, ficha de Google e informe de visitas y consultas', min: 55000, max: 55000, weeks: 'mes a mes' },
     },
     addons: {},
   },
@@ -134,7 +152,7 @@ export const SERVICES = {
 export function fromPrice(serviceId) {
   const s = SERVICES[serviceId];
   if (!s) return null;
-  return Math.min(...Object.values(s.tiers).map((t) => t.min));
+  return Math.min(...Object.values(s.tiers).map((t) => priceOf(t).min));
 }
 
 export function formatCLP(n) {
@@ -165,7 +183,8 @@ export function estimate(input) {
     const t = s.tiers[item.tier];
     if (!t) { errors.push(`Opción desconocida para ${s.name}: ${item.tier}`); continue; }
     const monthly = !!(s.monthly || t.monthly);
-    add(`${s.name}: ${t.label}`, t.min, t.max, monthly);
+    const p = priceOf(t);
+    add(`${s.name}: ${t.label}${p !== t ? ' (precio de lanzamiento)' : ''}`, p.min, p.max, monthly);
 
     for (const a of item.addons || []) {
       const id = typeof a === 'string' ? a : a?.id;
@@ -217,7 +236,9 @@ export function catalogText() {
   for (const [id, s] of Object.entries(SERVICES)) {
     out.push(`## ${s.name} (service="${id}")${s.monthly ? ' [mensual]' : ''}\nPara: ${s.for}`);
     for (const [tid, t] of Object.entries(s.tiers)) {
-      out.push(`- tier="${tid}": ${t.label}: ${formatCLP(t.min)} a ${formatCLP(t.max)}${s.monthly || t.monthly ? ' al mes' : ''} (plazo: ${t.weeks})`);
+      const per = s.monthly || t.monthly ? ' al mes' : '';
+      const launch = t.launch && launchLeft() > 0 ? `; precio de lanzamiento vigente: ${formatCLP(t.launch.min)} a ${formatCLP(t.launch.max)}` : '';
+      out.push(`- tier="${tid}": ${t.label}: precio normal ${formatCLP(t.min)} a ${formatCLP(t.max)}${per}${launch} (plazo: ${t.weeks})`);
     }
     for (const [aid, a] of Object.entries(s.addons)) {
       out.push(`  - addon="${aid}": ${a.label}: ${formatCLP(a.min)} a ${formatCLP(a.max)}${a.monthly ? ' al mes' : ''}${a.perUnit ? ' (admite qty)' : ''}`);

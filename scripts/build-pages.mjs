@@ -4,7 +4,7 @@ import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PAGES } from '../src/services-content.js';
-import { SERVICES, formatCLP } from '../src/pricing.js';
+import { SERVICES, formatCLP, priceOf } from '../src/pricing.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -84,7 +84,7 @@ function servicePage(p) {
   const s = SERVICES[p.service];
   const monthly = (t) => s.monthly || t.monthly;
   const tiers = Object.entries(s.tiers);
-  const low = Math.min(...tiers.map(([, t]) => t.min));
+  const low = Math.min(...tiers.map(([, t]) => priceOf(t).min));
   const jsonld = {
     '@context': 'https://schema.org',
     '@graph': [
@@ -151,7 +151,7 @@ function servicePage(p) {
           ${tiers.map(([tid, t], i) => `<article class="tier${i === Math.min(1, tiers.length - 1) && tiers.length > 2 ? ' tier--featured' : ''}" data-fade>
             ${i === 1 && tiers.length > 2 ? '<p class="tier__badge">Más elegido</p>' : ''}
             <h3>${esc(t.label)}</h3>
-            <p class="tier__price">desde <strong>${formatCLP(t.min)}</strong>${monthly(t) ? '<span>/mes</span>' : ''}</p>
+            <p class="tier__price">desde <strong>${formatCLP(priceOf(t).min)}</strong>${monthly(t) ? '<span>/mes</span>' : ''}${priceOf(t) !== t ? `<s class="tier__was">Precio normal desde ${formatCLP(t.min)}</s>` : ''}</p>
             <p class="tier__time">Plazo: ${esc(t.weeks)}</p>
             <ul>${(p.tiers[tid] || []).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
             <button class="btn ${i === 1 && tiers.length > 2 ? 'btn--gold' : 'btn--line'}" data-open-agent data-source="plan" data-ask="${esc(`Quiero cotizar ${s.name.toLowerCase()}: ${t.label}`)}">Cotizar esta opción</button>

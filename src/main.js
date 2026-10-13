@@ -1,4 +1,5 @@
 import { initShared, revealOnScroll, splitLines, initSampleFilters, $, $$, reduced, fine, gsap, ScrollTrigger, track } from './shared.js';
+import { initVoice } from './voice.js';
 import { initHeroShader } from './hero-shader.js';
 import { initReal } from './real.js';
 import { initReel, initShowcase, initWarp, initCases, attachVideo } from './showcase.js';
@@ -287,6 +288,7 @@ contact?.addEventListener('submit', async (e) => {
 })();
 
 initReal();
+initVoice(openAgent);
 initSampleFilters();
 initReel();
 initShowcase();
