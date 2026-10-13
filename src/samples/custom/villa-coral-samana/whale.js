@@ -41,6 +41,7 @@ export function initWhales({ section, reduced, months, whales, todayMonth, today
     if (above !== wasAbove) splash(p.x * W, SURF * H, above ? 70 : 90);
     wasAbove = above;
     facts.forEach((f, i) => f.classList.toggle('is-on', Math.min(2, Math.floor(k * 3.2)) === i));
+    section.querySelector('[data-whale-photo]')?.classList.toggle('is-on', k > 0.9);
     return p;
   }
   function splash(x, y, n) {

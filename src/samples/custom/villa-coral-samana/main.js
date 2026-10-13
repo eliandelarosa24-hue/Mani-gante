@@ -89,7 +89,6 @@ $$('.sh h2, .whales__copy h2, .chef__tx h2, .end h2').forEach((h) => { h.innerHT
   if (!reduced) h.addEventListener('pointermove', (e) => {
     const r = h.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - 0.5, y = (e.clientY - r.top) / r.height - 0.5;
     palms.style.transform = `translate3d(${x * -30}px, ${y * -18}px, 0)`;
-    $('.hero__ph').style.transform = `scale(1.06) translate3d(${x * 12}px, ${y * 8}px, 0)`;
   });
   const cv = $('[data-glint]'), c = cv.getContext('2d');
   let W = 0, H = 0; const glints = [];
@@ -110,6 +109,22 @@ $$('.sh h2, .whales__copy h2, .chef__tx h2, .end h2').forEach((h) => { h.innerHT
     }
     void t;
   })(0);
+})();
+
+/* Pines sobre las piscinas de la foto aérea (coordenadas en la imagen 16:9) */
+(function pins() {
+  const box = $('[data-pins]'), hero = $('[data-hero]');
+  const SPOTS = [['mango', 0.154, 0.713], ['ambar', 0.328, 0.718], ['coral', 0.504, 0.689], ['larimar', 0.672, 0.698], ['ballena', 0.823, 0.661]];
+  box.innerHTML = SPOTS.map(([id], i) => `<button type="button" class="pin" data-pin="${id}" style="--c:${byId[id].color};--i:${i}" aria-label="Villa ${byId[id].n}"><i></i><span>Villa ${byId[id].n}</span></button>`).join('');
+  const place = () => {
+    const W = hero.clientWidth, H = hero.clientHeight, ia = 16 / 9;
+    // La foto ocupa el hero con un 3 % de margen y background-size: cover
+    const bw = W * 1.06, bh = H * 1.06, s = Math.max(bw / ia, bh), iw = s * ia, ih = s;
+    const ox = (W - iw) / 2, oy = (H - ih) / 2;
+    SPOTS.forEach(([id, x, y]) => { const el = $(`[data-pin="${id}"]`, box); el.style.left = `${ox + x * iw}px`; el.style.top = `${oy + y * ih}px`; });
+  };
+  place(); addEventListener('resize', place);
+  box.addEventListener('click', (e) => { const b = e.target.closest('[data-pin]'); if (b) openVilla(b.dataset.pin); });
 })();
 
 /* ───────────── Navegación, menú, nota, moneda ───────────── */
