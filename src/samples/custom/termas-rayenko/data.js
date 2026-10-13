@@ -7,7 +7,7 @@ export const POOLS = [
   { id: 'coigue', n: 3, name: 'Pozón del Coigüe', temp: 39, depth: '1,2 m', cap: 14, x: 470, y: 300, r: 62, slot: 'hero', mins: '20 min', best: 'Conversar sin apuro', d: 'El más grande, bajo un coigüe de trescientos años. Es el corazón de la quebrada.' },
   { id: 'helecho', n: 4, name: 'Pozón Helecho', temp: 38, depth: '0,8 m', cap: 6, x: 590, y: 196, r: 40, slot: 'pasarela', mins: '20 min', best: 'Silencio: es el pozón sin conversación', d: 'Escondido entre helechos gigantes y nalcas. Aquí se habla en voz baja o no se habla.' },
   { id: 'luna', n: 5, name: 'Pozón Luna', temp: 37, depth: '1,0 m', cap: 8, x: 690, y: 368, r: 50, slot: 'pozon-noche', mins: '25 min', best: 'El bloque de la noche, mirando las estrellas', d: 'Sin árboles encima: el único pozón con el cielo completo. Lo encendemos con velas en el bloque nocturno.' },
-  { id: 'ninos', n: 6, name: 'Pozón Familiar', temp: 35, depth: '0,6 m', cap: 12, x: 800, y: 248, r: 46, slot: 'llegada', mins: 'Sin límite', best: 'Niñas y niños desde los 4 años', d: 'Poco profundo y templado, con escalones anchos. El pozón de las risas.' },
+  { id: 'ninos', n: 6, name: 'Pozón Familiar', temp: 35, depth: '0,6 m', cap: 12, x: 800, y: 248, r: 46, slot: 'cierre', mins: 'Sin límite', best: 'Niñas y niños desde los 4 años', d: 'Poco profundo y templado, con escalones anchos. El pozón de las risas.' },
   { id: 'rio', n: 7, name: 'Poza del Río', temp: 11, depth: '1,4 m', cap: 6, x: 880, y: 450, r: 44, slot: 'poza-rio', mins: '1 min', best: 'El contraste: entrar, contar hasta sesenta y volver', d: 'El estero de deshielo, sin trampa: agua de cordillera a once grados. Valiente quien repite.' },
 ];
 

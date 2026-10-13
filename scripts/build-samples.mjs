@@ -267,7 +267,7 @@ function gallery() {
 <head>
   <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Muestras de concepto · Red Vaeru</title>
-  <meta name="description" content="10 sitios de muestra diseñados por Red Vaeru para alojamientos, restaurantes, experiencias, enoturismo y destinos turísticos." />
+  <meta name="description" content="10 sitios de muestra diseñados por Red Vaeru para alojamientos, restaurantes, experiencias, enoturismo, termas y servicios profesionales." />
   <link rel="canonical" href="__SITE_URL__/muestras/" />
   <link rel="icon" type="image/png" href="/brand/emblema-32.png" />
   <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
