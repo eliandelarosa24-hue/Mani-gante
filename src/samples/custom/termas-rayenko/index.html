@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Termas Rayenko · Siete pozones termales en una quebrada de bosque nativo, Liquiñe · Muestra Red Vaeru</title>
+  <meta name="description" content="Termas de montaña con siete pozones naturales entre 11 y 42 °C en una quebrada de bosque nativo cerca de Liquiñe, Región de Los Ríos. Mapa de pozones, circuito de contraste y reserva por bloque horario. Muestra de concepto de Red Vaeru." />
+  <meta name="robots" content="noindex, follow" />
+  <meta name="theme-color" content="#0e1412" />
+  <link rel="canonical" href="__SITE_URL__/muestras/termas-rayenko/" />
+  <meta property="og:title" content="Termas Rayenko · muestra de concepto de Red Vaeru" />
+  <meta property="og:image" content="__SITE_URL__/og.jpg" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='32' fill='%230e1412'/%3E%3Cellipse cx='32' cy='46' rx='18' ry='6' fill='%238ec9c0'/%3E%3Cpath d='M24 36c-4-5 4-8 0-14M32 34c-4-6 4-9 0-17M40 36c-4-5 4-8 0-14' fill='none' stroke='%23eef1ec' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preconnect" href="https://images.unsplash.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@300;400;500;600&family=Spline+Sans+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <!--ANALYTICS-->
+</head>
+<body>
+  <!-- Pantalla de carga: se abre la llave de la vertiente y el agua sube de temperatura -->
+  <div class="loader" aria-hidden="true">
+    <div class="loader__pool">
+      <svg viewBox="0 0 200 160" class="loader__svg">
+        <g class="loader__steam"><path d="M70 96 C58 80 82 72 70 54 C60 40 78 30 72 16" /><path d="M100 92 C88 74 112 66 100 46 C90 32 108 22 102 6" /><path d="M130 96 C118 80 142 72 130 54 C120 40 138 30 132 16" /></g>
+        <ellipse cx="100" cy="128" rx="78" ry="20" class="loader__rim" />
+        <ellipse cx="100" cy="128" rx="68" ry="15" class="loader__water" />
+      </svg>
+      <p class="loader__t"><span data-load-t>11</span><small>°C</small></p>
+      <p class="loader__k" data-load-k>Abriendo la vertiente</p>
+    </div>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <defs>
+      <!-- Marca: un pozón con tres hilos de vapor -->
+      <symbol id="mark" viewBox="0 0 64 64">
+        <ellipse cx="32" cy="48" rx="22" ry="7" fill="currentColor" />
+        <path d="M22 37c-5-6 5-9 0-16M32 35c-5-7 5-10 0-19M42 37c-5-6 5-9 0-16" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" />
+      </symbol>
+      <filter id="heat" x="-10%" y="-20%" width="120%" height="140%"><feTurbulence type="fractalNoise" baseFrequency="0.012 0.06" numOctaves="1" seed="3" data-heat /><feDisplacementMap in="SourceGraphic" scale="6" /></filter>
+      <radialGradient id="poolg" cx="50%" cy="45%" r="60%"><stop offset="0" stop-color="#fff" stop-opacity=".35" /><stop offset="1" stop-color="#fff" stop-opacity="0" /></radialGradient>
+    </defs>
+  </svg>
+
+  <div class="demo"><img src="/brand/emblema-96.webp" alt="" width="20" height="20" /> Muestra de concepto diseñada por Red Vaeru · Negocio ficticio <a href="/muestras/">Ver todas las muestras</a> · <a href="/#contacto">Quiero un sitio así</a></div>
+
+  <header class="nav">
+    <a class="brand" href="#inicio" aria-label="Termas Rayenko, inicio"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#mark" /></svg><span><b>Rayenko</b><small>Termas · Liquiñe</small></span></a>
+    <nav class="nav__links" aria-label="Secciones"><a href="#quebrada">Los pozones</a><a href="#ritual">El ritual</a><a href="#origen">El agua</a><a href="#cabanas">Cabañas</a><a href="#llegar">Cómo llegar</a></nav>
+    <p class="nav__now" data-nav-now>Agua <b>39 °C</b></p>
+    <a class="heat-btn heat-btn--sm" href="#reservar"><span>Reservar bloque</span></a>
+    <button class="nav__burger" type="button" aria-label="Abrir menú" aria-expanded="false" data-burger><i></i><i></i></button>
+  </header>
+  <div class="drawer" data-drawer aria-hidden="true"><a href="#quebrada">Los pozones</a><a href="#ritual">El ritual</a><a href="#origen">De dónde viene el agua</a><a href="#reservar">Reservar</a><a href="#cabanas">Cabañas</a><a href="#regalo">Regalar</a><a href="#llegar">Cómo llegar</a></div>
+
+  <!-- Termómetro del recorrido: la página es el circuito, de 42 °C al río -->
+  <div class="thermo" aria-hidden="true"><span class="thermo__v" data-thermo-v>42°</span><div class="thermo__tube"><i data-thermo-fill></i></div><span class="thermo__l" data-thermo-l>Pozón del Fuego</span></div>
+
+  <main id="inicio">
+    <!-- ───────────── Hero ───────────── -->
+    <section class="hero" data-hero>
+      <div class="hero__ph" style="{{img:hero:1470071459604-3b5ec3a7fe05}}"></div>
+      <canvas class="hero__steam" data-steam></canvas>
+      <div class="hero__shade"></div>
+      <div class="hero__in">
+        <p class="hero__k">Termas de montaña · Liquiñe · Región de Los Ríos</p>
+        <h1 class="hero__title"><span class="l"><span>Siete pozones,</span></span><span class="l"><span><em data-shimmer>siete temperaturas.</em></span></span></h1>
+        <p class="hero__lead">Agua que nace a 68 °C en una quebrada de bosque nativo, a los pies del volcán Mocho-Choshuenco. Se recorre de caliente a frío, como se ha hecho siempre.</p>
+        <div class="hero__cta"><a class="heat-btn" href="#reservar"><span>Reservar un bloque</span></a><a class="mist-link" href="#quebrada">Recorrer la quebrada</a></div>
+      </div>
+      <div class="now" data-now>
+        <p><span>Aire</span><b data-now-air>6 °C</b></p>
+        <p><span>Agua</span><b data-now-water>39 °C</b></p>
+        <p><span>Próximo bloque</span><b data-now-block>Atardecer</b></p>
+        <p><span>Cupos</span><b data-now-cap>26</b></p>
+        <p><span>Esta noche</span><b data-now-moon>Luna 60%</b></p>
+      </div>
+      <p class="hero__hint">Mueva el cursor para despejar el vapor</p>
+    </section>
+
+    <!-- ───────────── La quebrada: mapa de pozones ───────────── -->
+    <section class="sec sec--dark" id="quebrada" data-temp="42" data-tl="Pozón del Fuego">
+      <header class="sh rv"><p class="sh__deg" aria-hidden="true">42°</p><p class="sh__k">La quebrada</p><h2>Siete pozones <em>a lo largo del estero.</em></h2><p class="sh__lead">Una pasarela de coigüe de 450 metros los une, desde la vertiente hasta el río. Toque cada pozón para conocerlo.</p></header>
+      <div class="map rv">
+        <div class="map__fig">
+          <svg viewBox="0 0 1000 620" data-map role="img" aria-label="Mapa de los siete pozones de la quebrada"></svg>
+          <button type="button" class="heat-btn heat-btn--ghost map__walk" data-walk><span>Recorrido sugerido ▸</span></button>
+        </div>
+        <aside class="pool" data-pool aria-live="polite"></aside>
+      </div>
+      <div class="scale rv" aria-hidden="true"><span>11 °C</span><i></i><span>42 °C</span></div>
+    </section>
+
+    <!-- ───────────── El ritual de contraste ───────────── -->
+    <section class="sec sec--deep" id="ritual" data-temp="40" data-tl="Pozón Cascada">
+      <header class="sh rv"><p class="sh__deg" aria-hidden="true">40°</p><p class="sh__k">El ritual</p><h2>Calor, frío <em>y descanso.</em></h2><p class="sh__lead">El circuito de contraste que proponemos: tres vueltas entre el pozón caliente, la poza del río y la manta junto al fogón. Pruébelo aquí en su versión de un minuto.</p></header>
+      <div class="ritual rv">
+        <div class="dial" data-dial>
+          <svg viewBox="0 0 300 300"><circle cx="150" cy="150" r="128" class="dial__bg" /><circle cx="150" cy="150" r="128" class="dial__arc" data-arc pathLength="1" /><circle cx="150" cy="150" r="92" class="dial__breath" data-breath /></svg>
+          <div class="dial__in"><p class="dial__phase" data-phase>Listo</p><p class="dial__time" data-time>1:00</p><p class="dial__cue" data-cue>Respire con el círculo</p></div>
+        </div>
+        <div class="ritual__side">
+          <ol class="ritual__steps" data-steps>
+            <li data-s="hot"><b>Pozón del Fuego · 42 °C</b><span>8 minutos. El cuerpo se calienta y la respiración se alarga.</span></li>
+            <li data-s="cold"><b>Poza del Río · 11 °C</b><span>Entre 30 segundos y un minuto. Todo despierta.</span></li>
+            <li data-s="rest"><b>Descanso junto al fogón</b><span>5 minutos, envuelto en la bata. Después, otra vuelta.</span></li>
+          </ol>
+          <div class="ritual__btns"><button type="button" class="heat-btn" data-ritual><span>Comenzar el ritual</span></button><span class="ritual__round" data-round>Vuelta 0 de 3</span></div>
+          <p class="ritual__fine">Si está embarazada o tiene problemas de presión o del corazón, consulte a su médico antes de usar aguas calientes y el contraste con agua fría.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── De dónde viene el agua ───────────── -->
+    <section class="geo" id="origen" data-geo data-temp="39" data-tl="Pozón del Coigüe">
+      <div class="geo__stage">
+        <header class="sh sh--left"><p class="sh__k">El agua</p><h2>Cuarenta años <em>bajo el volcán.</em></h2></header>
+        <svg class="geo__svg" viewBox="0 0 1200 700" preserveAspectRatio="xMidYMid slice" data-geo-svg aria-hidden="true"></svg>
+        <div class="geo__read"><p><span>Profundidad</span><b data-geo-depth>0 m</b></p><p><span>Temperatura</span><b data-geo-temp>4 °C</b></p></div>
+        <ol class="geo__steps" data-geo-steps>
+          <li><b>Lluvia y nieve</b>Cae sobre el Mocho-Choshuenco y los cerros del valle.</li>
+          <li><b>Se infiltra</b>Baja por grietas de roca volcánica durante décadas, a varios kilómetros de profundidad.</li>
+          <li><b>Se calienta</b>Cerca del calor del volcán, el agua supera los cien grados y se carga de minerales.</li>
+          <li><b>Sube por la falla</b>La falla Liquiñe-Ofqui, que recorre el sur de Chile, le abre camino hacia arriba.</li>
+          <li><b>Brota a 68 °C</b>En la vertiente de la quebrada. Desde ahí baja, pozón por pozón, hasta el río.</li>
+        </ol>
+      </div>
+    </section>
+    <section class="sec sec--dark water" data-temp="38" data-tl="Pozón Helecho">
+      <div class="water__in rv">
+        <div><p class="sh__k">Lo que trae el agua</p><p class="water__t">Alcalina, rica en sílice y <em>sin olor a azufre.</em></p><p class="water__d">Por eso la piel queda suave y nadie sale oliendo a huevo. El análisis se repite cada temporada.</p></div>
+        <table class="water__tbl" data-water></table>
+      </div>
+    </section>
+
+    <!-- ───────────── Reserva por bloques ───────────── -->
+    <section class="sec sec--steam" id="reservar" data-temp="37" data-tl="Pozón Luna">
+      <header class="sh rv"><p class="sh__deg" aria-hidden="true">37°</p><p class="sh__k">Reservar</p><h2>Elija el día <em>y la hora del agua.</em></h2><p class="sh__lead">Cuatro bloques al día, con aforo limitado para que la quebrada siga en calma. Precio directo, sin intermediarios.</p></header>
+      <form class="book rv" data-book novalidate>
+        <div class="book__days" data-days role="radiogroup" aria-label="Día"></div>
+        <div class="book__blocks" data-blocks role="radiogroup" aria-label="Bloque horario"></div>
+        <div class="book__row">
+          <div class="book__who" data-who>
+            <div><p>Adultos</p><div class="step"><button type="button" data-p="ad" data-d="-1" aria-label="Menos adultos">−</button><output data-o="ad">2</output><button type="button" data-p="ad" data-d="1" aria-label="Más adultos">+</button></div></div>
+            <div><p>Niños <small>4 a 12 años</small></p><div class="step"><button type="button" data-p="ch" data-d="-1" aria-label="Menos niños">−</button><output data-o="ch">0</output><button type="button" data-p="ch" data-d="1" aria-label="Más niños">+</button></div></div>
+            <div><p>Mayores <small>65+</small></p><div class="step"><button type="button" data-p="se" data-d="-1" aria-label="Menos mayores">−</button><output data-o="se">0</output><button type="button" data-p="se" data-d="1" aria-label="Más mayores">+</button></div></div>
+          </div>
+          <div class="book__extras" data-extras></div>
+        </div>
+        <div class="book__sum" data-sum aria-live="polite"></div>
+        <div class="band" data-band aria-live="polite"></div>
+      </form>
+    </section>
+
+    <!-- ───────────── Después del agua ───────────── -->
+    <section class="sec sec--dark after" data-temp="36" data-tl="Pozón Luna">
+      <header class="sh rv"><p class="sh__k">Después del agua</p><h2>Sauna, manos <em>y fogón.</em></h2></header>
+      <div class="after__grid">
+        <figure class="rv" data-zoom="sauna"><div class="ph" style="{{img:sauna:1600334129128-685c5582fd35}}"></div><figcaption><b>Sauna del bosque</b>Leña de ulmo y un ventanal hacia la niebla.</figcaption></figure>
+        <figure class="rv" data-zoom="masaje"><div class="ph" style="{{img:masaje:1540555700478-4be289fbecef}}"></div><figcaption><b>Masaje con piedras volcánicas</b>50 minutos, con piedras del mismo estero.</figcaption></figure>
+        <figure class="rv" data-zoom="te"><div class="ph" style="{{img:te:1576092768241-dec231879fc3}}"></div><figcaption><b>Té de hierbas y sopaipillas</b>Matico, cedrón y menta del huerto.</figcaption></figure>
+        <figure class="rv" data-zoom="fogon"><div class="ph" style="{{img:fogon:1475483768296-6163e08872a1}}"></div><figcaption><b>Cena en el fogón</b>Cordero, piñones y papas nativas al rescoldo.</figcaption></figure>
+      </div>
+    </section>
+
+    <!-- ───────────── Estaciones ───────────── -->
+    <section class="seasons" data-seasons data-temp="35" data-tl="Pozón Familiar">
+      <div class="seasons__ph" data-season-ph></div>
+      <div class="seasons__in">
+        <p class="sh__k">Cuatro estaciones</p>
+        <h2 class="seasons__t" data-season-t></h2>
+        <p class="seasons__d" data-season-d></p>
+        <div class="seasons__tabs" role="tablist" aria-label="Estaciones" data-season-tabs></div>
+      </div>
+    </section>
+
+    <!-- ───────────── Cabañas ───────────── -->
+    <section class="sec sec--dark" id="cabanas" data-temp="35" data-tl="Pozón Familiar">
+      <header class="sh rv"><p class="sh__deg" aria-hidden="true">35°</p><p class="sh__k">Quedarse</p><h2>Una noche <em>dentro de la quebrada.</em></h2><p class="sh__lead">Tres cabañas con acceso libre a los pozones desde las 21:00 hasta las 9:00, cuando el bosque es solo para ustedes.</p></header>
+      <div class="cabins">
+        <figure class="cabins__ph rv" data-zoom="cabana"><div class="ph" style="{{img:cabana:1449158743715-0a90ebb6d2d8}}"></div></figure>
+        <ul class="cabins__list" data-cabins></ul>
+      </div>
+    </section>
+
+    <!-- ───────────── Regalar ───────────── -->
+    <section class="sec sec--steam" id="regalo" data-temp="30" data-tl="Bajando al río">
+      <header class="sh rv"><p class="sh__k">Regalar</p><h2>Regale una tarde <em>de agua caliente.</em></h2><p class="sh__lead">Arme la tarjeta, escriba su mensaje y envíela por WhatsApp o correo. Vale por un año en cualquier bloque.</p></header>
+      <div class="gift rv">
+        <form class="gift__form" data-gift novalidate>
+          <p class="lbl">Diseño</p>
+          <div class="chips" data-gift-design><button type="button" aria-pressed="true" data-v="vapor">Vapor</button><button type="button" aria-pressed="false" data-v="nieve">Nieve</button><button type="button" aria-pressed="false" data-v="noche">Noche</button></div>
+          <p class="lbl">Qué regala</p>
+          <div class="chips" data-gift-plan><button type="button" aria-pressed="true" data-v="2">Bloque para dos</button><button type="button" aria-pressed="false" data-v="2m">Bloque y masaje</button><button type="button" aria-pressed="false" data-v="c">Noche en cabaña</button></div>
+          <label class="field"><span>Para</span><input name="to" maxlength="28" placeholder="Ana" /></label>
+          <label class="field"><span>De parte de</span><input name="from" maxlength="28" placeholder="Pablo" /></label>
+          <label class="field"><span>Mensaje</span><input name="msg" maxlength="70" placeholder="Para que el invierno pase más tibio" /></label>
+          <button type="button" class="heat-btn" data-demo="En el sitio real, aquí se paga la gift card y le llega por correo en PDF, lista para imprimir o reenviar por WhatsApp."><span>Comprar tarjeta</span></button>
+        </form>
+        <div class="card" data-card></div>
+      </div>
+    </section>
+
+    <!-- ───────────── Cómo llegar ───────────── -->
+    <section class="sec sec--dark" id="llegar" data-temp="20" data-tl="Bajando al río">
+      <header class="sh rv"><p class="sh__k">Cómo llegar</p><h2>Al final del camino <em>a Liquiñe.</em></h2></header>
+      <div class="road rv">
+        <div class="road__map">
+          <svg viewBox="0 0 520 420" data-road role="img" aria-label="Ruta desde Panguipulli y Coñaripe hasta las termas"></svg>
+        </div>
+        <div class="road__side">
+          <div class="road__status" data-road-status></div>
+          <ul class="road__list"><li><span>Coñaripe</span><b>35 min · 30 km</b></li><li><span>Panguipulli</span><b>1 h 15 · 70 km</b></li><li><span>Pucón</span><b>1 h 50 · 105 km</b></li><li><span>Valdivia</span><b>2 h 40 · 175 km</b></li><li><span>Temuco</span><b>3 h · 200 km</b></li></ul>
+          <p class="road__fine">Desde Liquiñe, 18 km de ripio bueno. Estacionamiento gratuito a 80 metros de la recepción.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- ───────────── Reseñas y preguntas ───────────── -->
+    <section class="sec sec--deep" id="resenas" data-temp="15" data-tl="Bajando al río">
+      <div class="rev rv" data-reviews></div>
+      <header class="sh rv" id="preguntas"><p class="sh__k">Antes de venir</p><h2>Preguntas <em>frecuentes.</em></h2></header>
+      <div class="faq" data-faq></div>
+    </section>
+
+    <!-- ───────────── Cierre ───────────── -->
+    <section class="end" data-temp="11" data-tl="Poza del Río">
+      <div class="end__ph" style="{{img:cierre:1519681393784-d120267933ba}}"></div>
+      <div class="end__in">
+        <p class="sh__k">Poza del Río · 11 °C</p>
+        <h2>Llegó al final <em>del circuito.</em></h2>
+        <p>Ahora, de vuelta al pozón del fuego. El agua le espera a <b data-end-water>39 °C</b>.</p>
+        <a class="heat-btn" href="#reservar"><span>Reservar un bloque</span></a>
+      </div>
+    </section>
+  </main>
+
+  <footer class="foot">
+    <div class="foot__top"><svg viewBox="0 0 64 64" aria-hidden="true"><use href="#mark" /></svg><p class="foot__word">Rayenko</p><p class="foot__mean"><i>rayen</i> flor · <i>ko</i> agua <small>en mapudungun</small></p></div>
+    <div class="foot__grid">
+      <div><p class="label">Dónde</p><p>Camino Liquiñe km 18<br />Panguipulli, Región de Los Ríos</p></div>
+      <div><p class="label">Contacto</p><p>+56 63 000 0000<br />hola@termasrayenko.cl</p></div>
+      <div><p class="label">Horario</p><p>Todos los días, 9:00 a 24:00<br />Bloque nocturno solo adultos</p></div>
+      <div><p class="label">Muestra</p><p>Negocio ficticio. Concepto diseñado por <a href="/">Red Vaeru</a> · Conectando culturas</p></div>
+    </div>
+    <p class="foot__end"><span>© <span data-yr>2026</span> Termas Rayenko</span><span>39°43′ S · 71°51′ O</span><button type="button" class="foot__snd" data-sound aria-pressed="false">Sonido de la quebrada: apagado</button></p>
+  </footer>
+
+  <div class="viewer" data-viewer aria-hidden="true" role="dialog" aria-modal="true" aria-label="Fotografía ampliada"><button type="button" class="viewer__x" data-viewer-close>Cerrar ✕</button><div class="viewer__img" data-viewer-img></div><p class="viewer__cap" data-viewer-cap></p></div>
+  <a class="wa" href="#reservar" data-demo aria-label="Escribir por WhatsApp"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a9 9 0 0 0-7.8 13.5L3 21l4.6-1.2A9 9 0 1 0 12 3z" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M8.5 8.5c0 4 3 7 7 7l1-1.6-2-1-1 1c-1.4-.6-2.4-1.6-3-3l1-1-1-2z" fill="currentColor"/></svg></a>
+  <div class="note" role="status"><p data-note-text></p><div><a href="https://wa.me/56952289117" target="_blank" rel="noopener">Quiero un sitio así</a><button type="button" data-note-close>Cerrar</button></div></div>
+
+  <template data-photos>
+    <i data-p="hero" style="{{img:hero:1470071459604-3b5ec3a7fe05}}"></i>
+    <i data-p="pasarela" style="{{img:pasarela:1448375240586-882707db888b}}"></i>
+    <i data-p="llegada" style="{{img:llegada:1510798831971-661eb04b3739}}"></i>
+    <i data-p="nieve" style="{{img:nieve:1483921020237-2ff51e8e4b22}}"></i>
+    <i data-p="pozon-cascada" style="{{img:pozon-cascada:1432405972618-c60b0225b8f9}}"></i>
+    <i data-p="pozon-piedra" style="{{img:pozon-piedra:1506905925346-21bda4d32df4}}"></i>
+    <i data-p="poza-rio" style="{{img:poza-rio:1501785888041-af3ef285b470}}"></i>
+    <i data-p="pozon-noche" style="{{img:pozon-noche:1519681393784-d120267933ba}}"></i>
+    <i data-p="sauna" style="{{img:sauna:1600334129128-685c5582fd35}}"></i>
+    <i data-p="masaje" style="{{img:masaje:1540555700478-4be289fbecef}}"></i>
+    <i data-p="te" style="{{img:te:1576092768241-dec231879fc3}}"></i>
+    <i data-p="fogon" style="{{img:fogon:1475483768296-6163e08872a1}}"></i>
+    <i data-p="volcan" style="{{img:volcan:1464822759023-fed622ff2c3b}}"></i>
+    <i data-p="bosque" style="{{img:bosque:1441974231531-c6227db76b6e}}"></i>
+    <i data-p="cabana" style="{{img:cabana:1449158743715-0a90ebb6d2d8}}"></i>
+    <i data-p="cierre" style="{{img:cierre:1519681393784-d120267933ba}}"></i>
+  </template>
+
+  <script type="module" src="/src/samples/custom/termas-rayenko/main.js"></script>
+</body>
+</html>
