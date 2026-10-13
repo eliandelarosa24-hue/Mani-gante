@@ -260,7 +260,7 @@ function page(s) {
 }
 
 function gallery() {
-  const NICHES = { alojamiento: 'Alojamiento', gastronomia: 'Gastronomía', experiencias: 'Experiencias', caribe: 'Caribe', destino: 'Destinos y gremios', asesoria: 'Asesoría' };
+  const NICHES = { alojamiento: 'Alojamiento', gastronomia: 'Gastronomía', experiencias: 'Experiencias', caribe: 'Caribe', destino: 'Destinos y gremios', asesoria: 'Asesoría', bienestar: 'Termas y bienestar' };
   const niches = [...new Set(SAMPLES.map((s) => s.niche))].map((k) => [k, NICHES[k] || k]);
   return `<!DOCTYPE html>
 <html lang="es-CL">
