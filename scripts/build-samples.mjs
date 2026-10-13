@@ -322,8 +322,8 @@ function cover(s) {
 
 export function card(s) {
   const hl = esc(JSON.stringify(SHOWCASE[s.slug] || []));
-  return `<a class="sample" href="/muestras/${s.slug}/" data-niche="${s.niche}" data-slug="${s.slug}" data-name="${esc(s.name)}" data-rubro="${esc(s.nicheLabel)}" data-place="${esc(s.place)}" data-cover="${cover(s)}" data-accent="${s.theme['--accent']}" data-hl="${hl}">
-    ${ph(s, s.cardSlot || 'hero', s.hero.img, '', s.hero.alt)}
+  return `<a class="sample" href="/muestras/${s.slug}/" data-niche="${s.niche}" data-slug="${s.slug}" data-name="${esc(s.name)}" data-rubro="${esc(s.nicheLabel)}" data-place="${esc(s.place)}" data-cover="${cover(s)}" data-thumb="${existsSync(join(root, 'public', `/muestras/${s.slug}/img/card.webp`)) ? `/muestras/${s.slug}/img/card.webp` : cover(s)}" data-accent="${s.theme['--accent']}" data-hl="${hl}">
+    ${ph(s, existsSync(join(root, 'public', `/muestras/${s.slug}/img/card.webp`)) ? 'card' : (s.cardSlot || 'hero'), s.hero.img, '', s.hero.alt)}
     <span class="sample__tag">${esc(s.nicheLabel)}</span>
     <span class="sample__body"><span class="sample__place">${esc(s.place)}</span><strong>${esc(s.name)}</strong><span class="sample__line">${esc(s.tagline)}</span><span class="sample__go">Ver muestra ↗</span></span>
   </a>`;

@@ -4,12 +4,27 @@ import { CASES } from './samples/cases.js';
 
 const cardsData = () => $$('[data-showcase-list] .sample').map((a) => ({
   el: a, slug: a.dataset.slug, name: a.dataset.name, rubro: a.dataset.rubro, place: a.dataset.place,
-  cover: a.dataset.cover, href: a.getAttribute('href'), hl: JSON.parse(a.dataset.hl || '[]'),
+  cover: a.dataset.cover, thumb: a.dataset.thumb || a.dataset.cover, href: a.getAttribute('href'), hl: JSON.parse(a.dataset.hl || '[]'),
 }));
 
 // Videos: cuando exista /video/<nombre>.mp4 se reproduce sobre la portada; si no existe, queda la imagen.
+const near = new WeakMap();
+const nearIO = typeof IntersectionObserver !== 'undefined' ? new IntersectionObserver((es) => es.forEach((e) => {
+  const st = near.get(e.target); if (!st) return;
+  st.visible = e.isIntersecting;
+  if (e.isIntersecting && st.pending) { const n = st.pending; st.pending = null; load(e.target, n); }
+  if (!e.isIntersecting && !e.target.paused) e.target.pause();
+  else if (e.isIntersecting && e.target.paused && e.target.classList.contains('is-on')) e.target.play().catch(() => {});
+}), { rootMargin: '250px 0px' }) : null;
+// El video solo se descarga cuando su contenedor se acerca a la pantalla, y se pausa al salir.
 export function attachVideo(video, name) {
   if (!video || reduced) return;
+  let st = near.get(video);
+  if (!st && nearIO) { st = { visible: false, pending: null }; near.set(video, st); nearIO.observe(video); }
+  if (st && !st.visible && !video.closest('.svc__float, .case-ov')) { st.pending = name; return; }
+  load(video, name);
+}
+function load(video, name) {
   // MP4 (H.264) para Safari y la mayoría; WebM (VP9) para navegadores sin H.264
   const h264 = video.canPlayType('video/mp4; codecs="avc1.42E01E"');
   const src = `/video/${name}.${h264 ? 'mp4' : 'webm'}`;
@@ -30,12 +45,13 @@ export function initReel() {
   const reel = $('[data-reel]'); if (!reel) return;
   const items = cardsData();
   const slides = $('[data-reel-slides]', reel), ticks = $('[data-reel-ticks]', reel), cap = $('.reel__cap', reel);
-  slides.innerHTML = items.map((d) => `<span style="background-image:url('${d.cover}')"></span>`).join('');
+  slides.innerHTML = items.map(() => '<span></span>').join('');
   ticks.innerHTML = items.map(() => '<i></i>').join('');
   const S = $$('span', slides), T = $$('i', ticks);
   let D = 3400, i = 0, timer = 0, vis = true, onVideo = false;
   const show = (k) => {
     i = (k + items.length) % items.length;
+    [i, (i + 1) % items.length].forEach((j) => { if (!S[j].style.backgroundImage) S[j].style.backgroundImage = `url('${items[j].cover}')`; });
     S.forEach((s, j) => s.classList.toggle('is-on', j === i));
     T.forEach((t, j) => { t.classList.remove('run'); t.classList.toggle('done', j < i); });
     void ticks.offsetWidth; T[i].style.setProperty('--d', `${D}ms`); T[i].classList.add('run');
@@ -60,7 +76,8 @@ export function initShowcase() {
   const img = $('[data-stage-img]', stage), link = $('[data-stage-link]', stage), go = $('[data-stage-go]', stage);
   let cur = -1;
   // Precarga de portadas para que el cambio sea instantáneo
-  items.forEach((d) => { const im = new Image(); im.src = d.cover; });
+  // La portada grande se precarga al pasar el mouse por la fila (no todas de golpe)
+  items.forEach((d) => d.el.addEventListener('pointerenter', () => { const im = new Image(); im.src = d.cover; }, { once: true }));
   const set = (k) => {
     if (k === cur) return; cur = k;
     const d = items[k], visible = items.filter((x) => !x.el.hidden);
