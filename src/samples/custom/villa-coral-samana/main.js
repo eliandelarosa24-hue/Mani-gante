@@ -63,7 +63,18 @@ function sunset({ year: y, month: m, day: d }) {
   if (document.readyState === 'complete') go(); else addEventListener('load', go);
   setTimeout(() => document.body.classList.add('is-shade', 'is-ready'), 7000);
 })();
-$$('.hero__title > span').forEach((s, i) => { const w = document.createElement('span'); w.className = 'w'; w.style.transitionDelay = `${0.5 + i * 0.18}s`; while (s.firstChild) w.append(s.firstChild); s.append(w); });
+$$('.hero__title > span:first-child').forEach((s, i) => { const w = document.createElement('span'); w.className = 'w'; w.style.transitionDelay = `${0.5 + i * 0.18}s`; while (s.firstChild) w.append(s.firstChild); s.append(w); });
+// La frase pintada del hero entra letra por letra, como un letrero que se ilumina
+(function paint() {
+  const em = $('[data-paint]'); if (!em) return;
+  em.setAttribute('aria-label', em.textContent);
+  let i = 0;
+  // Letras agrupadas por palabra para que nunca se corte una palabra al cambiar de línea
+  em.innerHTML = em.textContent.split(' ').map((w) => `<span class="wd" aria-hidden="true">${[...w].map((c) => `<span class="ch" style="--i:${i++}">${c}</span>`).join('')}</span>`).join(' ');
+})();
+// Ornamento caribeño (sol y olas) bajo cada antetítulo de sección
+const ORN = '<svg class="orn" viewBox="0 0 150 26" aria-hidden="true"><path class="w1" d="M2 15 q8 -8 16 0 t16 0 t16 0 t8 0"/><path class="w2" d="M100 15 q8 -8 16 0 t16 0 t16 0"/><g class="ray"><path d="M75 1v4M75 21v4M63 13h4M83 13h4M66.5 4.5l3 3M80.5 18.5l3 3M83.5 4.5l-3 3M69.5 18.5l-3 3"/></g><circle cx="75" cy="13" r="5"/></svg>';
+$$('.sh .sh__k').forEach((k) => k.insertAdjacentHTML('afterend', ORN));
 $$('.sh h2, .whales__copy h2, .chef__tx h2, .end h2').forEach((h) => { h.innerHTML = `<span class="ln"><span>${h.innerHTML}</span></span>`; });
 
 /* ───────────── Ahora en Samaná ───────────── */
