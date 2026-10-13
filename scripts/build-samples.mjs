@@ -330,7 +330,7 @@ function custom(s) {
     if (id) layers.push(`url('https://images.unsplash.com/photo-${id}?auto=format&fit=crop&w=1600&q=72')`);
     layers.push(`linear-gradient(135deg, ${s.theme['--accent-2'] || '#2f4a3a'}, ${s.theme['--accent'] || '#8a5a2b'})`);
     return `background-image:${layers.join(', ')}`;
-  }).replace('</body>', '  <script type="module" src="/src/samples/pitch.js"></script>\n</body>');
+  });
 }
 
 for (const s of SAMPLES) {
