@@ -39,6 +39,7 @@ const ICONS = {
   pool: '<path d="M2 18c2 1.5 4 1.5 6 0s4-1.5 6 0 4 1.5 6 0M2 14c2 1.5 4 1.5 6 0s4-1.5 6 0 4 1.5 6 0M8 12V5a2 2 0 0 1 4 0M16 12V5a2 2 0 0 0-4 0M8 8h8"/>',
   chef: '<path d="M6 13a4 4 0 0 1 1-8 5 5 0 0 1 10 0 4 4 0 0 1 1 8v7H6z"/><path d="M6 17h12"/>',
   music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
+  ledger: '<path d="M5 3h12a2 2 0 0 1 2 2v16H7a2 2 0 0 1-2-2V3zM12 3v18M8 8h2M8 12h2M14 8h2M14 12h2M5 17h14"/>',
   map: '<path d="M9 4L3 6v14l6-2 6 2 6-2V4l-6 2zM9 4v14M15 6v14"/>',
   users: '<circle cx="9" cy="8" r="3.5"/><path d="M2 21c0-4 3-6 7-6s7 2 7 6"/><path d="M16 4.5a3.5 3.5 0 0 1 0 7M18 15c2.5.5 4 2.5 4 6"/>',
   heart: '<path d="M12 21s-8-5-8-11a4.5 4.5 0 0 1 8-3 4.5 4.5 0 0 1 8 3c0 6-8 11-8 11z"/>',
@@ -259,7 +260,7 @@ function page(s) {
 }
 
 function gallery() {
-  const NICHES = { alojamiento: 'Alojamiento', gastronomia: 'Gastronomía', experiencias: 'Experiencias', caribe: 'Caribe', destino: 'Destinos y gremios' };
+  const NICHES = { alojamiento: 'Alojamiento', gastronomia: 'Gastronomía', experiencias: 'Experiencias', caribe: 'Caribe', destino: 'Destinos y gremios', asesoria: 'Asesoría' };
   const niches = [...new Set(SAMPLES.map((s) => s.niche))].map((k) => [k, NICHES[k] || k]);
   return `<!DOCTYPE html>
 <html lang="es-CL">

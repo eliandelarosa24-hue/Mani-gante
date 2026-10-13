@@ -199,4 +199,45 @@ Son 16 espacios, en 4 collages de 2×2. El estilo es fotografía de revista de v
 
 ---
 
-Las otras 2 muestras tendrán sus prompts cuando se rediseñe cada una.
+## Muestra 9 · Estudio Haber (estudio contable y tributario para pymes, Temuco)
+
+Son 16 espacios, en 4 collages de 2×2. El estilo es fotografía documental editorial, como un reportaje de revista de negocios hecho con cariño: luz de ventana natural, papel crema, verde tinta de libro contable, madera clara, un acento rojo ladrillo. Nada de oficinas corporativas de vidrio, nada de stock de gente sonriendo con corbata. Sin caras mirando a cámara, sin texto legible. Todo se corta a 16:9; descargue cada imagen en tamaño completo.
+
+### Collage A: el estudio → `hero, oficina, equipo, reunion`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. A small, warm accounting firm for small businesses in Temuco, southern Chile, documentary editorial photography. Top-left: a calm wide view of a top-down oak desk covered with neatly organized paper invoices, a green clothbound ledger, a vintage calculator with paper roll, a rubber stamp, a fountain pen and a cup of coffee, soft window light. Top-right: the facade of a restored early 1900s wooden house painted cream with dark green window frames on a quiet street, now a small office, a simple brass plaque by the door, overcast southern light. Bottom-left: three accountants seen from behind and in profile working at a long wooden table full of folders and laptops, plants and bookshelves, natural light, focused and friendly. Bottom-right: an accountant in a sweater explaining a printed chart to a bakery owner wearing an apron across a small wooden table, hands and papers in focus, faces turned away. Cream, ink green and brick red tones, 8K.
+
+### Collage B: el oficio → `caja, orden, sello, libro`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. The craft of bookkeeping, still life editorial photography on warm paper tones. Top-left: an old cardboard shoebox overflowing with crumpled paper receipts, invoices and bank slips on a wooden table, slightly chaotic, moody light. Top-right: the same receipts now neatly sorted into labeled kraft folders and clipped stacks by month, perfectly ordered, satisfying overhead view. Bottom-left: extreme close-up of a wooden rubber stamp pressing red ink onto a cream document, motion and ink texture visible. Bottom-right: an open antique green ledger book with handwritten columns of numbers in fountain pen ink and a ruler, a reading lamp casting warm light. Cream, ink green and brick red, shallow depth of field, 8K.
+
+### Collage C: los clientes → `panaderia, taller, campo, almacen`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Small family businesses of La Araucanía, southern Chile, documentary portrait style, people seen from behind or in profile, never facing the camera. Top-left: a small neighborhood bakery at dawn with a baker pulling marraqueta bread from a deep oven, flour in the air, warm light. Top-right: a small mechanic workshop with an old pickup truck on a lift and a mechanic wiping his hands, tools on the wall, daylight from the open door. Bottom-left: a blueberry farm in southern Chile with rows of bushes, a farmer carrying a crate of berries, volcano faintly visible in the distance. Bottom-right: a classic Chilean corner grocery store (almacén de barrio) with shelves full of products, a wooden counter and an old scale, the owner arranging fruit. Natural colors, honest and dignified, 8K.
+
+### Collage D: Temuco y el año tributario → `temuco, feria, firma, cierre`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Temuco, southern Chile, documentary editorial photography. Top-left: a view of Temuco city from Cerro Ñielol hill at golden hour, rooftops, green trees and distant mountains. Top-right: the busy Feria Pinto open market in Temuco with vegetable stalls, sacks of merkén, piñones and flowers, people seen from behind. Bottom-left: close-up of two hands signing a document with a fountain pen on a wooden desk while another hand rests on a folder, a handshake implied, warm light. Bottom-right: the same cozy small accounting office at dusk, lights on, desks tidy, folders closed, an empty chair and a green desk lamp glowing, peaceful end of the workday, seen from the street through the window. Cinematic, 8K.
+
+---
+
+## Muestra 10 · Ceniza Tostaduría (café de especialidad con tostaduría propia, Villarrica)
+
+Son 16 espacios, en 4 collages de 2×2. El estilo es fotografía de producto y documental de café de especialidad: negro volcánico, gris ceniza, hormigón, acero, madera de coigüe y un solo acento cobrizo o naranja brasa. Contraste alto, grano fino, nada de cafetería rústica con pizarras ni corazones de latte cursis. Sin caras mirando a cámara, sin texto legible ni logos. Todo se corta a 16:9; descargue cada imagen en tamaño completo.
+
+### Collage A: la casa → `hero, barra, interior, terraza`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. A minimal specialty coffee roastery café in Villarrica, southern Chile, at the foot of the snow-capped Villarrica volcano, architectural editorial photography. Top-left: a dramatic close-up of a single black ceramic cup of black filter coffee on a dark volcanic stone counter, steam rising into a beam of morning light, the snowy volcano softly blurred through the window behind. Top-right: a long concrete coffee bar with a stainless steel espresso machine, glass jars of coffee beans and a barista seen from behind pouring, warm copper pendant lights. Bottom-left: the café interior with raw concrete, black steel and light coigüe wood, a large drum coffee roaster visible behind a glass wall, a few customers reading, seen from behind. Bottom-right: a small wooden terrace with two chairs and a coffee cup facing Lake Villarrica and the smoking volcano on a clear morning. Volcanic black, ash grey and ember orange, 8K.
+
+### Collage B: el tueste → `tostador, enfriado, verde, catacion`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. The craft of coffee roasting, documentary photography in a small roastery. Top-left: a black cast-iron drum coffee roaster with copper details, its door open and freshly roasted beans pouring out into the round cooling tray, a little smoke, dramatic side light. Top-right: overhead close-up of dark brown roasted coffee beans spinning in the round cooling tray with the metal arm stirring them, motion blur. Bottom-left: jute sacks of green coffee beans from different origins stacked on wooden pallets, one sack open showing pale green beans, a metal scoop. Bottom-right: a professional coffee cupping table with rows of small glass bowls of coffee, spoons, a scale and small dishes of ground coffee, hands seen breaking the crust with a spoon. Volcanic black, ash grey and ember orange, 8K.
+
+### Collage C: la taza → `v60, espresso, latte, frio`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. Specialty coffee drinks, high-end product photography on dark stone and concrete. Top-left: a glass pour-over dripper with a thin spiral stream of water from a black gooseneck kettle onto blooming coffee, a digital scale underneath, side light. Top-right: extreme close-up of an espresso shot pouring from a bottomless portafilter into a small glass, rich tiger-striped crema. Bottom-left: a flat white in a matte grey ceramic cup with simple fine latte art seen from above on a dark wooden table, a small pastry beside it. Bottom-right: a tall glass of iced coffee tonic with ice and an orange slice, condensation, backlit by window light. Moody, minimal, 8K.
+
+### Collage D: el origen y la casa → `finca, cerezas, bolsas, cierre`
+
+> Create a single photorealistic image arranged as an exact 2x2 grid of four equal panels, with no borders, no gaps, no text and no logos. From origin to cup, documentary photography. Top-left: a steep coffee farm in the Andes of Colombia at sunrise with rows of coffee plants and mist in the valley, a farmer seen from behind carrying a basket. Top-right: close-up of a hand holding ripe red and yellow coffee cherries just picked from the branch. Bottom-left: matte black coffee bags without labels lined up on a concrete shelf, one open showing roasted beans, a small brass scale and a stamp. Bottom-right: the Villarrica volcano at dusk with a faint plume of smoke and orange glow, seen from the lakeshore, deep blue sky. Cinematic, 8K.
+
