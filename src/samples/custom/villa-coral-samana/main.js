@@ -2,6 +2,7 @@
 import './style.css';
 import { VILLAS, TRIPS, MENU, CLIMATE, MONTHS, REVIEWS, RATES } from './data.js';
 import { initWhales, toggleSong } from './whale.js';
+import { toggleMerengue } from './merengue.js';
 
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => [...r.querySelectorAll(s)];
@@ -380,9 +381,32 @@ addEventListener('keydown', (e) => {
   setMenu(false);
 });
 
+/* ───────────── Gotas de agua al tocar cualquier botón ───────────── */
+document.addEventListener('pointerdown', (e) => {
+  if (reduced || !e.target.closest('.btn, .nav__cta, .trip__btn, .vpick button, .song, .wa, .pin, .cur button')) return;
+  const sp = document.createElement('span'); sp.className = 'splash'; sp.style.left = `${e.clientX}px`; sp.style.top = `${e.clientY}px`;
+  let h = '<b></b><b></b>';
+  for (let i = 0; i < 9; i++) {
+    const a = (i / 9) * Math.PI * 2 + Math.random() * 0.5, d = 34 + Math.random() * 30;
+    h += `<i style="--s:${(7 + Math.random() * 7).toFixed(1)}px;--x:${(Math.cos(a) * d).toFixed(1)}px;--y:${(Math.sin(a) * d + 18).toFixed(1)}px;--a:${((a * 180) / Math.PI + 135).toFixed(0)}deg"></i>`;
+  }
+  sp.innerHTML = h; document.body.append(sp); setTimeout(() => sp.remove(), 900);
+});
+
+/* ───────────── Merengue: la página baila al ritmo de la tambora ───────────── */
+(function merengue() {
+  const b = $('[data-merengue]'); if (!b) return; let on = false;
+  const beat = () => { if (reduced) return; document.documentElement.classList.add('beat'); setTimeout(() => document.documentElement.classList.remove('beat'), 120); };
+  b.addEventListener('click', () => {
+    on = !on; toggleMerengue(on, beat);
+    b.setAttribute('aria-pressed', String(on)); document.body.classList.toggle('is-merengue', on);
+    $('[data-merengue-t]').textContent = on ? '¡Eso es! Quitar' : 'Ponle merengue';
+  });
+})();
+
 /* ───────────── Apariciones y parallax ───────────── */
 paintMoney();
-$$('.sh, .shut, .trip, .passport, .chef__ph, .chef__tx, .mosaic figure, .chart, .book__form, .bp, .reviews > *, .arrive__grid > *, .end__in, .foot__grid').forEach((el) => el.classList.add('rv'));
+$$('.sh, .shut, .trip, .rdc, .passport, .chef__ph, .chef__tx, .mosaic figure, .chart, .book__form, .bp, .reviews > *, .arrive__grid > *, .end__in, .foot__grid').forEach((el) => el.classList.add('rv'));
 const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
 $$('.rv, .ln').forEach((el) => io.observe(el));
 if (!reduced) addEventListener('scroll', () => {

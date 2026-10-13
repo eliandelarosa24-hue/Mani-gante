@@ -58,14 +58,14 @@
   <header class="nav">
     <a class="brand" href="#inicio" aria-label="Villa Coral Samaná, inicio"><svg class="brand__seal" viewBox="0 0 64 64" aria-hidden="true"><use href="#seal" /></svg><span><b>Villa Coral</b><small>Samaná · Rep. Dominicana</small></span></a>
     <nav class="nav__links" aria-label="Secciones">
-      <a href="#villas">Las villas</a><a href="#ballenas">Ballenas</a><a href="#pasaporte">Excursiones</a><a href="#chef">El chef</a><a href="#clima">Clima</a>
+      <a href="#villas">Las villas</a><a href="#ballenas">Ballenas</a><a href="#pasaporte">Excursiones</a><a href="#chef">El chef</a><a href="#rd">Lo nuestro</a>
     </nav>
     <div class="cur" role="group" aria-label="Moneda" data-cur><button type="button" aria-pressed="true" data-c="USD">US$</button><button type="button" aria-pressed="false" data-c="EUR">€</button><button type="button" aria-pressed="false" data-c="DOP">RD$</button></div>
     <a class="nav__cta" href="#reservar">Reservar</a>
     <button class="nav__menu" type="button" aria-expanded="false" aria-label="Abrir menú"><span></span><span></span></button>
   </header>
   <div class="sheet" aria-hidden="true">
-    <a href="#villas">Las villas</a><a href="#ballenas">Temporada de ballenas</a><a href="#pasaporte">Pasaporte de Samaná</a><a href="#chef">El chef</a><a href="#clima">Clima</a><a href="#reservar">Reservar</a>
+    <a href="#villas">Las villas</a><a href="#ballenas">Temporada de ballenas</a><a href="#pasaporte">Pasaporte de Samaná</a><a href="#chef">El chef</a><a href="#rd">De aquí para el mundo</a><a href="#clima">Clima</a><a href="#reservar">Reservar</a>
   </div>
 
   <main id="inicio">
@@ -151,15 +151,53 @@
       <div class="chef__tx">
         <p class="sh__k">04 · El chef</p>
         <h2>Pescado con coco, <em>como en Samaná.</em></h2>
-        <p class="chef__lead">Doña Yokasta cocina en su villa, con lo que llegó esa mañana al Pueblo de los Pescadores. Usted elige la hora; ella, el pescado.</p>
+        <p class="chef__lead">Doña Yokasta cocina en su villa, con lo que llegó esa mañana al Pueblo de los Pescadores. Usted elige la hora; ella, el pescado y <abbr class="dr" tabindex="0" data-dr="Un poquito. «Échale un chin de sal».">un chin</abbr> de sazón que no se aprende en ningún libro.</p>
         <ol class="chef__menu" data-menu></ol>
         <p class="chef__note">Chef a pedido: US$45 por persona y por comida. Los ingredientes se pagan aparte, a precio de mercado.</p>
       </div>
     </section>
 
+    <!-- DE AQUÍ PARA EL MUNDO -->
+    <section class="sec rd" id="rd">
+      <header class="sh"><p class="sh__k">05 · Hecho en República Dominicana</p><h2>De aquí <em>para el mundo.</em></h2><p class="sh__d">Aquí nadie tiene prisa, en el <abbr class="dr" tabindex="0" data-dr="Tienda de barrio: se compra, se conversa y se arregla el mundo.">colmado</abbr> se arreglan todos los problemas y siempre cabe <abbr class="dr" tabindex="0" data-dr="Un poquito. «Échale un chin de sal».">un chin</abbr> más. Seis cosas que esta isla le regaló al planeta.</p></header>
+      <div class="rd__grid">
+        <article class="rdc rdc--play" style="--c:#ff6b57;--r:-2deg">
+          <svg class="rdc__ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M18 34V10l20-4v24" /><circle cx="13" cy="34" r="5" /><circle cx="33" cy="30" r="5" /></svg>
+          <p class="rdc__n">01</p><h3>Merengue</h3>
+          <p>Güira, tambora y acordeón. Patrimonio Cultural de la Humanidad desde 2016. Aquí se baila hasta en la fila del banco.</p>
+          <button type="button" class="btn btn--paint btn--sm" data-merengue aria-pressed="false"><span class="eq" aria-hidden="true"><i></i><i></i><i></i></span><span data-merengue-t>Ponle merengue</span></button>
+        </article>
+        <article class="rdc" style="--c:#4fb6d8;--r:1.5deg">
+          <svg class="rdc__ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M30 6l6 6-12 12" /><circle cx="17" cy="31" r="10" /><circle cx="17" cy="31" r="3" /><path d="M36 12l4-4" /></svg>
+          <p class="rdc__n">02</p><h3>Bachata</h3>
+          <p>Nació en los barrios, con guitarras y amores rotos. Hoy suena en todo el mundo y es patrimonio de la UNESCO desde 2019.</p>
+        </article>
+        <article class="rdc" style="--c:#1f8fb8;--r:-1deg">
+          <svg class="rdc__ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M14 8h20l8 12-18 22L6 20z" /><path d="M6 20h36M18 8l-4 12 10 22 10-22-4-12" /></svg>
+          <p class="rdc__n">03</p><h3>Larimar</h3>
+          <p>La piedra azul que solo existe en esta isla, en las montañas de Barahona. Tiene el color del mar de Samaná a las ocho de la mañana.</p>
+        </article>
+        <article class="rdc" style="--c:#8a4b2a;--r:2deg">
+          <svg class="rdc__ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M24 4c10 6 12 30 0 40C12 34 14 10 24 4z" /><path d="M24 8v32M18 14c4 2 8 2 12 0M17 22c5 2 9 2 14 0M18 30c4 2 8 2 12 0" /></svg>
+          <p class="rdc__n">04</p><h3>Cacao</h3>
+          <p>La República Dominicana es uno de los mayores exportadores de cacao orgánico del mundo. Su chocolate, probablemente, empezó aquí.</p>
+        </article>
+        <article class="rdc" style="--c:#c2410c;--r:-2deg">
+          <svg class="rdc__ico" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="18" /><path d="M12 11c5 6 5 20 0 26M36 11c-5 6-5 20 0 26" /><path d="M13 16l3-1M14 22l3-.5M14 28l3 .5M13 33l3 1M35 16l-3-1M34 22l-3-.5M34 28l-3 .5M35 33l-3 1" /></svg>
+          <p class="rdc__n">05</p><h3>Pelota</h3>
+          <p>Ningún país fuera de Estados Unidos ha dado más peloteros a las Grandes Ligas. Los domingos, el play del pueblo se llena.</p>
+        </article>
+        <article class="rdc" style="--c:#1d5c45;--r:1deg">
+          <svg class="rdc__ico" viewBox="0 0 48 48" aria-hidden="true"><path d="M8 44V22L24 10l16 12v22z" /><path d="M24 2v8M20 5h8M20 44V32h8v12" /></svg>
+          <p class="rdc__n">06</p><h3>1824</h3>
+          <p>Ese año llegaron a Samaná afroamericanos libres desde Filadelfia. Sus descendientes todavía cantan himnos en inglés en La Churcha, la iglesia del pueblo.</p>
+        </article>
+      </div>
+    </section>
+
     <!-- GALERÍA -->
     <section class="sec gal" id="galeria">
-      <header class="sh"><p class="sh__k">05 · Postales</p><h2>Días de <em>sal y sol.</em></h2></header>
+      <header class="sh"><p class="sh__k">06 · Postales</p><h2>Días de <em>sal y sol.</em></h2></header>
       <div class="mosaic" data-mosaic>
         <figure style="--c:#ff6b57" data-ph="piscina"><div style="{{img:piscina:1520250497591-112f2f40a3f4}}"></div><figcaption>La piscina de la Larimar a la hora azul</figcaption></figure>
         <figure style="--c:#4fb6d8" data-ph="int-sala"><div style="{{img:int-sala:1582719508461-905c673771fd}}"></div><figcaption>La sala abierta de la Coral</figcaption></figure>
@@ -171,7 +209,7 @@
 
     <!-- CLIMA -->
     <section class="sec clima" id="clima">
-      <header class="sh"><p class="sh__k">06 · Clima</p><h2>Aquí siempre es <em>verano.</em></h2><p class="sh__d">El agua nunca baja de 26 °C. Pase sobre un mes para ver su temperatura, la lluvia y si hay ballenas.</p></header>
+      <header class="sh"><p class="sh__k">07 · Clima</p><h2>Aquí siempre es <em>verano.</em></h2><p class="sh__d">El agua nunca baja de 26 °C. Pase sobre un mes para ver su temperatura, la lluvia y si hay ballenas.</p></header>
       <div class="chart" data-chart></div>
       <p class="chart__read" data-chart-read>—</p>
     </section>
@@ -179,7 +217,7 @@
     <div class="stripes" aria-hidden="true"><svg viewBox="0 0 2200 60" preserveAspectRatio="none"><g><path class="s1" d="M0 12 Q50 0 100 12 T200 12 T300 12 T400 12 T500 12 T600 12 T700 12 T800 12 T900 12 T1000 12 T1100 12 T1200 12 T1300 12 T1400 12 T1500 12 T1600 12 T1700 12 T1800 12 T1900 12 T2000 12 T2100 12 T2200 12 T2300 12 T2400 12 V60 H0Z"/><path class="s2" d="M0 24 Q50 12 100 24 T200 24 T300 24 T400 24 T500 24 T600 24 T700 24 T800 24 T900 24 T1000 24 T1100 24 T1200 24 T1300 24 T1400 24 T1500 24 T1600 24 T1700 24 T1800 24 T1900 24 T2000 24 T2100 24 T2200 24 T2300 24 T2400 24 V60 H0Z"/><path class="s3" d="M0 36 Q50 24 100 36 T200 36 T300 36 T400 36 T500 36 T600 36 T700 36 T800 36 T900 36 T1000 36 T1100 36 T1200 36 T1300 36 T1400 36 T1500 36 T1600 36 T1700 36 T1800 36 T1900 36 T2000 36 T2100 36 T2200 36 T2300 36 T2400 36 V60 H0Z"/><path class="s4" d="M0 48 Q50 36 100 48 T200 48 T300 48 T400 48 T500 48 T600 48 T700 48 T800 48 T900 48 T1000 48 T1100 48 T1200 48 T1300 48 T1400 48 T1500 48 T1600 48 T1700 48 T1800 48 T1900 48 T2000 48 T2100 48 T2200 48 T2300 48 T2400 48 V60 H0Z"/></g></svg></div>
     <!-- RESERVAR: tarjeta de embarque -->
     <section class="sec book" id="reservar">
-      <header class="sh"><p class="sh__k">07 · Reservar directo</p><h2>Reserve directo <em>y venga tranquilo.</em></h2><p class="sh__d">Tarifa directa en dólares, confirmación por WhatsApp en español, inglés o francés. Su reserva sale como una tarjeta de embarque.</p></header>
+      <header class="sh"><p class="sh__k">08 · Reservar directo</p><h2>Reserve directo <em>y venga tranquilo.</em></h2><p class="sh__d">Tarifa directa en dólares, confirmación por WhatsApp en español, inglés o francés. Su reserva sale como una tarjeta de embarque.</p></header>
       <div class="book__grid">
         <div class="book__form">
           <p class="label">Villa</p>
@@ -234,7 +272,7 @@
 
     <!-- LLEGAR -->
     <section class="sec arrive" id="llegar">
-      <header class="sh"><p class="sh__k">08 · Cómo llegar</p><h2>Del avión a la hamaca <em>en 35 minutos.</em></h2></header>
+      <header class="sh"><p class="sh__k">09 · Cómo llegar</p><h2>Del avión a la hamaca <em>en 35 minutos.</em></h2></header>
       <div class="arrive__grid">
         <ul class="times"><li><span>Aeropuerto El Catey (AZS)</span><b>35 min</b></li><li><span>Pueblo de Las Terrenas</span><b>5 min</b></li><li><span>Santo Domingo (SDQ)</span><b>2 h 15</b></li><li><span>Punta Cana (PUJ)</span><b>3 h 30</b></li><li><span>Playa Cosón</span><b>10 min</b></li></ul>
         <div class="arrive__map"><iframe title="Mapa de Villa Coral" loading="lazy" src="https://www.google.com/maps?q=Playa%20Bonita,%20Las%20Terrenas,%20Dominican%20Republic&output=embed"></iframe></div>
@@ -266,6 +304,7 @@
       <div><p class="label">Horarios</p><p>Concierge 8:00 a 22:00<br />Llegada 15:00 · Salida 11:00</p></div>
       <div><p class="label">Muestra</p><p>Negocio ficticio. Concepto diseñado por <a href="/">Red Vaeru</a> · Conectando culturas</p></div>
     </div>
+    <p class="foot__rd"><span class="flag" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Hecho en República Dominicana, para el mundo</p>
     <p class="foot__end"><span>© <span data-year>2026</span> Villa Coral Samaná</span><span>19°19′ N · 69°32′ O</span></p>
   </footer>
 
