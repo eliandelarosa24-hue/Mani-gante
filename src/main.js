@@ -1,7 +1,7 @@
 import { initShared, revealOnScroll, splitLines, initSampleFilters, $, $$, reduced, fine, gsap, ScrollTrigger, track } from './shared.js';
 import { initHeroShader } from './hero-shader.js';
 import { initReal } from './real.js';
-import { initReel, initShowcase, initWarp, attachVideo } from './showcase.js';
+import { initReel, initShowcase, initWarp, initCases, attachVideo } from './showcase.js';
 import { fromPrice, formatCLP } from './pricing.js';
 import { submitLead } from './leads.js';
 
@@ -290,6 +290,7 @@ initReal();
 initSampleFilters();
 initReel();
 initShowcase();
+initCases();
 initWarp();
 initHeroShader($('.hero__canvas'));
 const boot = () => { intro(); scrollAnimations(); ScrollTrigger.refresh(); };

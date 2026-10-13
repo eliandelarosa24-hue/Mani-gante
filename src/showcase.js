@@ -1,5 +1,6 @@
 // Portada y galería de muestras: showreel, escenario de la muestra activa y transición al entrar a una muestra.
 import { $, $$, reduced, fine, gsap, track } from './shared.js';
+import { CASES } from './samples/cases.js';
 
 const cardsData = () => $$('[data-showcase-list] .sample').map((a) => ({
   el: a, slug: a.dataset.slug, name: a.dataset.name, rubro: a.dataset.rubro, place: a.dataset.place,
@@ -116,4 +117,93 @@ export function initWarp() {
   });
   // Al volver con el botón "atrás", la página puede venir de la caché: se quita la cortina
   addEventListener('pageshow', (e) => { if (e.persisted) $$('.warp').forEach((w) => w.remove()); });
+}
+
+// ---------- Caso de estudio: reto, idea, lo construido e identidad visual de cada muestra ----------
+export function initCases() {
+  const items = cardsData().filter((d) => CASES[d.slug]);
+  if (!items.length) return;
+  const ov = document.createElement('div');
+  ov.className = 'case-ov'; ov.setAttribute('data-lenis-prevent', ''); ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true'); ov.setAttribute('aria-hidden', 'true'); ov.setAttribute('aria-label', 'Caso de estudio');
+  ov.innerHTML = `<div class="case-ov__in" tabindex="-1">
+    <header class="case-ov__top"><p data-c-k></p><div><button type="button" class="case-ov__nav" data-c-prev aria-label="Caso anterior">←</button><button type="button" class="case-ov__nav" data-c-next aria-label="Caso siguiente">→</button><button type="button" class="case-ov__x" data-c-close aria-label="Cerrar">✕</button></div></header>
+    <div class="case-ov__grid">
+      <div class="case-ov__media"><span class="stage__bar" aria-hidden="true"><i></i><i></i><i></i><em data-c-url></em></span><span class="case-ov__screen"><span class="case-ov__img" data-c-img></span><video data-c-video muted loop playsinline preload="none" aria-hidden="true"></video></span></div>
+      <div class="case-ov__body" data-c-body></div>
+    </div>
+  </div>`;
+  document.body.append(ov);
+  const inner = $('.case-ov__in', ov), body = $('[data-c-body]', ov), video = $('[data-c-video]', ov);
+  const fontsLoaded = new Set();
+  const loadFonts = (fams) => fams.forEach((f) => {
+    if (fontsLoaded.has(f)) return; fontsLoaded.add(f);
+    const l = document.createElement('link'); l.rel = 'stylesheet';
+    l.href = `https://fonts.googleapis.com/css2?family=${f.replace(/ /g, '+')}&display=swap&text=${encodeURIComponent('AaBbCcÉéÑñ0123456789 ' + f)}`;
+    document.head.append(l);
+  });
+  let cur = 0, last = null, openT = 0;
+  function paint(k, dir = 0) {
+    cur = (k + items.length) % items.length;
+    const d = items[cur], c = CASES[d.slug];
+    loadFonts(c.fonts);
+    $('[data-c-k]', ov).textContent = `Caso ${String(cur + 1).padStart(2, '0')} / ${String(items.length).padStart(2, '0')} · ${d.rubro}`;
+    $('[data-c-url]', ov).textContent = `redvaeru.cl/muestras/${d.slug}`;
+    $('[data-c-img]', ov).style.backgroundImage = `url('${d.cover}')`;
+    attachVideo(video, `muestra-${d.slug}`);
+    body.innerHTML = `
+      <p class="case-ov__concept">${c.concept}</p>
+      <h2 class="case-ov__name">${d.name}</h2>
+      <p class="case-ov__place">${d.place}</p>
+      <div class="case-ov__cols">
+        <section><h3>El reto</h3><p>${c.reto}</p></section>
+        <section><h3>La idea</h3><p>${c.idea}</p></section>
+      </div>
+      <section class="case-ov__built"><h3>Lo que construimos</h3><ul>${d.hl.map((h) => `<li>${h}</li>`).join('')}<li>Diseño a medida, versión celular y pantalla de carga propia</li></ul></section>
+      <section class="case-ov__id"><h3>Identidad</h3>
+        <div class="case-ov__pal">${c.palette.map(([n, hex]) => `<span><i style="background:${hex}"></i><b>${n}</b><small>${hex}</small></span>`).join('')}</div>
+        <div class="case-ov__type">${c.fonts.map((f, i) => `<span><em style="font-family:'${f}', serif">${i === 0 ? 'Aa' : 'Aa'}</em><b>${f}</b><small>${['Títulos', 'Texto', 'Detalle'][i] || 'Detalle'}</small></span>`).join('')}</div>
+      </section>
+      <div class="case-ov__cta"><a class="btn btn--gold" href="${d.href}">Entrar a la muestra <span aria-hidden="true">→</span></a><button type="button" class="btn btn--ghost" data-c-want>Quiero algo así para mi negocio</button></div>`;
+    body.classList.remove('is-in'); void body.offsetWidth; body.classList.add('is-in');
+    body.style.setProperty('--dir', dir);
+    body.scrollTop = 0;
+    $('[data-c-want]', body).addEventListener('click', () => {
+      close();
+      const b = document.querySelector('[data-open-agent]'); if (!b) return;
+      b.dataset.ask = `Vi el caso de ${d.name} y quiero un sitio así para mi negocio. ¿Qué me recomienda?`;
+      b.click(); delete b.dataset.ask;
+    });
+    track('case_view', { sample: d.slug });
+  }
+  function open(k) {
+    last = document.activeElement; paint(k);
+    ov.classList.add('is-open'); ov.setAttribute('aria-hidden', 'false');
+    document.documentElement.classList.add('case-lock');
+    clearTimeout(openT); openT = setTimeout(() => inner.focus({ preventScroll: true }), 60);
+  }
+  function close() {
+    ov.classList.remove('is-open'); ov.setAttribute('aria-hidden', 'true');
+    document.documentElement.classList.remove('case-lock');
+    video.pause(); last?.focus?.({ preventScroll: true });
+  }
+  $('[data-c-close]', ov).addEventListener('click', close);
+  $('[data-c-prev]', ov).addEventListener('click', () => paint(cur - 1, -1));
+  $('[data-c-next]', ov).addEventListener('click', () => paint(cur + 1, 1));
+  ov.addEventListener('click', (e) => { if (e.target === ov) close(); });
+  addEventListener('keydown', (e) => {
+    if (!ov.classList.contains('is-open')) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') paint(cur + 1, 1);
+    if (e.key === 'ArrowLeft') paint(cur - 1, -1);
+  });
+  // Abrir desde el escenario (la muestra activa) y desde la lista de casos en celular
+  $('[data-case-open]')?.addEventListener('click', () => {
+    const slug = $('[data-stage-link]')?.getAttribute('href').split('/')[2];
+    open(Math.max(0, items.findIndex((d) => d.slug === slug)));
+  });
+  const ml = $('[data-cases-m-list]');
+  if (ml) {
+    ml.innerHTML = items.map((d, i) => `<button type="button" data-c-i="${i}">${d.name}</button>`).join('');
+    ml.addEventListener('click', (e) => { const b = e.target.closest('[data-c-i]'); if (b) open(+b.dataset.cI); });
+  }
 }

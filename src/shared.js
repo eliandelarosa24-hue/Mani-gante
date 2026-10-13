@@ -189,12 +189,10 @@ export function initShared() {
       n.addEventListener('click', () => openAgent(null, 'invitacion'));
       document.body.append(n);
       setTimeout(() => n.classList.add('is-in'), 30);
-      setTimeout(() => n.remove(), 12000);
+      setTimeout(() => { n.classList.remove('is-in'); setTimeout(() => n.remove(), 600); }, 9000);
     };
-    setTimeout(show, 25000);
-    addEventListener('scroll', function half() {
-      if (scrollY > document.documentElement.scrollHeight * 0.45) { removeEventListener('scroll', half); show(); }
-    }, { passive: true });
+    // Una sola invitación, tarde y discreta: el sitio respira y el visitante explora tranquilo.
+    setTimeout(show, 45000);
   }
 
   return { lenis, openAgent, closeAgent, scrollTo };
