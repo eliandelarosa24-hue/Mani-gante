@@ -15,7 +15,7 @@ export const launchLeft = () => Math.max(0, LAUNCH.slots - LAUNCH.taken);
 export const GUARANTEE = {
   title: 'Garantía de portada',
   short: 'Primero ve su portada. Si no le convence, no paga nada.',
-  text: 'Antes de cobrar, diseño la portada de su sitio con sus fotos y su historia. Si no le convence, no paga nada y no queda comprometido. Si le gusta, paga el 50% para continuar y el resto al publicar.',
+  text: 'Antes de cobrar, diseño la portada de su sitio con sus fotos y su historia. Si no le convence, no paga nada y no queda comprometido. Si le gusta, firmamos el contrato, paga el 50% para continuar y el resto al publicar.',
 };
 
 // Precio vigente de una opción: el de lanzamiento mientras queden cupos, si existe.
@@ -31,6 +31,8 @@ export const CAMPAIGN = {
 export const USD_RATE = 950;
 
 export const HOSTING_NOTE = 'Todos los sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se compra aparte en NIC Chile), hosting con certificado de seguridad el primer año y correo de contacto. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.';
+
+export const CONTRACT_NOTE = 'Todo trabajo se formaliza con un contrato de prestación de servicios con Red Vaeru: alcance, plazos, precio, forma de pago y propiedad del sitio quedan por escrito.';
 
 export const TAX_NOTE = 'Valores referenciales en pesos chilenos. Emito boleta o factura según lo que necesite su negocio; los impuestos que correspondan se detallan en la propuesta.';
 
@@ -59,6 +61,8 @@ export const SERVICES = {
       seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
       agente: { label: 'Agente IA 24/7 que responde y cotiza en su sitio', min: 120000, max: 200000 },
       sheets: { label: 'Registro automático de reservas en Google Sheets', min: 40000, max: 70000 },
+      logo: { label: 'Logo para su negocio (si aún no tiene)', min: 39000, max: 69000 },
+      dominio_cl: { label: 'Dominio .cl a su nombre (inscripción en NIC Chile, 1 año)', min: 12000, max: 15000 },
     },
   },
   web_restaurante: {
@@ -75,6 +79,8 @@ export const SERVICES = {
       pedidos: { label: 'Pedidos / delivery guiado por WhatsApp', min: 30000, max: 55000 },
       idioma: { label: 'Idioma adicional (por idioma)', min: 15000, max: 30000, perUnit: true },
       seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
+      logo: { label: 'Logo para su negocio (si aún no tiene)', min: 39000, max: 69000 },
+      dominio_cl: { label: 'Dominio .cl a su nombre (inscripción en NIC Chile, 1 año)', min: 12000, max: 15000 },
     },
   },
   redes: {

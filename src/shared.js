@@ -44,6 +44,10 @@ export function initShared() {
         ? `<span>desde</span><strong>${money(p.min)}${per}</strong>${p !== t ? `<s>Precio normal desde ${money(t.min)}</s>` : ''}`
         : `${money(p.min)}${per}`;
     });
+    $$('[data-addon-price]').forEach((el) => {
+      const [sid, aid] = el.dataset.addonPrice.split(':');
+      const ad = SERVICES[sid]?.addons?.[aid]; if (ad) el.textContent = money(ad.min);
+    });
     $$('[data-cur]').forEach((b) => b.setAttribute('aria-checked', String(b.dataset.cur === cur)));
   };
   $$('[data-cur]').forEach((b) => b.addEventListener('click', () => {

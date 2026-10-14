@@ -2,7 +2,7 @@
 // Requiere la variable de entorno ANTHROPIC_API_KEY en Netlify (Site configuration > Environment variables).
 // Opcional: CLAUDE_MODEL para cambiar de modelo sin tocar código.
 import Anthropic from '@anthropic-ai/sdk';
-import { estimate, catalogText, formatCLP, LAUNCH, launchLeft, TAX_NOTE, GUARANTEE, PLANS } from '../../src/pricing.js';
+import { estimate, catalogText, formatCLP, LAUNCH, launchLeft, TAX_NOTE, GUARANTEE, PLANS, CONTRACT_NOTE } from '../../src/pricing.js';
 
 const MODEL = process.env.CLAUDE_MODEL || 'claude-opus-5-5';
 const MAX_TURNS = 24;
@@ -23,6 +23,10 @@ const SYSTEM = `Usted es "Vaeru IA", el asistente de inteligencia artificial del
 Los sitios se venden en tres productos, iguales para alojamientos y restaurantes:
 ${PLANS.map((p) => `- ${p.name} (tier="${p.id}"): ${p.for} Incluye: ${p.includes.join('; ')}.`).join('\n')}
 Además, mantención mensual: Cuidado y Crecimiento (service="mantencion"). Si el cliente duda entre dos productos, recomiende uno y explique por qué en una frase.
+
+# Contrato
+${CONTRACT_NOTE}
+Si el cliente no tiene logo, se lo hacemos (addon "logo"). El dominio .com va de regalo el primer año; el .cl se inscribe en NIC Chile como extra (addon "dominio_cl").
 
 # ${GUARANTEE.title}
 ${GUARANTEE.text} Menciónela cuando el cliente dude, pregunte por riesgos o por cómo se paga.

@@ -2,7 +2,7 @@
 // Por defecto responde en modo local (sin costo): preguntas frecuentes, recomendación de muestra
 // y cotizador guiado con el tarifario. Para activar la conversación con Claude (/api/agent, tiene costo
 // por uso), defina en Netlify VITE_AI=on y ANTHROPIC_API_KEY. Si la IA falla, vuelve al modo local.
-import { SERVICES, estimate, formatCLP, launchLeft, TAX_NOTE, GUARANTEE } from './pricing.js';
+import { SERVICES, estimate, formatCLP, launchLeft, TAX_NOTE, GUARANTEE, CONTRACT_NOTE } from './pricing.js';
 import { track } from './analytics.js';
 import { submitLead } from './leads.js';
 
@@ -30,6 +30,8 @@ const FAQ = [
   { k: /cambiar|editar|actualizar|yo mismo/i, a: 'Sí, le dejo una capacitación breve y una checklist para cambiar textos y fotos. Si prefiere no preocuparse, existe la mantención mensual desde ' + formatCLP(SERVICES.mantencion.tiers.cuidado.min) + '.' },
   { k: /qui[eé]n|jorge|equipo|agencia/i, a: 'Red Vaeru es el estudio de Jorge Vásquez, dominicano en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. Usted habla siempre con quien hace el trabajo.' },
   { k: /booking|airbnb|comisi[oó]n|plataforma/i, a: 'Las plataformas cobran entre 15% y 25% por reserva. Un sitio propio con WhatsApp y reserva directa le devuelve ese margen y la relación con el huésped.' },
+  { k: /contrato|formal|por escrito|respaldo legal/i, a: `Sí. ${CONTRACT_NOTE}` },
+  { k: /logo|logotipo|marca|identidad/i, a: () => `Si aún no tiene logo, se lo hacemos: es un servicio adicional desde ${formatCLP(SERVICES.web_alojamiento.addons.logo.min)} y se suma a cualquier plan.` },
   { k: /garant|riesgo|y si no me gusta|no me convence/i, a: `${GUARANTEE.title}: ${GUARANTEE.text}` },
   { k: /esencial|completo|firma|diferencia|qu[eé] plan|cu[aá]l (me )?conviene/i, a: 'Esencial es una página con todo lo necesario para que le escriban. Completo suma secciones, galería, mapa y reservas directas: es el que más conviene a cabañas, hostales y restaurantes. Firma es una experiencia a medida, como las muestras, para termas, hoteles boutique, viñas o glamping. Cuénteme de su negocio y le digo cuál le conviene.' },
   { k: /lanzamiento|cupo|descuento|barato/i, a: () => `Son precios de lanzamiento mientras sumo mis primeros proyectos turísticos. Quedan ${launchLeft()} cupos. A cambio pido un testimonio y permiso para mostrar el trabajo.` },
@@ -411,7 +413,7 @@ export class Chat {
     this.bot('Con gusto. ¿Sobre qué tema?');
     const topics = [
       ['Plazos de entrega', 'plazo'], ['Dominio y hosting', 'dominio'], ['Pagos y boleta', 'pago'],
-      ['Planes Esencial, Completo y Firma', 'qué plan'], ['Garantía de portada', 'garantía'], ['Mantención mensual', 'mantención'], ['Precios de lanzamiento', 'lanzamiento'], ['Ver muestras por rubro', 'muestras'], ['Proyectos en el Caribe', 'caribe'], ['¿Quién está detrás?', 'jorge'],
+      ['Planes Esencial, Completo y Firma', 'qué plan'], ['Contrato', 'contrato'], ['Logo', 'logo'], ['Garantía de portada', 'garantía'], ['Mantención mensual', 'mantención'], ['Precios de lanzamiento', 'lanzamiento'], ['Ver muestras por rubro', 'muestras'], ['Proyectos en el Caribe', 'caribe'], ['¿Quién está detrás?', 'jorge'],
     ];
     this.setChips(topics.map(([label, q]) => ({ label, on: () => { this.user(label); this.guidedText(q); } })));
   }

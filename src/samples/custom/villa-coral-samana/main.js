@@ -49,28 +49,30 @@ function sunset({ year: y, month: m, day: d }) {
 
 /* ───────────── Pantalla de carga: el vuelo llega y se levanta la cortina ───────────── */
 (function loader() {
-  // El vuelo avanza solo hasta el 85 % mientras carga la foto de portada; cuando está lista, aterriza.
-  // Así nunca queda detenido esperando todas las imágenes de la página.
-  const min = reduced ? 0 : 1700, t0 = performance.now(), path = $('[data-load-path]'), alt = $('[data-load-alt]');
+  // La cortina de la ventanilla se levanta al instante y el vuelo dura poco: aterriza apenas la foto
+  // de portada está lista (o a los 2,6 s como máximo), así la portada nunca queda esperando.
+  const min = reduced ? 0 : 1500, max = 2600, t0 = performance.now(), path = $('[data-load-path]'), alt = $('[data-load-alt]');
   let ready = false, k = 0, done = false;
+  setTimeout(() => document.body.classList.add('is-window'), reduced ? 0 : 350);
   (function fly(now) {
-    const target = ready && now - t0 >= min ? 1 : Math.min(0.85, (now - t0) / Math.max(1, min) * 0.85);
-    k += (target - k) * (reduced ? 1 : 0.08);
-    if (target === 1 && 1 - k < 0.004) k = 1;
+    const el = now - t0, land = (ready && el >= min) || el >= max;
+    const target = land ? 1 : Math.min(0.9, el / max);
+    k += (target - k) * (reduced ? 1 : land ? 0.16 : 0.12);
+    if (land && 1 - k < 0.01) k = 1;
     path.style.strokeDashoffset = String(1 - k);
     alt.textContent = `Altitud ${Math.round(11000 * (1 - k) / 100) * 100 || 0} m`;
     if (k < 1) return requestAnimationFrame(fly);
     if (done) return; done = true;
     document.body.classList.add('is-shade');
-    setTimeout(() => document.body.classList.add('is-ready'), reduced ? 0 : 900);
+    setTimeout(() => document.body.classList.add('is-ready'), reduced ? 0 : 450);
   })(t0);
   firstUrl('hero').then((url) => {
     if (!url) { ready = true; return; }
     const im = new Image(); im.src = url;
     (im.decode ? im.decode() : Promise.resolve()).catch(() => {}).then(() => (ready = true));
   });
-  setTimeout(() => (ready = true), 3200);
-  setTimeout(() => document.body.classList.add('is-shade', 'is-ready'), 7000);
+  // Respaldo: si la pestaña estaba en segundo plano y no corrieron las animaciones, igual se abre.
+  setTimeout(() => document.body.classList.add('is-window', 'is-shade', 'is-ready'), 4500);
 })();
 $$('.hero__title > span:first-child').forEach((s, i) => { const w = document.createElement('span'); w.className = 'w'; w.style.transitionDelay = `${0.5 + i * 0.18}s`; while (s.firstChild) w.append(s.firstChild); s.append(w); });
 // La frase pintada del hero entra letra por letra, como un letrero que se ilumina
