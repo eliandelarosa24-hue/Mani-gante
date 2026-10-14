@@ -3,7 +3,7 @@
 // Van sin música a propósito: la música se agrega en Instagram desde su biblioteca (licenciada) al publicar.
 // Uso: node build-videos.mjs [id ...]
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, existsSync } from 'node:fs';
+import { mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { render, done, topo, icon, qr, EMBLEM, BRAND as B, C, OUT, ROOT } from './lib.mjs';
 
@@ -139,36 +139,57 @@ function buildScreen(id, R) {
 }
 
 // ---------- Composición final ----------
+// Subtítulos de la voz en off (out/voz/<id>.json, generado por voz.mjs): un PNG por bloque de palabras.
+async function buildSubs(id, V) {
+  const L = LAYOUT[REELS[id].layout];
+  await render(V.subs.map((s, i) => ({
+    file: `.video-assets/${id}/sub-${i}.png`, w: W, h: H, cls: '', transparent: true,
+    html: `<div style="position:absolute;left:60px;right:60px;top:${L.y + 26}px;display:flex;justify-content:center">
+      <span style="background:rgba(11,17,14,.86);border:2px solid rgba(196,163,90,.55);border-radius:22px;padding:14px 26px;font:800 50px/1.2 Manrope,sans-serif;color:${C.cream};text-align:center;max-width:900px">${s.text}</span></div>`,
+  })));
+}
+
 function compose(id, R, variant = '') {
   const L = LAYOUT[R.layout];
   const screen = join(A, id, 'screen.mp4');
   const body = dur(screen), total = body + OUTRO;
-  const caps = R.captions.map(([t0, t1], i) => ({ t0, t1: Math.min(t1, body), f: join(A, id, variant && i === 0 ? 'cap-0-B.png' : `cap-${i}.png`) }));
+  const V = variant === 'voz' ? JSON.parse(readFileSync(join(OUT, 'voz', `${id}.json`), 'utf8')) : null;
+  const caps = R.captions.map(([t0, t1], i) => ({ t0, t1: Math.min(t1, body), f: join(A, id, variant === 'B' && i === 0 ? 'cap-0-B.png' : `cap-${i}.png`) }));
+  if (V) V.subs.forEach((s, i) => caps.push({ t0: +(s.t0 + V.offset).toFixed(2), t1: +Math.min(s.t1 + V.offset + 0.12, total).toFixed(2), f: join(A, id, `sub-${i}.png`) }));
   const inputs = ['-loop', '1', '-t', String(total), '-i', join(A, `bg-${R.layout}.png`), '-i', screen, '-loop', '1', '-i', join(A, `mask-${R.layout}.png`),
     '-loop', '1', '-t', String(total), '-i', join(A, `bezel-${R.layout}.png`), ...caps.flatMap((c) => ['-loop', '1', '-t', String(total), '-i', c.f]),
-    '-loop', '1', '-t', String(total), '-i', join(A, id, 'outro.png'), '-f', 'lavfi', '-t', String(total), '-i', 'anullsrc=r=48000:cl=stereo'];
+    '-loop', '1', '-t', String(total), '-i', join(A, id, 'outro.png'), ...(V ? ['-i', join(OUT, 'voz', `${id}.mp3`)] : ['-f', 'lavfi', '-t', String(total), '-i', 'anullsrc=r=48000:cl=stereo'])];
   const o = 4 + caps.length, a = o + 1;
   let g = `[1:v]tpad=stop_mode=clone:stop_duration=${OUTRO + 1},setpts=PTS-STARTPTS[scr];[2:v]format=gray,scale=${L.w}:${L.h}[m];[scr][m]alphamerge[rs];`
     + `[0:v][rs]overlay=${L.x}:${L.y}:shortest=0[b0];[b0][3:v]overlay=0:0[b1];`;
   caps.forEach((c, i) => { g += `[b${i + 1}][${4 + i}:v]overlay=0:0:enable='between(t,${c.t0},${c.t1})'[b${i + 2}];`; });
   g += `[${o}:v]format=rgba,fade=in:st=${body}:d=0.45:alpha=1[ot];[b${caps.length + 1}][ot]overlay=0:0,fade=in:st=0:d=0.25,format=yuv420p[v]`;
+  if (V) g += `;[${a}:a]adelay=${Math.round(V.offset * 1000)}:all=1,apad,atrim=0:${total},aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=11[au]`;
   mkdirSync(VID, { recursive: true });
-  const out = join(VID, `${R.file}${variant ? '_variante-B' : ''}.mp4`);
-  ff([...inputs, '-filter_complex', g, '-map', '[v]', '-map', `${a}:a`, '-t', String(total), '-r', String(FPS),
+  const out = join(VID, `${R.file}${variant === 'B' ? '_variante-B' : variant === 'voz' ? '_voz' : ''}.mp4`);
+  ff([...inputs, '-filter_complex', g, '-map', '[v]', '-map', V ? '[au]' : `${a}:a`, '-t', String(total), '-r', String(FPS),
     '-c:v', 'libx264', '-profile:v', 'high', '-preset', 'medium', '-crf', '19', '-maxrate', '8M', '-bufsize', '16M', '-pix_fmt', 'yuv420p',
     '-c:a', 'aac', '-b:a', '128k', '-movflags', '+faststart', out]);
-  console.log(`✓ ${R.file}${variant ? ' (B)' : ''} · ${total.toFixed(1)} s`);
+  console.log(`✓ ${R.file}${variant ? ` (${variant})` : ''} · ${total.toFixed(1)} s`);
 }
 
-const ids = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(REELS);
+// --voz: arma solo las versiones con voz en off y subtítulos (requiere out/voz/<id>.json de voz.mjs).
+const VOZ = process.argv.includes('--voz');
+const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
+const ids = args.length ? args : Object.keys(REELS);
 await buildAssets();
+if (VOZ) for (const id of ids) if (existsSync(join(OUT, 'voz', `${id}.json`))) await buildSubs(id, JSON.parse(readFileSync(join(OUT, 'voz', `${id}.json`), 'utf8')));
 await done();
 for (const id of ids) {
   const R = REELS[id];
   const missing = R.screen.filter((s) => s.clip && !existsSync(join(CLIPS, s.clip)));
   if (missing.length) { console.error(`✗ ${id}: falta ${missing.map((s) => s.clip).join(', ')} (ejecute capture-sites.mjs)`); continue; }
   mkdirSync(join(A, id), { recursive: true });
-  buildScreen(id, R);
+  if (!existsSync(join(A, id, 'screen.mp4')) || !VOZ) buildScreen(id, R);
+  if (VOZ) {
+    if (existsSync(join(OUT, 'voz', `${id}.json`))) compose(id, R, 'voz'); else console.error(`✗ ${id}: falta out/voz/${id}.json (ejecute voz.mjs)`);
+    continue;
+  }
   compose(id, R);
   if (R.hookB) compose(id, R, 'B');
 }

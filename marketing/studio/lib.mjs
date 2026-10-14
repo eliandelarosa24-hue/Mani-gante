@@ -138,6 +138,6 @@ export async function render(pieces) {
   }
   await page.close();
 }
-export async function done() { await browser?.close(); }
+export async function done() { await browser?.close(); browser = null; }
 export const exists = (rel) => existsSync(join(ROOT, rel));
 export const read = (rel) => readFileSync(join(ROOT, rel));
