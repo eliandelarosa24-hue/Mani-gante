@@ -670,3 +670,28 @@ No publiques el mismo texto en más de 2 grupos el mismo día: Facebook puede ma
 - https://rocketmedia.cl/paginas-web-temuco/
 - https://www.visitvillarrica.cl/servicios/cabantildeas-1517151544_1546956520/
 - https://www.neolo.com/chile/menu-qr/
+
+---
+
+## 10. Contenido producido (14-10-2026)
+
+Todo el contenido de este documento ya está producido con el estudio de `marketing/studio/`. Se regenera con `npm run all` desde esa carpeta. Incluye:
+
+- **Imágenes:** 75 en total.
+  - Carruseles P01, P03, C01 y C02.
+  - Posts P05 y P07.
+  - Historias S01, S02 y S03 (S03 en versiones de 5 a 1 cupos).
+  - 7 portadas de Reels.
+  - Kit de perfil.
+  - Avisos para Yapo, grupos de Facebook y ficha de Google.
+  - 6 anuncios en formato Meta.
+- **Reels:** 10 videos.
+  - Siete Reels: P02, P04, P06, R01, R02, R03 y R04.
+  - Tres con variante B del gancho: P02, R01 y R02.
+  - Están grabados de los sitios reales en vista de celular.
+  - Van sin música: se agrega en Instagram al publicar.
+- **Agenda de publicación:** una página privada con cada archivo, sus textos listos para copiar y una marca de «Publicado» para cada pieza.
+
+**Cambios respecto del plan original:**
+- En R02 la carta en PDF es un ejemplo genérico, y así se rotula.
+- En R03 el «antes» es una ilustración genérica. No se usa el aviso real de un cliente.
