@@ -6,7 +6,7 @@ import { OUT } from './lib.mjs';
 
 const DAYS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
-const dayLabel = (iso) => { const d = new Date(iso + 'T12:00:00'); return `${DAYS[d.getDay()]} ${d.getDate()} de ${MONTHS[d.getMonth()]}`; };
+const dayLabel = (iso) => { const d = new Date(iso + 'T12:00:00'); const s = `${DAYS[d.getDay()]} ${d.getDate()} de ${MONTHS[d.getMonth()]}`; return s[0].toUpperCase() + s.slice(1); };
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const name = (f) => f.split('/').pop();
 
@@ -14,10 +14,10 @@ const missing = [...PIECES.flatMap((p) => [...p.files, ...(p.filesB || [])]), ..
 if (missing.length) { console.error('Faltan archivos:\n' + missing.join('\n')); process.exit(1); }
 
 const media = (f, cover) => {
-  const src = `media/${f}`;
+  const src = f;
   const isVid = f.endsWith('.mp4');
   return `<figure class="m ${isVid ? 'm--v' : ''} ${/1080x1080|portada-facebook|foto-perfil/.test(f) ? 'm--sq' : ''} ${/_1080x1920|historias|destacadas|portadas-reels/.test(f) ? 'm--tall' : ''} ${/avisos\//.test(f) ? 'm--wide' : ''}">
-    ${isVid ? `<video src="${src}" ${cover ? `poster="media/${cover}"` : ''} controls playsinline preload="none"></video>` : `<img src="${src}" alt="${esc(name(f))}" loading="lazy">`}
+    ${isVid ? `<video src="${src}" ${cover ? `poster="${cover}"` : ''} controls playsinline preload="none"></video>` : `<img src="${src}" alt="${esc(name(f))}" loading="lazy">`}
     <figcaption><span>${esc(name(f))}</span><button class="dl" type="button" data-file="${src}" data-name="${esc(name(f))}">Descargar</button></figcaption></figure>`;
 };
 const strip = (files) => {
@@ -80,7 +80,7 @@ h1 em{color:var(--gold);font-style:italic}
 .nav a{flex:none;color:var(--cream);text-decoration:none;border:1px solid var(--line);border-radius:99px;padding:6px 12px;font-size:13px;font-weight:600;white-space:nowrap}
 .nav a:focus-visible,.nav a:hover{border-color:var(--gold);color:var(--gold-2)}
 .day{padding-block:34px 6px;display:grid;gap:18px}
-.day h2{font:500 28px/1.1 var(--display);margin:0;text-transform:capitalize}
+.day h2{font:500 28px/1.1 var(--display);margin:0}
 .day h2 small{display:block;font:700 12px/1.4 var(--body);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
 .piece{background:var(--ink-2);border:1px solid var(--line);border-radius:18px;padding:18px;display:grid;gap:14px;min-width:0}
 .piece.is-done{opacity:.55}
