@@ -10,7 +10,7 @@ const dayLabel = (iso) => { const d = new Date(iso + 'T12:00:00'); const s = `${
 const esc = (s) => String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 const name = (f) => f.split('/').pop();
 
-const missing = [...PIECES.flatMap((p) => [...p.files, ...(p.filesB || [])]), ...KITS.flatMap((k) => k.files)].filter((f) => !existsSync(OUT + f));
+const missing = [...PIECES.flatMap((p) => [...p.files, ...(p.filesB || []), ...(p.filesVoz || [])]), ...KITS.flatMap((k) => k.files)].filter((f) => !existsSync(OUT + f));
 if (missing.length) { console.error('Faltan archivos:\n' + missing.join('\n')); process.exit(1); }
 
 const media = (f, cover) => {
@@ -41,6 +41,7 @@ const pieceHtml = (p) => {
       <h3>${esc(p.title)}</h3>
       <label class="done"><input type="checkbox" id="done-${p.id}" data-done="${p.id}"> Publicado</label>
     </header>
+    ${p.filesVoz ? `<div class="voz"><span class="voz__tag">Con voz y subtítulos</span>${strip(p.filesVoz)}</div><p class="hint">Versión sin voz (para poner su propia música):</p>` : ''}
     ${strip(p.files)}
     ${p.notes ? `<p class="note">${esc(p.notes)}</p>` : ''}
     ${texts ? `<div class="texts">${texts}</div>` : ''}
@@ -104,6 +105,7 @@ button{font:inherit;cursor:pointer}
 .dl,.cp{flex:none;border:1px solid var(--gold);background:transparent;color:var(--gold-2);border-radius:99px;padding:4px 10px;font-size:12px;font-weight:700}
 .dl:hover,.cp:hover,.dl:focus-visible,.cp:focus-visible{background:var(--gold);color:var(--ink);outline:none}
 .dl[hidden]{display:none}
+.voz{display:grid;gap:8px}.voz__tag{justify-self:start;font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--ink);background:var(--gold);border-radius:99px;padding:4px 10px}
 .note{margin:0;font-size:13.5px;color:var(--cream);background:var(--ink-3);border-radius:10px;padding:10px 12px}
 .texts{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(280px,1fr))}
 .copy{border:1px solid var(--line);border-radius:12px;overflow:hidden;min-width:0}
@@ -125,7 +127,7 @@ button{font:inherit;cursor:pointer}
     <p class="lead">Todo el contenido de la campaña, listo para publicar desde el celular: descargue cada archivo, copie el texto y márquelo como publicado. Las horas son de Chile continental.</p>
     <div class="progress"><div class="bar" aria-hidden="true"><i id="bar"></i></div><span class="count" id="count">0 de ${total} publicadas</span></div>
     <ul class="rules">
-      <li>Los Reels van sin música: agréguela en Instagram desde su biblioteca al publicar.</li>
+      <li>Cada Reel viene en dos versiones: con voz y subtítulos, o sin voz. En ambas, agregue la música desde la biblioteca de Instagram (con voz, a volumen bajo).</li>
       <li>Las muestras de concepto siempre se presentan como muestras, nunca como clientes.</li>
       <li>En las historias de cupos, publique solo la versión con el número real.</li>
       <li>Facebook: suba los videos e imágenes directamente, no los comparta desde Instagram.</li>
@@ -208,6 +210,6 @@ button{font:inherit;cursor:pointer}
 
 mkdirSync(OUT + 'hub', { recursive: true });
 writeFileSync(OUT + 'hub/index.html', html);
-const files = [...new Set([...PIECES.flatMap((p) => [...p.files, ...(p.filesB || [])]), ...KITS.flatMap((k) => k.files)])];
+const files = [...new Set([...PIECES.flatMap((p) => [...p.files, ...(p.filesB || []), ...(p.filesVoz || [])]), ...KITS.flatMap((k) => k.files)])];
 writeFileSync(OUT + 'hub/files.json', JSON.stringify(Object.fromEntries(files.map((f) => [`media/${f}`, f])), null, 1));
 console.log(`✓ hub/index.html · ${PIECES.length} piezas · ${files.length} archivos`);

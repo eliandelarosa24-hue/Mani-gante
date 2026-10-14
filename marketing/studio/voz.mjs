@@ -18,9 +18,9 @@ export const SCRIPTS = {
   P02: { voice: 'F', max: 14.5, sub: 'Esta es la web de Cabañas Miah y Noah, en Curacautín. Sus huéspedes ven las cabañas, la galería y la zona, y reservan directo por WhatsApp. ¿Quiere una así? Escríbame PORTADA.' },
   P04: { voice: 'M', max: 25.5, sub: 'Diseñé diez muestras para el turismo del sur: termas, cabañas, domos, una viña, cocina mapuche. No son clientes: son ideas de lo que se puede hacer. ¿Cuál se parece a su negocio? Coménteme el número y le cuento cómo sería la suya.' },
   P06: { voice: 'M', max: 14.5, sub: 'El Rincón de los Poetas, en Almagro, tenía una historia que no se veía en ninguna plataforma. Ahora tiene su propia web, que la cuenta, y un canal directo para reservar. ¿Su lugar también tiene una historia?' },
-  R01: { voice: 'F', max: 13.5, sub: '¿Sabe cuánto le dejó a la plataforma este año? Mire: diez reservas al mes, a noventa mil pesos, con quince por ciento de comisión. Son un millón seiscientos veinte mil al año. Haga la cuenta con sus números, o la hacemos juntos.' },
+  R01: { voice: 'F', max: 13.5, sub: '¿Sabe cuánto le dejó a la plataforma este año? Diez reservas al mes, a noventa mil, con quince por ciento de comisión: un millón seiscientos veinte mil al año. Haga la cuenta con sus números.' },
   R02: { voice: 'M', max: 13, sub: 'Su carta puede ser una experiencia: sus platos, su historia y un botón de WhatsApp para pedir. Un QR en cada mesa, y usted cambia los precios cuando quiera. Escríbame CARTA.' },
-  R03: { voice: 'F', max: 16.5, sub: 'Esto es lo que un aviso en una plataforma no le da: reservas por WhatsApp, directo con usted. Su propia guía de la zona. Check-in en línea. Y sus reseñas, en su propia casa.' },
+  R03: { voice: 'F', max: 16.5, anchors: [[0, 'Esto'], [3, 'reservas'], [6.5, 'Su propia'], [10, 'Check-in'], [13.5, 'Y sus']], sub: 'Esto es lo que un aviso en una plataforma no le da: reservas por WhatsApp, directo con usted. Su propia guía de la zona. Check-in en línea. Y sus reseñas, en su propia casa.' },
   R04: { voice: 'M', max: 11.5, sub: 'Si su glamping tuviera su propia web, el cielo sería el protagonista, y sus domos se reservarían directo. Esta es una muestra de concepto. ¿Hacemos la suya?' },
 };
 // Pronunciación: palabras que la voz debe decir distinto de como se escriben.
@@ -98,9 +98,38 @@ async function synth(id, S) {
   console.log(`✓ ${id} · ${len.toFixed(1)} s${len > S.max ? ` ⚠ supera ${S.max} s: acorte el guion o suba la velocidad` : ''}`);
 }
 
+// Sincroniza frases con escenas: cada ancla [segundo, inicio del bloque] mueve ese tramo de voz a su escena.
+function anchor(id, S) {
+  if (!S.anchors) return;
+  const jf = join(DIR, `${id}.json`), raw = join(DIR, `${id}.raw.mp3`), mp3 = join(DIR, `${id}.mp3`);
+  const J = JSON.parse(readFileSync(jf, 'utf8'));
+  if (!existsSync(raw)) execFileSync('cp', [mp3, raw]);
+  const idx = S.anchors.map(([at, w]) => [at, J.subs.findIndex((g) => g.text.startsWith(w))]).filter(([, i]) => i >= 0);
+  const segs = idx.map(([at, i], k) => ({ at, i0: i, i1: k + 1 < idx.length ? idx[k + 1][1] : J.subs.length }));
+  let prevEnd = 0;
+  const parts = [];
+  segs.forEach((g) => {
+    const src0 = J.subs[g.i0].t0, src1 = J.subs[g.i1 - 1].t1 + 0.08;
+    const start = Math.max(g.at, prevEnd + 0.15), shift = start - src0;
+    for (let i = g.i0; i < g.i1; i++) { J.subs[i].t0 = +(J.subs[i].t0 + shift).toFixed(2); J.subs[i].t1 = +(J.subs[i].t1 + shift).toFixed(2); }
+    parts.push({ src0, src1, start });
+    prevEnd = start + (src1 - src0);
+  });
+  const fc = parts.map((p, k) => `[0:a]atrim=${p.src0}:${p.src1},asetpts=PTS-STARTPTS,adelay=${Math.round(p.start * 1000)}:all=1[a${k}]`).join(';')
+    + `;${parts.map((_, k) => `[a${k}]`).join('')}amix=inputs=${parts.length}:normalize=0[out]`;
+  execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-i', raw, '-filter_complex', fc, '-map', '[out]', '-b:a', '128k', mp3]);
+  J.duration = prevEnd;
+  writeFileSync(jf, JSON.stringify(J, null, 1));
+  console.log(`↔ ${id} sincronizado con ${parts.length} escenas · ${prevEnd.toFixed(1)} s`);
+}
+
+if (process.argv.includes('--anclar')) {
+  for (const id of process.argv.slice(2).filter((a) => !a.startsWith('--'))) anchor(id, SCRIPTS[id]);
+  process.exit(0);
+}
 if (!SIM && !KEY) { console.error('Falta ELEVENLABS_API_KEY (o use --simular).'); process.exit(1); }
 mkdirSync(DIR, { recursive: true });
 const ids = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 for (const id of ids.length ? ids : Object.keys(SCRIPTS)) {
-  try { await synth(id, SCRIPTS[id]); } catch (e) { console.error(`✗ ${id}: ${e.message}`); }
+  try { await synth(id, SCRIPTS[id]); anchor(id, SCRIPTS[id]); } catch (e) { console.error(`✗ ${id}: ${e.message}`); }
 }
