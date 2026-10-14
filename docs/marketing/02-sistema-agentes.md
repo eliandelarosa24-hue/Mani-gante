@@ -65,3 +65,9 @@ Cada agente:
 - Diseños en Canva.
 - Filas de prospectos tomadas de fuentes públicas.
 - Informes.
+
+## Estado al 14-10-2026
+- Planilla creada en Google Drive: "Red Vaeru · Comercial" (id `10tlHdQhfueyVMG2ER1TkGmDv4_j0L7fnCLyLxuntJQo`), con pestañas Prospectos (37 alojamientos de Booking por verificar), Embudo (calculado) y Métricas.
+- Rutina activa: **lunes 08:40** (agentes 1, 2 y 3), que escribe `docs/marketing/informes/AAAA-MM-DD-lunes.md`.
+- Rutina activa: **viernes 18:15** (agentes 6 y 7), que escribe `docs/marketing/informes/AAAA-MM-DD-viernes.md`.
+- Por ahora los informes son semanales. Pasarán a ser diarios cuando haya volumen de datos.
