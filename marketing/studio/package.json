@@ -1,0 +1,18 @@
+{
+  "name": "red-vaeru-studio",
+  "private": true,
+  "type": "module",
+  "description": "Generador del contenido de redes de Red Vaeru: imágenes (HTML → PNG) y videos (capturas + ffmpeg).",
+  "scripts": {
+    "images": "node build-images.mjs",
+    "capture": "node capture-sites.mjs",
+    "videos": "node build-videos.mjs",
+    "all": "npm run images && npm run capture && npm run videos"
+  },
+  "devDependencies": {
+    "@fontsource/fraunces": "^5.3.0",
+    "@fontsource/manrope": "^5.3.0",
+    "playwright": "^1.49.1",
+    "qrcode": "^1.5.4"
+  }
+}
