@@ -132,17 +132,16 @@ slide({ file: `${C01}/07.png`, seed: 27, eyebrow: 'Revisión gratis', title: '¿
 const P07 = '2026-10-22_1930_P07_paquete-temporada';
 const temporadaPost = (file, titleHtml) => add({
   file, w: W, h: H, cls: 'ink',
-  html: `<img src="${HERO}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
-    <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(11,17,14,.25) 0%,rgba(11,17,14,.55) 45%,rgba(11,17,14,.95) 100%)"></div>
+  html: `${topo(W, H, { seed: 18 })}
     <img class="emb" src="${EMBLEM}" style="top:64px;right:72px">
     <span class="tag" style="top:70px;left:72px">Temporada · ${B.cuposTemporada} cupos · ${B.temporada}</span>
-    <div style="position:absolute;left:80px;right:80px;bottom:150px;display:flex;flex-direction:column;gap:30px">
-      <h1 class="serif" style="font-size:104px;line-height:1.02;font-weight:500">${titleHtml}</h1>
-      <p style="font-size:36px;font-weight:600;line-height:1.4">Web completa + ficha de Google + 1 mes de mantención gratis. Lista antes del 30 de noviembre.</p>
+    <div style="position:absolute;left:80px;width:560px;top:200px;bottom:150px;display:flex;flex-direction:column;justify-content:center;gap:30px">
+      <h1 class="serif" style="font-size:88px;line-height:1.02;font-weight:500">${titleHtml}</h1>
+      <p style="font-size:32px;font-weight:600;line-height:1.4">Web completa + ficha de Google + 1 mes de mantención gratis. Lista antes del 30 de noviembre.</p>
       ${cta('TEMPORADA')}
     </div>
-    <span style="position:absolute;right:24px;bottom:16px;font-size:18px;opacity:.6">Imagen ilustrativa</span>
-    <div class="foot" style="bottom:70px;justify-content:flex-end"><span></span></div>`,
+    <div style="position:absolute;right:-30px;top:250px">${phone(MIAH_M, 400, 4)}</div>
+    <span style="position:absolute;right:40px;bottom:70px;font-size:22px;font-weight:600;opacity:.8">Caso real: Cabañas Miah y Noah</span>`,
 });
 temporadaPost(`${P07}/01.png`, 'Que el verano lo encuentre con <em>web propia</em>');
 temporadaPost(`${P07}/01-B.png`, '6 semanas para la temporada. <em>¿Su web está lista?</em>');
@@ -199,8 +198,8 @@ phoneCover('portadas-reels/P02_miah-y-noah.png', 'Caso real · Curacautín', 'As
 cover('portadas-reels/P04_showreel-muestras.png', '10 rubros del turismo', '¿Cuál se parece a <em>su negocio?</em>', '', 'Muestras de concepto');
 phoneCover('portadas-reels/P06_rincon-de-los-poetas.png', 'Caso real · Nueva Imperial', 'Un hostal con <em>historia</em>', POETAS_M);
 cover('portadas-reels/R01_calculadora.png', 'Calculadora gratis', '¿Cuánto le paga a <em>Booking?</em>');
-cover('portadas-reels/R02_carta-qr.png', 'Restaurantes', 'Su cliente no debería <em>ampliar un PDF</em>', asset('public/muestras/fogon-mapu/img/chef.webp'), 'Muestra de concepto');
-phoneCover('portadas-reels/R03_antes-y-despues.png', 'Caso real · Curacautín', 'Antes y <em>después</em>', MIAH_M);
+cover('portadas-reels/R02_carta-qr.png', 'Restaurantes', 'Su carta, <em>como una experiencia</em>', asset('public/muestras/fogon-mapu/img/chef.webp'), 'Muestra de concepto');
+phoneCover('portadas-reels/R03_lo-que-no-le-da.png', 'Caso real · Curacautín', 'Lo que su aviso <em>no le da</em>', MIAH_M);
 cover('portadas-reels/R04_glamping.png', 'Glamping y domos', 'Si su glamping tuviera <em>su propia web</em>', asset('public/muestras/domos-cielo-austral/img/unidad-1.webp'), 'Muestra de concepto');
 
 // ---------- Avisos: Yapo, grupos de Facebook y ficha de Google (1200×900) ----------
@@ -210,7 +209,7 @@ wide('avisos/yapo-2_planes.png', 'ink', `${topo(1200, 900, { seed: 50 })}<div st
 wide('avisos/yapo-3_garantia.png', 'cream', `<div style="position:absolute;inset:80px;display:flex;align-items:center;gap:60px"><div style="flex:1;display:flex;flex-direction:column;gap:26px"><div class="eyebrow">Garantía de portada</div><h1 class="serif" style="font-size:76px;line-height:1.04;font-weight:500">Primero ve su web. <em>Si no le convence, no paga.</em></h1><p style="font-size:30px;font-weight:600">Escanee y escríbame PORTADA</p></div><img src="${waQR}" style="width:330px;height:330px"></div>`);
 wide('avisos/grupos-fb_carta-qr.png', 'ink', `${topo(1200, 900, { seed: 52 })}<div style="position:absolute;left:70px;top:110px;width:600px;display:flex;flex-direction:column;gap:26px"><div class="eyebrow">Restaurantes de Temuco</div><h1 class="serif" style="font-size:78px;line-height:1.03;font-weight:500">¿Su carta sigue siendo <em>un PDF?</em></h1><p style="font-size:34px;font-weight:600">Carta QR con sus fotos y su marca: ${B.carta}</p><p style="font-size:28px;opacity:.85">Escríbame CARTA · ${B.wa}</p></div><div style="position:absolute;right:90px;top:170px;width:400px;height:540px;background:#fff;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;color:${C.ink};box-shadow:0 30px 60px rgba(0,0,0,.4)"><p class="serif" style="font-size:40px">Escanee la carta</p><img src="${cartaQR}" style="width:280px;height:280px"><p style="font-size:20px;opacity:.6">Muestra de concepto · Fogón Mapu</p></div>`);
 wide('avisos/google-1_webs-turismo.png', 'ink', `${topo(1200, 900, { seed: 54 })}<div style="position:absolute;inset:90px;display:flex;flex-direction:column;justify-content:center;gap:30px"><img src="${EMBLEM}" style="width:120px;height:120px"><h1 class="serif" style="font-size:84px;line-height:1.03;font-weight:500">Webs para cabañas y restaurantes de la <em>Araucanía</em></h1><p style="font-size:36px;font-weight:600">Con garantía de portada · desde ${B.carta}</p></div>`);
-wide('avisos/google-2_temporada.png', 'ink', `<img src="${HERO}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover"><div style="position:absolute;inset:0;background:linear-gradient(90deg,rgba(11,17,14,.95),rgba(11,17,14,.35))"></div><div style="position:absolute;left:80px;top:0;bottom:0;width:640px;display:flex;flex-direction:column;justify-content:center;gap:26px"><div class="eyebrow">Paquete Temporada · ${B.cuposTemporada} cupos</div><h1 class="serif" style="font-size:80px;line-height:1.03;font-weight:500">Su web lista <em>antes del verano</em></h1><p style="font-size:34px;font-weight:600">${B.temporada} · lista antes del 30 de noviembre</p></div><span style="position:absolute;right:20px;bottom:14px;font-size:16px;opacity:.6">Imagen ilustrativa</span>`);
+wide('avisos/google-2_temporada.png', 'ink', `${topo(1200, 900, { seed: 56 })}<div style="position:absolute;left:80px;top:0;bottom:0;width:640px;display:flex;flex-direction:column;justify-content:center;gap:26px"><div class="eyebrow">Paquete Temporada · ${B.cuposTemporada} cupos</div><h1 class="serif" style="font-size:80px;line-height:1.03;font-weight:500">Su web lista <em>antes del verano</em></h1><p style="font-size:34px;font-weight:600">${B.temporada} · lista antes del 30 de noviembre</p></div><div style="position:absolute;right:90px;top:70px">${phone(MIAH_M, 330, 3)}</div>`);
 
 // ---------- Anuncios (formato Meta Ads: 1080×1080 y 1080×1920), listos para cuando haya presupuesto ----------
 const ad = (id, ic, eyebrow, titleHtml, price, line, word) => {

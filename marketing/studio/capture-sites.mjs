@@ -22,6 +22,11 @@ const CLIPS = {
     url: 'https://cabanasmiaynoah.netlify.app/', seconds: 15,
     plan: [[0, 0], [2.2, 0], [5, 900], [6.5, 900], [9.5, 2200], [11, 2200], [14, 3600], [15, 3600]],
   },
+  // Recorrido por funciones reales de la web: reservas, guía de la zona, check-in y reseñas.
+  'miah-funciones': {
+    url: 'https://cabanasmiaynoah.netlify.app/', seconds: 17,
+    plan: [[0, 0], [1.5, 0], [3, '#reserve'], [5.6, '#reserve'], [7, '#guide'], [9.6, '#guide'], [10.9, '#checkin'], [13.1, '#checkin'], [14.5, '#reviews'], [17, '#reviews']],
+  },
   poetas: {
     url: 'https://elrincondelospoetas.netlify.app/', seconds: 15,
     plan: [[0, 0], [2.2, 0], [5, 900], [6.5, 900], [9.5, 2200], [11, 2200], [14, 3600], [15, 3600]],

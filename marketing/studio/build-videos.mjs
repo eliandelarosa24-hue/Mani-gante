@@ -5,7 +5,7 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { render, done, topo, icon, asset, EMBLEM, BRAND as B, C, OUT, ROOT } from './lib.mjs';
+import { render, done, topo, icon, qr, EMBLEM, BRAND as B, C, OUT, ROOT } from './lib.mjs';
 
 const W = 1080, H = 1920, FPS = 30, OUTRO = 3.2;
 const A = join(OUT, '.video-assets');
@@ -48,16 +48,16 @@ const REELS = {
     outro: { eyebrow: 'Calculadora gratis', title: 'Calcule la suya o <em>hagámosla juntos</em>', word: 'PORTADA', line: B.site },
   },
   R02: {
-    file: '2026-10-21_1230_R02_reel-carta-qr', layout: 'phone',
-    screen: [{ still: 'carta-pdf', dur: 3.2, zoom: [1, 2.1] }, { clip: 'fogon-mapu.mp4', from: 0.5, dur: 7 }, { still: 'qr-mesa', dur: 3 }],
-    captions: [[0, 3.2, 'Así ve su carta un cliente <em>desde el celular</em> 😬'], [3.2, 10.2, 'Así podría verla <em>(muestra de concepto)</em>'], [10.2, 13.2, 'Un QR por mesa. <em>Usted cambia los precios.</em>']],
+    file: '2026-10-21_1230_R02_reel-carta-qr', layout: 'phone', tag: 'Muestra de concepto',
+    screen: [{ clip: 'fogon-mapu.mp4', dur: 10 }, { still: 'qr-mesa', dur: 3.4, zoom: [1, 1.05] }],
+    captions: [[0, 3, 'Su carta, <em>como una experiencia</em>'], [3, 10, 'Sus platos, su historia <em>y su WhatsApp</em>'], [10, 13.4, 'Un QR por mesa. <em>Usted cambia los precios.</em>']],
     hookB: '¿Todavía imprime la carta <em>cada vez que sube un precio?</em>',
     outro: { eyebrow: 'Restaurantes y cafés', title: `Carta QR <em>${B.carta}</em>`, word: 'CARTA' },
   },
   R03: {
-    file: '2026-10-23_1230_R03_reel-antes-y-despues', layout: 'phone',
-    screen: [{ still: 'antes', dur: 3.5, zoom: [1, 1.06] }, { clip: 'miah.mp4', dur: 9 }],
-    captions: [[0, 3.5, '<em>Antes:</em> solo un aviso en una plataforma'], [3.5, 12.5, '<em>Ahora:</em> su propia web con WhatsApp directo']],
+    file: '2026-10-23_1230_R03_reel-lo-que-no-le-da', layout: 'phone',
+    screen: [{ clip: 'miah-funciones.mp4' }],
+    captions: [[0, 3, 'Lo que un aviso en una plataforma <em>no le da</em>'], [3, 6.5, 'Reservas por <em>WhatsApp directo</em>'], [6.5, 10, 'Su propia <em>guía de la zona</em>'], [10, 13.5, 'Check&#8209;in <em>en línea</em>'], [13.5, 17, 'Sus reseñas, <em>en su propia casa</em>']],
     outro: { eyebrow: 'Caso real · Curacautín', title: '¿Hacemos <em>la suya?</em>', word: 'PORTADA' },
   },
   R04: {
@@ -104,25 +104,14 @@ async function buildAssets() {
   }
   // Fotogramas fijos que se muestran dentro del celular (780×1688, igual que las capturas).
   const scr = (file, cls, html) => p.push({ file: `.video-assets/${file}.png`, w: 780, h: 1688, cls, html });
-  const dish = (n, pr) => `<div style="display:flex;justify-content:space-between;font-size:15px;line-height:1.5"><span>${n}</span><span>${pr}</span></div>`;
-  scr('carta-pdf', 'paper', `<div style="position:absolute;inset:0;background:#d9d6cf"></div><div style="position:absolute;left:40px;top:120px;width:700px;height:990px;background:#fff;box-shadow:0 2px 8px rgba(0,0,0,.25);padding:40px 46px;font-family:Georgia,serif;color:#333;filter:blur(.6px)">
-    <p style="text-align:center;font-size:30px;letter-spacing:.2em">CARTA</p><p style="text-align:center;font-size:13px;margin:6px 0 22px">Ejemplo genérico · no corresponde a ningún local</p>
-    ${['ENTRADAS', 'PLATOS DE FONDO', 'ACOMPAÑAMIENTOS', 'POSTRES', 'BEBIDAS'].map((s, i) => `<p style="font-size:17px;font-weight:bold;margin:16px 0 6px">${s}</p>${[['Empanada de pino', '$2.500'], ['Cazuela de vacuno', '$7.900'], ['Pastel de choclo', '$8.500'], ['Ensalada chilena', '$3.200'], ['Sopaipillas (6)', '$2.000']].slice(0, 3 + (i % 3)).map(([n, pr]) => dish(n, pr)).join('')}`).join('')}
-  </div><div style="position:absolute;left:0;right:0;top:0;height:90px;background:#3a3a3a;color:#eee;font:22px sans-serif;display:flex;align-items:center;padding:0 30px">carta_menu_final_v3.pdf</div>`);
-  scr('qr-mesa', 'paper', `<div style="position:absolute;inset:0;background:linear-gradient(180deg,#6b4a2f,#3e2a1b)"></div>
-    <div style="position:absolute;left:150px;top:420px;width:480px;height:700px;background:${C.cream};border-radius:26px;box-shadow:0 30px 60px rgba(0,0,0,.5);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:28px;color:${C.ink}">
-      <p class="serif" style="font-size:46px">Vea nuestra carta</p>
-      <div style="width:300px;height:300px;display:grid;place-items:center">${icon('qr', 300, C.ink, 1.2)}</div>
-      <p style="font-size:24px;font-weight:600">Escanee con su celular</p></div>`);
-  scr('antes', 'paper', `<div style="position:absolute;inset:0;background:#f4f4f4;color:#333;font-family:Manrope">
-    <div style="height:110px;background:#9aa3ad"></div>
-    <div style="margin:30px;height:470px;border-radius:16px;background:linear-gradient(135deg,#c9ced3,#aeb5bc);display:grid;place-items:center;color:#fff;font-size:30px">Foto</div>
-    <div style="margin:0 30px;display:flex;gap:16px">${[1, 2, 3].map(() => '<div style="flex:1;height:150px;border-radius:12px;background:#d5d9dd"></div>').join('')}</div>
-    <p style="margin:34px 30px 10px;font-size:38px;font-weight:700">Cabaña en el sur</p>
-    <p style="margin:0 30px;font-size:26px;color:#666">Una de muchas opciones en la zona</p>
-    <div style="margin:40px 30px;height:24px;width:70%;background:#e2e4e6;border-radius:8px"></div><div style="margin:-20px 30px;height:24px;width:50%;background:#e2e4e6;border-radius:8px"></div>
-    <div style="position:absolute;left:30px;right:30px;bottom:60px;height:100px;border-radius:14px;background:#8b949e;color:#fff;display:grid;place-items:center;font-size:32px;font-weight:700">Reservar</div>
-    <div style="position:absolute;left:30px;right:30px;top:600px;font-size:22px;color:#999;text-align:center">Ilustración genérica</div></div>`);
+  const menuQR = await qr('https://redvaeru.netlify.app/muestras/fogon-mapu/', C.ink, '#F2EBDF');
+  scr('qr-mesa', 'ink2', `${topo(780, 1688, { seed: 95, opacity: 0.2 })}
+    <div style="position:absolute;left:110px;right:110px;top:300px;bottom:330px;background:${C.cream};border-radius:34px;box-shadow:0 40px 80px rgba(0,0,0,.6);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:34px;color:${C.ink};padding:40px">
+      <p class="eyebrow" style="color:#8a6a2a">Fogón Mapu · Cocina de territorio</p>
+      <p class="serif" style="font-size:64px;line-height:1.05;text-align:center">Escanee <em style="color:#8a6a2a">la carta</em></p>
+      <img src="${menuQR}" style="width:360px;height:360px">
+      <p style="font-size:24px;font-weight:600;opacity:.7;text-align:center">Mesa 4 · carta actualizada hoy</p>
+    </div>`);
   await render(p);
 }
 

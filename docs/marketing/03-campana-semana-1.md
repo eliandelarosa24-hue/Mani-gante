@@ -692,6 +692,7 @@ Todo el contenido de este documento ya está producido con el estudio de `market
   - Van sin música: se agrega en Instagram al publicar.
 - **Agenda de publicación:** una página privada con cada archivo, sus textos listos para copiar y una marca de «Publicado» para cada pieza.
 
-**Cambios respecto del plan original:**
-- En R02 la carta en PDF es un ejemplo genérico, y así se rotula.
-- En R03 el «antes» es una ilustración genérica. No se usa el aviso real de un cliente.
+**Cambios respecto del plan original (sin material genérico):**
+- **R02** ya no usa una carta en PDF de ejemplo. Muestra la muestra de concepto Fogón Mapu y cierra con una tarjeta de mesa cuyo QR funciona.
+- **R03** pasó de «antes y después» a «Lo que su aviso en una plataforma no le da». Todo lo que aparece son funciones reales de la web de Cabañas Miah y Noah: reservas por WhatsApp, guía de la zona, check-in en línea y reseñas.
+- **P07 y la publicación de Google del viernes** ya no usan una foto ilustrativa. Muestran la web real de Miah y Noah.

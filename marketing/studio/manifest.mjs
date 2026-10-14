@@ -163,7 +163,7 @@ Escanee el QR de la imagen para ver una muestra. 👉 Escríbame CARTA al ${WA}`
     noFb: true,
   },
   {
-    id: 'R02', day: '2026-10-21', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 16 s', title: 'Su cliente no debería ampliar un PDF',
+    id: 'R02', day: '2026-10-21', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Su carta, como una experiencia',
     files: ['videos/2026-10-21_1230_R02_reel-carta-qr.mp4', 'portadas-reels/R02_carta-qr.png'], filesB: ['videos/2026-10-21_1230_R02_reel-carta-qr_variante-B.mp4'],
     ig: `Su carta es lo primero que el cliente revisa antes de entrar, o antes de pedir por WhatsApp.
 
@@ -173,7 +173,7 @@ Si hoy es un PDF o una foto, le hago una carta digital con sus fotos, su marca y
 👉 Escríbame CARTA al ${WA}
 
 #Temuco #restaurantesTemuco #gastronomiadelsur #picadas`,
-    notes: 'La carta en PDF del video es un ejemplo genérico y la web es una muestra de concepto (Fogón Mapu). Ambas cosas se indican en pantalla.',
+    notes: 'La web es una muestra de concepto (Fogón Mapu) y así se indica en pantalla. El QR de la tarjeta funciona: abre la muestra.',
   },
   {
     id: 'S02', day: '2026-10-21', time: '20:30', where: ['Historias de Instagram'], format: '4 historias', title: 'Pregúnteme sobre webs',
@@ -208,14 +208,21 @@ Primero ve la portada; si no le convence, no paga. WhatsApp ${WA}`,
     noFb: true,
   },
   {
-    id: 'R03', day: '2026-10-23', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 16 s', title: 'Antes y después',
-    files: ['videos/2026-10-23_1230_R03_reel-antes-y-despues.mp4', 'portadas-reels/R03_antes-y-despues.png'],
-    ig: `Mismo alojamiento, otra forma de recibir reservas.
+    id: 'R03', day: '2026-10-23', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 20 s', title: 'Lo que su aviso en una plataforma no le da',
+    files: ['videos/2026-10-23_1230_R03_reel-lo-que-no-le-da.mp4', 'portadas-reels/R03_lo-que-no-le-da.png'],
+    ig: `Esto es lo que tiene la web de Cabañas Miah y Noah, en Curacautín, y que ningún aviso en una plataforma le da:
 
-La plataforma le sigue trayendo huéspedes nuevos; la web le permite que el huésped que ya lo conoce le reserve directo.
+✔️ Reservas por WhatsApp directo con los dueños
+✔️ Su propia guía de Curacautín: Conguillío, termas, lagunas
+✔️ Check-in en línea para llegar sin esperas
+✔️ Sus reseñas, en su propia casa
 
-👉 PORTADA al ${WA}`,
-    notes: 'El «antes» es una ilustración genérica, no el aviso real de un cliente.',
+La plataforma le sigue trayendo huéspedes nuevos. La web es su casa propia en internet.
+
+👉 PORTADA al ${WA}
+
+#Curacautín #cabañas #turismoaraucania`,
+    notes: 'Todo lo que se ve es la web real de Cabañas Miah y Noah.',
   },
   {
     id: 'S03', day: '2026-10-23', time: '20:30', where: ['Historias de Instagram'], format: '3 historias', title: 'Cupos que quedan',
