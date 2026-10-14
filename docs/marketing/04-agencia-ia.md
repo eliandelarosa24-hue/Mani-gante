@@ -50,3 +50,17 @@
    - Publicidad (10).
    - Video con IA (4).
    - Agente de Instagram (9).
+
+## Estado al 14-10-2026 (tarde)
+
+- ✅ **Prospector:** rutina activa de lunes a viernes a las 08:10. La primera corre el jueves 15.
+- ✅ **Asistente comercial:** rutina activa de lunes a viernes a las 09:10, con recordatorios en Google Calendar.
+- ⛔ **Voz con IA (acento chileno, femenina y masculina):** sigue pendiente.
+  - **Por qué:**
+    - El editor de IA de Descript no genera voces desde la conexión; solo se puede hacer dentro de su app.
+    - Esta sesión tiene bloqueados en la red los servicios de voz: Microsoft (`speech.platform.bing.com`), ElevenLabs (`api.elevenlabs.io`) y Hugging Face.
+  - **Proyecto de prueba en Descript:** «Red Vaeru · R01 calculadora · prueba de voz», con dos versiones (femenina y masculina) ya creadas y el guion listo.
+  - **Opciones para destrabarlo:**
+    1. **ElevenLabs:** la voz más natural; tiene voces de la comunidad con acento chileno. Los planes pagados permiten uso comercial. Hace falta una clave de API y permitir `api.elevenlabs.io` en la red del entorno.
+    2. **Microsoft Azure Speech:** voces neuronales chilenas oficiales (Catalina y Lorenzo), con un tramo gratuito mensual. Hace falta una cuenta de Azure, una clave y permitir `*.tts.speech.microsoft.com`.
+    3. **Descript, a mano:** en la app, elegir una voz de stock en español latino y pegar el guion. Después, Agent Underlord agrega los subtítulos.
