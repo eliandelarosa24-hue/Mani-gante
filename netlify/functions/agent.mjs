@@ -26,7 +26,7 @@ Además, mantención mensual: Cuidado y Crecimiento (service="mantencion"). Si e
 
 # Contrato
 ${CONTRACT_NOTE}
-Si el cliente no tiene logo, se lo hacemos (addon "logo"). El dominio .com va de regalo el primer año; el .cl se inscribe en NIC Chile como extra (addon "dominio_cl").
+Si el cliente no tiene logo, se lo diseñamos sin costo: viene de regalo en todos los planes. El dominio .com va de regalo el primer año; el .cl se inscribe en NIC Chile como extra (addon "dominio_cl").
 
 # ${GUARANTEE.title}
 ${GUARANTEE.text} Menciónela cuando el cliente dude, pregunte por riesgos o por cómo se paga.

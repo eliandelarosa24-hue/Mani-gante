@@ -31,7 +31,7 @@ const FAQ = [
   { k: /qui[eé]n|jorge|equipo|agencia/i, a: 'Red Vaeru es el estudio de Jorge Vásquez, dominicano en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. Usted habla siempre con quien hace el trabajo.' },
   { k: /booking|airbnb|comisi[oó]n|plataforma/i, a: 'Las plataformas cobran entre 15% y 25% por reserva. Un sitio propio con WhatsApp y reserva directa le devuelve ese margen y la relación con el huésped.' },
   { k: /contrato|formal|por escrito|respaldo legal/i, a: `Sí. ${CONTRACT_NOTE}` },
-  { k: /logo|logotipo|marca|identidad/i, a: () => `Si aún no tiene logo, se lo hacemos: es un servicio adicional desde ${formatCLP(SERVICES.web_alojamiento.addons.logo.min)} y se suma a cualquier plan.` },
+  { k: /logo|logotipo|marca|identidad/i, a: 'Si aún no tiene logo, se lo diseñamos sin costo: viene de regalo en todos los planes (Esencial, Completo y Firma).' },
   { k: /garant|riesgo|y si no me gusta|no me convence/i, a: `${GUARANTEE.title}: ${GUARANTEE.text}` },
   { k: /esencial|completo|firma|diferencia|qu[eé] plan|cu[aá]l (me )?conviene/i, a: 'Esencial es una página con todo lo necesario para que le escriban. Completo suma secciones, galería, mapa y reservas directas: es el que más conviene a cabañas, hostales y restaurantes. Firma es una experiencia a medida, como las muestras, para termas, hoteles boutique, viñas o glamping. Cuénteme de su negocio y le digo cuál le conviene.' },
   { k: /lanzamiento|cupo|descuento|barato/i, a: () => `Son precios de lanzamiento mientras sumo mis primeros proyectos turísticos. Quedan ${launchLeft()} cupos. A cambio pido un testimonio y permiso para mostrar el trabajo.` },

@@ -38,7 +38,7 @@ export const TAX_NOTE = 'Valores referenciales en pesos chilenos. Emito boleta o
 
 // Los tres productos de sitio web y la mantención, como se presentan en la portada.
 export const PLANS = [
-  { id: 'esencial', name: 'Esencial', for: 'Para el negocio que hoy solo tiene Instagram o un aviso en Booking.', includes: ['Una página con fotos, ubicación y contacto', 'Botón de WhatsApp y formulario', 'Carta digital con QR para restaurantes', 'Textos para aparecer en Google', 'Dominio y hosting el primer año', 'Una ronda de revisión'] },
+  { id: 'esencial', name: 'Esencial', for: 'Para el negocio que hoy solo tiene Instagram o un aviso en Booking.', includes: ['Logo de regalo si aún no tiene', 'Una página con fotos, ubicación y contacto', 'Botón de WhatsApp y formulario', 'Carta digital con QR para restaurantes', 'Textos para aparecer en Google', 'Dominio y hosting el primer año', 'Una ronda de revisión'] },
   { id: 'completo', name: 'Completo', featured: true, for: 'Para cabañas, hostales y restaurantes que quieren recibir reservas directas.', includes: ['Todo lo de Esencial', 'Varias secciones: unidades o carta, servicios, entorno', 'Galería por espacios y mapa', 'Reservas por WhatsApp o enlace a su sistema', 'Ficha de Google configurada', 'Guía para editar textos y fotos'] },
   { id: 'firma', name: 'Firma', for: 'Para termas, hoteles boutique, viñas y glamping que quieren una web única.', includes: ['Todo lo de Completo', 'Concepto y diseño a medida, como las muestras', 'Animaciones e interacción propias del lugar', 'Reservas o calendario integrado', 'Segundo idioma y precios en USD', 'Estrategia de lanzamiento'] },
 ];
@@ -61,7 +61,6 @@ export const SERVICES = {
       seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
       agente: { label: 'Agente IA 24/7 que responde y cotiza en su sitio', min: 120000, max: 200000 },
       sheets: { label: 'Registro automático de reservas en Google Sheets', min: 40000, max: 70000 },
-      logo: { label: 'Logo para su negocio (si aún no tiene)', min: 39000, max: 69000 },
       dominio_cl: { label: 'Dominio .cl a su nombre (inscripción en NIC Chile, 1 año)', min: 12000, max: 15000 },
     },
   },
@@ -79,7 +78,6 @@ export const SERVICES = {
       pedidos: { label: 'Pedidos / delivery guiado por WhatsApp', min: 30000, max: 55000 },
       idioma: { label: 'Idioma adicional (por idioma)', min: 15000, max: 30000, perUnit: true },
       seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
-      logo: { label: 'Logo para su negocio (si aún no tiene)', min: 39000, max: 69000 },
       dominio_cl: { label: 'Dominio .cl a su nombre (inscripción en NIC Chile, 1 año)', min: 12000, max: 15000 },
     },
   },
