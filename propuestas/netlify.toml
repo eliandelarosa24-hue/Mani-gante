@@ -1,0 +1,13 @@
+# Sitio de propuestas de Red Vaeru (bocetos privados para prospectos).
+# En Netlify: repositorio Mani-gante, misma rama, Base directory = propuestas.
+[build]
+  command = ""
+  publish = "."
+  # Solo se publica cuando cambia algo dentro de propuestas/
+  ignore = "git diff --quiet $CACHED_COMMIT_REF $COMMIT_REF -- ."
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Robots-Tag = "noindex, nofollow"
+    X-Content-Type-Options = "nosniff"

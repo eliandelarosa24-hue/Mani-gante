@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>French Andes · Hostal en Pucón · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para French Andes Apart Hostel, preparado por Red Vaeru." />
+<meta property="og:title" content="French Andes · su nueva portada" />
+<meta property="og:description" content="Bienvenue à la maison: un boceto de sitio propio para French Andes, en Pucón." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/french-andes/img/og.jpg" />
+<link rel="icon" href="img/logo.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Kaushan+Script&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<style>
+:root {
+  --navy: #011a5a; --navy-2: #0a2a7a; --sky: #8cc3ee; --rouge: #c8263a; --snow: #f7f5f0; --paper: #fbfaf7;
+  --ink: #0d1530; --muted: #5b6377; --line: rgba(1,26,90,.12);
+  --serif: 'DM Serif Display', Georgia, serif; --script: 'Kaushan Script', cursive; --sans: 'Manrope', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--paper); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { max-width: 100%; display: block; }
+a { color: inherit; }
+
+/* Franja de la propuesta */
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; font-weight: 700; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+/* Portada */
+.hero { position: relative; min-height: min(100svh, 900px); display: grid; grid-template-rows: auto 1fr; color: #fff; isolation: isolate; overflow: hidden; }
+.hero__bg { position: absolute; inset: 0; z-index: -2; background: url('img/volcan.webp') 50% 38%/cover; transform-origin: 50% 40%; animation: breathe 22s var(--ease) both; }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(1,26,90,.55) 0%, rgba(1,26,90,.08) 30%, rgba(1,20,70,.25) 50%, rgba(1,14,48,.88) 100%), linear-gradient(90deg, rgba(1,14,48,.45), transparent 60%); }
+@keyframes breathe { from { transform: scale(1.14); } to { transform: scale(1); } }
+.smoke { position: absolute; left: 44%; top: 30%; width: 26vmin; height: 26vmin; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.35), transparent 65%); filter: blur(18px); z-index: -1; animation: smoke 9s ease-in-out infinite; pointer-events: none; }
+@keyframes smoke { 0%,100% { transform: translate(0,0) scale(1); opacity: .5; } 50% { transform: translate(-30px,-40px) scale(1.3); opacity: .15; } }
+nav { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px clamp(16px, 4vw, 52px); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 58px; height: 58px; border-radius: 50%; box-shadow: 0 0 0 3px rgba(255,255,255,.85), 0 10px 24px rgba(0,0,0,.3); }
+.brand span { font-weight: 800; letter-spacing: .02em; line-height: 1.1; }
+.brand small { display: block; font-weight: 500; font-size: 11px; letter-spacing: .18em; text-transform: uppercase; opacity: .85; }
+.menu { display: flex; align-items: center; gap: 26px; font-size: 14px; font-weight: 600; }
+.menu a { text-decoration: none; opacity: .92; }
+.langs { display: flex; gap: 2px; padding: 3px; border-radius: 999px; background: rgba(255,255,255,.16); backdrop-filter: blur(8px); font-size: 12px; }
+.langs b { padding: 5px 9px; border-radius: 999px; font-weight: 700; }
+.langs b:first-child { background: #fff; color: var(--navy); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 999px; font: 800 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease), box-shadow .35s; }
+.btn:hover { transform: translateY(-2px); }
+.btn--rouge { background: var(--rouge); color: #fff; box-shadow: 0 16px 34px -14px rgba(200,38,58,.8); }
+.btn--glass { background: rgba(255,255,255,.14); color: #fff; backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.6); }
+.btn--navy { background: var(--navy); color: #fff; }
+.hero__in { align-self: end; padding: 0 clamp(16px, 4vw, 52px) clamp(96px, 12vw, 130px); max-width: 1000px; }
+.bienvenue { font: 400 clamp(26px, 3.4vw, 40px)/1 var(--script); color: #fff; margin-bottom: 12px; transform: rotate(-3deg); transform-origin: left; display: inline-block; text-shadow: 0 4px 20px rgba(0,0,0,.35); animation: write 1.2s .3s var(--ease) both; }
+@keyframes write { from { clip-path: inset(-30% 100% -30% -10%); } to { clip-path: inset(-30% -10% -30% -10%); } }
+h1 { font: 400 clamp(42px, 7.2vw, 96px)/.98 var(--serif); letter-spacing: -.01em; margin-bottom: 18px; text-wrap: balance; text-shadow: 0 6px 30px rgba(0,0,0,.25); }
+h1 em { font-style: italic; color: #fff; background: linear-gradient(transparent 78%, rgba(200,38,58,.85) 78%, rgba(200,38,58,.85) 90%, transparent 90%); padding: 0 .06em; }
+.h1 span { display: inline-block; animation: rise 1s var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(40px); } }
+.lead { font-size: clamp(16px, 1.6vw, 19px); line-height: 1.6; max-width: 560px; opacity: .92; margin-bottom: 26px; animation: rise 1s .5s var(--ease) both; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; animation: rise 1s .65s var(--ease) both; }
+.proof { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 22px; animation: rise 1s .8s var(--ease) both; }
+.proof > span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 14px; border-radius: 999px; background: rgba(1,14,48,.45); backdrop-filter: blur(8px); font-size: 13px; font-weight: 600; }
+.proof b { font-size: 15px; }
+.tri { display: inline-flex; height: 10px; border-radius: 3px; overflow: hidden; }
+.tri i { width: 7px; } .tri i:nth-child(1) { background: #2a4fb5; } .tri i:nth-child(2) { background: #fff; } .tri i:nth-child(3) { background: var(--rouge); }
+
+/* Reserva */
+.book { position: relative; z-index: 5; width: min(1080px, calc(100% - 32px)); margin: -58px auto 0; display: grid; grid-template-columns: 1.4fr 1fr 1fr .9fr auto; gap: 10px; align-items: end; padding: 16px; border-radius: 22px; background: #fff; box-shadow: 0 36px 70px -34px rgba(1,26,90,.55); }
+.book label { display: grid; gap: 6px; font-size: 11px; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.book input, .book select { width: 100%; padding: 12px; border: 1px solid #dfe2ea; border-radius: 12px; background: #f6f7fa; font: 600 14.5px var(--sans); color: var(--ink); }
+.book .btn { height: 48px; }
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 60; transform: translate(-50%, 140%); opacity: 0; visibility: hidden; max-width: calc(100% - 32px); padding: 14px 18px; border-radius: 16px; background: var(--navy); color: #fff; font-size: 14px; box-shadow: 0 20px 40px -18px rgba(0,0,0,.5); transition: transform .5s var(--ease); }
+.toast.on { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { display: inline-flex; align-items: center; gap: 10px; font-size: 12px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--rouge); margin-bottom: 14px; }
+h2 { font: 400 clamp(32px, 4.4vw, 56px)/1.04 var(--serif); color: var(--navy); margin-bottom: 14px; text-wrap: balance; }
+h2 em { font-style: italic; color: var(--rouge); }
+.sub { color: var(--muted); font-size: 17px; line-height: 1.65; max-width: 640px; }
+
+/* Habitaciones */
+.rooms { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 40px; }
+.room { position: relative; border-radius: 22px; overflow: hidden; background: #fff; box-shadow: 0 24px 50px -36px rgba(1,26,90,.6); transition: transform .5s var(--ease); }
+.room:hover { transform: translateY(-6px); }
+.room figure { aspect-ratio: 4/5; overflow: hidden; }
+.room img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.room:hover img { transform: scale(1.06); }
+.room .tag { position: absolute; top: 14px; left: 14px; padding: 6px 11px; border-radius: 999px; background: rgba(255,255,255,.92); color: var(--navy); font-size: 12px; font-weight: 800; }
+.room div { padding: 16px 18px 20px; }
+.room h3 { font: 400 22px/1.15 var(--serif); color: var(--navy); margin-bottom: 6px; }
+.room p { font-size: 14px; color: var(--muted); line-height: 1.5; }
+
+/* Vista */
+.view { background: var(--navy); color: #fff; overflow: hidden; }
+.view .wrap { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(28px, 5vw, 72px); align-items: center; }
+.view h2 { color: #fff; }
+.view h2 em { color: var(--sky); }
+.view .sub { color: rgba(255,255,255,.8); }
+.window { position: relative; border-radius: 28px; overflow: hidden; box-shadow: 0 40px 80px -30px rgba(0,0,0,.6); }
+.window img { width: 100%; aspect-ratio: 4/3; object-fit: cover; transform: scale(1.12); transition: transform 1.6s var(--ease); }
+.window.on img { transform: scale(1); }
+.window figcaption { position: absolute; left: 16px; bottom: 16px; padding: 8px 14px; border-radius: 999px; background: rgba(1,14,48,.6); backdrop-filter: blur(6px); font-size: 13px; font-weight: 700; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 30px; }
+.facts div { padding: 16px; border-radius: 16px; background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.14); }
+.facts b { display: block; font: 400 34px/1 var(--serif); color: var(--sky); }
+.facts span { font-size: 12.5px; color: rgba(255,255,255,.78); }
+
+/* Comodidades */
+.amen { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 40px; background: var(--line); border-radius: 22px; overflow: hidden; box-shadow: 0 0 0 1px var(--line); }
+.amen div { background: #fff; padding: 22px; display: grid; gap: 10px; align-content: start; transition: background .3s; }
+.amen div:hover { background: #f1f5fd; }
+.amen svg { width: 30px; height: 30px; stroke: var(--navy); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+.amen b { font-size: 15.5px; color: var(--navy); }
+.amen span { font-size: 13.5px; color: var(--muted); line-height: 1.45; }
+
+/* Galería */
+.gallery { display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: 260px 260px; gap: 14px; margin-top: 40px; }
+.gallery figure { border-radius: 20px; overflow: hidden; }
+.gallery figure:first-child { grid-row: span 2; }
+.gallery img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.gallery figure:hover img { transform: scale(1.05); }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 26px; background: linear-gradient(120deg, var(--navy), var(--navy-2)); color: #fff; }
+.direct p { font: 400 clamp(22px, 2.6vw, 32px)/1.2 var(--serif); max-width: 680px; }
+.direct em { color: var(--sky); }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+
+/* Propuesta de Red Vaeru */
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { color: #e3c98a; }
+.pitch h2 { color: #f2ebdf; }
+.pitch h2 em { color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 400 50px/1 var(--serif); color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .menu a { display: none; }
+  .book { grid-template-columns: 1fr 1fr; }
+  .book label:first-child, .book .btn { grid-column: 1 / -1; }
+  .rooms { grid-template-columns: 1fr 1fr; }
+  .view .wrap, .pitch .wrap { grid-template-columns: 1fr; }
+  .amen { grid-template-columns: 1fr 1fr; }
+  .gallery { grid-template-columns: 1fr 1fr; grid-template-rows: 220px 180px 180px; }
+  .gallery figure:first-child { grid-column: span 2; grid-row: auto; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand img { width: 50px; height: 50px; }
+  .brand span { display: none; }
+  .rooms { grid-template-columns: 1fr; }
+  .room figure { aspect-ratio: 16/11; }
+  .facts b { font-size: 28px; }
+  .hero__in { padding-bottom: 100px; }
+  .hero::before { background: linear-gradient(180deg, rgba(1,26,90,.5) 0%, rgba(1,26,90,.1) 22%, rgba(1,14,48,.55) 45%, rgba(1,14,48,.9) 100%); }
+  .ctas .btn { padding: 13px 18px; font-size: 14px; }
+  .proof > span { font-size: 12px; padding: 7px 12px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para French Andes</span><a href="#propuesta">Ver propuesta</a></div>
+
+<header class="hero">
+  <div class="hero__bg" role="img" aria-label="El volcán Villarrica nevado visto desde French Andes"></div>
+  <div class="smoke" aria-hidden="true"></div>
+  <nav>
+    <a class="brand" href="#"><img src="img/logo.png" alt="Logo de French Andes" width="58" height="58" /><span>French Andes<small>Apart Hostel · Pucón</small></span></a>
+    <div class="menu"><a href="#habitaciones">Habitaciones</a><a href="#vista">La casa</a><a href="#reservar">Reservar</a><span class="langs" aria-label="Idiomas"><b>ES</b><b>EN</b><b>FR</b></span></div>
+  </nav>
+  <div class="hero__in">
+    <p class="bienvenue">Bienvenue à la maison</p>
+    <h1 class="h1"><span>Su casa en Pucón,</span> <span style="animation-delay:.15s"><em>con el volcán</em></span> <span style="animation-delay:.3s">en la ventana.</span></h1>
+    <p class="lead">Estudios, dúplex y habitaciones familiares rodeados de jardín, con parrilla, cocina compartida y el Villarrica de fondo. Atendido con cariño, a la francesa.</p>
+    <div class="ctas"><a class="btn btn--rouge" href="#reservar">Ver disponibilidad</a><a class="btn btn--glass" href="#habitaciones">Conocer las habitaciones</a></div>
+    <div class="proof"><span><b>8,9</b> en Booking · 279 opiniones</span><span><b>9,8</b> ubicación según parejas</span><span><span class="tri" aria-hidden="true"><i></i><i></i><i></i></span> Se habla francés</span></div>
+  </div>
+</header>
+
+<form class="book" id="reservar" aria-label="Consultar disponibilidad">
+  <label>Habitación
+    <select>
+      <option>Estudio con terraza · 2 a 3 personas</option>
+      <option>Estudio Triple Estándar · hasta 4</option>
+      <option>Apartamento Dúplex · hasta 4</option>
+      <option>Estudio Dúplex · hasta 3</option>
+      <option>Estudio Familiar · hasta 7</option>
+      <option>Habitación Doble con vista al jardín</option>
+    </select>
+  </label>
+  <label>Llegada<input type="date" /></label>
+  <label>Salida<input type="date" /></label>
+  <label>Huéspedes<select><option>2</option><option>3</option><option>4</option><option>5 a 7</option></select></label>
+  <button class="btn btn--navy" type="submit">Consultar</button>
+</form>
+<div class="toast" role="status" aria-live="polite">En su sitio, este botón le escribe directo por WhatsApp o abre su sistema de reservas, sin comisión.</div>
+
+<section id="habitaciones">
+  <div class="wrap">
+    <p class="k reveal"><span class="tri"><i></i><i></i><i></i></span> Habitaciones</p>
+    <h2 class="reveal">Para parejas, amigos <em>y familias.</em></h2>
+    <p class="sub reveal">Seis formas de quedarse, todas con piso de madera, calefacción central y ropa de cama incluida.</p>
+    <div class="rooms">
+      <article class="room reveal"><span class="tag">2 a 3 personas</span><figure><img src="img/estudio-terraza.webp" alt="Estudio con terraza y mesa al sol" loading="lazy" /></figure><div><h3>Estudio con terraza</h3><p>Cama doble y una terraza propia para el desayuno al sol.</p></div></article>
+      <article class="room reveal"><span class="tag">Hasta 4</span><figure><img src="img/duplex.webp" alt="Estudio dúplex con escalera de madera" loading="lazy" /></figure><div><h3>Dúplex</h3><p>Dos niveles con cama doble y camas individuales: ideal para grupos.</p></div></article>
+      <article class="room reveal"><span class="tag">Hasta 7</span><figure><img src="img/familiar.webp" alt="Estudio familiar con literas y cama doble" loading="lazy" /></figure><div><h3>Estudio familiar</h3><p>Cama doble extragrande y literas: toda la familia junta.</p></div></article>
+      <article class="room reveal"><span class="tag">Vista al volcán</span><figure><img src="img/literas-vista.webp" alt="Habitación con literas y vista al volcán por la ventana" loading="lazy" /></figure><div><h3>Con vista al jardín</h3><p>Ventanal al jardín y, al fondo, el Villarrica nevado.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="view" id="vista">
+  <div class="wrap">
+    <figure class="window reveal"><img src="img/ventana.webp" alt="El volcán Villarrica visto desde la ventana de una habitación" loading="lazy" /><figcaption>La vista desde la ventana</figcaption></figure>
+    <div>
+      <p class="k reveal" style="color:var(--sky)">La casa</p>
+      <h2 class="reveal">Despierte con <em>el Villarrica.</em></h2>
+      <p class="sub reveal">Un jardín grande para desconectarse, chimenea al aire libre para las noches de invierno y todo lo necesario para salir a esquiar, pedalear o remar por la zona.</p>
+      <div class="facts reveal"><div><b>9,4</b><span>WiFi según huéspedes</span></div><div><b>6</b><span>tipos de habitación</span></div><div><b>0 $</b><span>estacionamiento</span></div></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <p class="k reveal"><span class="tri"><i></i><i></i><i></i></span> Comodidades</p>
+    <h2 class="reveal">Todo lo que hace <em>sentirse en casa.</em></h2>
+    <div class="amen reveal">
+      <div><svg viewBox="0 0 24 24"><path d="M12 3c-3 4-6 6-6 10a6 6 0 0 0 12 0c0-4-3-6-6-10z"/><path d="M12 21v-6"/></svg><b>Jardín y parrilla</b><span>Zona de barbacoa para las tardes de verano.</span></div>
+      <div><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M9 13h6"/></svg><b>Cocina compartida</b><span>Hervidor, refrigerador y microondas.</span></div>
+      <div><svg viewBox="0 0 24 24"><path d="M5 12a10 10 0 0 1 14 0M8.5 15.5a5 5 0 0 1 7 0"/><circle cx="12" cy="19" r="1"/></svg><b>WiFi gratis</b><span>Evaluado con 9,4 por los huéspedes.</span></div>
+      <div><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg><b>Estacionamiento gratis</b><span>Privado, adaptado para movilidad reducida.</span></div>
+      <div><svg viewBox="0 0 24 24"><path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-8z"/></svg><b>Chimenea al aire libre</b><span>Para las noches frías del sur.</span></div>
+      <div><svg viewBox="0 0 24 24"><path d="M4 5h6a2 2 0 0 1 2 2v12a2 2 0 0 0-2-2H4zM20 5h-6a2 2 0 0 0-2 2v12a2 2 0 0 1 2-2h6z"/></svg><b>Biblioteca y salón</b><span>Espacios comunes para compartir.</span></div>
+      <div><svg viewBox="0 0 24 24"><path d="M3 20l7-12 4 6 2-3 5 9z"/></svg><b>Arriendo de equipo de ski</b><span>Listo para subir al Villarrica.</span></div>
+      <div><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M2 12h2M20 12h2M5 5l1.5 1.5M17.5 17.5L19 19M5 19l1.5-1.5M17.5 6.5L19 5"/></svg><b>Solárium</b><span>Sol de verano con vista a la montaña.</span></div>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="gallery">
+      <figure class="reveal"><img src="img/atardecer.webp" alt="Atardecer desde la terraza de French Andes" loading="lazy" /></figure>
+      <figure class="reveal"><img src="img/jardin.webp" alt="Jardín con el volcán de fondo" loading="lazy" /></figure>
+      <figure class="reveal"><img src="img/estudio-terraza.webp" alt="Terraza del estudio" loading="lazy" style="object-position:50% 70%" /></figure>
+      <figure class="reveal"><img src="img/literas-vista.webp" alt="Habitación con vista" loading="lazy" /></figure>
+      <figure class="reveal"><img src="img/volcan.webp" alt="Volcán Villarrica" loading="lazy" style="object-position:50% 45%" /></figure>
+    </div>
+    <div class="direct reveal" style="margin-top:28px"><p>Reserve directo con nosotros: <em>mejor tarifa, sin comisiones</em> y respuesta personal en español, inglés o francés.</p><a class="btn btn--rouge" href="#reservar">Consultar fechas</a></div>
+    <p class="note">Boceto preparado con las fotos públicas de French Andes. En el sitio final van sus fotos, textos y tarifas actualizadas.</p>
+  </div>
+</section>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k">Propuesta de Red Vaeru para French Andes</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Cada reserva que hoy pasa por Booking les cuesta entre 15% y 18%; en su sitio llegan directo a su WhatsApp o correo.</span></li>
+        <li><span><b>En español, inglés y francés.</b> Para los viajeros que ya los eligen y para los que todavía no los conocen.</span></li>
+        <li><span><b>Sus seis tipos de habitación</b> con fotos, capacidad y precios, fáciles de comparar desde el celular.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "hostal en Pucón".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20French%20Andes." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal, .window').forEach((el) => io.observe(el));
+const d = new Date(), f = (x) => x.toISOString().slice(0, 10);
+const [a, b] = document.querySelectorAll('.book input'); d.setDate(d.getDate() + 14); a.value = f(d); d.setDate(d.getDate() + 3); b.value = f(d);
+const t = document.querySelector('.toast');
+document.querySelector('.book').addEventListener('submit', (e) => { e.preventDefault(); t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 4200); });
+</script>
+</body>
+</html>
