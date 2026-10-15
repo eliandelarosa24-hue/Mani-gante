@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Hostal El Nogal · Pucón · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para Hostal El Nogal, preparado por Red Vaeru." />
+<meta property="og:title" content="Hostal El Nogal · su nueva portada" />
+<meta property="og:description" content="Un hostal tranquilo y cálido en Pucón: un boceto de sitio propio para Hostal El Nogal." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/el-nogal/img/og.jpg" />
+<link rel="icon" href="img/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,500;0,700;1,500&family=Rubik:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<!-- Fotos: ficha pública de Hostal El Nogal en Interpatagonia. Logo: dibujado en vector para el boceto. -->
+<style>
+/* Madera de nogal, verde de hojas, lavanda de las cortinas y los colores de sus colchas de patchwork. */
+:root {
+  --nogal: #6b4226; --nogal-2: #8a5a33; --hoja: #5e7d3c; --lavanda: #7e6aa6; --rosa: #d98c8c; --menta: #9cc3a5; --mostaza: #e0b45a;
+  --lino: #f6efe0; --lino-2: #efe4cf; --ink: #2b211b; --muted: #6e6157;
+  --serif: 'Lora', Georgia, serif; --sans: 'Rubik', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+  --quilt: conic-gradient(from 90deg at 50% 50%, var(--rosa) 0 25%, var(--menta) 0 50%, var(--mostaza) 0 75%, var(--lavanda) 0) 0 0/28px 28px;
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--lino); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+.quilt { height: 14px; background: var(--quilt); opacity: .85; }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px clamp(16px, 4vw, 52px); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 52px; height: 52px; }
+.brand strong { display: block; font: 700 22px/1 var(--serif); color: var(--nogal); }
+.brand small { display: block; margin-top: 4px; font-size: 11px; font-weight: 600; letter-spacing: .22em; text-transform: uppercase; color: var(--hoja); }
+.top nav { display: flex; gap: 24px; font-weight: 500; font-size: 15px; }
+.top nav a { text-decoration: none; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 999px; font: 600 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease); }
+.btn:hover { transform: translateY(-2px); }
+.btn--nogal { background: var(--nogal); color: #fff; }
+.btn--lavanda { background: var(--lavanda); color: #fff; }
+.btn--line { box-shadow: inset 0 0 0 1.5px var(--nogal); color: var(--nogal); }
+
+/* Portada con foto cosida */
+.hero { display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(28px, 5vw, 72px); align-items: center; padding: clamp(24px, 5vw, 64px) clamp(16px, 4vw, 52px) clamp(56px, 7vw, 96px); }
+.kick { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 600; letter-spacing: .14em; text-transform: uppercase; color: var(--hoja); margin-bottom: 16px; }
+.kick i { width: 28px; height: 14px; background: var(--quilt); border-radius: 3px; }
+h1 { font: 700 clamp(42px, 6vw, 86px)/1.02 var(--serif); letter-spacing: -.02em; color: var(--nogal); text-wrap: balance; }
+h1 em { font-weight: 500; color: var(--lavanda); }
+.lead { font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.65; color: var(--muted); max-width: 520px; margin: 20px 0 26px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.sewn { position: relative; padding: 14px; border-radius: 22px; background: var(--quilt); box-shadow: 0 40px 70px -40px rgba(43,33,27,.7); transform: rotate(1.5deg); }
+.sewn::before { content: ''; position: absolute; inset: 7px; border: 2px dashed rgba(255,255,255,.9); border-radius: 16px; pointer-events: none; }
+.sewn img { width: 100%; aspect-ratio: 4/3.2; object-fit: cover; border-radius: 12px; }
+.badge { position: absolute; right: -14px; top: -14px; padding: 12px 16px; border-radius: 16px; background: #fff; text-align: center; box-shadow: 0 16px 30px -16px rgba(0,0,0,.4); transform: rotate(-4deg); }
+.badge b { display: block; font: 700 30px/1 var(--serif); color: var(--nogal); }
+.badge span { font-size: 11.5px; color: var(--muted); }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { font-size: 12.5px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; color: var(--hoja); margin-bottom: 12px; }
+h2 { font: 700 clamp(32px, 4.4vw, 54px)/1.05 var(--serif); letter-spacing: -.015em; color: var(--nogal); margin-bottom: 14px; text-wrap: balance; }
+h2 em { font-weight: 500; color: var(--lavanda); }
+.sub { font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 620px; }
+
+/* Elija su habitación */
+.picker { display: grid; grid-template-columns: .85fr 1.15fr; gap: clamp(24px, 4vw, 56px); align-items: start; margin-top: 40px; }
+.opts { display: grid; gap: 10px; }
+.opts button { display: grid; grid-template-columns: 44px 1fr; gap: 14px; align-items: center; padding: 14px 16px; border: 0; border-radius: 18px; background: #fff; text-align: left; cursor: pointer; font: inherit; color: inherit; transition: background .3s, transform .3s var(--ease); box-shadow: 0 10px 24px -20px rgba(43,33,27,.6); }
+.opts button i { width: 44px; height: 44px; border-radius: 12px; background: var(--quilt); }
+.opts button b { display: block; font: 700 18px var(--serif); }
+.opts button span { font-size: 14px; color: var(--muted); }
+.opts button[aria-pressed="true"] { background: var(--nogal); color: #fff; transform: translateX(6px); }
+.opts button[aria-pressed="true"] span { color: rgba(255,255,255,.8); }
+.view { position: relative; border-radius: 22px; overflow: hidden; aspect-ratio: 4/3; box-shadow: 0 34px 60px -36px rgba(43,33,27,.7); }
+.view img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity .6s; }
+.view img.on { opacity: 1; }
+.view p { position: absolute; left: 14px; bottom: 14px; right: 14px; padding: 12px 16px; border-radius: 14px; background: rgba(246,239,224,.95); font-size: 15px; }
+
+/* Lo que incluye */
+.inc { background: var(--lino-2); }
+.inc .wrap { display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(24px, 4vw, 56px); align-items: center; }
+.inc figure { border-radius: 22px; overflow: hidden; aspect-ratio: 4/3; }
+.inc figure img { width: 100%; height: 100%; object-fit: cover; }
+.list { list-style: none; padding: 0; margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.list li { padding: 14px 16px; border-radius: 14px; background: #fff; font-weight: 500; font-size: 15px; border-left: 6px solid var(--hoja); }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 22px; background: var(--nogal); color: #fff; position: relative; overflow: hidden; }
+.direct::after { content: ''; position: absolute; right: 0; top: 0; bottom: 0; width: 18px; background: var(--quilt); }
+.direct p { font: 500 clamp(21px, 2.4vw, 30px)/1.25 var(--serif); max-width: 680px; }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { color: #e3c98a; }
+.pitch h2 { color: #f2ebdf; } .pitch h2 em { color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 700 46px/1 var(--serif); color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .top nav { display: none; }
+  .hero, .picker, .inc .wrap, .pitch .wrap { grid-template-columns: 1fr; }
+  .sewn { max-width: 560px; }
+  .picker > * { min-width: 0; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand img { width: 44px; height: 44px; } .brand strong { font-size: 19px; }
+  .badge { right: 4px; top: -18px; }
+  .opts { display: flex; overflow-x: auto; scrollbar-width: none; }
+  .opts button { flex: none; grid-template-columns: 1fr; padding: 12px 16px; }
+  .opts button i, .opts button span span { display: none; }
+  .opts button[aria-pressed="true"] { transform: none; }
+  .list { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para Hostal El Nogal</span><a href="#propuesta">Ver propuesta</a></div>
+<div class="quilt" aria-hidden="true"></div>
+
+<header class="top">
+  <a class="brand" href="#"><img src="img/logo.svg" alt="Logo de Hostal El Nogal" width="52" height="52" /><span><strong>El Nogal</strong><small>Hostal · Pucón</small></span></a>
+  <nav><a href="#habitaciones">Habitaciones</a><a href="#incluye">Qué incluye</a><a href="#reservar">Reservar</a></nav>
+</header>
+
+<div class="hero">
+  <div>
+    <p class="kick"><i></i>Villa Los Álamos · Pucón</p>
+    <h1>Un hostal tranquilo, <em>abrigado como en casa.</em></h1>
+    <p class="lead">Habitaciones de madera con colchas tejidas, en una calle sin ruido y a pasos de las áreas verdes. Cerca de todo lo que ofrece Pucón, lejos del bullicio.</p>
+    <div class="ctas"><a class="btn btn--nogal" href="#reservar">Ver disponibilidad</a><a class="btn btn--line" href="#habitaciones">Elegir habitación</a></div>
+  </div>
+  <div class="sewn">
+    <img src="img/casa.webp" alt="La casa de madera roja de Hostal El Nogal" />
+    <div class="badge"><b>9,5</b><span>Hoteles.com<br />504 opiniones</span></div>
+  </div>
+</div>
+
+<section id="habitaciones" style="padding-top:0">
+  <div class="wrap">
+    <p class="k reveal">Habitaciones</p>
+    <h2 class="reveal">Elija su <em>habitación.</em></h2>
+    <p class="sub reveal">Matrimoniales, dobles y triples, la mayoría con baño privado. Todas con calefacción y ropa de cama de abrigo.</p>
+    <div class="picker">
+      <div class="opts reveal" role="group" aria-label="Tipos de habitación">
+        <button type="button" aria-pressed="true" data-i="0"><i></i><span><b>Matrimonial</b><span>Cama de dos plazas · baño privado</span></span></button>
+        <button type="button" aria-pressed="false" data-i="1"><i></i><span><b>Doble</b><span>Dos camas · baño privado</span></span></button>
+        <button type="button" aria-pressed="false" data-i="2"><i></i><span><b>Triple</b><span>Para tres · baño privado</span></span></button>
+        <button type="button" aria-pressed="false" data-i="3"><i></i><span><b>Familiar</b><span>Con camarote para los niños</span></span></button>
+      </div>
+      <div class="view reveal" aria-live="polite">
+        <img class="on" src="img/matrimonial.webp" alt="Habitación matrimonial de madera con colcha de patchwork" />
+        <img src="img/doble.webp" alt="Habitación doble con cortinas lavanda" loading="lazy" />
+        <img src="img/triple.webp" alt="Habitación triple luminosa" loading="lazy" />
+        <img src="img/camarote.webp" alt="Habitación con camarote de madera" loading="lazy" />
+        <p id="desc">Cama de dos plazas, velador con lámpara y colcha de patchwork.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="inc" id="incluye">
+  <div class="wrap">
+    <figure class="reveal"><img src="img/comedor.webp" alt="Comedor común con mesas y ventanales" loading="lazy" /></figure>
+    <div>
+      <p class="k reveal">Qué incluye</p>
+      <h2 class="reveal">Lo justo para <em>un buen descanso.</em></h2>
+      <p class="sub reveal">Un hostal de pocas habitaciones, atendido con cariño. Los huéspedes destacan la atención y la tranquilidad.</p>
+      <ul class="list reveal">
+        <li>WiFi gratis en las habitaciones</li>
+        <li>Estacionamiento gratis</li>
+        <li>Cocina compartida</li>
+        <li>Calefacción y secador de pelo</li>
+        <li>Ayuda con tours y pasajes</li>
+        <li>Guardamaletas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="reservar">
+  <div class="wrap">
+    <div class="direct reveal"><p>Reserve directo con nosotros: mejor tarifa, sin comisiones y respuesta personal por WhatsApp.</p><a class="btn btn--lavanda" href="https://wa.me/56994166134?text=Hola%20Hostal%20El%20Nogal%2C%20quiero%20consultar%20disponibilidad." target="_blank" rel="noopener">Escribir por WhatsApp</a></div>
+    <p class="note">Boceto preparado con las fotos públicas de Hostal El Nogal. En el sitio final van sus fotos, textos y tarifas actualizadas.</p>
+  </div>
+</section>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k">Propuesta de Red Vaeru para Hostal El Nogal</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Con más de 500 opiniones excelentes, la confianza ya está ganada; en su sitio esa reserva llega directo a ustedes.</span></li>
+        <li><span><b>Cada habitación con su foto y su precio,</b> para que el huésped elija sin tener que preguntar.</span></li>
+        <li><span><b>La tranquilidad como sello:</b> lo que más valoran quienes ya se han quedado con ustedes.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "hostal tranquilo en Pucón".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20Hostal%20El%20Nogal." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+const txt = ['Cama de dos plazas, velador con lámpara y colcha de patchwork.', 'Dos camas con cortinas lavanda y mucha luz natural.', 'Para tres personas, con ventanas al jardín.', 'Con camarote de madera: los niños felices.'];
+const bs = [...document.querySelectorAll('.opts button')], ims = [...document.querySelectorAll('.view img')], d = document.getElementById('desc');
+bs.forEach((b, i) => b.addEventListener('click', () => { bs.forEach((x) => x.setAttribute('aria-pressed', x === b)); ims.forEach((m, j) => m.classList.toggle('on', i === j)); d.textContent = txt[i]; }));
+</script>
+</body>
+</html>

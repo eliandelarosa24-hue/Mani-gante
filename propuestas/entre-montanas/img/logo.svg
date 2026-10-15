@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Cabañas Entre Montañas">
+  <circle cx="100" cy="100" r="97" fill="#eaf3fb"/>
+  <path fill="#2e5f8a" d="M20 140 L64 76 L92 116 L120 64 L180 140 Z"/>
+  <path fill="#fff" d="M120 64 L132 80 L124 82 L118 74 L110 84 Z"/>
+  <path fill="#d2602f" d="M78 140 V118 L100 100 L122 118 V140 Z"/>
+  <rect x="94" y="124" width="12" height="16" fill="#eaf3fb"/>
+  <path d="M30 150 H170" stroke="#2e5f8a" stroke-width="5" stroke-linecap="round"/>
+</svg>

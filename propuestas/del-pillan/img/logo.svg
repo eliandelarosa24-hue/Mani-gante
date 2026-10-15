@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Cabañas del Pillán">
+  <circle cx="100" cy="100" r="97" fill="#ffffff"/>
+  <circle cx="100" cy="100" r="97" fill="none" stroke="#27b3d6" stroke-width="6"/>
+  <path fill="#9a5a2c" d="M44 118 L84 58 L96 70 L104 62 L156 118 Z"/>
+  <path fill="#fff" d="M84 58 L96 70 L104 62 L114 73 L104 76 L96 70 L88 80 L80 72 Z"/>
+  <circle cx="148" cy="58" r="12" fill="#ffc93c"/>
+  <path fill="none" stroke="#27b3d6" stroke-width="7" stroke-linecap="round" d="M40 136 C56 128 70 144 86 136 S116 128 132 136 S152 142 160 136"/>
+  <path fill="none" stroke="#27b3d6" stroke-width="7" stroke-linecap="round" opacity=".5" d="M56 154 C68 148 80 160 92 154 S116 148 128 154 S140 158 146 154"/>
+</svg>

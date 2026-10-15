@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Cabañas Alto Bosque">
+  <circle cx="100" cy="100" r="97" fill="#15181a"/>
+  <path fill="#6f8a5b" d="M46 140 L70 82 L94 140 Z M106 140 L134 70 L162 140 Z"/>
+  <path fill="#e9ece6" d="M72 140 V112 L100 92 L128 112 V140 Z"/>
+  <rect x="92" y="120" width="16" height="20" fill="#f2b45a"/>
+  <circle cx="144" cy="50" r="8" fill="#f2b45a"/>
+  <path d="M40 150 H160" stroke="#e9ece6" stroke-width="4" stroke-linecap="round"/>
+</svg>

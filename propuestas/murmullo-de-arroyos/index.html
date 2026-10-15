@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Murmullo de Arroyos · Pucón · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para Cabañas Murmullo de Arroyos, preparado por Red Vaeru." />
+<meta property="og:title" content="Murmullo de Arroyos · su nueva portada" />
+<meta property="og:description" content="Cabañas de troncos con vista a la cordillera, camino a Huife: un boceto de sitio propio para Murmullo de Arroyos." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/murmullo-de-arroyos/img/og.jpg" />
+<link rel="icon" href="img/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Hanken+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<!-- Fotos: ficha pública de Murmullo de Arroyos en Interpatagonia. Logo: dibujado en vector para el boceto. -->
+<style>
+/* Madera color miel de las cabañas, verde profundo del bosque y el azul del agua que corre. */
+:root {
+  --miel: #d9893b; --miel-2: #f3c27f; --bosque: #2c4a2b; --bosque-2: #3c6339; --agua: #4c9bb5; --agua-2: #8fd0e2;
+  --crema: #fbf5ea; --crema-2: #f3e7d2; --ink: #1f2a1e; --muted: #5f6a5d;
+  --serif: 'Instrument Serif', Georgia, serif; --sans: 'Hanken Grotesk', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--crema); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+/* Portada: la cabaña en el prado, con la onda del arroyo */
+.hero { position: relative; min-height: min(100svh, 880px); display: grid; grid-template-rows: auto 1fr auto; color: #fff; overflow: hidden; isolation: isolate; }
+.hero__bg { position: absolute; inset: 0; z-index: -2; background: url('img/cabana-terraza.webp') 50% 45%/cover; animation: drift 26s var(--ease) both; }
+@keyframes drift { from { transform: scale(1.14); } to { transform: scale(1); } }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(20,32,20,.55), rgba(20,32,20,.05) 30%, rgba(20,32,20,.25) 55%, rgba(20,32,20,.88)); }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px clamp(16px, 4vw, 52px); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 54px; height: 54px; }
+.brand strong { display: block; font: 400 26px/1 var(--serif); }
+.brand small { display: block; margin-top: 3px; font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--miel-2); }
+.top nav { display: flex; gap: 26px; font-size: 15px; font-weight: 600; }
+.top nav a { text-decoration: none; }
+.hero__in { align-self: end; padding: 0 clamp(16px, 4vw, 52px) 10px; max-width: 900px; }
+h1 { font: 400 clamp(52px, 8vw, 116px)/.92 var(--serif); letter-spacing: -.01em; text-wrap: balance; }
+h1 em { color: var(--miel-2); }
+h1 .w { display: inline-block; animation: up 1.1s var(--ease) both; }
+@keyframes up { from { opacity: 0; transform: translateY(34px); } }
+.lead { font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.6; max-width: 560px; margin: 16px 0 24px; opacity: .92; animation: up 1s .45s var(--ease) both; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; animation: up 1s .6s var(--ease) both; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 999px; font: 700 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease); }
+.btn:hover { transform: translateY(-2px); }
+.btn--miel { background: var(--miel); color: #fff; }
+.btn--glass { background: rgba(255,255,255,.15); color: #fff; backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.6); }
+.btn--bosque { background: var(--bosque); color: #fff; }
+.stream { width: 100%; height: 70px; display: block; }
+.stream path { fill: none; stroke: var(--agua-2); stroke-width: 2.4; stroke-linecap: round; opacity: .8; stroke-dasharray: 12 14; animation: flow 3s linear infinite; }
+.stream path:nth-child(2) { opacity: .45; animation-duration: 4.4s; }
+.stream path:nth-child(3) { opacity: .25; animation-duration: 6s; }
+@keyframes flow { to { stroke-dashoffset: -52; } }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { font-size: 12.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--miel); margin-bottom: 12px; }
+h2 { font: 400 clamp(38px, 5vw, 66px)/1 var(--serif); margin-bottom: 14px; text-wrap: balance; }
+h2 em { color: var(--bosque-2); }
+.sub { font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 620px; }
+
+/* Tres promesas del lugar */
+.promise { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 40px; }
+.promise div { padding: 26px; border-radius: 22px; background: #fff; box-shadow: 0 20px 40px -32px rgba(31,42,30,.6); }
+.promise b { display: block; font: 400 32px/1.05 var(--serif); color: var(--bosque); margin-bottom: 8px; }
+.promise span { color: var(--muted); line-height: 1.55; }
+.promise svg { width: 36px; height: 36px; margin-bottom: 14px; stroke: var(--miel); fill: none; stroke-width: 1.7; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Interior: mosaico cálido */
+.wood { background: var(--crema-2); }
+.mosaic { display: grid; grid-template-columns: repeat(4, 1fr); grid-auto-rows: 210px; gap: 12px; margin-top: 40px; }
+.mosaic figure { position: relative; border-radius: 16px; overflow: hidden; }
+.mosaic figure.big { grid-column: span 2; grid-row: span 2; }
+.mosaic figure.tall { grid-row: span 2; }
+.mosaic figure.wide { grid-column: span 2; }
+.mosaic { grid-auto-flow: dense; }
+.mosaic img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.mosaic figure:hover img { transform: scale(1.05); }
+.mosaic figcaption { position: absolute; left: 12px; bottom: 12px; padding: 5px 11px; border-radius: 999px; background: rgba(251,245,234,.94); font-size: 13px; font-weight: 700; }
+
+/* El prado */
+.prado { position: relative; min-height: 460px; display: grid; align-items: end; color: #fff; overflow: hidden; isolation: isolate; }
+.prado img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.prado::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(20,32,20,.1) 20%, rgba(20,32,20,.9)); }
+.prado h2 { color: #fff; } .prado h2 em { color: var(--miel-2); }
+.prado .sub { color: rgba(255,255,255,.88); }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 22px; background: var(--bosque); color: #fff; }
+.direct p { font: 400 clamp(24px, 2.8vw, 34px)/1.15 var(--serif); max-width: 680px; }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { color: #e3c98a; }
+.pitch h2 { color: #f2ebdf; } .pitch h2 em { color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 400 54px/1 var(--serif); color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .top nav { display: none; }
+  .promise { grid-template-columns: 1fr; }
+  .mosaic { grid-template-columns: 1fr 1fr; grid-auto-rows: 170px; }
+  .pitch .wrap { grid-template-columns: 1fr; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand img { width: 46px; height: 46px; } .brand strong { font-size: 22px; }
+  .hero::before { background: linear-gradient(180deg, rgba(20,32,20,.55), rgba(20,32,20,.25) 30%, rgba(20,32,20,.55) 55%, rgba(20,32,20,.9)); }
+  .mosaic figure.big { grid-column: span 2; grid-row: span 1; }
+  .mosaic figure.tall { grid-row: span 1; }
+  .mosaic figure.wide { grid-column: span 2; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para Murmullo de Arroyos</span><a href="#propuesta">Ver propuesta</a></div>
+
+<div class="hero">
+  <div class="hero__bg" role="img" aria-label="Cabaña de troncos con terraza y camino de piedras entre árboles"></div>
+  <header class="top">
+    <a class="brand" href="#"><img src="img/logo.svg" alt="Logo de Murmullo de Arroyos" width="54" height="54" /><span><strong>Murmullo de Arroyos</strong><small>Cabañas · Pucón</small></span></a>
+    <nav><a href="#lugar">El lugar</a><a href="#cabanas">Las cabañas</a><a href="#reservar">Reservar</a></nav>
+  </header>
+  <div class="hero__in">
+    <h1><span class="w">Donde lo único</span> <span class="w" style="animation-delay:.15s">que suena es <em>el agua.</em></span></h1>
+    <p class="lead">Cabañas de troncos con estufa a leña, lejos del centro y con vista a la cordillera. Camino a las termas de Huife.</p>
+    <div class="ctas"><a class="btn btn--miel" href="#reservar">Ver disponibilidad</a><a class="btn btn--glass" href="#cabanas">Ver las cabañas</a></div>
+  </div>
+  <svg class="stream" viewBox="0 0 1440 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 C180 10 300 34 480 22 S780 10 960 22 S1260 34 1440 22"/><path d="M0 40 C200 30 320 52 520 40 S820 28 1000 40 S1300 52 1440 40"/><path d="M0 58 C220 48 340 66 540 58 S860 48 1040 58 S1320 66 1440 58"/></svg>
+</div>
+
+<section id="lugar">
+  <div class="wrap">
+    <p class="k reveal">El lugar</p>
+    <h2 class="reveal">Lejos del ruido, <em>cerca de todo.</em></h2>
+    <p class="sub reveal">En el kilómetro 1 del camino Huepil – Paillaco: un rincón tranquilo y seguro, con cabañas separadas entre sí para que cada familia tenga su espacio.</p>
+    <div class="promise">
+      <div class="reveal"><svg viewBox="0 0 24 24"><path d="M3 20l6-10 4 6 3-4 5 8z"/><circle cx="17" cy="6" r="2"/></svg><b>Vista a la cordillera</b><span>Montañas y bosque desde la terraza.</span></div>
+      <div class="reveal"><svg viewBox="0 0 24 24"><path d="M12 3c2 3 5 5 5 9a5 5 0 0 1-10 0c0-2 1-3 2-4 0 2 1 3 2 3 0-3-1-5 1-8z"/></svg><b>Estufa a leña</b><span>Calor de verdad en las noches frías.</span></div>
+      <div class="reveal"><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10"/><path d="M9 20v-5h6v5"/></svg><b>Cabañas separadas</b><span>Privacidad y silencio para descansar.</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="wood" id="cabanas">
+  <div class="wrap">
+    <p class="k reveal">Las cabañas</p>
+    <h2 class="reveal">Madera de punta <em>a punta.</em></h2>
+    <p class="sub reveal">Amplias, con living, cocina totalmente equipada, dormitorio matrimonial e individual con baño privado. Ropa de cama y WiFi incluidos.</p>
+    <div class="mosaic">
+      <figure class="big reveal"><img src="img/living.webp" alt="Living de madera con ventanal, estufa y comedor" loading="lazy" /><figcaption>Living con ventanal</figcaption></figure>
+      <figure class="reveal"><img src="img/dormitorio.webp" alt="Dormitorio matrimonial de madera" loading="lazy" /><figcaption>Matrimonial</figcaption></figure>
+      <figure class="tall reveal"><img src="img/camarote.webp" alt="Dormitorio con camarote de madera" loading="lazy" /><figcaption>Para los niños</figcaption></figure>
+      <figure class="reveal"><img src="img/estufa.webp" alt="Living con estufa a leña y sillón tejido" loading="lazy" /><figcaption>Estufa a leña</figcaption></figure>
+      <figure class="reveal"><img src="img/cocina.webp" alt="Cocina equipada de madera" loading="lazy" /><figcaption>Cocina equipada</figcaption></figure>
+      <figure class="reveal"><img src="img/dormitorio-2.webp" alt="Dormitorio con cama de colores y ventana al bosque" loading="lazy" /><figcaption>Ventana al bosque</figcaption></figure>
+      <figure class="wide reveal"><img src="img/comedor.webp" alt="Rincón con sillón y mesa de madera" loading="lazy" /><figcaption>Rincón para leer</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="prado">
+  <img src="img/prado-ancho.webp" alt="Cabaña en medio de un amplio prado verde rodeado de bosque" loading="lazy" />
+  <div class="wrap">
+    <p class="k reveal" style="color:var(--miel-2)">El jardín</p>
+    <h2 class="reveal">Un prado entero <em>para los niños.</em></h2>
+    <p class="sub reveal">Amplio jardín alrededor de las cabañas para jugar, hacer un asado o simplemente tirarse al pasto.</p>
+  </div>
+</section>
+
+<section id="reservar">
+  <div class="wrap">
+    <div class="direct reveal"><p>Reserve directo con nosotros: mejor tarifa, sin comisiones y respuesta personal por WhatsApp.</p><a class="btn btn--miel" href="https://wa.me/56981575704?text=Hola%20Murmullo%20de%20Arroyos%2C%20quiero%20consultar%20disponibilidad." target="_blank" rel="noopener">Escribir por WhatsApp</a></div>
+    <p class="note">Boceto preparado con las fotos públicas de Murmullo de Arroyos. En el sitio final van sus fotos, textos y tarifas actualizadas.</p>
+  </div>
+</section>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k">Propuesta de Red Vaeru para Murmullo de Arroyos</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Cada reserva que hoy pasa por Booking les cuesta entre 15% y 18%; en su sitio llega directo a su WhatsApp.</span></li>
+        <li><span><b>Sus cabañas lucen como merecen:</b> madera, leña y cordillera en grande, no en una miniatura.</span></li>
+        <li><span><b>Cómo llegar, bien explicado:</b> mapa y referencias del camino a Huife para que nadie se pierda.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "cabañas cerca de las termas de Huife".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20Murmullo%20de%20Arroyos." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>

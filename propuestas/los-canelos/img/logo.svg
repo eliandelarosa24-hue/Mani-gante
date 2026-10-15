@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Cabañas Los Canelos">
+  <circle cx="100" cy="100" r="97" fill="#faf6ec"/>
+  <g fill="#4f7f32">
+    <path d="M100 30 C120 52 122 84 100 112 C78 84 80 52 100 30 Z"/>
+    <path d="M100 112 C86 92 64 84 40 88 C52 108 76 118 100 112 Z" opacity=".85"/>
+    <path d="M100 112 C114 92 136 84 160 88 C148 108 124 118 100 112 Z" opacity=".85"/>
+  </g>
+  <path d="M100 40 V112" stroke="#faf6ec" stroke-width="3" stroke-linecap="round"/>
+  <circle cx="100" cy="118" r="6" fill="#b4532a"/>
+  <path fill="none" stroke="#1aa0b8" stroke-width="6" stroke-linecap="round" d="M38 146 C58 136 76 156 100 146 S142 136 162 146"/>
+  <path fill="none" stroke="#1aa0b8" stroke-width="6" stroke-linecap="round" d="M54 164 C70 156 84 172 100 164 S130 156 146 164" opacity=".55"/>
+</svg>

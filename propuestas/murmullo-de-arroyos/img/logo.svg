@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Murmullo de Arroyos">
+  <circle cx="100" cy="100" r="97" fill="#2c4a2b"/>
+  <path fill="#d9893b" d="M56 104 L100 66 L144 104 H132 V136 H68 V104 Z"/>
+  <path fill="#2c4a2b" d="M92 114 H108 V136 H92 Z"/>
+  <g fill="none" stroke="#8fd0e2" stroke-width="5" stroke-linecap="round">
+    <path d="M44 152 C58 144 70 160 84 152 S112 144 126 152 S148 158 156 152"/>
+    <path d="M60 168 C70 162 80 174 90 168 S112 162 122 168 S136 172 140 168" opacity=".6"/>
+  </g>
+</svg>

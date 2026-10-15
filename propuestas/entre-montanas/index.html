@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Cabañas Entre Montañas · Coñaripe · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para Cabañas Entre Montañas, preparado por Red Vaeru." />
+<meta property="og:title" content="Entre Montañas · su nueva portada" />
+<meta property="og:description" content="Siete cabañas a minutos del lago Calafquén: un boceto de sitio propio para Cabañas Entre Montañas." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/entre-montanas/img/og.jpg" />
+<link rel="icon" href="img/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Karla:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<!-- Fotos: ficha pública de Cabañas Entre Montañas en Interpatagonia. Logo: dibujado en vector para el boceto. -->
+<style>
+/* El cielo azul de Coñaripe, el naranjo de las cabañas y el verde de los cerros. */
+:root {
+  --cielo: #2e5f8a; --cielo-2: #4f8fc4; --hielo: #eaf3fb; --naranjo: #d2602f; --naranjo-2: #ef8a4e; --cerro: #3c6b3e;
+  --ink: #142233; --muted: #566577;
+  --display: 'Bebas Neue', Impact, sans-serif; --sans: 'Karla', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: #fff; -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+/* Portada: título gigante entre las montañas (el texto queda detrás de la silueta) */
+.hero { position: relative; background: linear-gradient(180deg, #9cc8ec 0%, #d8ebf8 55%, #fff 100%); overflow: hidden; }
+.hero .top { position: relative; z-index: 3; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px clamp(16px, 4vw, 52px); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 50px; height: 50px; }
+.brand strong { display: block; font: 400 26px/1 var(--display); letter-spacing: .04em; color: var(--cielo); }
+.brand small { display: block; margin-top: 2px; font-size: 11px; font-weight: 800; letter-spacing: .22em; text-transform: uppercase; color: var(--naranjo); }
+.top nav { display: flex; gap: 24px; font-weight: 700; font-size: 15px; }
+.top nav a { text-decoration: none; }
+.big { position: relative; z-index: 1; text-align: center; padding-top: clamp(10px, 3vw, 30px); font: 400 clamp(84px, 19vw, 300px)/.8 var(--display); letter-spacing: .01em; color: var(--cielo); animation: rise 1.4s var(--ease) both; }
+@keyframes rise { from { transform: translateY(80px); opacity: 0; } }
+.ridge { position: relative; z-index: 2; display: block; width: 100%; height: clamp(120px, 18vw, 260px); margin-top: clamp(-150px, -12vw, -60px); }
+.hero__photo { position: relative; z-index: 2; margin: -2px clamp(16px, 4vw, 52px) 0; display: grid; grid-template-columns: 1.3fr 1fr; gap: 18px; align-items: center; padding-bottom: clamp(48px, 6vw, 80px); }
+.hero__photo figure { border-radius: 20px; overflow: hidden; aspect-ratio: 16/10; box-shadow: 0 40px 70px -40px rgba(20,34,51,.7); }
+.hero__photo figure img { width: 100%; height: 100%; object-fit: cover; }
+.lead { font-size: clamp(17px, 1.7vw, 20px); line-height: 1.6; color: var(--muted); margin-bottom: 22px; }
+.lead b { color: var(--ink); }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 12px; font: 800 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease); }
+.btn:hover { transform: translateY(-2px); }
+.btn--naranjo { background: var(--naranjo); color: #fff; }
+.btn--line { box-shadow: inset 0 0 0 2px var(--cielo); color: var(--cielo); }
+.btn--cielo { background: var(--cielo); color: #fff; }
+.rating { display: flex; gap: 18px; margin-top: 24px; }
+.rating div b { display: block; font: 400 40px/1 var(--display); color: var(--naranjo); }
+.rating div span { font-size: 13px; color: var(--muted); }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { font-size: 12.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--naranjo); margin-bottom: 10px; }
+h2 { font: 400 clamp(46px, 6vw, 84px)/.92 var(--display); letter-spacing: .01em; color: var(--cielo); margin-bottom: 14px; }
+h2 span { color: var(--naranjo); }
+.sub { font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 620px; }
+
+/* Siete cabañas: contador */
+.seven { background: var(--hielo); }
+.seven .wrap { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.doors { display: grid; grid-template-columns: repeat(7, 1fr); gap: 8px; margin-top: 26px; }
+.doors i { aspect-ratio: 3/4; border-radius: 10px 10px 4px 4px; background: var(--naranjo); position: relative; transform: translateY(20px); opacity: 0; transition: transform .6s var(--ease), opacity .6s; }
+.doors i::after { content: ''; position: absolute; left: 30%; right: 30%; bottom: 0; height: 45%; border-radius: 4px 4px 0 0; background: var(--hielo); }
+.doors.on i { transform: none; opacity: 1; }
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.duo figure { border-radius: 18px; overflow: hidden; aspect-ratio: 3/4; }
+.duo figure:first-child { transform: translateY(-24px); }
+.duo img { width: 100%; height: 100%; object-fit: cover; }
+
+/* Interior */
+.inside { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 40px; }
+.inside figure { position: relative; border-radius: 18px; overflow: hidden; aspect-ratio: 4/3.4; }
+.inside img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.inside figure:hover img { transform: scale(1.05); }
+.inside figcaption { position: absolute; left: 12px; bottom: 12px; padding: 6px 12px; border-radius: 8px; background: #fff; font-weight: 800; font-size: 14px; }
+.feats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 22px; }
+.feats div { padding: 18px; border-radius: 14px; background: var(--hielo); }
+.feats b { display: block; font: 400 24px var(--display); color: var(--cielo); letter-spacing: .02em; }
+.feats span { font-size: 14px; color: var(--muted); }
+
+/* Testimonios reales */
+.voices { background: var(--cielo); color: #fff; }
+.voices h2 { color: #fff; } .voices h2 span { color: var(--naranjo-2); }
+.voices .k { color: #bcdcf5; }
+.qs { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-top: 36px; }
+.qs blockquote { padding: 24px; border-radius: 18px; background: rgba(255,255,255,.1); box-shadow: inset 0 0 0 1px rgba(255,255,255,.18); font-size: 16.5px; line-height: 1.6; }
+.qs cite { display: block; margin-top: 14px; font-style: normal; font-weight: 800; color: #bcdcf5; font-size: 14px; }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 20px; background: var(--naranjo); color: #fff; }
+.direct p { font: 400 clamp(28px, 3.4vw, 42px)/1 var(--display); letter-spacing: .02em; max-width: 700px; }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { color: #e3c98a; }
+.pitch h2 { color: #f2ebdf; } .pitch h2 em { font-style: normal; color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 400 60px/1 var(--display); color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; border-radius: 999px; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .top nav { display: none; }
+  .hero__photo, .seven .wrap, .pitch .wrap { grid-template-columns: 1fr; }
+  .inside, .qs { grid-template-columns: 1fr 1fr; }
+  .feats { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand img { width: 44px; height: 44px; } .brand strong { font-size: 22px; }
+  .big { font-size: 25vw; }
+  .inside, .qs { grid-template-columns: 1fr; }
+  .duo figure:first-child { transform: none; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } .doors i { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para Cabañas Entre Montañas</span><a href="#propuesta">Ver propuesta</a></div>
+
+<header class="hero">
+  <div class="top">
+    <a class="brand" href="#"><img src="img/logo.svg" alt="Logo de Cabañas Entre Montañas" width="50" height="50" /><span><strong>Entre Montañas</strong><small>Cabañas · Coñaripe</small></span></a>
+    <nav><a href="#cabanas">Cabañas</a><a href="#adentro">Por dentro</a><a href="#opiniones">Opiniones</a><a href="#reservar">Reservar</a></nav>
+  </div>
+  <p class="big" aria-hidden="true">Entre montañas</p>
+  <svg class="ridge" viewBox="0 0 1440 260" preserveAspectRatio="none" aria-hidden="true">
+    <path d="M0 260 V150 L120 90 L230 140 L360 60 L470 120 L560 80 L700 150 L820 70 L940 130 L1060 40 L1180 120 L1300 80 L1440 130 V260 Z" fill="#3c6b3e"/>
+    <path d="M0 260 V190 L160 140 L300 180 L460 130 L620 190 L780 140 L940 185 L1100 130 L1260 180 L1440 150 V260 Z" fill="#2f5631"/>
+    <path d="M0 260 V230 C240 210 480 240 720 225 S1200 210 1440 230 V260 Z" fill="#fff"/>
+  </svg>
+  <div class="hero__photo">
+    <figure><img src="img/cabana.webp" alt="Cabaña naranja con terraza entre árboles y cerros" /></figure>
+    <div>
+      <p class="lead"><b>Siete cabañas de madera</b> en el camino a Panguipulli, a minutos del lago Calafquén y con vista al volcán Villarrica. Para familias y grupos de amigos.</p>
+      <div class="ctas"><a class="btn btn--naranjo" href="#reservar">Ver disponibilidad</a><a class="btn btn--line" href="#cabanas">Ver cabañas</a></div>
+      <div class="rating"><div><b>9,6</b><span>Opiniones · 13</span></div><div><b>7</b><span>cabañas</span></div><div><b>0,5 km</b><span>de Coñaripe</span></div></div>
+    </div>
+  </div>
+</header>
+
+<section class="seven" id="cabanas">
+  <div class="wrap">
+    <div>
+      <p class="k reveal">Las cabañas</p>
+      <h2 class="reveal">Siete puertas, <span>un solo lugar.</span></h2>
+      <p class="sub reveal">Cabañas independientes bajo los árboles, cada una con su terraza y espacio para el asado. Una para la pareja, o todas para el paseo familiar.</p>
+      <div class="doors" id="doors" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+    </div>
+    <div class="duo">
+      <figure class="reveal"><img src="img/cielo.webp" alt="Cabaña bajo árboles altos y cielo azul" loading="lazy" /></figure>
+      <figure class="reveal"><img src="img/bosque.webp" alt="Cabañas en el bosque con pasto" loading="lazy" /></figure>
+    </div>
+  </div>
+</section>
+
+<section id="adentro">
+  <div class="wrap">
+    <p class="k reveal">Por dentro</p>
+    <h2 class="reveal">Completas <span>y calentitas.</span></h2>
+    <p class="sub reveal">Madera por todas partes, cocina equipada, ropa de cama y dormitorios para que todos duerman cómodos.</p>
+    <div class="inside">
+      <figure class="reveal"><img src="img/interior.webp" alt="Cocina comedor de madera con barra" loading="lazy" /><figcaption>Cocina y comedor</figcaption></figure>
+      <figure class="reveal"><img src="img/matrimonial.webp" alt="Dormitorio matrimonial de madera" loading="lazy" /><figcaption>Matrimonial</figcaption></figure>
+      <figure class="reveal"><img src="img/literas.webp" alt="Dormitorio con camarotes" loading="lazy" /><figcaption>Para los niños</figcaption></figure>
+    </div>
+    <div class="feats reveal">
+      <div><b>Quincho</b><span>Para asados al aire libre</span></div>
+      <div><b>Ropa de cama</b><span>Incluida</span></div>
+      <div><b>Restaurante</b><span>En el recinto</span></div>
+      <div><b>Lago Calafquén</b><span>A minutos</span></div>
+    </div>
+  </div>
+</section>
+
+<section class="voices" id="opiniones">
+  <div class="wrap">
+    <p class="k reveal">Lo que dicen</p>
+    <h2 class="reveal">Huéspedes que <span>vuelven.</span></h2>
+    <div class="qs">
+      <blockquote class="reveal">“Maravilloso lugar, con una vista privilegiada al volcán Villarrica, seguro y céntrico. Don Osvaldo un 7, preocupado de cada detalle.”<cite>Karen G.</cite></blockquote>
+      <blockquote class="reveal">“Lugar tranquilo y cómodo, además de buena ubicación y conexión.”<cite>Eduardo Y.</cite></blockquote>
+      <blockquote class="reveal">“Buena atención y ubicación. 100% confiable y recomendable.”<cite>Marcelo</cite></blockquote>
+    </div>
+  </div>
+</section>
+
+<section id="reservar">
+  <div class="wrap">
+    <div class="direct reveal"><p>Reserve directo: mejor tarifa, sin comisiones y respuesta personal por WhatsApp.</p><a class="btn btn--cielo" href="https://wa.me/56982214631?text=Hola%20Caba%C3%B1as%20Entre%20Monta%C3%B1as%2C%20quiero%20consultar%20disponibilidad." target="_blank" rel="noopener">Escribir por WhatsApp</a></div>
+    <p class="note">Boceto preparado con las fotos y opiniones públicas de Cabañas Entre Montañas. En el sitio final van sus fotos, textos y tarifas actualizadas.</p>
+  </div>
+</section>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k">Propuesta de Red Vaeru para Cabañas Entre Montañas</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Cada reserva que hoy pasa por una plataforma les cuesta entre 15% y 18%; en su sitio llega directo a su WhatsApp.</span></li>
+        <li><span><b>Las siete cabañas con su ficha,</b> ideal para grupos que quieren arrendar varias juntas.</span></li>
+        <li><span><b>Sus opiniones a la vista:</b> la atención de don Osvaldo y don Patricio es su mejor publicidad.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "cabañas en Coñaripe".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20Caba%C3%B1as%20Entre%20Monta%C3%B1as." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+const doors = document.getElementById('doors');
+new IntersectionObserver((es, o) => es.forEach((e) => { if (!e.isIntersecting) return; [...doors.children].forEach((d, i) => d.style.transitionDelay = (i * .12) + 's'); doors.classList.add('on'); o.disconnect(); }), { threshold: .4 }).observe(doors);
+</script>
+</body>
+</html>

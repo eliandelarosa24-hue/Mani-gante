@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Cabañas Alto Bosque · Pucón · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para Cabañas Alto Bosque, preparado por Red Vaeru." />
+<meta property="og:title" content="Cabañas Alto Bosque · su nueva portada" />
+<meta property="og:description" content="Cabañas de diseño entre bosque nativo, a minutos de Pucón: un boceto de sitio propio para Alto Bosque." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/alto-bosque/img/og.jpg" />
+<link rel="icon" href="img/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,600;1,6..72,400&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<!-- Fotos: ficha pública de Cabañas Alto Bosque en Interpatagonia. Logo: dibujado en vector para el boceto. -->
+<style>
+/* Madera carbón de las cabañas, luz cálida de las guirnaldas, verde musgo y niebla. */
+:root {
+  --carbon: #15181a; --carbon-2: #20252a; --ambar: #f2b45a; --musgo: #6f8a5b; --niebla: #e9ece6; --niebla-2: #dfe3db;
+  --ink: #15181a; --muted: #5b625d;
+  --serif: 'Newsreader', Georgia, serif; --sans: 'Space Grotesk', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--niebla); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+/* Portada con interruptor día / noche */
+.hero { position: relative; min-height: min(100svh, 900px); display: grid; grid-template-rows: auto 1fr auto; color: #fff; overflow: hidden; isolation: isolate; background: var(--carbon); }
+.hero__bg { position: absolute; inset: 0; z-index: -2; background-size: cover; background-position: 50% 50%; transition: opacity 1.2s var(--ease); }
+.hero__bg--noche { background-image: url('img/tinaja-noche.webp'); }
+.hero__bg--dia { background-image: url('img/cabana-negra.webp'); opacity: 0; }
+.hero.dia .hero__bg--dia { opacity: 1; } .hero.dia .hero__bg--noche { opacity: 0; }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(10,12,13,.7), transparent 60%), linear-gradient(180deg, rgba(10,12,13,.55), rgba(10,12,13,.1) 30%, rgba(10,12,13,.2) 55%, rgba(10,12,13,.9)); }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px clamp(16px, 4vw, 52px); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 52px; height: 52px; }
+.brand strong { display: block; font: 600 21px/1 var(--sans); letter-spacing: .02em; }
+.brand small { display: block; margin-top: 4px; font-size: 11px; letter-spacing: .26em; text-transform: uppercase; color: var(--ambar); }
+.switch { display: flex; gap: 4px; padding: 4px; border-radius: 999px; background: rgba(255,255,255,.12); backdrop-filter: blur(10px); }
+.switch button { padding: 8px 14px; border: 0; border-radius: 999px; background: none; color: #fff; font: 600 13px var(--sans); cursor: pointer; }
+.switch button[aria-pressed="true"] { background: var(--ambar); color: var(--carbon); }
+.hero__in { align-self: end; padding: 0 clamp(16px, 4vw, 52px) 24px; max-width: 900px; }
+.kick { font-size: 13px; letter-spacing: .26em; text-transform: uppercase; color: var(--ambar); margin-bottom: 16px; }
+h1 { font: 400 clamp(46px, 7vw, 100px)/.98 var(--serif); letter-spacing: -.02em; text-wrap: balance; text-shadow: 0 4px 24px rgba(0,0,0,.65); }
+h1 em { color: var(--ambar); }
+h1 .w { display: inline-block; animation: up 1.1s var(--ease) both; }
+@keyframes up { from { opacity: 0; transform: translateY(34px); } }
+.lead { font-size: clamp(16px, 1.5vw, 18.5px); line-height: 1.65; max-width: 560px; color: rgba(255,255,255,.85); margin: 18px 0 0; animation: up 1s .45s var(--ease) both; }
+.bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 16px; margin: 26px clamp(16px, 4vw, 52px) 26px; padding: 14px 14px 14px 22px; border-radius: 14px; background: rgba(21,24,26,.72); backdrop-filter: blur(12px); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+.bar dl { display: flex; flex-wrap: wrap; gap: 28px; }
+.bar dt { font-size: 11px; letter-spacing: .2em; text-transform: uppercase; color: rgba(255,255,255,.6); }
+.bar dd { margin: 3px 0 0; font: 600 18px var(--sans); }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 10px; font: 600 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease); }
+.btn:hover { transform: translateY(-2px); }
+.btn--ambar { background: var(--ambar); color: var(--carbon); }
+.btn--dark { background: var(--carbon); color: #fff; }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { font-size: 12.5px; letter-spacing: .26em; text-transform: uppercase; color: var(--musgo); margin-bottom: 14px; font-weight: 600; }
+h2 { font: 400 clamp(34px, 4.6vw, 58px)/1.04 var(--serif); letter-spacing: -.015em; margin-bottom: 14px; text-wrap: balance; }
+h2 em { color: var(--musgo); }
+.sub { font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 620px; }
+
+/* Dos estilos de cabaña */
+.types { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 44px; }
+.type { position: relative; border-radius: 4px; overflow: hidden; background: #fff; }
+.type figure { aspect-ratio: 4/3; overflow: hidden; }
+.type img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+.type:hover img { transform: scale(1.05); }
+.type div { padding: 22px 24px 26px; }
+.type small { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--musgo); font-weight: 600; }
+.type h3 { font: 400 32px/1.1 var(--serif); margin: 8px 0 8px; }
+.type p { color: var(--muted); line-height: 1.6; }
+
+/* Interior: tira oscura */
+.inside { background: var(--carbon); color: var(--niebla); }
+.inside h2 { color: #fff; } .inside h2 em { color: var(--ambar); }
+.inside .k { color: var(--ambar); }
+.inside .sub { color: rgba(233,236,230,.75); }
+.strip { display: grid; grid-template-columns: 1.4fr 1fr 1fr; grid-template-rows: 240px 240px; gap: 12px; margin-top: 40px; }
+.strip figure { position: relative; overflow: hidden; border-radius: 4px; }
+.strip figure:first-child { grid-row: span 2; }
+.strip img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.4s var(--ease); }
+.strip figure:hover img { transform: scale(1.05); }
+.strip figcaption { position: absolute; left: 12px; bottom: 12px; font-size: 12px; letter-spacing: .16em; text-transform: uppercase; padding: 6px 10px; background: rgba(21,24,26,.75); border-radius: 3px; }
+.feats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1px; margin-top: 30px; background: rgba(233,236,230,.12); border-radius: 4px; overflow: hidden; }
+.feats div { background: var(--carbon-2); padding: 20px; }
+.feats b { display: block; font-weight: 600; margin-bottom: 4px; }
+.feats span { font-size: 14px; color: rgba(233,236,230,.65); }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 4px; background: var(--ambar); color: var(--carbon); }
+.direct p { font: 400 clamp(22px, 2.6vw, 32px)/1.2 var(--serif); max-width: 680px; }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { color: #e3c98a; }
+.pitch h2 { color: #f2ebdf; } .pitch h2 em { color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 400 50px/1 var(--serif); color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; border-radius: 999px; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .types, .pitch .wrap { grid-template-columns: 1fr; }
+  .strip { grid-template-columns: 1fr 1fr; grid-template-rows: 240px 180px 180px; }
+  .strip figure:first-child { grid-column: 1 / -1; grid-row: auto; }
+  .feats { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand strong { font-size: 18px; } .brand img { width: 44px; height: 44px; }
+  .switch button { padding: 7px 10px; font-size: 12px; }
+  .bar dl { gap: 18px; } .bar .btn { width: 100%; }
+  .hero::before { background: linear-gradient(180deg, rgba(10,12,13,.55), rgba(10,12,13,.3) 30%, rgba(10,12,13,.6) 55%, rgba(10,12,13,.92)); }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para Cabañas Alto Bosque</span><a href="#propuesta">Ver propuesta</a></div>
+
+<div class="hero" id="hero">
+  <div class="hero__bg hero__bg--noche" role="img" aria-label="Tinaja de noche bajo una guirnalda de luces, con los cerros al fondo"></div>
+  <div class="hero__bg hero__bg--dia" role="img" aria-label="Cabaña moderna de madera oscura con terraza entre árboles"></div>
+  <header class="top">
+    <a class="brand" href="#"><img src="img/logo.svg" alt="Logo de Cabañas Alto Bosque" width="52" height="52" /><span><strong>Alto Bosque</strong><small>Cabañas · Pucón</small></span></a>
+    <div class="switch" role="group" aria-label="Ver de día o de noche"><button type="button" aria-pressed="false" data-m="dia">Día</button><button type="button" aria-pressed="true" data-m="noche">Noche</button></div>
+  </header>
+  <div class="hero__in">
+    <p class="kick">Bosque nativo · a minutos de Pucón</p>
+    <h1><span class="w">Diseño, bosque</span> <span class="w" style="animation-delay:.15s">y <em>tinaja bajo las luces.</em></span></h1>
+    <p class="lead">Cabañas de madera con grandes ventanales, jardines amplios y una tinaja caliente para las noches de Pucón. Se aceptan mascotas.</p>
+  </div>
+  <div class="bar" id="reservar">
+    <dl><div><dt>Booking</dt><dd>9,2 · 173 opiniones</dd></div><div><dt>Capacidad</dt><dd>Hasta 20 huéspedes</dd></div><div><dt>Mascotas</dt><dd>Bienvenidas</dd></div></dl>
+    <a class="btn btn--ambar" href="https://wa.me/56981566136?text=Hola%20Caba%C3%B1as%20Alto%20Bosque%2C%20quiero%20consultar%20disponibilidad." target="_blank" rel="noopener">Consultar por WhatsApp</a>
+  </div>
+</div>
+
+<section id="cabanas">
+  <div class="wrap">
+    <p class="k reveal">Las cabañas</p>
+    <h2 class="reveal">Arquitectura que <em>mira al bosque.</em></h2>
+    <p class="sub reveal">Madera oscura, techos en pendiente y terrazas propias. Por dentro, espacios amplios y luminosos para descansar de verdad.</p>
+    <div class="types">
+      <article class="type reveal"><figure><img src="img/cabana-negra.webp" alt="Cabaña de un piso con techo inclinado y terraza" loading="lazy" /></figure><div><small>Un piso</small><h3>La cabaña del ventanal</h3><p>Techo inclinado, doble altura y terraza con mesa para comer afuera.</p></div></article>
+      <article class="type reveal"><figure><img src="img/cabana-dos-pisos.webp" alt="Cabaña de dos pisos con balcón y terraza techada" loading="lazy" /></figure><div><small>Dos pisos</small><h3>La cabaña del balcón</h3><p>Dormitorio arriba con balcón, terraza techada abajo y jardín alrededor.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section class="inside">
+  <div class="wrap">
+    <p class="k reveal">Por dentro</p>
+    <h2 class="reveal">Cálidas, amplias <em>y bien equipadas.</em></h2>
+    <p class="sub reveal">Living con comedor para la familia, cocina totalmente equipada y dormitorios con ventanas hacia los árboles.</p>
+    <div class="strip">
+      <figure class="reveal"><img src="img/living.webp" alt="Living comedor amplio con sillones y mesa larga" loading="lazy" /><figcaption>Living comedor</figcaption></figure>
+      <figure class="reveal"><img src="img/dormitorio-balcon.webp" alt="Dormitorio con salida al balcón" loading="lazy" /><figcaption>Dormitorio con balcón</figcaption></figure>
+      <figure class="reveal"><img src="img/dormitorio.webp" alt="Dormitorio luminoso con ventana" loading="lazy" /><figcaption>Dormitorio</figcaption></figure>
+      <figure class="reveal"><img src="img/cocina.webp" alt="Cocina equipada" loading="lazy" /><figcaption>Cocina</figcaption></figure>
+      <figure class="reveal"><img src="img/cabanas.webp" alt="Cabañas entre árboles con jardín" loading="lazy" /><figcaption>El jardín</figcaption></figure>
+    </div>
+    <div class="feats reveal">
+      <div><b>Tinaja</b><span>Agua caliente bajo las estrellas</span></div>
+      <div><b>Cocina equipada</b><span>Microondas, refrigerador y más</span></div>
+      <div><b>TV satelital</b><span>Para los días de lluvia</span></div>
+      <div><b>Quincho</b><span>Parrilla compartida</span></div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="direct reveal"><p>Reserve directo con nosotros: mejor tarifa, sin comisiones y respuesta personal por WhatsApp.</p><a class="btn btn--dark" href="#reservar">Consultar fechas</a></div>
+    <p class="note">Boceto preparado con las fotos públicas de Cabañas Alto Bosque. En el sitio final van sus fotos, textos y tarifas actualizadas.</p>
+  </div>
+</section>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k">Propuesta de Red Vaeru para Cabañas Alto Bosque</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Con 173 opiniones en Booking ya tienen la confianza ganada; en su sitio esa reserva llega directo a su WhatsApp.</span></li>
+        <li><span><b>Su diseño a la altura de sus cabañas:</b> cabañas modernas merecen un sitio moderno, no solo un aviso más en una plataforma.</span></li>
+        <li><span><b>Cada cabaña con su ficha:</b> fotos, capacidad y precio, fácil de comparar desde el celular.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "cabañas en Pucón con tinaja".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20Caba%C3%B1as%20Alto%20Bosque." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+const hero = document.getElementById('hero'), bs = [...document.querySelectorAll('.switch button')];
+bs.forEach((b) => b.addEventListener('click', () => { hero.classList.toggle('dia', b.dataset.m === 'dia'); bs.forEach((x) => x.setAttribute('aria-pressed', x === b)); }));
+</script>
+</body>
+</html>

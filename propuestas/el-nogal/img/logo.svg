@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Hostal El Nogal">
+  <circle cx="100" cy="100" r="97" fill="#f6efe0"/>
+  <path fill="#6b4226" d="M94 168 C96 140 96 120 92 104 L108 104 C104 120 104 140 106 168 Z"/>
+  <g fill="#5e7d3c">
+    <ellipse cx="100" cy="74" rx="46" ry="36"/>
+    <ellipse cx="66" cy="96" rx="26" ry="20"/>
+    <ellipse cx="134" cy="96" rx="26" ry="20"/>
+  </g>
+  <g fill="#8a5a33"><circle cx="86" cy="70" r="7"/><circle cx="112" cy="80" r="7"/><circle cx="100" cy="58" r="7"/></g>
+  <path d="M60 170 H140" stroke="#6b4226" stroke-width="5" stroke-linecap="round"/>
+</svg>

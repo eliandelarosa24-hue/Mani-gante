@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Hostería Alemana">
+  <circle cx="100" cy="100" r="97" fill="#fbf8f0"/>
+  <circle cx="100" cy="100" r="88" fill="none" stroke="#2f4a3a" stroke-width="3"/>
+  <path fill="#2f4a3a" d="M52 96 L100 56 L148 96 H136 V144 H64 V96 Z"/>
+  <path fill="#f2dc8f" d="M74 100 H126 V144 H74 Z"/>
+  <path fill="#2f4a3a" d="M92 118 H108 V144 H92 Z"/>
+  <rect x="78" y="106" width="10" height="10" fill="#2f4a3a"/><rect x="112" y="106" width="10" height="10" fill="#2f4a3a"/>
+  <g fill="#b23a2e"><circle cx="80" cy="122" r="3.5"/><circle cx="86" cy="124" r="3.5"/><circle cx="114" cy="122" r="3.5"/><circle cx="120" cy="124" r="3.5"/></g>
+  <path d="M40 152 H160" stroke="#2f4a3a" stroke-width="3" stroke-linecap="round"/>
+</svg>
