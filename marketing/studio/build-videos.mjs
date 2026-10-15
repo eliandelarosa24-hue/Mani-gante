@@ -116,7 +116,7 @@ function compose(id, R, variant = '') {
   const o = 4 + caps.length, a = o + 1;
   let g = `[1:v]tpad=stop_mode=clone:stop_duration=${OUTRO + 1},setpts=PTS-STARTPTS[scr];[2:v]format=gray,scale=${L.w}:${L.h}[m];[scr][m]alphamerge[rs];`
     + `[0:v][rs]overlay=${L.x}:${L.y}:shortest=0[b0];[b0][3:v]overlay=0:0[b1];`;
-  caps.forEach((c, i) => { g += `[b${i + 1}][${4 + i}:v]overlay=0:0:enable='between(t,${c.t0},${c.t1})'[b${i + 2}];`; });
+  caps.forEach((c, i) => { g += `[b${i + 1}][${4 + i}:v]overlay=0:0:enable='gte(t,${c.t0})*lt(t,${c.t1})'[b${i + 2}];`; });
   g += `[${o}:v]format=rgba,fade=in:st=${body}:d=0.45:alpha=1[ot];[b${caps.length + 1}][ot]overlay=0:0,fade=in:st=0:d=0.25,format=yuv420p[v]`;
   if (V) g += `;[${a}:a]adelay=${Math.round(V.offset * 1000)}:all=1,apad,atrim=0:${total},aresample=48000,loudnorm=I=-14:TP=-1.5:LRA=11[au]`;
   mkdirSync(VID, { recursive: true });

@@ -12,7 +12,7 @@
 
 | Semana | Fechas | Tema | Qué busca | Piezas principales | Estado |
 |---|---|---|---|---|---|
-| 2 | 26 oct – 1 nov | **Cero sorpresas: así trabajo** | Confianza: método, compromisos y dudas reales del sitio. Además, rubros nuevos (termas, cafés, hoteles boutique) | Reel del método · carrusel «Lo que necesito de usted» · carrusel de compromisos · carrusel de preguntas frecuentes · Reels de termas, café y hotel boutique (muestras) · historias de cupos y cuenta regresiva | ✅ Producida el 15-10-2026 |
+| 2 | 26 oct – 1 nov | **Cero sorpresas: así trabajo** | Confianza: método, compromisos y dudas reales del sitio. Además, rubros nuevos (termas, cafés, hoteles boutique) | Reel del método · carrusel «Lo que necesito de usted» · carrusel de compromisos · carrusel de preguntas frecuentes · Reels de termas, café y hotel boutique (muestras) · historias de cupos y cuenta regresiva | ✅ Producida el 15-10-2026 · [agenda](https://claude.ai/artifact/NiVcrEUtnSRTAS9rvtLEBu) |
 | 3 | 2 – 8 nov | **Cuenta regresiva de temporada** | Urgencia real: faltan 4 semanas para el 30 de noviembre | Calculadora en modo restaurante · Paquete Temporada en detalle · «3 errores en la web de una cabaña» · consejos para la ficha de Google · Reels de cabañas (Lago Azul) y de tours (Pucón Aventura), ambas muestras · historias de cuenta regresiva | Lo produce el agente el miércoles 21 de octubre |
 | 4 | 9 – 15 nov | **Últimos cupos de lanzamiento** | Cierre: los cupos se acaban y después rige el precio normal | Anuncio honesto de los cupos que quedan · Reel de viña (muestra) · Reel de Villa Coral Samaná (Caribe, muestra) · carrusel «Antes de diciembre: la lista final» · preguntas frecuentes, parte 2 · historias de cupos | Lo produce el agente el miércoles 28 de octubre |
 
