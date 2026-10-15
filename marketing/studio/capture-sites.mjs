@@ -104,6 +104,14 @@ const CLIPS = {
     url: 'https://redvaeru.netlify.app/muestras/villa-coral-samana/', seconds: 14,
     plan: [[0, 0], [2.5, 0], [6, 1100], [8, 1100], [12, 2600], [14, 2600]],
   },
+  // Muestra de edición humana: la calculadora sube hasta los valores por defecto (20 reservas, $90.000, 18 %).
+  'calculadora-sube': {
+    url: 'https://redvaeru.netlify.app/', seconds: 12, settle: 6000,
+    plan: [[0, '.ota'], [12, '.ota']],
+    sliders: [
+      { name: 'nights', from: 4, to: 20, t0: 0, t1: 5 },
+    ],
+  },
   'redvaeru-inicio': {
     url: 'https://redvaeru.netlify.app/', seconds: 10, settle: 6000,
     plan: [[0, 0], [3, 0], [10, 2200]],

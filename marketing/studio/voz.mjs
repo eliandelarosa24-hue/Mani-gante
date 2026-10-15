@@ -64,7 +64,9 @@ function groupWords(text, starts, ends) {
     if (g.length >= 4 || (end && g.length >= 2)) { groups.push(g); g = []; }
   }
   if (g.length) groups.push(g);
-  return groups.map((ws) => ({ text: ws.map((w) => w.w).join(' '), t0: +ws[0].t0.toFixed(2), t1: +ws[ws.length - 1].t1.toFixed(2) }));
+  const out = groups.map((ws) => ({ text: ws.map((w) => w.w).join(' '), t0: +ws[0].t0.toFixed(2), t1: +ws[ws.length - 1].t1.toFixed(2) }));
+  out.words = words.map((w) => ({ w: w.w, t0: +w.t0.toFixed(2), t1: +w.t1.toFixed(2) }));
+  return out;
 }
 
 async function synth(id, S) {
@@ -78,7 +80,7 @@ async function synth(id, S) {
     const voice = await pickVoice(S.voice);
     const r = await api(`/text-to-speech/${voice}/with-timestamps?output_format=mp3_44100_128`, {
       method: 'POST',
-      body: JSON.stringify({ text, model_id: 'eleven_multilingual_v2', language_code: 'es', voice_settings: { stability: 0.45, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true, speed: 1.0 } }),
+      body: JSON.stringify({ text, model_id: 'eleven_multilingual_v2', language_code: 'es', voice_settings: { stability: 0.45, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true, speed: 1.0, ...(S.settings || {}) } }),
     });
     audio = Buffer.from(r.audio_base64, 'base64');
     writeFileSync(join(DIR, `${id}.mp3`), audio);
@@ -86,7 +88,7 @@ async function synth(id, S) {
   }
   const len = Number(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', join(DIR, `${id}.mp3`)]).toString());
   const subs = groupWords(text, starts, ends);
-  writeFileSync(join(DIR, `${id}.json`), JSON.stringify({ voice: S.voice, duration: len, offset: 0.3, subs }, null, 1));
+  writeFileSync(join(DIR, `${id}.json`), JSON.stringify({ voice: S.voice, duration: len, offset: 0.3, subs, words: subs.words }, null, 1));
   console.log(`✓ ${id} · ${len.toFixed(1)} s${len > S.max ? ` ⚠ supera ${S.max} s: acorte el guion o suba la velocidad` : ''}`);
 }
 
