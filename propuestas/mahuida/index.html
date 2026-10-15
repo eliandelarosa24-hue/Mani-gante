@@ -1,0 +1,346 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Cabañas Mahuida · Villarrica · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para Cabañas Mahuida, preparado por Red Vaeru." />
+<meta property="og:title" content="Cabañas Mahuida · su nueva portada" />
+<meta property="og:description" content="Kilómetro 3, camino a Ñancul: un boceto de sitio propio para Cabañas Mahuida, en Villarrica." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/mahuida/img/og.jpg" />
+<link rel="icon" href="img/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:wght@500;600;700&family=Figtree:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<!-- Fotos: página pública de Facebook de Cabañas Mahuida (facebook.com/cabanasmahuidavillarrica). Logo redibujado en vector a partir del suyo. -->
+<style>
+/* Paleta del logo: cerro azul, letras amarillas, cabañas pintadas de azul, verde del piolet. */
+:root {
+  --azul: #1d8fd6; --azul-2: #1567a6; --noche: #0d2a45; --amarillo: #f6d31c; --verde: #139e5c; --teal: #4fbdbd;
+  --cielo: #eef6fc; --papel: #fbfcfd; --ink: #10233a; --muted: #5a6b7d;
+  --slab: 'Zilla Slab', Georgia, serif; --sans: 'Figtree', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--papel); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+/* Portada */
+.hero { position: relative; min-height: min(100svh, 900px); display: grid; grid-template-rows: auto 1fr auto; color: #fff; overflow: hidden; isolation: isolate; }
+.hero__bg { position: absolute; inset: 0; z-index: -2; background: url('img/portada.webp') 50% 60%/cover; animation: zoom 24s var(--ease) both; }
+@keyframes zoom { from { transform: scale(1.14); } to { transform: scale(1); } }
+.hero::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(180deg, rgba(13,42,69,.6), rgba(13,42,69,0) 28%, rgba(13,42,69,0) 44%, rgba(13,42,69,.86) 100%); }
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px clamp(16px, 4vw, 52px); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 60px; height: 60px; filter: drop-shadow(0 8px 18px rgba(0,0,0,.3)); }
+.brand strong { display: block; font: 700 25px/1 var(--slab); letter-spacing: .04em; color: var(--amarillo); text-shadow: 0 2px 0 rgba(13,42,69,.6); }
+.brand small { display: block; margin-top: 3px; font-size: 11px; font-weight: 700; letter-spacing: .32em; text-transform: uppercase; color: #bfe9e9; }
+.top nav { display: flex; gap: 26px; font-size: 14.5px; font-weight: 700; }
+.top nav a { text-decoration: none; }
+
+.hero__in { align-self: end; padding: 0 clamp(16px, 4vw, 52px) 28px; max-width: 980px; }
+/* Señal de ruta: verde como las de la carretera */
+.sign { display: inline-flex; align-items: stretch; margin-bottom: 18px; border-radius: 8px; overflow: hidden; box-shadow: 0 10px 24px -10px rgba(0,0,0,.5), inset 0 0 0 2px rgba(255,255,255,.85); background: var(--verde); font-weight: 800; animation: up .9s var(--ease) both; }
+.sign b { display: grid; place-items: center; padding: 8px 12px; background: #fff; color: var(--verde); font: 700 20px/1 var(--slab); }
+.sign span { padding: 8px 14px; font-size: 13px; line-height: 1.25; letter-spacing: .02em; }
+.sign span small { display: block; font-weight: 600; opacity: .85; font-size: 11.5px; }
+h1 { font: 700 clamp(44px, 7.6vw, 100px)/.95 var(--slab); letter-spacing: -.01em; text-wrap: balance; text-shadow: 0 8px 30px rgba(0,0,0,.35); }
+h1 .w { display: inline-block; animation: up 1s var(--ease) both; }
+h1 mark { background: none; color: var(--amarillo); }
+@keyframes up { from { opacity: 0; transform: translateY(34px); } }
+.lead { font-size: clamp(16px, 1.6vw, 19px); line-height: 1.6; max-width: 600px; opacity: .95; margin: 18px 0 24px; animation: up 1s .45s var(--ease) both; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; animation: up 1s .6s var(--ease) both; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 10px; font: 800 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease), box-shadow .35s; }
+.btn:hover { transform: translateY(-2px); }
+.btn--amarillo { background: var(--amarillo); color: var(--noche); box-shadow: 0 14px 30px -14px rgba(246,211,28,.9); }
+.btn--glass { background: rgba(255,255,255,.14); color: #fff; backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1.5px rgba(255,255,255,.6); }
+.btn--azul { background: var(--azul); color: #fff; }
+
+.dock { margin: 0 clamp(16px, 4vw, 52px) 26px; display: grid; grid-template-columns: auto 1fr 1fr 1fr auto; gap: 10px; align-items: end; padding: 12px; border-radius: 16px; background: #fff; color: var(--ink); box-shadow: 0 24px 50px -24px rgba(0,0,0,.6); border-top: 5px solid var(--amarillo); }
+.score { align-self: center; display: flex; align-items: center; gap: 10px; padding: 2px 14px 2px 4px; border-right: 1px solid #e3e9ef; }
+.score b { display: grid; place-items: center; width: 50px; height: 50px; border-radius: 12px 12px 12px 2px; background: var(--azul-2); color: #fff; font: 700 21px var(--slab); }
+.score span { font-size: 12px; line-height: 1.35; color: var(--muted); }
+.score span strong { color: var(--ink); }
+.dock label { display: grid; gap: 4px; font-size: 11px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.dock input, .dock select { width: 100%; padding: 11px 12px; border: 1px solid #dfe6ee; border-radius: 10px; background: var(--cielo); font: 700 14.5px var(--sans); color: var(--ink); }
+.dock .btn { height: 46px; }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { display: inline-flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--azul); margin-bottom: 14px; }
+.k::before { content: ''; width: 26px; height: 4px; border-radius: 2px; background: linear-gradient(90deg, var(--amarillo) 50%, var(--verde) 50%); }
+h2 { font: 700 clamp(34px, 4.6vw, 58px)/1.02 var(--slab); color: var(--noche); margin-bottom: 14px; text-wrap: balance; }
+h2 em { font-style: normal; color: var(--azul); }
+.sub { font-size: 17px; line-height: 1.65; color: var(--muted); max-width: 620px; }
+
+/* Ruta: del centro a la montaña, como un perfil de altura */
+.ruta { background: var(--cielo); overflow: hidden; }
+.profile { position: relative; margin-top: 44px; }
+.profile svg { width: 100%; height: auto; overflow: visible; }
+.profile .line { fill: none; stroke: var(--azul); stroke-width: 3; stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 2.4s var(--ease); }
+.profile .fill { fill: url(#g); opacity: 0; transition: opacity 1.4s .6s; }
+.profile.on .line { stroke-dashoffset: 0; } .profile.on .fill { opacity: 1; }
+.stops { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 18px; }
+.stop { position: relative; padding: 16px 16px 18px; border-radius: 14px; background: #fff; box-shadow: 0 14px 30px -24px rgba(13,42,69,.6); }
+.stop i { position: absolute; top: -9px; left: 16px; width: 16px; height: 16px; border-radius: 50%; border: 3px solid #fff; background: var(--azul); box-shadow: 0 0 0 2px var(--azul); }
+.stop.here i { background: var(--amarillo); box-shadow: 0 0 0 2px var(--noche); }
+.stop small { display: block; font-size: 11.5px; font-weight: 800; letter-spacing: .14em; text-transform: uppercase; color: var(--verde); margin-bottom: 4px; }
+.stop b { display: block; font: 700 21px/1.15 var(--slab); color: var(--noche); }
+.stop span { display: block; margin-top: 6px; font-size: 14px; color: var(--muted); line-height: 1.45; }
+
+/* Cabañas: pestañas con las fotos del interior */
+.inside { display: grid; grid-template-columns: 1.35fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.viewer { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 3/2; background: var(--noche); box-shadow: 0 34px 70px -40px rgba(13,42,69,.9); }
+.viewer img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transform: scale(1.05); transition: opacity .7s, transform 1.2s var(--ease); }
+.viewer img.on { opacity: 1; transform: none; }
+.tabs { display: flex; flex-wrap: wrap; gap: 8px; margin: 24px 0 8px; }
+.tabs button { padding: 10px 16px; border-radius: 999px; border: 1.5px solid #d4e1ec; background: #fff; font: 700 14px var(--sans); color: var(--ink); cursor: pointer; transition: background .3s, color .3s, border-color .3s; }
+.tabs button[aria-selected="true"] { background: var(--noche); border-color: var(--noche); color: #fff; }
+.feats { list-style: none; padding: 0; margin-top: 22px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.feats li { display: flex; gap: 10px; align-items: center; padding: 12px 14px; border-radius: 12px; background: var(--cielo); font-weight: 700; font-size: 14.5px; }
+.feats svg { flex: none; width: 24px; height: 24px; stroke: var(--azul); fill: none; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+/* Piscina climatizada (sin foto todavía): agua animada */
+.agua { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 18px; margin-top: 44px; }
+.pool { position: relative; grid-row: span 2; border-radius: 22px; overflow: hidden; padding: 28px; color: #fff; background: linear-gradient(180deg, #2aa7e8, #1567a6 60%, #0d2a45); display: flex; flex-direction: column; justify-content: flex-end; min-height: 440px; isolation: isolate; }
+.pool::before, .pool::after { content: ''; position: absolute; left: -50%; width: 200%; height: 200%; z-index: -1; border-radius: 42%; background: rgba(255,255,255,.08); animation: wave 14s linear infinite; top: -150%; }
+.pool::after { border-radius: 46%; background: rgba(255,255,255,.06); animation-duration: 19s; top: -145%; }
+@keyframes wave { to { transform: rotate(360deg); } }
+.pool .temp { width: 64px; height: 40px; }
+.pool b { display: block; font: 700 28px/1.1 var(--slab); margin: 6px 0 8px; }
+.pool p { font-size: 15px; line-height: 1.55; opacity: .9; }
+.tile { position: relative; border-radius: 22px; overflow: hidden; min-height: 210px; }
+.tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.tile:hover img { transform: scale(1.05); }
+.tile span { position: absolute; left: 14px; bottom: 14px; right: 14px; padding: 10px 14px; border-radius: 12px; background: rgba(255,255,255,.93); font-weight: 800; font-size: 14px; }
+.tile span small { display: block; font-weight: 600; color: var(--muted); font-size: 12.5px; }
+.tile--wide { grid-column: span 2; }
+
+/* Mahuida = montaña */
+.monte { position: relative; background: var(--noche); color: #fff; overflow: hidden; }
+.monte .wrap { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.monte h2 { color: #fff; } .monte h2 em { color: var(--amarillo); }
+.monte .sub { color: rgba(255,255,255,.78); }
+.monte .k { color: var(--teal); }
+.word { font: 700 clamp(60px, 9vw, 120px)/.9 var(--slab); color: transparent; -webkit-text-stroke: 1.5px rgba(246,211,28,.7); letter-spacing: .02em; margin-bottom: 8px; }
+.polaroid { position: relative; padding: 12px 12px 46px; background: #fff; border-radius: 4px; transform: rotate(2.5deg); box-shadow: 0 30px 60px -20px rgba(0,0,0,.6); }
+.polaroid img { width: 100%; aspect-ratio: 4/3; object-fit: cover; }
+.polaroid p { position: absolute; left: 16px; right: 16px; bottom: 12px; text-align: left; color: var(--ink); font: 600 15px var(--slab); }
+.polaroid + .polaroid { position: absolute; width: 40%; right: -4%; bottom: -16%; transform: rotate(-5deg); }
+.polaroid + .polaroid p { text-align: center; }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 22px; background: var(--amarillo); color: var(--noche); }
+.direct p { font: 700 clamp(22px, 2.6vw, 32px)/1.15 var(--slab); max-width: 680px; }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { color: #e3c98a; } .pitch .k::before { background: #c4a35a; }
+.pitch h2 { color: #f2ebdf; } .pitch h2 em { color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 700 48px/1 var(--slab); color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; border-radius: 999px; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .top nav { display: none; }
+  .dock { grid-template-columns: 1fr 1fr; }
+  .score { grid-column: 1 / -1; border-right: 0; border-bottom: 1px solid #e3e9ef; padding-bottom: 10px; }
+  .dock .btn { grid-column: 1 / -1; }
+  .stops { grid-template-columns: 1fr 1fr; row-gap: 26px; }
+  .inside, .monte .wrap, .pitch .wrap { grid-template-columns: 1fr; }
+  .agua { grid-template-columns: 1fr 1fr; }
+  .pool { grid-row: auto; grid-column: 1 / -1; min-height: 320px; }
+  .monte .wrap > div:last-child { max-width: 560px; margin-bottom: 40px; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand img { width: 50px; height: 50px; }
+  .brand strong { font-size: 21px; }
+  .hero__bg { background-position: 40% 60%; }
+  .hero::before { background: linear-gradient(180deg, rgba(13,42,69,.55), rgba(13,42,69,.25) 22%, rgba(13,42,69,.7) 48%, rgba(13,42,69,.92) 100%); }
+  .sign b { font-size: 17px; padding: 8px 10px; } .sign span { font-size: 12px; }
+  .stops { grid-template-columns: 1fr; }
+  .feats { grid-template-columns: 1fr; }
+  .agua { grid-template-columns: 1fr; }
+  .tile--wide { grid-column: auto; }
+  .tile { min-height: 240px; }
+  .polaroid + .polaroid { width: 46%; right: -2%; bottom: -22%; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } .profile .line { stroke-dashoffset: 0; } .profile .fill { opacity: 1; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para Cabañas Mahuida</span><a href="#propuesta">Ver propuesta</a></div>
+
+<div class="hero">
+  <div class="hero__bg" role="img" aria-label="Las cabañas azules de Mahuida entre pasto y árboles, con cielo despejado"></div>
+  <header class="top">
+    <a class="brand" href="#"><img src="img/logo.svg" alt="Logo de Cabañas Mahuida" width="60" height="60" /><span><strong>MAHUIDA</strong><small>Cabañas</small></span></a>
+    <nav><a href="#ruta">Ubicación</a><a href="#cabanas">Cabañas</a><a href="#piscina">Piscina</a><a href="#reservar">Reservar</a></nav>
+  </header>
+  <div class="hero__in">
+    <div class="sign"><b>km 3</b><span>Camino Villarrica – Ñancul<small>A minutos del centro y del lago</small></span></div>
+    <h1><span class="w">Sus cabañas azules</span> <span class="w" style="animation-delay:.15s">en <mark>Villarrica.</mark></span></h1>
+    <p class="lead">Cabañas atendidas por sus dueños, entre jardines y una laguna, con piscina climatizada techada y el volcán a la vuelta del camino.</p>
+    <div class="ctas"><a class="btn btn--amarillo" href="#reservar">Ver disponibilidad</a><a class="btn btn--glass" href="#cabanas">Conocer las cabañas</a></div>
+  </div>
+  <form class="dock" id="reservar" aria-label="Consultar disponibilidad">
+    <div class="score"><b>9,5</b><span><strong>Excepcional</strong> en Booking<br />83 opiniones</span></div>
+    <label>Llegada<input type="date" /></label>
+    <label>Salida<input type="date" /></label>
+    <label>Personas<select><option>2</option><option>3 a 4</option><option>5 a 6</option><option>Grupo o delegación</option></select></label>
+    <button class="btn btn--azul" type="submit">Consultar por WhatsApp</button>
+  </form>
+</div>
+
+<section class="ruta" id="ruta">
+  <div class="wrap">
+    <p class="k reveal">Ubicación</p>
+    <h2 class="reveal">Cerca de todo, <em>lejos del ruido.</em></h2>
+    <p class="sub reveal">A tres kilómetros del centro de Villarrica, por el camino a Ñancul: se llega en minutos a la costanera y se duerme con el silencio del campo.</p>
+    <div class="profile" id="perfil">
+      <svg viewBox="0 0 1180 150" preserveAspectRatio="none" aria-hidden="true">
+        <defs><linearGradient id="g" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#1d8fd6" stop-opacity=".28"/><stop offset="1" stop-color="#1d8fd6" stop-opacity="0"/></linearGradient></defs>
+        <path class="fill" d="M0 140 C120 138 200 132 300 128 C420 124 500 118 590 112 C700 104 760 90 860 70 C940 52 990 20 1040 8 C1080 16 1120 40 1180 60 L1180 150 L0 150 Z"/>
+        <path class="line" pathLength="1" d="M0 140 C120 138 200 132 300 128 C420 124 500 118 590 112 C700 104 760 90 860 70 C940 52 990 20 1040 8 C1080 16 1120 40 1180 60"/>
+      </svg>
+    </div>
+    <div class="stops">
+      <div class="stop reveal"><i></i><small>km 0</small><b>Villarrica centro</b><span>Supermercados, restoranes y la costanera del lago.</span></div>
+      <div class="stop here reveal"><i></i><small>km 3</small><b>Cabañas Mahuida</b><span>Jardines, laguna, quinchos y estacionamiento privado.</span></div>
+      <div class="stop reveal"><i></i><small>Convenio</small><b>Termas Quimey-co</b><span>Tarifa especial para huéspedes de Mahuida.</span></div>
+      <div class="stop reveal"><i></i><small>2.847 m</small><b>Volcán Villarrica</b><span>Ascensos en verano y centro de ski en invierno.</span></div>
+    </div>
+  </div>
+</section>
+
+<section id="cabanas">
+  <div class="wrap inside">
+    <div class="reveal">
+      <div class="viewer" aria-live="polite">
+        <img class="on" src="img/living.webp" alt="Living comedor con estufa a leña y ventanas al jardín" />
+        <img src="img/comedor.webp" alt="Comedor con mesa familiar y vista a la entrada" loading="lazy" />
+        <img src="img/cocina.webp" alt="Cocina equipada con techo de madera" loading="lazy" />
+        <img src="img/interior.webp" alt="Interior de la cabaña con muebles de madera" loading="lazy" />
+      </div>
+    </div>
+    <div>
+      <p class="k reveal">Las cabañas</p>
+      <h2 class="reveal">Espacio para <em>la familia entera.</em></h2>
+      <p class="sub reveal">Cabañas amplias y luminosas, con techo de madera, estufa a leña y cocina equipada. Para parejas, familias y delegaciones.</p>
+      <div class="tabs reveal" role="tablist" aria-label="Fotos de la cabaña">
+        <button type="button" role="tab" aria-selected="true">Living</button>
+        <button type="button" role="tab" aria-selected="false">Comedor</button>
+        <button type="button" role="tab" aria-selected="false">Cocina</button>
+        <button type="button" role="tab" aria-selected="false">Interior</button>
+      </div>
+      <ul class="feats reveal">
+        <li><svg viewBox="0 0 24 24"><path d="M6 21V10l6-5 6 5v11"/><path d="M10 21v-5h4v5"/></svg>Estufa a leña y calefacción</li>
+        <li><svg viewBox="0 0 24 24"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M4 9h16M9 13h6"/></svg>Cocina equipada</li>
+        <li><svg viewBox="0 0 24 24"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg>Seguridad 24 horas</li>
+        <li><svg viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="M10 16V8h3a2.5 2.5 0 0 1 0 5h-3"/></svg>Estacionamiento gratis</li>
+        <li><svg viewBox="0 0 24 24"><circle cx="9" cy="7" r="3"/><path d="M3 20c0-3.5 2.7-6 6-6s6 2.5 6 6M17 11a3 3 0 1 0 0-6M21 20c0-3-1.6-5.2-4-5.8"/></svg>Atendido por sus dueños</li>
+        <li><svg viewBox="0 0 24 24"><circle cx="12" cy="4" r="2"/><path d="M12 7v6M8 21l4-8 4 8M7 10h10"/></svg>Accesible en silla de ruedas</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="piscina" style="padding-top:0">
+  <div class="wrap">
+    <p class="k reveal">Piscina y jardines</p>
+    <h2 class="reveal">Piscina temperada <em>aunque llueva.</em></h2>
+    <p class="sub reveal">La piscina es techada y climatizada, así el verano del sur se disfruta igual. Afuera, jardines con laguna, quinchos y terrazas para el asado.</p>
+    <div class="agua">
+      <div class="pool reveal"><svg class="temp" viewBox="0 0 64 40" aria-hidden="true"><path d="M4 12c6-6 12-6 18 0s12 6 18 0 12-6 18 0M4 26c6-6 12-6 18 0s12 6 18 0 12-6 18 0" fill="none" stroke="#f6d31c" stroke-width="4.5" stroke-linecap="round"/></svg><b>Piscina climatizada techada</b><p>Con zona poco profunda para los niños. Funciona por temporada: en su sitio quedará el calendario a la vista.</p></div>
+      <figure class="tile tile--wide reveal"><img src="img/laguna.webp" alt="Jardín con laguna, flores y patos frente a una cabaña azul" loading="lazy" style="object-position:50% 45%" /><span>Jardín con laguna<small>Flores, patos y bancas al sol</small></span></figure>
+      <figure class="tile reveal"><img src="img/cabanas.webp" alt="Cabañas con terrazas y quitasoles" loading="lazy" /><span>Terrazas propias<small>Con quitasol y mesa afuera</small></span></figure>
+      <figure class="tile reveal"><img src="img/noche.webp" alt="Las cabañas iluminadas de noche bajo los árboles" loading="lazy" style="object-position:50% 62%" /><span>De noche<small>Iluminado y tranquilo</small></span></figure>
+    </div>
+  </div>
+</section>
+
+<section class="monte">
+  <div class="wrap">
+    <div>
+      <p class="k reveal">El nombre</p>
+      <p class="word reveal" aria-hidden="true">Mahuida</p>
+      <h2 class="reveal">Quiere decir <em>montaña.</em></h2>
+      <p class="sub reveal">Y la montaña está ahí mismo: el Villarrica se sube en verano y se esquía en invierno. Sus dueños conocen el volcán y le cuentan cómo aprovecharlo, además del convenio con las termas.</p>
+    </div>
+    <div class="reveal" style="position:relative">
+      <figure class="polaroid"><img src="img/volcan.webp" alt="Cordada subiendo la ladera nevada del volcán Villarrica sobre las nubes" loading="lazy" /><p>Subiendo el Villarrica</p></figure>
+      <figure class="polaroid"><img src="img/portada.webp" alt="Cabañas Mahuida" loading="lazy" style="aspect-ratio:1" /><p>y de vuelta a casa</p></figure>
+    </div>
+  </div>
+</section>
+
+<section style="padding-top:clamp(90px,12vw,140px)">
+  <div class="wrap">
+    <div class="direct reveal"><p>Reserve directo con los dueños: mejor tarifa, sin comisiones y respuesta personal por WhatsApp.</p><a class="btn btn--azul" href="#reservar">Consultar fechas</a></div>
+    <p class="note">Boceto preparado con las fotos públicas de Cabañas Mahuida. En el sitio final van sus fotos (incluida la piscina), textos y tarifas actualizadas.</p>
+  </div>
+</section>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k">Propuesta de Red Vaeru para Cabañas Mahuida</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Con 9,5 en Booking ya tienen la reputación; cada reserva que pasa por ahí les cuesta entre 15% y 18%. En su sitio llega directo a su WhatsApp.</span></li>
+        <li><span><b>Cada cabaña con su ficha:</b> fotos, capacidad y precio, fácil de comparar desde el celular.</span></li>
+        <li><span><b>La piscina climatizada y el convenio con Quimey-co</b> bien a la vista, que es lo que decide a una familia en invierno.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "cabañas en Villarrica con piscina".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20Caba%C3%B1as%20Mahuida." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal, .profile').forEach((el) => io.observe(el));
+// Pestañas de fotos
+const tabs = [...document.querySelectorAll('.tabs button')], shots = [...document.querySelectorAll('.viewer img')];
+tabs.forEach((t, i) => t.addEventListener('click', () => { tabs.forEach((x, j) => x.setAttribute('aria-selected', i === j)); shots.forEach((s, j) => s.classList.toggle('on', i === j)); }));
+// Fechas sugeridas y consulta por WhatsApp
+const d = new Date(), f = (x) => x.toISOString().slice(0, 10);
+const [a, b] = document.querySelectorAll('.dock input'); d.setDate(d.getDate() + 14); a.value = f(d); d.setDate(d.getDate() + 3); b.value = f(d);
+document.querySelector('.dock').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const n = document.querySelector('.dock select').value;
+  const txt = `Hola Cabañas Mahuida, quiero consultar disponibilidad del ${a.value} al ${b.value} ${/\d/.test(n) ? `para ${n} personas` : `para un grupo`}.`;
+  window.open('https://wa.me/56992750243?text=' + encodeURIComponent(txt), '_blank', 'noopener');
+});
+</script>
+</body>
+</html>

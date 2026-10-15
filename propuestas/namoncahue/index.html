@@ -1,0 +1,321 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Cabañas Namoncahue · Caburgua · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para Cabañas Namoncahue, preparado por Red Vaeru." />
+<meta property="og:title" content="Cabañas Namoncahue · su nueva portada" />
+<meta property="og:description" content="En el corazón del bosque de Caburgua: un boceto de sitio propio para Cabañas Namoncahue." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/namoncahue/img/og.jpg" />
+<link rel="icon" href="img/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;1,9..144,400;1,9..144,600&family=IBM+Plex+Mono:wght@400;500&family=Instrument+Sans:wght@400;500;600;700&display=swap" rel="stylesheet" />
+<!-- Fotos: página pública de Facebook (facebook.com/caburguaplayablanca) e Interpatagonia. Logo de bosque dibujado en vector para el boceto. -->
+<style>
+/* Paleta del bosque de Caburgua: coihue, musgo, corteza, la madera roja de las tinajas y el papel de un cuaderno de campo. */
+:root {
+  --bosque: #1f3b2d; --bosque-2: #284c39; --musgo: #6f9440; --musgo-2: #9bbf5a; --corteza: #6b3f26; --tinaja: #c45a35;
+  --sol: #e9b949; --papel: #f1ede2; --papel-2: #e7e1d1; --ink: #1b2219; --muted: #5d6458;
+  --serif: 'Fraunces', Georgia, serif; --mono: 'IBM Plex Mono', ui-monospace, monospace; --sans: 'Instrument Sans', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--papel); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+/* Portada: mirar hacia arriba, entre los coihues */
+.hero { position: relative; min-height: min(100svh, 920px); display: grid; grid-template-columns: 1.05fr 1fr; background: var(--bosque); color: var(--papel); overflow: hidden; }
+.hero__txt { position: relative; z-index: 2; display: grid; grid-template-rows: auto 1fr auto; padding: 18px clamp(16px, 4vw, 56px) 78px; }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 56px; height: 56px; }
+.brand strong { display: block; font: 600 22px/1 var(--serif); letter-spacing: .01em; }
+.brand small { display: block; margin-top: 4px; font: 400 11px var(--mono); letter-spacing: .16em; text-transform: uppercase; color: var(--musgo-2); }
+.hero__mid { align-self: center; padding: 40px 0 24px; }
+.coord { font: 400 12.5px var(--mono); letter-spacing: .08em; color: var(--musgo-2); margin-bottom: 22px; display: flex; flex-wrap: wrap; gap: 8px 18px; }
+.coord span::before { content: '▲ '; font-size: 9px; color: var(--sol); }
+h1 { font: 400 clamp(46px, 6.6vw, 96px)/.96 var(--serif); letter-spacing: -.02em; text-wrap: balance; }
+h1 em { font-style: italic; color: var(--musgo-2); }
+h1 .w { display: inline-block; animation: up 1.1s var(--ease) both; }
+@keyframes up { from { opacity: 0; transform: translateY(34px); } }
+.lead { font-size: clamp(16px, 1.5vw, 18.5px); line-height: 1.65; max-width: 520px; color: rgba(241,237,226,.86); margin: 22px 0 26px; animation: up 1s .45s var(--ease) both; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; animation: up 1s .6s var(--ease) both; }
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 999px; font: 700 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease), background .3s; }
+.btn:hover { transform: translateY(-2px); }
+.btn--tinaja { background: var(--tinaja); color: #fff; }
+.btn--line { color: var(--papel); box-shadow: inset 0 0 0 1.5px rgba(241,237,226,.55); }
+.btn--bosque { background: var(--bosque); color: var(--papel); }
+.hero__foot { display: flex; flex-wrap: wrap; gap: 10px; font: 400 12.5px var(--mono); color: rgba(241,237,226,.75); }
+.hero__foot span { padding: 7px 12px; border-radius: 999px; box-shadow: inset 0 0 0 1px rgba(241,237,226,.22); }
+.hero__img { position: relative; overflow: hidden; }
+.hero__img img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; animation: canopy 26s var(--ease) both; }
+@keyframes canopy { from { transform: scale(1.18) rotate(-2deg); } to { transform: scale(1.02) rotate(0); } }
+.hero__img::after { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, var(--bosque), rgba(31,59,45,0) 28%); }
+.stamp { position: absolute; right: 22px; bottom: 22px; z-index: 2; width: 132px; height: 132px; border-radius: 50%; display: grid; place-items: center; text-align: center; background: var(--papel); color: var(--bosque); box-shadow: 0 20px 40px -20px rgba(0,0,0,.6); transform: rotate(-8deg); }
+.stamp b { display: block; font: 600 30px/1 var(--serif); }
+.stamp small { display: block; font: 400 10.5px/1.3 var(--mono); letter-spacing: .06em; text-transform: uppercase; margin-top: 4px; }
+
+/* Reserva como una ficha de campo */
+.book { position: relative; z-index: 5; width: min(1080px, calc(100% - 32px)); margin: -46px auto 0; display: grid; grid-template-columns: 1fr 1fr 1fr auto; gap: 12px; align-items: end; padding: 16px; border-radius: 6px; background: #fbf9f3; box-shadow: 0 30px 60px -32px rgba(31,59,45,.7); border-left: 6px solid var(--tinaja); }
+.book label { display: grid; gap: 6px; font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
+.book input, .book select { width: 100%; padding: 12px; border: 0; border-bottom: 2px solid var(--papel-2); border-radius: 0; background: transparent; font: 600 15px var(--sans); color: var(--ink); }
+.book .btn { height: 48px; }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { font: 500 12.5px var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--tinaja); margin-bottom: 14px; }
+.k::before { content: '— '; }
+h2 { font: 400 clamp(34px, 4.6vw, 60px)/1.02 var(--serif); letter-spacing: -.015em; color: var(--bosque); margin-bottom: 14px; text-wrap: balance; }
+h2 em { font-style: italic; color: var(--musgo); }
+.sub { font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 620px; }
+
+/* Herbario: lo que se encuentra caminando por el bosque */
+.herb { display: grid; grid-template-columns: repeat(4, 1fr); gap: 20px; margin-top: 44px; }
+.spec { background: #fbf9f3; padding: 12px 12px 16px; border-radius: 3px; box-shadow: 0 1px 0 var(--papel-2), 0 22px 40px -30px rgba(31,59,45,.7); transition: transform .5s var(--ease); }
+.spec:nth-child(odd) { transform: rotate(-1.2deg); } .spec:nth-child(even) { transform: rotate(1deg) translateY(14px); }
+.spec:hover { transform: rotate(0) translateY(-4px); }
+.spec figure { aspect-ratio: 1; overflow: hidden; }
+.spec img { width: 100%; height: 100%; object-fit: cover; }
+.spec p { display: flex; justify-content: space-between; gap: 8px; margin-top: 12px; font: 400 11.5px var(--mono); color: var(--muted); letter-spacing: .04em; }
+.spec b { display: block; margin-top: 4px; font: italic 400 21px var(--serif); color: var(--bosque); }
+
+/* Cabañas: carrusel horizontal */
+.cab { background: var(--papel-2); }
+.cab .head { display: flex; flex-wrap: wrap; align-items: end; justify-content: space-between; gap: 20px; }
+.arrows { display: flex; gap: 8px; }
+.arrows button { width: 48px; height: 48px; border-radius: 50%; border: 1.5px solid var(--bosque); background: transparent; color: var(--bosque); font-size: 20px; cursor: pointer; transition: background .3s, color .3s; }
+.arrows button:hover { background: var(--bosque); color: var(--papel); }
+.rail { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(300px, 34%); gap: 18px; margin-top: 36px; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; padding-bottom: 6px; }
+.rail::-webkit-scrollbar { display: none; }
+.card { scroll-snap-align: start; background: #fbf9f3; border-radius: 4px; overflow: hidden; }
+.card figure { aspect-ratio: 4/3; overflow: hidden; }
+.card img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.card:hover img { transform: scale(1.05); }
+.card div { padding: 16px 18px 20px; }
+.card small { font: 400 11.5px var(--mono); color: var(--tinaja); letter-spacing: .08em; }
+.card h3 { font: 400 23px/1.2 var(--serif); color: var(--bosque); margin: 6px 0; }
+.card p { font-size: 14.5px; line-height: 1.5; color: var(--muted); }
+
+/* Tinajas y hamacas */
+.relax { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.relax__pics { position: relative; aspect-ratio: 4/4.6; }
+.relax__pics img { position: absolute; object-fit: cover; border-radius: 4px; box-shadow: 0 30px 60px -34px rgba(31,59,45,.8); }
+.relax__pics img:nth-child(1) { left: 0; top: 0; width: 66%; height: 84%; }
+.relax__pics img:nth-child(2) { right: 0; bottom: 0; width: 52%; height: 50%; border: 8px solid var(--papel); }
+.list { list-style: none; padding: 0; margin-top: 26px; border-top: 1px solid rgba(31,59,45,.15); }
+.list li { display: grid; grid-template-columns: 54px 1fr; gap: 8px; padding: 16px 0; border-bottom: 1px solid rgba(31,59,45,.15); }
+.list li span { font: 400 12px var(--mono); color: var(--tinaja); padding-top: 4px; }
+.list li b { display: block; font: 400 21px var(--serif); color: var(--bosque); }
+.list li small { display: block; color: var(--muted); font-size: 14.5px; margin-top: 2px; line-height: 1.5; }
+
+/* De noche */
+.night { position: relative; min-height: 520px; display: grid; place-items: center; text-align: center; color: var(--papel); overflow: hidden; isolation: isolate; }
+.night img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; z-index: -2; }
+.night::before { content: ''; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(10,18,14,.88), rgba(10,18,14,.55) 55%, rgba(10,18,14,.2)); }
+.night > div { max-width: 1180px; width: 100%; text-align: left; }
+.night .sub { margin: 0 0 26px; }
+.night h2 { color: var(--papel); } .night h2 em { color: var(--sol); }
+.night .sub { color: rgba(241,237,226,.85); margin: 0 0 26px; }
+.stars i { position: absolute; width: 2px; height: 2px; border-radius: 50%; background: #fff; animation: tw 3s ease-in-out infinite; }
+@keyframes tw { 50% { opacity: .15; } }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 6px; background: var(--bosque); color: var(--papel); }
+.direct p { font: 400 clamp(22px, 2.6vw, 32px)/1.2 var(--serif); max-width: 680px; }
+.direct em { color: var(--musgo-2); }
+.note { margin-top: 16px; font: 400 12px var(--mono); color: var(--muted); }
+
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { color: #e3c98a; }
+.pitch h2 { color: #f2ebdf; } .pitch h2 em { color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 400 50px/1 var(--serif); color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+.spec.reveal.on:nth-child(odd) { transform: rotate(-1.2deg); } .spec.reveal.on:nth-child(even) { transform: rotate(1deg) translateY(14px); }
+
+@media (max-width: 1000px) {
+  .hero { grid-template-columns: 1fr; grid-template-rows: auto 46svh; }
+  .hero__txt { padding-bottom: 32px; }
+  .hero__img { order: 2; }
+  .hero__img::after { background: linear-gradient(180deg, var(--bosque), rgba(31,59,45,0) 30%); }
+  .hero__mid { padding: 34px 0 20px; }
+  .book { grid-template-columns: 1fr 1fr; margin-top: -40px; }
+  .book .btn { grid-column: 1 / -1; }
+  .book label:nth-child(3) { grid-column: 1 / -1; }
+  .herb { grid-template-columns: 1fr 1fr; }
+  .rail { grid-auto-columns: minmax(270px, 70%); }
+  .relax, .pitch .wrap { grid-template-columns: 1fr; }
+  .relax__pics { max-width: 560px; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand img { width: 48px; height: 48px; }
+  .hero { grid-template-rows: auto 380px; }
+  .stamp { width: 108px; height: 108px; right: 14px; bottom: 58px; } .stamp b { font-size: 24px; }
+  .herb { gap: 14px; }
+  .spec b { font-size: 17px; }
+  .spec p { font-size: 10px; }
+  .night { min-height: 440px; }
+  .night::before { background: linear-gradient(180deg, rgba(10,18,14,.35), rgba(10,18,14,.9) 70%); }
+  .night { place-items: end start; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para Cabañas Namoncahue</span><a href="#propuesta">Ver propuesta</a></div>
+
+<header class="hero">
+  <div class="hero__txt">
+    <a class="brand" href="#"><img src="img/logo.svg" alt="Logo de Cabañas Namoncahue" width="56" height="56" /><span><strong>Namoncahue</strong><small>Cabañas · Caburgua</small></span></a>
+    <div class="hero__mid">
+      <p class="coord"><span>Camino a Playa Blanca</span><span>Caburgua · Pucón</span></p>
+      <h1><span class="w">En el corazón</span> <span class="w" style="animation-delay:.15s">del bosque</span> <span class="w" style="animation-delay:.3s"><em>de Caburgua.</em></span></h1>
+      <p class="lead">Cabañas de madera entre coihues, con terraza propia, tinajas calientes y hamacas colgadas entre los árboles. A 2,2 km de la Playa Blanca.</p>
+      <div class="ctas"><a class="btn btn--tinaja" href="#reservar">Ver disponibilidad</a><a class="btn btn--line" href="#cabanas">Conocer las cabañas</a></div>
+    </div>
+    <div class="hero__foot"><span>Mascotas bienvenidas</span><span>WiFi</span><span>Hasta 20 huéspedes</span></div>
+  </div>
+  <div class="hero__img">
+    <img src="img/dosel.webp" alt="Copas de los árboles vistas desde abajo, con el sol entre las ramas" />
+    <div class="stamp" aria-hidden="true"><span><b>2,2 km</b><small>a Playa<br />Blanca</small></span></div>
+  </div>
+</header>
+
+<form class="book" id="reservar" aria-label="Consultar disponibilidad">
+  <label>Llegada<input type="date" /></label>
+  <label>Salida<input type="date" /></label>
+  <label>Huéspedes<select><option>2</option><option>3 a 4</option><option>5 a 6</option><option>Grupo grande</option></select></label>
+  <button class="btn btn--bosque" type="submit">Consultar por WhatsApp</button>
+</form>
+
+<section id="bosque">
+  <div class="wrap">
+    <p class="k reveal">Cuaderno de campo</p>
+    <h2 class="reveal">Lo que encuentra <em>al salir a caminar.</em></h2>
+    <p class="sub reveal">Namoncahue está dentro del bosque, no al lado. Basta salir de la cabaña para encontrarse con esto.</p>
+    <div class="herb">
+      <article class="spec reveal"><figure><img src="img/digue.webp" alt="Digüeñes en una rama" loading="lazy" /></figure><p><span>N.º 01</span><span>primavera</span></p><b>Digüeñes</b></article>
+      <article class="spec reveal"><figure><img src="img/michay.webp" alt="Flores naranjas de michay" loading="lazy" /></figure><p><span>N.º 02</span><span>sotobosque</span></p><b>Michay en flor</b></article>
+      <article class="spec reveal"><figure><img src="img/hongos.webp" alt="Hongos repisa sobre un tocón" loading="lazy" /></figure><p><span>N.º 03</span><span>tocón viejo</span></p><b>Hongos repisa</b></article>
+      <article class="spec reveal"><figure><img src="img/musgo.webp" alt="Musgo sobre troncos con una cabaña al fondo" loading="lazy" /></figure><p><span>N.º 04</span><span>junto a la cabaña</span></p><b>Musgo y cabaña</b></article>
+    </div>
+  </div>
+</section>
+
+<section class="cab" id="cabanas">
+  <div class="wrap">
+    <div class="head">
+      <div><p class="k reveal">Las cabañas</p><h2 class="reveal">Madera, luz <em>y bosque en la ventana.</em></h2></div>
+      <div class="arrows"><button type="button" aria-label="Anterior" data-d="-1">←</button><button type="button" aria-label="Siguiente" data-d="1">→</button></div>
+    </div>
+    <div class="rail" tabindex="0" aria-label="Fotos de las cabañas">
+      <article class="card"><figure><img src="img/cabana-sol.webp" alt="Cabaña de madera con terraza entre los árboles" loading="lazy" /></figure><div><small>Por fuera</small><h3>Terraza privada</h3><p>Cada cabaña con su terraza y mesa para comer afuera, mirando el bosque.</p></div></article>
+      <article class="card"><figure><img src="img/living.webp" alt="Living con ventanal al bosque y luz de tarde" loading="lazy" /></figure><div><small>Living</small><h3>El bosque entra</h3><p>Ventanales al bosque, piso de madera y TV por cable.</p></div></article>
+      <article class="card"><figure><img src="img/comedor.webp" alt="Comedor con mesa para seis y cocina" loading="lazy" /></figure><div><small>Comedor y cocina</small><h3>Para cocinar en familia</h3><p>Cocina equipada con horno, microondas y hervidor.</p></div></article>
+      <article class="card"><figure><img src="img/dormitorio.webp" alt="Dormitorio con cama de dos plazas y ventana al bosque" loading="lazy" /></figure><div><small>Dormitorios</small><h3>Despertar con pájaros</h3><p>Ropa de cama incluida y ventanas hacia los árboles.</p></div></article>
+      <article class="card"><figure><img src="img/cabana.webp" alt="Cabaña de madera con baranda de troncos" loading="lazy" /></figure><div><small>Por fuera</small><h3>Hecha de bosque</h3><p>Barandas de troncos y estufa para las noches frías.</p></div></article>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap relax">
+    <div class="relax__pics reveal"><img src="img/tinaja.webp" alt="Tinaja de madera sobre un deck rojo en medio del bosque" loading="lazy" /><img src="img/hamacas.webp" alt="Hamacas colgadas entre los árboles junto a sillones" loading="lazy" /></div>
+    <div>
+      <p class="k reveal">Para no hacer nada</p>
+      <h2 class="reveal">Tinaja caliente, <em>hamaca y leña.</em></h2>
+      <p class="sub reveal">Lo mejor de Namoncahue no está adentro de la cabaña: está entre los árboles.</p>
+      <ul class="list reveal">
+        <li><span>01</span><div><b>Tinajas en el bosque</b><small>Agua caliente al aire libre, sobre un deck entre los coihues.</small></div></li>
+        <li><span>02</span><div><b>Hamacas y rincones</b><small>Hamacas colgadas entre los árboles para la siesta de la tarde.</small></div></li>
+        <li><span>03</span><div><b>Parrilla y salón compartido</b><small>Para el asado con la familia y los amigos.</small></div></li>
+        <li><span>04</span><div><b>Lago Caburgua a minutos</b><small>Playa Blanca a 2,2 km, Playa Negra a 2,4 km y los Ojos del Caburgua a 9,4 km.</small></div></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section class="night">
+  <img src="img/noche.webp" alt="El bosque de noche iluminado por un farol" loading="lazy" style="object-position:70% 50%" />
+  <div class="stars" aria-hidden="true"></div>
+  <div class="reveal">
+    <h2>Y de noche, <em>solo el bosque.</em></h2>
+    <p class="sub">Sin ruido de autos, sin luces de ciudad. Un farol, la tinaja tibia y las estrellas.</p>
+    <a class="btn btn--tinaja" href="#reservar">Reservar mis noches</a>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="direct reveal"><p>Reserve directo con nosotros: <em>mejor tarifa, sin comisiones</em> y respuesta personal por WhatsApp.</p><a class="btn btn--tinaja" href="#reservar">Consultar fechas</a></div>
+    <p class="note">Boceto preparado con las fotos públicas de Cabañas Namoncahue. En el sitio final van sus fotos, textos y tarifas actualizadas.</p>
+  </div>
+</section>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k">Propuesta de Red Vaeru para Cabañas Namoncahue</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Cada reserva que hoy pasa por una plataforma les cuesta entre 15% y 18%; en su sitio llega directo a su WhatsApp.</span></li>
+        <li><span><b>Cada cabaña con su ficha:</b> fotos, capacidad, si tiene tinaja y si acepta mascotas, fácil de revisar desde el celular.</span></li>
+        <li><span><b>El bosque como protagonista:</b> sus fotos de Instagram y Facebook ordenadas en un sitio que se ve tan bien como el lugar.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "cabañas en Caburgua con tinaja".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20Caba%C3%B1as%20Namoncahue." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+// Estrellas sobre la foto nocturna
+const st = document.querySelector('.stars');
+for (let i = 0; i < 40; i++) { const s = document.createElement('i'); s.style.left = Math.random() * 100 + '%'; s.style.top = Math.random() * 45 + '%'; s.style.animationDelay = Math.random() * 3 + 's'; st.appendChild(s); }
+// Carrusel de cabañas
+const rail = document.querySelector('.rail');
+document.querySelectorAll('.arrows button').forEach((b) => b.addEventListener('click', () => rail.scrollBy({ left: b.dataset.d * rail.clientWidth * .7, behavior: 'smooth' })));
+// Fechas sugeridas y consulta por WhatsApp
+const d = new Date(), f = (x) => x.toISOString().slice(0, 10);
+const [a, b] = document.querySelectorAll('.book input'); d.setDate(d.getDate() + 14); a.value = f(d); d.setDate(d.getDate() + 3); b.value = f(d);
+document.querySelector('.book').addEventListener('submit', (e) => {
+  e.preventDefault();
+  const n = document.querySelector('.book select').value;
+  const txt = `Hola Cabañas Namoncahue, quiero consultar disponibilidad del ${a.value} al ${b.value} ${/\d/.test(n) ? `para ${n} personas` : 'para un grupo grande'}.`;
+  window.open('https://wa.me/56967321259?text=' + encodeURIComponent(txt), '_blank', 'noopener');
+});
+</script>
+</body>
+</html>

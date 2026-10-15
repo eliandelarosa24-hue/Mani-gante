@@ -1,0 +1,326 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Cabañas Alegría · Caburgua · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para Cabañas Alegría Caburgua, preparado por Red Vaeru." />
+<meta property="og:title" content="Cabañas Alegría · su nueva portada" />
+<meta property="og:description" content="Construyendo la alegría en el bosque de Caburgua: un boceto de sitio propio para Cabañas Alegría." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/alegria/img/og.jpg" />
+<link rel="icon" href="img/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Caveat:wght@500;700&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,700&display=swap" rel="stylesheet" />
+<!-- Fotos: página pública de Facebook de Cabañas Alegría (facebook.com/alegriaalsurdechile). Logo: su árbol de colores redibujado en vector. -->
+<style>
+/* Los cinco colores de las hojas de su árbol y el café del tronco. */
+:root {
+  --naranjo: #f39a1e; --azul: #1fa8e0; --magenta: #e0236b; --verde: #8cc63f; --gris: #58595b; --tronco: #a57c52;
+  --papel: #fffaf3; --papel-2: #fdf0e0; --ink: #2b2523; --muted: #6d625c;
+  --display: 'Bricolage Grotesque', system-ui, sans-serif; --hand: 'Caveat', cursive; --sans: 'DM Sans', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--papel); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+.rainbow { display: grid; grid-template-columns: repeat(5, 1fr); height: 6px; }
+.rainbow i:nth-child(1) { background: var(--verde); } .rainbow i:nth-child(2) { background: var(--naranjo); } .rainbow i:nth-child(3) { background: var(--azul); } .rainbow i:nth-child(4) { background: var(--magenta); } .rainbow i:nth-child(5) { background: var(--gris); }
+
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 16px clamp(16px, 4vw, 52px); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 58px; height: 58px; }
+.brand strong { display: block; font: 800 23px/1 var(--display); letter-spacing: -.01em; }
+.brand small { display: block; font: 700 19px/1 var(--hand); color: var(--tronco); margin-top: 2px; }
+.top nav { display: flex; gap: 24px; font-size: 15px; font-weight: 500; }
+.top nav a { text-decoration: none; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 16px; font: 700 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease), box-shadow .35s; }
+.btn:hover { transform: translateY(-2px) rotate(-1deg); }
+.btn--magenta { background: var(--magenta); color: #fff; box-shadow: 0 6px 0 #a3134b; }
+.btn--line { box-shadow: inset 0 0 0 2px var(--ink); }
+.btn--azul { background: var(--azul); color: #fff; box-shadow: 0 6px 0 #127fae; }
+
+/* Portada: la frase de su letrero y un álbum de fotos */
+.hero { position: relative; display: grid; grid-template-columns: 1fr 1.05fr; gap: clamp(24px, 4vw, 60px); align-items: center; padding: clamp(24px, 4vw, 60px) clamp(16px, 4vw, 52px) clamp(64px, 8vw, 110px); }
+.leaves { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.leaves svg { position: absolute; width: 26px; height: 40px; animation: fall linear infinite; opacity: .8; }
+@keyframes fall { from { transform: translateY(-60px) rotate(0); } to { transform: translateY(110vh) rotate(540deg); } }
+.quote { position: relative; display: inline-block; padding: 16px 22px 18px; border-radius: 10px; background: #2f3b38; color: #fff; transform: rotate(-2.5deg); box-shadow: 0 18px 34px -18px rgba(0,0,0,.5); margin-bottom: 26px; animation: swing 4s ease-in-out infinite; transform-origin: 50% -30px; }
+@keyframes swing { 50% { transform: rotate(1.5deg); } }
+.quote::before { content: ''; position: absolute; left: 50%; top: -28px; width: 70px; height: 30px; margin-left: -35px; border: 2px solid #b8a789; border-bottom: 0; border-radius: 40px 40px 0 0; }
+.quote p { font: 700 clamp(22px, 2.3vw, 28px)/1.1 var(--hand); }
+.quote p b { color: #7fd4ff; }
+.quote small { display: block; text-align: right; font: 700 18px var(--hand); color: #7fd4ff; margin-top: 4px; }
+h1 { font: 800 clamp(44px, 6.4vw, 90px)/.95 var(--display); letter-spacing: -.035em; text-wrap: balance; }
+h1 .c1 { color: var(--naranjo); } h1 .c2 { color: var(--azul); } h1 .c3 { color: var(--magenta); }
+h1 .w { display: inline-block; animation: up 1s var(--ease) both; }
+@keyframes up { from { opacity: 0; transform: translateY(32px); } }
+.lead { font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.6; color: var(--muted); max-width: 540px; margin: 20px 0 28px; animation: up 1s .45s var(--ease) both; }
+.ctas { display: flex; flex-wrap: wrap; gap: 14px; animation: up 1s .6s var(--ease) both; }
+.album { position: relative; aspect-ratio: 1/1; }
+.snap { position: absolute; padding: 10px; background: #fff; border-radius: 6px; box-shadow: 0 26px 50px -26px rgba(43,37,35,.55); animation: drop 1s var(--ease) both; }
+.snap img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 3px; }
+.snap::before { content: ''; position: absolute; top: -12px; left: 50%; width: 86px; height: 24px; margin-left: -43px; background: rgba(243,154,30,.55); transform: rotate(-3deg); }
+.snap:nth-child(2)::before { background: rgba(31,168,224,.5); } .snap:nth-child(3)::before { background: rgba(224,35,107,.45); }
+.snap:nth-child(1) { width: 56%; left: 2%; top: 4%; transform: rotate(-5deg); }
+.snap:nth-child(2) { width: 50%; right: 0; top: 14%; transform: rotate(4deg); animation-delay: .15s; }
+.snap:nth-child(3) { width: 46%; left: 24%; bottom: 0; transform: rotate(-1deg); animation-delay: .3s; }
+@keyframes drop { from { opacity: 0; translate: 0 -40px; } }
+.snap figcaption { font: 700 21px/1 var(--hand); padding: 8px 4px 2px; }
+.sticker { position: absolute; z-index: 2; right: 2%; bottom: 10%; display: grid; place-items: center; width: 116px; height: 116px; border-radius: 50%; background: var(--verde); color: #fff; text-align: center; transform: rotate(12deg); box-shadow: 0 14px 28px -14px rgba(60,100,10,.8); }
+.sticker b { display: block; font: 800 32px/1 var(--display); }
+.sticker small { display: block; font: 700 17px/1 var(--hand); }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { font: 700 25px/1 var(--hand); color: var(--magenta); margin-bottom: 8px; }
+h2 { font: 800 clamp(34px, 4.6vw, 58px)/1 var(--display); letter-spacing: -.03em; margin-bottom: 14px; text-wrap: balance; }
+h2 em { font-style: normal; color: var(--azul); }
+.sub { font-size: 17px; line-height: 1.65; color: var(--muted); max-width: 620px; }
+
+/* Dos cabañas con nombre propio */
+.duo { display: grid; grid-template-columns: 1fr 1fr; gap: 22px; margin-top: 40px; }
+.cabin { position: relative; padding: clamp(24px, 3vw, 36px); border-radius: 28px; overflow: hidden; isolation: isolate; }
+.cabin--colibri { background: #e5f6fd; }
+.cabin--magnolia { background: #fde6ee; }
+.cabin svg.ico { position: absolute; right: -10px; top: -10px; width: 190px; height: 190px; z-index: -1; opacity: .9; transition: transform 1.2s var(--ease); }
+.cabin:hover svg.ico { transform: rotate(-8deg) scale(1.05); }
+.cabin small { font: 700 22px var(--hand); }
+.cabin--colibri small { color: #127fae; } .cabin--magnolia small { color: #b3174f; }
+.cabin h3 { font: 800 clamp(34px, 3.6vw, 46px)/1 var(--display); letter-spacing: -.03em; margin: 4px 0 12px; }
+.cabin p { color: var(--muted); line-height: 1.6; max-width: 380px; }
+.cabin ul { list-style: none; padding: 0; margin: 18px 0 22px; display: flex; flex-wrap: wrap; gap: 8px; }
+.cabin li { padding: 7px 12px; border-radius: 999px; background: #fff; font-size: 13.5px; font-weight: 700; }
+.cabin .btn { box-shadow: none; }
+
+/* Por dentro: mosaico */
+.inside { background: var(--papel-2); }
+.mosaic { display: grid; grid-template-columns: 1.3fr 1fr 1fr; grid-template-rows: 250px 250px; gap: 14px; margin-top: 40px; }
+.mosaic figure { position: relative; border-radius: 22px; overflow: hidden; }
+.mosaic figure:first-child { grid-row: span 2; }
+.mosaic img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.mosaic figure:hover img { transform: scale(1.05); }
+.mosaic figcaption { position: absolute; left: 12px; bottom: 12px; padding: 4px 12px 6px; border-radius: 10px; background: #fff; font: 700 21px/1 var(--hand); }
+
+/* Tinaja y bosque */
+.tina { display: grid; grid-template-columns: 1fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.tina figure { position: relative; border-radius: 200px 200px 28px 28px; overflow: hidden; aspect-ratio: 4/4.6; box-shadow: 0 30px 60px -36px rgba(43,37,35,.7); }
+.tina figure img { width: 100%; height: 100%; object-fit: cover; }
+.steam { position: absolute; left: 50%; top: 22%; width: 140px; height: 140px; margin-left: -70px; border-radius: 50%; background: radial-gradient(circle, rgba(255,255,255,.55), transparent 65%); filter: blur(14px); animation: steam 6s ease-in-out infinite; }
+@keyframes steam { 50% { transform: translateY(-30px) scale(1.3); opacity: .3; } }
+.checks { list-style: none; padding: 0; margin-top: 24px; display: grid; gap: 12px; }
+.checks li { display: flex; gap: 12px; align-items: flex-start; font-size: 16px; line-height: 1.5; }
+.checks li i { flex: none; width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; color: #fff; font-style: normal; font-weight: 700; font-size: 14px; margin-top: -2px; }
+
+/* Caburgua */
+.lago { position: relative; display: grid; grid-template-columns: 1.1fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: center; }
+.lago figure { border-radius: 28px; overflow: hidden; transform: rotate(1.5deg); box-shadow: 0 30px 60px -36px rgba(43,37,35,.7); }
+.lago figure img { width: 100%; aspect-ratio: 4/3; object-fit: cover; object-position: 50% 70%; }
+.dist { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 24px; }
+.dist div { padding: 16px; border-radius: 18px; background: #fff; box-shadow: 0 14px 26px -22px rgba(43,37,35,.6); }
+.dist b { display: block; font: 800 28px/1 var(--display); }
+.dist span { font-size: 14px; color: var(--muted); }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 28px; background: var(--ink); color: #fff; }
+.direct p { font: 700 clamp(22px, 2.6vw, 30px)/1.2 var(--display); letter-spacing: -.02em; max-width: 680px; }
+.direct p span { font: 700 1.25em var(--hand); color: var(--naranjo); }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+.toast { position: fixed; left: 50%; bottom: 24px; z-index: 60; transform: translate(-50%, 140%); opacity: 0; visibility: hidden; max-width: calc(100% - 32px); padding: 14px 18px; border-radius: 16px; background: var(--ink); color: #fff; font-size: 14px; box-shadow: 0 20px 40px -18px rgba(0,0,0,.5); transition: transform .5s var(--ease); }
+.toast.on { transform: translate(-50%, 0); opacity: 1; visibility: visible; }
+
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { font: 800 12.5px var(--sans); letter-spacing: .2em; text-transform: uppercase; color: #e3c98a; margin-bottom: 14px; }
+.pitch h2 { color: #f2ebdf; } .pitch h2 em { color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 800 46px/1 var(--display); letter-spacing: -.03em; color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; border-radius: 999px; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .top nav { display: none; }
+  .hero, .tina, .lago, .pitch .wrap { grid-template-columns: 1fr; }
+  .album { max-width: 540px; width: 100%; margin: 0 auto; }
+  .duo { grid-template-columns: 1fr; }
+  .mosaic { grid-template-columns: 1fr 1fr; grid-template-rows: 260px 190px 190px; }
+  .mosaic figure:first-child { grid-column: span 2; grid-row: auto; }
+  .tina figure { max-width: 480px; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand img { width: 48px; height: 48px; }
+  .sticker { width: 92px; height: 92px; } .sticker b { font-size: 25px; } .sticker small { font-size: 14px; }
+  .snap figcaption { font-size: 17px; }
+  .snap:nth-child(1) { width: 52%; }
+  .snap:nth-child(2) { top: 20%; width: 48%; }
+  .leaves svg { opacity: .45; }
+  .cabin svg.ico { width: 130px; height: 130px; }
+  .mosaic { grid-template-rows: 220px 160px 160px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para Cabañas Alegría</span><a href="#propuesta">Ver propuesta</a></div>
+<div class="rainbow" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></div>
+
+<header class="top">
+  <a class="brand" href="#"><img src="img/logo.svg" alt="Logo de Cabañas Alegría" width="58" height="58" /><span><strong>Cabañas Alegría</strong><small>Caburgua · Pucón</small></span></a>
+  <nav><a href="#cabanas">Las cabañas</a><a href="#adentro">Por dentro</a><a href="#tinaja">Tinaja</a><a href="#caburgua">Caburgua</a></nav>
+</header>
+
+<div class="hero" style="isolation:isolate">
+  <div class="leaves" aria-hidden="true"></div>
+  <div>
+    <div class="quote"><p>«Regresé de mis viajes,<br />navegué construyendo<br /><b>la alegría</b>»</p><small>Pablo Neruda</small></div>
+    <h1><span class="w">Dos cabañas</span> <span class="w" style="animation-delay:.12s">en el <span class="c1">bosque</span></span> <span class="w" style="animation-delay:.24s">de <span class="c2">Caburgua</span><span class="c3">.</span></span></h1>
+    <p class="lead">Colibrí y Magnolia: cabañas de madera con tinaja privada, terraza y quincho, rodeadas de árboles. A pocos minutos del lago y de los Ojos del Caburgua.</p>
+    <div class="ctas"><button class="btn btn--magenta" type="button" data-toast>Consultar fechas</button><a class="btn btn--line" href="#cabanas">Conocer las cabañas</a></div>
+  </div>
+  <div class="album">
+    <figure class="snap"><img src="img/cabana.webp" alt="Cabaña de madera entre árboles altos y cielo azul" /><figcaption>nuestra casita</figcaption></figure>
+    <figure class="snap"><img src="img/living.webp" alt="Living luminoso con ventanales al bosque" /><figcaption>por dentro</figcaption></figure>
+    <figure class="snap"><img src="img/bosque.webp" alt="Prado y bosque con las cabañas al fondo" /><figcaption>el bosque</figcaption></figure>
+    <div class="sticker"><span><b>9,0</b><small>en Booking</small></span></div>
+  </div>
+</div>
+
+<section id="cabanas" style="padding-top:0">
+  <div class="wrap">
+    <p class="k reveal">las cabañas</p>
+    <h2 class="reveal">Cada una con <em>su nombre.</em></h2>
+    <p class="sub reveal">Dos cabañas, nada más. Así cada huésped recibe atención personal de quienes llevan diez años recibiendo viajeros.</p>
+    <div class="duo">
+      <article class="cabin cabin--colibri reveal">
+        <svg class="ico" viewBox="0 0 100 100" aria-hidden="true"><path d="M20 58 C30 40 48 34 62 38 L90 30 L66 46 C68 60 58 74 40 76 C34 77 28 80 22 88 C22 78 24 70 30 64 Z" fill="#1fa8e0" opacity=".35"/><path d="M48 50 C40 42 30 30 32 16 C42 26 50 36 54 46 Z" fill="#8cc63f" opacity=".45"/><circle cx="64" cy="42" r="2.5" fill="#127fae"/></svg>
+        <small>para dos</small>
+        <h3>Colibrí</h3>
+        <p>Pequeña y cálida, pensada para parejas. Con su propia tinaja, terraza y todo lo necesario para cocinar.</p>
+        <ul><li>2 personas</li><li>Tinaja privada</li><li>Terraza</li><li>Quincho</li></ul>
+        <button class="btn btn--azul" type="button" data-toast>Consultar Colibrí</button>
+      </article>
+      <article class="cabin cabin--magnolia reveal">
+        <svg class="ico" viewBox="0 0 100 100" aria-hidden="true"><g fill="#e0236b" opacity=".3"><path d="M50 70 C30 60 26 36 34 20 C46 30 52 50 50 70 Z"/><path d="M50 70 C70 60 74 36 66 20 C54 30 48 50 50 70 Z"/><path d="M50 70 C36 66 18 56 14 40 C30 40 44 52 50 70 Z"/><path d="M50 70 C64 66 82 56 86 40 C70 40 56 52 50 70 Z"/></g><path d="M50 70 V96" stroke="#a57c52" stroke-width="3" opacity=".5"/></svg>
+        <small>para la familia</small>
+        <h3>Magnolia</h3>
+        <p>Más amplia, para familias o amigos. Living luminoso, cocina equipada y su tinaja entre los árboles.</p>
+        <ul><li>4 personas</li><li>Tinaja privada</li><li>Terraza</li><li>Quincho</li></ul>
+        <button class="btn btn--magenta" type="button" data-toast>Consultar Magnolia</button>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="inside" id="adentro">
+  <div class="wrap">
+    <p class="k reveal">por dentro</p>
+    <h2 class="reveal">Hecho con cariño, <em>hasta el último detalle.</em></h2>
+    <p class="sub reveal">Madera, colores, mantas tejidas y flores en la mesa. Cabañas que se sienten como casa.</p>
+    <div class="mosaic">
+      <figure class="reveal"><img src="img/living-2.webp" alt="Living con mesa de mantel colorido y techo de vigas" loading="lazy" /><figcaption>el living</figcaption></figure>
+      <figure class="reveal"><img src="img/cocina.webp" alt="Cocina equipada con ventana al bosque" loading="lazy" /><figcaption>la cocina</figcaption></figure>
+      <figure class="reveal"><img src="img/tetera.webp" alt="Tetera antigua convertida en macetero con pensamientos" loading="lazy" /><figcaption>los detalles</figcaption></figure>
+      <figure class="reveal"><img src="img/neruda.webp" alt="Letrero con la frase de Neruda colgado en la terraza" loading="lazy" style="object-position:70% 50%" /><figcaption>la terraza</figcaption></figure>
+      <figure class="reveal"><img src="img/perrito.webp" alt="Perrito descansando con su peluche en la terraza" loading="lazy" /><figcaption>la bienvenida</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section id="tinaja">
+  <div class="wrap tina">
+    <figure class="reveal"><img src="img/bosque.webp" alt="El bosque alrededor de las cabañas al atardecer" loading="lazy" /><div class="steam" aria-hidden="true"></div></figure>
+    <div>
+      <p class="k reveal">tinaja privada</p>
+      <h2 class="reveal">Agua caliente, <em>bosque y cielo.</em></h2>
+      <p class="sub reveal">Cada cabaña tiene su tinaja. Sin horarios compartidos, sin vecinos: solo ustedes, el vapor y los árboles.</p>
+      <ul class="checks reveal">
+        <li><i style="background:var(--verde)">✓</i>Tinaja privada para cada cabaña</li>
+        <li><i style="background:var(--naranjo)">✓</i>Quincho y terraza para el asado</li>
+        <li><i style="background:var(--azul)">✓</i>Estacionamiento privado y gratis</li>
+        <li><i style="background:var(--magenta)">✓</i>Atención directa de sus dueños</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<section id="caburgua" style="padding-top:0">
+  <div class="wrap lago">
+    <div>
+      <p class="k reveal">el lago</p>
+      <h2 class="reveal">Caburgua, <em>a la vuelta.</em></h2>
+      <p class="sub reveal">Por el Camino Misional, en pleno sector Caburgua: playas de arena blanca, cascadas y Pucón a poco más de media hora.</p>
+      <div class="dist reveal">
+        <div><b style="color:var(--azul)">4 km</b><span>Ojos del Caburgua</span></div>
+        <div><b style="color:var(--verde)">Lago</b><span>Playa Blanca y Playa Negra</span></div>
+      </div>
+    </div>
+    <figure class="reveal"><img src="img/caburgua.webp" alt="Letrero de Caburgua frente al lago y los cerros" loading="lazy" /></figure>
+  </div>
+</section>
+
+<section style="padding-top:0">
+  <div class="wrap">
+    <div class="direct reveal"><p>Reserve directo con nosotros: <span>mejor tarifa,</span> sin comisiones y respuesta personal por WhatsApp.</p><button class="btn btn--magenta" type="button" data-toast>Consultar fechas</button></div>
+    <p class="note">Boceto preparado con las fotos públicas de Cabañas Alegría. En el sitio final van sus fotos (cada cabaña y su tinaja), textos y tarifas actualizadas.</p>
+  </div>
+</section>
+<div class="toast" role="status" aria-live="polite">En su sitio, este botón le escribe directo por WhatsApp con las fechas y la cabaña elegida, sin comisión.</div>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k">Propuesta de Red Vaeru para Cabañas Alegría</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Cada reserva que hoy pasa por Booking les cuesta entre 15% y 18%; en su sitio llega directo a su WhatsApp.</span></li>
+        <li><span><b>Colibrí y Magnolia con ficha propia:</b> fotos, capacidad y tinaja, para que el huésped elija sin preguntar.</span></li>
+        <li><span><b>Su Instagram conectado:</b> todo lo lindo que ya publican, ordenado en un sitio que se encuentra en Google.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "cabañas en Caburgua con tinaja".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20Caba%C3%B1as%20Alegr%C3%ADa." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal').forEach((el) => io.observe(el));
+// Hojas de los colores del logo cayendo despacio
+const cols = ['#8cc63f', '#f39a1e', '#1fa8e0', '#e0236b', '#58595b'], lv = document.querySelector('.leaves');
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) for (let i = 0; i < 14; i++) {
+  lv.insertAdjacentHTML('beforeend', `<svg viewBox="0 0 20 30" style="left:${Math.random() * 100}%;animation-duration:${14 + Math.random() * 12}s;animation-delay:-${Math.random() * 20}s"><path d="M10 0 C18 8 18 20 10 30 C2 20 2 8 10 0Z" fill="${cols[i % 5]}"/></svg>`);
+}
+const t = document.querySelector('.toast');
+document.querySelectorAll('[data-toast]').forEach((b) => b.addEventListener('click', () => { t.classList.add('on'); clearTimeout(t._h); t._h = setTimeout(() => t.classList.remove('on'), 4200); }));
+</script>
+</body>
+</html>

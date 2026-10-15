@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Cabañas Namoncahue">
+  <circle cx="100" cy="100" r="97" fill="#1f3b2d"/>
+  <circle cx="134" cy="62" r="13" fill="#e9b949"/>
+  <g fill="#9bbf5a"><path d="M60 150 L82 62 L104 150 Z"/></g>
+  <g fill="#d9e4c3"><path d="M92 150 L116 46 L140 150 Z"/></g>
+  <g fill="#6f9440"><path d="M40 150 L56 92 L72 150 Z"/><path d="M128 150 L146 84 L164 150 Z"/></g>
+  <path fill="none" stroke="#f1ede2" stroke-width="5" stroke-linecap="round" d="M34 152 H166"/>
+  <path fill="none" stroke="#c45a35" stroke-width="5" stroke-linecap="round" d="M70 166 H130"/>
+</svg>

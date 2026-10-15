@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Hostal Rayen">
+  <circle cx="100" cy="100" r="97" fill="#fff8f1"/>
+  <g transform="translate(100 100)" fill="#c4553a">
+    <path id="p" d="M0 -14 C14 -30 16 -56 0 -74 C-16 -56 -14 -30 0 -14 Z"/>
+    <use href="#p" transform="rotate(60)"/><use href="#p" transform="rotate(120)"/><use href="#p" transform="rotate(180)"/><use href="#p" transform="rotate(240)"/><use href="#p" transform="rotate(300)"/>
+  </g>
+  <circle cx="100" cy="100" r="15" fill="#f0b429"/>
+  <circle cx="100" cy="100" r="97" fill="none" stroke="#c4553a" stroke-width="4"/>
+</svg>

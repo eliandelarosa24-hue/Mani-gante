@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Cabañas Mahuida">
+  <circle cx="100" cy="100" r="97" fill="#f6d31c"/>
+  <path fill="#1d8fd6" d="M28 134 L58 118 L76 98 L86 103 L99 78 L106 85 L119 44 L128 64 L134 60 L147 90 L157 98 L174 134 Z"/>
+  <path fill="#fff" d="M119 44 L128 64 L134 60 L140 74 L131 72 L125 82 L118 66 L110 84 L106 85 L99 78 L108 74 Z"/>
+  <path fill="#f6d31c" d="M28 134 L174 134 L174 140 L28 140 Z"/>
+  <path fill="none" stroke="#1d8fd6" stroke-width="5" stroke-linecap="round" d="M40 146 C78 139 122 139 160 146"/>
+  <path fill="none" stroke="#139e5c" stroke-width="5" stroke-linecap="round" d="M62 160 C88 155 112 155 138 160"/>
+</svg>
