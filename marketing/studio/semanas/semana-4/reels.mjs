@@ -5,7 +5,7 @@ export const REELS = {
   R13: {
     file: '2026-11-09_1230_R13_reel-ultimos-cupos', layout: 'phone',
     screen: [{ clip: 'redvaeru-planes.mp4' }],
-    captions: [[0, 3.5, 'Precios de lanzamiento: <em>los últimos cupos</em>'], [3.5, 9, `Esencial a <em>${B.esencial}</em>, normal desde ${B.esencialNormal}`], [9, 16, 'Cuando se completen, <em>rige el precio normal</em>']],
+    captions: [[0, 3.5, 'Precios de lanzamiento: <em>los últimos cupos</em>'], [3.5, 9, `Sitios desde <em>${B.carta}</em>, normal desde ${B.esencialNormal}`], [9, 16, 'Cuando se completen, <em>rige el precio normal</em>']],
     outro: { eyebrow: `${B.cupos} cupos de lanzamiento`, title: 'Primero ve <em>su portada</em>', word: 'PORTADA' },
   },
   R14: {
