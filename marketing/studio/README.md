@@ -2,22 +2,29 @@
 
 Genera todo el contenido de redes de la campaña a partir de la marca y de los sitios reales.
 
+El estudio trabaja **por semana**: cada semana de campaña tiene su carpeta `semanas/semana-N/` y su salida en `out/semana-N/`. La variable `SEMANA` elige cuál se genera (por defecto, la 1). Los clips grabados de los sitios (`out/clips/`) son compartidos.
+
 | Comando | Qué hace | Salida |
 |---|---|---|
 | `npm i` | Instala Playwright, las tipografías de la marca (Fraunces y Manrope) y el generador de QR | — |
-| `node capture-sites.mjs` | Graba en vista de celular los sitios reales (Miah y Noah, Rincón de los Poetas, calculadora, muestras), cuadro por cuadro | `out/clips/*.mp4` |
-| `node build-images.mjs` | Carruseles, posts, historias, portadas de Reels, perfil, avisos y anuncios | `out/<fecha>_<hora>_<pieza>/`, `out/perfil/`, `out/avisos/`, `out/anuncios/`, `out/portadas-reels/` |
-| `node build-videos.mjs` | Reels de 1080×1920 con textos por escena y cierre con llamada a la acción (más la variante B del gancho) | `out/videos/*.mp4` |
-| `node voz.mjs` | Voz en off con IA (ElevenLabs): voz femenina y masculina con acento chileno, alternadas, y los tiempos de cada palabra para los subtítulos. Requiere `ELEVENLABS_API_KEY` | `out/voz/<reel>.mp3` y `.json` |
-| `node build-videos.mjs --voz` | Versiones de los Reels con voz en off y subtítulos sincronizados | `out/videos/*_voz.mp4` |
-| `node build-hub.mjs` | Página de la agenda que se publica como Artifact (archivos, textos para copiar y estado de publicación) | `out/hub/` |
+| `node capture-sites.mjs` | Graba en vista de celular los sitios reales y las muestras, cuadro por cuadro | `out/clips/*.mp4` |
+| `SEMANA=N node build-images.mjs` | Carruseles, historias, portadas de Reels y avisos de la semana | `out/semana-N/…` |
+| `SEMANA=N node voz.mjs` | Voz en off con IA (ElevenLabs) y tiempos de cada palabra para los subtítulos. Requiere `ELEVENLABS_API_KEY` y `NODE_USE_ENV_PROXY=1` | `out/semana-N/voz/` |
+| `SEMANA=N node build-videos.mjs [--voz]` | Reels de 1080×1920 (y versiones con voz y subtítulos) | `out/semana-N/videos/` |
+| `SEMANA=N node build-hub.mjs` | Agenda en línea (se publica como Artifact) | `out/semana-N/hub/` |
+| `SEMANA=N node build-pdf.mjs` | Agenda en PDF para usar sin internet | `out/semana-N/Agenda-Red-Vaeru-semana-N.pdf` |
+| `SEMANA=N node empaquetar.mjs` | Un ZIP por día (imágenes en JPG, videos comprimidos, textos y PDF) | `entregas/semana-N/` |
+
+**Crear una semana nueva:** copiar `semanas/semana-2/` a `semanas/semana-N/` y editar sus cuatro archivos, siguiendo `docs/marketing/05-plan-octubre-noviembre.md`.
 
 **Dónde editar:**
 - Precios, cupos y WhatsApp: `BRAND` en `lib.mjs`. Deben coincidir con `src/pricing.js`.
-- Textos de cada publicación, fechas y horas: `manifest.mjs`.
-- Textos de las imágenes: `build-images.mjs`.
-- Textos de los videos: `REELS` en `build-videos.mjs`.
-- Guiones de la voz en off y pronunciación: `SCRIPTS` y `SAY` en `voz.mjs`. Para fijar una voz, defina `ELEVENLABS_VOICE_F` o `ELEVENLABS_VOICE_M`.
+- Plantillas visuales (las mismas todas las semanas): `templates.mjs`.
+- Por semana, en `semanas/semana-N/`:
+  - Textos, fechas y horas: `manifest.mjs`.
+  - Imágenes: `imagenes.mjs`.
+  - Reels: `reels.mjs`.
+  - Guiones de voz: `voz.mjs`. La pronunciación (`SAY`) está en el `voz.mjs` del estudio.
 
 **Reglas de contenido:**
 - Las muestras llevan siempre la etiqueta «Muestra de concepto».
@@ -25,4 +32,4 @@ Genera todo el contenido de redes de la campaña a partir de la marca y de los s
 - Las cifras de comisión se presentan como ejemplo.
 - Los Reels van sin música: se agrega en Instagram desde su biblioteca licenciada.
 
-`out/` no se versiona: se regenera con los comandos de arriba.
+`out/` y `entregas/` no se versionan: se regenera con los comandos de arriba.

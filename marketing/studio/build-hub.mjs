@@ -50,7 +50,7 @@ const pieceHtml = (p) => {
 };
 
 const total = PIECES.length;
-const html = `<title>Agenda Red Vaeru</title>
+const html = `<title>${SEMANA === "1" ? "Agenda Red Vaeru" : `Agenda Red Vaeru Semana ${SEMANA}`}</title>
 <meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,500;1,9..144,400&family=Manrope:wght@400;500;600;700&display=swap">

@@ -27,6 +27,23 @@ const CLIPS = {
     url: 'https://cabanasmiaynoah.netlify.app/', seconds: 17,
     plan: [[0, 0], [1.5, 0], [3, '#reserve'], [5.6, '#reserve'], [7, '#guide'], [9.6, '#guide'], [10.9, '#checkin'], [13.1, '#checkin'], [14.5, '#reviews'], [17, '#reviews']],
   },
+  // Semana 2
+  'redvaeru-metodo': {
+    url: 'https://redvaeru.netlify.app/', seconds: 16, settle: 6000,
+    plan: [[0, '#metodo'], [2.5, '#metodo'], [13, '#nosotros'], [16, '#nosotros']],
+  },
+  'termas-rayenko': {
+    url: 'https://redvaeru.netlify.app/muestras/termas-rayenko/', seconds: 14,
+    plan: [[0, 0], [2.5, 0], [6, 1100], [8, 1100], [12, 2600], [14, 2600]],
+  },
+  'kuchen-haus-frutillar': {
+    url: 'https://redvaeru.netlify.app/muestras/kuchen-haus-frutillar/', seconds: 14,
+    plan: [[0, 0], [2.5, 0], [6, 1100], [8, 1100], [12, 2600], [14, 2600]],
+  },
+  'hotel-casa-nogal': {
+    url: 'https://redvaeru.netlify.app/muestras/hotel-casa-nogal/', seconds: 14,
+    plan: [[0, 0], [2.5, 0], [6, 1100], [8, 1100], [12, 2600], [14, 2600]],
+  },
   poetas: {
     url: 'https://elrincondelospoetas.netlify.app/', seconds: 15,
     plan: [[0, 0], [2.2, 0], [5, 900], [6.5, 900], [9.5, 2200], [11, 2200], [14, 3600], [15, 3600]],

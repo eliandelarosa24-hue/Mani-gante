@@ -1,0 +1,37 @@
+# Plan de contenido · 26 de octubre al 15 de noviembre de 2026
+
+**Idea central:** que el flujo de contenido no se detenga, con el mismo estilo visual (plantillas de `marketing/studio/templates.mjs`) y las mismas ofertas:
+- Carta QR: $49.000.
+- Esencial: $59.000.
+- Temporada: $199.000, con 3 cupos.
+- 5 cupos de lanzamiento.
+
+**La fecha que ordena todo:** el 30 de noviembre, último día para tener la web lista antes del verano.
+
+## Semanas
+
+| Semana | Fechas | Tema | Qué busca | Piezas principales | Estado |
+|---|---|---|---|---|---|
+| 2 | 26 oct – 1 nov | **Cero sorpresas: así trabajo** | Confianza: método, compromisos y dudas reales del sitio. Además, rubros nuevos (termas, cafés, hoteles boutique) | Reel del método · carrusel «Lo que necesito de usted» · carrusel de compromisos · carrusel de preguntas frecuentes · Reels de termas, café y hotel boutique (muestras) · historias de cupos y cuenta regresiva | ✅ Producida el 15-10-2026 |
+| 3 | 2 – 8 nov | **Cuenta regresiva de temporada** | Urgencia real: faltan 4 semanas para el 30 de noviembre | Calculadora en modo restaurante · Paquete Temporada en detalle · «3 errores en la web de una cabaña» · consejos para la ficha de Google · Reels de cabañas (Lago Azul) y de tours (Pucón Aventura), ambas muestras · historias de cuenta regresiva | Lo produce el agente el miércoles 21 de octubre |
+| 4 | 9 – 15 nov | **Últimos cupos de lanzamiento** | Cierre: los cupos se acaban y después rige el precio normal | Anuncio honesto de los cupos que quedan · Reel de viña (muestra) · Reel de Villa Coral Samaná (Caribe, muestra) · carrusel «Antes de diciembre: la lista final» · preguntas frecuentes, parte 2 · historias de cupos | Lo produce el agente el miércoles 28 de octubre |
+
+## Contenido que cambia si llega un cliente
+
+Si se cierra un cliente en octubre, el agente agrega en la semana siguiente:
+- **«Construyendo la web de…»:** proceso real, solo con permiso escrito del cliente.
+- **Su testimonio:** cuando lo entregue.
+- **Cupos actualizados:** se cambia `LAUNCH.taken` en `src/pricing.js` y el número en `BRAND` de `marketing/studio/lib.mjs`.
+
+## Reglas que se mantienen
+
+- **Solo material real:**
+  - El sitio de Red Vaeru.
+  - Las webs de clientes, con su permiso.
+  - Las muestras, siempre rotuladas como «Muestra de concepto».
+- **Nada de fotos de stock** ni ejemplos genéricos.
+- **Cada Reel en dos versiones:** con voz y subtítulos, y sin voz. La versión con voz requiere el plan pagado de ElevenLabs para uso comercial.
+- **Entrega de cada semana:**
+  - Agenda en línea.
+  - Agenda en PDF para usar sin internet.
+  - Un ZIP por día.
