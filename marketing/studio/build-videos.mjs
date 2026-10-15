@@ -5,12 +5,12 @@
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, existsSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { render, done, topo, icon, qr, EMBLEM, BRAND as B, C, OUT, ROOT } from './lib.mjs';
+import { render, done, topo, icon, qr, EMBLEM, BRAND as B, C, OUT, BASE, ROOT, SEMANA_DIR } from './lib.mjs';
 
 const W = 1080, H = 1920, FPS = 30, OUTRO = 3.2;
-const A = join(OUT, '.video-assets');
+const A = join(BASE, '.video-assets');
 const CLIPS = join(OUT, 'clips');
-const VID = join(OUT, 'videos');
+const VID = join(BASE, 'videos');
 const ff = (args) => execFileSync('ffmpeg', ['-y', '-loglevel', 'error', ...args], { stdio: 'inherit' });
 const dur = (f) => Number(execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', f]).toString());
 
@@ -20,53 +20,7 @@ const LAYOUT = {
   frame: { x: 140, y: 560, w: 800, h: 1000, r: 36, bezel: 10 },
 };
 
-const REELS = {
-  P02: {
-    file: '2026-10-16_1230_P02_reel-miah-y-noah', layout: 'phone',
-    screen: [{ clip: 'miah.mp4' }],
-    captions: [[0, 2.2, 'Esta cabaña de Curacautín <em>ya no depende solo de Booking</em>'], [2.2, 6, 'Huéspedes que <em>reservan directo</em> por WhatsApp'], [6, 10, 'Sus dos cabañas, <em>con todo el detalle</em>'], [10, 15, 'Galería, ubicación y <em>check&#8209;in en línea</em>']],
-    hookB: 'Así se ve la web de <em>una cabaña de Curacautín</em> 👇',
-    outro: { eyebrow: 'Caso real · Cabañas Miah y Noah', title: '¿Quiere una <em>así?</em>', word: 'PORTADA' },
-  },
-  P04: {
-    file: '2026-10-17_1130_P04_reel-showreel-muestras', layout: 'frame', tag: 'Muestras de concepto',
-    screen: [{ src: 'public/video/reel.mp4' }],
-    captions: [[0, 3, '10 ideas de web para <em>el turismo del sur</em>'], [3, 26, '¿Cuál se parece a <em>su negocio?</em> 👇']],
-    outro: { eyebrow: 'Comente el número', title: 'Le cuento cómo sería <em>la suya</em>', word: 'PORTADA' },
-  },
-  P06: {
-    file: '2026-10-18_1930_P06_reel-rincon-de-los-poetas', layout: 'phone',
-    screen: [{ clip: 'poetas.mp4' }],
-    captions: [[0, 3, 'Un hostal con historia <em>en Almagro, Nueva Imperial</em>'], [3, 8, 'Su historia, <em>contada en su propia web</em>'], [8, 15, 'Y un canal directo <em>para reservar</em>']],
-    outro: { eyebrow: 'Caso real · El Rincón de los Poetas', title: 'Cada lugar tiene una historia <em>que vende</em>', word: 'PORTADA' },
-  },
-  R01: {
-    file: '2026-10-19_1230_R01_reel-calculadora', layout: 'phone',
-    screen: [{ clip: 'calculadora.mp4' }],
-    captions: [[0, 1.5, '¿Cuánto le dejó a la plataforma <em>este año?</em>'], [1.5, 7.5, 'Ejemplo: 10 reservas al mes, <em>$90.000, 15%</em>'], [7.5, 11, '$1.620.000 al año <em>en comisiones</em>'], [11, 14, 'Haga la cuenta <em>con sus números</em>']],
-    hookB: 'Este número <em>le va a doler</em> (o no)',
-    outro: { eyebrow: 'Calculadora gratis', title: 'Calcule la suya o <em>hagámosla juntos</em>', word: 'PORTADA', line: B.site },
-  },
-  R02: {
-    file: '2026-10-21_1230_R02_reel-carta-qr', layout: 'phone', tag: 'Muestra de concepto',
-    screen: [{ clip: 'fogon-mapu.mp4', dur: 10 }, { still: 'qr-mesa', dur: 3.4, zoom: [1, 1.05] }],
-    captions: [[0, 3, 'Su carta, <em>como una experiencia</em>'], [3, 10, 'Sus platos, su historia <em>y su WhatsApp</em>'], [10, 13.4, 'Un QR por mesa. <em>Usted cambia los precios.</em>']],
-    hookB: '¿Todavía imprime la carta <em>cada vez que sube un precio?</em>',
-    outro: { eyebrow: 'Restaurantes y cafés', title: `Carta QR <em>${B.carta}</em>`, word: 'CARTA' },
-  },
-  R03: {
-    file: '2026-10-23_1230_R03_reel-lo-que-no-le-da', layout: 'phone',
-    screen: [{ clip: 'miah-funciones.mp4' }],
-    captions: [[0, 3, 'Lo que un aviso en una plataforma <em>no le da</em>'], [3, 6.5, 'Reservas por <em>WhatsApp directo</em>'], [6.5, 10, 'Su propia <em>guía de la zona</em>'], [10, 13.5, 'Check&#8209;in <em>en línea</em>'], [13.5, 17, 'Sus reseñas, <em>en su propia casa</em>']],
-    outro: { eyebrow: 'Caso real · Curacautín', title: '¿Hacemos <em>la suya?</em>', word: 'PORTADA' },
-  },
-  R04: {
-    file: '2026-10-25_1900_R04_reel-glamping', layout: 'phone', tag: 'Muestra de concepto',
-    screen: [{ clip: 'domos-cielo-austral.mp4' }],
-    captions: [[0, 3, 'Si su glamping tuviera <em>su propia web…</em>'], [3, 8, 'El cielo como <em>protagonista</em>'], [8, 12, 'Sus domos, <em>reservados directo</em>']],
-    outro: { eyebrow: 'Glamping, domos y lodges', title: 'Diseño a medida <em>para su lugar</em>', word: 'PORTADA' },
-  },
-};
+const { REELS } = await import(SEMANA_DIR + 'reels.mjs');
 
 // ---------- Recursos gráficos de los videos ----------
 async function buildAssets() {
@@ -153,12 +107,12 @@ function compose(id, R, variant = '') {
   const L = LAYOUT[R.layout];
   const screen = join(A, id, 'screen.mp4');
   const body = dur(screen), total = body + OUTRO;
-  const V = variant === 'voz' ? JSON.parse(readFileSync(join(OUT, 'voz', `${id}.json`), 'utf8')) : null;
+  const V = variant === 'voz' ? JSON.parse(readFileSync(join(BASE, 'voz', `${id}.json`), 'utf8')) : null;
   const caps = R.captions.map(([t0, t1], i) => ({ t0, t1: Math.min(t1, body), f: join(A, id, variant === 'B' && i === 0 ? 'cap-0-B.png' : `cap-${i}.png`) }));
   if (V) V.subs.forEach((s, i) => caps.push({ t0: +(s.t0 + V.offset).toFixed(2), t1: +Math.min(s.t1 + V.offset + 0.12, total).toFixed(2), f: join(A, id, `sub-${i}.png`) }));
   const inputs = ['-loop', '1', '-t', String(total), '-i', join(A, `bg-${R.layout}.png`), '-i', screen, '-loop', '1', '-i', join(A, `mask-${R.layout}.png`),
     '-loop', '1', '-t', String(total), '-i', join(A, `bezel-${R.layout}.png`), ...caps.flatMap((c) => ['-loop', '1', '-t', String(total), '-i', c.f]),
-    '-loop', '1', '-t', String(total), '-i', join(A, id, 'outro.png'), ...(V ? ['-i', join(OUT, 'voz', `${id}.mp3`)] : ['-f', 'lavfi', '-t', String(total), '-i', 'anullsrc=r=48000:cl=stereo'])];
+    '-loop', '1', '-t', String(total), '-i', join(A, id, 'outro.png'), ...(V ? ['-i', join(BASE, 'voz', `${id}.mp3`)] : ['-f', 'lavfi', '-t', String(total), '-i', 'anullsrc=r=48000:cl=stereo'])];
   const o = 4 + caps.length, a = o + 1;
   let g = `[1:v]tpad=stop_mode=clone:stop_duration=${OUTRO + 1},setpts=PTS-STARTPTS[scr];[2:v]format=gray,scale=${L.w}:${L.h}[m];[scr][m]alphamerge[rs];`
     + `[0:v][rs]overlay=${L.x}:${L.y}:shortest=0[b0];[b0][3:v]overlay=0:0[b1];`;
@@ -178,7 +132,7 @@ const VOZ = process.argv.includes('--voz');
 const args = process.argv.slice(2).filter((a) => !a.startsWith('--'));
 const ids = args.length ? args : Object.keys(REELS);
 await buildAssets();
-if (VOZ) for (const id of ids) if (existsSync(join(OUT, 'voz', `${id}.json`))) await buildSubs(id, JSON.parse(readFileSync(join(OUT, 'voz', `${id}.json`), 'utf8')));
+if (VOZ) for (const id of ids) if (existsSync(join(BASE, 'voz', `${id}.json`))) await buildSubs(id, JSON.parse(readFileSync(join(BASE, 'voz', `${id}.json`), 'utf8')));
 await done();
 for (const id of ids) {
   const R = REELS[id];
@@ -187,7 +141,7 @@ for (const id of ids) {
   mkdirSync(join(A, id), { recursive: true });
   if (!existsSync(join(A, id, 'screen.mp4')) || !VOZ) buildScreen(id, R);
   if (VOZ) {
-    if (existsSync(join(OUT, 'voz', `${id}.json`))) compose(id, R, 'voz'); else console.error(`✗ ${id}: falta out/voz/${id}.json (ejecute voz.mjs)`);
+    if (existsSync(join(BASE, 'voz', `${id}.json`))) compose(id, R, 'voz'); else console.error(`✗ ${id}: falta out/voz/${id}.json (ejecute voz.mjs)`);
     continue;
   }
   compose(id, R);

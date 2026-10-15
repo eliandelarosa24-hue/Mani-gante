@@ -4,6 +4,8 @@ const WA = '+56 9 5228 9117';
 const tagsAra = '#Araucanía #Temuco #Curacautín #Villarrica #turismochile #cabañas #emprendedoresdelsur';
 const img = (dir, names) => names.map((n) => `${dir}/${n}`);
 
+export const SEMANA_INFO = { campana: 'Su web lista antes del verano', rango: '15 al 25 de octubre' };
+
 export const PIECES = [
   {
     id: 'P01', day: '2026-10-15', time: '19:30', fbTime: '19:35', where: ['Instagram', 'Facebook'], format: 'Carrusel 5 láminas', title: 'Presentación: quién soy y qué hago',

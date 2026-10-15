@@ -7,6 +7,10 @@ import QRCode from 'qrcode';
 const here = (p) => new URL(p, import.meta.url).pathname;
 export const ROOT = here('../../');
 export const OUT = here('./out/');
+// Semana activa (variable de entorno SEMANA, por defecto 1): contenido en semanas/semana-N, salida en out/semana-N.
+export const SEMANA = process.env.SEMANA || '1';
+export const BASE = here(`./out/semana-${SEMANA}/`);
+export const SEMANA_DIR = here(`./semanas/semana-${SEMANA}/`);
 
 // Datos comerciales vigentes (fuente: src/pricing.js y docs/marketing/03-campana-semana-1.md).
 export const BRAND = {
@@ -131,7 +135,7 @@ export async function render(pieces) {
     await page.setViewportSize({ width: p.w, height: p.h });
     await page.setContent(`<!doctype html><html><head><meta charset="utf-8"><style>${BASE_CSS}${p.css || ''}</style></head><body><div class="f ${p.cls ?? 'ink'}" style="width:${p.w}px;height:${p.h}px">${p.html}</div></body></html>`, { waitUntil: 'load' });
     await page.evaluate(() => document.fonts.ready);
-    const file = join(OUT, p.file);
+    const file = join(BASE, p.file);
     mkdirSync(dirname(file), { recursive: true });
     await page.screenshot({ path: file, omitBackground: !!p.transparent, clip: { x: 0, y: 0, width: p.w, height: p.h } });
     console.log('✓', p.file);

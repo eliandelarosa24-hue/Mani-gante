@@ -1,8 +1,8 @@
 // Genera la página de la agenda de contenido (out/hub/index.html) que se publica como Artifact.
 // Los archivos se publican al lado de la página, en media/<ruta dentro de out/>.
 import { writeFileSync, mkdirSync, existsSync } from 'node:fs';
-import { PIECES, KITS, fbText } from './manifest.mjs';
-import { OUT } from './lib.mjs';
+const { PIECES, KITS, fbText, SEMANA_INFO } = await import(SEMANA_DIR + 'manifest.mjs');
+import { BASE as OUT, SEMANA, SEMANA_DIR } from './lib.mjs';
 
 const DAYS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -122,8 +122,8 @@ button{font:inherit;cursor:pointer}
 </style>
 <div class="wrap">
   <header class="top">
-    <span class="eyebrow">Red Vaeru · campaña «Su web lista antes del verano»</span>
-    <h1>Agenda de contenido <em>15 al 25 de octubre</em></h1>
+    <span class="eyebrow">Red Vaeru · campaña «${SEMANA_INFO.campana}»</span>
+    <h1>Agenda de contenido <em>${SEMANA_INFO.rango}</em></h1>
     <p class="lead">Todo el contenido de la campaña, listo para publicar desde el celular: descargue cada archivo, copie el texto y márquelo como publicado. Las horas son de Chile continental.</p>
     <div class="progress"><div class="bar" aria-hidden="true"><i id="bar"></i></div><span class="count" id="count">0 de ${total} publicadas</span></div>
     <ul class="rules">

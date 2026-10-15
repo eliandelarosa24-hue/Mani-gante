@@ -4,8 +4,8 @@ import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
 import { readFileSync, existsSync } from 'node:fs';
 import { join } from 'node:path';
-import { PIECES, fbText } from './manifest.mjs';
-import { BASE_CSS, EMBLEM, OUT, BRAND as B, C } from './lib.mjs';
+const { PIECES, fbText, SEMANA_INFO } = await import(SEMANA_DIR + 'manifest.mjs');
+import { BASE_CSS, EMBLEM, BASE as OUT, BRAND as B, C, SEMANA, SEMANA_DIR } from './lib.mjs';
 
 const DAYS = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 const MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -79,8 +79,8 @@ h4{font-size:7pt;letter-spacing:.12em;text-transform:uppercase;color:#8a6a2a;mar
 pre{white-space:pre-wrap;word-break:break-word;font-family:Manrope,sans-serif;font-size:8.5pt;background:#fafafa;border-radius:1.5mm;padding:2mm;margin:0}`;
 
 const html = `<!doctype html><html><head><meta charset="utf-8"><style>${css}</style></head><body>
-<div class="cover"><img src="${EMBLEM}"><span class="eyebrow">Red Vaeru · campaña «Su web lista antes del verano»</span>
-<h1>Agenda de contenido <em>15 al 25 de octubre</em></h1>
+<div class="cover"><img src="${EMBLEM}"><span class="eyebrow">Red Vaeru · campaña «${SEMANA_INFO.campana}»</span>
+<h1>Agenda de contenido <em>${SEMANA_INFO.rango}</em></h1>
 <p>Todo lo que hay que publicar, día por día, con los textos listos para copiar. Funciona sin internet. Horas de Chile continental.</p>
 <p>WhatsApp ${B.wa} · ${B.site}</p></div>
 <div class="index"><h2>Resumen de la semana</h2><table>
@@ -100,7 +100,7 @@ const browser = await chromium.launch({ executablePath: existsSync('/opt/pw-brow
 const page = await browser.newPage();
 await page.setContent(html, { waitUntil: 'load' });
 await page.evaluate(() => document.fonts.ready);
-const out = join(OUT, 'Agenda-Red-Vaeru-semana-1.pdf');
+const out = join(OUT, `Agenda-Red-Vaeru-semana-${SEMANA}.pdf`);
 await page.pdf({ path: out, width: '110mm', height: '200mm', printBackground: true, preferCSSPageSize: true });
 await browser.close();
 console.log('✓', out, (readFileSync(out).length / 1e6).toFixed(1), 'MB');
