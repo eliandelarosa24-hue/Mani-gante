@@ -18,6 +18,23 @@
 | 5 | 16 – 22 nov | **Recta final: lo que todavía alcanza** | El 16 es el último día para partir una Carta QR o un sitio Esencial a tiempo para el 30. Después: «su web trabaja en enero y febrero» | Reel de la Carta QR en acción · carrusel «Lo que alcanza en 1 semana» · Reel de domos o glamping (muestra) · Reel del Fogón Mapu (muestra) · preguntas sobre plazos · historias de cupos | Lo produce el agente el miércoles 21 de octubre |
 | 6 | 23 – 29 nov | **La temporada ya empezó: su web para enero y febrero** | Seguir vendiendo después del 30, sin inventar urgencias: la temporada alta es enero y febrero | Reel «Lo que pasa en enero si no tiene web» (calculadora) · casos reales (Miah y Noah, El Rincón de los Poetas) · carrusel de mantención mensual · Reel de hotel o termas · historias de cupos | Lo produce el agente el miércoles 28 de octubre |
 
+## Serie informativa (videos animados)
+
+Agenda: https://claude.ai/artifact/Ax13w8A1PESVoRzBPTxTXn. Son Reels extra a las 18:00 que informan y terminan llevando a los servicios. Los datos y sus fuentes están en `06-datos-videos-informativos.md`.
+
+| Video | Fecha | Tema | Fuente |
+|---|---|---|---|
+| A02 | jue 22 oct | ¿Cuánto se queda la plataforma de cada reserva? | Booking.com, Airbnb |
+| A03 | sáb 24 oct | El verano se decide antes de diciembre | INE, EMAT |
+| A04 | jue 29 oct | Llegan menos turistas, pero los de lejos van en aumento | Subsecretaría de Turismo |
+| A01 | mar 10 nov | El F29 tiene tres fechas (antes del vencimiento del 12) | SII |
+
+Próximos temas, que el Productor hará de a 2 por semana:
+- Mes sin ventas no es mes sin F29.
+- IVA y turista extranjero.
+- Sin reseñas no hay reserva.
+- Fondos para digitalizarse: cómo prepararse para la próxima convocatoria.
+
 ## Contenido que cambia si llega un cliente
 
 Si se cierra un cliente en octubre, el agente agrega en la semana siguiente:

@@ -24,6 +24,7 @@
 | 9 | **Atención 24/7** | Responde preguntas frecuentes y cotiza en el sitio (Vaeru IA ya existe). Más adelante, los mensajes privados de Instagram | Vaeru IA en el sitio. Opcional: MyChatBot para Instagram | Siempre activo | ✅ sitio · 💳 Instagram (más adelante) |
 | 10 | **Publicidad pagada** | Campañas en Meta y Google con los anuncios ya diseñados | TheCMO (Meta Ads y Google Ads) o Adspirer | Cuando haya presupuesto | 💳 |
 | 11 | **Productor de contenido** | Cada miércoles produce completa la semana que empieza el lunes subsiguiente: imágenes, Reels con y sin voz, agenda en línea, PDF y un ZIP por día, con el mismo estilo y las mismas ofertas. Lee la planilla para usar los cupos reales | Estudio (`marketing/studio/semanas`), plan `05-plan-octubre-noviembre.md`, Google Sheets, ElevenLabs | Miércoles a las 10:10 (semana 5 el 21-10 y semana 6 el 28-10) | ✅ rutina creada |
+| 12 | **Estudio animado (serie informativa)** | Videos animados con datos útiles para el negocio turístico: turismo en cifras (INE, Subsecretaría de Turismo), tributario (SII), comisiones de plataformas, fondos y asesoría. Siempre con la fuente en pantalla y un cierre que lleva a las webs, la Carta QR y el paquete Temporada | `marketing/studio/animados.mjs`, ElevenLabs, datos en `06-datos-videos-informativos.md` | 2 por semana (los produce el Productor) | ✅ 4 primeros videos listos |
 
 ## Reglas que respetan todos los agentes
 
