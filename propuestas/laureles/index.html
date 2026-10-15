@@ -1,0 +1,289 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="robots" content="noindex, nofollow" />
+<title>Cabañas Los Laureles · Licán Ray · Propuesta de Red Vaeru</title>
+<meta name="description" content="Boceto de sitio web para Cabañas Los Laureles, preparado por Red Vaeru." />
+<meta property="og:title" content="Cabañas Los Laureles · su nueva portada" />
+<meta property="og:description" content="A cuadra y media de la Playa Grande de Licán Ray: un boceto de sitio propio para Cabañas Los Laureles." />
+<meta property="og:image" content="https://redvaeru-propuestas.netlify.app/laureles/img/og.jpg" />
+<link rel="icon" href="img/logo.svg" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,700;1,500&family=Karla:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+<!-- Fotos: anuncios públicos de Cabañas Los Laureles en Airbnb (rooms/47205063 y rooms/53991170). Logo: cabaña de techo en A con laureles, dibujado en vector para el boceto. -->
+<style>
+/* Madera de las cabañas, hojas de laurel, hortensias del jardín y el agua del Calafquén. */
+:root {
+  --madera: #6e4126; --madera-2: #8d5634; --laurel: #3d6b45; --laurel-2: #5f8f5e; --hortensia: #5b74b8; --lago: #1f7a8c;
+  --arena: #f4ecdc; --arena-2: #ebdfc8; --ink: #24190f; --muted: #6c5d50;
+  --serif: 'Playfair Display', Georgia, serif; --sans: 'Karla', system-ui, sans-serif;
+  --ease: cubic-bezier(.22,1,.36,1);
+}
+* { box-sizing: border-box; margin: 0; }
+html { scroll-behavior: smooth; }
+body { font-family: var(--sans); color: var(--ink); background: var(--arena); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+
+.rv { position: sticky; top: 0; z-index: 50; display: flex; gap: 12px; align-items: center; justify-content: space-between; padding: 8px 16px; background: #0b110e; color: #f2ebdf; font-size: 12.5px; }
+.rv b { color: #e3c98a; }
+.rv a { flex: none; text-decoration: none; padding: 7px 13px; border-radius: 999px; background: #c4a35a; color: #0b110e; font-weight: 800; font-size: 12px; }
+
+header.top { display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 18px clamp(16px, 4vw, 52px); }
+.brand { display: flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 56px; height: 56px; }
+.brand strong { display: block; font: 700 23px/1 var(--serif); color: var(--madera); }
+.brand small { display: block; margin-top: 4px; font-size: 11px; font-weight: 700; letter-spacing: .22em; text-transform: uppercase; color: var(--laurel); }
+.top nav { display: flex; gap: 26px; font-size: 15px; font-weight: 600; }
+.top nav a { text-decoration: none; }
+
+.btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; padding: 14px 24px; border: 0; border-radius: 4px; font: 700 15px var(--sans); text-decoration: none; cursor: pointer; transition: transform .35s var(--ease), background .3s; }
+.btn:hover { transform: translateY(-2px); }
+.btn--laurel { background: var(--laurel); color: #fff; }
+.btn--line { box-shadow: inset 0 0 0 1.5px var(--madera); color: var(--madera); }
+.btn--lago { background: var(--lago); color: #fff; }
+
+/* Portada: la foto enmarcada con la forma de su techo en A */
+.hero { display: grid; grid-template-columns: 1.05fr .95fr; gap: clamp(28px, 5vw, 72px); align-items: center; padding: clamp(16px, 3vw, 40px) clamp(16px, 4vw, 52px) clamp(56px, 7vw, 96px); }
+.kick { display: inline-flex; align-items: center; gap: 10px; font-size: 13px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--lago); margin-bottom: 18px; }
+.kick svg { width: 34px; height: 12px; }
+h1 { font: 500 clamp(46px, 6.8vw, 96px)/.98 var(--serif); letter-spacing: -.02em; color: var(--madera); text-wrap: balance; }
+h1 em { color: var(--laurel); }
+h1 .w { display: inline-block; animation: up 1s var(--ease) both; }
+@keyframes up { from { opacity: 0; transform: translateY(34px); } }
+.lead { font-size: clamp(16.5px, 1.6vw, 19px); line-height: 1.65; color: var(--muted); max-width: 540px; margin: 22px 0 28px; animation: up 1s .45s var(--ease) both; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; animation: up 1s .6s var(--ease) both; }
+.facts { display: flex; flex-wrap: wrap; gap: 26px; margin-top: 34px; padding-top: 22px; border-top: 1px solid rgba(110,65,38,.2); animation: up 1s .75s var(--ease) both; }
+.facts b { display: block; font: 700 34px/1 var(--serif); color: var(--madera); }
+.facts span { font-size: 13px; color: var(--muted); }
+.aframe { position: relative; aspect-ratio: 3/3.7; }
+.aframe .roof { position: absolute; inset: 0; clip-path: polygon(50% 0, 100% 34%, 100% 100%, 0 100%, 0 34%); overflow: hidden; background: var(--arena-2); }
+.aframe .roof img { width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; animation: settle 2.2s var(--ease) both; }
+@keyframes settle { from { transform: scale(1.15); } }
+.aframe::before { content: ''; position: absolute; inset: -14px -14px auto; height: 40%; background: var(--madera); clip-path: polygon(50% 0, 100% 85%, 100% 100%, 50% 15%, 0 100%, 0 85%); z-index: 1; }
+.score { position: absolute; z-index: 2; left: -18px; bottom: 26px; padding: 14px 18px; border-radius: 4px; background: #fff; box-shadow: 0 20px 40px -20px rgba(36,25,15,.55); }
+.score b { font: 700 32px/1 var(--serif); color: var(--lago); }
+.score span { display: block; font-size: 12.5px; color: var(--muted); margin-top: 2px; }
+
+section { padding: clamp(64px, 9vw, 112px) clamp(16px, 4vw, 52px); }
+.wrap { max-width: 1180px; margin: 0 auto; }
+.k { display: flex; align-items: center; gap: 10px; font-size: 12.5px; font-weight: 800; letter-spacing: .2em; text-transform: uppercase; color: var(--laurel); margin-bottom: 14px; }
+.k svg { width: 22px; height: 22px; fill: var(--laurel); }
+h2 { font: 500 clamp(34px, 4.6vw, 58px)/1.04 var(--serif); letter-spacing: -.015em; color: var(--madera); margin-bottom: 14px; text-wrap: balance; }
+h2 em { color: var(--laurel); }
+.sub { font-size: 17px; line-height: 1.7; color: var(--muted); max-width: 620px; }
+
+/* Al lago: una franja que avanza paso a paso */
+.lago { background: var(--lago); color: #fff; overflow: hidden; position: relative; }
+.lago h2 { color: #fff; } .lago h2 em { color: #bfe6ec; }
+.lago .k { color: #bfe6ec; } .lago .k svg { fill: #bfe6ec; }
+.lago .sub { color: rgba(255,255,255,.82); }
+.walk { position: relative; margin-top: 44px; display: grid; grid-template-columns: repeat(3, 1fr); gap: 0; }
+.walk::before { content: ''; position: absolute; left: 6%; right: 6%; top: 27px; height: 3px; background: repeating-linear-gradient(90deg, rgba(255,255,255,.85) 0 10px, transparent 10px 20px); transform-origin: left; transform: scaleX(0); transition: transform 2.2s var(--ease); }
+.walk.on::before { transform: scaleX(1); }
+.walk div { position: relative; text-align: center; padding: 0 10px; }
+.walk i { display: grid; place-items: center; width: 56px; height: 56px; margin: 0 auto 14px; border-radius: 50%; background: #fff; color: var(--lago); font-style: normal; box-shadow: 0 0 0 6px rgba(255,255,255,.18); }
+.walk i svg { width: 26px; height: 26px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+.walk b { display: block; font: 500 24px/1.15 var(--serif); }
+.walk span { display: block; margin-top: 6px; font-size: 14.5px; color: rgba(255,255,255,.78); }
+.waves { position: absolute; left: 0; right: 0; bottom: 0; height: 60px; opacity: .25; }
+.waves path { animation: drift 9s linear infinite; }
+@keyframes drift { to { transform: translateX(-200px); } }
+
+/* La cabaña por dentro: plano de datos y fotos */
+.inside { display: grid; grid-template-columns: .9fr 1.1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.plan { display: grid; grid-template-columns: 1fr 1fr; gap: 1px; margin-top: 30px; background: rgba(110,65,38,.18); border: 1px solid rgba(110,65,38,.18); border-radius: 6px; overflow: hidden; }
+.plan div { background: #fbf6ec; padding: 20px; }
+.plan b { display: block; font: 700 40px/1 var(--serif); color: var(--madera); }
+.plan span { font-size: 14px; color: var(--muted); }
+.inc { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 10px; }
+.inc li { display: flex; gap: 10px; align-items: center; font-size: 15.5px; }
+.inc li::before { content: ''; flex: none; width: 18px; height: 10px; border-radius: 0 100% 0 100%; background: var(--laurel-2); }
+.photos { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.photos figure { position: relative; border-radius: 6px; overflow: hidden; }
+.photos figure:first-child { grid-column: 1 / -1; aspect-ratio: 16/10; }
+.photos figure:not(:first-child) { aspect-ratio: 4/5; }
+.photos img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.photos figure:hover img { transform: scale(1.05); }
+.photos figcaption { position: absolute; left: 12px; bottom: 12px; padding: 6px 12px; border-radius: 3px; background: rgba(251,246,236,.94); font-size: 13px; font-weight: 700; }
+
+/* Jardín: tira horizontal */
+.garden { background: var(--arena-2); }
+.strip { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1fr; gap: 14px; margin-top: 40px; height: 440px; }
+.strip figure { border-radius: 6px; overflow: hidden; }
+.strip img { width: 100%; height: 100%; object-fit: cover; transition: transform 1.2s var(--ease); }
+.strip figure:hover img { transform: scale(1.05); }
+
+.direct { display: flex; flex-wrap: wrap; gap: 20px; align-items: center; justify-content: space-between; padding: clamp(24px, 3vw, 36px); border-radius: 6px; background: var(--madera); color: #fff; }
+.direct p { font: 500 clamp(22px, 2.6vw, 32px)/1.2 var(--serif); max-width: 680px; }
+.direct em { color: #cfe3c6; }
+.note { margin-top: 16px; font-size: 12.5px; color: var(--muted); }
+
+.pitch { background: #0b110e; color: #f2ebdf; }
+.pitch .wrap { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(28px, 5vw, 64px); align-items: start; }
+.pitch .k { color: #e3c98a; } .pitch .k svg { fill: #e3c98a; }
+.pitch h2 { color: #f2ebdf; } .pitch h2 em { color: #e3c98a; }
+.pitch ul { list-style: none; padding: 0; margin-top: 22px; display: grid; gap: 12px; }
+.pitch li { display: grid; grid-template-columns: 22px 1fr; gap: 10px; font-size: 15.5px; line-height: 1.5; color: rgba(242,235,223,.88); }
+.pitch li::before { content: '✓'; color: #c4a35a; font-weight: 800; }
+.pitch li b { color: #f2ebdf; }
+.offer { padding: 28px; border-radius: 24px; background: radial-gradient(circle at 0 0, rgba(196,163,90,.24), transparent 60%), #1a2620; box-shadow: inset 0 0 0 1px rgba(196,163,90,.4); }
+.offer small { display: block; font-size: 13px; color: rgba(242,235,223,.72); }
+.offer strong { display: block; font: 700 48px/1 var(--serif); color: #e3c98a; margin: 8px 0; }
+.offer s { color: rgba(242,235,223,.55); }
+.offer p { margin: 16px 0 22px; font-size: 14.5px; line-height: 1.6; color: rgba(242,235,223,.82); }
+.offer .btn { width: 100%; background: #c4a35a; color: #0b110e; border-radius: 999px; }
+.offer .alt { display: block; text-align: center; margin-top: 12px; font-size: 13px; color: rgba(242,235,223,.7); }
+footer { padding: 26px 16px 36px; text-align: center; background: #0b110e; color: rgba(242,235,223,.5); font-size: 12.5px; border-top: 1px solid rgba(242,235,223,.08); }
+
+.reveal { opacity: 0; transform: translateY(28px); transition: opacity 1s var(--ease), transform 1s var(--ease); }
+.reveal.on { opacity: 1; transform: none; }
+
+@media (max-width: 1000px) {
+  .top nav { display: none; }
+  .hero, .inside, .pitch .wrap { grid-template-columns: 1fr; }
+  .aframe { max-width: 480px; width: 100%; margin: 0 auto; }
+  .strip { grid-template-columns: 1fr 1fr; height: auto; }
+  .strip figure { aspect-ratio: 4/5; }
+  .strip figure:first-child { grid-column: 1 / -1; aspect-ratio: 16/10; }
+}
+@media (max-width: 560px) {
+  .rv span { font-size: 11.5px; }
+  .brand img { width: 48px; height: 48px; }
+  .brand strong { font-size: 20px; }
+  .facts { gap: 18px; } .facts b { font-size: 28px; }
+  .score { left: 0; }
+  .aframe { width: calc(100% - 20px); }
+  .aframe::before { inset: -10px -10px auto; }
+  .walk { grid-template-columns: 1fr; gap: 26px; }
+  .walk::before { left: 27px; right: auto; top: 0; bottom: 0; width: 3px; height: auto; background: repeating-linear-gradient(180deg, rgba(255,255,255,.85) 0 10px, transparent 10px 20px); transform: scaleY(0); transform-origin: top; }
+  .walk.on::before { transform: scaleY(1); }
+  .walk div { display: grid; grid-template-columns: 56px 1fr; column-gap: 16px; text-align: left; padding: 0; }
+  .walk i { grid-row: span 2; margin: 0; }
+  .plan b { font-size: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } .reveal { opacity: 1; transform: none; } .walk::before { transform: none !important; } }
+</style>
+</head>
+<body>
+<div class="rv"><span>Boceto de sitio web preparado por <b>Red Vaeru</b> para Cabañas Los Laureles</span><a href="#propuesta">Ver propuesta</a></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><symbol id="hoja" viewBox="0 0 24 24"><path d="M4 20C4 10 11 4 20 4c0 10-7 16-16 16zm0 0l9-9"/></symbol></defs></svg>
+
+<header class="top">
+  <a class="brand" href="#"><img src="img/logo.svg" alt="Logo de Cabañas Los Laureles" width="56" height="56" /><span><strong>Los Laureles</strong><small>Cabañas · Licán Ray</small></span></a>
+  <nav><a href="#lago">El lago</a><a href="#cabana">La cabaña</a><a href="#jardin">El jardín</a><a href="#reservar">Reservar</a></nav>
+</header>
+
+<div class="hero">
+  <div>
+    <p class="kick"><svg viewBox="0 0 34 12" aria-hidden="true"><path d="M1 6c4-5 8-5 12 0s8 5 12 0 6-4 8-2" fill="none" stroke="#1f7a8c" stroke-width="2.4" stroke-linecap="round"/></svg>Lago Calafquén</p>
+    <h1><span class="w">A cuadra y media</span> <span class="w" style="animation-delay:.15s">de la <em>Playa Grande.</em></span></h1>
+    <p class="lead">Cabañas nuevas de madera en pleno balneario de Licán Ray, rodeadas de jardín y hortensias. Se deja el auto y se baja caminando al lago.</p>
+    <div class="ctas"><a class="btn btn--laurel" href="#reservar">Ver disponibilidad</a><a class="btn btn--line" href="#cabana">Conocer la cabaña</a></div>
+    <div class="facts"><div><b>6</b><span>personas por cabaña</span></div><div><b>3</b><span>dormitorios</span></div><div><b>2</b><span>baños</span></div></div>
+  </div>
+  <div class="aframe">
+    <div class="roof"><img src="img/portada.webp" alt="Cabaña de madera con techo en A, ventanal y cielo azul" /></div>
+    <div class="score"><b>9,8</b><span>Excepcional en Booking</span></div>
+  </div>
+</div>
+
+<section class="lago" id="lago">
+  <div class="wrap">
+    <p class="k reveal"><svg aria-hidden="true"><use href="#hoja"/></svg>El lago</p>
+    <h2 class="reveal">De la cabaña a la arena, <em>sin tomar el auto.</em></h2>
+    <p class="sub reveal">Licán Ray se recorre a pie: la Playa Grande, la costanera, los restoranes y el comercio están a minutos de su terraza.</p>
+    <div class="walk" id="walk">
+      <div><i><svg viewBox="0 0 24 24"><path d="M3 11l9-7 9 7M5 10v10h14V10M10 20v-6h4v6"/></svg></i><b>Su cabaña</b><span>Calle Los Laureles 150</span></div>
+      <div><i><svg viewBox="0 0 24 24"><path d="M13 4a1.5 1.5 0 1 0 0 .1M10 21l2-6 3 2v4M8 12l3-4 3 2 3 1M11 8l-1 5"/></svg></i><b>Cuadra y media</b><span>Un paseo de un par de minutos</span></div>
+      <div><i><svg viewBox="0 0 24 24"><path d="M2 16c2.5-2 5-2 7.5 0s5 2 7.5 0 3.5-1.5 5 0M2 20c2.5-2 5-2 7.5 0s5 2 7.5 0 3.5-1.5 5 0M17 4a3 3 0 1 0 0 .1"/></svg></i><b>Playa Grande</b><span>Lago Calafquén</span></div>
+    </div>
+  </div>
+  <svg class="waves" viewBox="0 0 1600 60" preserveAspectRatio="none" aria-hidden="true"><path d="M0 30 Q50 10 100 30 T200 30 T300 30 T400 30 T500 30 T600 30 T700 30 T800 30 T900 30 T1000 30 T1100 30 T1200 30 T1300 30 T1400 30 T1500 30 T1600 30 T1700 30 T1800 30 V60 H0Z" fill="#fff"/></svg>
+</section>
+
+<section id="cabana">
+  <div class="wrap inside">
+    <div>
+      <p class="k reveal"><svg aria-hidden="true"><use href="#hoja"/></svg>La cabaña</p>
+      <h2 class="reveal">Espacio para <em>toda la familia.</em></h2>
+      <p class="sub reveal">Dos pisos de madera con vigas a la vista, cocina equipada y una pieza matrimonial con baño en suite. Calientitas con calefacción a pellet.</p>
+      <div class="plan reveal">
+        <div><b>6</b><span>personas</span></div>
+        <div><b>5</b><span>camas: 1 matrimonial y 4 de una plaza</span></div>
+        <div><b>3</b><span>dormitorios</span></div>
+        <div><b>2</b><span>baños, uno en suite</span></div>
+      </div>
+      <ul class="inc reveal">
+        <li>Calefacción a pellet</li>
+        <li>Televisión satelital y WiFi</li>
+        <li>Estacionamiento dentro del recinto</li>
+        <li>Parrilla para el asado</li>
+      </ul>
+    </div>
+    <div class="photos">
+      <figure class="reveal"><img src="img/comedor.webp" alt="Comedor con techo de vigas, lámpara y cuadros de aves" loading="lazy" style="object-position:50% 45%" /><figcaption>Comedor con vigas a la vista</figcaption></figure>
+      <figure class="reveal"><img src="img/matrimonial.webp" alt="Dormitorio matrimonial con cubrecama de patchwork" loading="lazy" /><figcaption>Pieza matrimonial en suite</figcaption></figure>
+      <figure class="reveal"><img src="img/camas.webp" alt="Dormitorio con dos camas de una plaza" loading="lazy" /><figcaption>Piezas para los niños</figcaption></figure>
+      <figure class="reveal"><img src="img/living.webp" alt="Living con sillón verde, mesa de madera y televisor" loading="lazy" /><figcaption>El living</figcaption></figure>
+      <figure class="reveal"><img src="img/cocina.webp" alt="Cocina equipada con refrigerador y cubierta de granito" loading="lazy" /><figcaption>Cocina equipada</figcaption></figure>
+    </div>
+  </div>
+</section>
+
+<section class="garden" id="jardin">
+  <div class="wrap">
+    <p class="k reveal"><svg aria-hidden="true"><use href="#hoja"/></svg>El jardín</p>
+    <h2 class="reveal">Hortensias, árboles <em>y sombra en verano.</em></h2>
+    <p class="sub reveal">Las cabañas están entre árboles y jardines cuidados, con senderos de maicillo y espacio para que los niños jueguen afuera.</p>
+    <div class="strip">
+      <figure class="reveal"><img src="img/jardin.webp" alt="Jardín con hortensias y las cabañas entre los árboles" loading="lazy" /></figure>
+      <figure class="reveal"><img src="img/sendero.webp" alt="Sendero entre árboles junto a las cabañas" loading="lazy" /></figure>
+      <figure class="reveal"><img src="img/hortensias.webp" alt="Hortensias frente a una cabaña de madera" loading="lazy" /></figure>
+      <figure class="reveal"><img src="img/cabanas.webp" alt="Fila de cabañas de madera con jardín" loading="lazy" /></figure>
+    </div>
+  </div>
+</section>
+
+<section id="reservar">
+  <div class="wrap">
+    <div class="direct reveal"><p>Reserve directo con nosotros: <em>mejor tarifa, sin comisiones</em> y respuesta personal por WhatsApp.</p><a class="btn btn--lago" href="https://wa.me/56958327408?text=Hola%20Caba%C3%B1as%20Los%20Laureles%2C%20quiero%20consultar%20disponibilidad." target="_blank" rel="noopener">Escribir por WhatsApp</a></div>
+    <p class="note">Boceto preparado con las fotos públicas de Cabañas Los Laureles. En el sitio final van sus fotos (también del lago y la playa), textos y tarifas actualizadas.</p>
+  </div>
+</section>
+
+<section class="pitch" id="propuesta">
+  <div class="wrap">
+    <div>
+      <p class="k"><svg aria-hidden="true"><use href="#hoja"/></svg>Propuesta de Red Vaeru para Cabañas Los Laureles</p>
+      <h2>Esto es un boceto. <em>Su sitio completo</em> trabaja para usted todo el año.</h2>
+      <ul>
+        <li><span><b>Reservas directas sin comisión.</b> Con 9,8 en Booking ya tienen la reputación; cada reserva que pasa por ahí les cuesta entre 15% y 18%. En su sitio llega directo a su WhatsApp.</span></li>
+        <li><span><b>Sus seguidores de Instagram, convertidos en reservas:</b> un enlace en la biografía que lleva a fotos, disponibilidad y precio.</span></li>
+        <li><span><b>Cada cabaña con su ficha</b> y la distancia a la Playa Grande bien clara, que es lo que decide el verano.</span></li>
+        <li><span><b>Ficha de Google configurada</b> para aparecer cuando buscan "cabañas en Licán Ray cerca de la playa".</span></li>
+        <li><span><b>Dominio y hosting el primer año</b>, todo a su nombre y con contrato.</span></li>
+      </ul>
+    </div>
+    <div class="offer">
+      <small>Plan recomendado · Completo</small>
+      <strong>desde $149.000</strong>
+      <small>Precio de lanzamiento · normal <s>desde $390.000</s> · quedan pocos cupos</small>
+      <p>Garantía de portada: primero ven su portada terminada. Si no les convence, no pagan nada. Si les gusta, firmamos contrato y pagan el 50% para comenzar.</p>
+      <a class="btn" href="https://wa.me/56952289117?text=Hola%20Jorge%2C%20vi%20la%20propuesta%20de%20sitio%20web%20para%20Caba%C3%B1as%20Los%20Laureles." target="_blank" rel="noopener">Hablar con Jorge por WhatsApp</a>
+      <a class="alt" href="https://redvaeru.netlify.app" target="_blank" rel="noopener">Ver el portafolio de Red Vaeru ↗</a>
+    </div>
+  </div>
+</section>
+<footer>Boceto de Red Vaeru · Estudio digital de hospitalidad · Chile y República Dominicana</footer>
+
+<script>
+const io = new IntersectionObserver((es) => es.forEach((e) => { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target); } }), { threshold: .14 });
+document.querySelectorAll('.reveal, #walk').forEach((el) => io.observe(el));
+</script>
+</body>
+</html>
