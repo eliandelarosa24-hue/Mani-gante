@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Logo de Alun Kuyen">
+  <defs><clipPath id="c"><circle cx="100" cy="100" r="97"/></clipPath></defs>
+  <circle cx="100" cy="100" r="97" fill="#fff"/>
+  <g clip-path="url(#c)" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="100.5" cy="52.5" r="17.5" stroke="#6e1414" stroke-width="3.6"/>
+    <path d="M25 117 C38 110 47 104 55 100 C66 93 75 83 84 77 C89 74 92 74.5 95 76 C98 79 100 83 102.5 84 C105 83 107 76 110.5 73.5 C114 75 118 80 124.5 84.5 C135 92 145 98 153 101.5 C162 105 170 108 178 111" stroke="#e3741f" stroke-width="3.7"/>
+    <path d="M40 117 C50 111 59 105 68 101.5 C75 97 80 91 85.5 87.5 C92 88 99 91 105.5 90.5 C108 89 110.5 86.5 113.5 86 C118 88 122 91 127.5 93.5 C140 99 154 106 168 112.5" stroke="#8fa02a" stroke-width="3.5"/>
+    <path d="M52 115.5 C61 110 70 106 77.5 103 C83 99 86.5 95.5 90 93.5 C97 94.5 104 95 112 95.5 C119 97 125 98.5 131 100 C140 104 148 109 156 114" stroke="#e8c21f" stroke-width="3.3"/>
+  </g>
+  <path clip-path="url(#c)" fill="#0d70b2" d="M2 132 C30 124 62 117 92 112 C102 110.5 109 111 113 116 C117 121 116 130 118 138 C120 145 124 151 131 152 C150 153 172 150 200 148 L200 132 C178 134 158 136 140 136 C128 135.5 124 130 122 123 C119 116 113 112 104 114.5 C75 122 40 131 2 143 Z"/>
+</svg>
