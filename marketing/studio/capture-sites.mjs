@@ -66,6 +66,44 @@ const CLIPS = {
     url: 'https://redvaeru.netlify.app/muestras/domos-cielo-austral/', seconds: 12,
     plan: [[0, 0], [2.5, 0], [5.5, 1000], [7, 1000], [10.5, 2400], [12, 2400]],
   },
+  // Semana 3
+  'calculadora-restaurante': {
+    url: 'https://redvaeru.netlify.app/', seconds: 14, settle: 6000,
+    plan: [[0, '.ota'], [14, '.ota']],
+    actions: [{ t: 0.6, click: '[data-ota-mode="rest"]' }],
+    // Ejemplo: 120 pedidos al mes, $15.000 por pedido, 25 % de comisión.
+    sliders: [
+      { name: 'nights', from: 300, to: 120, t0: 2, t1: 4.5 },
+      { name: 'rate', from: 18000, to: 15000, t0: 4.5, t1: 6 },
+      { name: 'fee', from: 25, to: 25, t0: 6, t1: 7 },
+    ],
+  },
+  'redvaeru-diagnostico': {
+    url: 'https://redvaeru.netlify.app/', seconds: 16, settle: 6000,
+    plan: [[0, '#diagnostico'], [1.5, '#diagnostico'], [3, '[data-quiz]'], [16, '[data-quiz]']],
+    actions: [3.6, 4.8, 6, 7.2, 8.4, 9.6].map((t, i) => ({ t, click: `[data-quiz-o] .quiz__opt:nth-child(${i % 2 ? 3 : 2})` })),
+  },
+  'redvaeru-planes': {
+    url: 'https://redvaeru.netlify.app/', seconds: 16, settle: 6000,
+    plan: [[0, '#planes'], [2.5, '#planes'], [15, '#proyectos'], [16, '#proyectos']],
+  },
+  'cabanas-lago-azul': {
+    url: 'https://redvaeru.netlify.app/muestras/cabanas-lago-azul/', seconds: 14,
+    plan: [[0, 0], [2.5, 0], [6, 1100], [8, 1100], [12, 2600], [14, 2600]],
+  },
+  'pucon-aventura': {
+    url: 'https://redvaeru.netlify.app/muestras/pucon-aventura/', seconds: 14,
+    plan: [[0, 0], [2.5, 0], [6, 1100], [8, 1100], [12, 2600], [14, 2600]],
+  },
+  // Semana 4
+  'vina-los-robles': {
+    url: 'https://redvaeru.netlify.app/muestras/vina-los-robles/', seconds: 14,
+    plan: [[0, 0], [2.5, 0], [6, 1100], [8, 1100], [12, 2600], [14, 2600]],
+  },
+  'villa-coral-samana': {
+    url: 'https://redvaeru.netlify.app/muestras/villa-coral-samana/', seconds: 14,
+    plan: [[0, 0], [2.5, 0], [6, 1100], [8, 1100], [12, 2600], [14, 2600]],
+  },
   'redvaeru-inicio': {
     url: 'https://redvaeru.netlify.app/', seconds: 10, settle: 6000,
     plan: [[0, 0], [3, 0], [10, 2200]],
@@ -112,6 +150,9 @@ async function capture(id, cfg, browser) {
   for (let f = 0; f < total; f++) {
     const t = f / FPS;
     await page.evaluate((y) => window.scrollTo(0, y), Math.round(yAt(t)));
+    for (const a of cfg.actions || []) {
+      if (t >= a.t && t < a.t + 1 / FPS) await page.evaluate((sel) => document.querySelector(sel)?.click(), a.click);
+    }
     for (const s of cfg.sliders || []) {
       if (t < s.t0 || t > s.t1 + 1 / FPS) continue;
       const k = ease(Math.min(1, (t - s.t0) / (s.t1 - s.t0)));
