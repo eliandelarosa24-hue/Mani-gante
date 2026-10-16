@@ -97,6 +97,7 @@ const STICK = {
   tag: (s) => `<div class="tag2 ${s.tone || ''}" style="font-size:${s.size || 50}px">${s.text}</div>`,
   emoji: (s) => `<div class="emo" style="font-size:${s.size || 170}px">${s.text}</div>`,
   num: (s) => `<div class="num"><b>${s.text}</b>${s.label ? `<span>${s.label}</span>` : ''}</div>`,
+  quote: (s) => `<div class="quote"><p>«${s.text}»</p><span>${s.by}</span></div>`,
   type: (s) => `<div class="typ" style="font-size:${s.size || 84}px" data-full="${s.text.replace(/"/g, '&quot;')}"><span></span><i>|</i></div>`,
 };
 // Trazos "a mano": elipse temblorosa, flecha curva con punta, subrayado ondulado (en coordenadas de la grabación).
@@ -147,10 +148,10 @@ body{width:${W}px;height:${H}px;background:#000;overflow:hidden}
 .tap{position:absolute;width:0;height:0;opacity:0}
 .tap .ring{position:absolute;left:-70px;top:-70px;width:140px;height:140px;border-radius:50%;border:8px solid #fff;box-shadow:0 0 0 6px rgba(196,163,90,.6)}
 .tap .fin{position:absolute;left:-20px;top:-6px;font-family:Emoji;font-size:120px;line-height:1;filter:drop-shadow(0 10px 14px rgba(0,0,0,.4))}
-#hook{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center}
-#hook .bgi{position:absolute;inset:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(26px) brightness(.38) saturate(1.2)}
-#hook h1{position:relative;font-family:Manrope;font-weight:800;font-size:150px;line-height:.98;color:${C.cream};letter-spacing:-.02em;text-transform:uppercase}
-#hook h1 em{font-family:Fraunces;font-style:italic;font-weight:600;text-transform:none;color:${C.gold2}}
+.hook{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center}
+.hook .bgi{position:absolute;inset:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(26px) brightness(.38) saturate(1.2)}
+.hook h1{position:relative;font-family:Manrope;font-weight:800;font-size:150px;line-height:.98;color:${C.cream};letter-spacing:-.02em;text-transform:uppercase}
+.hook h1 em{font-family:Fraunces;font-style:italic;font-weight:600;text-transform:none;color:${C.gold2}}
 .st{position:absolute;transform-origin:50% 50%;opacity:0}
 .tag2{display:inline-block;background:#fff;color:${C.ink};font-family:Manrope,Emoji;font-weight:800;padding:18px 30px;border-radius:22px;box-shadow:0 10px 0 rgba(0,0,0,.18),0 18px 40px rgba(0,0,0,.35);white-space:nowrap}
 .tag2.gold{background:${C.gold};color:${C.ink}}
@@ -161,6 +162,9 @@ body{width:${W}px;height:${H}px;background:#000;overflow:hidden}
 .num b{font-family:Fraunces;font-style:italic;font-weight:600;font-size:260px;line-height:.8;color:${C.gold2};-webkit-text-stroke:8px ${C.ink};paint-order:stroke;text-shadow:0 14px 0 rgba(0,0,0,.25)}
 .num span{background:${C.ink};color:${C.cream};border:3px solid ${C.gold};font-weight:800;font-size:46px;padding:14px 26px;border-radius:18px;white-space:nowrap}
 .typ{font-family:Manrope,Emoji;font-weight:800;color:#fff;line-height:1.05;text-align:center;white-space:pre-wrap;width:900px;paint-order:stroke;-webkit-text-stroke:12px ${C.ink};text-shadow:0 10px 0 rgba(0,0,0,.3)}
+.quote{width:900px;background:#fff;color:${C.ink};border-radius:30px;padding:44px 50px 38px;box-shadow:0 14px 0 rgba(0,0,0,.18),0 24px 50px rgba(0,0,0,.4);text-align:left}
+.quote p{font-family:Fraunces;font-style:italic;font-weight:500;font-size:62px;line-height:1.1}
+.quote span{display:block;margin-top:22px;font-weight:800;font-size:32px;color:#8a6a2a}
 .typ i{font-style:normal;color:${C.gold2};-webkit-text-stroke:0}
 #flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
 #leak{position:absolute;inset:-20%;opacity:0;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(40% 35% at 30% 40%,rgba(255,170,80,.85),transparent 70%),radial-gradient(35% 30% at 70% 60%,rgba(255,90,60,.55),transparent 70%)}
@@ -193,7 +197,7 @@ window.render=async(t)=>{
   const s=shots.find((x)=>t>=x.t0&&t<x.t1)||shots.at(-1);
   // ---- metraje ----
   const isHook=s.type==='hook', isCta=s.type==='cta';
-  $('#hook').style.display=isHook?'flex':'none';
+  document.querySelectorAll('.hook').forEach((h)=>{h.style.display=(isHook&&h.id==='hk'+shots.indexOf(s))?'flex':'none';});
   $('#cta').style.display=isCta?'block':'none';
   $('#world').style.display=(isHook||isCta)?'none':'block';
   if(!isHook&&!isCta){
@@ -229,7 +233,7 @@ window.render=async(t)=>{
     const p=(t-s.t0);
     const sc=p<0.18?BACK(p/0.18)*1:1+0.04*Math.sin(p*9);
     let sx=0; fx.filter((f)=>f.shake&&t>=f.t&&t<f.t+0.45).forEach((f)=>{sx+=Math.sin(t*95)*f.shake*(1-(t-f.t)/0.45);});
-    $('#hook h1').style.transform='translateX('+sx+'px) scale('+sc+') rotate('+(-2+Math.sin(p*3)*1.2)+'deg)';
+    const hh=document.querySelector('#hk'+shots.indexOf(s)+' h1'); if(hh) hh.style.transform='translateX('+sx+'px) scale('+sc+') rotate('+(-2+Math.sin(p*3)*1.2)+'deg)';
   }
   if(isCta){
     document.querySelectorAll('.ci').forEach((el)=>{const p=(t-s.t0-0.12*el.dataset.k)/0.32;el.style.opacity=E(p);el.style.transform='translateY('+((1-E(p))*60)+'px) scale('+(0.7+0.3*BACK(p))+')'+(el.classList.contains('wig')&&p>1?' rotate('+(Math.sin(t*7)*3)+'deg)':'');});
@@ -250,7 +254,7 @@ window.render=async(t)=>{
       return;
     }
     const end=f.until??s.t1;
-    const live=t>=f.t&&t<end&&shot===s;
+    const live=t>=f.t&&t<end&&(f.persist||shot===s);
     if(f.draw){const p=live?E((t-f.t)/(f.speed||0.38)):0; el.style.strokeDashoffset=1-p; el.style.opacity=live?1:0; return;}
     if(!live){el.style.opacity=0;return;}
     const p=(t-f.t)/0.28, out=end-t<0.15?(end-t)/0.15:1;
@@ -287,9 +291,12 @@ for (const id of ids) {
   grain();
   const dir = join(WORK, id); rmSync(dir, { recursive: true, force: true }); mkdirSync(join(dir, 'f'), { recursive: true });
   execFileSync('cp', [join(WORK, 'grain.png'), join(dir, 'grain.png')]);
-  const hook = P.shots.find((s) => s.type === 'hook');
-  const hookBg = hook?.bg ? `../frames/${hook.bg.clip}/${String(Math.round(hook.bg.t * FPS) + 1).padStart(5, '0')}.jpg` : '';
-  if (hook?.bg) frames(hook.bg.clip);
+  const hooks = P.shots.map((s, k) => {
+    if (s.type !== 'hook') return '';
+    if (s.bg) frames(s.bg.clip);
+    const bg = s.bg ? `<img class="bgi" src="../frames/${s.bg.clip}/${String(Math.round(s.bg.t * FPS) + 1).padStart(5, '0')}.jpg">` : '';
+    return `<div class="hook" id="hk${k}">${bg}<h1 style="${s.size ? `font-size:${s.size}px` : ''}">${s.text}</h1></div>`;
+  }).join('');
   const stick = (f, i) => `<div class="st" id="fx${i}" style="left:${f.sticker.x}px;top:${f.sticker.y}px">${STICK[f.sticker.kind || 'tag'](f.sticker)}</div>`;
   const stickers = P.fx.map((f, i) => (f.sticker && f.sticker.space !== 'world' ? stick(f, i) : '')).join('');
   const worldFx = P.fx.map((f, i) => {
@@ -300,7 +307,7 @@ for (const id of ids) {
   const html = `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head><body class="f">
     <div id="stage">
       <div id="world"><img id="foot"><svg id="draw" viewBox="0 0 ${FW} ${FH}">${draws}</svg>${worldFx}</div>
-      <div id="hook">${hookBg ? `<img class="bgi" src="${hookBg}">` : ''}<h1>${hook?.text ?? ''}</h1></div>
+      ${hooks}
       ${await ctaHTML(e)}
       ${stickers}
       <div id="cap"></div><div id="leak"></div><div id="vig"></div><div id="grain"></div><div id="flash"></div>

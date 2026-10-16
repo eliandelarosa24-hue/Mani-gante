@@ -8,3 +8,12 @@ export const SCRIPTS = {
   R03: { voice: 'F', max: 16.5, anchors: [[0, 'Esto'], [3, 'reservas'], [6.5, 'Su propia'], [10, 'Check-in'], [13.5, 'Y sus']], sub: 'Esto es lo que un aviso en una plataforma no le da: reservas por WhatsApp, directo con usted. Su propia guía de la zona. Check-in en línea. Y sus reseñas, en su propia casa.' },
   R04: { voice: 'M', max: 11.5, sub: 'Si su glamping tuviera su propia web, el cielo sería el protagonista, y sus domos se reservarían directo. Esta es una muestra de concepto. ¿Hacemos la suya?' },
 };
+
+// Reediciones con edición humana (voz fija), para publicar del 16 al 22 de octubre.
+const VOZ_FIJA = { voice: 'F', settings: { stability: 0.32, style: 0.5, speed: 1.06 } };
+Object.assign(SCRIPTS, {
+  P02E: { ...VOZ_FIJA, max: 32, sub: 'Esta cabaña de Curacautín ya no depende solo de Booking. Mire. Las fotos, ordenadas por espacio. Una guía con los parques y lagunas de la zona. Y el botón que más importa: reservar directo por WhatsApp. Nicole, coanfitriona de Miah y Noah, lo dice así: ahora nuestros huéspedes nos encuentran y reservan directo. ¿Quiere una así? Escríbame PORTADA.' },
+  P04E: { ...VOZ_FIJA, max: 34, sub: 'Nueve negocios del sur. Nueve webs distintas. ¿Cuál se parece al suyo? Uno: termas. Dos: cabañas frente al lago. Tres: domos bajo las estrellas. Cuatro: tours de aventura. Cinco: una viña. Seis: cocina de fuego. Siete: café y pastelería. Ocho: hotel boutique. Nueve: villas en el Caribe. Son muestras de concepto: ideas de lo que se puede hacer. Coménteme el número, y le cuento cómo sería la suya.' },
+  P06E: { ...VOZ_FIJA, max: 32, sub: '¿Un hostal donde la poesía se quedó a vivir? Existe. Está en Almagro, Nueva Imperial, donde nació Juvencio Valle, Premio Nacional de Literatura. El Rincón de los Poetas lo cuenta en su propia web: su historia, sus cinco habitaciones, su nota de nueve coma ocho en Booking, y un canal directo para reservar. ¿Su lugar también tiene una historia? Escríbame PORTADA.' },
+  R02E: { ...VOZ_FIJA, max: 34, sub: '¿Todavía imprime la carta cada vez que sube un precio? Mire esto. Una carta digital, con sus platos, su historia y un botón para pedir por WhatsApp. Un QR en cada mesa, y usted cambia los precios desde el celular. Y si vende por delivery, haga la cuenta: ciento veinte pedidos al mes, con veinticinco por ciento de comisión… cinco millones cuatrocientos mil pesos al año. Carta QR desde cuarenta y nueve mil pesos. Escríbame CARTA.' },
+});

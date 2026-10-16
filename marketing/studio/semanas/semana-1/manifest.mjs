@@ -27,8 +27,8 @@ ${tagsAra}`,
     notes: 'Fíjelo en el perfil. La variante B cambia solo la primera lámina.',
   },
   {
-    id: 'P02', filesVoz: ['videos/2026-10-16_1230_P02_reel-miah-y-noah_voz.mp4'], day: '2026-10-16', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 18 s', title: 'Así reservan directo en Curacautín',
-    files: ['videos/2026-10-16_1230_P02_reel-miah-y-noah.mp4', 'portadas-reels/P02_miah-y-noah.png'], filesB: ['videos/2026-10-16_1230_P02_reel-miah-y-noah_variante-B.mp4'],
+    id: 'P02', day: '2026-10-16', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 18 s', title: 'Así reservan directo en Curacautín',
+    files: ['videos/2026-10-16_1230_P02_reel-miah-y-noah_edit.mp4', 'portadas-reels/P02_miah-y-noah.png'], 
     ig: `Cabañas Miah y Noah, en Curacautín, tiene su propio sitio: galería, check-in en línea, guía de la zona y WhatsApp directo.
 
 «Nos ayudó a tener por fin un sitio propio para Cabañas Miah y Noah. Ahora nuestros huéspedes nos encuentran y reservan directo.» — Nicole, co-anfitriona.
@@ -55,8 +55,8 @@ Todo con contrato y pago en dos partes. Y antes de pagar, ve su portada.
     notes: 'Fíjelo en el perfil. Guárdelo también en la destacada «Planes».',
   },
   {
-    id: 'P04', filesVoz: ['videos/2026-10-17_1130_P04_reel-showreel-muestras_voz.mp4'], day: '2026-10-17', time: '11:30', fbTime: '12:00', where: ['Instagram', 'Facebook'], format: 'Reel 29 s', title: '10 muestras de concepto: ¿cuál se parece a su negocio?',
-    files: ['videos/2026-10-17_1130_P04_reel-showreel-muestras.mp4', 'portadas-reels/P04_showreel-muestras.png'],
+    id: 'P04', day: '2026-10-17', time: '11:30', fbTime: '12:00', where: ['Instagram', 'Facebook'], format: 'Reel 29 s', title: '10 muestras de concepto: ¿cuál se parece a su negocio?',
+    files: ['videos/2026-10-17_1130_P04_reel-showreel-muestras_edit.mp4', 'portadas-reels/P04_showreel-muestras.png'],
     ig: `Diseñé 10 muestras para distintos rubros del turismo: termas, cabañas, domos, viña, café, cocina mapuche contemporánea… No son clientes: son ideas para mostrar lo que se puede hacer.
 
 ¿Cuál se parece a su lugar? Coménteme el número 👇
@@ -90,8 +90,8 @@ Por eso trabajo al revés: primero le muestro la portada de su sitio, con sus fo
 👉 PORTADA al ${WA}`,
   },
   {
-    id: 'P06', filesVoz: ['videos/2026-10-18_1930_P06_reel-rincon-de-los-poetas_voz.mp4'], day: '2026-10-18', time: '19:30', fbTime: '20:00', where: ['Instagram', 'Facebook'], format: 'Reel 18 s', title: 'El Rincón de los Poetas',
-    files: ['videos/2026-10-18_1930_P06_reel-rincon-de-los-poetas.mp4', 'portadas-reels/P06_rincon-de-los-poetas.png'],
+    id: 'P06', day: '2026-10-18', time: '19:30', fbTime: '20:00', where: ['Instagram', 'Facebook'], format: 'Reel 18 s', title: 'El Rincón de los Poetas',
+    files: ['videos/2026-10-18_1930_P06_reel-rincon-de-los-poetas_edit.mp4', 'portadas-reels/P06_rincon-de-los-poetas.png'],
     ig: `El Rincón de los Poetas tenía una historia que no se veía en ninguna plataforma. Ahora tiene una web que la cuenta y un canal directo para reservar.
 
 ¿Su lugar también tiene una historia? 👉 PORTADA al ${WA}
@@ -112,8 +112,8 @@ Ejemplos reales: redvaeru.netlify.app · WhatsApp ${WA} 🙌`,
     noFb: true, notes: 'Máximo 2 grupos por día y solo donde las reglas permitan ofrecer servicios.',
   },
   {
-    id: 'R01', filesVoz: ['videos/2026-10-19_1230_R01_reel-calculadora_voz.mp4'], day: '2026-10-19', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: '¿Cuánto le dejó a la plataforma este año?',
-    files: ['videos/2026-10-19_1230_R01_reel-calculadora.mp4', 'portadas-reels/R01_calculadora.png'], filesB: ['videos/2026-10-19_1230_R01_reel-calculadora_variante-B.mp4'],
+    id: 'R01', day: '2026-10-19', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: '¿Cuánto le dejó a la plataforma este año?',
+    files: ['videos/2026-10-19_1230_R01_reel-calculadora_edit.mp4', 'portadas-reels/R01_calculadora.png'], 
     ig: `Haga este ejercicio con su propio extracto 👇
 
 Reservas al mes × valor promedio × % de comisión × 12 meses.
@@ -165,8 +165,8 @@ Escanee el QR de la imagen para ver una muestra. 👉 Escríbame CARTA al ${WA}`
     noFb: true,
   },
   {
-    id: 'R02', filesVoz: ['videos/2026-10-21_1230_R02_reel-carta-qr_voz.mp4'], day: '2026-10-21', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Su carta, como una experiencia',
-    files: ['videos/2026-10-21_1230_R02_reel-carta-qr.mp4', 'portadas-reels/R02_carta-qr.png'], filesB: ['videos/2026-10-21_1230_R02_reel-carta-qr_variante-B.mp4'],
+    id: 'R02', day: '2026-10-21', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Su carta, como una experiencia',
+    files: ['videos/2026-10-21_1230_R02_reel-carta-qr_edit.mp4', 'portadas-reels/R02_carta-qr.png'], 
     ig: `Su carta es lo primero que el cliente revisa antes de entrar, o antes de pedir por WhatsApp.
 
 Si hoy es un PDF o una foto, le hago una carta digital con sus fotos, su marca y un QR para cada mesa, lista en pocos días.

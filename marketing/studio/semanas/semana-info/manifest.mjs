@@ -9,7 +9,7 @@ const NOTA = 'Video animado con datos de fuentes oficiales (fuente en pantalla).
 export const PIECES = [
   {
     id: 'A02', day: '2026-10-22', time: '18:00', fbTime: '18:30', where: ['Instagram', 'Facebook', 'TikTok'], format: 'Reel animado 31 s', title: '¿Cuánto se queda la plataforma de cada reserva?',
-    files: ['videos/A02_comision-plataformas.mp4', 'portadas-reels/A02_comisiones.png'],
+    files: ['videos/A02_comision-plataformas_edit.mp4', 'portadas-reels/A02E_A02_edit.png'],
     ig: `¿Cuánto se queda la plataforma de cada reserva? 👇
 
 • Booking.com: entre 10% y 25%, según su contrato
