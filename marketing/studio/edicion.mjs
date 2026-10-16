@@ -97,6 +97,7 @@ const STICK = {
   tag: (s) => `<div class="tag2 ${s.tone || ''}" style="font-size:${s.size || 50}px">${s.text}</div>`,
   emoji: (s) => `<div class="emo" style="font-size:${s.size || 170}px">${s.text}</div>`,
   num: (s) => `<div class="num"><b>${s.text}</b>${s.label ? `<span>${s.label}</span>` : ''}</div>`,
+  stat: (s) => `<div class="stat"><b data-count="${s.value}" data-dec="${s.dec || 0}" data-pre="${s.pre || ''}" data-suf="${s.suf || ''}">0</b><span>${s.label}</span>${s.src ? `<small>${s.src}</small>` : ''}</div>`,
   quote: (s) => `<div class="quote"><p>«${s.text}»</p><span>${s.by}</span></div>`,
   type: (s) => `<div class="typ" style="font-size:${s.size || 84}px" data-full="${s.text.replace(/"/g, '&quot;')}"><span></span><i>|</i></div>`,
 };
@@ -162,6 +163,10 @@ body{width:${W}px;height:${H}px;background:#000;overflow:hidden}
 .num b{font-family:Fraunces;font-style:italic;font-weight:600;font-size:260px;line-height:.8;color:${C.gold2};-webkit-text-stroke:8px ${C.ink};paint-order:stroke;text-shadow:0 14px 0 rgba(0,0,0,.25)}
 .num span{background:${C.ink};color:${C.cream};border:3px solid ${C.gold};font-weight:800;font-size:46px;padding:14px 26px;border-radius:18px;white-space:nowrap}
 .typ{font-family:Manrope,Emoji;font-weight:800;color:#fff;line-height:1.05;text-align:center;white-space:pre-wrap;width:900px;paint-order:stroke;-webkit-text-stroke:12px ${C.ink};text-shadow:0 10px 0 rgba(0,0,0,.3)}
+.stat{width:880px;background:#fff;color:${C.ink};border-radius:30px;padding:34px 46px 30px;box-shadow:0 14px 0 rgba(0,0,0,.18),0 24px 50px rgba(0,0,0,.4);text-align:left}
+.stat b{display:block;font-family:Fraunces;font-weight:600;font-size:150px;line-height:1;letter-spacing:-.03em;color:#8a6a2a}
+.stat span{display:block;margin-top:10px;font-weight:800;font-size:44px;line-height:1.15}
+.stat small{display:block;margin-top:14px;font-weight:600;font-size:26px;opacity:.6}
 .quote{width:900px;background:#fff;color:${C.ink};border-radius:30px;padding:44px 50px 38px;box-shadow:0 14px 0 rgba(0,0,0,.18),0 24px 50px rgba(0,0,0,.4);text-align:left}
 .quote p{font-family:Fraunces;font-style:italic;font-weight:500;font-size:62px;line-height:1.1}
 .quote span{display:block;margin-top:22px;font-weight:800;font-size:32px;color:#8a6a2a}
@@ -261,6 +266,8 @@ window.render=async(t)=>{
     const sc=BACK(p)*out, wig=f.wiggle?Math.sin((t-f.t)*8)*3:0;
     el.style.opacity=Math.min(1,p*3)*out;
     el.style.transform='translate(-50%,-50%) scale('+sc+') rotate('+((f.rot||0)+wig)+'deg)';
+    const sb=el.querySelector('.stat b');
+    if(sb){const q=E((t-f.t-0.1)/1.1);const v=+sb.dataset.count*q;sb.textContent=sb.dataset.pre+v.toLocaleString('es-CL',{minimumFractionDigits:+sb.dataset.dec,maximumFractionDigits:+sb.dataset.dec})+sb.dataset.suf;}
     const ty=el.querySelector('.typ');
     if(ty){const full=ty.dataset.full;const n=Math.min(full.length,Math.floor((t-f.t)/(f.cps||0.045)));ty.querySelector('span').textContent=full.slice(0,n);ty.querySelector('i').style.opacity=(n<full.length||Math.floor(t*3)%2)?1:0;}
   });
