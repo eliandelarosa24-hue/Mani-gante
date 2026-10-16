@@ -57,3 +57,9 @@ Si se cierra un cliente en octubre, el agente agrega en la semana siguiente:
   - Agenda en línea.
   - Agenda en PDF para usar sin internet.
   - Un ZIP por día.
+
+## Rehechura con el estilo nuevo (16 de octubre)
+
+- **Posts del 23 de octubre al 15 de noviembre (136 piezas):** rediseñados con la capa de personalidad de `templates.mjs`, que agrega stickers, notas a mano, resaltado de plumón, chats tipo WhatsApp, contadores de cupos, calendario, pantallas reales de Miah, Poetas y redvaeru.netlify.app y la firma de Jorge. Mismos nombres de archivo y mismos textos.
+- **Reels R03 a R16 (14):** tienen guion nuevo con voz fija (`VOZ_FIJA`, con la voz hpp4J3VqNfWAUOO0d1Us) y edición humana en `semanas/semana-N/edicion.mjs`. Los manifiestos ya apuntan a los `*_edit.mp4`.
+  - ⏳ Falta la voz real. Los borradores están renderizados en silencio. Cuando haya créditos de ElevenLabs (unos 5.000 caracteres), se corre `NODE_USE_ENV_PROXY=1 ELEVENLABS_API_KEY=… sh rehacer-reels.sh`, y después se reconstruyen las agendas y los paquetes.
