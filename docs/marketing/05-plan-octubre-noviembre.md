@@ -18,22 +18,25 @@
 | 5 | 16 – 22 nov | **Recta final: lo que todavía alcanza** | El 16 es el último día para partir una Carta QR o un sitio Esencial a tiempo para el 30. Después: «su web trabaja en enero y febrero» | Reel de la Carta QR en acción · carrusel «Lo que alcanza en 1 semana» · Reel de domos o glamping (muestra) · Reel del Fogón Mapu (muestra) · preguntas sobre plazos · historias de cupos | Lo produce el agente el miércoles 21 de octubre |
 | 6 | 23 – 29 nov | **La temporada ya empezó: su web para enero y febrero** | Seguir vendiendo después del 30, sin inventar urgencias: la temporada alta es enero y febrero | Reel «Lo que pasa en enero si no tiene web» (calculadora) · casos reales (Miah y Noah, El Rincón de los Poetas) · carrusel de mantención mensual · Reel de hotel o termas · historias de cupos | Lo produce el agente el miércoles 28 de octubre |
 
-## Serie informativa (videos animados)
+## Serie educativa (Reels con edición humana)
 
-Agenda: https://claude.ai/artifact/Ax13w8A1PESVoRzBPTxTXn. Son Reels extra a las 18:00 que informan y terminan llevando a los servicios. Los datos y sus fuentes están en `06-datos-videos-informativos.md`.
+Agenda: https://claude.ai/artifact/Ax13w8A1PESVoRzBPTxTXn
 
-| Video | Fecha | Tema | Fuente |
-|---|---|---|---|
-| A02 | jue 22 oct | ¿Cuánto se queda la plataforma de cada reserva? | Booking.com, Airbnb |
-| A03 | sáb 24 oct | El verano se decide antes de diciembre | INE, EMAT |
-| A04 | jue 29 oct | Llegan menos turistas, pero los de lejos van en aumento | Subsecretaría de Turismo |
-| A01 | mar 10 nov | El F29 tiene tres fechas (antes del vencimiento del 12) | SII |
+Son Reels extra a las 18:00 que informan y terminan llevando a los servicios. Las fuentes están en `06-datos-videos-informativos.md` y `07-noticias-turismo-octubre-2026.md`. Cuando un video usa muestras de concepto como imagen, lleva la etiqueta fija «Imágenes: muestras de concepto de Red Vaeru».
 
-Próximos temas, que el Productor hará de a 2 por semana:
-- Mes sin ventas no es mes sin F29.
-- IVA y turista extranjero.
-- Sin reseñas no hay reserva.
-- Fondos para digitalizarse: cómo prepararse para la próxima convocatoria.
+| Video | Fecha | Tema | Fuente | Estado |
+|---|---|---|---|---|
+| A02 | jue 22 oct | ¿Cuánto le cobra realmente la plataforma? | Booking.com, Airbnb | ✅ |
+| E04 | sáb 24 oct | El verano se decide antes de diciembre | INE, EMAT | ✅ |
+| E06 | mar 27 oct | Cómo pedir reseñas sin incomodar | Tips | ✅ |
+| E05 | jue 29 oct | Llegan menos turistas, pero los de lejos crecen | Subsecretaría de Turismo | ✅ |
+| E08 | sáb 31 oct | Noticia: Navidad y Año Nuevo caen viernes (2 fines de semana largos) y Fiestas Patrias con más de 65 % de ocupación | Calendario y Hoteleros de Chile vía Emol | ⏳ sin voz: faltan créditos de ElevenLabs |
+| E10 | mar 3 nov | 4 reglas para que sus fotos vendan | Tips | ✅ |
+| E03 | jue 5 nov | IVA y turistas extranjeros | DL 825 y SII | ✅ |
+| E09 | sáb 7 nov | Noticia: vuelo directo Temuco–Balmaceda de SKY | SKY vía 24horas y Mediabanco | ⏳ sin voz: faltan créditos de ElevenLabs |
+| E01 | mar 10 nov | El F29 tiene tres fechas (vence el jueves 12) | SII | ✅ |
+| E07 | sáb 14 nov | Fondos: cómo no perderse la próxima convocatoria | Sercotec | ✅ |
+| E02 | mar 17 nov | Mes sin ventas no es mes sin F29 | SII | ✅ |
 
 ## Contenido que cambia si llega un cliente
 
