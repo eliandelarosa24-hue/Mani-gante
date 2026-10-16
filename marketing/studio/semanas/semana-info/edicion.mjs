@@ -43,11 +43,11 @@ export const EDITS = {
 
   // ---------- Serie educativa (edición humana) ----------
   E01: {
-    file: 'E01_f29-tres-fechas', slug: 'E01', coverAt: 2.2, musicVol: 0.3, hi: ['f29', 'doce', 'veinte', 'veintiocho', 'guardelo'],
+    file: 'E01_f29-tres-fechas', slug: 'E01', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 2.2, musicVol: 0.3, hi: ['f29', 'doce', 'veinte', 'veintiocho', 'guardelo'],
     shots: [
       B(0, 'termas-rayenko', { dim: 0.6, noCap: true, trans: false, speed: 0.4 }),
       H('Doce', 'termas-rayenko', 1, '<em>12</em><br>plazo general', 150),
-      H('Veinte', 'cabanas-lago-azul', 1, '<em>20</em><br>internet + factura electrónica', 104),
+      H('Veinte', 'cabanas-lago-azul', 1, '<em>20</em><br>internet +<br>factura electrónica', 86),
       H('Veintiocho', 'domos-cielo-austral', 1, '<em>28</em><br>sin impuesto a pagar', 118),
       B('fin', 'pucon-aventura', { dim: 0.35 }),
       B('Este', 'miah', { from: 0.3, dim: 0.45, trans: 'zoom' }),
@@ -67,7 +67,7 @@ export const EDITS = {
     cta: { title: 'Yo ordeno su <em>vitrina digital</em>', checks: ['Web', 'Carta QR', 'Ficha de Google'], button: 'Escríbame PORTADA 👇', note: 'Información general: confirme su caso con su contador.' },
   },
   E02: {
-    file: 'E02_f29-sin-movimiento', slug: 'E02', coverAt: 1.6, musicVol: 0.3, hi: ['f29', 'obligatorio', 'veintiocho', 'portada'],
+    file: 'E02_f29-sin-movimiento', slug: 'E02', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 1.6, musicVol: 0.3, hi: ['f29', 'obligatorio', 'veintiocho', 'portada'],
     shots: [
       B(0, 'domos-cielo-austral', { dim: 0.6, noCap: true, trans: false, speed: 0.4 }),
       H('igual', 'domos-cielo-austral', 2, '¿Igual tiene que<br><em>declarar?</em> 🤔', 110),
@@ -91,7 +91,7 @@ export const EDITS = {
     cta: { title: 'Temporada baja = <em>tiempo de preparar</em>', checks: ['Web', 'Carta QR', 'Ficha de Google'], button: 'Escríbame PORTADA 👇', note: NOTE },
   },
   E03: {
-    file: 'E03_iva-turista-extranjero', slug: 'E03', coverAt: 1.6, musicVol: 0.3, hi: ['iva', 'ingles', 'portada'],
+    file: 'E03_iva-turista-extranjero', slug: 'E03', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 1.6, musicVol: 0.3, hi: ['iva', 'ingles', 'portada'],
     shots: [
       B(0, 'villa-coral-samana', { dim: 0.6, noCap: true, trans: false, speed: 0.4 }),
       H('cobra', 'villa-coral-samana', 3, '¿Le cobra<br><em>IVA?</em> 🤔', 150),
@@ -120,7 +120,7 @@ export const EDITS = {
     cta: { title: 'Su web, <em>también en inglés</em>', checks: ['Segundo idioma', 'Precios en USD', 'Reserva directa'], button: 'Escríbame PORTADA 👇', note: 'Información general: confirme su caso con su contador.' },
   },
   E04: {
-    file: 'E04_verano-araucania', slug: 'E04', coverAt: 2.0, musicVol: 0.3, hi: ['ine', 'verano', 'portada'],
+    file: 'E04_verano-araucania', slug: 'E04', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 2.0, musicVol: 0.3, hi: ['ine', 'verano', 'portada'],
     shots: [
       B(0, 'cabanas-lago-azul', { dim: 0.55, noCap: true, trans: false, speed: 0.4 }),
       B('Mire', 'pucon-aventura', { dim: 0.4, trans: 'zoom' }),
@@ -145,7 +145,7 @@ export const EDITS = {
     cta: { title: 'Que lo vean y <em>reserven fácil</em>', checks: ['Web propia', 'Ficha de Google', 'Reserva por WhatsApp'], button: 'Escríbame PORTADA 👇', note: NOTE },
   },
   E05: {
-    file: 'E05_turistas-larga-distancia', slug: 'E05', coverAt: 1.6, musicVol: 0.3, hi: ['ingles', 'portada'],
+    file: 'E05_turistas-larga-distancia', slug: 'E05', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 1.6, musicVol: 0.3, hi: ['ingles', 'portada'],
     shots: [
       B(0, 'villa-coral-samana', { dim: 0.6, noCap: true, trans: false, speed: 0.4 }),
       H('pero', 'termas-rayenko', 2, '…pero hay un grupo<br>que <em>no para de crecer</em> 📈', 96),
@@ -191,7 +191,7 @@ export const EDITS = {
     cta: { title: 'Su QR de <em>reseñas</em>', checks: ['Enlace directo a Google', 'Listo para imprimir'], button: 'Escríbame PORTADA 👇', note: NOTE },
   },
   E07: {
-    file: 'E07_fondos-prepararse', slug: 'E07', coverAt: 2.0, musicVol: 0.3, hi: ['sercotec', 'sernatur', 'listo', 'portada'],
+    file: 'E07_fondos-prepararse', slug: 'E07', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 2.0, musicVol: 0.3, hi: ['sercotec', 'sernatur', 'listo', 'portada'],
     shots: [
       B(0, 'redvaeru-inicio', { dim: 0.6, noCap: true, trans: false, speed: 0.4 }),
       H('postulación', 'redvaeru-inicio', 2, 'Duró solo<br><em>10 días</em> ⏱️', 130),
@@ -217,7 +217,7 @@ export const EDITS = {
     cta: { title: 'Armamos su <em>plan digital</em>', checks: ['Web', 'Ficha de Google', 'Asesoría turística'], button: 'Escríbame PORTADA 👇', note: NOTE },
   },
   E10: {
-    file: 'E10_fotos-que-venden', slug: 'E10', coverAt: 1.8, musicVol: 0.3, hi: ['fotos', 'espacio', 'verano', 'portada'],
+    file: 'E10_fotos-que-venden', slug: 'E10', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 1.8, musicVol: 0.3, hi: ['fotos', 'espacio', 'verano', 'portada'],
     shots: [
       B(0, 'miah-galeria', { from: 0.3, speed: 0.5, dim: 0.55, noCap: true, trans: false, y: 1100, z: 1.15 }),
       H('Cuatro', 'miah-galeria', 3, '4 reglas para que<br><em>vendan</em> 📸', 120),
@@ -243,5 +243,59 @@ export const EDITS = {
       ...END('escríbame'),
     ],
     cta: { title: 'Una galería <em>que vende</em>', checks: ['Fotos por espacio', 'Lo que lo hace distinto', 'Lista para el verano'], button: 'Escríbame PORTADA 👇', note: NOTE },
+  },
+
+  // ---------- Noticias de turismo (docs/marketing/07) ----------
+  E08: {
+    file: 'E08_noticia-fines-de-semana-largos', slug: 'E08', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 1.4, musicVol: 0.3, hi: ['diciembre', 'viernes', 'temporada'],
+    shots: [
+      B(0, 'domos-cielo-austral', { dim: 0.6, noCap: true, trans: false, speed: 0.4 }),
+      H('Navidad', 'cabanas-lago-azul', 1, '🎄 Navidad<br><em>viernes 25</em>', 120),
+      H('Año', 'termas-rayenko', 1, '🎆 Año Nuevo<br><em>viernes 1°</em>', 120),
+      H('Son', 'pucon-aventura', 1, '<em>2</em> fines de semana<br>largos seguidos', 108),
+      B('cómo', 'miah', { from: 0.3, dim: 0.45, trans: 'zoom' }),
+      B('Fiestas', 'pucon-aventura', { from: 6, dim: 0.5 }),
+      { at: 'Los', clip: 'miah-funciones', from: 3.0, to: 5.4, trans: 'whip', cam: [{ x: 540, y: 1450, z: 1.15 }, { at: 'encuentren', x: 541, y: 1660, z: 1.6 }] },
+      { at: 'Escríbame', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      TYPE('Ojo', 'Ojo con diciembre 🎄', 100),
+      { at: 'Navidad', flash: 0.4, shake: 12, rgb: true, sfx: 'impact', vol: 0.45 },
+      { at: 'Año', flash: 0.35, sfx: 'whoosh', vol: 0.45 },
+      { at: 'Son', flash: 0.45, shake: 16, rgb: true, sfx: 'impact', vol: 0.5 },
+      TAG('cómo', '¿Y en el último? 🤔', { tone: 'gold', size: 66, y: 860 }),
+      STAT('Fiestas', 65, 'ocupación hotelera en la Araucanía · Fiestas Patrias 2026', { pre: '> ', suf: ' %', src: 'Hoteleros de Chile vía Emol (20-09-2026, cifra preliminar)' }),
+      { at: 'encuentren', tap: { x: 541, y: 1660 }, sfx: 'tap', vol: 1 },
+      TAG('tiempo', '⏰ Reservan con tiempo', { y: 470, tone: 'ink' }),
+      ...END('Escríbame'),
+    ],
+    cta: { title: 'Que lo encuentren <em>antes de diciembre</em>', checks: ['Web propia', 'Ficha de Google', 'Reserva por WhatsApp'], button: 'Escríbame TEMPORADA 👇', note: NOTE },
+  },
+  E09: {
+    file: 'E09_noticia-vuelo-temuco-balmaceda', slug: 'E09', label: 'Imágenes: muestras de concepto de Red Vaeru', coverAt: 1.4, musicVol: 0.3, hi: ['temuco', 'balmaceda', 'patagonia', 'portada'],
+    shots: [
+      B(0, 'pucon-aventura', { dim: 0.6, noCap: true, trans: false, speed: 0.4 }),
+      H('SKY', 'cabanas-lago-azul', 1, 'Vuelo directo<br><em>Temuco – Balmaceda</em> ✈️', 100),
+      B('Opera', 'termas-rayenko', { dim: 0.5, trans: 'zoom' }),
+      B('desde', 'domos-cielo-austral', { dim: 0.5 }),
+      H('Más', 'pucon-aventura', 3, 'Araucanía ⇄<br><em>Patagonia</em>', 120),
+      B('viajeros', 'miah', { from: 0.3, trans: 'whip' }),
+      { at: 'encontrar', clip: 'miah-funciones', from: 3.0, to: 5.4, trans: 'zoom', cam: [{ x: 540, y: 1450, z: 1.15 }, { at: 'usted', x: 541, y: 1660, z: 1.6 }] },
+      { at: 'Escríbame', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      TYPE('Noticia', '📰 Noticia para el sur', 100),
+      { at: 'SKY', flash: 0.45, shake: 14, rgb: true, sfx: 'impact', vol: 0.5 },
+      SRC('SKY', 'Fuente: SKY Airline vía 24horas y Mediabanco (agosto 2026)', 'Más'),
+      TAG('Opera', '🗓️ 1 de enero → 14 de marzo de 2027', { tone: 'gold', size: 52, y: 860 }),
+      STAT('desde', 38190, 'por tramo, con tasas', { pre: 'desde $', y: 860 }),
+      { at: 'Más', flash: 0.35, sfx: 'whoosh', vol: 0.45 },
+      TAG('dormir', '🛏️ Dónde dormir', { x: 320, y: 820, rot: -5 }),
+      TAG('comer', '🍽️ Dónde comer', { x: 740, y: 1020, rot: 4 }),
+      TAG('hacer', '🗺️ Qué hacer', { x: 380, y: 1220, rot: -3, tone: 'gold' }),
+      { at: 'usted', tap: { x: 541, y: 1660 }, sfx: 'tap', vol: 1 },
+      ...END('Escríbame'),
+    ],
+    cta: { title: '¿Lo van a <em>encontrar?</em>', checks: ['Web propia', 'Ficha de Google', 'Segundo idioma'], button: 'Escríbame PORTADA 👇', note: NOTE },
   },
 };

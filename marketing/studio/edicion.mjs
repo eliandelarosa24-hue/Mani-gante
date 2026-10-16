@@ -82,6 +82,11 @@ function plan(e, J) {
     }
     fx.push({ ...f, t: T(f.at) + (f.dt ?? 0), until: f.until !== undefined ? T(f.until) : undefined });
   });
+  // Etiqueta fija arriba (p. ej. cuando se usan muestras de concepto como imágenes de apoyo), hasta el cierre.
+  if (e.label) {
+    const cta = shots.find((s) => s.type === 'cta');
+    fx.push({ sticker: { text: e.label, x: 540, y: 150, tone: 'ink', size: 24 }, t: 0.05, until: cta ? cta.t0 : total, persist: true });
+  }
   // Subtítulos: bloques de hasta 3 palabras (corta en la puntuación).
   const caps = [];
   let g = [];

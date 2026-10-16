@@ -16,7 +16,7 @@ const SIM = process.argv.includes('--simular');
 // Voces alternadas: F = femenina, M = masculina. Cada guion termina antes del cierre del Reel.
 const { SCRIPTS } = await import(SEMANA_DIR + 'voz.mjs');
 // Pronunciación: palabras que la voz debe decir distinto de como se escriben.
-const SAY = [['Miah', 'Mía'], ['PORTADA', 'portada'], ['CARTA', 'carta'], ['WhatsApp', 'guatsap']];
+const SAY = [['Miah', 'Mía'], ['PORTADA', 'portada'], ['CARTA', 'carta'], ['TEMPORADA', 'temporada'], ['WhatsApp', 'guatsap']];
 const toSay = (t) => SAY.reduce((s, [w, p]) => s.replaceAll(w, p), t);
 
 const api = async (path, opts = {}) => {
