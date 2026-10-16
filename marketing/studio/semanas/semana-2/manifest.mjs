@@ -9,7 +9,7 @@ const img = (dir, names) => names.map((n) => `${dir}/${n}`);
 export const PIECES = [
   {
     id: 'R05', day: '2026-10-26', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 19 s', title: 'Cuatro pasos. Cero sorpresas.',
-    files: ['videos/2026-10-26_1230_R05_reel-metodo.mp4', 'portadas-reels/R05_metodo.png'], filesVoz: ['videos/2026-10-26_1230_R05_reel-metodo_voz.mp4'],
+    files: ['videos/2026-10-26_1230_R05_reel-metodo_edit.mp4', 'portadas-reels/R05_metodo.png'],
     ig: `Así avanza su web conmigo, sin letra chica 👇
 
 1️⃣ Su lugar: conversamos sobre su negocio y cómo recibe huéspedes hoy.
@@ -61,7 +61,7 @@ Muestras y casos: redvaeru.netlify.app · WhatsApp ${WA}`,
   },
   {
     id: 'R06', day: '2026-10-28', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Si sus termas tuvieran su propia web',
-    files: ['videos/2026-10-28_1230_R06_reel-termas.mp4', 'portadas-reels/R06_termas.png'], filesVoz: ['videos/2026-10-28_1230_R06_reel-termas_voz.mp4'],
+    files: ['videos/2026-10-28_1230_R06_reel-termas_edit.mp4', 'portadas-reels/R06_termas.png'],
     ig: `Esta es una muestra de concepto que diseñé para unas termas de montaña: siete pozones, siete temperaturas, y la experiencia completa antes de llegar.
 
 ¿Tiene termas, tinajas o un spa de naturaleza? Le muestro una idea para el suyo.
@@ -86,7 +86,7 @@ Guárdelo y compárelo con cualquier otra propuesta. 👉 PORTADA al ${WA}`,
   },
   {
     id: 'R07', day: '2026-10-30', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Para cafés y pastelerías del sur',
-    files: ['videos/2026-10-30_1230_R07_reel-cafe.mp4', 'portadas-reels/R07_cafe.png'], filesVoz: ['videos/2026-10-30_1230_R07_reel-cafe_voz.mp4'],
+    files: ['videos/2026-10-30_1230_R07_reel-cafe_edit.mp4', 'portadas-reels/R07_cafe.png'],
     ig: `Un café con historia merece algo más que una foto de la carta 🍰
 
 Esta es una muestra de concepto para un café y pastelería del sur: sus kuchen, su historia familiar y un botón para encargar por WhatsApp.
@@ -117,7 +117,7 @@ Esta es una muestra de concepto para un café y pastelería del sur: sus kuchen,
   },
   {
     id: 'R08', day: '2026-11-01', time: '19:00', fbTime: '19:30', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Para hoteles boutique: una web a su altura',
-    files: ['videos/2026-11-01_1900_R08_reel-hotel-boutique.mp4', 'portadas-reels/R08_hotel-boutique.png'], filesVoz: ['videos/2026-11-01_1900_R08_reel-hotel-boutique_voz.mp4'],
+    files: ['videos/2026-11-01_1900_R08_reel-hotel-boutique_edit.mp4', 'portadas-reels/R08_hotel-boutique.png'],
     ig: `Un hotel boutique vende una experiencia, no solo una habitación.
 
 Esta muestra de concepto la diseñé para un hotel con historia junto al río: sus habitaciones, su restaurante y su ciudad, contados como un álbum.

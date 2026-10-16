@@ -10,7 +10,7 @@ const img = (dir, names) => names.map((n) => `${dir}/${n}`);
 export const PIECES = [
   {
     id: 'R13', day: '2026-11-09', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 19 s', title: 'Precios de lanzamiento: los últimos cupos',
-    files: ['videos/2026-11-09_1230_R13_reel-ultimos-cupos.mp4', 'portadas-reels/R13_ultimos-cupos.png'], filesVoz: ['videos/2026-11-09_1230_R13_reel-ultimos-cupos_voz.mp4'],
+    files: ['videos/2026-11-09_1230_R13_reel-ultimos-cupos_edit.mp4', 'portadas-reels/R13_ultimos-cupos.png'],
     ig: `Los precios de lanzamiento son para mis primeros 5 clientes. Cuando se completen, rige el precio normal 👇
 
 🍽️ Carta QR: $49.000
@@ -67,7 +67,7 @@ Muestras y casos reales: redvaeru.netlify.app · WhatsApp ${WA}`,
   },
   {
     id: 'R14', day: '2026-11-11', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Para viñas y enoturismo',
-    files: ['videos/2026-11-11_1230_R14_reel-vina.mp4', 'portadas-reels/R14_vina.png'], filesVoz: ['videos/2026-11-11_1230_R14_reel-vina_voz.mp4'],
+    files: ['videos/2026-11-11_1230_R14_reel-vina_edit.mp4', 'portadas-reels/R14_vina.png'],
     ig: `Una viña no vende botellas: vende una tarde entre barricas 🍷
 
 Esta muestra de concepto la diseñé para una viña familiar: la casona, la cava, las catas y la cosecha, con reserva de visitas.
@@ -92,7 +92,7 @@ Es el plan Firma: diseño a medida para su lugar. 👉 PORTADA al ${WA}
   },
   {
     id: 'R15', day: '2026-11-13', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Del sur de Chile al Caribe',
-    files: ['videos/2026-11-13_1230_R15_reel-villa-caribe.mp4', 'portadas-reels/R15_villa-caribe.png'], filesVoz: ['videos/2026-11-13_1230_R15_reel-villa-caribe_voz.mp4'],
+    files: ['videos/2026-11-13_1230_R15_reel-villa-caribe_edit.mp4', 'portadas-reels/R15_villa-caribe.png'],
     ig: `Del sur de Chile al Caribe 🌴
 
 Esta muestra de concepto la diseñé para unas villas frente al mar en Samaná, República Dominicana: cada villa con su historia, la temporada de ballenas y precios en USD.
@@ -122,7 +122,7 @@ Son 5 cupos. Cuando se completen, rige el precio normal.
   },
   {
     id: 'R16', day: '2026-11-15', time: '19:00', fbTime: '19:30', where: ['Instagram', 'Facebook'], format: 'Reel 18 s', title: 'Caso real: El Rincón de los Poetas',
-    files: ['videos/2026-11-15_1900_R16_reel-caso-poetas.mp4', 'portadas-reels/R16_caso-poetas.png'], filesVoz: ['videos/2026-11-15_1900_R16_reel-caso-poetas_voz.mp4'],
+    files: ['videos/2026-11-15_1900_R16_reel-caso-poetas_edit.mp4', 'portadas-reels/R16_caso-poetas.png'],
     ig: `El Rincón de los Poetas, en Almagro, tiene su propia web: su historia, sus espacios y un canal directo para reservar.
 
 Faltan 15 días para el 30 de noviembre. Si quiere la suya antes del verano, Carta QR y Esencial todavía alcanzan.

@@ -17,3 +17,10 @@ Object.assign(SCRIPTS, {
   P06E: { ...VOZ_FIJA, max: 32, sub: '¿Un hostal donde la poesía se quedó a vivir? Existe. Está en Almagro, Nueva Imperial, donde nació Juvencio Valle, Premio Nacional de Literatura. El Rincón de los Poetas lo cuenta en su propia web: su historia, sus cinco habitaciones, su nota de nueve coma ocho en Booking, y un canal directo para reservar. ¿Su lugar también tiene una historia? Escríbame PORTADA.' },
   R02E: { ...VOZ_FIJA, max: 34, sub: '¿Todavía imprime la carta cada vez que sube un precio? Mire esto. Una carta digital, con sus platos, su historia y un botón para pedir por WhatsApp. Un QR en cada mesa, y usted cambia los precios desde el celular. Y si vende por delivery, haga la cuenta: ciento veinte pedidos al mes, con veinticinco por ciento de comisión… cinco millones cuatrocientos mil pesos al año. Carta QR desde cuarenta y nueve mil pesos. Escríbame CARTA.' },
 });
+
+// Reels rehechos con edición humana y voz fija (del 23 de octubre en adelante).
+const VOZ_FIJA2 = { voice: 'F', voiceId: 'hpp4J3VqNfWAUOO0d1Us', settings: { stability: 0.32, style: 0.5, speed: 1.06 } };
+Object.assign(SCRIPTS, {
+  R03E: { ...VOZ_FIJA2, max: 36, sub: '¿Su cabaña está solo en Booking? Entonces hay cuatro cosas que su aviso nunca le va a dar. Uno: que le reserven directo, por WhatsApp. Dos: su propia guía de la zona, con parques y lagunas. Tres: check-in en línea, antes de llegar. Y cuatro: sus reseñas, en su propia casa. Así lo hicieron Cabañas Miah y Noah, en Curacautín. ¿Quiere lo mismo? Escríbame PORTADA.' },
+  R04E: { ...VOZ_FIJA2, max: 32, sub: 'En la ciudad se ven unas trescientas estrellas. Lejos de las luces, miles. Eso es lo que vende un glamping… y casi nunca se ve en su aviso. Mire. Una portada que es puro cielo. La luna de esta noche, en vivo. Y cada domo con su techo transparente, listo para reservar directo. Es una muestra de concepto. ¿Hacemos la de su glamping? Escríbame PORTADA.' },
+});

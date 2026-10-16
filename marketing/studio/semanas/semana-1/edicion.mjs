@@ -1,3 +1,4 @@
+import { B, H, TYPE, TAG, NUM, EMO, HIT, WHOOSH, END, NOTE, MUESTRA as ROTULO } from '../kit-edicion.mjs';
 // Semana 1 · reediciones con edición humana (16 al 21 de octubre). Coordenadas en px de la grabación (1080×2337).
 const MUESTRA = { space: 'screen' };
 const CTA_NOTE = 'Primero ve su portada. Si no le convence, no paga.';
@@ -147,3 +148,56 @@ export const EDITS = {
     cta: { title: 'Carta QR <em>$49.000</em>', checks: ['Sus platos', 'Su historia', 'Pedidos por WhatsApp', 'QR en cada mesa'], button: 'Escríbame CARTA 👇', note: CTA_NOTE },
   },
 };
+
+// Reels rehechos del 23 al 25 de octubre (edición humana, voz fija).
+Object.assign(EDITS, {
+  R03E: {
+    file: '2026-10-23_1230_R03_reel-lo-que-no-le-da_edit', slug: 'R03_edit', coverAt: 1.2, musicVol: 0.32,
+    hi: ['whatsapp', 'guia', 'check-in', 'resenas', 'portada'],
+    shots: [
+      B(0, 'miah', { from: 0.3, speed: 0.35, dim: 0.55, noCap: true, y: 1100, z: 1.05 }),
+      H('Entonces', 'miah', 1, '4 cosas que su aviso <em>no le da</em>', 120),
+      { at: 'Uno', clip: 'miah-funciones', from: 3.0, to: 5.4, trans: 'zoom', cam: [{ x: 540, y: 1450, z: 1.15 }, { at: 'WhatsApp', x: 541, y: 1660, z: 1.6 }] },
+      { at: 'Dos', clip: 'miah-guia', trans: 'whip', times: [['Dos', 3.5], ['parques', 4.2], ['lagunas', 6.6], ['end', 7.6]], cam: [{ x: 540, y: 900, z: 1.15 }, { at: 'parques', x: 540, y: 820, z: 1.3 }] },
+      B('Tres', 'miah-funciones', { from: 14.4, speed: 0.3, trans: 'zoom', y: 1100, z: 1.12 }),
+      B('cuatro#2', 'miah-funciones', { from: 5.0, speed: 0.1, trans: 'whip', y: 1900, z: 1.4 }),
+      B('Así', 'miah', { from: 0.3, speed: 0.6, y: 1100, z: 1.02 }),
+      { at: 'Quiere', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      TYPE('Su', '¿Su cabaña está SOLO en Booking? 🤔'),
+      HIT('Entonces'),
+      NUM('Uno', 1, 'Reserva directa'), { at: 'WhatsApp', dt: 0.15, tap: { x: 541, y: 1660 }, sfx: 'tap', vol: 1 },
+      NUM('Dos', 2, 'Su guía de la zona'), { taps: 3 },
+      NUM('Tres', 3, 'Check-in en línea'), TAG('llegar', '✈️ antes de llegar', { y: 1250, rot: 4 }),
+      NUM('cuatro#2', 4, 'Sus reseñas'), { at: 'reseñas', draw: { kind: 'circle', x: 540, y: 2104, rx: 270, ry: 70 }, sfx: 'scribble', vol: 0.8 }, TAG('casa', '⭐ en SU casa', { y: 700, tone: 'gold' }),
+      TAG('Miah', 'CASO REAL ✅', { y: 690, size: 58, tone: 'gold' }), TAG('Curacautín', '📍 Curacautín', { x: 720, y: 1240, rot: 5 }),
+      ...END('Quiere'), { at: 'Escríbame', sfx: 'pop', vol: 0.8 },
+    ],
+    cta: { title: '¿Quiere <em>lo mismo?</em>', checks: ['Reserva directa', 'Guía de la zona', 'Check-in en línea', 'Sus reseñas'], button: 'Escríbame PORTADA 👇', note: NOTE },
+  },
+  R04E: {
+    file: '2026-10-25_1900_R04_reel-glamping_edit', slug: 'R04_edit', coverAt: 1.2, musicVol: 0.34, label: ROTULO,
+    hi: ['estrellas', 'cielo', 'directo', 'portada'],
+    shots: [
+      B(0, 'domos-cielo-austral', { from: 4.2, speed: 0.25, dim: 0.55, noCap: true, y: 900, z: 1.1 }),
+      H('Lejos', 'domos-cielo-austral', 5, 'Lejos de las luces:<br><em>miles</em> ✨', 120),
+      B('Eso', 'domos-cielo-austral', { from: 9.6, speed: 0.25, y: 1450, z: 1.12 }),
+      B('Mire', 'domos-cielo-austral', { from: 0.3, speed: 0.5, trans: 'zoom', y: 1000, z: 1.04 }),
+      B('luna', 'domos-cielo-austral', { from: 2.0, speed: 0.2, y: 1880, z: 1.45 }),
+      B('cada', 'domos-cielo-austral', { from: 9.2, speed: 0.35, y: 1500, z: 1.1 }),
+      { at: 'Hacemos', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      TYPE('En', '¿Cuántas estrellas se ven desde su glamping? 🌌'),
+      TAG('trescientas', '🏙️ en la ciudad: ~300', { y: 1250 }),
+      HIT('miles', { sfx: 'riser', vol: 0.4 }),
+      TAG('aviso', 'Su aviso: 1 foto y un precio 😐', { y: 1250, rot: 3 }),
+      WHOOSH('Mire'), TAG('cielo', '🌌 puro cielo', { y: 1250, tone: 'gold' }),
+      TAG('luna', '🌙 en vivo', { y: 700, rot: 5 }),
+      TAG('transparente', '🔭 techo transparente', { y: 1250 }), TAG('directo', 'Reserva directa ✅', { y: 560, tone: 'gold', rot: -4 }),
+      ...END('Hacemos'), { at: 'Escríbame', sfx: 'pop', vol: 0.8 },
+    ],
+    cta: { title: '¿Y <em>su glamping?</em>', checks: ['Su cielo', 'Sus domos', 'Reserva directa'], button: 'Escríbame PORTADA 👇', note: NOTE },
+  },
+});

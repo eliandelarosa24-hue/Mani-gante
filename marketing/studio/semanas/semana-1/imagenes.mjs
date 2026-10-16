@@ -2,7 +2,7 @@
 import { topo, icon, dots, asset, EMBLEM, BRAND as B, C } from '../../lib.mjs';
 
 export default async function imagenes(k) {
-const { add, W, H, SH, waQR, waQRgold, cartaQR, slide, story, cta, phone, list, plan, phoneCover, cover, wide, ad, MIAH_M, POETAS_M, HERO } = k;
+const { add, W, H, SH, waQR, waQRgold, cartaQR, slide, story, cta, phone, list, plan, phoneCover, cover, wide, ad, MIAH_M, POETAS_M, HERO, still, chat, counter, cal, chips } = k;
 // ---------- Perfil ----------
 add({ file: 'perfil/foto-perfil.png', w: 1080, h: 1080, cls: 'ink', html: `${topo(1080, 1080, { seed: 7, opacity: 0.16, rings: 14, centers: [[540, 540]] })}<img src="${EMBLEM}" style="position:absolute;left:190px;top:190px;width:700px;height:700px">` });
 add({
@@ -94,13 +94,19 @@ temporadaPost(`${P07}/01-B.png`, '6 semanas para la temporada. <em>¿Su web est�
 
 // ---------- C02 · "Ya estoy en Booking" (sáb 24, 11:30) ----------
 const C02 = '2026-10-24_1130_C02_ya-estoy-en-booking';
-slide({ file: `${C02}/01.png`, seed: 30, eyebrow: 'La pregunta de la semana', title: '"Ya estoy en Booking, <em>¿para qué quiero una web?"</em>', align: 'center', titleSize: 104, n: 0, total: 6 });
-slide({ file: `${C02}/01-B.png`, seed: 30, eyebrow: 'La pregunta de la semana', title: '¿Web propia o Booking? <em>Las dos.</em>', body: 'Y le explico por qué →', align: 'center', titleSize: 112, n: 0, total: 6 });
-slide({ file: `${C02}/02.png`, cls: 'cream', title: 'Buena pregunta.', body: 'Booking le trae huéspedes <b>nuevos</b>. Sígalo usando.', align: 'center', titleSize: 110, n: 1, total: 6 });
-slide({ file: `${C02}/03.png`, seed: 32, title: 'Pero el huésped que <em>vuelve</em>…', body: '…el que lo encontró en Instagram o el que le pidió el dato a un amigo: ¿adónde lo manda?', align: 'center', titleSize: 104, n: 2, total: 6 });
-slide({ file: `${C02}/04.png`, cls: 'cream', title: 'Su web es <em>su vitrina</em>', body: 'Fotos, precios, ubicación y su WhatsApp. Sin comisión por esas reservas directas.', extra: `<div style="display:flex;gap:28px">${icon('photo', 80, '#8a6a2a')}${icon('pin', 80, '#8a6a2a')}${icon('chat', 80, '#8a6a2a')}</div>`, align: 'center', titleSize: 104, n: 3, total: 6 });
-slide({ file: `${C02}/05.png`, seed: 34, title: 'Y si cambian las reglas de la plataforma…', body: '…usted sigue teniendo su propio canal.', align: 'center', titleSize: 96, n: 4, total: 6 });
-slide({ file: `${C02}/06.png`, seed: 35, eyebrow: 'Garantía de portada', title: 'Vea cómo se vería la suya, <em>antes de pagar</em>', extra: cta(), align: 'center', n: 5, total: 6 });
+const tapa02 = { seed: 30, inset: '200px 80px 520px', n: 0, total: 6, deco: [{ emo: '🤔', x: 760, y: 880, size: 200, rot: 8 }, { hand: 'me lo preguntan todas las semanas', x: 110, y: 1000, rot: -4, size: 50 }] };
+slide({ file: `${C02}/01.png`, eyebrow: 'La pregunta de la semana', title: '"Ya estoy en Booking, <em>¿para qué quiero una web?"</em>', titleSize: 100, ...tapa02 });
+slide({ file: `${C02}/01-B.png`, eyebrow: 'La pregunta de la semana', title: '¿Web propia o Booking? <em>Las dos.</em>', body: 'Y le explico por qué.', titleSize: 112, ...tapa02 });
+slide({ file: `${C02}/02.png`, cls: 'cream', title: 'Buena pregunta.', body: 'Booking le trae huéspedes <b>nuevos</b>. Sígalo usando.', inset: '200px 80px 560px', titleSize: 110, n: 1, total: 6,
+  deco: [{ stk: '✅ Booking: huéspedes nuevos', x: 100, y: 860, rot: -3, size: 44 }, { hand: 'no le digo que lo deje 🙅', x: 140, y: 1020, rot: -4, size: 58 }] });
+slide({ file: `${C02}/03.png`, seed: 32, title: 'Pero el huésped que <em>vuelve</em>…', body: '…el que lo encontró en Instagram o el que le pidió el dato a un amigo: ¿adónde lo manda?', inset: '170px 80px 150px', titleSize: 104, n: 2, total: 6,
+  extra: chat([['in', 'Hola! Nos quedamos el verano pasado 🙌 ¿tienen web para ver fechas?', '21:14']], 40), deco: [{ hand: '…¿le manda el link de Booking? 😬', x: 110, y: 1080, rot: -3, size: 54 }] });
+slide({ file: `${C02}/04.png`, cls: 'cream', title: 'Su web es <em>su vitrina</em>', body: 'Fotos, precios, ubicación y su WhatsApp. Sin comisión por esas reservas directas.', inset: '170px 80px 560px', titleSize: 104, n: 3, total: 6,
+  deco: [{ phone: still('miah'), x: 660, y: 640, w: 260, rot: 5 }, { stk: '📸 Fotos', x: 100, y: 830, rot: -4, size: 44 }, { stk: '📍 Ubicación', x: 300, y: 920, rot: 3, size: 44 }, { stk: '💬 WhatsApp', x: 120, y: 1020, rot: -2, size: 44, tone: 'gold' }, { hand: 'caso real →', x: 430, y: 1110, rot: -4, size: 50 }] });
+slide({ file: `${C02}/05.png`, seed: 34, title: 'Y si cambian las reglas de la plataforma…', body: '…usted sigue teniendo su propio canal.', inset: '170px 80px 560px', titleSize: 96, n: 4, total: 6,
+  deco: [{ stk: '📜 Reglas nuevas · ¿comisión? · ¿ranking?', x: 90, y: 850, rot: -3, size: 40 }, { emo: '🏠', x: 740, y: 840, size: 200, rot: 8 }, { hand: 'su web no cambia de reglas', x: 120, y: 1010, rot: -4, size: 54 }] });
+slide({ file: `${C02}/06.png`, seed: 35, eyebrow: 'Garantía de portada', title: 'Vea cómo se vería la suya, <em>antes de pagar</em>', extra: cta(), inset: '170px 80px 560px', n: 5, total: 6, sign: false,
+  deco: [{ pola: MIAH_M, x: 580, y: 760, w: 360, h: 380, rot: 5, op: 'top', cap: 'caso real · Miah' }, { stk: '$0 si no le gusta', x: 100, y: 880, rot: -5, size: 42, tone: 'gold' }, { sign: true, x: 90, y: 1090 }] });
 
 // ---------- Historias ----------
 const S01 = '2026-10-19_2030_S01_historias-tiene-web';
@@ -114,9 +120,12 @@ story({ file: `${S02}/2.png`, cls: 'cream', eyebrow: 'Las más comunes', title: 
 story({ file: `${S02}/3.png`, eyebrow: 'Respuesta corta', extra: list([`Desde ${B.carta}`, 'Sí, le enseño a cambiar textos y fotos', 'Si no le gusta la portada, no paga'], C.gold, 52) });
 story({ file: `${S02}/4.png`, title: '¿Otra duda? <em>Escríbame.</em>', extra: `<img src="${waQRgold}" style="width:360px;height:360px;border-radius:20px;padding:20px;background:${C.gold2}"><p style="font-size:40px;font-weight:700">WhatsApp ${B.wa}</p>` });
 const S03 = '2026-10-23_2030_S03_historias-cupos';
-for (let n = B.cupos; n >= 1; n--) story({ file: `${S03}/1_quedan-${n}-de-${B.cupos}.png`, eyebrow: 'Cupos de lanzamiento', title: `Quedan <em style="white-space:nowrap">${n} de ${B.cupos}</em>`, body: 'Precios de lanzamiento solo para los primeros clientes.', titleSize: 140 });
-for (let n = B.cuposTemporada; n >= 1; n--) story({ file: `${S03}/2_temporada-${n}-de-${B.cuposTemporada}.png`, cls: 'cream', eyebrow: `Paquete Temporada · ${B.temporada}`, title: `Quedan <em style="white-space:nowrap">${n} de ${B.cuposTemporada}</em>`, body: 'Carta QR y Esencial: hasta completar los cupos de lanzamiento.', titleSize: 140 });
-story({ file: `${S03}/3.png`, title: 'Escríbame antes del domingo y <em>le entrego su portada el lunes.</em>', extra: cta() });
+for (let n = B.cupos; n >= 1; n--) story({ file: `${S03}/1_quedan-${n}-de-${B.cupos}.png`, eyebrow: 'Cupos de lanzamiento', title: `Quedan <em style="white-space:nowrap">${n} de ${B.cupos}</em>`, body: 'Precios de lanzamiento solo para los primeros clientes.', titleSize: 140,
+  extra: counter(n, B.cupos, 150), deco: [{ hand: n === 1 ? '¡el último! 😬' : n <= 2 ? 'se están yendo…' : 'después rige el precio normal', x: n <= 2 ? 520 : 200, y: 1540, rot: -4, size: 60 }] });
+for (let n = B.cuposTemporada; n >= 1; n--) story({ file: `${S03}/2_temporada-${n}-de-${B.cuposTemporada}.png`, cls: 'cream', eyebrow: `Paquete Temporada · ${B.temporada}`, title: `Quedan <em style="white-space:nowrap">${n} de ${B.cuposTemporada}</em>`, body: 'Carta QR y Esencial: hasta completar los cupos de lanzamiento.', titleSize: 140,
+  extra: counter(n, B.cuposTemporada, 170).replace(/🏡/g, '🌲'), deco: [{ hand: 'web completa antes del 30 ☀️', x: 200, y: 1560, rot: -4, size: 60 }] });
+story({ file: `${S03}/3.png`, title: 'Escríbame antes del domingo y <em>le entrego su portada el lunes.</em>', extra: cta(), inset: '360px 80px 900px', center: false, titleSize: 96, sign: false,
+  deco: [{ pola: MIAH_M, x: 360, y: 1080, w: 420, h: 440, rot: 5, op: 'top', cap: 'así parte: su portada' }, { stk: '📅 lunes', x: 100, y: 1200, rot: -6, size: 52, tone: 'gold' }] });
 
 // ---------- Portadas de Reels (1080×1920; el título queda en la zona que se ve en la grilla) ----------
 phoneCover('portadas-reels/P02_miah-y-noah.png', 'Caso real · Curacautín', 'Así reservan <em>directo</em>', MIAH_M);
@@ -124,8 +133,8 @@ cover('portadas-reels/P04_showreel-muestras.png', '10 rubros del turismo', '¿Cu
 phoneCover('portadas-reels/P06_rincon-de-los-poetas.png', 'Caso real · Nueva Imperial', 'Un hostal con <em>historia</em>', POETAS_M);
 cover('portadas-reels/R01_calculadora.png', 'Calculadora gratis', '¿Cuánto le paga a <em>Booking?</em>');
 cover('portadas-reels/R02_carta-qr.png', 'Restaurantes', 'Su carta, <em>como una experiencia</em>', asset('public/muestras/fogon-mapu/img/chef.webp'), 'Muestra de concepto');
-phoneCover('portadas-reels/R03_lo-que-no-le-da.png', 'Caso real · Curacautín', 'Lo que su aviso <em>no le da</em>', MIAH_M);
-cover('portadas-reels/R04_glamping.png', 'Glamping y domos', 'Si su glamping tuviera <em>su propia web</em>', asset('public/muestras/domos-cielo-austral/img/unidad-1.webp'), 'Muestra de concepto');
+phoneCover('portadas-reels/R03_lo-que-no-le-da.png', 'Caso real · Curacautín', 'Lo que su aviso <em>no le da</em>', still('miah-guia'), [{ stk: 'CASO REAL ✅', x: 90, y: 1300, rot: -5, size: 50, tone: 'gold' }]);
+cover('portadas-reels/R04_glamping.png', 'Glamping y domos', 'Si su glamping tuviera <em>su propia web</em>', asset('public/muestras/domos-cielo-austral/img/unidad-1.webp'), 'Muestra de concepto', [{ emo: '✨', x: 760, y: 1440, size: 150, rot: 8 }]);
 
 // ---------- Avisos: Yapo, grupos de Facebook y ficha de Google (1200×900) ----------
 wide('avisos/yapo-1_caso-real.png', 'paper', `<div style="position:absolute;left:70px;top:90px;width:560px;display:flex;flex-direction:column;gap:26px"><div class="eyebrow">Caso real · Curacautín</div><h1 class="serif" style="font-size:76px;line-height:1.03;font-weight:500">Página web para cabañas y restaurantes</h1><p style="font-size:34px;font-weight:600">Temuco y Araucanía · desde ${B.carta}</p><p style="font-size:28px;opacity:.75">WhatsApp ${B.wa}</p></div><div style="position:absolute;right:110px;top:70px">${phone(MIAH_M, 330, 3)}</div>`);
@@ -133,7 +142,7 @@ wide('avisos/yapo-2_planes.png', 'ink', `${topo(1200, 900, { seed: 50 })}<div st
 wide('avisos/yapo-3_garantia.png', 'cream', `<div style="position:absolute;inset:80px;display:flex;align-items:center;gap:60px"><div style="flex:1;display:flex;flex-direction:column;gap:26px"><div class="eyebrow">Garantía de portada</div><h1 class="serif" style="font-size:76px;line-height:1.04;font-weight:500">Primero ve su web. <em>Si no le convence, no paga.</em></h1><p style="font-size:30px;font-weight:600">Escanee y escríbame PORTADA</p></div><img src="${waQR}" style="width:330px;height:330px"></div>`);
 wide('avisos/grupos-fb_carta-qr.png', 'ink', `${topo(1200, 900, { seed: 52 })}<div style="position:absolute;left:70px;top:110px;width:600px;display:flex;flex-direction:column;gap:26px"><div class="eyebrow">Restaurantes de Temuco</div><h1 class="serif" style="font-size:78px;line-height:1.03;font-weight:500">¿Su carta sigue siendo <em>un PDF?</em></h1><p style="font-size:34px;font-weight:600">Carta QR con sus fotos y su marca: ${B.carta}</p><p style="font-size:28px;opacity:.85">Escríbame CARTA · ${B.wa}</p></div><div style="position:absolute;right:90px;top:170px;width:400px;height:540px;background:#fff;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:24px;color:${C.ink};box-shadow:0 30px 60px rgba(0,0,0,.4)"><p class="serif" style="font-size:40px">Escanee la carta</p><img src="${cartaQR}" style="width:280px;height:280px"><p style="font-size:20px;opacity:.6">Muestra de concepto · Fogón Mapu</p></div>`);
 wide('avisos/google-1_webs-turismo.png', 'ink', `${topo(1200, 900, { seed: 54 })}<div style="position:absolute;inset:90px;display:flex;flex-direction:column;justify-content:center;gap:30px"><img src="${EMBLEM}" style="width:120px;height:120px"><h1 class="serif" style="font-size:84px;line-height:1.03;font-weight:500">Webs para cabañas y restaurantes de la <em>Araucanía</em></h1><p style="font-size:36px;font-weight:600">Con garantía de portada · desde ${B.carta}</p></div>`);
-wide('avisos/google-2_temporada.png', 'ink', `${topo(1200, 900, { seed: 56 })}<div style="position:absolute;left:80px;top:0;bottom:0;width:640px;display:flex;flex-direction:column;justify-content:center;gap:26px"><div class="eyebrow">Paquete Temporada · ${B.cuposTemporada} cupos</div><h1 class="serif" style="font-size:80px;line-height:1.03;font-weight:500">Su web lista <em>antes del verano</em></h1><p style="font-size:34px;font-weight:600">${B.temporada} · lista antes del 30 de noviembre</p></div><div style="position:absolute;right:90px;top:70px">${phone(MIAH_M, 330, 3)}</div>`);
+wide('avisos/google-2_temporada.png', 'ink', `${topo(1200, 900, { seed: 56 })}<div style="position:absolute;left:80px;top:0;bottom:0;width:640px;display:flex;flex-direction:column;justify-content:center;gap:26px"><div class="eyebrow">Paquete Temporada · ${B.cuposTemporada} cupos</div><h1 class="serif" style="font-size:80px;line-height:1.03;font-weight:500">Su web lista <em>antes del verano</em></h1><p style="font-size:34px;font-weight:600">${B.temporada} · lista antes del 30 de noviembre</p></div><div style="position:absolute;right:90px;top:70px">${phone(MIAH_M, 330, 3)}</div>`, [{ stk: 'CASO REAL ✅', x: 780, y: 760, rot: -5, size: 34, tone: 'gold' }, { hand: '☀️ antes del verano', x: 90, y: 720, rot: -4, size: 52 }]);
 
 // ---------- Anuncios (formato Meta Ads: 1080×1080 y 1080×1920), listos para cuando haya presupuesto ----------
 ad('carta-qr', 'fork', 'Restaurantes · Araucanía', 'Su carta, <em>en el celular de sus clientes</em>', B.carta, 'Con sus fotos, su marca y QR para cada mesa', 'CARTA');

@@ -210,8 +210,8 @@ Primero ve la portada; si no le convence, no paga. WhatsApp ${WA}`,
     noFb: true,
   },
   {
-    id: 'R03', filesVoz: ['videos/2026-10-23_1230_R03_reel-lo-que-no-le-da_voz.mp4'], day: '2026-10-23', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 20 s', title: 'Lo que su aviso en una plataforma no le da',
-    files: ['videos/2026-10-23_1230_R03_reel-lo-que-no-le-da.mp4', 'portadas-reels/R03_lo-que-no-le-da.png'],
+    id: 'R03', day: '2026-10-23', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 20 s', title: 'Lo que su aviso en una plataforma no le da',
+    files: ['videos/2026-10-23_1230_R03_reel-lo-que-no-le-da_edit.mp4', 'portadas-reels/R03_lo-que-no-le-da.png'],
     ig: `Esto es lo que tiene la web de Cabañas Miah y Noah, en Curacautín, y que ningún aviso en una plataforma le da:
 
 ✔️ Reservas por WhatsApp directo con los dueños
@@ -244,8 +244,8 @@ Booking le trae huéspedes nuevos y conviene seguir ahí. La web propia es para 
 👉 PORTADA al ${WA}`,
   },
   {
-    id: 'R04', filesVoz: ['videos/2026-10-25_1900_R04_reel-glamping_voz.mp4'], day: '2026-10-25', time: '19:00', fbTime: '19:30', where: ['Instagram', 'Facebook'], format: 'Reel 15 s', title: 'Si su glamping tuviera su propia web',
-    files: ['videos/2026-10-25_1900_R04_reel-glamping.mp4', 'portadas-reels/R04_glamping.png'],
+    id: 'R04', day: '2026-10-25', time: '19:00', fbTime: '19:30', where: ['Instagram', 'Facebook'], format: 'Reel 15 s', title: 'Si su glamping tuviera su propia web',
+    files: ['videos/2026-10-25_1900_R04_reel-glamping_edit.mp4', 'portadas-reels/R04_glamping.png'],
     ig: `Esta es una muestra de concepto que diseñé para mostrar lo que se puede hacer con un glamping de astroturismo: el cielo como protagonista.
 
 ¿Tiene domos o un glamping? Le muestro una idea para el suyo. 👉 PORTADA al ${WA}

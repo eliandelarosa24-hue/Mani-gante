@@ -10,10 +10,10 @@ const img = (dir, names) => names.map((n) => `${dir}/${n}`);
 export const PIECES = [
   {
     id: 'R09', day: '2026-11-02', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: '¿Cuánto le paga a las apps de delivery?',
-    files: ['videos/2026-11-02_1230_R09_reel-calculadora-restaurante.mp4', 'portadas-reels/R09_calculadora-restaurante.png'], filesVoz: ['videos/2026-11-02_1230_R09_reel-calculadora-restaurante_voz.mp4'],
+    files: ['videos/2026-11-02_1230_R09_reel-calculadora-restaurante_edit.mp4', 'portadas-reels/R09_calculadora-restaurante.png'],
     ig: `¿Sabe cuánto le paga cada año a PedidosYa o Uber Eats? 🛵
 
-Haga la cuenta con sus números en la calculadora de mi sitio. En el ejemplo del video: 120 pedidos al mes, de $15.000, con 25% de comisión, son $5.400.000 al año.
+Haga la cuenta con sus números en la calculadora de mi sitio. En el ejemplo del video: 120 pedidos al mes, de $18.000, con 25% de comisión, son $6.480.000 al año. Si solo el 30% le pidiera directo, recupera $1.944.000.
 
 Una carta propia con pedidos por WhatsApp no paga comisión.
 Carta QR desde $49.000 👉 escríbame CARTA al ${WA}
@@ -59,7 +59,7 @@ WhatsApp ${WA}`,
   },
   {
     id: 'R10', day: '2026-11-04', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Cabañas frente al lago',
-    files: ['videos/2026-11-04_1230_R10_reel-cabanas-lago.mp4', 'portadas-reels/R10_cabanas-lago.png'], filesVoz: ['videos/2026-11-04_1230_R10_reel-cabanas-lago_voz.mp4'],
+    files: ['videos/2026-11-04_1230_R10_reel-cabanas-lago_edit.mp4', 'portadas-reels/R10_cabanas-lago.png'],
     ig: `Esta es una muestra de concepto que diseñé para unas cabañas frente al lago: cada cabaña con su nombre y sus fotos, la tinaja, el kayak y el muelle, y la reserva directa por WhatsApp.
 
 ¿Tiene cabañas? Le muestro cómo se vería la suya, antes de pagar nada.
@@ -86,7 +86,7 @@ Un sitio completo toma de 3 a 4 semanas: para tenerlo el 30 de noviembre, hay qu
   },
   {
     id: 'R11', day: '2026-11-06', time: '12:30', fbTime: '13:00', where: ['Instagram', 'Facebook'], format: 'Reel 17 s', title: 'Para tours y experiencias',
-    files: ['videos/2026-11-06_1230_R11_reel-tours.mp4', 'portadas-reels/R11_tours.png'], filesVoz: ['videos/2026-11-06_1230_R11_reel-tours_voz.mp4'],
+    files: ['videos/2026-11-06_1230_R11_reel-tours_edit.mp4', 'portadas-reels/R11_tours.png'],
     ig: `Un tour se vende con la experiencia, no con una lista de precios 🌋
 
 Esta muestra de concepto la diseñé para una agencia de aventura en Pucón: cada salida con su nivel, su duración y sus fotos, y los guías que la acompañan.
@@ -116,7 +116,7 @@ Guárdelo ✓ ¿Prefiere que se la deje lista yo? Va incluida en el Paquete Temp
   },
   {
     id: 'R12', day: '2026-11-08', time: '19:00', fbTime: '19:30', where: ['Instagram', 'Facebook'], format: 'Reel 19 s', title: 'Diagnóstico gratuito: ¿qué tan independiente es su negocio?',
-    files: ['videos/2026-11-08_1900_R12_reel-diagnostico.mp4', 'portadas-reels/R12_diagnostico.png'], filesVoz: ['videos/2026-11-08_1900_R12_reel-diagnostico_voz.mp4'],
+    files: ['videos/2026-11-08_1900_R12_reel-diagnostico_edit.mp4', 'portadas-reels/R12_diagnostico.png'],
     ig: `¿Qué tan independiente es su negocio de Booking, Airbnb o las apps de delivery?
 
 Seis preguntas, un minuto. Recibe un puntaje y las tres mejoras que más le conviene hacer primero. Gratis y sin compromiso.

@@ -77,7 +77,7 @@ async function synth(id, S) {
     execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-f', 'lavfi', '-t', String(dur), '-i', 'anullsrc=r=44100:cl=mono', '-b:a', '64k', join(DIR, `${id}.mp3`)]);
     starts = [...text].map((_, i) => (i / text.length) * dur); ends = starts.map((s) => s + dur / text.length);
   } else {
-    const voice = await pickVoice(S.voice);
+    const voice = S.voiceId || await pickVoice(S.voice);
     const r = await api(`/text-to-speech/${voice}/with-timestamps?output_format=mp3_44100_128`, {
       method: 'POST',
       body: JSON.stringify({ text, model_id: 'eleven_multilingual_v2', language_code: 'es', voice_settings: { stability: 0.45, similarity_boost: 0.8, style: 0.25, use_speaker_boost: true, speed: 1.0, ...(S.settings || {}) } }),
