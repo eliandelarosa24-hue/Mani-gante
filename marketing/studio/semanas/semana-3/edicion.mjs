@@ -40,7 +40,7 @@ export const EDITS = {
       B('amanecer', 'cabanas-lago-azul', { from: 6.2, speed: 0.4, y: 1500, z: 1.12 }),
       B('mapa', 'cabanas-lago-azul', { from: 10.0, speed: 0.4, trans: 'zoom', y: 1100, z: 1.08 }),
       B('cada', 'cabanas-lago-azul', { from: 11.6, speed: 0.4, y: 1850, z: 1.15 }),
-      B('Es', 'cabanas-lago-azul', { from: 1.0, speed: 0.3, y: 1000, z: 1.04 }),
+      B('Es#2', 'cabanas-lago-azul', { from: 1.0, speed: 0.3, y: 1000, z: 1.04 }),
       { at: 'Le', type: 'cta', capY: 1700 },
     ],
     fx: [
@@ -90,7 +90,7 @@ export const EDITS = {
       HIT(0.35, { vol: 0.45 }), TYPE('Si', '¿Y si mañana le bajan el aviso? 📉'),
       HIT('quedan', { shake: 22, vol: 0.6 }), WHOOSH('Hice'),
       TAG('Seis', '6 preguntas · 1 minuto ⏱️', { y: 1250, tone: 'gold' }),
-      NUM('Por', 1, 'Sus reservas'), NUM('tiene', 2, 'Su web'), NUM('fotos', 3, 'Sus fotos'), NUM('cuánto', 4, 'Su respuesta'),
+      NUM('Por', 1, 'Sus reservas', 'tiene'), NUM('tiene', 2, 'Su web', 'fotos'), NUM('fotos', 3, 'Sus fotos', 'cuánto'), NUM('cuánto', 4, 'Su respuesta', 'final'),
       TAG('puntaje', '🎯 su puntaje', { y: 560, rot: 4 }), TAG('tres', '3 mejoras para partir ✅', { y: 1250 }),
       HIT('gratis', { sfx: 'ding', vol: 0.5, shake: 8 }), TAG('gratis', 'GRATIS 🙌', { y: 560, tone: 'gold', size: 70 }),
       ...END('Escríbame'),

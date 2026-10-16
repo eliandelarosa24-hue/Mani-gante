@@ -19,8 +19,7 @@ export const EDITS = {
       HIT('nueve', { sfx: 'cash', vol: 0.7 }), TAG('nueve', 'desde $49.000', { y: 560, tone: 'gold', size: 64, rot: -4 }),
       TAG('ciento', 'normal: desde $149.000', { y: 1300, rot: 4 }),
       HIT('Por', { sfx: 'whoosh', shake: 8, vol: 0.45 }),
-      NUM('testimonio', 1, 'Un testimonio'), NUM('permiso', 2, 'Mostrar el trabajo'), NUM('cuente', 3, 'Cómo le fue'),
-      TAG('Miah', 'CASO REAL ✅', { y: 690 }),
+      NUM('testimonio', 1, 'Un testimonio', 'permiso'), NUM('permiso', 2, 'Mostrar el trabajo', 'cuente'), NUM('cuente', 3, 'Cómo le fue', 'Cuando#2'),
       HIT('Cuando#2', { sfx: 'riser', vol: 0.35, shake: 10 }),
       ...END('Escríbame'),
     ],
@@ -31,7 +30,7 @@ export const EDITS = {
     hi: ['barricas', 'cata', 'firma', 'portada'],
     shots: [
       B(0, 'vina-los-robles', { from: 8.2, speed: 0.25, dim: 0.5, noCap: true, y: 1500, z: 1.1 }),
-      H('Vende', 'vina-los-robles', 8, 'Una tarde<br><em>entre barricas</em> 🍷', 120),
+      H('Vende#2', 'vina-los-robles', 8, 'Una tarde<br><em>entre barricas</em> 🍷', 120),
       B('Mire', 'vina-los-robles', { from: 0.3, speed: 0.5, trans: 'zoom', y: 1000, z: 1.04 }),
       B('hectáreas', 'vina-los-robles', { from: 5.0, speed: 0.4, y: 900, z: 1.15 }),
       B('enóloga', 'vina-los-robles', { from: 11.6, speed: 0.4, trans: 'zoom', y: 800, z: 1.15 }),
@@ -41,7 +40,7 @@ export const EDITS = {
     ],
     fx: [
       TYPE('Una', '¿Su viña vende botellas… o experiencias? 🍷'), TAG('botellas', '🍾 botellas ❌', { y: 1250, rot: 4 }),
-      HIT('Vende', { sfx: 'whoosh', shake: 8, vol: 0.45 }), WHOOSH('Mire'),
+      HIT('Vende#2', { sfx: 'whoosh', shake: 8, vol: 0.45 }), WHOOSH('Mire'),
       TAG('generaciones', '👨‍👩‍👧 3 generaciones', { y: 1250 }), TAG('números', '70 ha · 14 etiquetas', { y: 560, rot: 4, tone: 'gold' }),
       TAG('enóloga', '👩‍🔬 la enóloga', { y: 1250 }), TAG('cata', '🍷 reserve su cata', { y: 560, tone: 'gold' }),
       TAG('Firma', 'Plan Firma · a medida', { y: 1250 }),

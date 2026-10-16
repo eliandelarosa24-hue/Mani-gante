@@ -56,6 +56,7 @@ function plan(e, J) {
   };
   const total = +(words.at(-1).t1 + (e.hold ?? 2.6)).toFixed(2);
   const shots = e.shots.map((s, k) => ({ ...s, t0: T(s.at), t1: k + 1 < e.shots.length ? T(e.shots[k + 1].at) : total }));
+  shots.forEach((s) => { if (!(s.t1 > s.t0)) throw new Error(`${e.id}: el plano «${s.at}» (${s.t0.toFixed(2)} s) no queda antes del siguiente: revise la palabra o use «palabra#n»`); });
   shots.forEach((s) => {
     if (s.clip) s.n = frames(s.clip);
     // sync: el instante clipT de la grabación cae justo cuando la voz dice la palabra "at".
@@ -300,6 +301,7 @@ for (const id of ids) {
   const J = JSON.parse(readFileSync(join(BASE, 'voz', `${id}.json`), 'utf8'));
   if (!J.words) throw new Error(`${id}: la voz no tiene tiempos por palabra; vuelva a generarla con voz.mjs`);
   const P = plan(e, J);
+  if (process.env.DRY) { console.log(`✓ ${id} · plan válido · ${P.shots.length} planos`); continue; }
   grain();
   const dir = join(WORK, id); rmSync(dir, { recursive: true, force: true }); mkdirSync(join(dir, 'f'), { recursive: true });
   execFileSync('cp', [join(WORK, 'grain.png'), join(dir, 'grain.png')]);
