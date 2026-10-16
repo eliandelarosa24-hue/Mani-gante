@@ -15,8 +15,12 @@ El estudio trabaja **por semana**: cada semana de campaña tiene su carpeta `sem
 | `SEMANA=N node build-pdf.mjs` | Agenda en PDF para usar sin internet | `out/semana-N/Agenda-Red-Vaeru-semana-N.pdf` |
 | `SEMANA=N node empaquetar.mjs` | Un ZIP por día (imágenes en JPG, videos comprimidos, textos y PDF) | `entregas/semana-N/` |
 | `SEMANA=info node animados.mjs [id]` | Videos animados e informativos (turismo en cifras, tributario, asesoría): escenas de marca que entran al ritmo de la voz, cifras que suben, barras, calendario, subtítulos, fuente en pantalla y cierre con QR. Guiones y escenas en `semanas/semana-info/` (`voz.mjs` y `animados.mjs`); primero `SEMANA=info node voz.mjs` | `out/semana-info/videos/` |
+| `SEMANA=N node edicion.mjs [id]` | **Edición humana estilo viral (el estándar de los Reels):** planos cortos de las grabaciones reales con cámara virtual, golpes de zoom, sacudidas, destellos, separación RGB, barridos con luz cálida, stickers, números de capítulo, texto que se escribe solo, toques de dedo sincronizados con los toques reales, trazos a mano, subtítulos palabra por palabra con resaltador, grano, música y efectos. Guion en `semanas/semana-N/edicion.mjs`; muestras en `semanas/semana-muestra/` | `out/semana-N/videos/` |
+| `node sfx.mjs` | Efectos de sonido y base musical con ElevenLabs (una vez) | `out/sfx/` |
 
 **Crear una semana nueva:** copiar `semanas/semana-2/` a `semanas/semana-N/` y editar sus cuatro archivos, siguiendo `docs/marketing/05-plan-octubre-noviembre.md`.
+
+**Voz fija:** todos los Reels usan la voz F (`ELEVENLABS_VOICE_F=hpp4J3VqNfWAUOO0d1Us`) con `settings: { stability: 0.32, style: 0.5, speed: 1.06 }` (ver `VOZ_FIJA` en `semanas/semana-muestra/voz.mjs`).
 
 **Dónde editar:**
 - Precios, cupos y WhatsApp: `BRAND` en `lib.mjs`. Deben coincidir con `src/pricing.js`.

@@ -4,7 +4,7 @@
 // Uso: node capture-sites.mjs [id ...]   (sin argumentos graba todos)
 import { chromium } from 'playwright';
 import { execFileSync } from 'node:child_process';
-import { mkdirSync, rmSync, existsSync } from 'node:fs';
+import { mkdirSync, rmSync, existsSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 
 const OUT = new URL('./out/clips/', import.meta.url).pathname;
@@ -112,6 +112,17 @@ const CLIPS = {
       { name: 'nights', from: 4, to: 20, t0: 0, t1: 5 },
     ],
   },
+  // Muestra 2 de edición humana: galería por cabaña y guía de la zona de Miah y Noah, con toques reales.
+  'miah-galeria': {
+    url: 'https://cabanasmiaynoah.netlify.app/', seconds: 10,
+    plan: [[0, '#gallery'], [10, '#gallery']],
+    actions: [{ t: 2.2, click: '#gf button:nth-child(2)' }, { t: 4.6, click: '#gf button:nth-child(3)' }, { t: 7, click: '#gf button:nth-child(1)' }],
+  },
+  'miah-guia': {
+    url: 'https://cabanasmiaynoah.netlify.app/', seconds: 10, prescroll: true,
+    plan: [[0, '#fil@-400'], [3, '#fil@-400'], [3.7, '#fil@-150'], [10, '#fil@-150']],
+    actions: [{ t: 4.2, click: '#fil button:nth-child(2)' }, { t: 6.6, click: '#fil button:nth-child(3)' }],
+  },
   'redvaeru-inicio': {
     url: 'https://redvaeru.netlify.app/', seconds: 10, settle: 6000,
     plan: [[0, 0], [3, 0], [10, 2200]],
@@ -123,9 +134,10 @@ async function resolveY(page, target) {
   return page.evaluate((t) => {
     const max = document.documentElement.scrollHeight - innerHeight;
     if (t === 'end') return max;
-    const el = document.querySelector(t);
+    const [sel, off = -24] = t.split('@');
+    const el = document.querySelector(sel);
     if (!el) return 0;
-    return Math.min(max, el.getBoundingClientRect().top + scrollY - 24);
+    return Math.min(max, el.getBoundingClientRect().top + scrollY + Number(off));
   }, target);
 }
 
@@ -141,6 +153,11 @@ async function capture(id, cfg, browser) {
   await page.clock.runFor(cfg.settle || 3500);
   await page.waitForTimeout(800);
 
+  // Páginas que cargan contenido al bajar: se recorren antes de medir posiciones.
+  if (cfg.prescroll) {
+    for (let k = 0; k < 40; k++) { await page.evaluate((k) => window.scrollTo(0, k * 600), k); await page.clock.runFor(150); }
+    await page.evaluate(() => window.scrollTo(0, 0)); await page.clock.runFor(800);
+  }
   const keys = [];
   for (const [t, target] of cfg.plan) keys.push([t, await resolveY(page, target)]);
   const yAt = (t) => {
@@ -155,11 +172,16 @@ async function capture(id, cfg, browser) {
   rmSync(dir, { recursive: true, force: true });
   mkdirSync(dir, { recursive: true });
   const total = Math.round(cfg.seconds * FPS);
+  const taps = [];
   for (let f = 0; f < total; f++) {
     const t = f / FPS;
     await page.evaluate((y) => window.scrollTo(0, y), Math.round(yAt(t)));
     for (const a of cfg.actions || []) {
-      if (t >= a.t && t < a.t + 1 / FPS) await page.evaluate((sel) => document.querySelector(sel)?.click(), a.click);
+      if (t >= a.t && t < a.t + 1 / FPS) {
+        // Registra dónde cae cada toque (px CSS de la pantalla), para dibujar el dedo en la edición.
+        const r = await page.evaluate((sel) => { const el = document.querySelector(sel); if (!el) return null; const b = el.getBoundingClientRect(); el.click(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, a.click);
+        taps.push({ t: a.t, sel: a.click, ...r });
+      }
     }
     for (const s of cfg.sliders || []) {
       if (t < s.t0 || t > s.t1 + 1 / FPS) continue;
@@ -180,7 +202,8 @@ async function capture(id, cfg, browser) {
   execFileSync('ffmpeg', ['-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(dir, '%04d.jpg'),
     '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '18', '-preset', 'medium', join(OUT, `${id}.mp4`)]);
   rmSync(dir, { recursive: true, force: true });
-  console.log(`✓ ${id}.mp4 (${cfg.seconds} s)`);
+  if (taps.length) writeFileSync(join(OUT, `${id}.json`), JSON.stringify({ taps }, null, 1));
+  console.log(`✓ ${id}.mp4 (${cfg.seconds} s)${taps.length ? ' · ' + JSON.stringify(taps) : ''}`);
 }
 
 const ids = process.argv.slice(2).length ? process.argv.slice(2) : Object.keys(CLIPS);

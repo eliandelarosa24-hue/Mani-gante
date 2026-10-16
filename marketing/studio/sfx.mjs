@@ -13,6 +13,9 @@ export const SFX = {
   cash: { text: 'cash register ka-ching sound effect, bright, short', dur: 1.2 },
   click: { text: 'soft mouse click user interface tap, short', dur: 0.5 },
   scribble: { text: 'marker pen quickly drawing on paper, short scribble', dur: 0.8 },
+  riser: { text: 'short suspense riser swell building tension for a video reveal, 1.5 seconds', dur: 1.5 },
+  ding: { text: 'bright positive notification ding, checkmark success sound', dur: 0.8 },
+  tap: { text: 'soft finger tap on a phone screen, short', dur: 0.5 },
   music: { text: 'warm upbeat lo-fi hip hop instrumental beat, soft piano and mellow drums, positive, steady loop, no vocals', dur: 22 },
 };
 

@@ -1,6 +1,8 @@
-// Edición "humana" para Reels (1080×1920, 30 cps): planos cortos de las grabaciones reales con cámara virtual
-// (encuadre, empujes y golpes de zoom, pulso de mano), sacudidas, destellos, barridos entre planos, stickers,
-// círculos y flechas dibujados a mano, subtítulos palabra por palabra, grano, música y efectos de sonido.
+// Edición "humana" para Reels (1080×1920, 30 cps), al estilo de los edits virales: planos cortos de las
+// grabaciones reales con cámara virtual (encuadre, empujes y golpes de zoom, pulso de mano), sacudidas,
+// destellos, separación RGB, barridos con luz cálida, stickers, números de capítulo, texto que se escribe solo,
+// toques de dedo sobre los botones reales, círculos/flechas/subrayados a mano, subtítulos palabra por palabra
+// con resaltador, grano, música (atenuada bajo la voz) y efectos de sonido.
 // Todo se ancla a palabras de la voz en off (out/semana-N/voz/<id>.json, con tiempos por palabra).
 // Uso: SEMANA=muestra node edicion.mjs [id ...]   (lee semanas/semana-N/edicion.mjs)
 import { chromium } from 'playwright';
@@ -12,6 +14,7 @@ import { BASE, OUT, SEMANA_DIR, BASE_CSS, BRAND as B, C, EMBLEM, topo, qr } from
 
 const { EDITS } = await import(SEMANA_DIR + 'edicion.mjs');
 const FPS = 30, W = 1080, H = 1920, FW = 1080, FH = 2337; // FW×FH: grabación del celular escalada a 1080 de ancho
+const CSSPX = FW / 390; // 1 px CSS de la grabación (vista de 390 px) = 2,77 px de la grabación escalada
 const CHROME = process.env.CHROME_PATH || '/opt/pw-browsers/chromium-1194/chrome-linux/chrome';
 const WORK = join(BASE, '.edit'), VID = join(BASE, 'videos'), COV = join(BASE, 'portadas-reels'), SFX = join(OUT, 'sfx');
 
@@ -25,9 +28,16 @@ function frames(clip) {
   return Number(execFileSync('sh', ['-c', `ls "${dir}" | wc -l`]).toString());
 }
 
+// Toques registrados por capture-sites.mjs (px CSS) → px de la grabación escalada.
+const clipTaps = (clip) => {
+  const f = join(OUT, 'clips', `${clip}.json`);
+  return existsSync(f) ? JSON.parse(readFileSync(f, 'utf8')).taps.map((t) => ({ ...t, x: t.x * CSSPX, y: t.y * CSSPX })) : [];
+};
+
 // Grano de película: una textura de ruido que se desplaza en cada cuadro.
 function grain() {
   const f = join(WORK, 'grain.png');
+  if (!existsSync(f)) mkdirSync(WORK, { recursive: true });
   if (!existsSync(f)) execFileSync('ffmpeg', ['-nostdin', '-loglevel', 'error', '-y', '-f', 'lavfi', '-i', 'nullsrc=s=512x512,geq=random(1)*255:128:128', '-vf', 'format=gray', '-frames:v', '1', f]);
   return f;
 }
@@ -48,14 +58,35 @@ function plan(e, J) {
   const shots = e.shots.map((s, k) => ({ ...s, t0: T(s.at), t1: k + 1 < e.shots.length ? T(e.shots[k + 1].at) : total }));
   shots.forEach((s) => {
     if (s.clip) s.n = frames(s.clip);
+    // sync: el instante clipT de la grabación cae justo cuando la voz dice la palabra "at".
+    if (s.sync) s.from = s.sync.clipT - (T(s.sync.at) - s.t0) * (s.speed || 1);
+    // times: [[palabra, segundo de la grabación], ...] acelera o frena la grabación por tramos.
+    if (s.times) s.times = s.times.map(([a, c]) => [a === 'end' ? s.t1 : T(a), c]);
     s.cam = (s.cam || [{}]).map((c, i) => ({ x: FW / 2, y: FH / 2, z: 1, dur: 0.22, ...c, t: i === 0 ? s.t0 : T(c.at) }));
   });
-  const fx = (e.fx || []).map((f) => ({ ...f, t: T(f.at) + (f.dt ?? 0), until: f.until !== undefined ? T(f.until) : undefined }));
+  const fx = [];
+  (e.fx || []).forEach((f) => {
+    // taps: N dibuja el dedo en cada toque real de la grabación que cae dentro del plano N.
+    if (f.taps !== undefined) {
+      const s = shots[f.taps];
+      const inv = (ct) => {
+        if (!s.times) return s.t0 + (ct - (s.from || 0)) / (s.speed || 1);
+        for (let i = 1; i < s.times.length; i++) { const [a0, c0] = s.times[i - 1], [a1, c1] = s.times[i]; if (ct >= c0 && ct <= c1) return a0 + ((ct - c0) / (c1 - c0)) * (a1 - a0); }
+        return -1;
+      };
+      clipTaps(s.clip).forEach((tp) => {
+        const t = inv(tp.t);
+        if (t >= s.t0 && t < s.t1) fx.push({ tap: { x: tp.x, y: tp.y }, t, sfx: 'tap', vol: 1 });
+      });
+      return;
+    }
+    fx.push({ ...f, t: T(f.at) + (f.dt ?? 0), until: f.until !== undefined ? T(f.until) : undefined });
+  });
   // Subtítulos: bloques de hasta 3 palabras (corta en la puntuación).
   const caps = [];
   let g = [];
   words.forEach((w, i) => {
-    g.push(w);
+    g.push({ ...w, hl: (e.hi || []).includes(norm(w.w)) });
     if (g.length >= 3 || /[.,:;?!…]$/.test(w.w) || i === words.length - 1) { caps.push(g); g = []; }
   });
   return { total, shots, fx, caps: caps.map((ws) => ({ t0: ws[0].t0, t1: ws.at(-1).t1 + 0.08, ws })) };
@@ -65,7 +96,8 @@ function plan(e, J) {
 const STICK = {
   tag: (s) => `<div class="tag2 ${s.tone || ''}" style="font-size:${s.size || 50}px">${s.text}</div>`,
   emoji: (s) => `<div class="emo" style="font-size:${s.size || 170}px">${s.text}</div>`,
-  btn: (s) => `<div class="tag2 gold big">${s.text}</div>`,
+  num: (s) => `<div class="num"><b>${s.text}</b>${s.label ? `<span>${s.label}</span>` : ''}</div>`,
+  type: (s) => `<div class="typ" style="font-size:${s.size || 84}px" data-full="${s.text.replace(/"/g, '&quot;')}"><span></span><i>|</i></div>`,
 };
 // Trazos "a mano": elipse temblorosa, flecha curva con punta, subrayado ondulado (en coordenadas de la grabación).
 const wob = (i, a) => Math.sin(i * 12.9898 + a * 78.233) * 0.5;
@@ -92,13 +124,15 @@ const DRAW = {
 
 async function ctaHTML(e) {
   const waQR = await qr(B.waLink, C.ink, '#F2EBDF');
+  let k = 0;
   return `<div id="cta">${topo(1080, 1920, { seed: 9, opacity: 0.22 })}
     <div class="ctain">
-      <img class="ci" data-k="0" src="${EMBLEM}" style="width:150px;height:150px">
-      <h1 class="ci serif" data-k="1">${e.cta.title}</h1>
-      <div class="ci tag2 gold big wig" data-k="2">${e.cta.button}</div>
-      <div class="ci qrrow" data-k="3"><img src="${waQR}"><p>WhatsApp<br><b>${B.wa}</b></p></div>
-      <p class="ci note" data-k="4">${e.cta.note}</p>
+      <img class="ci" data-k="${k++}" src="${EMBLEM}" style="width:140px;height:140px">
+      <h1 class="ci serif" data-k="${k++}">${e.cta.title}</h1>
+      ${e.cta.checks ? `<div class="ci checks" data-k="${k++}">${e.cta.checks.map((c) => `<span>✅ ${c}</span>`).join('')}</div>` : ''}
+      <div class="ci tag2 gold big wig" data-k="${k++}">${e.cta.button}</div>
+      <div class="ci qrrow" data-k="${k++}"><img src="${waQR}"><p>WhatsApp<br><b>${B.wa}</b></p></div>
+      <p class="ci note" data-k="${k++}">${e.cta.note}</p>
     </div></div>`;
 }
 
@@ -110,6 +144,9 @@ body{width:${W}px;height:${H}px;background:#000;overflow:hidden}
 #foot{position:absolute;left:0;top:0;width:${FW}px;height:${FH}px}
 #draw{position:absolute;left:0;top:0;width:${FW}px;height:${FH}px;overflow:visible}
 #draw path{fill:none;stroke:${C.gold2};stroke-width:14;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 4px 0 rgba(0,0,0,.35))}
+.tap{position:absolute;width:0;height:0;opacity:0}
+.tap .ring{position:absolute;left:-70px;top:-70px;width:140px;height:140px;border-radius:50%;border:8px solid #fff;box-shadow:0 0 0 6px rgba(196,163,90,.6)}
+.tap .fin{position:absolute;left:-20px;top:-6px;font-family:Emoji;font-size:120px;line-height:1;filter:drop-shadow(0 10px 14px rgba(0,0,0,.4))}
 #hook{position:absolute;inset:0;display:none;align-items:center;justify-content:center;text-align:center}
 #hook .bgi{position:absolute;inset:-60px;width:calc(100% + 120px);height:calc(100% + 120px);object-fit:cover;filter:blur(26px) brightness(.38) saturate(1.2)}
 #hook h1{position:relative;font-family:Manrope;font-weight:800;font-size:150px;line-height:.98;color:${C.cream};letter-spacing:-.02em;text-transform:uppercase}
@@ -120,24 +157,34 @@ body{width:${W}px;height:${H}px;background:#000;overflow:hidden}
 .tag2.ink{background:${C.ink};color:${C.cream};border:3px solid ${C.gold}}
 .tag2.big{font-size:60px;padding:24px 42px;border-radius:999px}
 .emo{font-family:Emoji;line-height:1;filter:drop-shadow(0 12px 18px rgba(0,0,0,.35))}
+.num{display:flex;align-items:center;gap:22px}
+.num b{font-family:Fraunces;font-style:italic;font-weight:600;font-size:260px;line-height:.8;color:${C.gold2};-webkit-text-stroke:8px ${C.ink};paint-order:stroke;text-shadow:0 14px 0 rgba(0,0,0,.25)}
+.num span{background:${C.ink};color:${C.cream};border:3px solid ${C.gold};font-weight:800;font-size:46px;padding:14px 26px;border-radius:18px;white-space:nowrap}
+.typ{font-family:Manrope,Emoji;font-weight:800;color:#fff;line-height:1.05;text-align:center;white-space:pre-wrap;width:900px;paint-order:stroke;-webkit-text-stroke:12px ${C.ink};text-shadow:0 10px 0 rgba(0,0,0,.3)}
+.typ i{font-style:normal;color:${C.gold2};-webkit-text-stroke:0}
 #flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none}
+#leak{position:absolute;inset:-20%;opacity:0;pointer-events:none;mix-blend-mode:screen;background:radial-gradient(40% 35% at 30% 40%,rgba(255,170,80,.85),transparent 70%),radial-gradient(35% 30% at 70% 60%,rgba(255,90,60,.55),transparent 70%)}
 #grain{position:absolute;inset:-512px;background-image:url(grain.png);opacity:.07;mix-blend-mode:overlay;pointer-events:none}
 #vig{position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 45%,transparent 55%,rgba(0,0,0,.45));pointer-events:none}
 #cap{position:absolute;left:540px;width:max-content;max-width:980px;transform-origin:0 50%;display:flex;flex-wrap:wrap;justify-content:center;gap:4px 26px;padding:14px 30px 20px;border-radius:30px;background:rgba(11,17,14,.62);backdrop-filter:blur(6px);pointer-events:none}
 #cap span{font-family:Manrope,Emoji;font-weight:800;font-size:70px;line-height:1.12;color:#fff;paint-order:stroke;-webkit-text-stroke:10px ${C.ink};text-shadow:0 8px 0 rgba(0,0,0,.25);display:inline-block}
 #cap span.on{color:${C.gold2};transform:scale(1.1) rotate(-2deg);margin:0 6px}
+#cap span.hl{color:${C.ink};-webkit-text-stroke:0;text-shadow:none;background:linear-gradient(100deg,transparent 2%,${C.gold2} 6%,${C.gold} 92%,transparent 98%);padding:0 14px;border-radius:12px;transform:rotate(-2deg)}
 #cta{position:absolute;inset:0;background:${C.ink};display:none}
 #cta .topo{position:absolute;inset:0}
-.ctain{position:absolute;left:80px;right:80px;top:300px;bottom:520px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:44px;text-align:center}
-.ctain h1{font-size:120px;line-height:1;font-weight:500;color:${C.cream}}
+.ctain{position:absolute;left:70px;right:70px;top:220px;bottom:500px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:38px;text-align:center}
+.ctain h1{font-size:110px;line-height:1;font-weight:500;color:${C.cream}}
+.checks{display:flex;flex-wrap:wrap;justify-content:center;gap:14px}
+.checks span{font-family:Manrope,Emoji;font-size:40px;font-weight:800;color:${C.cream};background:rgba(242,235,223,.08);border:2px solid rgba(196,163,90,.55);padding:12px 22px;border-radius:999px}
 .qrrow{display:flex;align-items:center;gap:30px;text-align:left}.qrrow img{width:230px;height:230px;border-radius:22px}
 .qrrow p{font-size:34px;font-weight:600;line-height:1.3;color:${C.cream}}.qrrow b{font-size:44px;color:${C.gold2}}
-.note{font-size:34px;font-weight:600;color:${C.cream};opacity:.8}
+.note{font-size:36px;font-weight:700;color:${C.cream};opacity:.85}
 .ci{opacity:0}
 `;
 
 const RUNTIME = `
 const E=(x)=>1-Math.pow(1-Math.max(0,Math.min(1,x)),3);
+const IO=(x)=>{x=Math.max(0,Math.min(1,x));return x<.5?4*x*x*x:1-Math.pow(-2*x+2,3)/2;};
 const BACK=(x)=>{x=Math.max(0,Math.min(1,x));const c=2.2;return 1+(c+1)*Math.pow(x-1,3)+c*Math.pow(x-1,2);};
 const $=(s)=>document.querySelector(s);
 let lastSrc='';
@@ -151,7 +198,9 @@ window.render=async(t)=>{
   $('#world').style.display=(isHook||isCta)?'none':'block';
   if(!isHook&&!isCta){
     const lt=t-s.t0, len=s.t1-s.t0;
-    const ct=s.to!==undefined?s.from+(s.to-s.from)*Math.min(1,lt/len):(s.from||0)+lt*(s.speed||1);
+    const k=s.ramp?IO(lt/len):Math.min(1,lt/len);
+    let ct=s.to!==undefined?s.from+(s.to-s.from)*k:(s.from||0)+lt*(s.speed||1);
+    if(s.times){ct=s.times[0][1];for(let i=1;i<s.times.length;i++){const [a0,c0]=s.times[i-1],[a1,c1]=s.times[i];if(t>=a0){ct=t>=a1?c1:c0+(c1-c0)*(t-a0)/(a1-a0);}}}
     const idx=Math.max(1,Math.min(s.n,Math.round(ct*30)+1));
     const src='../frames/'+s.clip+'/'+String(idx).padStart(5,'0')+'.jpg';
     if(src!==lastSrc){const im=$('#foot');im.src=src;lastSrc=src;await im.decode().catch(()=>{});}
@@ -171,7 +220,10 @@ window.render=async(t)=>{
     if(s.trans==='whip'&&tp<1){wx=(1-E(tp))*520;blur=(1-tp)*26;}
     if(s.trans==='zoom'&&tp<1){wz=1+(1-E(tp))*0.35;blur=(1-tp)*18;}
     $('#world').style.transform='translate('+(540+hx+sx+wx)+'px,'+(960+hy+sy)+'px) rotate('+(hr+sr)+'deg) scale('+(z*wz)+') translate('+(-x)+'px,'+(-y)+'px)';
-    $('#world').style.filter=blur?'blur('+blur+'px)':'none';
+    const rgb=fx.find((f)=>f.rgb&&t>=f.t&&t<f.t+0.28); const ra=rgb?(1-(t-rgb.t)/0.28)*14:0;
+    const fl=[]; if(blur)fl.push('blur('+blur+'px)'); if(ra)fl.push('drop-shadow('+ra+'px 0 0 rgba(255,40,60,.55)) drop-shadow('+(-ra)+'px 0 0 rgba(40,220,255,.55))');
+    if(s.dim)fl.push('brightness('+(1-s.dim)+')');
+    $('#world').style.filter=fl.length?fl.join(' '):'none';
   }
   if(isHook){
     const p=(t-s.t0);
@@ -182,19 +234,31 @@ window.render=async(t)=>{
   if(isCta){
     document.querySelectorAll('.ci').forEach((el)=>{const p=(t-s.t0-0.12*el.dataset.k)/0.32;el.style.opacity=E(p);el.style.transform='translateY('+((1-E(p))*60)+'px) scale('+(0.7+0.3*BACK(p))+')'+(el.classList.contains('wig')&&p>1?' rotate('+(Math.sin(t*7)*3)+'deg)':'');});
   }
-  // ---- stickers y trazos ----
+  // ---- luz cálida en los cortes ----
+  let lk=0; shots.forEach((q)=>{if(q.trans&&Math.abs(t-q.t0)<0.3)lk=Math.max(lk,1-Math.abs(t-q.t0)/0.3);});
+  $('#leak').style.opacity=lk*0.75; $('#leak').style.transform='translateX('+((t*400)%300-150)+'px)';
+  // ---- stickers, toques y trazos ----
   fx.forEach((f,i)=>{
     const el=document.getElementById('fx'+i); if(!el) return;
-    const end=f.until??s.t1;
-    const on=t>=f.t&&t<end&&((f.shot===undefined)||true);
     const shot=shots.find((x)=>f.t>=x.t0&&f.t<x.t1);
-    const live=on&&shot===s;
-    if(f.draw){const pth=el; const p=live?E((t-f.t)/(f.speed||0.38)):0; pth.style.strokeDashoffset=1-p; pth.style.opacity=live?1:0; return;}
+    if(f.tap){
+      const d=t-f.t, on=shot===s&&d>-0.35&&d<0.6;
+      el.style.opacity=on?(d<-0.2?(d+0.35)/0.15:d>0.45?(0.6-d)/0.15:1):0;
+      el.querySelector('.ring').style.transform='scale('+(d<0?0.2:0.3+1.3*E(d/0.45))+')';
+      el.querySelector('.ring').style.opacity=d<0?0:1-E(d/0.5);
+      el.querySelector('.fin').style.transform='translate('+(d<0?-d*160:0)+'px,'+(d<0?-d*120:0)+'px) scale('+(Math.abs(d)<0.08?0.88:1)+')';
+      return;
+    }
+    const end=f.until??s.t1;
+    const live=t>=f.t&&t<end&&shot===s;
+    if(f.draw){const p=live?E((t-f.t)/(f.speed||0.38)):0; el.style.strokeDashoffset=1-p; el.style.opacity=live?1:0; return;}
     if(!live){el.style.opacity=0;return;}
     const p=(t-f.t)/0.28, out=end-t<0.15?(end-t)/0.15:1;
     const sc=BACK(p)*out, wig=f.wiggle?Math.sin((t-f.t)*8)*3:0;
     el.style.opacity=Math.min(1,p*3)*out;
     el.style.transform='translate(-50%,-50%) scale('+sc+') rotate('+((f.rot||0)+wig)+'deg)';
+    const ty=el.querySelector('.typ');
+    if(ty){const full=ty.dataset.full;const n=Math.min(full.length,Math.floor((t-f.t)/(f.cps||0.045)));ty.querySelector('span').textContent=full.slice(0,n);ty.querySelector('i').style.opacity=(n<full.length||Math.floor(t*3)%2)?1:0;}
   });
   // ---- destellos ----
   let fl=0; fx.filter((f)=>f.flash&&t>=f.t&&t<f.t+0.16).forEach((f)=>{fl=Math.max(fl,(1-(t-f.t)/0.16)*f.flash);});
@@ -204,9 +268,9 @@ window.render=async(t)=>{
   const box=$('#cap'); box.style.top=(s.capY??1430)+'px'; box.style.display=(s.noCap||!cap)?'none':'flex';
   if(cap&&!s.noCap){
     const key=cap.t0+'';
-    if(box.dataset.k!==key){box.dataset.k=key;box.innerHTML=cap.ws.map((w)=>'<span>'+w.w+'</span>').join('');}
+    if(box.dataset.k!==key){box.dataset.k=key;box.innerHTML=cap.ws.map((w)=>'<span class="'+(w.hl?'hl':'')+'">'+w.w+'</span>').join('');}
     const pp=(t-cap.t0)/0.12; box.style.transform='translateX(-50%) scale('+(0.85+0.15*BACK(pp))+')';
-    [...box.children].forEach((sp,i)=>sp.classList.toggle('on',t>=cap.ws[i].t0&&t<(cap.ws[i+1]?.t0??cap.t1)));
+    [...box.children].forEach((sp,i)=>sp.classList.toggle('on',!cap.ws[i].hl&&t>=cap.ws[i].t0&&t<(cap.ws[i+1]?.t0??cap.t1)));
   }
   // ---- grano ----
   const r=Math.floor(t*30)*7919; $('#grain').style.transform='translate('+(r%512)+'px,'+((r*3)%512)+'px)';
@@ -226,18 +290,20 @@ for (const id of ids) {
   const hook = P.shots.find((s) => s.type === 'hook');
   const hookBg = hook?.bg ? `../frames/${hook.bg.clip}/${String(Math.round(hook.bg.t * FPS) + 1).padStart(5, '0')}.jpg` : '';
   if (hook?.bg) frames(hook.bg.clip);
-  const stickers = P.fx.map((f, i) => {
-    if (f.sticker) return `<div class="st" id="fx${i}" style="left:${f.sticker.x}px;top:${f.sticker.y}px">${STICK[f.sticker.kind || 'tag'](f.sticker)}</div>`;
-    return '';
+  const stick = (f, i) => `<div class="st" id="fx${i}" style="left:${f.sticker.x}px;top:${f.sticker.y}px">${STICK[f.sticker.kind || 'tag'](f.sticker)}</div>`;
+  const stickers = P.fx.map((f, i) => (f.sticker && f.sticker.space !== 'world' ? stick(f, i) : '')).join('');
+  const worldFx = P.fx.map((f, i) => {
+    if (f.tap) return `<div class="tap" id="fx${i}" style="left:${f.tap.x}px;top:${f.tap.y}px"><div class="ring"></div><div class="fin">👆</div></div>`;
+    return f.sticker?.space === 'world' ? stick(f, i) : '';
   }).join('');
   const draws = P.fx.map((f, i) => (f.draw ? `<path id="fx${i}" pathLength="1" stroke-dasharray="1" stroke-dashoffset="1" d="${DRAW[f.draw.kind](f.draw)}" style="${f.draw.color ? `stroke:${f.draw.color}` : ''}"/>` : '')).join('');
   const html = `<!doctype html><html><head><meta charset="utf-8"><style>${CSS}</style></head><body class="f">
     <div id="stage">
-      <div id="world"><img id="foot"><svg id="draw" viewBox="0 0 ${FW} ${FH}">${draws}</svg></div>
+      <div id="world"><img id="foot"><svg id="draw" viewBox="0 0 ${FW} ${FH}">${draws}</svg>${worldFx}</div>
       <div id="hook">${hookBg ? `<img class="bgi" src="${hookBg}">` : ''}<h1>${hook?.text ?? ''}</h1></div>
       ${await ctaHTML(e)}
       ${stickers}
-      <div id="cap"></div><div id="vig"></div><div id="grain"></div><div id="flash"></div>
+      <div id="cap"></div><div id="leak"></div><div id="vig"></div><div id="grain"></div><div id="flash"></div>
     </div>
     <script>window.P=${JSON.stringify({ ...P, FW, FH })};${RUNTIME}</script></body></html>`;
   writeFileSync(join(dir, 'index.html'), html);
@@ -252,7 +318,7 @@ for (const id of ids) {
   }
   await page.close();
   // Audio: voz + música de fondo (atenuada bajo la voz) + efectos en cada evento.
-  const sfx = P.fx.filter((f) => f.sfx).map((f) => ({ file: join(SFX, `${f.sfx}.mp3`), t: f.t + (f.sfxDt ?? 0), vol: f.vol ?? 0.7 }));
+  const sfx = P.fx.filter((f) => f.sfx).map((f) => ({ file: join(SFX, `${f.sfx}.mp3`), t: Math.max(0, f.t + (f.sfxDt ?? 0)), vol: f.vol ?? 0.7 }));
   P.shots.filter((s) => s.trans === 'whip' || s.trans === 'zoom').forEach((s) => sfx.push({ file: join(SFX, 'whoosh.mp3'), t: Math.max(0, s.t0 - 0.12), vol: 0.55 }));
   const inputs = ['-i', join(BASE, 'voz', `${id}.mp3`), '-stream_loop', '-1', '-i', join(SFX, e.music ?? 'music.mp3'), ...sfx.flatMap((x) => ['-i', x.file])];
   let fc = `[1:a]adelay=${Math.round((J.offset ?? 0.3) * 1000)}:all=1,apad,atrim=0:${P.total},aresample=48000,asplit=2[v][vk];`;
@@ -261,7 +327,7 @@ for (const id of ids) {
   fc += `[v][m]${sfx.map((_, i) => `[s${i}]`).join('')}amix=inputs=${2 + sfx.length}:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11[au]`;
   const out = join(VID, `${e.file}.mp4`);
   execFileSync('ffmpeg', ['-nostdin', '-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(dir, 'f', '%05d.jpg'), ...inputs, '-filter_complex', fc,
-    '-map', '0:v', '-map', '[au]', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '19', '-preset', 'medium', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', '-t', String(P.total), out], { stdio: ['ignore', 'inherit', 'inherit'] });
+    '-map', '0:v', '-map', '[au]', '-c:v', 'libx264', '-pix_fmt', 'yuv420p', '-crf', '21', '-preset', 'medium', '-maxrate', '9M', '-bufsize', '18M', '-c:a', 'aac', '-b:a', '192k', '-movflags', '+faststart', '-t', String(P.total), out], { stdio: ['ignore', 'inherit', 'inherit'] });
   rmSync(join(dir, 'f'), { recursive: true, force: true });
   console.log(`✓ ${e.file} · ${P.total.toFixed(1)} s · ${P.shots.length} planos · ${P.fx.length} efectos`);
 }
