@@ -67,6 +67,19 @@ Ese viajero busca en internet, y en inglés. ¿Su web está en inglés? 👉 POR
     notes: NOTA,
   },
   {
+    id: 'E08', day: '2026-10-31', time: '18:00', fbTime: '18:30', where: ['Instagram', 'Facebook', 'TikTok'], format: 'Reel 25 s', title: 'Noticia: Navidad y Año Nuevo caen en viernes',
+    files: ['videos/E08_noticia-fines-de-semana-largos.mp4', 'portadas-reels/E08_E08.png'],
+    ig: `Ojo con diciembre 📅
+
+Navidad (25-12) y Año Nuevo (01-01-2027) caen en viernes: dos fines de semana largos seguidos.
+En Fiestas Patrias, la ocupación hotelera en La Araucanía superó el 65% (Hoteleros de Chile, cifra preliminar).
+
+Los huéspedes reservan con tiempo: que lo encuentren hoy, no en diciembre. 👉 TEMPORADA al ${WA}
+
+#Araucanía #turismo #findesemanalargo #cabañas #temporada`,
+    notes: NOTA,
+  },
+  {
     id: 'E10', day: '2026-11-03', time: '18:00', fbTime: '18:30', where: ['Instagram', 'Facebook', 'TikTok'], format: 'Reel 29 s', title: '4 reglas para que sus fotos vendan',
     files: ['videos/E10_fotos-que-venden.mp4', 'portadas-reels/E10_E10.png'],
     ig: `Antes de reservar, sus huéspedes miran las fotos 📸 4 reglas para que vendan:
@@ -97,6 +110,19 @@ Y para atraer a ese turista: su web en inglés. 👉 PORTADA al ${WA}
 
 #SII #IVA #turismochile #pymes`,
     notes: NOTA,
+  },
+  {
+    id: 'E09', day: '2026-11-07', time: '18:00', fbTime: '18:30', where: ['Instagram', 'Facebook', 'TikTok'], format: 'Reel 24 s', title: 'Noticia: vuelo directo Temuco–Balmaceda',
+    files: ['videos/E09_noticia-vuelo-temuco-balmaceda.mp4', 'portadas-reels/E09_E09.png'],
+    ig: `Noticia para el sur ✈️
+
+SKY anunció un vuelo directo Temuco–Balmaceda para el verano: del 1 de enero al 14 de marzo de 2027, desde $38.190 por tramo (fuente: SKY, vía Mediabanco y 24horas).
+
+Más conexión entre la Araucanía y la Patagonia en plena temporada = más viajeros de paso buscando dónde dormir, comer y qué hacer.
+¿Lo van a encontrar a usted? 👉 PORTADA al ${WA}
+
+#Temuco #Patagonia #Aysén #turismo #Araucanía`,
+    notes: NOTA + ' Verifique la frecuencia del vuelo en sky.cl antes de publicar.',
   },
   {
     id: 'E01', day: '2026-11-10', time: '18:00', fbTime: '18:30', where: ['Instagram', 'Facebook', 'TikTok'], format: 'Reel 24 s', title: 'El F29 tiene tres fechas',
