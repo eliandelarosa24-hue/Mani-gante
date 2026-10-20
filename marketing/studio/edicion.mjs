@@ -235,7 +235,7 @@ window.render=async(t)=>{
     if(s.type==='photo'){const a=s.kb[0],b=s.kb[1];const z=a.z+(b.z-a.z)*k,x=a.x+(b.x-a.x)*k,y=a.y+(b.y-a.y)*k;el.querySelector('.pfg').style.transform='scale('+z+') translate('+x+'px,'+y+'px)';}
     if(s.type==='stack'){const cs=el.querySelectorAll('.pcard');cs.forEach((c,i)=>{const at=s.t0+0.1+i*(len-0.4)/cs.length;const p=(t-at)/0.32;c.style.opacity=p>0?Math.min(1,p*2):0;c.style.transform='translate(-50%,-50%) translateY('+((1-E(p))*-260)+'px) rotate('+(c.dataset.r*(p>0?1:0)+(1-E(p))*14)+'deg) scale('+(0.8+0.2*BACK(p))+')';});
       const bg=el.querySelector('.pbg'); if(bg) bg.style.transform='scale('+(1.05+0.08*k)+')';}
-    if(isKin){el.querySelectorAll('.kw span').forEach((sp)=>{const p=(t-(+sp.dataset.t))/0.18;sp.style.opacity=p>0?1:0;sp.style.transform='translateY('+((1-E(p))*60)+'px) scale('+(p>0?0.6+0.4*BACK(p):0.6)+') rotate('+(sp.classList.contains('hl')?-3:0)+'deg)';});
+    if(isKin){el.querySelectorAll('.kw').forEach((kw)=>{kw.style.display=(t>=+kw.dataset.a&&t<+kw.dataset.b)?'flex':'none';});el.querySelectorAll('.kw span').forEach((sp)=>{const p=(t-(+sp.dataset.t))/0.18;sp.style.opacity=p>0?1:0;sp.style.transform='translateY('+((1-E(p))*60)+'px) scale('+(p>0?0.6+0.4*BACK(p):0.6)+') rotate('+(sp.classList.contains('hl')?-3:0)+'deg)';});
       const bg=el.querySelector('.kbg'); if(bg) bg.style.transform='scale('+(1.05+0.1*k)+')';}
   }
   if(!isHook&&!isCta&&!isPh&&!isKin){
@@ -354,7 +354,12 @@ for (const id of ids) {
       const ws = J.words.map((w) => ({ ...w, t0: w.t0 + (J.offset ?? 0.3) })).filter((w) => w.t0 >= s.t0 - 0.01 && w.t0 < s.t1 - 0.05);
       const hi = (s.hi || e.hi || []);
       const bg = s.bg ? `<img class="kbg" src="../frames/${s.bg.clip}/${String(Math.round(s.bg.t * FPS) + 1).padStart(5, '0')}.jpg">` : '';
-      return `<div class="kin" id="pk${k}">${bg}<div class="kw" style="${s.size ? `--fs:${s.size}px` : ''}">${ws.map((w) => `<span class="${hi.includes(w.w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[¿?¡!.,:;…«»"]/g, '')) ? 'hl' : ''}" data-t="${w.t0}" style="${s.size ? `font-size:${s.size}px` : ''}">${w.w}</span>`).join('')}</div></div>`;
+      // Páginas cortas: máximo `per` palabras, cortando en la puntuación; cada página reemplaza a la anterior.
+      const per = s.per || 5, pages = [[]];
+      ws.forEach((w) => { const pg = pages[pages.length - 1]; pg.push(w); if (pg.length >= per || (/[.,:;?!…]$/.test(w.w) && pg.length >= 2)) pages.push([]); });
+      if (!pages[pages.length - 1].length) pages.pop();
+      const span = (w) => `<span class="${hi.includes(w.w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[¿?¡!.,:;…«»"]/g, '')) ? 'hl' : ''}" data-t="${w.t0}" style="${s.size ? `font-size:${s.size}px` : ''}">${w.w}</span>`;
+      return `<div class="kin" id="pk${k}">${bg}${pages.map((pg, i) => `<div class="kw" data-a="${i ? pg[0].t0 : -1}" data-b="${pages[i + 1] ? pages[i + 1][0].t0 : 1e9}">${pg.map(span).join('')}</div>`).join('')}</div>`;
     }
     return '';
   }).join('');

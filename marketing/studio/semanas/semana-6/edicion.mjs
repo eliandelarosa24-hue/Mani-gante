@@ -18,7 +18,7 @@ export const EDITS = {
         { x: 760, y: 935, z: 1.75 }, { at: 'noventa', x: 760, y: 1232, z: 1.75 }, { at: 'dieciocho', x: 760, y: 1472, z: 1.75 },
         { at: 'Son', x: 400, y: 1892, z: 1.9 }, { at: 'treinta', x: 540, y: 2043, z: 1.55, dur: 0.5 },
       ] },
-      B('calculadora', 'calculadora-sube', { from: 0.4, speed: 0.4, trans: 'zoom', y: 1300, z: 1.0 }),
+      B('calculadora', 'calculadora-sube', { from: 5.0, speed: 0.03, trans: 'zoom', y: 1300, z: 1.0 }),
       { at: 'propia', type: 'stack', bg: MIAH('exterior-sol'), trans: 'whip', label: REAL, cards: [{ src: MIAH('exterior-cielo'), y: 780 }, { src: MIAH('terraza'), y: 900 }, { src: MIAH('living'), y: 1020 }] },
       { at: 'Escríbame', type: 'cta', capY: 1700 },
     ],
