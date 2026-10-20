@@ -33,7 +33,7 @@ Son Reels extra a las 18:00 que informan y terminan llevando a los servicios. La
 | E08 | sáb 31 oct | Noticia: Navidad y Año Nuevo caen viernes (2 fines de semana largos) y Fiestas Patrias con más de 65 % de ocupación | Calendario y Hoteleros de Chile vía Emol | ⏳ sin voz: faltan créditos de ElevenLabs |
 | E10 | mar 3 nov | 4 reglas para que sus fotos vendan | Tips | ✅ |
 | E03 | jue 5 nov | IVA y turistas extranjeros | DL 825 y SII | ✅ |
-| E09 | sáb 7 nov | Noticia: vuelo directo Temuco–Balmaceda de SKY | SKY vía 24horas y Mediabanco | ⏳ sin voz: faltan créditos de ElevenLabs |
+| E09 | sáb 7 nov | Noticia: vuelo directo Temuco–Balmaceda de SKY | SKY vía 24horas y Mediabanco | ✅ |
 | E01 | mar 10 nov | El F29 tiene tres fechas (vence el jueves 12) | SII | ✅ |
 | E07 | sáb 14 nov | Fondos: cómo no perderse la próxima convocatoria | Sercotec | ✅ |
 | E02 | mar 17 nov | Mes sin ventas no es mes sin F29 | SII | ✅ |
@@ -62,4 +62,18 @@ Si se cierra un cliente en octubre, el agente agrega en la semana siguiente:
 
 - **Posts del 23 de octubre al 15 de noviembre (136 piezas):** rediseñados con la capa de personalidad de `templates.mjs`, que agrega stickers, notas a mano, resaltado de plumón, chats tipo WhatsApp, contadores de cupos, calendario, pantallas reales de Miah, Poetas y redvaeru.netlify.app y la firma de Jorge. Mismos nombres de archivo y mismos textos.
 - **Reels R03 a R16 (14):** tienen guion nuevo con voz fija (`VOZ_FIJA`, con la voz hpp4J3VqNfWAUOO0d1Us) y edición humana en `semanas/semana-N/edicion.mjs`. Los manifiestos ya apuntan a los `*_edit.mp4`.
-  - ⏳ Falta la voz real. Los borradores están renderizados en silencio. Cuando haya créditos de ElevenLabs (unos 5.000 caracteres), se corre `NODE_USE_ENV_PROXY=1 ELEVENLABS_API_KEY=… sh rehacer-reels.sh`, y después se reconstruyen las agendas y los paquetes.
+  - ✅ Con voz real, renderizados y entregados en `entregas/reels-finales-23oct-15nov/`.
+
+## Semanas 5 y 6 (16 al 29 de noviembre), producidas con el estilo nuevo
+
+- **Semana 5, «Recta final: lo que todavía alcanza»:** R17 a R20, C10, C11, P10, S10, S11, Google 6 y grupos de Facebook.
+- **Semana 6, «La temporada ya empezó»:** R21 a R24, C12 (mantención: Cuidado $25.000/mes y Crecimiento $55.000/mes, como en `src/pricing.js`), C13, P11, S12, S13, Google 7 y grupos de Facebook.
+- **Reels:**
+  - Voz fija con guion propio y edición con B-roll real.
+  - El B-roll son fotos de la galería de Miah en `out/broll/`, que se extraen del clip `miah-galeria` con ffmpeg.
+  - Placas nuevas del editor:
+    - `photo`: Ken Burns.
+    - `stack`: polaroids.
+    - `kinetic`: tipografía cinética sobre la voz.
+- **Mensaje honesto después del 30:** no hay urgencia falsa. El 30 no cierra nada; enero y febrero son los meses fuertes.
+- **La rutina «Productor» del miércoles** se pisa con estas semanas. Conviene que pase a producir diciembre.
