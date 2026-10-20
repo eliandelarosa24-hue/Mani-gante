@@ -10,7 +10,7 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, rmSync, existsSync, readFileSync, writeFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { pathToFileURL } from 'node:url';
-import { BASE, OUT, SEMANA_DIR, BASE_CSS, BRAND as B, C, EMBLEM, topo, qr } from './lib.mjs';
+import { BASE, OUT, ROOT, SEMANA_DIR, BASE_CSS, BRAND as B, C, EMBLEM, topo, qr } from './lib.mjs';
 
 const { EDITS } = await import(SEMANA_DIR + 'edicion.mjs');
 const FPS = 30, W = 1080, H = 1920, FW = 1080, FH = 2337; // FW×FH: grabación del celular escalada a 1080 de ancho
@@ -58,6 +58,7 @@ function plan(e, J) {
   const shots = e.shots.map((s, k) => ({ ...s, t0: T(s.at), t1: k + 1 < e.shots.length ? T(e.shots[k + 1].at) : total }));
   shots.forEach((s) => { if (!(s.t1 > s.t0)) throw new Error(`${e.id}: el plano «${s.at}» (${s.t0.toFixed(2)} s) no queda antes del siguiente: revise la palabra o use «palabra#n»`); });
   shots.forEach((s) => {
+    if (s.type === 'kinetic') s.noCap = true;
     if (s.clip) s.n = frames(s.clip);
     // sync: el instante clipT de la grabación cae justo cuando la voz dice la palabra "at".
     if (s.sync) s.from = s.sync.clipT - (T(s.sync.at) - s.t0) * (s.speed || 1);
@@ -195,6 +196,18 @@ body{width:${W}px;height:${H}px;background:#000;overflow:hidden}
 .qrrow p{font-size:34px;font-weight:600;line-height:1.3;color:${C.cream}}.qrrow b{font-size:44px;color:${C.gold2}}
 .note{font-size:36px;font-weight:700;color:${C.cream};opacity:.85}
 .ci{opacity:0}
+.ph{position:absolute;inset:0;display:none;overflow:hidden;background:#000}
+.ph .pbg{position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);object-fit:cover;filter:blur(40px) brightness(.45) saturate(1.3)}
+.ph .pfg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform-origin:50% 50%}
+.ph .pcard{position:absolute;background:#fbf8f2;padding:16px 16px 64px;box-shadow:0 30px 60px rgba(0,0,0,.55);opacity:0}
+.ph .pcard img{display:block;width:100%;height:100%;object-fit:cover}
+.ph .pcard b{position:absolute;left:0;right:0;bottom:12px;text-align:center;font-family:Fraunces;font-style:italic;font-weight:600;font-size:40px;color:${C.ink}}
+.ph .plab{position:absolute;left:50%;bottom:140px;transform:translateX(-50%);font-family:Manrope;font-weight:800;font-size:24px;letter-spacing:.06em;color:${C.cream};background:rgba(11,17,14,.6);padding:8px 18px;border-radius:999px;white-space:nowrap}
+.kin{position:absolute;inset:0;display:none;background:${C.ink};overflow:hidden}
+.kin .kbg{position:absolute;inset:-80px;width:calc(100% + 160px);height:calc(100% + 160px);object-fit:cover;filter:blur(30px) brightness(.32) saturate(1.2)}
+.kin .kw{position:absolute;left:70px;right:70px;top:50%;transform:translateY(-50%);display:flex;flex-wrap:wrap;gap:0 28px;align-content:center;justify-content:flex-start}
+.kin .kw span{font-family:Manrope,Emoji;font-weight:800;font-size:132px;line-height:1.02;letter-spacing:-.03em;color:${C.cream};text-transform:uppercase;opacity:0;display:inline-block}
+.kin .kw span.hl{font-family:Fraunces;font-style:italic;font-weight:600;text-transform:none;color:${C.gold2}}
 `;
 
 const RUNTIME = `
@@ -207,11 +220,25 @@ window.render=async(t)=>{
   const {shots,fx,caps,total,FW,FH}=window.P;
   const s=shots.find((x)=>t>=x.t0&&t<x.t1)||shots.at(-1);
   // ---- metraje ----
-  const isHook=s.type==='hook', isCta=s.type==='cta';
-  document.querySelectorAll('.hook').forEach((h)=>{h.style.display=(isHook&&h.id==='hk'+shots.indexOf(s))?'flex':'none';});
+  const isHook=s.type==='hook', isCta=s.type==='cta', isPh=s.type==='photo'||s.type==='stack', isKin=s.type==='kinetic';
+  const si=shots.indexOf(s);
+  document.querySelectorAll('.hook').forEach((h)=>{h.style.display=(isHook&&h.id==='hk'+si)?'flex':'none';});
+  document.querySelectorAll('.ph,.kin').forEach((h)=>{h.style.display=((isPh||isKin)&&h.id==='pk'+si)?'block':'none';});
   $('#cta').style.display=isCta?'block':'none';
-  $('#world').style.display=(isHook||isCta)?'none':'block';
-  if(!isHook&&!isCta){
+  $('#world').style.display=(isHook||isCta||isPh||isKin)?'none':'block';
+  if(isPh||isKin){
+    const el=$('#pk'+si), lt=t-s.t0, len=s.t1-s.t0, k=IO(lt/len);
+    let sx=0,sy=0; fx.filter((f)=>f.shake&&t>=f.t&&t<f.t+0.45).forEach((f)=>{const d=1-(t-f.t)/0.45;sx+=Math.sin(t*95)*f.shake*d;sy+=Math.cos(t*83)*f.shake*d;});
+    const tp=lt/0.22; let wx=0,bl=0,wz=1;
+    if(s.trans==='whip'&&tp<1){wx=(1-E(tp))*520;bl=(1-tp)*26;} if(s.trans==='zoom'&&tp<1){wz=1+(1-E(tp))*0.3;bl=(1-tp)*18;}
+    el.style.transform='translate('+(wx+sx)+'px,'+sy+'px) scale('+wz+')'; el.style.filter=bl?'blur('+bl+'px)':'none';
+    if(s.type==='photo'){const a=s.kb[0],b=s.kb[1];const z=a.z+(b.z-a.z)*k,x=a.x+(b.x-a.x)*k,y=a.y+(b.y-a.y)*k;el.querySelector('.pfg').style.transform='scale('+z+') translate('+x+'px,'+y+'px)';}
+    if(s.type==='stack'){const cs=el.querySelectorAll('.pcard');cs.forEach((c,i)=>{const at=s.t0+0.1+i*(len-0.4)/cs.length;const p=(t-at)/0.32;c.style.opacity=p>0?Math.min(1,p*2):0;c.style.transform='translate(-50%,-50%) translateY('+((1-E(p))*-260)+'px) rotate('+(c.dataset.r*(p>0?1:0)+(1-E(p))*14)+'deg) scale('+(0.8+0.2*BACK(p))+')';});
+      const bg=el.querySelector('.pbg'); if(bg) bg.style.transform='scale('+(1.05+0.08*k)+')';}
+    if(isKin){el.querySelectorAll('.kw span').forEach((sp)=>{const p=(t-(+sp.dataset.t))/0.18;sp.style.opacity=p>0?1:0;sp.style.transform='translateY('+((1-E(p))*60)+'px) scale('+(p>0?0.6+0.4*BACK(p):0.6)+') rotate('+(sp.classList.contains('hl')?-3:0)+'deg)';});
+      const bg=el.querySelector('.kbg'); if(bg) bg.style.transform='scale('+(1.05+0.1*k)+')';}
+  }
+  if(!isHook&&!isCta&&!isPh&&!isKin){
     const lt=t-s.t0, len=s.t1-s.t0;
     const k=s.ramp?IO(lt/len):Math.min(1,lt/len);
     let ct=s.to!==undefined?s.from+(s.to-s.from)*k:(s.from||0)+lt*(s.speed||1);
@@ -238,6 +265,7 @@ window.render=async(t)=>{
     const rgb=fx.find((f)=>f.rgb&&t>=f.t&&t<f.t+0.28); const ra=rgb?(1-(t-rgb.t)/0.28)*14:0;
     const fl=[]; if(blur)fl.push('blur('+blur+'px)'); if(ra)fl.push('drop-shadow('+ra+'px 0 0 rgba(255,40,60,.55)) drop-shadow('+(-ra)+'px 0 0 rgba(40,220,255,.55))');
     if(s.dim)fl.push('brightness('+(1-s.dim)+')');
+    if(window.P.grade)fl.push(window.P.grade);
     $('#world').style.filter=fl.length?fl.join(' '):'none';
   }
   if(isHook){
@@ -311,6 +339,25 @@ for (const id of ids) {
     const bg = s.bg ? `<img class="bgi" src="../frames/${s.bg.clip}/${String(Math.round(s.bg.t * FPS) + 1).padStart(5, '0')}.jpg">` : '';
     return `<div class="hook" id="hk${k}">${bg}<h1 style="${s.size ? `font-size:${s.size}px` : ''}">${s.text}</h1></div>`;
   }).join('');
+  const fileUrl = (rel) => pathToFileURL(join(ROOT, rel)).href;
+  const plates = P.shots.map((s, k) => {
+    if (s.type === 'photo') {
+      const src = fileUrl(s.src);
+      return `<div class="ph" id="pk${k}"><img class="pbg" src="${src}"><img class="pfg" src="${src}" style="object-position:${s.pos || 'center'}">${s.label ? `<div class="plab">${s.label}</div>` : ''}</div>`;
+    }
+    if (s.type === 'stack') {
+      const bg = s.bg ? fileUrl(s.bg) : fileUrl(s.cards[0].src);
+      return `<div class="ph" id="pk${k}"><img class="pbg" src="${bg}">${s.cards.map((c, i) => `<div class="pcard" data-r="${c.rot ?? [-6, 5, -3, 7][i % 4]}" style="left:${c.x ?? 540}px;top:${c.y ?? 880 + i * 60}px;width:${c.w ?? 640}px;height:${c.h ?? 560}px"><img src="${fileUrl(c.src)}">${c.cap ? `<b>${c.cap}</b>` : ''}</div>`).join('')}${s.label ? `<div class="plab">${s.label}</div>` : ''}</div>`;
+    }
+    if (s.type === 'kinetic') {
+      if (s.bg) frames(s.bg.clip);
+      const ws = J.words.map((w) => ({ ...w, t0: w.t0 + (J.offset ?? 0.3) })).filter((w) => w.t0 >= s.t0 - 0.01 && w.t0 < s.t1 - 0.05);
+      const hi = (s.hi || e.hi || []);
+      const bg = s.bg ? `<img class="kbg" src="../frames/${s.bg.clip}/${String(Math.round(s.bg.t * FPS) + 1).padStart(5, '0')}.jpg">` : '';
+      return `<div class="kin" id="pk${k}">${bg}<div class="kw" style="${s.size ? `--fs:${s.size}px` : ''}">${ws.map((w) => `<span class="${hi.includes(w.w.toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[¿?¡!.,:;…«»"]/g, '')) ? 'hl' : ''}" data-t="${w.t0}" style="${s.size ? `font-size:${s.size}px` : ''}">${w.w}</span>`).join('')}</div></div>`;
+    }
+    return '';
+  }).join('');
   const stick = (f, i) => `<div class="st" id="fx${i}" style="left:${f.sticker.x}px;top:${f.sticker.y}px">${STICK[f.sticker.kind || 'tag'](f.sticker)}</div>`;
   const stickers = P.fx.map((f, i) => (f.sticker && f.sticker.space !== 'world' ? stick(f, i) : '')).join('');
   const worldFx = P.fx.map((f, i) => {
@@ -322,11 +369,12 @@ for (const id of ids) {
     <div id="stage">
       <div id="world"><img id="foot"><svg id="draw" viewBox="0 0 ${FW} ${FH}">${draws}</svg>${worldFx}</div>
       ${hooks}
+      ${plates}
       ${await ctaHTML(e)}
       ${stickers}
       <div id="cap"></div><div id="leak"></div><div id="vig"></div><div id="grain"></div><div id="flash"></div>
     </div>
-    <script>window.P=${JSON.stringify({ ...P, FW, FH })};${RUNTIME}</script></body></html>`;
+    <script>window.P=${JSON.stringify({ ...P, FW, FH, grade: e.grade ?? 'contrast(1.06) saturate(1.1)' })};${RUNTIME}</script></body></html>`;
   writeFileSync(join(dir, 'index.html'), html);
   const page = await browser.newPage({ viewport: { width: W, height: H } });
   await page.goto(pathToFileURL(join(dir, 'index.html')).href, { waitUntil: 'load' });
