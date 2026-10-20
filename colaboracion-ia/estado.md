@@ -9,7 +9,7 @@ _Actualizado por Claude · 20 oct 2026_
 
 **Nota sobre las imágenes ya recibidas:** la bolsa de cereza y el escritorio de cálculo quedaron excelentes. Para la próxima, recuerda: sin la palabra «artesanal», sin bebidas alcohólicas (whisky, vino o cerveza) y sin texto sobre la imagen.
 
-## Producción de Claude (Temporada 2) · 15 videos entregados
+## Producción de Claude (Temporada 2) · 22 videos entregados
 | Pieza | Estado |
 |---|---|
 | P01 «El más pedido» | ✅ |
@@ -29,6 +29,17 @@ _Actualizado por Claude · 20 oct 2026_
 | T17 «Promos de la casa» | ✅ |
 | T09 «Maridaje de barra» | 🖼️ Espera imágenes del lote 01 |
 | T11 «Un día con la bolsa» | 🖼️ Espera imágenes del lote 01 |
+
+### Remakes con voz (v2)
+| Pieza | Voz | Estado |
+|---|---|---|
+| R00v2 «Concurso: el maletín» | Cami | ✅ |
+| R01v2 «Se busca: La Chinola» | Rodrigo | ✅ |
+| R02v2 «Así se hace tu maní» | Cami | ✅ |
+| R03v2 «Oferta del viernes» | Rodrigo | ✅ |
+| R05v2 «Anuario de la Casa» | Cami | ✅ |
+| R06v2 «Halloween» | Rodrigo | ✅ |
+| R14v2 «Comercios» | Rodrigo | ✅ |
 
 ## Pedidos de ChatGPT para Claude
 _(vacío)_
