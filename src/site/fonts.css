@@ -1,0 +1,6 @@
+/* Tipografías del estudio: titulares en serif condensada (Noto Serif Display, recortada a ancho 62,5–75 y peso 200–500),
+   texto en Host Grotesk y datos en Fragment Mono. Todas propias del sitio, sin servicios externos. */
+@import '@fontsource-variable/host-grotesk/wght.css';
+@import '@fontsource/fragment-mono/latin-400.css';
+@font-face { font-family: 'Display'; font-style: normal; font-weight: 200 500; font-stretch: 62.5% 75%; font-display: swap; src: url('/fonts/rv/display-n.woff2') format('woff2'); }
+@font-face { font-family: 'Display'; font-style: italic; font-weight: 200 500; font-stretch: 62.5% 75%; font-display: swap; src: url('/fonts/rv/display-i.woff2') format('woff2'); }

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="es-CL">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Contacto · Red Vaeru</title>
+  <meta name="description" content="Cuéntenos de su lugar. Escríbanos por WhatsApp, correo o el formulario: respondemos en menos de 24 horas hábiles." />
+  <link rel="canonical" href="__SITE_URL__/contacto/" />
+  <meta property="og:type" content="website" />
+  <meta property="og:locale" content="es_CL" />
+  <meta property="og:site_name" content="Red Vaeru" />
+  <meta property="og:url" content="__SITE_URL__/contacto/" />
+  <meta property="og:title" content="Contacto · Red Vaeru" />
+  <meta property="og:description" content="Escriba la primera escena. Respondemos en menos de 24 horas hábiles." />
+  <meta property="og:image" content="__SITE_URL__/og.jpg" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <!--RV:HEAD-->
+</head>
+<body class="pg pg--contacto" data-fab="always">
+  <!--RV:HEADER:contacto-->
+  <main id="contenido">
+    <section class="ph">
+      <p class="ph__k" data-reveal="fade"><span>Contacto</span><span>Respuesta en menos de 24 horas hábiles</span></p>
+      <h1 class="ph__title" data-reveal="lines">Escriba la <em>primera escena.</em></h1>
+      <p class="ph__lede" data-reveal="fade">Cuéntenos de su lugar: qué es, dónde está y qué le gustaría que pasara. Del resto nos encargamos juntos.</p>
+    </section>
+
+    <section class="ct" aria-label="Formas de contacto">
+      <div class="ct__ways">
+        <a class="way way--main" href="https://wa.me/56952289117?text=Hola%2C%20vengo%20del%20sitio%20de%20Red%20Vaeru." target="_blank" rel="noopener" data-from="contacto" data-wa-intent data-magnetic><small>WhatsApp · la vía más rápida</small><strong>+56 9 5228 9117</strong><i aria-hidden="true">↗</i></a>
+        <a class="way" href="mailto:redvaeru@gmail.com"><small>Correo</small><strong>redvaeru@gmail.com</strong><i aria-hidden="true">↗</i></a>
+        <button class="way" type="button" data-open-agent data-source="contacto"><small>Vaeru IA · a cualquier hora</small><strong>Cotizar en un minuto</strong><i aria-hidden="true">↗</i></button>
+        <div class="clocks" aria-label="Hora actual en nuestras dos casas">
+          <p><span>Araucanía, Chile</span><b data-clock="America/Santiago">--:--</b></p>
+          <p><span>Santo Domingo, R. D.</span><b data-clock="America/Santo_Domingo">--:--</b></p>
+        </div>
+      </div>
+
+      <form class="script" name="contacto" method="POST" data-netlify="true" netlify-honeypot="bot-field" action="/gracias" data-script>
+        <input type="hidden" name="form-name" value="contacto" />
+        <input type="hidden" name="obra" value="" />
+        <input type="hidden" name="escena" value="" />
+        <p class="hidden"><label>No llenar: <input name="bot-field" /></label></p>
+        <p class="script__slug" aria-live="polite" data-slug><span>Escena 1.</span> EXT. SU LUGAR — DÍA</p>
+        <div class="fld-row">
+          <label class="fld"><span>Tipo de negocio</span>
+            <select name="negocio" data-slug-part="negocio">
+              <option value="Cabañas">Cabañas</option><option value="Hostal">Hostal</option><option value="Hotel">Hotel</option><option value="Glamping o domos">Glamping o domos</option><option value="Termas">Termas</option><option value="Restaurante">Restaurante</option><option value="Café o pastelería">Café o pastelería</option><option value="Viña">Viña</option><option value="Tours y experiencias">Tours y experiencias</option><option value="Otro">Otro</option>
+            </select>
+          </label>
+          <label class="fld"><span>Dónde está</span><input name="lugar" autocomplete="address-level2" placeholder="Pucón, Samaná…" data-slug-part="lugar" /></label>
+        </div>
+        <div class="fld-row">
+          <label class="fld"><span>Me interesa</span>
+            <select name="servicio">
+              <option>Sitio web</option><option>Asesoría turística</option><option>Capacitación</option><option>Agente de IA</option><option>Redes sociales</option><option>Orientarme</option>
+            </select>
+          </label>
+          <label class="fld"><span>Temporada que le importa</span>
+            <select name="temporada" data-slug-part="temporada">
+              <option value="Verano">Verano</option><option value="Invierno">Invierno</option><option value="Todo el año">Todo el año</option>
+            </select>
+          </label>
+        </div>
+        <label class="fld"><span>Cuéntenos de su lugar</span><textarea name="mensaje" rows="5" required placeholder="Qué tiene de especial, cómo recibe reservas hoy y qué le gustaría lograr."></textarea></label>
+        <div class="fld-row">
+          <label class="fld"><span>Nombre</span><input name="nombre" required autocomplete="name" /></label>
+          <label class="fld"><span>WhatsApp</span><input type="tel" name="whatsapp" required autocomplete="tel" inputmode="tel" placeholder="+56 9…" /></label>
+        </div>
+        <label class="fld"><span>Correo <em>(opcional)</em></span><input type="email" name="correo" autocomplete="email" /></label>
+        <label class="consent"><input type="checkbox" name="consentimiento" value="acepta" required /> <span>Acepto que Red Vaeru use estos datos para responder mi consulta, según la <a href="/privacidad">política de privacidad</a>.</span></label>
+        <button type="submit" class="btn btn--accent" data-magnetic>Enviar escena <span aria-hidden="true">→</span></button>
+        <small>Le respondemos en menos de 24 horas hábiles.</small>
+      </form>
+    </section>
+
+    <section class="sec sec--line" aria-labelledby="despues">
+      <div class="sec__head">
+        <p class="eyebrow" data-reveal="fade">Qué pasa después</p>
+        <h2 id="despues" class="h2" data-reveal="lines">Tres pasos, <em>sin sorpresas.</em></h2>
+      </div>
+      <ol class="next" data-reveal="stagger">
+        <li><b>01</b><h3>Le respondemos</h3><p>En menos de 24 horas hábiles, por WhatsApp o correo, con preguntas concretas sobre su negocio.</p></li>
+        <li><b>02</b><h3>Conversamos</h3><p>Una videollamada de 30 minutos sin costo para ver cómo vende hoy y qué necesita de verdad.</p></li>
+        <li><b>03</b><h3>Ve su portada</h3><p>Diseñamos la portada de su sitio antes de cobrar. Si le convence, firmamos el contrato.</p></li>
+      </ol>
+    </section>
+  </main>
+  <!--RV:FOOTER-->
+  <!--RV:OVERLAYS-->
+  <script type="module" src="/src/site/contacto.js"></script>
+</body>
+</html>

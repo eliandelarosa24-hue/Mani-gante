@@ -15,7 +15,7 @@ export const launchLeft = () => Math.max(0, LAUNCH.slots - LAUNCH.taken);
 export const GUARANTEE = {
   title: 'Garantía de portada',
   short: 'Primero ve su portada. Si no le convence, no paga nada.',
-  text: 'Antes de cobrar, diseño la portada de su sitio con sus fotos y su historia. Si no le convence, no paga nada y no queda comprometido. Si le gusta, firmamos el contrato, paga el 50% para continuar y el resto al publicar.',
+  text: 'Antes de cobrar, diseñamos la portada de su sitio con sus fotos y su historia. Si no le convence, no paga nada y no queda comprometido. Si le gusta, firmamos el contrato, paga el 50% para continuar y el resto al publicar.',
 };
 
 // Precio vigente de una opción: el de lanzamiento mientras queden cupos, si existe.
@@ -34,7 +34,7 @@ export const HOSTING_NOTE = 'Todos los sitios incluyen dominio de regalo el prim
 
 export const CONTRACT_NOTE = 'Todo trabajo se formaliza con un contrato de prestación de servicios con Red Vaeru: alcance, plazos, precio, forma de pago y propiedad del sitio quedan por escrito.';
 
-export const TAX_NOTE = 'Valores referenciales en pesos chilenos. Emito boleta o factura según lo que necesite su negocio; los impuestos que correspondan se detallan en la propuesta.';
+export const TAX_NOTE = 'Valores referenciales en pesos chilenos. Emitimos boleta o factura según lo que necesite su negocio; los impuestos que correspondan se detallan en la propuesta.';
 
 // Los tres productos de sitio web y la mantención, como se presentan en la portada.
 export const PLANS = [

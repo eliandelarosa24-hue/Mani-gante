@@ -20,7 +20,7 @@ test('el generador crea páginas con precios, datos estructurados y el script co
   const html = readFileSync('servicios/paginas-web-alojamientos/index.html', 'utf8');
   assert.match(html, /\$49\.000/);
   assert.match(html, /"@type":"FAQPage"/);
-  assert.match(html, /src="\/src\/page\.js"/);
+  assert.match(html, /src="\/src\/site\/page\.js"/);
   assert.match(readFileSync('privacidad/index.html', 'utf8'), /Ley 21\.719/);
 });
 

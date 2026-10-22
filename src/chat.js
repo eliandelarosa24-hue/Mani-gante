@@ -24,11 +24,11 @@ const START_CHIPS = [
 const FAQ = [
   { k: /plazo|tiempo|cu[aá]nto (se )?demora|cu[aá]ndo|semanas|listo/i, a: 'Un sitio Esencial toma de 1 a 2 semanas, uno Completo de 3 a 4 y uno Firma de 5 a 8. El plazo corre desde que tengo los textos y fotos de su negocio.' },
   { k: /dominio|hosting|\.cl|servidor/i, a: 'Todos mis sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se compra aparte) y hosting con certificado de seguridad el primer año, todo a su nombre. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.' },
-  { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Se paga en pesos chilenos (o USD fuera de Chile). Emito boleta o factura según lo que necesite; los impuestos y la forma de pago (transferencia o cuotas) quedan en la propuesta escrita antes de empezar.' },
+  { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Se paga en pesos chilenos (o USD fuera de Chile). Emitimos boleta o factura según lo que necesite; los impuestos y la forma de pago (transferencia o cuotas) quedan en la propuesta escrita antes de empezar.' },
   { k: /caribe|dominican|extranjero|fuera de chile|usd|d[oó]lar/i, a: 'Sí, trabajo con negocios del Caribe y República Dominicana de forma remota. Esos proyectos se cotizan en USD.' },
   { k: /presencial|online|regi[oó]n|viaj/i, a: 'Las capacitaciones son presenciales en la Araucanía (en otras regiones el traslado se cotiza aparte) u online en vivo para hasta 25 personas.' },
   { k: /cambiar|editar|actualizar|yo mismo/i, a: 'Sí, le dejo una capacitación breve y una checklist para cambiar textos y fotos. Si prefiere no preocuparse, existe la mantención mensual desde ' + formatCLP(SERVICES.mantencion.tiers.cuidado.min) + '.' },
-  { k: /qui[eé]n|jorge|equipo|agencia/i, a: 'Red Vaeru es el estudio de Jorge Vásquez, dominicano en la Araucanía y estudiante de Ingeniería en Turismo en INACAP. Usted habla siempre con quien hace el trabajo.' },
+  { k: /qui[eé]n|jorge|equipo|agencia/i, a: 'Red Vaeru es un estudio pequeño de diseño web para la hospitalidad, entre el Caribe y el sur de Chile. Lo dirige Jorge Vásquez, dominicano radicado en La Araucanía y estudiante de Ingeniería en Turismo. Usted habla siempre con quien hace el trabajo.' },
   { k: /booking|airbnb|comisi[oó]n|plataforma/i, a: 'Las plataformas cobran entre 15% y 25% por reserva. Un sitio propio con WhatsApp y reserva directa le devuelve ese margen y la relación con el huésped.' },
   { k: /contrato|formal|por escrito|respaldo legal/i, a: `Sí. ${CONTRACT_NOTE}` },
   { k: /logo|logotipo|marca|identidad/i, a: 'Si aún no tiene logo, se lo diseñamos sin costo: viene de regalo en todos los planes (Esencial, Completo y Firma).' },
@@ -36,9 +36,9 @@ const FAQ = [
   { k: /esencial|completo|firma|diferencia|qu[eé] plan|cu[aá]l (me )?conviene/i, a: 'Esencial es una página con todo lo necesario para que le escriban. Completo suma secciones, galería, mapa y reservas directas: es el que más conviene a cabañas, hostales y restaurantes. Firma es una experiencia a medida, como las muestras, para termas, hoteles boutique, viñas o glamping. Cuénteme de su negocio y le digo cuál le conviene.' },
   { k: /lanzamiento|cupo|descuento|barato/i, a: () => `Son precios de lanzamiento mientras sumo mis primeros proyectos turísticos. Quedan ${launchLeft()} cupos. A cambio pido un testimonio y permiso para mostrar el trabajo.` },
   { k: /mantenci[oó]n|mensual|despu[eé]s de publicar|soporte/i, a: () => `Hay dos planes de mantención, sin permanencia: Cuidado, ${formatCLP(SERVICES.mantencion.tiers.cuidado.min)} al mes (hosting, dominio, respaldo y un cambio al mes), y Crecimiento, ${formatCLP(SERVICES.mantencion.tiers.crecimiento.min)} al mes (los cambios del mes, su ficha de Google al día y un informe de visitas y consultas).` },
-  { k: /eres (una )?(ia|persona|robot|humano)|hablo con (una )?persona|qui[eé]n responde/i, a: 'Soy Vaeru IA, el asistente virtual de Red Vaeru. Respondo dudas y armo cotizaciones referenciales; Jorge revisa personalmente cada una y le responde por WhatsApp en menos de 24 horas hábiles.' },
+  { k: /eres (una )?(ia|persona|robot|humano)|hablo con (una )?persona|qui[eé]n responde/i, a: 'Soy Vaeru IA, el asistente virtual de Red Vaeru. Respondo dudas y armo cotizaciones referenciales; el estudio revisa personalmente cada una y le responde por WhatsApp en menos de 24 horas hábiles.' },
   { k: /^(hola|buenas|buen d[ií]a|buenas tardes|buenas noches|hey|wena)\b/i, a: 'Hola, qué gusto. Cuénteme qué tipo de negocio tiene (cabañas, restaurante, termas, hotel…) y le recomiendo un plan, o elija una opción de abajo.' },
-  { k: /^(gracias|muchas gracias|ok|listo|perfecto|genial)\b/i, a: 'A usted. Si quiere avanzar, Jorge le prepara la propuesta fija por WhatsApp. Aquí estoy para lo que necesite.' },
+  { k: /^(gracias|muchas gracias|ok|listo|perfecto|genial)\b/i, a: 'A usted. Si quiere avanzar, le preparamos la propuesta fija por WhatsApp. Aquí estoy para lo que necesite.' },
   { k: /privacidad|mis datos|qu[eé] hacen con/i, a: 'Uso lo que me escribe solo para responderle y preparar su cotización; no comparta datos sensibles. Detalles en la política de privacidad.' },
 ];
 
@@ -106,7 +106,7 @@ export class Chat {
     this.input = this.form.q;
     this.form.addEventListener('submit', (e) => { e.preventDefault(); this.send(this.input.value); });
     root.querySelector('.chat__close')?.addEventListener('click', () => onClose?.());
-    this.bot('Hola, soy Vaeru IA, el asistente virtual de Jorge. Le ayudo a estimar la inversión para su negocio turístico o a resolver dudas. ¿Qué necesita?');
+    this.bot('Hola, soy Vaeru IA, el asistente virtual de Red Vaeru. Le ayudo a estimar la inversión para su negocio turístico o a resolver dudas. ¿Qué necesita?');
     this.startChips();
   }
 
@@ -178,13 +178,13 @@ export class Chat {
       ${mon ? `<div class="quote__monthly">${mon}</div>` : ''}
       <ul>${est.lines.map((l) => `<li><span>${esc(l.label)}</span><b>${span(l.min, l.max)}${l.monthly ? '/mes' : ''}</b></li>`).join('')}</ul>
       <form class="lead" novalidate>
-        <p class="lead__title">¿Se la envío a Jorge para preparar su propuesta fija?</p>
+        <p class="lead__title">¿Se la envío al estudio para preparar su propuesta fija?</p>
         <div class="lead__row">
           <label><span class="sr">Nombre</span><input name="nombre" placeholder="Su nombre" autocomplete="name" required /></label>
           <label><span class="sr">WhatsApp</span><input name="whatsapp" type="tel" inputmode="tel" placeholder="WhatsApp (+56 9…)" autocomplete="tel" required /></label>
         </div>
         <label><span class="sr">Nombre del negocio</span><input name="negocio" placeholder="Nombre del alojamiento o restaurante (opcional)" /></label>
-        <button class="btn btn--gold" type="submit">Enviar a Jorge</button>
+        <button class="btn btn--gold" type="submit">Enviar al estudio</button>
         <small>Le responde en menos de 24 horas hábiles. Al enviar acepta la <a href="/privacidad">política de privacidad</a>.</small>
       </form>
       <div class="quote__actions">
@@ -201,7 +201,7 @@ export class Chat {
   summary(est, extra = {}) {
     const { one, mon } = rangeOf(est);
     return [
-      'Hola Jorge, vengo de Vaeru IA en el sitio de Red Vaeru.',
+      'Hola, vengo de Vaeru IA en el sitio de Red Vaeru.',
       extra.nombre ? `Soy ${extra.nombre}${extra.negocio ? `, de ${extra.negocio}` : ''}.` : '',
       'Me interesa:',
       ...est.lines.map((l) => `• ${l.label}`),
@@ -234,7 +234,7 @@ export class Chat {
       conversacion: this.history.filter((m) => m.role === 'user').map((m) => m.content).join(' / ').slice(0, 1500),
     }, 'agente');
     if (ok) {
-      f.innerHTML = `<p class="lead__ok">Listo, ${esc(nombre.split(' ')[0])}. Jorge recibió su cotización y le escribe a su WhatsApp en menos de 24 horas hábiles.</p>`;
+      f.innerHTML = `<p class="lead__ok">Listo, ${esc(nombre.split(' ')[0])}. Recibimos su cotización y le escribimos a su WhatsApp en menos de 24 horas hábiles.</p>`;
     } else {
       // Sin Netlify Forms (por ejemplo en desarrollo), el respaldo es WhatsApp con el resumen.
       btn.disabled = false;
@@ -267,7 +267,7 @@ export class Chat {
       ${est.lines.map((l) => `<tr><td>${esc(l.label)}</td><td>${span(l.min, l.max)}${l.monthly ? '/mes' : ''}</td></tr>`).join('')}</table>
       <div class="box">${one ? `<p class="muted">Inversión única estimada</p><p class="total">${one}</p>` : ''}${mon ? `<p class="muted">Mensual estimado</p><p class="total">${mon}</p>` : ''}</div>
       <p class="muted">${esc(TAX_NOTE)} Rango válido hasta el ${fmt(until)}. El precio fijo y el alcance llegan por escrito en la propuesta, antes de pagar nada.</p>
-      <p class="muted">Jorge Vásquez · Red Vaeru · WhatsApp +56 9 5228 9117 · redvaeru@gmail.com</p>
+      <p class="muted">Red Vaeru · Dirección: Jorge Vásquez · WhatsApp +56 9 5228 9117 · redvaeru@gmail.com</p>
       <script>setTimeout(()=>print(),300)<\/script></body></html>`);
     w.document.close();
   }
@@ -275,13 +275,13 @@ export class Chat {
   schedule() {
     this.user('Agendar videollamada');
     track('call_request');
-    this.bot('Perfecto. Una videollamada de 15 minutos, sin costo, para ver su caso. Escríbale a Jorge con el botón y acuerdan el horario.');
+    this.bot('Perfecto. Una videollamada de 15 minutos, sin costo, para ver su caso. Escríbanos con el botón y acordamos el horario.');
     const a = document.createElement('a');
     a.className = 'btn btn--gold msg-cta';
     a.target = '_blank';
     a.rel = 'noopener';
     a.dataset.from = 'agendar';
-    a.href = wa(`Hola Jorge, quiero agendar una videollamada de 15 minutos para revisar mi negocio.${this.lastEstimate ? '\n\n' + this.summary(this.lastEstimate) : ''}`);
+    a.href = wa(`Hola, quiero agendar una videollamada de 15 minutos para revisar mi negocio.${this.lastEstimate ? '\n\n' + this.summary(this.lastEstimate) : ''}`);
     a.textContent = 'Agendar por WhatsApp ↗';
     this.log.append(a);
     this.scroll();
@@ -383,8 +383,8 @@ export class Chat {
     }
     if (like && !/precio|cotiz|presupuesto|cu[aá]nto/i.test(text)) return this.recommend(like);
     if (svc) return this.startService(svc.s);
-    this.bot('Esa se la responde mejor Jorge directo por WhatsApp. Le dejo el mensaje listo; también puede elegir una opción de abajo.');
-    this.ctaLink(wa(`Hola Jorge, vengo del sitio de Red Vaeru. Tengo una consulta: ${text}`), 'Escribirle a Jorge ↗', 'duda');
+    this.bot('Esa se la respondemos mejor directo por WhatsApp. Le dejo el mensaje listo; también puede elegir una opción de abajo.');
+    this.ctaLink(wa(`Hola, vengo del sitio de Red Vaeru. Tengo una consulta: ${text}`), 'Escribirnos por WhatsApp ↗', 'duda');
     this.startChips();
   }
 
@@ -464,7 +464,7 @@ export class Chat {
     const multi = this.cart.length > 1;
     this.bot(multi
       ? `Sumé ${s.name.toLowerCase()} a su cotización. Este es el total actualizado con precios de lanzamiento.`
-      : `Listo. Esta es una estimación con precios de lanzamiento para ${s.name.toLowerCase()} (plazo aproximado: ${s.tiers[g.tier].weeks}). Si me deja su nombre y WhatsApp, Jorge le responde en menos de 24 horas hábiles con una propuesta fija.`);
+      : `Listo. Esta es una estimación con precios de lanzamiento para ${s.name.toLowerCase()} (plazo aproximado: ${s.tiers[g.tier].weeks}). Si me deja su nombre y WhatsApp, le respondemos en menos de 24 horas hábiles con una propuesta fija.`);
     this.quote(est);
     this.guided = null;
     this.afterQuoteChips();

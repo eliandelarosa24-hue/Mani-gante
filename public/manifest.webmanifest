@@ -1,11 +1,11 @@
 {
-  "name": "Red Vaeru · Estudio digital de turismo",
+  "name": "Red Vaeru · Proyectamos lugares",
   "short_name": "Red Vaeru",
-  "description": "Sitios web, asesoría y capacitación para turismo y hospitalidad.",
+  "description": "Estudio de diseño web para la hospitalidad, entre el Caribe y el sur de Chile.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#0B110E",
-  "theme_color": "#0B110E",
+  "background_color": "#0c0b0a",
+  "theme_color": "#0c0b0a",
   "lang": "es-CL",
   "icons": [
     { "src": "/brand/emblema-192.webp", "sizes": "192x192", "type": "image/webp" },

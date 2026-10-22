@@ -23,7 +23,7 @@ export const PAGES = [
     faq: [
       ['¿Necesito dejar Booking o Airbnb?', 'No. La idea es sumar un canal propio: las plataformas le traen visibilidad y su sitio convierte a quienes ya lo conocen en reservas sin comisión.'],
       ['¿Puedo recibir pagos en el sitio?', 'Sí, en el plan Firma o como extra se puede integrar un motor de reservas o un enlace de pago. Lo vemos según su volumen.'],
-      ['¿Qué pasa si no tengo buenas fotos?', 'Le doy una guía para tomarlas con su celular, o coordinamos una sesión. Las fotos son lo más importante del sitio.'],
+      ['¿Qué pasa si no tengo buenas fotos?', 'Le damos una guía para tomarlas con su celular, o coordinamos una sesión. Las fotos son lo más importante del sitio.'],
     ],
   },
   {
@@ -46,7 +46,7 @@ export const PAGES = [
     ],
     tiers: { esencial: ['Dominio de regalo y hosting el primer año', 'Logo de regalo si aún no tiene', 'Carta digital por categorías con fotos', 'Código QR listo para imprimir', 'Página con horarios, ubicación y WhatsApp', 'Actualizaciones simples'], completo: ['Todo lo de Esencial', 'Sitio con historia, carta, galería y ubicación', 'Reservas de mesa y WhatsApp', 'Ficha de Google configurada', 'Guía para editar la carta'], firma: ['Todo lo de Completo', 'Experiencia visual a medida, como las muestras', 'Reservas y pedidos integrados', 'Segundo idioma para turistas', 'Estrategia de lanzamiento'] },
     faq: [
-      ['¿Puedo cambiar la carta yo mismo?', 'Sí. Le dejo una forma simple de actualizar platos y precios, o lo hago yo con la mantención mensual.'],
+      ['¿Puedo cambiar la carta yo mismo?', 'Sí. Le dejamos una forma simple de actualizar platos y precios, o lo hacemos nosotros con la mantención mensual.'],
       ['¿El QR deja de funcionar si cambio la carta?', 'No. El QR apunta siempre a la misma dirección y muestra la carta vigente.'],
       ['¿Sirve para delivery?', 'Sí, con pedidos guiados por WhatsApp que llegan ordenados, sin pagar comisión a apps de delivery.'],
     ],
@@ -59,7 +59,7 @@ export const PAGES = [
     description: 'Diagnóstico de cómo vende su negocio turístico, estrategia frente a Booking y Airbnb, tarifas, fotos, experiencia del huésped y formulación de proyectos turísticos.',
     eyebrow: 'Asesoría turística',
     h1: 'Venda más directo, <em>con un plan claro.</em>',
-    lead: 'Reviso cómo vende hoy, dónde pierde reservas y qué le conviene cambiar primero. Recomendaciones concretas, no teoría.',
+    lead: 'Revisamos cómo vende hoy, dónde pierde reservas y qué le conviene cambiar primero. Recomendaciones concretas, no teoría.',
     ask: 'Necesito asesoría para mi negocio turístico',
     img: 'https://images.unsplash.com/photo-1552664730-d307ca884978?auto=format&fit=crop&w=1400&q=75',
     for: ['Alojamientos que dependen de plataformas', 'Emprendimientos turísticos que están partiendo', 'Restaurantes y operadores que quieren ordenar su venta', 'Proyectos que necesitan formularse para postular a fondos'],
@@ -152,7 +152,7 @@ export const PAGES = [
     faq: [
       ['¿Incluye publicidad pagada?', 'La gestión de anuncios se suma como extra. La inversión en publicidad la paga usted directamente a la plataforma.'],
       ['¿Hay permanencia mínima?', 'No. Se puede pausar o terminar con aviso de 30 días.'],
-      ['¿Necesito mandar fotos?', 'Sí, idealmente fotos y videos cortos del día a día. Le doy una guía simple para hacerlos.'],
+      ['¿Necesito mandar fotos?', 'Sí, idealmente fotos y videos cortos del día a día. Le damos una guía simple para hacerlos.'],
     ],
   },
 ];
