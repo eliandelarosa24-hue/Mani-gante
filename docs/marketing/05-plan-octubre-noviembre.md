@@ -76,4 +76,8 @@ Si se cierra un cliente en octubre, el agente agrega en la semana siguiente:
     - `stack`: polaroids.
     - `kinetic`: tipografía cinética sobre la voz.
 - **Mensaje honesto después del 30:** no hay urgencia falsa. El 30 no cierra nada; enero y febrero son los meses fuertes.
+- **Agendas en línea:**
+  - Semana 5: https://claude.ai/artifact/LYujsKM6srWrjvdrgunFR9
+  - Semana 6: https://claude.ai/artifact/Sk888mhMwSQPaidqipJgyU
+- **PDF y ZIP por día:** están en `out/semana-5/` y `out/semana-6/`.
 - **La rutina «Productor» del miércoles** se pisa con estas semanas. Conviene que pase a producir diciembre.
