@@ -1,4 +1,4 @@
-// Lo que destaca de cada muestra en la galería de la portada (tres funciones reales de cada sitio).
+// Lo que destaca de cada muestra (tres funciones reales de cada sitio): se muestra en su caso, en /trabajos/<slug>/.
 export const SHOWCASE = {
   'estudio-haber': ['Boletas que vuelan y se ordenan en el libro contable', 'Calendario tributario vivo con feriados', 'Calculadoras de IVA, honorarios y F29'],
   'termas-rayenko': ['Mapa de siete pozones con recorrido guiado', 'Reserva por bloque con pulsera de acceso', 'Cocina de temporada y lunas llenas reales'],
@@ -11,5 +11,3 @@ export const SHOWCASE = {
   'pucon-aventura': ['Ruta al cráter animada', 'Test: qué aventura es la suya', 'Clima por día para elegir la salida'],
   'vina-los-robles': ['Recorrido por las setenta hectáreas', 'Enólogo por un día: cree su ensamblaje', 'Maridaje plato a plato'],
 };
-// Orden en que aparecen en la portada: primero las más recientes y llamativas.
-export const ORDER = ['termas-rayenko', 'villa-coral-samana', 'hotel-casa-nogal', 'estudio-haber', 'cabanas-lago-azul', 'domos-cielo-austral', 'fogon-mapu', 'vina-los-robles', 'pucon-aventura', 'kuchen-haus-frutillar'];

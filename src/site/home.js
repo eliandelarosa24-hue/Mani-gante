@@ -128,6 +128,21 @@ function cinema() {
   });
   show(0);
 
+  // Al pasar por los botones de una escena, se asoma su sitio funcionando
+  const peek = $('.peek'), pv = $('[data-peek-video]'), pu = $('[data-peek-url]');
+  let peekT = 0;
+  scenes.forEach((s, k) => $$('.scene__cta', s).forEach((a) => {
+    a.addEventListener('pointerenter', () => {
+      clearTimeout(peekT);
+      const src = SCENES[k].video;
+      if (pv.dataset.src !== src) { pv.dataset.src = src; pv.innerHTML = `<source src="${src}.webm" type="video/webm"><source src="${src}.mp4" type="video/mp4">`; pv.load(); }
+      pu.textContent = `redvaeru.netlify.app${SCENES[k].sample}`;
+      pv.play().catch(() => {});
+      peek.classList.add('is-on');
+    });
+    a.addEventListener('pointerleave', () => { peekT = setTimeout(() => { peek.classList.remove('is-on'); pv.pause(); }, 250); });
+  }));
+
   addEventListener('pointermove', (e) => gl.pointer(e.clientX / innerWidth, 1 - e.clientY / innerHeight), { passive: true });
   document.addEventListener('visibilitychange', () => (document.hidden ? gl.stop() : gl.start()));
 

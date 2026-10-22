@@ -31,8 +31,12 @@ test('el generador crea las páginas, la galería y las tarjetas de la portada',
       assert.doesNotMatch(html, /\{\{img:/, `${s.slug}: quedó un marcador de imagen sin reemplazar`);
     } else assert.match(html, /:root:root\{/);
   }
-  assert.ok(existsSync('muestras/index.html'));
-  assert.equal((readFileSync('muestras/_cards.html', 'utf8').match(/class="sample"/g) || []).length, 10);
+  // Cada muestra lleva de vuelta a su caso y al contacto con la obra anotada
+  for (const s of SAMPLES) {
+    const html = readFileSync(`muestras/${s.slug}/index.html`, 'utf8');
+    assert.match(html, new RegExp(`href="/trabajos/${s.slug}/"`));
+    assert.match(html, new RegExp(`href="/contacto/\\?obra=${s.slug}"`));
+  }
 });
 
 function defaultId(type) {

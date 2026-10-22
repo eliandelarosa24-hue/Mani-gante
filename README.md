@@ -1,33 +1,41 @@
-# Red Vaeru · Portafolio 2.1
+# Red Vaeru · Proyectamos lugares
 
-Sitio de Red Vaeru, el estudio digital de Jorge Vásquez para turismo y hospitalidad: sitios web para alojamientos y restaurantes, asesoría turística, capacitación en servicio al cliente y redes sociales. Incluye:
-- **Vaeru IA**, un agente con Claude que cotiza y responde dudas;
-- un **diagnóstico interactivo**;
-- **páginas por servicio** para Google;
-- **captura de leads** en Netlify Forms.
+Sitio de Red Vaeru, estudio de diseño web para la hospitalidad entre el Caribe y el sur de Chile («Conectando culturas»). El sitio es una sala de cine:
+- **Inicio:** una función que proyecta las diez muestras de concepto por latitud, del paralelo 19 Norte (Samaná) al 41 Sur (Frutillar). Cada titular va en la tipografía real de su sitio. Siguen un intermedio, el documental con los clientes reales, los créditos y «Próximamente: su lugar».
+- **Páginas:** Trabajos (un caso por obra), Servicios y planes (la única página clara y la única con precios), Estudio y Contacto.
+- **Vaeru IA**, el asistente que cotiza y responde dudas.
+- **Sonido ambiente** sintetizado por lugar, apagado por defecto.
 
 ## Estructura
 
 | Archivo | Qué es |
 |---|---|
-| `index.html` | Página principal |
-| **`src/pricing.js`** | **Tarifario, cupos de lanzamiento (`LAUNCH`), campaña de temporada (`CAMPAIGN`) y nota tributaria.** Todo el sitio y el agente leen de aquí |
-| `src/services-content.js` | Textos de las 5 páginas por servicio |
-| `scripts/build-pages.mjs` | Genera `/servicios/*`, `/privacidad`, `/gracias` y `404.html` (se ejecuta solo antes de `dev` y `build`) |
-| `src/shared.js` | Navegación, cursor, scroll suave, agente en cajón, campaña, invitación del agente |
-| `src/main.js` | Página principal: animaciones, calculadora de comisiones, diagnóstico, contacto |
-| `src/page.js` | Páginas secundarias |
-| `src/chat.js` | Interfaz de Vaeru IA: varios servicios, captura de lead, PDF, videollamada |
-| `src/analytics.js` | Eventos de conversión (Plausible, GA4 o dataLayer) |
-| `netlify/functions/agent.mjs` | Agente con Claude en `/api/agent`, con límite de uso por IP |
-| `netlify/functions/lead.mjs` | Envía cada lead (contacto, cotización, diagnóstico) a Google Sheets en `/api/lead` |
-| `src/leads.js` | Envío de leads a Netlify Forms y a Google Sheets a la vez |
-| `src/live.js` | Sección "En vivo": los sitios de los clientes funcionando dentro de la página |
-| `src/samples/` | Las 10 muestras de concepto: contenido (`data.js`), estilos y comportamiento compartidos |
-| `scripts/build-samples.mjs` | Genera `/muestras/*` y la galería (se ejecuta solo antes de `dev` y `build`) |
-| `public/brand/` | Logo oficial de Red Vaeru sin fondo (WebP y PNG) |
+| `index.html` | Portada (la función) |
+| `servicios/index.html`, `estudio/index.html`, `contacto/index.html` | Páginas escritas a mano |
+| `scripts/build-works.mjs` | Genera `/trabajos/` y `/trabajos/<obra>/` desde `src/site/scenes.js` |
+| `scripts/build-pages.mjs` | Genera `/servicios/<servicio>/`, `/privacidad`, `/gracias` y `404.html` |
+| `scripts/build-samples.mjs` | Genera las muestras `/muestras/<obra>/` (`/muestras/` redirige a Trabajos) |
+| **`src/pricing.js`** | **Tarifario, cupos de lanzamiento (`LAUNCH`) y notas.** Servicios, las páginas de servicio y Vaeru IA leen de aquí |
+| `src/site/scenes.js` | Las obras: orden por latitud, coordenadas, titular, tipografía, foto, caso y galería; también los proyectos reales |
+| `src/site/chrome.mjs` | Cabecera, menú, pie, emblema y capas comunes. Vite los inserta donde cada página escribe `<!--RV:...-->` |
+| `src/site/markup.mjs` | Marcado de las escenas, el riel de latitud, el documental y el mapa del Estudio |
+| `src/site/base.css`, `home.css`, `pages.css` | Sistema visual: variables, piezas comunes, portada y páginas interiores |
+| `src/site/core.js` | Scroll suave, cabecera, menú, cursor, relojes, apariciones, transición entre páginas y cajón de Vaeru IA |
+| `src/site/home.js`, `src/site/cinema-gl.js` | La función: proyector WebGL en computador y modo liviano en celular |
+| `src/site/sound.js` | Sonido ambiente por lugar (mar, lluvia, fuego, noche, agua, viento) |
+| `src/site/prices.js` | Precios en pantalla, CLP / USD |
+| `scripts/fetch-scene-fonts.mjs` | Descarga, una vez, las tipografías de cada muestra recortadas a lo necesario (`public/fonts/escenas/`) |
+| `public/fonts/rv/` | Titulares del estudio (Noto Serif Display, recortada a ancho 62,5–75) |
+| `src/chat.js` | Interfaz de Vaeru IA: cotizador guiado, captura de lead, videollamada |
+| `src/analytics.js`, `src/leads.js` | Eventos de conversión y envío de leads a Netlify Forms y Google Sheets |
+| `netlify/functions/agent.mjs` | Modo IA opcional de Vaeru IA en `/api/agent`, con límite de uso por IP |
+| `netlify/functions/lead.mjs` | Envía cada lead a Google Sheets en `/api/lead` |
+| `src/samples/` | Las 10 muestras de concepto: contenido, casos (`cases.js`) y diseños a medida (`custom/`) |
+| `public/brand/` | Emblema en vector (`emblema.svg`, `gobo.svg`) e íconos |
 | `public/__forms.html` | Registro de los formularios `cotizacion` y `diagnostico` para Netlify |
 | `docs/` | Análisis, plan para conseguir clientes, tarifario, investigación y registro de mejoras |
+
+**Agregar una obra:** súmela a `src/samples/data.js` y `cases.js`, póngala en `src/site/scenes.js` en su lugar por latitud y ejecute `node scripts/fetch-scene-fonts.mjs` para su tipografía.
 
 ## Desarrollo local
 
@@ -60,7 +68,6 @@ Sin la clave de API, Vaeru IA funciona en **modo guiado**: cotiza con el mismo t
 ## Tareas frecuentes
 - **Cerré un proyecto de lanzamiento:** en `src/pricing.js`, suba `LAUNCH.taken`.
 - **Cambiar precios:** edite `SERVICES` en `src/pricing.js`.
-- **Nueva campaña:** cambie `CAMPAIGN.deadline` y `CAMPAIGN.text`. La barra superior se oculta sola después de la fecha.
 - **Editar una página de servicio:** use `src/services-content.js`.
 - **Poner imágenes propias (Gemini) en las muestras:** genere los collages de `docs/collages-gemini.md` y córtelos con `npm run collage -- collage.png --sample <slug> --grid 2x2 --names a,b,c,d`.
 - **Entregar una muestra como sitio aparte:** `npm run build && npm run pack -- <slug>` crea `entregas/<slug>.zip`, listo para arrastrar a app.netlify.com/drop.
@@ -68,7 +75,7 @@ Sin la clave de API, Vaeru IA funciona en **modo guiado**: cotiza con el mismo t
 - **Tipo de cambio para precios en USD:** `USD_RATE` en `src/pricing.js`.
 
 ## Pendiente (requiere al dueño)
-- [ ] Foto profesional de Jorge y fotos reales de los clientes (reemplazar Unsplash).
+- [ ] Fotos reales de los clientes en alta resolución (el estudio no muestra el rostro del director, por decisión de marca).
 - [ ] Números de resultados de los casos (reservas directas) y testimonios en video.
 - [ ] Agregar el giro de servicios digitales en el SII (hoy solo está registrado el de venta de maní confitado).
 - [ ] Configurar la planilla de Google Sheets (`docs/google-sheets.md`, 10 minutos).

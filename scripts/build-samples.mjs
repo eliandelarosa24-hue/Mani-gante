@@ -1,13 +1,11 @@
-// Genera las 10 muestras de concepto (/muestras/<slug>/) y la galería (/muestras/).
+// Genera las 10 muestras de concepto (/muestras/<slug>/).
 // Contenido en src/samples/data.js. Imágenes: si existe public/muestras/<slug>/img/<nombre>.webp
 // (por ejemplo, una imagen generada con Gemini), reemplaza sola a la foto de respaldo.
 import { mkdirSync, writeFileSync, rmSync, existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SAMPLES as RAW } from '../src/samples/data.js';
-import { SHOWCASE, ORDER } from '../src/samples/showcase.js';
-// Orden de la galería: el de la portada; las que no estén en ORDER van al final.
-const SAMPLES = [...RAW].sort((a, b) => (ORDER.indexOf(a.slug) + 1 || 99) - (ORDER.indexOf(b.slug) + 1 || 99));
+const SAMPLES = RAW;
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const esc = (s) => String(s ?? '').replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
@@ -264,71 +262,6 @@ function page(s) {
 `;
 }
 
-function gallery() {
-  const NICHES = { alojamiento: 'Alojamiento', gastronomia: 'Gastronomía', experiencias: 'Experiencias', caribe: 'Caribe', destino: 'Destinos y gremios', asesoria: 'Asesoría', bienestar: 'Termas y bienestar' };
-  const niches = [...new Set(SAMPLES.map((s) => s.niche))].map((k) => [k, NICHES[k] || k]);
-  return `<!DOCTYPE html>
-<html lang="es-CL">
-<head>
-  <meta charset="utf-8" /><meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Muestras de concepto · Red Vaeru</title>
-  <meta name="description" content="10 sitios de muestra diseñados por Red Vaeru para alojamientos, restaurantes, experiencias, enoturismo, termas y servicios profesionales." />
-  <link rel="canonical" href="__SITE_URL__/muestras/" />
-  <link rel="icon" type="image/png" href="/brand/emblema-32.png" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" /><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=Manrope:wght@400;600;700&display=swap" rel="stylesheet" />
-  <link rel="stylesheet" href="/src/styles.css" />
-  <!--ANALYTICS-->
-</head>
-<body>
-  <a class="skip" href="#contenido">Saltar al contenido</a>
-  <div class="progress" aria-hidden="true"><span data-progress></span></div>
-  <div class="grain" aria-hidden="true"></div>
-  <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><em></em></span></div>
-  <header class="nav" data-nav>
-    <a href="/" class="nav__brand" aria-label="Red Vaeru, inicio"><img class="mark" src="/brand/emblema-96.webp" alt="" width="96" height="96" /><span>Red Vaeru</span></a>
-    <nav class="nav__links" aria-label="Principal"><a href="/#servicios">Servicios</a><a href="/muestras/">Muestras</a><a href="/#trabajos">Trabajos</a><a href="/#contacto">Contacto</a></nav>
-    <button class="btn btn--glow nav__cta" data-open-agent data-source="muestras"><span class="pulse"></span> Cotizar con IA</button>
-    <button class="nav__burger" aria-label="Abrir menú" aria-expanded="false" data-burger><span></span><span></span></button>
-  </header>
-  <div class="menu" data-menu aria-hidden="true"><nav aria-label="Menú móvil"><a href="/">Inicio</a><a href="/#servicios">Servicios</a><a href="/muestras/">Muestras</a><a href="/#contacto">Contacto</a></nav></div>
-  <main id="contenido">
-    <section class="page-hero dark"><div class="wrap">
-      <nav class="crumbs" aria-label="Ruta"><a href="/">Inicio</a> / <span aria-current="page">Muestras</span></nav>
-      <p class="eyebrow">Muestras de concepto</p>
-      <h1 class="page-hero__title" data-hero-title>Diez negocios, <em>diez identidades.</em></h1>
-      <p class="hero__lead">Sitios completos diseñados para negocios ficticios del turismo chileno y caribeño. Cada uno muestra lo que puedo hacer por el suyo: reservas directas, cartas interactivas, experiencias, catas y más.</p>
-    </div></section>
-    <section class="dark block samples-page"><div class="wrap">
-      <div class="sfilters" role="group" aria-label="Filtrar por rubro"><button aria-pressed="true" data-sf="todo">Todo</button>${niches.map(([k, l]) => `<button aria-pressed="false" data-sf="${k}">${esc(l)}</button>`).join('')}</div>
-      <div class="samples">${SAMPLES.map(card).join('')}</div>
-      <p class="services__note">Negocios, nombres y reseñas ficticios, creados para mostrar el estilo de trabajo de Red Vaeru.</p>
-    </div></section>
-  </main>
-  <footer class="footer dark"><div class="wrap"><p class="footer__word" aria-hidden="true">Red Vaeru</p><div class="footer__bottom"><span>© <span data-year>2026</span> Red Vaeru · Jorge Vásquez</span><span><a href="/privacidad">Privacidad</a> · <a href="/">Inicio</a></span></div></div></footer>
-  <button class="fab" data-open-agent data-source="flotante" aria-label="Abrir Vaeru IA"><img class="mark" src="/brand/emblema-96.webp" alt="" width="96" height="96" /><span>Vaeru IA</span></button>
-  <div class="drawer" data-drawer aria-hidden="true"><div class="drawer__backdrop" data-close-agent></div><div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Vaeru IA" data-agent-drawer></div></div>
-  <script type="module" src="/src/page.js"></script>
-</body>
-</html>
-`;
-}
-
-// Portada de la tarjeta: la foto propia si existe, si no la de respaldo.
-function cover(s) {
-  const slot = s.cardSlot || 'hero', local = `/muestras/${s.slug}/img/${slot}.webp`;
-  return existsSync(join(root, 'public', local)) ? local : `https://images.unsplash.com/photo-${s.hero.img}?auto=format&fit=crop&w=1600&q=70`;
-}
-
-export function card(s) {
-  const hl = esc(JSON.stringify(SHOWCASE[s.slug] || []));
-  return `<a class="sample" href="/muestras/${s.slug}/" data-niche="${s.niche}" data-slug="${s.slug}" data-name="${esc(s.name)}" data-rubro="${esc(s.nicheLabel)}" data-place="${esc(s.place)}" data-cover="${cover(s)}" data-thumb="${existsSync(join(root, 'public', `/muestras/${s.slug}/img/card.webp`)) ? `/muestras/${s.slug}/img/card.webp` : cover(s)}" data-accent="${s.theme['--accent']}" data-hl="${hl}">
-    ${ph(s, existsSync(join(root, 'public', `/muestras/${s.slug}/img/card.webp`)) ? 'card' : (s.cardSlot || 'hero'), s.hero.img, '', s.hero.alt)}
-    <span class="sample__tag">${esc(s.nicheLabel)}</span>
-    <span class="sample__body"><span class="sample__place">${esc(s.place)}</span><strong>${esc(s.name)}</strong><span class="sample__line">${esc(s.tagline)}</span><span class="sample__go">Ver muestra ↗</span></span>
-  </a>`;
-}
-
 rmSync(join(root, 'muestras'), { recursive: true, force: true });
 // Muestras a medida: si existe src/samples/custom/<slug>/index.html se usa ese diseño propio.
 // Las marcas {{img:archivo:idUnsplash}} se convierten en imagen propia (si existe) o foto de respaldo.
@@ -352,7 +285,5 @@ for (const s of SAMPLES) {
   mkdirSync(dirname(file), { recursive: true });
   writeFileSync(file, custom(s) || page(s));
 }
-writeFileSync(join(root, 'muestras', 'index.html'), gallery());
-// Tarjetas para la sección de muestras de la página principal (las inserta vite.config.js)
-writeFileSync(join(root, 'muestras', '_cards.html'), SAMPLES.map(card).join('\n'));
-console.log(`Muestras generadas: ${SAMPLES.length} + galería`);
+// La galería de muestras vive en /trabajos/ (scripts/build-works.mjs); /muestras/ redirige allá.
+console.log(`Muestras generadas: ${SAMPLES.length}`);

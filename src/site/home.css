@@ -173,3 +173,12 @@
 }
 
 .in-reel .fab { transform: translateY(160%); }
+
+/* Vista previa del sitio en movimiento al pasar por «Entrar al sitio» */
+.peek { display: none; }
+.is-cinema .peek { position: absolute; z-index: 4; right: calc(var(--gut) + 40px); bottom: 190px; display: block; width: clamp(300px, 30vw, 460px); overflow: hidden; border-radius: 6px; background: var(--ink-2); box-shadow: 0 0 0 1px var(--line-2), 0 40px 100px -30px #000; pointer-events: none; opacity: 0; transform: translateY(16px) scale(0.96); transform-origin: 80% 100%; transition: opacity 0.5s var(--ease), transform 0.8s var(--ease); }
+.peek.is-on { opacity: 1; transform: none; }
+.peek__bar { display: flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-bottom: 1px solid var(--line); }
+.peek__bar i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-2); }
+.peek__bar em { margin-left: 8px; font: 400 10px var(--f-mono); font-style: normal; letter-spacing: 0.06em; color: var(--muted); }
+.peek video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }

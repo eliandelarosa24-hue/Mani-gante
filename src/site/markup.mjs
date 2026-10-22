@@ -14,7 +14,7 @@ export const titleHtml = (s, cls = 'wtitle', text = s.title) => `<span class="${
 export function scenesMarkup() {
   return SCENES.map((s, i) => `
       <article class="scene" data-scene data-slug="${s.slug}" style="--accent:${s.accent}" aria-labelledby="sc-${s.slug}">
-        <img class="scene__img" src="${s.image}" alt="" width="1920" height="1080" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async" />
+        <picture><source media="(min-width: 821px)" srcset="${s.image}" /><img class="scene__img" src="/img/escenas/${s.slug}-900.webp" alt="" width="1920" height="1080" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async" /></picture>
         <div class="scene__in">
           <p class="scene__kicker" data-scene-fade><span>Nº ${s.n} / ${String(SCENES.length).padStart(2, '0')} · Ficción</span><span>${esc(s.kind)}</span><span>${esc(s.town)} · ${s.coords}</span></p>
           <h2 class="scene__title" id="sc-${s.slug}"><span class="sr">${esc(s.name)}: </span>${titleHtml(s, 'wtitle', s.title)}</h2>

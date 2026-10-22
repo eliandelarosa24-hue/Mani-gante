@@ -1,5 +1,5 @@
 import { defineConfig } from 'vite';
-import { readdirSync, existsSync, readFileSync, statSync } from 'node:fs';
+import { readdirSync, existsSync, statSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { chromeParts, emblem } from './src/site/chrome.mjs';
 import { scenesMarkup, ticksMarkup, realMarkup, railMarkup, latMapMarkup } from './src/site/markup.mjs';
@@ -17,7 +17,6 @@ function pagesIn(dir) {
   return out;
 }
 const pages = ['index.html', ...(existsSync('404.html') ? ['404.html'] : []), ...DIRS.flatMap(pagesIn)];
-const sampleCards = () => (existsSync('muestras/_cards.html') ? readFileSync('muestras/_cards.html', 'utf8') : '');
 
 function analyticsTag() {
   if (process.env.VITE_PLAUSIBLE_DOMAIN) {
@@ -50,11 +49,11 @@ function site() {
     name: 'red-vaeru-site',
     transformIndexHtml: {
       order: 'pre',
-      handler: (html) => inject(html).replaceAll('__SITE_URL__', SITE_URL).replace('<!--ANALYTICS-->', analyticsTag()).replace('<!--SAMPLES-->', sampleCards()),
+      handler: (html) => inject(html).replaceAll('__SITE_URL__', SITE_URL).replace('<!--ANALYTICS-->', analyticsTag()),
     },
     generateBundle() {
       const indexable = pages
-        .filter((p) => p !== '404.html' && !p.startsWith('gracias') && !p.startsWith('muestras/index'))
+        .filter((p) => p !== '404.html' && !p.startsWith('gracias'))
         .map((p) => '/' + p.replace(/index\.html$/, ''));
       const today = new Date().toISOString().slice(0, 10);
       this.emitFile({ type: 'asset', fileName: 'robots.txt', source: `User-agent: *\nAllow: /\nDisallow: /api/\n\nSitemap: ${SITE_URL}/sitemap.xml\n` });
