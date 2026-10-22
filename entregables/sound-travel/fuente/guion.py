@@ -109,122 +109,70 @@ def bullet(d, text, lead=None):
 # Guion
 # ---------------------------------------------------------------------------
 SLIDES = [
-    # (n, titulo, integrante, duracion_seg, guion, enfasis[list], transicion)
-    (1, "Portada", 1, 30,
-     "Buenos días, profesora y compañeros. Somos el equipo de Sound Travel y hoy les vamos a presentar el plan de coordinación y operaciones de una agencia que creamos para la asignatura de Coordinación en Operaciones Turísticas. "
-     "Quiero aclarar algo desde el principio: Sound Travel es una empresa ficticia. Elegimos la Opción 2 de la guía, que nos pedía crear un servicio turístico pensado para nuestro propio territorio, y por eso todo lo que van a ver está aterrizado en Temuco y La Araucanía.",
-     ["Empresa ficticia, Opción 2 de la guía.", "Contexto: Temuco y Región de La Araucanía."],
-     "Antes de entrar en materia, les mostramos cómo vamos a ordenar la exposición."),
-    (2, "Ruta de la exposición", 1, 30,
-     "Dividimos la presentación en cuatro partes que siguen los criterios de evaluación de la unidad. Yo parto con el contexto y la presentación de la empresa; mi compañero o compañera 2 explica la estructura y los procesos, que es el criterio 2.1.1; luego el integrante 3 muestra cómo nos relacionamos con los demás actores, el criterio 2.1.2; y el integrante 4 cierra con los criterios técnicos y el seguimiento, el 2.1.3. "
-     "Todo apunta al aprendizaje esperado: organizar la coordinación con distintos actores considerando el producto, el territorio y la normativa.",
-     ["Cada parte responde a un criterio.", "El aprendizaje esperado es el hilo conductor."],
-     "Y para entender por qué existe Sound Travel, primero hay que mirar el problema."),
-    (3, "El problema: llegar, disfrutar y volver seguro", 1, 60,
-     "El turismo en Chile se viene recuperando con fuerza. Según la Subsecretaría de Turismo, el país superó los 3,6 millones de visitantes internacionales en 2023, y además hay mucho movimiento de viajeros nacionales que se desplazan entre regiones para ver espectáculos en vivo. "
-     "Ahora, ¿qué pasa en concreto en Temuco cuando hay un concierto grande en el Estadio Germán Becker o una fiesta en la Isla Cautín? Pasan tres cosas: la micro deja de pasar temprano, los estacionamientos colapsan y las aplicaciones de transporte suben sus tarifas. El resultado es que mucha gente no sabe cómo volver a casa de forma segura en la noche. "
-     "El informe toma como referencia el Festival Internacional de Temuco proyectado para febrero de 2027. Lo usamos como un escenario de planificación, pero queremos ser honestos: no tenemos una confirmación oficial de que ese evento se vaya a realizar.",
-     ["El problema es real y se repite cada temporada.", "Tres fallas: transporte público, estacionamientos y tarifas.", "El festival 2027 es un escenario proyectado, no un hecho confirmado."],
-     "Frente a ese problema, nace nuestra propuesta."),
-    (4, "¿Qué es Sound Travel?", 1, 50,
-     "Sound Travel es una agencia de turismo de eventos con casa matriz en Temuco. La justificación es simple: no existe una solución que integre el viaje de ida y vuelta con todo lo demás que necesita un asistente. Por eso diseñamos un servicio integrado que junta el traslado, la entrada, las paradas para comer y la compañía de un guía. "
-     "En el mapa pueden ver nuestra localización. Temuco es la base, y desde ahí operamos rutas dentro de la región: Padre Las Casas, Lautaro, Villarrica y Pucón. Las líneas punteadas son viajes especiales a conciertos en Concepción y Santiago. Es un esquema referencial, no un mapa a escala, pero muestra bien hasta dónde llega el servicio.",
-     ["Servicio integrado: no solo transporte.", "Base en Temuco, rutas regionales y viajes especiales."],
-     "Ahora que sabemos qué hace la empresa, veamos hacia dónde apunta y a quién le habla."),
-    (5, "Misión, visión y público objetivo", 1, 40,
-     "Nuestra misión es ofrecer traslado y actividades complementarias para asistentes a festivales y conciertos, dentro y fuera de la región, garantizando seguridad, comodidad y un viaje bien planificado. Nuestra visión es ser una agencia reconocida en el sur de Chile en turismo de eventos, justamente por la buena organización. "
-     "Tenemos dos perfiles de cliente. El primero son jóvenes de 18 a 35 años, fanáticos de la música, que quieren una experiencia completa y sin complicarse con el transporte. El segundo son turistas de hasta 45 años, grupos de amigos o parejas, que buscan panoramas de fin de semana, como un sunset en Villarrica o Pucón, y que valoran también la comida local.",
-     ["Seguridad y comodidad aparecen en misión y en ambos perfiles.", "El perfil 2 explica la importancia de la gastronomía."],
-     "Con estos clientes en mente armamos nuestro producto principal."),
-    (6, "Propuesta de valor: el Pack Sound Travel", 1, 30,
-     "El Pack Sound Travel tiene cuatro componentes: traslado ida y vuelta en minibuses o vans de 15 a 30 pasajeros, entrada asegurada a través de ticketeras oficiales para evitar estafas, la asistencia de un guía y paradas gastronómicas en locales de la zona. Lo resumimos en una frase: llegar puntual, disfrutar con tranquilidad y volver seguro a casa. "
-     "Para que todo esto funcione, la agencia necesita una estructura muy clara, y eso lo explica mi compañero.",
-     ["Cuatro componentes en un solo pack.", "No inventamos precios: el informe no los define."],
-     "Le paso la palabra al Integrante 2."),
-    (7, "Estructura organizacional: organigrama jerárquico", 2, 45,
-     "Gracias. Yo les voy a mostrar cómo está organizada Sound Travel por dentro. Este es nuestro organigrama jerárquico. Arriba está la Dirección General, a cargo del Gerente General. Debajo hay tres áreas: Operaciones y Logística, Comercial y Atención al Cliente, y Administración y Finanzas. "
-     "Un detalle importante es que el Equipo de Terreno, o sea guías y conductores, depende directamente de Operaciones. Eso no es casual: quien planifica las rutas es el mismo que coordina a las personas que están con los pasajeros el día del evento, así la información no se pierde en el camino.",
-     ["Estructura simple y vertical.", "Terreno depende de Operaciones: conexión directa oficina–terreno."],
-     "Ahora veamos qué hace cada área en detalle."),
-    (8, "Áreas de trabajo y recurso humano", 2, 55,
-     "Tenemos cinco cargos principales. La Dirección General planifica, busca alianzas con instituciones y productoras, y vela por el cumplimiento de la normativa turística. Operaciones y Logística arma las rutas, calcula los tiempos, revisa que los minibuses tengan sus papeles al día y prepara los planes de contingencia. "
-     "El área Comercial responde consultas en redes, gestiona reservas y publica en Instagram y TikTok. Administración y Finanzas lleva la contabilidad, emite boletas y facturas, controla el presupuesto de cada salida y paga a tiempo a transportistas, locales y ticketeras. "
-     "Y el Equipo de Terreno es la cara visible: los guías pasan lista, entregan las pulseras y acompañan al grupo hasta la entrada, mientras los conductores aseguran un manejo prudente y puntual.",
-     ["Cada cargo actúa antes, durante o después del evento.", "El Equipo de Terreno es el contacto directo con el cliente."],
-     "Esto mismo lo podemos mirar de otra forma: por funciones."),
-    (9, "Organigrama funcional", 2, 40,
-     "Si el organigrama jerárquico responde a quién depende de quién, el funcional responde a qué función cumple cada área. Agrupamos el trabajo en cuatro funciones: directiva, operativa, comercial y administrativa. "
-     "Las cuatro convergen en el centro, que es el servicio integrado. Por ejemplo, la función administrativa liquida los convenios con transportistas y restaurantes, y la operativa diseña los puntos de encuentro. Ojo con un punto: el informe menciona convenios con municipios y SERNATUR, pero como somos una empresa ficticia, esos convenios son una propuesta, no acuerdos firmados.",
-     ["Diferencia entre organigrama jerárquico y funcional.", "Convenios institucionales = propuesta."],
-     "Ahora, estas funciones se traducen en procesos, algunos internos y otros externos."),
-    (10, "Procesos operativos internos y externos", 2, 50,
-     "A la izquierda están los procesos internos: planificar rutas y puntos de encuentro, revisar documentos y mantención de los minibuses, gestionar reservas y la nómina de pasajeros, controlar pagos y presupuesto, y finalmente ejecutar el embarque y el retorno. "
-     "A la derecha están los procesos externos, que se dan en tres frentes: proveedores, alianzas estratégicas y clientes. Las flechas del medio van en ambos sentidos porque lo interno prepara lo que comprometemos afuera, y lo externo nos devuelve información clave, como qué calles estarán cerradas o cuántos pasajeros confirmaron.",
-     ["Interno y externo se retroalimentan.", "Tres frentes externos: proveedores, alianzas y clientes."],
+    (1, "Portada", 1, 20,
+     "Buenos días, profesora y compañeros. Somos el equipo de Sound Travel. Durante esta unidad investigamos cómo coordinar un servicio turístico de eventos en nuestra región y diseñamos esta agencia, que es ficticia: elegimos la Opción 2 de la guía, que pedía crear una empresa contextualizada en nuestro territorio.",
+     ["Empresa ficticia, Opción 2.", "Trabajo de investigación propio del equipo."],
+     "Partamos por el problema que encontramos."),
+    (2, "El problema y nuestra respuesta: Sound Travel", 1, 60,
+     "Al investigar el contexto vimos que el turismo en Chile está creciendo: según la Subsecretaría de Turismo, en 2023 llegaron más de 3,6 millones de visitantes internacionales, y además hay mucha gente que viaja entre regiones para ver conciertos. "
+     "Pero en Temuco, cada vez que hay un evento masivo en el Germán Becker o en la Isla Cautín, se repiten tres problemas: la micro deja de pasar temprano, los estacionamientos colapsan y las aplicaciones suben sus tarifas. "
+     "Nuestra respuesta es Sound Travel: una agencia de turismo de eventos con base en Temuco, que opera rutas a Padre Las Casas, Lautaro, Villarrica y Pucón, y viajes especiales a Concepción y Santiago. "
+     "Tomamos como escenario el Festival Internacional de Temuco 2027, pero aclaramos que no encontramos confirmación oficial; lo usamos solo para planificar.",
+     ["Tres problemas concretos del territorio.", "Localización: Temuco como base.", "El festival 2027 es un escenario, no un hecho."],
+     "Ahora, ¿qué busca la empresa y para quién trabaja?"),
+    (3, "Identidad y propuesta de valor", 1, 50,
+     "Nuestra misión es ofrecer traslado y actividades complementarias para asistentes a eventos, garantizando seguridad, comodidad y un viaje bien planificado. Y queremos ser reconocidos en el sur de Chile justamente por la buena organización. "
+     "Definimos dos públicos: jóvenes de 18 a 35 años que van a conciertos y festivales, y grupos o parejas de hasta 45 años que buscan panoramas de fin de semana, como un sunset en la zona lacustre. "
+     "A ambos les ofrecemos el Pack Sound Travel, que junta cuatro cosas: traslado ida y vuelta, entrada asegurada con ticketeras oficiales, un guía que los acompaña y paradas gastronómicas. En una frase: llegar puntual, disfrutar tranquilo y volver seguro.",
+     ["Misión y perfiles apuntan a seguridad y comodidad.", "Cuatro componentes en un solo pack."],
+     "Para cumplir esta promesa necesitamos una organización clara. Le paso la palabra al Integrante 2."),
+    (4, "Estructura organizacional y recurso humano", 2, 45,
+     "Gracias. Diseñamos una estructura simple y vertical. Arriba está la Dirección General, que planifica, busca alianzas y vela por la normativa. Debajo hay tres áreas: Operaciones y Logística, que arma rutas y revisa los minibuses; Comercial, que atiende redes y reservas; y Administración y Finanzas, que lleva la contabilidad y paga a los proveedores. "
+     "Decidimos que el Equipo de Terreno, guías y conductores, dependa de Operaciones, porque así quien planifica la ruta coordina directamente a quienes están con los pasajeros.",
+     ["Cinco cargos con funciones claras.", "Terreno depende de Operaciones."],
+     "Esta misma estructura la podemos mirar por funciones."),
+    (5, "Organigrama funcional y procesos internos y externos", 2, 40,
+     "En el organigrama funcional agrupamos el trabajo en cuatro funciones: directiva, operativa, comercial y administrativa, y todas apuntan al mismo servicio integrado. "
+     "Estas funciones se traducen en procesos internos, como planificar rutas, gestionar reservas o controlar pagos, y en procesos externos en tres frentes: proveedores, alianzas con instituciones y clientes. Lo interno y lo externo se retroalimentan: lo que preparamos adentro es lo que comprometemos afuera.",
+     ["Jerárquico = quién depende de quién; funcional = qué hace cada área.", "Tres frentes externos."],
      "Todo esto se ordena en un flujo de cinco etapas."),
-    (11, "Diagrama de flujo del servicio en cinco etapas", 2, 50,
-     "Este es el recorrido completo del servicio. En la etapa 1 difundimos el Pack Evento en Instagram y TikTok. En la etapa 2 el cliente consulta, cotiza y compra por la web o WhatsApp, y recibe su voucher. En la etapa 3, la más crítica, bloqueamos asientos, comidas y entradas con los proveedores. En la etapa 4 se hace el traslado con acompañamiento del guía, y en la etapa 5 volvemos seguros a Temuco y enviamos una encuesta de calidad. "
-     "La flecha verde muestra que esa encuesta alimenta las próximas salidas, o sea, hay mejora continua. Un detalle: el informe no dice quién envía la encuesta, por eso lo marcamos con asterisco.",
-     ["Etapa 3 es el punto de coordinación con proveedores.", "La encuesta cierra el ciclo y mejora el servicio."],
-     "Justamente en la etapa 3 aparecen muchos actores externos. Le paso la palabra al Integrante 3, que explica cómo nos coordinamos con ellos."),
-    (12, "Ecosistema de actores turísticos", 3, 40,
-     "Gracias. Para que el pack funcione, Sound Travel trabaja con seis tipos de actores. Tenemos proveedores privados, como las empresas de transporte y los locales gastronómicos; un aliado comercial, que son las ticketeras y productoras; actores públicos, como la Municipalidad de Temuco, SERNATUR Araucanía, la seguridad municipal y Carabineros; y por supuesto la demanda, que son nuestros clientes. "
-     "La guía también menciona alojamiento y seguros. Siendo honestos, en nuestro servicio no aplican porque son salidas de un día; para los viajes a Santiago o Concepción eso queda pendiente de definir.",
-     ["Cuatro grupos: proveedores, aliados, actores públicos y demanda.", "Alojamiento no aplica al servicio actual."],
-     "Ahora veamos cómo se relaciona cada uno con la agencia."),
-    (13, "Mapa de relaciones funcionales", 3, 60,
-     "Este mapa es el corazón de nuestra coordinación. Sound Travel está al centro porque es quien diseña el programa, contrata, coordina horarios y supervisa en terreno. "
-     "Las líneas continuas violeta son relaciones contractuales o comerciales: con el transporte tenemos contratación B2B, con las ticketeras una alianza comercial, con los locales un convenio de alimentación y con los clientes una compra directa B2C. Las líneas punteadas celestes son de coordinación y flujo de información: con el municipio, SERNATUR y la seguridad local no compramos nada, pero intercambiamos información y permisos. "
-     "Las flechas son dobles porque la información va y vuelve: nosotros entregamos nóminas y horarios, y ellos nos informan apertura de puertas, cierres de calles o dónde podemos estacionar.",
-     ["Sound Travel como coordinador central.", "Dos tipos de vínculo: contractual/comercial y coordinación/información.", "La información circula en ambos sentidos."],
-     "Bajemos al detalle de qué le corresponde a cada proveedor."),
-    (14, "Responsabilidades de los proveedores", 3, 50,
-     "Cada proveedor tiene responsabilidades claras. El transporte debe tener máquinas limpias, revisión técnica vigente y choferes profesionales descansados. Las ticketeras emiten y validan los códigos QR o entradas físicas y nos avisan la hora de apertura de puertas. Los locales gastronómicos tienen que tener las mesas y menús listos para no atrasar el itinerario. "
-     "Pero la relación es de doble vía: abajo ven lo que cada uno recibe de nosotros. Por ejemplo, el restaurante necesita saber a qué hora llegamos y cuántas personas somos, y recibe el pago de la reserva entre 72 y 24 horas antes. Si nosotros fallamos en eso, ellos tampoco pueden cumplir.",
-     ["Obligaciones de cada proveedor.", "Doble vía: la agencia también tiene compromisos."],
-     "Además de los proveedores, hay dos frentes más: el institucional y el comercial."),
-    (15, "Coordinación institucional y comercial", 3, 45,
-     "Con la Municipalidad de Temuco, SERNATUR Araucanía, la seguridad municipal y Carabineros mantenemos una coordinación institucional. ¿Para qué? Para saber qué calles estarán cerradas, dónde se autoriza estacionar los buses, cuáles son las vías de evacuación y para contar con resguardo en las zonas de embarque nocturno. Recalco que es una relación propuesta: no tenemos convenios firmados. "
-     "En lo comercial trabajamos con un modelo B2C, o sea venta directa al público, usando Instagram, TikTok, la página web y WhatsApp Business, donde cotizamos, cerramos la venta y enviamos el voucher.",
-     ["Lo institucional aporta información y seguridad.", "Lo comercial trae al cliente por canales digitales."],
-     "Y todo esto tiene sentido solo si responde a lo que el cliente necesita."),
-    (16, "Necesidades de la demanda e interdependencia", 3, 45,
-     "En esta tabla cruzamos cada necesidad del cliente con la respuesta del servicio y los actores que intervienen. Por ejemplo, volver seguro de noche se resuelve con el reencuentro 30 minutos después del show, el conteo de pasajeros y la pulsera por bus, y ahí participan el guía, el conductor y la seguridad local. "
-     "Abajo está la cadena de interdependencia: si la entrada no se emite, si el bus no llega o si la mesa no está lista, el cliente no queda satisfecho aunque todo lo demás funcione. Por eso no basta con contratar; hay que coordinar.",
-     ["Servicio diseñado desde las necesidades del cliente.", "Un solo eslabón que falla afecta a todo el servicio."],
-     "La pregunta entonces es: ¿con qué criterios aseguramos que cada eslabón cumpla? Eso lo responde el Integrante 4."),
-    (17, "Estándares técnicos y normativos", 4, 50,
-     "Gracias. Yo cierro con el criterio 2.1.3. La asignación de tareas en Sound Travel se basa en cuatro criterios; parto por los técnicos y normativos. En lo técnico, antes de cada salida el Jefe de Operaciones aplica un checklist al minibús: neumáticos, cinturones, botiquín y climatización. Los guías usan una nómina digital y entregan pulseras de color según el bus. "
-     "En lo normativo, proponemos inscribir la agencia en el Registro Nacional de Prestadores de SERNATUR, que regula la Ley 20.423. Exigimos a los transportistas cumplir el Decreto Supremo 80 de transporte privado remunerado, conductores con licencia profesional A2 o A3 y SOAP vigente. "
-     "Al revisar las fuentes hicimos dos ajustes al informe: el registro está en el Título VII de la ley y, para agencias, la inscripción es voluntaria; y las clases de licencia vienen de la Ley de Tránsito 18.290, no del Decreto 80.",
-     ["Los estándares definen quién verifica qué.", "Corrección de citas = revisión crítica de fuentes."],
-     "Pero operar bien no es solo cumplir la norma; también hay que cuidar el entorno y entender el territorio."),
-    (18, "Sustentabilidad y contexto territorial", 4, 40,
-     "En sustentabilidad aplicamos la regla Viaje Limpio, con bolsas de reciclaje en cada minibús, usamos solo tickets y credenciales digitales, y priorizamos locales gastronómicos de la zona para que el gasto quede en la región. "
-     "En cuanto al territorio, La Araucanía tiene lluvias repentinas, neblina nocturna en la Ruta 5 Sur y mucha congestión en la ruta entre Villarrica y Pucón en verano. Por eso fijamos puntos de encuentro céntricos e iluminados, como el sector de Avenida Alemania o la Plaza Teodoro Schmidt, y salimos con margen para no quedar atrapados en los tacos.",
-     ["Sustentabilidad ambiental y económica local.", "El territorio condiciona horarios y puntos de encuentro."],
-     "Con estos cuatro criterios armamos la matriz de tareas."),
-    (19, "Matriz de asignación de tareas y responsables", 4, 45,
-     "La matriz responde quién hace qué, cuándo y con qué criterio. Entre 72 y 24 horas antes, el Jefe de Operaciones y el administrativo revisan documentos, pagan reservas y cierran la nómina. El día del evento, guía y conductor hacen la citación, el control de lista digital y la charla de seguridad. Durante el evento, el guía acompaña y se coordina con seguridad municipal; y en el retorno se reúne al grupo, se cuenta a todos y se regresa a Temuco. "
-     "Agregamos una quinta fila, el post-evento, porque la encuesta aparece en el informe pero no tenía responsable en la matriz. La marcamos como complemento y sugerimos que la haga el área Comercial.",
-     ["Cada tarea tiene responsable y criterio aplicado.", "La fila post-evento es un complemento declarado."],
-     "Asignar tareas no basta: hay que hacer seguimiento."),
-    (20, "Comunicación y seguimiento: una línea de tiempo", 4, 40,
-     "Esta línea de tiempo muestra cómo seguimos a cada actor. A los proveedores, el Jefe de Operaciones les confirma por correo siete días antes y por WhatsApp 24 horas antes, validando patentes, choferes y horarios. "
-     "Al equipo interno lo seguimos el día del evento con un grupo de WhatsApp operativo y radios, porque en el Estadio Germán Becker suele caerse la señal. El guía reporta cuatro hitos: bus en el punto, salida completa, llegada y comienzo del retorno. "
-     "Y a los clientes los acompañamos desde la compra, con el comprobante y el canal del bus, hasta el día siguiente, cuando reciben la encuesta.",
-     ["Canales distintos según el actor.", "Cuatro hitos de reporte el día del evento."],
-     "¿Y si algo sale mal? Para eso está el protocolo de contingencias."),
-    (21, "Protocolo de coordinación ante contingencias", 4, 35,
-     "En verde están las respuestas que ya vienen en el informe: plan para cortes de tránsito y mal clima, radios si se cae la señal, el guía en un punto de asistencia ante emergencias y la pulsera y la ubicación en tiempo real para quien se desoriente. "
-     "En ámbar está lo que nosotros proponemos para completarlo, porque el informe no tenía un protocolo formal: tener un proveedor de respaldo y un procedimiento si un pasajero no llega al reencuentro, con un escalamiento claro desde el guía hasta Carabineros si es necesario.",
-     ["Distinguir lo que está en el informe de lo propuesto.", "Escalamiento: guía → jefe de operaciones → dirección → seguridad."],
-     "Para terminar, conectamos todo con los criterios de evaluación."),
-    (22, "Conclusiones: coordinar es anticipar", 4, 30,
-     "En resumen: para el criterio 2.1.1 mostramos una estructura simple y un flujo de cinco etapas que une procesos internos y externos. Para el 2.1.2, Sound Travel actúa como coordinador central entre transporte, ticketeras, gastronomía, instituciones y clientes. Y para el 2.1.3, asignamos tareas con criterios técnicos, normativos, sustentables y territoriales, y las controlamos con seguimiento y contingencias. "
-     "Un servicio de eventos funciona solo si cada actor sabe qué hacer, cuándo y a quién informar. Muchas gracias; quedamos atentos a sus preguntas.",
-     ["Un mensaje por criterio.", "Cierre con la frase central."],
-     "Se deja proyectada la diapositiva 23 (referencias) durante las preguntas."),
+    (6, "Diagrama de flujo del servicio en cinco etapas", 2, 45,
+     "Este es el recorrido completo. Primero difundimos el Pack Evento en redes; luego el cliente cotiza y compra por web o WhatsApp; en la etapa 3 bloqueamos asientos, comidas y entradas con los proveedores; en la 4 se hace el traslado con el guía; y en la 5 volvemos seguros a Temuco y enviamos una encuesta. "
+     "Esa encuesta vuelve al inicio, por eso la flecha verde: es mejora continua. Al revisar el informe notamos que no decía quién envía la encuesta; lo dejamos marcado con asterisco.",
+     ["La etapa 3 concentra la coordinación externa.", "La encuesta cierra el ciclo."],
+     "En la etapa 3 aparecen muchos actores. Le paso la palabra al Integrante 3."),
+    (7, "Actores y mapa de relaciones funcionales", 3, 50,
+     "Gracias. Identificamos seis actores: transporte, ticketeras, locales gastronómicos, municipio y SERNATUR, seguridad local y los clientes. Sound Travel está al centro porque diseña, contrata, coordina horarios y supervisa en terreno. "
+     "Las líneas continuas son relaciones contractuales o comerciales: contratación con el transporte, alianza con las ticketeras, convenio con los locales y compra directa con el cliente. Las punteadas son de coordinación e información: con las instituciones no compramos nada, pero intercambiamos permisos y datos. "
+     "Un dato honesto: alojamiento no aplica porque son salidas de un día.",
+     ["Sound Travel como coordinador central.", "Dos tipos de vínculo y flujo de información en ambos sentidos."],
+     "Veamos qué le corresponde a cada actor."),
+    (8, "Responsabilidades y coordinación con cada actor", 3, 40,
+     "Cada actor tiene responsabilidades claras: el transporte, máquinas al día y choferes descansados; las ticketeras, entradas válidas y el horario de apertura; los locales, mesas listas a tiempo; y el municipio, SERNATUR y la seguridad, información sobre calles cerradas, estacionamiento de buses y resguardo nocturno. "
+     "Pero es una relación de doble vía: ellos también dependen de lo que les entregamos, como nóminas, horarios y pagos en fecha. Abajo está lo comercial: vendemos directo al público por redes, web y WhatsApp. Ojo: con las instituciones es una relación propuesta, no hay convenios firmados.",
+     ["Relación de doble vía.", "Vínculo institucional propuesto."],
+     "Y todo esto tiene sentido si responde a lo que necesita el cliente."),
+    (9, "Necesidades de la demanda e interdependencia", 3, 40,
+     "Aquí cruzamos cada necesidad del cliente con nuestra respuesta. Por ejemplo, para volver seguro de noche hay un reencuentro 30 minutos después del show, conteo de pasajeros y una pulsera por bus. "
+     "Abajo está la cadena de interdependencia: si la entrada no se emite, el bus no llega o la mesa no está lista, el cliente no queda satisfecho aunque lo demás funcione. Por eso no basta con contratar: hay que coordinar.",
+     ["Servicio diseñado desde el cliente.", "Si falla un eslabón, falla el servicio."],
+     "¿Con qué criterios aseguramos que cada eslabón cumpla? Le paso la palabra al Integrante 4."),
+    (10, "Cuatro criterios para asignar tareas", 4, 50,
+     "Gracias. Asignamos las tareas con cuatro criterios. Técnico: antes de cada salida el Jefe de Operaciones revisa neumáticos, cinturones, botiquín y climatización, y el guía usa nómina digital y pulseras. Normativo: proponemos inscribirnos en el registro de SERNATUR y exigimos a los transportistas el Decreto 80, licencia A2 o A3 y SOAP. "
+     "Al revisar las leyes descubrimos dos errores de cita en el informe y los corregimos: el registro está en el Título VII de la Ley 20.423 y es voluntario para agencias, y las licencias vienen de la Ley de Tránsito. "
+     "En sustentabilidad: Viaje Limpio, cero papel y compras a emprendimientos locales. Y por el territorio, con lluvia, neblina y tacos, usamos puntos de encuentro céntricos e iluminados y salimos con margen.",
+     ["Cada criterio define quién hace qué.", "Corregimos dos citas al investigar las normas."],
+     "Con estos criterios armamos la matriz de tareas."),
+    (11, "Matriz de tareas y seguimiento de la operación", 4, 45,
+     "La matriz responde quién hace qué, cuándo y cómo se controla. Antes del evento, el Jefe de Operaciones revisa documentos y confirma a los proveedores por correo siete días antes y por WhatsApp 24 horas antes. El día del evento, guía y conductor hacen el embarque y reportan cuatro hitos en el WhatsApp operativo: bus en el punto, salida, llegada y retorno; si cae la señal, usamos radios. "
+     "Al cliente lo acompañamos desde el comprobante hasta la ubicación del guía en tiempo real. Agregamos la fila post-evento, la encuesta, porque en el informe no tenía responsable.",
+     ["Seguimiento distinto para proveedores, operadores y clientes.", "Fila post-evento agregada por el equipo."],
+     "Y si algo sale mal, tenemos un protocolo."),
+    (12, "Contingencias y conclusiones", 4, 45,
+     "En verde están las respuestas que ya venían en el informe, como radios, punto de asistencia y pulseras; en ámbar, lo que propusimos para completarlo: proveedores de respaldo y un escalamiento si un pasajero no llega. "
+     "Para cerrar: en el criterio 2.1.1 mostramos una estructura y un flujo claros; en el 2.1.2, a Sound Travel coordinando a todos los actores; y en el 2.1.3, tareas asignadas con criterios y controladas con seguimiento. Un servicio de eventos funciona solo si cada actor sabe qué hacer, cuándo y a quién informar. Muchas gracias.",
+     ["Distinguir informe y propuesta.", "Un mensaje por criterio."],
+     "Quedamos atentos a sus preguntas."),
 ]
 
 d = base_doc()
@@ -240,7 +188,7 @@ r = p.add_run("Guion de exposición para cuatro integrantes")
 r.font.size = Pt(16)
 r.bold = True
 para(d, "Coordinación en Operaciones Turísticas (GTD404) · Unidad 2 · INACAP Sede Temuco · Docente: Evelyn Rios Soto", color=GREY)
-para(d, "Duración total provisoria: 16 minutos (≈ 4 minutos por integrante). Los tiempos están en la tabla de distribución; para ajustar la duración total, acorten o alarguen la explicación oral de las diapositivas marcadas como «flexibles».", italic=True)
+para(d, "Versión de 12 diapositivas. Duración total: unos 9 minutos (≈ 2:10 por integrante), con margen para no pasar de 10. Pensado para leerse con naturalidad: es el trabajo que investigamos como equipo.", italic=True)
 
 d.add_heading("1. Distribución de diapositivas y tiempos", level=1)
 groups = {1: [], 2: [], 3: [], 4: []}
@@ -253,20 +201,20 @@ for who in (1, 2, 3, 4):
     total += secs
     nums = [n for n, *_ in groups[who]]
     rows.append((f"Integrante {who}", f"{nums[0]}–{nums[-1]}", str(len(nums)),
-                 {1: "Contexto, Sound Travel, misión, visión, público y propuesta de valor",
-                  2: "Organigramas, áreas, RR. HH., procesos y diagrama de flujo",
-                  3: "Actores, mapa de relaciones, responsabilidades, coordinación y demanda",
-                  4: "Normativa, sustentabilidad, territorio, matriz, seguimiento, contingencias y conclusiones"}[who],
+                 {1: "Portada; problema y Sound Travel (justificación, localización); misión, visión, público y pack",
+                  2: "Organigrama y RR. HH.; organigrama funcional y procesos; diagrama de flujo",
+                  3: "Actores y mapa de relaciones; responsabilidades y coordinación; demanda e interdependencia",
+                  4: "Cuatro criterios; matriz de tareas y seguimiento; contingencias y conclusiones"}[who],
                  {1: "2.1.1 (base)", 2: "2.1.1", 3: "2.1.2", 4: "2.1.3"}[who],
                  f"{secs // 60}:{secs % 60:02d}"))
-rows.append(("TOTAL", "1–22 (+23 de apoyo)", "22 + 1", "", "", f"{total // 60}:{total % 60:02d}"))
+rows.append(("TOTAL", "1–12", "12", "", "", f"{total // 60}:{total % 60:02d}"))
 table(d, ["Expositor", "Diapositivas", "N.°", "Contenido", "Criterio", "Tiempo"], rows, [2.4, 2.4, 1.0, 6.7, 2.0, 1.5])
 para(d, "")
 para(d, "", bold_lead="Por qué este reparto es equilibrado:")
-bullet(d, "El Integrante 1 tiene más diapositivas (6), pero dos de ellas son breves (portada y ruta). Su carga real es comparable.")
-bullet(d, "El Integrante 4 tiene la sección más técnica (normativa y matriz); por eso sus diapositivas tienen tiempos acotados y el guion prioriza ideas clave.")
-bullet(d, "Los integrantes 2 y 3 tienen cinco diapositivas cada uno con diagramas centrales (flujo y mapa de relaciones), que concentran 50–60 segundos.")
-para(d, "Diapositivas flexibles para ajustar la duración: 3, 8, 13, 17 (pueden acortarse 10–15 s cada una) y 2, 6, 22 (pueden alargarse si sobra tiempo).", italic=True)
+bullet(d, "Cada integrante expone 3 diapositivas y habla entre 2:10 y 2:20.")
+bullet(d, "El Integrante 4 tiene la parte más técnica, así que su guion se queda en las ideas clave; el detalle está en la diapositiva.")
+bullet(d, "Se fusionaron diapositivas de la versión larga sin eliminar evidencia: cada subrequisito sigue apareciendo (ver matriz).")
+para(d, "Si van justos de tiempo, acorten las diapositivas 2, 7 y 10 (las más largas, 50–60 s). Hay cerca de 1 minuto de margen bajo los 10.", italic=True)
 
 d.add_heading("2. Guion por diapositiva", level=1)
 para(d, "Consejo general: no lean la diapositiva. El guion explica y da ejemplos; la diapositiva solo apoya. Las frases entre comillas de transición pueden decirse con sus propias palabras.", italic=True, color=GREY)
@@ -291,7 +239,7 @@ for tx in [
     "En cada cambio de expositor, quien termina nombra a quien sigue y el tema que tratará; quien entra comienza con «Gracias».",
     "Si la profesora pregunta por normativa, recuerden: el registro de SERNATUR es voluntario para agencias (Ley 20.423, art. 33) y obligatorio para alojamiento y turismo aventura; las licencias A2/A3 están en la Ley 18.290.",
     "Si preguntan por el festival 2027 o por convenios: respondan que son escenarios y propuestas de una empresa ficticia, no hechos confirmados.",
-    "Completen sus nombres en la portada (diapositiva 1) antes de exponer.",
+    "Completen sus nombres en la portada (diapositiva 1) antes de exponer. Usen «investigamos», «revisamos», «propusimos»: el trabajo es de ustedes.",
 ]:
     bullet(d, tx)
 d.save(f"{OUT_DIR}/Sound_Travel_Guion_Exposicion.docx")
@@ -310,54 +258,54 @@ para(d, "Advertencia: la guía remite a un instrumento de evaluación disponible
 
 d.add_heading("1. Matriz de verificación", level=1)
 M = [
-    ("2.1.1", "Selección o creación de la empresa y justificación", "3, 4", "1", "Cumple"),
-    ("2.1.1", "Nombre, localización, misión, visión y público objetivo", "4, 5", "1", "Cumple"),
-    ("2.1.1", "Propuesta de valor / servicio prestado", "6", "1", "Cumple"),
-    ("2.1.1", "Organigrama básico (jerárquico)", "7", "2", "Cumple"),
-    ("2.1.1", "Descripción de áreas y funciones", "8", "2", "Cumple"),
-    ("2.1.1", "Recurso humano y roles (guía, jefe de operaciones, vendedor, etc.)", "8", "2", "Cumple"),
-    ("2.1.1", "Organigrama funcional", "9", "2", "Cumple"),
-    ("2.1.1", "Procesos internos", "10", "2", "Cumple"),
-    ("2.1.1", "Procesos externos: relación con proveedores (alojamiento, transporte, alimentación, seguros)", "10, 12, 14", "2 y 3", "Parcial: transporte, alimentación y ticketeras desarrollados; alojamiento no aplica (salidas de día); seguros solo SOAP"),
-    ("2.1.1", "Procesos externos: alianzas estratégicas (SERNATUR, municipios, organizaciones locales)", "10, 15", "2 y 3", "Cumple (declaradas como propuesta)"),
-    ("2.1.1", "Procesos externos: clientes y canales de comercialización", "10, 15", "2 y 3", "Cumple"),
-    ("2.1.1", "Diagrama de flujo o mapa de procesos", "11", "2", "Cumple"),
-    ("2.1.2", "Identificación de los actores del servicio", "12", "3", "Cumple"),
-    ("2.1.2", "Diagrama funcional: empresa al centro, actores alrededor", "13", "3", "Cumple"),
-    ("2.1.2", "Líneas o flechas según tipo de relación (coordinación, contratación, información)", "13", "3", "Cumple"),
-    ("2.1.2", "Responsabilidades y funciones de cada actor", "12, 14, 15", "3", "Cumple"),
-    ("2.1.2", "Relación entre servicio, características y necesidades de la demanda", "5, 16", "1 y 3", "Cumple"),
-    ("2.1.2", "Interdependencia operativa entre actores", "13, 14, 16", "3", "Cumple"),
-    ("2.1.3", "Criterio de asignación: estándares técnicos", "17", "4", "Cumple"),
-    ("2.1.3", "Criterio de asignación: estándares normativos", "17", "4", "Cumple (citas corregidas; verificar texto vigente en bcn.cl)"),
-    ("2.1.3", "Criterio de asignación: sustentabilidad", "18", "4", "Cumple"),
-    ("2.1.3", "Criterio de asignación: contexto territorial", "4, 18", "1 y 4", "Cumple"),
-    ("2.1.3", "Matriz de asignación de tareas y responsables", "19", "4", "Cumple (fila post-evento complementaria)"),
-    ("2.1.3", "Seguimiento de proveedores", "20", "4", "Cumple"),
-    ("2.1.3", "Seguimiento de operadores", "20", "4", "Cumple"),
-    ("2.1.3", "Seguimiento de clientes", "20", "4", "Cumple"),
-    ("2.1.3", "Protocolos de coordinación y respuesta ante contingencias (solicitado en el encargo)", "21", "4", "Parcial en el informe; completado en la presentación con propuestas señaladas"),
-    ("Forma", "Portada, introducción, desarrollo y conclusión", "1, 2–3, 4–21, 22", "1–4", "Cumple"),
-    ("Forma", "Referencias bibliográficas", "23", "4", "Cumple"),
+    ("2.1.1", "Selección o creación de la empresa y justificación", "2", "1", "Cumple"),
+    ("2.1.1", "Nombre, localización, misión, visión y público objetivo", "2, 3", "1", "Cumple"),
+    ("2.1.1", "Propuesta de valor / servicio prestado", "3", "1", "Cumple"),
+    ("2.1.1", "Organigrama básico (jerárquico)", "4", "2", "Cumple"),
+    ("2.1.1", "Descripción de áreas y funciones", "4", "2", "Cumple"),
+    ("2.1.1", "Recurso humano y roles", "4", "2", "Cumple"),
+    ("2.1.1", "Organigrama funcional", "5", "2", "Cumple"),
+    ("2.1.1", "Procesos internos", "5", "2", "Cumple"),
+    ("2.1.1", "Procesos externos: proveedores (alojamiento, transporte, alimentación, seguros)", "5, 7, 8", "2 y 3", "Parcial: transporte, alimentación y ticketeras desarrollados; alojamiento no aplica; seguros solo SOAP"),
+    ("2.1.1", "Procesos externos: alianzas estratégicas", "5, 8", "2 y 3", "Cumple (declaradas como propuesta)"),
+    ("2.1.1", "Procesos externos: clientes y canales de comercialización", "5, 8", "2 y 3", "Cumple"),
+    ("2.1.1", "Diagrama de flujo o mapa de procesos", "6", "2", "Cumple"),
+    ("2.1.2", "Identificación de los actores del servicio", "7", "3", "Cumple"),
+    ("2.1.2", "Diagrama funcional: empresa al centro, actores alrededor", "7", "3", "Cumple"),
+    ("2.1.2", "Líneas según tipo de relación (coordinación, contratación, información)", "7", "3", "Cumple"),
+    ("2.1.2", "Responsabilidades y funciones de cada actor", "7, 8", "3", "Cumple"),
+    ("2.1.2", "Relación entre servicio y necesidades de la demanda", "3, 9", "1 y 3", "Cumple"),
+    ("2.1.2", "Interdependencia operativa entre actores", "7, 8, 9", "3", "Cumple"),
+    ("2.1.3", "Criterio de asignación: estándares técnicos", "10", "4", "Cumple"),
+    ("2.1.3", "Criterio de asignación: estándares normativos", "10", "4", "Cumple (citas corregidas; verificar texto vigente en bcn.cl)"),
+    ("2.1.3", "Criterio de asignación: sustentabilidad", "10", "4", "Cumple"),
+    ("2.1.3", "Criterio de asignación: contexto territorial", "2, 10", "1 y 4", "Cumple"),
+    ("2.1.3", "Matriz de asignación de tareas y responsables", "11", "4", "Cumple (fila post-evento complementaria)"),
+    ("2.1.3", "Seguimiento de proveedores", "11", "4", "Cumple"),
+    ("2.1.3", "Seguimiento de operadores", "11", "4", "Cumple"),
+    ("2.1.3", "Seguimiento de clientes", "11", "4", "Cumple"),
+    ("2.1.3", "Protocolo de contingencias", "12", "4", "Parcial en el informe; completado con propuestas señaladas"),
+    ("Forma", "Portada, introducción, desarrollo y conclusión", "1, 2, 3–11, 12", "1–4", "Cumple"),
+    ("Forma", "Referencias bibliográficas", "12 (franja) y este documento", "4", "Cumple (versión compacta en la diapositiva)"),
 ]
 table(d, ["Criterio", "Evidencia requerida", "Diapositiva", "Expositor", "Estado"], M, [1.7, 6.4, 2.0, 1.7, 4.2], status_col=4)
 
 d.add_heading("2. Resumen por criterio", level=1)
 table(d, ["Criterio", "Evidencia requerida", "Diapositivas", "Expositor", "Estado"], [
-    ("2.1.1", "Estructuras y procesos internos/externos", "3–11", "Integrantes 1 y 2", "Cumple (un subrequisito parcial: alojamiento y seguros)"),
-    ("2.1.2", "Relaciones funcionales entre actores", "12–16", "Integrante 3", "Cumple"),
-    ("2.1.3", "Criterios técnicos, asignación y seguimiento", "17–21", "Integrante 4", "Cumple (contingencias completadas con propuestas)"),
+    ("2.1.1", "Estructuras y procesos internos/externos", "2–6", "Integrantes 1 y 2", "Cumple (un subrequisito parcial: alojamiento y seguros)"),
+    ("2.1.2", "Relaciones funcionales entre actores", "7–9", "Integrante 3", "Cumple"),
+    ("2.1.3", "Criterios técnicos, asignación y seguimiento", "10–12", "Integrante 4", "Cumple (contingencias completadas con propuestas)"),
 ], [1.5, 5.5, 2.2, 3.0, 3.8], status_col=4)
 
 d.add_heading("3. Análisis de los documentos fuente", level=1)
 d.add_heading("3.1 Vacíos e inconsistencias detectados", level=2)
 gaps = [
-    ("Cita normativa (Ley 20.423). ", "El informe atribuye la inscripción en el Registro Nacional de Prestadores al artículo 19. El registro se regula en el Título VII (arts. 30 y siguientes); el art. 33 establece que la inscripción es voluntaria, salvo para alojamiento turístico (art. 34) y turismo aventura. Corregido en la diapositiva 17."),
-    ("Cita normativa (licencias). ", "El informe vincula las licencias A2/A3 al D.S. 80/2004. Las clases de licencia están en el art. 12 de la Ley 18.290 de Tránsito (A2: 10 a 17 asientos; A3: sin límite). El D.S. 80 regula el transporte privado remunerado de pasajeros. Corregido en la diapositiva 17."),
-    ("Festival Internacional de Temuco 2027. ", "El informe lo presenta como «anunciado». No se encontró confirmación verificable; se presenta como escenario proyectado (diapositiva 3)."),
+    ("Cita normativa (Ley 20.423). ", "El informe atribuye la inscripción en el Registro Nacional de Prestadores al artículo 19. El registro se regula en el Título VII (arts. 30 y siguientes); el art. 33 establece que la inscripción es voluntaria, salvo para alojamiento turístico (art. 34) y turismo aventura. Corregido en la diapositiva 10."),
+    ("Cita normativa (licencias). ", "El informe vincula las licencias A2/A3 al D.S. 80/2004. Las clases de licencia están en el art. 12 de la Ley 18.290 de Tránsito (A2: 10 a 17 asientos; A3: sin límite). El D.S. 80 regula el transporte privado remunerado de pasajeros. Corregido en la diapositiva 10."),
+    ("Festival Internacional de Temuco 2027. ", "El informe lo presenta como «anunciado». No se encontró confirmación verificable; se presenta como escenario proyectado (diapositiva 2)."),
     ("Proveedores de alojamiento y seguros. ", "La guía los menciona como ejemplos; el informe no los desarrolla. Alojamiento no aplica a salidas de día; para viajes a Santiago o Concepción queda por definir. Seguros: solo SOAP de transportistas; un seguro de asistencia al pasajero no está considerado."),
-    ("Matriz de tareas incompleta. ", "El informe cubre cuatro momentos y omite la etapa 5 (encuesta post-evento), sin responsable asignado. Se agregó una fila complementaria (diapositiva 19)."),
-    ("Protocolo de contingencias. ", "El informe menciona planes de contingencia y medidas aisladas, pero no un protocolo formal. Se ordenaron en una tabla y se añadieron dos situaciones y un escalamiento marcados como propuesta (diapositiva 21)."),
+    ("Matriz de tareas incompleta. ", "El informe cubre cuatro momentos y omite la etapa 5 (encuesta post-evento), sin responsable asignado. Se agregó una fila complementaria (diapositiva 11)."),
+    ("Protocolo de contingencias. ", "El informe menciona planes de contingencia y medidas aisladas, pero no un protocolo formal. Se ordenaron en una tabla y se añadieron dos situaciones y un escalamiento marcados como propuesta (diapositiva 12)."),
     ("Responsables de etapas 1 y 2 del flujo. ", "No están explícitos en la figura 2; se dedujeron de la secc. 3.1 y 3.2 (área Comercial)."),
     ("Cantidad de integrantes. ", "La guía indica grupos de 2 o 3 integrantes y el informe registra un solo integrante; la presentación se diseñó para 4 según lo solicitado. Confirmen con la docente si la conformación es válida."),
     ("Formato de entrega. ", "La guía describe un pre-informe escrito y su entrega como «material audiovisual» en AAI; la presentación es una adaptación oral del informe."),
@@ -372,7 +320,7 @@ table(d, ["Tipo", "Ejemplos en la presentación", "Cómo se presenta"], [
     ("Propuesta operativa de la empresa ficticia", "Estructura, cargos, rutas, pack, convenios, alianzas institucionales, matriz, canales de seguimiento, sustentabilidad", "Atribuida al informe; convenios e inscripción en registro rotulados como propuesta"),
     ("Escenario proyectado", "Festival Internacional de Temuco 2027", "Etiqueta «Escenario proyectado»"),
     ("Complemento del equipo", "Fila post-evento, dos contingencias, escalamiento, cadena de interdependencia", "Rotulado en ámbar o como «análisis del equipo»"),
-    ("Requiere verificación", "Texto vigente de las normas en bcn.cl; condiciones reales de tránsito y permisos municipales para buses turísticos", "Nota en diapositivas 17 y 23"),
+    ("Requiere verificación", "Texto vigente de las normas en bcn.cl; condiciones reales de tránsito y permisos municipales para buses turísticos", "Nota en diapositivas 10 y 12"),
 ], [3.5, 8.0, 4.5])
 
 d.add_heading("3.3 Fuentes consultadas para la verificación normativa", level=2)
