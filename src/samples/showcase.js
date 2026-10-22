@@ -1,8 +1,8 @@
 // Lo que destaca de cada muestra (tres funciones reales de cada sitio): se muestra en su caso, en /trabajos/<slug>/.
 export const SHOWCASE = {
   'estudio-haber': ['Boletas que vuelan y se ordenan en el libro contable', 'Calendario tributario vivo con feriados', 'Calculadoras de IVA, honorarios y F29'],
-  'termas-rayenko': ['Mapa de siete pozones con recorrido guiado', 'Reserva por bloque con pulsera de acceso', 'Cocina de temporada y lunas llenas reales'],
-  'villa-coral-samana': ['Pines de cada villa sobre la foto aérea', 'Temporada de ballenas y canción sintetizada', 'Precios en dólares, euros o pesos dominicanos'],
+  'termas-rayenko': ['Mapa de siete pozones con recorrido guiado', 'Reserva por bloque con pulsera de acceso', 'Cocina de temporada y calendario de lunas llenas'],
+  'villa-coral-samana': ['Cada villa marcada sobre la foto aérea', 'Temporada de ballenas y merengue de fondo', 'Precios en dólares, euros o pesos dominicanos'],
   'hotel-casa-nogal': ['Lluvia en el vidrio que se despeja con el cursor', 'Corte de la casona, piso por piso', 'Doce llaves, doce habitaciones'],
   'cabanas-lago-azul': ['Un día en la orilla: el cielo cambia al bajar', 'Agua animada en la portada', 'Las casas comparadas a la misma escala'],
   'domos-cielo-austral': ['Planetario interactivo y constelaciones para trazar', 'Calendario cósmico con las mejores noches', 'Reserva que muestra cómo estará el cielo'],

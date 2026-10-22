@@ -30,7 +30,7 @@ export const CAMPAIGN = {
 // Tipo de cambio referencial para mostrar precios en USD (clientes del Caribe). Actualícelo cuando cambie.
 export const USD_RATE = 950;
 
-export const HOSTING_NOTE = 'Todos los sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se compra aparte en NIC Chile), hosting con certificado de seguridad el primer año y correo de contacto. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.';
+export const HOSTING_NOTE = 'Todos los sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se inscribe aparte en NIC Chile) y hosting con certificado de seguridad el primer año, a su nombre. Desde el segundo año, la renovación va en la mantención mensual o se cotiza aparte.';
 
 export const CONTRACT_NOTE = 'Todo trabajo se formaliza con un contrato de prestación de servicios con Red Vaeru: alcance, plazos, precio, forma de pago y propiedad del sitio quedan por escrito.';
 
@@ -58,8 +58,8 @@ export const SERVICES = {
       checkin: { label: 'Check-in online para huéspedes', min: 25000, max: 45000 },
       guia: { label: 'Guía local / blog del destino', min: 20000, max: 35000 },
       idioma: { label: 'Idioma adicional (por idioma)', min: 20000, max: 35000, perUnit: true },
-      seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
-      agente: { label: 'Agente IA 24/7 que responde y cotiza en su sitio', min: 120000, max: 200000 },
+      seo: { label: 'Ficha de Google y posicionamiento local (ya incluida en Completo y Firma)', min: 25000, max: 45000 },
+      agente: { label: 'Agente de IA 24/7 que responde y cotiza en su sitio', min: 120000, max: 200000 },
       sheets: { label: 'Registro automático de reservas en Google Sheets', min: 40000, max: 70000 },
       dominio_cl: { label: 'Dominio .cl a su nombre (inscripción en NIC Chile, 1 año)', min: 12000, max: 15000 },
     },
@@ -77,7 +77,7 @@ export const SERVICES = {
       reservas: { label: 'Reservas de mesa en línea', min: 25000, max: 50000 },
       pedidos: { label: 'Pedidos / delivery guiado por WhatsApp', min: 30000, max: 55000 },
       idioma: { label: 'Idioma adicional (por idioma)', min: 15000, max: 30000, perUnit: true },
-      seo: { label: 'Posicionamiento local (Google Business + SEO inicial)', min: 25000, max: 45000 },
+      seo: { label: 'Ficha de Google y posicionamiento local (ya incluida en Completo y Firma)', min: 25000, max: 45000 },
       dominio_cl: { label: 'Dominio .cl a su nombre (inscripción en NIC Chile, 1 año)', min: 12000, max: 15000 },
     },
   },
@@ -111,7 +111,7 @@ export const SERVICES = {
   capacitacion: {
     name: 'Capacitación en servicio al cliente',
     short: 'Capacitación',
-    for: 'Equipos de recepción, sala, housekeeping y atención turística',
+    for: 'Equipos de recepción, sala, limpieza y atención turística',
     tiers: {
       taller: { label: 'Taller de 4 horas (hasta 15 personas)', min: 150000, max: 220000, weeks: 'a coordinar' },
       programa: { label: 'Programa de 3 módulos (12 horas)', min: 390000, max: 590000, weeks: '3 a 6 semanas' },
@@ -130,8 +130,8 @@ export const SERVICES = {
     for: 'Agentes de IA, registro automático de reservas y procesos sin planillas manuales',
     tiers: {
       sheets: { label: 'Registro automático de reservas y consultas en Google Sheets', min: 60000, max: 100000, weeks: '1 semana' },
-      agente: { label: 'Agente IA 24/7 entrenado con su negocio', min: 150000, max: 250000, weeks: '2 a 3 semanas' },
-      integral: { label: 'Hospitalidad inteligente: agente IA + automatizaciones + panel de reservas', min: 290000, max: 450000, weeks: '3 a 5 semanas' },
+      agente: { label: 'Agente de IA 24/7 entrenado con su negocio', min: 150000, max: 250000, weeks: '2 a 3 semanas' },
+      integral: { label: 'Hospitalidad inteligente: agente de IA + automatizaciones + panel de reservas', min: 290000, max: 450000, weeks: '3 a 5 semanas' },
     },
     addons: {
       operacion: { label: 'Operación mensual del agente (incluye consumo moderado de IA)', min: 25000, max: 45000, monthly: true },

@@ -17,14 +17,14 @@ export const CASES = {
   },
   'hotel-casa-nogal': {
     concept: 'Una casona que se recorre bajo la lluvia',
-    reto: 'Un hotel patrimonial pierde su mayor valor, la historia, cuando se lista como una habitación más. Y las agencias online cobran entre 15 y 20%.',
+    reto: 'Un hotel patrimonial pierde su mayor valor, la historia, cuando se lista como una habitación más. Y las plataformas cobran comisión por cada reserva.',
     idea: 'La portada se mira a través de un vidrio con lluvia que se despeja con el cursor. La casona se recorre piso por piso en un corte de arquitecto, y cada habitación se elige por su llave.',
     palette: [['Papel', '#efe7da'], ['Burdeos', '#6e1f24'], ['Musgo', '#3c4a36'], ['Bronce', '#b08d4e'], ['Noche', '#15110f']],
     fonts: ['Bodoni Moda', 'Hanken Grotesk', 'La Belle Aurore'],
   },
   'estudio-haber': {
     concept: 'De la caja de zapatos al balance',
-    reto: 'Tres de cada cuatro pymes chilenas no tienen sitio web, y los estudios contables dependen del boca a boca. Quien busca contador en Google elige al que se ve más confiable.',
+    reto: 'Los estudios contables suelen depender del boca a boca. Quien busca contador en Google elige al que se ve más confiable.',
     idea: 'Las boletas desordenadas vuelan y se ordenan solas en el libro contable. Calendario tributario vivo, calculadoras con tira impresa y diagnóstico de régimen: un sitio útil que trae visitas todos los meses.',
     palette: [['Papel', '#f3eee2'], ['Tinta', '#15241d'], ['Verde libro', '#1f5a45'], ['Timbre', '#b8432f'], ['Calco', '#2c3e78']],
     fonts: ['Newsreader', 'Instrument Sans', 'IBM Plex Mono'],

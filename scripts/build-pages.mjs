@@ -81,6 +81,7 @@ function servicePage(p) {
   };
   const others = PAGES.filter((o) => o.slug !== p.slug);
   const featured = tiers.length > 2 ? 1 : -1;
+  const hasLaunch = tiers.some(([, t]) => t.launch);
   return `${head({ title: p.metaTitle, description: p.description, path: `/servicios/${p.slug}/`, jsonld })}
 <body class="pg pg--servicio">
   ${chrome()}
@@ -91,7 +92,7 @@ function servicePage(p) {
           <nav class="crumbs" aria-label="Ruta" style="margin-bottom: 28px"><a href="/servicios/">Servicios</a><span aria-hidden="true">/</span><span aria-current="page">${esc(s.name)}</span></nav>
           <h1 class="ph__title" data-reveal="lines">${p.h1}</h1>
           <p class="ph__lede" data-reveal="fade">${esc(p.lead)}</p>
-          <p class="ph__k" style="margin: 28px 0 0" data-reveal="fade"><span data-from-price="${p.service}"></span><span data-launch>Precio de lanzamiento · quedan <b data-launch-left>5</b> cupos</span></p>
+          <p class="ph__k" style="margin: 28px 0 0" data-reveal="fade"><span data-from-price="${p.service}"></span>${hasLaunch ? '<span data-launch>Precio de lanzamiento · quedan <b data-launch-left>5</b> de <span data-launch-total>5</span> cupos</span>' : ''}</p>
         </div>
         <figure class="sv-hero__img" data-reveal="clip"><img src="${IMG[p.slug] || p.img}" alt="" width="1100" height="1375" fetchpriority="high" /></figure>
       </div>
@@ -111,18 +112,18 @@ function servicePage(p) {
     <section class="sec sec--line">
       <div class="sec__head sec__head--split">
         <h2 class="h2" data-reveal="lines">Elija el alcance. <em>Lo ajustamos a su medida.</em></h2>
-        <p class="lede" data-reveal="fade">Valores de lanzamiento mientras queden cupos. El precio fijo llega por escrito en la propuesta.</p>
+        <p class="lede" data-reveal="fade">${hasLaunch ? 'Precio de lanzamiento mientras queden cupos.' : 'Valores referenciales.'} El precio fijo llega por escrito en la propuesta.</p>
       </div>
       <div class="tiers" data-reveal="stagger">
         ${tiers.map(([tid, t], i) => `<article class="tier">
-          <h3>${esc(t.label)}${i === featured ? ' <span style="color:var(--fl);font:400 11px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">· el más elegido</span>' : ''}</h3>
+          <h3>${esc(t.label)}${i === featured ? ' <span style="color:var(--fl);font:400 11px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">· recomendado</span>' : ''}</h3>
           <p class="tier__price">desde <strong>${formatCLP(priceOf(t).min)}${monthly(t) ? '<small>/mes</small>' : ''}</strong>${priceOf(t) !== t ? `<s class="tier__was">Precio normal desde ${formatCLP(t.min)}</s>` : ''}</p>
           <p class="tier__time">Plazo: ${esc(t.weeks)}</p>
           <ul>${(p.tiers[tid] || []).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
-          <button class="btn ${i === featured ? 'btn--solid' : 'btn--line'}" type="button" data-open-agent data-source="plan" data-ask="${esc(`Quiero cotizar ${s.name.toLowerCase()}: ${t.label}`)}">Cotizar esta opción</button>
+          <button class="btn ${i === featured ? 'btn--solid' : 'btn--line'}" type="button" data-open-agent data-source="plan" data-ask="${esc(`Quiero cotizar ${s.name.toLowerCase()}: ${t.label}`)}">Cotizar esta opción<span class="sr">: ${esc(t.label)}</span></button>
         </article>`).join('\n        ')}
       </div>
-      ${Object.keys(s.addons).length ? `<p class="wk-note">Extras disponibles: ${Object.values(s.addons).map((a) => esc(a.label.toLowerCase())).join(' · ')}.</p>` : ''}
+      ${Object.keys(s.addons).length ? `<p class="wk-note">Extras disponibles: ${Object.values(s.addons).map((a) => esc(a.label.charAt(0).toLowerCase() + a.label.slice(1))).join(' · ')}.</p>` : ''}
       <p class="wk-note">Valores referenciales en pesos chilenos. Emitimos boleta o factura; los impuestos que correspondan se detallan en la propuesta. Todo trabajo se formaliza con contrato.</p>
     </section>
 
@@ -138,7 +139,7 @@ function servicePage(p) {
       <h2 class="h2" data-reveal="lines">Conversemos de su <em>próxima temporada.</em></h2>
       <div class="cs-ctas" data-reveal="fade">
         <button class="btn btn--solid" type="button" data-open-agent data-source="cierre-servicio" data-ask="${esc(p.ask)}" data-magnetic>Cotizar con Vaeru IA <span aria-hidden="true">→</span></button>
-        <a class="btn btn--line" href="https://wa.me/56952289117?text=${encodeURIComponent(`Hola, vi la página de ${s.name.toLowerCase()} en Red Vaeru.`)}" target="_blank" rel="noopener" data-from="pagina-servicio" data-magnetic>Escribir por WhatsApp</a>
+        <a class="btn btn--line" href="https://wa.me/56952289117?text=${encodeURIComponent(`Hola, vi la página «${s.name}» en el sitio de Red Vaeru.`)}" target="_blank" rel="noopener" data-from="pagina-servicio" data-magnetic>Escribir por WhatsApp</a>
       </div>
       <nav class="others" style="width: 100%; margin-top: 40px; border-color: var(--line)" aria-label="Otros servicios">${others.map((o) => `<a href="/servicios/${o.slug}/" style="border-color: var(--line)"><span class="others__name">${esc(SERVICES[o.service].name)}</span><span class="others__from" style="color: var(--muted)" data-from-price="${o.service}"></span><span aria-hidden="true">→</span></a>`).join('')}</nav>
     </section>
@@ -182,7 +183,6 @@ function privacyPage() {
         <p>Mientras dure la conversación o el servicio, y hasta 24 meses después para dar seguimiento, salvo que usted pida eliminarlos antes.</p>
         <h2>Sus derechos</h2>
         <p>Puede pedir acceso, rectificación, eliminación u oposición al uso de sus datos escribiendo a <a href="mailto:redvaeru@gmail.com">redvaeru@gmail.com</a>. Respondemos en un plazo máximo de 15 días hábiles. Esta política se ajusta a la normativa chilena de protección de datos personales, incluida la Ley 21.719.</p>
-        <p class="wk-note">Este texto es una base de buenas prácticas. Se recomienda validarlo con asesoría legal.</p>
       </div>
     </section>
   </main>
@@ -199,7 +199,7 @@ function simplePage({ title, path, eyebrow, h1, text, noindex, cls = '' }) {
       <h1 class="ph__title" style="max-width: 14ch">${h1}</h1>
       <p class="ph__lede" style="margin: 0 auto">${text}</p>
       <div class="cs-ctas" style="justify-content: center">
-        ${cls ? '<a class="dark404__exit" href="/">Salida</a>' : '<a class="btn btn--solid" href="/">Volver al inicio</a>'}
+        ${cls ? '<a class="dark404__exit" href="/">Volver al inicio</a>' : '<a class="btn btn--solid" href="/">Volver al inicio</a>'}
         <a class="btn btn--line" href="/trabajos/">Ver los trabajos</a>
       </div>
     </section>
@@ -209,8 +209,8 @@ function simplePage({ title, path, eyebrow, h1, text, noindex, cls = '' }) {
 
 for (const p of PAGES) rmSync(join(root, 'servicios', p.slug), { recursive: true, force: true });
 mkdirSync(join(root, 'gracias'), { recursive: true });
-writeFileSync(join(root, 'gracias', 'index.html'), simplePage({ title: 'Escena recibida · Red Vaeru', path: '/gracias', eyebrow: 'Corte', h1: 'Escena <em>recibida.</em>', text: 'Su mensaje llegó a Red Vaeru. Le respondemos por WhatsApp o correo en menos de 24 horas hábiles con los siguientes pasos.', noindex: true }));
-writeFileSync(join(root, '404.html'), simplePage({ title: 'Página no encontrada · Red Vaeru', path: '/404', eyebrow: 'Error 404', h1: 'Esta sala está <em>a oscuras.</em>', text: 'La página que busca no existe o cambió de lugar. Siga la luz hacia la salida.', noindex: true, cls: 'is-404' }));
+writeFileSync(join(root, 'gracias', 'index.html'), simplePage({ title: 'Mensaje recibido · Red Vaeru', path: '/gracias', eyebrow: 'Gracias', h1: 'Mensaje <em>recibido.</em>', text: 'Su mensaje llegó a Red Vaeru. Le respondemos por WhatsApp o correo en menos de 24 horas hábiles con los siguientes pasos.', noindex: true }));
+writeFileSync(join(root, '404.html'), simplePage({ title: 'Página no encontrada · Red Vaeru', path: '/404', eyebrow: 'Error 404', h1: 'Esta sala está <em>a oscuras.</em>', text: 'La página que busca no existe o cambió de lugar.', noindex: true, cls: 'is-404' }));
 for (const p of PAGES) {
   const file = join(root, 'servicios', p.slug, 'index.html');
   mkdirSync(dirname(file), { recursive: true });

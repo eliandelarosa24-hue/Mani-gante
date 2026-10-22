@@ -61,7 +61,7 @@ function header(active = '') {
     <div class="menu__foot">
       <a href="${waLink()}" target="_blank" rel="noopener" data-from="menu">WhatsApp ${CONTACT.waLabel}</a>
       <a href="mailto:${CONTACT.mail}">${CONTACT.mail}</a>
-      <p>Araucanía, Chile · Santo Domingo, R. D.</p>
+      <p>La Araucanía, Chile · Raíces en República Dominicana</p>
     </div>
   </div>`;
 }
@@ -87,8 +87,8 @@ function footer() {
         <p class="ft__label">Servicios</p>
         <a href="/servicios/paginas-web-alojamientos/">Web para alojamientos</a><a href="/servicios/paginas-web-restaurantes/">Web para restaurantes</a><a href="/servicios/asesoria-turistica/">Asesoría turística</a><a href="/servicios/capacitacion-servicio-al-cliente/">Capacitación</a>
       </div>
-      <div class="ft__col ft__clocks" aria-label="Hora actual en nuestras dos casas">
-        <p class="ft__label">Dos casas</p>
+      <div class="ft__col ft__clocks" aria-label="Hora actual en Chile y República Dominicana">
+        <p class="ft__label">Dos orillas</p>
         <p><span>Araucanía, Chile</span><b data-clock="America/Santiago">--:--</b></p>
         <p><span>Santo Domingo, R. D.</span><b data-clock="America/Santo_Domingo">--:--</b></p>
       </div>

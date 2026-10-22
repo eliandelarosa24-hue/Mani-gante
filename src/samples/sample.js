@@ -27,7 +27,7 @@ const toast = $('.toast');
 function demo(action) {
   if (!toast) return;
   $('[data-toast-text]', toast).textContent = `En el sitio real, aquí ${action}. Esta es una muestra de concepto diseñada por Red Vaeru.`;
-  $('[data-toast-wa]', toast).href = `https://wa.me/56952289117?text=${encodeURIComponent(`Hola Jorge, vi la muestra "${SAMPLE}" en Red Vaeru y quiero un sitio así para mi negocio.`)}`;
+  $('[data-toast-wa]', toast).href = `https://wa.me/56952289117?text=${encodeURIComponent(`Hola, vi la muestra "${SAMPLE}" en el sitio de Red Vaeru y quiero algo así para mi negocio.`)}`;
   toast.classList.add('is-in');
   clearTimeout(demo.t);
   demo.t = setTimeout(() => toast.classList.remove('is-in'), 9000);

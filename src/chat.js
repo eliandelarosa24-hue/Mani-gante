@@ -17,29 +17,29 @@ const START_CHIPS = [
   { label: 'Asesoría turística', service: 'asesoria' },
   { label: 'Capacitar a mi equipo', service: 'capacitacion' },
   { label: 'Redes sociales', service: 'redes' },
-  { label: 'Agente IA y automatización', service: 'automatizacion' },
+  { label: 'Agente de IA y automatización', service: 'automatizacion' },
   { label: 'Tengo una duda', faq: true },
 ];
 
 const FAQ = [
-  { k: /plazo|tiempo|cu[aá]nto (se )?demora|cu[aá]ndo|semanas|listo/i, a: 'Un sitio Esencial toma de 1 a 2 semanas, uno Completo de 3 a 4 y uno Firma de 5 a 8. El plazo corre desde que tengo los textos y fotos de su negocio.' },
-  { k: /dominio|hosting|\.cl|servidor/i, a: 'Todos mis sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se compra aparte) y hosting con certificado de seguridad el primer año, todo a su nombre. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.' },
-  { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Se paga en pesos chilenos (o USD fuera de Chile). Emitimos boleta o factura según lo que necesite; los impuestos y la forma de pago (transferencia o cuotas) quedan en la propuesta escrita antes de empezar.' },
-  { k: /caribe|dominican|extranjero|fuera de chile|usd|d[oó]lar/i, a: 'Sí, trabajo con negocios del Caribe y República Dominicana de forma remota. Esos proyectos se cotizan en USD.' },
+  { k: /plazo|tiempo|cu[aá]nto (se )?demora|cu[aá]ndo|semanas/i, a: 'Un sitio Esencial toma de 1 a 2 semanas, uno Completo de 3 a 4 y uno Firma de 5 a 8. El plazo corre desde que recibimos los textos y fotos de su negocio.' },
+  { k: /dominio|hosting|\.cl|servidor/i, a: 'Todos nuestros sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se inscribe aparte en NIC Chile) y hosting con certificado de seguridad el primer año, todo a su nombre. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.' },
+  { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Primero ve la portada de su sitio. Si le gusta, firmamos el contrato, paga el 50% para continuar y el resto al publicar, por transferencia. Se paga en pesos chilenos (en USD fuera de Chile) y emitimos boleta o factura.' },
+  { k: /caribe|dominican|extranjero|fuera de chile|usd|d[oó]lar/i, a: 'Sí, trabajamos de forma remota con negocios de República Dominicana y el resto del Caribe. Esos proyectos se cotizan en USD.' },
   { k: /presencial|online|regi[oó]n|viaj/i, a: 'Las capacitaciones son presenciales en la Araucanía (en otras regiones el traslado se cotiza aparte) u online en vivo para hasta 25 personas.' },
-  { k: /cambiar|editar|actualizar|yo mismo/i, a: 'Sí, le dejo una capacitación breve y una checklist para cambiar textos y fotos. Si prefiere no preocuparse, existe la mantención mensual desde ' + formatCLP(SERVICES.mantencion.tiers.cuidado.min) + '.' },
+  { k: /cambiar|editar|actualizar|yo mismo/i, a: 'Sí. Desde el plan Completo le dejamos una guía para cambiar textos y fotos. Si prefiere no preocuparse, la mantención mensual parte en ' + formatCLP(SERVICES.mantencion.tiers.cuidado.min) + '.' },
   { k: /qui[eé]n|jorge|equipo|agencia/i, a: 'Red Vaeru es un estudio pequeño de diseño web para la hospitalidad, entre el Caribe y el sur de Chile. Lo dirige Jorge Vásquez, dominicano radicado en La Araucanía y estudiante de Ingeniería en Turismo. Usted habla siempre con quien hace el trabajo.' },
-  { k: /booking|airbnb|comisi[oó]n|plataforma/i, a: 'Las plataformas cobran entre 15% y 25% por reserva. Un sitio propio con WhatsApp y reserva directa le devuelve ese margen y la relación con el huésped.' },
+  { k: /booking|airbnb|comisi[oó]n|plataforma/i, a: 'Las plataformas suelen cobrar desde 15% por reserva. Un sitio propio con WhatsApp y reserva directa le devuelve ese margen y la relación con el huésped.' },
   { k: /contrato|formal|por escrito|respaldo legal/i, a: `Sí. ${CONTRACT_NOTE}` },
   { k: /logo|logotipo|marca|identidad/i, a: 'Si aún no tiene logo, se lo diseñamos sin costo: viene de regalo en todos los planes (Esencial, Completo y Firma).' },
   { k: /garant|riesgo|y si no me gusta|no me convence/i, a: `${GUARANTEE.title}: ${GUARANTEE.text}` },
   { k: /esencial|completo|firma|diferencia|qu[eé] plan|cu[aá]l (me )?conviene/i, a: 'Esencial es una página con todo lo necesario para que le escriban. Completo suma secciones, galería, mapa y reservas directas: es el que más conviene a cabañas, hostales y restaurantes. Firma es una experiencia a medida, como las muestras, para termas, hoteles boutique, viñas o glamping. Cuénteme de su negocio y le digo cuál le conviene.' },
-  { k: /lanzamiento|cupo|descuento|barato/i, a: () => `Son precios de lanzamiento mientras sumo mis primeros proyectos turísticos. Quedan ${launchLeft()} cupos. A cambio pido un testimonio y permiso para mostrar el trabajo.` },
+  { k: /lanzamiento|cupo|descuento|barato/i, a: () => `Son precios de lanzamiento mientras sumamos nuestros primeros proyectos turísticos, solo para los sitios web. Quedan ${launchLeft()} de 5 cupos. A cambio le pedimos permiso para mostrar su sitio y, si queda conforme, un testimonio.` },
   { k: /mantenci[oó]n|mensual|despu[eé]s de publicar|soporte/i, a: () => `Hay dos planes de mantención, sin permanencia: Cuidado, ${formatCLP(SERVICES.mantencion.tiers.cuidado.min)} al mes (hosting, dominio, respaldo y un cambio al mes), y Crecimiento, ${formatCLP(SERVICES.mantencion.tiers.crecimiento.min)} al mes (los cambios del mes, su ficha de Google al día y un informe de visitas y consultas).` },
   { k: /eres (una )?(ia|persona|robot|humano)|hablo con (una )?persona|qui[eé]n responde/i, a: 'Soy Vaeru IA, el asistente virtual de Red Vaeru. Respondo dudas y armo cotizaciones referenciales; el estudio revisa personalmente cada una y le responde por WhatsApp en menos de 24 horas hábiles.' },
   { k: /^(hola|buenas|buen d[ií]a|buenas tardes|buenas noches|hey|wena)\b/i, a: 'Hola, qué gusto. Cuénteme qué tipo de negocio tiene (cabañas, restaurante, termas, hotel…) y le recomiendo un plan, o elija una opción de abajo.' },
   { k: /^(gracias|muchas gracias|ok|listo|perfecto|genial)\b/i, a: 'A usted. Si quiere avanzar, le preparamos la propuesta fija por WhatsApp. Aquí estoy para lo que necesite.' },
-  { k: /privacidad|mis datos|qu[eé] hacen con/i, a: 'Uso lo que me escribe solo para responderle y preparar su cotización; no comparta datos sensibles. Detalles en la política de privacidad.' },
+  { k: /privacidad|mis datos|qu[eé] hacen con/i, a: 'Usamos lo que escribe aquí solo para responderle y preparar su cotización. No comparta datos sensibles. Más detalles en la política de privacidad.' },
 ];
 
 // Muestra más parecida según el rubro que menciona la persona.
@@ -173,7 +173,7 @@ export class Chat {
     const card = document.createElement('div');
     card.className = 'quote';
     card.innerHTML = `
-      <div class="quote__label">Estimación referencial · precios de lanzamiento</div>
+      <div class="quote__label">Estimación referencial${est.lines.some((l) => l.label.includes('precio de lanzamiento')) ? ' · precio de lanzamiento' : ''}</div>
       ${one ? `<div class="quote__total">${one}</div>` : ''}
       ${mon ? `<div class="quote__monthly">${mon}</div>` : ''}
       <ul>${est.lines.map((l) => `<li><span>${esc(l.label)}</span><b>${span(l.min, l.max)}${l.monthly ? '/mes' : ''}</b></li>`).join('')}</ul>
@@ -185,7 +185,7 @@ export class Chat {
         </div>
         <label><span class="sr">Nombre del negocio</span><input name="negocio" placeholder="Nombre del alojamiento o restaurante (opcional)" /></label>
         <button class="btn btn--gold" type="submit">Enviar al estudio</button>
-        <small>Le responde en menos de 24 horas hábiles. Al enviar acepta la <a href="/privacidad">política de privacidad</a>.</small>
+        <small>Le respondemos en menos de 24 horas hábiles. Al enviar acepta la <a href="/privacidad">política de privacidad</a>.</small>
       </form>
       <div class="quote__actions">
         <a class="quote__link" data-wa target="_blank" rel="noopener" data-from="cotizacion">WhatsApp directo ↗</a>
@@ -261,7 +261,7 @@ export class Chat {
         table{width:100%;border-collapse:collapse;margin:28px 0} td,th{padding:10px 0;border-bottom:1px solid #ddd;text-align:left;font-size:14px} td:last-child,th:last-child{text-align:right;white-space:nowrap}
         .total{font-size:26px;margin:4px 0} .muted{color:#666;font-size:12px} .box{background:#f2ebdf;padding:16px 20px;border-radius:12px}
       </style></head><body>
-      <header><div><small>RED VAERU · Estudio digital para turismo</small><h1>Cotización referencial</h1></div><small>${fmt(today)}</small></header>
+      <header><div><small>RED VAERU · Diseño web para la hospitalidad</small><h1>Cotización referencial</h1></div><small>${fmt(today)}</small></header>
       ${nombre || negocio ? `<p>Preparada para: <strong>${esc(nombre)}</strong>${negocio ? ` · ${esc(negocio)}` : ''}</p>` : ''}
       <table><tr><th>Servicio</th><th>Rango</th></tr>
       ${est.lines.map((l) => `<tr><td>${esc(l.label)}</td><td>${span(l.min, l.max)}${l.monthly ? '/mes' : ''}</td></tr>`).join('')}</table>
@@ -275,24 +275,24 @@ export class Chat {
   schedule() {
     this.user('Agendar videollamada');
     track('call_request');
-    this.bot('Perfecto. Una videollamada de 15 minutos, sin costo, para ver su caso. Escríbanos con el botón y acordamos el horario.');
+    this.bot('Perfecto. Una videollamada de 30 minutos, sin costo, para ver su caso. Escríbanos con el botón y acordamos el horario.');
     const a = document.createElement('a');
     a.className = 'btn btn--gold msg-cta';
     a.target = '_blank';
     a.rel = 'noopener';
     a.dataset.from = 'agendar';
-    a.href = wa(`Hola, quiero agendar una videollamada de 15 minutos para revisar mi negocio.${this.lastEstimate ? '\n\n' + this.summary(this.lastEstimate) : ''}`);
+    a.href = wa(`Hola, quiero agendar una videollamada de 30 minutos para revisar mi negocio.${this.lastEstimate ? '\n\n' + this.summary(this.lastEstimate) : ''}`);
     a.textContent = 'Agendar por WhatsApp ↗';
     this.log.append(a);
     this.scroll();
   }
 
   samples() {
-    this.bot('Hay 10 muestras completas de distintos rubros: termas, villa en el Caribe, hotel boutique, estudio contable, cabañas, glamping, restaurante, viña, operador de aventura y pastelería. Elija la más parecida a su negocio:');
+    this.bot('Tenemos 10 muestras de concepto (negocios ficticios en lugares reales): termas, villas en el Caribe, hotel boutique, estudio contable, cabañas, glamping, restaurante, viña, turismo aventura y pastelería. Elija la más parecida a su negocio:');
     const a = document.createElement('a');
     a.className = 'btn btn--gold msg-cta';
-    a.href = '/muestras/';
-    a.textContent = 'Ver las 10 muestras ↗';
+    a.href = '/trabajos/';
+    a.textContent = 'Ver las muestras de concepto';
     this.log.append(a);
     this.scroll();
     track('agent_samples');
@@ -463,8 +463,8 @@ export class Chat {
     const est = estimate({ items: this.cart });
     const multi = this.cart.length > 1;
     this.bot(multi
-      ? `Sumé ${s.name.toLowerCase()} a su cotización. Este es el total actualizado con precios de lanzamiento.`
-      : `Listo. Esta es una estimación con precios de lanzamiento para ${s.name.toLowerCase()} (plazo aproximado: ${s.tiers[g.tier].weeks}). Si me deja su nombre y WhatsApp, le respondemos en menos de 24 horas hábiles con una propuesta fija.`);
+      ? `Sumé ${s.name.toLowerCase()} a su cotización. Este es el total actualizado.`
+      : `Listo. Esta es una estimación referencial para ${s.name.toLowerCase()} (plazo aproximado: ${s.tiers[g.tier].weeks}). Si nos deja su nombre y WhatsApp, le respondemos en menos de 24 horas hábiles con una propuesta fija.`);
     this.quote(est);
     this.guided = null;
     this.afterQuoteChips();

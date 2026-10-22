@@ -10,14 +10,15 @@ boot();
 
 const form = $('[data-script]'), slug = $('[data-slug]'), wa = $('[data-wa-intent]');
 const INTERIOR = ['Restaurante', 'Café o pastelería', 'Hotel', 'Hostal'];
-const paintSlug = () => {
-  const neg = form.negocio.value, lugar = form.lugar.value.trim() || 'su lugar', temp = form.temporada.value;
-  const scene = `${INTERIOR.includes(neg) ? 'INT.' : 'EXT.'} ${neg.toUpperCase()} EN ${lugar.toUpperCase()} — ${temp.toUpperCase()}`;
+const paintSlug = (touched = false) => {
+  const neg = form.negocio.value, lugar = form.lugar.value.trim(), temp = form.temporada.value;
+  const scene = `${INTERIOR.includes(neg) ? 'INT.' : 'EXT.'} ${neg.toUpperCase()} EN ${(lugar || 'su lugar').toUpperCase()} — ${temp.toUpperCase()}`;
   slug.innerHTML = `<span>Escena 1.</span> ${scene.replace(/[<>&]/g, '')}`;
   form.escena.value = scene;
-  if (wa) wa.href = `https://wa.me/56952289117?text=${encodeURIComponent(`Hola, vengo del sitio de Red Vaeru. Tengo ${neg.toLowerCase()} en ${lugar} y me interesa conversar.`)}`;
+  // WhatsApp lleva el contexto solo cuando el visitante ya eligió algo
+  if (wa && touched) wa.href = `https://wa.me/56952289117?text=${encodeURIComponent(`Hola, vengo del sitio de Red Vaeru. Mi negocio: ${neg}${lugar ? `, en ${lugar}` : ''}. Me gustaría conversar.`)}`;
 };
-$$('[data-slug-part]', form).forEach((el) => el.addEventListener('input', paintSlug));
+$$('[data-slug-part]', form).forEach((el) => el.addEventListener('input', () => paintSlug(true)));
 
 // Viene desde un caso ("Quiero algo así"): deja la obra anotada
 const obra = new URLSearchParams(location.search).get('obra');

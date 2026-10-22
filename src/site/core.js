@@ -223,7 +223,7 @@ export function boot({ smooth = true } = {}) {
     });
   }
 
-  // Relojes de las dos casas y año
+  // Relojes de las dos orillas y año
   const clocks = $$('[data-clock]');
   const tick = () => clocks.forEach((el) => { el.textContent = new Intl.DateTimeFormat('es-CL', { timeZone: el.dataset.clock, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date()); });
   if (clocks.length) { tick(); setInterval(tick, 20000); }

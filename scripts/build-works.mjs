@@ -36,7 +36,7 @@ const tail = (script) => `<!--RV:FOOTER-->
 </html>
 `;
 
-const GROUPS = { 'Alojamiento': ['termas-rayenko', 'villa-coral-samana', 'domos-cielo-austral', 'hotel-casa-nogal', 'cabanas-lago-azul'], 'Gastronomía': ['fogon-mapu', 'kuchen-haus-frutillar', 'vina-los-robles'], 'Experiencias': ['pucon-aventura', 'vina-los-robles', 'termas-rayenko'], 'Servicios': ['estudio-haber'] };
+const GROUPS = { 'Alojamiento': ['termas-rayenko', 'villa-coral-samana', 'domos-cielo-austral', 'hotel-casa-nogal', 'cabanas-lago-azul'], 'Gastronomía': ['fogon-mapu', 'kuchen-haus-frutillar', 'vina-los-robles'], 'Experiencias': ['pucon-aventura', 'vina-los-robles', 'termas-rayenko'], 'Otros rubros': ['estudio-haber'] };
 const groupsOf = (slug) => Object.entries(GROUPS).filter(([, l]) => l.includes(slug)).map(([g]) => g);
 
 function index() {
@@ -58,14 +58,14 @@ function index() {
             <span class="live__url">${esc(new URL(r.url).host)} ↗</span>
           </a>
         </li>`).join('');
-  return `${head({ title: 'Trabajos · Red Vaeru', description: 'Diez muestras de concepto y los sitios de clientes que ya están en el aire: termas, villas en el Caribe, domos, hoteles, restaurantes, viñas y operadores de turismo.', path: '/trabajos/' })}
+  return `${head({ title: 'Trabajos · Red Vaeru', description: 'Diez muestras de concepto (termas, villas, domos, hoteles, restaurantes, viñas y turismo aventura) y tres sitios reales ya en el aire en La Araucanía.', path: '/trabajos/' })}
 <body class="pg pg--trabajos">
   <!--RV:HEADER:trabajos-->
   <main id="contenido">
     <section class="wk-hero">
-      <p class="eyebrow" data-reveal="fade">Trabajos · ${SCENES.length + REAL.length}</p>
+      <p class="eyebrow" data-reveal="fade">Trabajos · ${SCENES.length} muestras · ${REAL.length} en el aire</p>
       <h1 class="wk-hero__title" data-reveal="lines">Cada lugar,<br><em>su propia web.</em></h1>
-      <p class="wk-hero__lead" data-reveal="fade">Diez muestras de concepto, cada una con su idea, su tipografía y su color, y los sitios de clientes que ya reciben reservas.</p>
+      <p class="wk-hero__lead" data-reveal="fade">Diez muestras de concepto, cada una con su idea, su tipografía y su color. Y tres sitios reales ya en el aire.</p>
       <div class="wk-filter" role="group" aria-label="Filtrar trabajos" data-reveal="fade">
         <button type="button" aria-pressed="true" data-filter="todo">Todos</button>
         ${Object.keys(GROUPS).map((g) => `<button type="button" aria-pressed="false" data-filter="${g}">${g}</button>`).join('')}
@@ -79,7 +79,7 @@ function index() {
     </section>
     <section class="live-sec" aria-labelledby="en-el-aire">
       <p class="eyebrow">En el aire</p>
-      <h2 id="en-el-aire" class="live-sec__title" data-reveal="lines">Sitios reales,<br><em>recibiendo huéspedes.</em></h2>
+      <h2 id="en-el-aire" class="live-sec__title" data-reveal="lines">Sitios reales,<br><em>ya en el aire.</em></h2>
       <ul class="live-list" data-reveal="stagger">${real}
       </ul>
     </section>
@@ -98,7 +98,7 @@ function casePage(s, i) {
     image: `__SITE_URL__${s.image}`,
     description: s.concept,
   };
-  return `${head({ title: `${s.name} · ${s.concept} · Red Vaeru`, description: `${s.concept}. ${s.reto}`.slice(0, 300), path: s.case, image: `/muestras/${s.slug}/og.jpg`, jsonld })}
+  return `${head({ title: `${s.name} · Muestra de concepto · Red Vaeru`, description: `Muestra de concepto de Red Vaeru (negocio ficticio en ${s.town}). ${s.concept}.`, path: s.case, image: `/muestras/${s.slug}/og.jpg`, jsonld })}
 <body class="pg pg--caso" style="--accent:${s.accent}">
   <!--RV:HEADER:trabajos-->
   <main id="contenido">

@@ -413,7 +413,7 @@ document.addEventListener('click', (e) => {
   if (!demo) return;
   e.preventDefault();
   $('[data-toast-text]').textContent = demo.dataset.demo || 'En el sitio real, la reserva llegaría al WhatsApp del restaurante con la mesa, la hora, la experiencia y el total. Esta es una muestra de concepto diseñada por Red Vaeru.';
-  $('[data-toast-wa]').href = `https://wa.me/56952289117?text=${encodeURIComponent('Hola Jorge, vi la muestra "Fogón Mapu" en Red Vaeru y quiero un sitio así para mi restaurante.')}`;
+  $('[data-toast-wa]').href = `https://wa.me/56952289117?text=${encodeURIComponent('Hola, vi la muestra "Fogón Mapu" en el sitio de Red Vaeru y quiero algo así para mi restaurante.')}`;
   toast.classList.add('is-in');
   clearTimeout(toast.t);
   toast.t = setTimeout(() => toast.classList.remove('is-in'), 9000);

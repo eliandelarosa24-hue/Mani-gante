@@ -21,8 +21,8 @@ export function scenesMarkup() {
           <div class="scene__foot" data-scene-fade>
             <p class="scene__concept"><b>${esc(s.name)} · muestra de concepto · negocio ficticio</b><span>${esc(s.concept)}</span></p>
             <div class="scene__ctas">
-              <a class="scene__cta" href="${s.case}" data-cursor="Ver caso">Ver el caso <span aria-hidden="true">→</span></a>
-              <a class="scene__cta scene__cta--ghost" href="${s.sample}">Entrar al sitio <span aria-hidden="true">↗</span></a>
+              <a class="scene__cta" href="${s.case}" data-cursor="Ver caso">Ver el caso<span class="sr"> de ${esc(s.name)}</span> <span aria-hidden="true">→</span></a>
+              <a class="scene__cta scene__cta--ghost" href="${s.sample}">Entrar al sitio<span class="sr"> de ${esc(s.name)}</span> <span aria-hidden="true">↗</span></a>
             </div>
           </div>
         </div>
