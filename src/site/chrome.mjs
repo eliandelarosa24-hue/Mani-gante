@@ -104,7 +104,13 @@ function footer() {
 function overlays() {
   return `<div class="curtain" aria-hidden="true"><div class="curtain__panel">${emblem('curtain__mark')}</div></div>
   <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><em></em></span></div>
-  <button class="fab" type="button" data-open-agent data-source="flotante" aria-label="Abrir Vaeru IA, el asistente de Red Vaeru">${emblem('fab__mark')}<span>Vaeru IA</span></button>
+  <div class="fab" data-fab>
+    <div class="fab__menu" id="fab-menu" data-fab-menu hidden>
+      <a class="fab__opt" href="${waLink()}" target="_blank" rel="noopener" data-from="flotante" data-fab-wa><span class="fab__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.3Z"/></svg></span><span><b>WhatsApp</b><small>Le responde una persona del estudio</small></span></a>
+      <button class="fab__opt" type="button" data-open-agent data-source="flotante"><span class="fab__ico" aria-hidden="true">${emblem('fab__glyph')}</span><span><b>Vaeru IA</b><small>Cotiza y responde al instante</small></span></button>
+    </div>
+    <button class="fab__btn" type="button" data-fab-btn aria-expanded="false" aria-controls="fab-menu">${emblem('fab__mark')}<span>Escríbanos</span></button>
+  </div>
   <div class="drawer" data-drawer aria-hidden="true">
     <div class="drawer__backdrop" data-close-agent></div>
     <div class="drawer__panel" role="dialog" aria-modal="true" aria-label="Vaeru IA" data-agent-drawer></div>

@@ -206,14 +206,28 @@ export function boot({ smooth = true } = {}) {
       const dot = $('.cursor__dot', cur), ring = $('.cursor__ring', cur), label = $('em', ring);
       const dx = gsap.quickTo(dot, 'x', { duration: 0.08 }), dy = gsap.quickTo(dot, 'y', { duration: 0.08 });
       const rx = gsap.quickTo(ring, 'x', { duration: 0.45, ease: 'power3' }), ry = gsap.quickTo(ring, 'y', { duration: 0.45, ease: 'power3' });
-      addEventListener('pointermove', (e) => { dx(e.clientX); dy(e.clientY); rx(e.clientX); ry(e.clientY); cur.classList.add('is-on'); }, { passive: true });
+      let mx = 0, my = 0, px = 0, py = 0, speed = 0, angle = 0;
+      addEventListener('pointermove', (e) => { mx = e.clientX; my = e.clientY; dx(mx); dy(my); rx(mx); ry(my); cur.classList.add('is-on'); }, { passive: true });
       document.addEventListener('pointerleave', () => cur.classList.remove('is-on'));
       document.addEventListener('pointerover', (e) => {
         const lab = e.target.closest('[data-cursor]');
         const hov = e.target.closest('a, button, summary, input, select, textarea, label, [role="tab"]');
+        const media = !lab && e.target.closest('video, .doc__phone, .cs-phone, .prod__phone, .scene__phone, .est__screens');
         cur.classList.toggle('is-label', !!lab);
         label.textContent = lab ? lab.dataset.cursor : '';
-        cur.classList.toggle('is-hover', !!hov && !lab);
+        cur.classList.toggle('is-media', !!media);
+        cur.classList.toggle('is-hover', !!hov && !lab && !media);
+      });
+      // El anillo se estira en la dirección del movimiento, como una gota de luz que sigue al puntero
+      const rot = gsap.quickSetter(ring, 'rotation', 'rad'), sx = gsap.quickSetter(ring, 'scaleX'), sy = gsap.quickSetter(ring, 'scaleY');
+      gsap.ticker.add(() => {
+        const vx = mx - px, vy = my - py;
+        px = mx; py = my;
+        const v = Math.hypot(vx, vy);
+        speed += (v - speed) * 0.18;
+        if (v > 1.5) angle = Math.atan2(vy, vx);
+        const k = cur.classList.contains('is-label') ? 0 : Math.min(speed / 45, 0.5);
+        rot(k > 0.01 ? angle : 0); sx(1 + k); sy(1 - k * 0.45);
       });
     }
     // Tarjetas con lámpara: la luz cálida cae donde está el puntero
@@ -267,8 +281,23 @@ export function boot({ smooth = true } = {}) {
   drawer?.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAgent(); if (e.key === 'Tab') trap($('[data-agent-drawer]'), e); });
   $$('[data-open-agent]').forEach((b) => b.addEventListener('click', () => openAgent(b.dataset.ask, b.dataset.source || 'boton')));
   $$('[data-close-agent]').forEach((b) => b.addEventListener('click', closeAgent));
-  const fab = $('.fab');
+  const fab = $('[data-fab]');
   if (fab) {
+    // Dos caminos: WhatsApp con un mensaje que ya dice desde dónde escribe, o Vaeru IA
+    const fbtn = $('[data-fab-btn]', fab), fmenu = $('[data-fab-menu]', fab), fwa = $('[data-fab-wa]', fab);
+    const p = location.pathname, caso = $('.cs-hero__name')?.textContent.trim(), titulo = document.title.split(' · ')[0];
+    const msg = p.startsWith('/trabajos/') && caso ? `Hola, vi el caso de ${caso} en el sitio de Red Vaeru y quiero algo así para mi negocio.`
+      : p === '/servicios/' ? 'Hola, vi los planes en el sitio de Red Vaeru y quiero cotizar mi sitio.'
+      : p.startsWith('/servicios/') ? `Hola, vi «${titulo}» en el sitio de Red Vaeru y me interesa.`
+      : p.startsWith('/trabajos') ? 'Hola, vi los trabajos de Red Vaeru y quiero conversar sobre mi negocio.'
+      : p.startsWith('/estudio') ? 'Hola, conocí el estudio Red Vaeru y quiero conversar.'
+      : 'Hola, vengo del sitio de Red Vaeru.';
+    fwa.href = `${fwa.href.split('?')[0]}?text=${encodeURIComponent(msg)}`;
+    const setFab = (on) => { fmenu.hidden = !on; fab.classList.toggle('is-open', on); fbtn.setAttribute('aria-expanded', String(on)); if (on) $('a, button', fmenu).focus({ preventScroll: true }); };
+    fbtn.addEventListener('click', () => { setFab(fmenu.hidden); if (!fmenu.hidden) track('fab_open', { page: p }); });
+    fmenu.addEventListener('click', (e) => { if (e.target.closest('a, button')) setFab(false); });
+    fab.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !fmenu.hidden) { setFab(false); fbtn.focus(); } });
+    document.addEventListener('pointerdown', (e) => { if (!fmenu.hidden && !fab.contains(e.target)) setFab(false); });
     const showFab = () => fab.classList.toggle('is-visible', scrollY > innerHeight * 0.5 || document.body.dataset.fab === 'always');
     addEventListener('scroll', showFab, { passive: true }); showFab();
   }

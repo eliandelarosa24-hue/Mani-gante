@@ -228,10 +228,55 @@ function cinema() {
   }));
 }
 
+// ---------- índice de escenas (celular) ----------
+// Un botón «Escenas» acompaña la función y abre la lista de las diez obras para saltar a cualquiera
+function sceneIndex(scenes) {
+  const box = document.createElement('div');
+  box.className = 'sx';
+  box.innerHTML = `<button class="sx__btn" type="button" aria-expanded="false" aria-controls="sx-list"><span class="sx__dot" aria-hidden="true"></span>Escenas <b data-sx-n>01</b><small>/ ${String(SCENES.length).padStart(2, '0')}</small></button>
+    <div class="sx__sheet" id="sx-list" role="dialog" aria-modal="true" aria-label="Escenas de la función" hidden>
+      <div class="sx__backdrop" data-sx-close></div>
+      <div class="sx__panel">
+        <p class="sx__head"><span>La función</span><button type="button" data-sx-close aria-label="Cerrar escenas">Cerrar</button></p>
+        <ol class="sx__list">${SCENES.map((s, i) => `<li><a href="#sc-${s.slug}" data-sx-go="${i}" style="--accent:${s.accent}"><span class="sx__n">${s.n}</span><span class="sx__name">${s.name}</span><span class="sx__kind">${s.kind} · ${s.town}</span></a></li>`).join('')}</ol>
+      </div>
+    </div>`;
+  document.body.append(box);
+  const btn = $('.sx__btn', box), sheet = $('.sx__sheet', box), num = $('[data-sx-n]', box), links = $$('[data-sx-go]', box);
+  let current = 0;
+  const open = (on) => {
+    sheet.hidden = !on;
+    btn.setAttribute('aria-expanded', String(on));
+    html.classList.toggle('sx-open', on);
+    const lenis = getLenis();
+    if (on) { lenis?.stop(); links[current]?.focus({ preventScroll: true }); } else { lenis?.start(); btn.focus({ preventScroll: true }); }
+  };
+  btn.addEventListener('click', () => { open(sheet.hidden); track('scene_index', { open: true }); });
+  $$('[data-sx-close]', box).forEach((b) => b.addEventListener('click', () => open(false)));
+  sheet.addEventListener('keydown', (e) => { if (e.key === 'Escape') open(false); });
+  links.forEach((a) => a.addEventListener('click', (e) => {
+    e.preventDefault();
+    const k = +a.dataset.sxGo;
+    open(false);
+    const lenis = getLenis(), target = scenes[k];
+    lenis ? lenis.scrollTo(target, { duration: 1.2 }) : target.scrollIntoView({ behavior: 'smooth' });
+    track('reel_jump', { work: SCENES[k].slug, from: 'indice' });
+  }));
+  // Visible solo mientras se recorre la función; marca la escena en curso
+  ScrollTrigger.create({ trigger: '[data-reel]', start: 'top 70%', end: 'bottom 30%', toggleClass: { targets: html, className: 'in-reel' } });
+  scenes.forEach((s, k) => ScrollTrigger.create({ trigger: s, start: 'top 50%', end: 'bottom 50%', onToggle: (st) => {
+    if (!st.isActive) return;
+    current = k;
+    num.textContent = SCENES[k].n;
+    links.forEach((a, j) => a.toggleAttribute('aria-current', j === k));
+  } }));
+}
+
 // ---------- modo liviano (celular) ----------
 function light() {
   const scenes = $$('[data-scene]');
   scenes.forEach((s) => paintTitle($('.wtitle', s)));
+  sceneIndex(scenes);
   if (reduced) { scenes.forEach((s) => s.classList.add('is-active')); return; }
   scenes.forEach((s) => {
     const img = $('.scene__img', s);
