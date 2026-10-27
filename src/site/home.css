@@ -30,7 +30,8 @@
 .open__cue-line { position: relative; width: 1px; height: 46px; background: var(--line); overflow: hidden; }
 .open__cue-line::after { content: ''; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--bone); animation: cue 2.2s var(--ease-io) infinite; }
 @keyframes cue { to { top: 100%; } }
-.is-light .open { background: radial-gradient(120% 70% at 80% 0%, rgba(111, 208, 211, 0.1), transparent 60%), radial-gradient(100% 60% at 0% 100%, rgba(226, 73, 59, 0.1), transparent 60%), var(--ink); }
+/* Celular: la apertura usa, oscurecida, la misma foto con que abre la función (ya descargada para la primera escena) */
+.is-light .open { background: linear-gradient(180deg, rgba(12, 11, 10, 0.72), rgba(12, 11, 10, 0.55) 40%, rgba(12, 11, 10, 0.94) 82%), url('/img/escenas/villa-coral-samana-900.webp') center / cover, var(--ink); }
 
 /* ---------- sala de cine ---------- */
 .reel { position: relative; }
@@ -90,11 +91,11 @@
 .rail__dot i { width: 7px; height: 7px; border-radius: 50%; box-shadow: inset 0 0 0 1px var(--bone); transition: transform 0.5s var(--ease), background 0.4s, box-shadow 0.4s; }
 .rail__dot:hover i { transform: scale(1.5); }
 .rail__dot[aria-current='true'] i { background: var(--c); box-shadow: 0 0 0 4px rgba(12, 11, 10, 0.4), 0 0 18px var(--c); transform: scale(1.35); }
-.rail__end { position: absolute; right: 12px; top: -4px; font: 400 10px var(--f-mono); letter-spacing: 0.12em; color: var(--faint); white-space: nowrap; }
+.rail__end { position: absolute; right: 12px; top: -4px; font: 400 10px var(--f-mono); letter-spacing: 0.12em; color: var(--muted); white-space: nowrap; }
 .rail__end--s { top: auto; bottom: -4px; }
 .rail__eq { position: absolute; top: var(--y); left: -10px; width: 20px; height: 1px; background: var(--fl); }
 .rail__eq b { position: absolute; right: 26px; top: -6px; font: 400 10px var(--f-mono); color: var(--fl); }
-.rail__cut { position: absolute; top: var(--y); left: -6px; margin-top: -8px; font: 400 11px var(--f-mono); color: var(--faint); background: transparent; letter-spacing: -0.1em; transform: rotate(-20deg); }
+.rail__cut { position: absolute; top: var(--y); left: -6px; margin-top: -8px; font: 400 11px var(--f-mono); color: var(--muted); background: transparent; letter-spacing: -0.1em; transform: rotate(-20deg); }
 .rail__now { position: absolute; right: 20px; top: var(--now, 0%); margin-top: -7px; font: 400 11px var(--f-mono); letter-spacing: 0.1em; color: var(--bone); white-space: nowrap; font-variant-numeric: tabular-nums; transition: top 0.15s linear; }
 .cue { display: none; }
 .is-cinema .cue { position: absolute; z-index: 3; top: calc(var(--hd-h) + 24px); right: calc(var(--gut) + 46px); display: block; width: 14px; height: 14px; border-radius: 50%; background: var(--fl); box-shadow: 0 0 0 6px rgba(226, 73, 44, 0.18), 0 0 24px var(--fl); opacity: 0; }
@@ -165,8 +166,8 @@
 }
 @media (max-width: 560px) {
   .open__title { font-size: clamp(54px, 17vw, 96px); }
-  .open__kicker span + span::before { margin-right: 10px; }
-  .open__kicker { gap: 6px 10px; }
+  .open__kicker { flex-direction: column; gap: 6px; }
+  .open__kicker span + span::before { content: none; }
   .wtitle { font-size: calc(clamp(44px, 13vw, 76px) * var(--t-size, 1)); }
   .scene__cta { min-height: 46px; padding: 0 18px; font-size: 13.5px; }
   .open__cue { display: none; }

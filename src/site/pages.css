@@ -326,6 +326,8 @@
   .lat__map { margin-left: 70px; }
 }
 @media (max-width: 560px) {
+  .ph__k { flex-direction: column; gap: 6px; }
+  .ph__k span + span::before { content: none; }
   .ph__title, .wk-hero__title { font-size: clamp(56px, 17vw, 100px); }
   .promises, .steps, .benefits { grid-template-columns: 1fr; }
   .fld-row { grid-template-columns: 1fr; }
