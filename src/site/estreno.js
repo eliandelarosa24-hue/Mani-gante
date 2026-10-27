@@ -23,14 +23,14 @@ const esc = (s) => String(s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&
 const font = (s) => s.replace(/Escena/g, 'Estreno');
 const domain = (name) => (name.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '') || 'sunegocio').slice(0, 28) + '.cl';
 
-function page(kind, sc, r, d) {
+function page(kind, sc, r, d, photo) {
   const t = sc.type, m = kind === 'm';
   const size = (m ? 50 : 104) * t.size;
   const title = `font-family:${font(t.family)};font-weight:${t.weight};font-size:${size}px;letter-spacing:${t.tracking};line-height:${t.lh};${t.upper ? 'text-transform:uppercase;' : ''}${t.stretch ? `font-stretch:${t.stretch};` : ''}`;
   const logo = `font-family:${font(t.family)};font-weight:${t.weight};${t.upper ? 'text-transform:uppercase;letter-spacing:0.02em;' : ''}${t.stretch ? `font-stretch:${t.stretch};` : ''}`;
   const kick = [r.label, d.lugar].filter(Boolean).join(' · ');
   return `<div class="ep ep--${kind}" style="--acc:${sc.accent}">
-    <img class="ep__bg" src="/img/escenas/${sc.slug}-900.webp" alt="" />
+    <img class="ep__bg" src="${photo || `/img/escenas/${sc.slug}-900.webp`}" alt="" />
     <span class="ep__shade"></span>
     <div class="ep__nav"><b class="ep__logo" style="${logo}" data-ep-name>${esc(d.name)}</b>${m ? '<span class="ep__burger"><i></i><i></i></span>' : `<span class="ep__links"><i>Inicio</i><i>${r.sec}</i><i>Ubicación</i><i>Contacto</i></span><span class="ep__btn ep__btn--sm">${r.cta}</span>`}</div>
     <div class="ep__hero">
@@ -40,7 +40,7 @@ function page(kind, sc, r, d) {
       <p class="ep__ctas"><span class="ep__btn ep__btn--solid">${r.cta}</span><span class="ep__btn">WhatsApp</span></p>
     </div>
     <span class="ep__wa"></span>
-    <span class="ep__tag">Foto de muestra</span>
+    <span class="ep__tag">${photo ? 'Su foto' : 'Foto de muestra'}</span>
   </div>`;
 }
 
@@ -49,7 +49,7 @@ export function estreno(root) {
   const vd = $('[data-est-d]', root), vm = $('[data-est-m]', root);
   const url = $('[data-est-url]', root), lookName = $('[data-est-look]', root), ref = $('[data-est-ref]', root);
   const wa = $('[data-est-wa]', root), ct = $('[data-est-ct]', root);
-  let rubro = RUBROS[0], look = SCENES.findIndex((s) => s.slug === rubro.look), touched = false, typing = 0;
+  let rubro = RUBROS[0], look = SCENES.findIndex((s) => s.slug === rubro.look), touched = false, typing = 0, photo = null;
 
   const data = () => ({ name: form.nombre.value.trim() || rubro.demo, lugar: form.lugar.value.trim() });
   // Cada viewport dibuja una página de tamaño real (1280 o 390 px) y la escala a su ancho
@@ -64,7 +64,7 @@ export function estreno(root) {
   };
   const render = () => {
     const sc = SCENES[look], d = data();
-    swap(vd, page('d', sc, rubro, d)); swap(vm, page('m', sc, rubro, d));
+    swap(vd, page('d', sc, rubro, d, photo)); swap(vm, page('m', sc, rubro, d, photo));
     lookName.textContent = sc.name;
     ref.href = sc.case;
     links();
@@ -116,6 +116,51 @@ export function estreno(root) {
   $('[data-est-next]', root).addEventListener('click', () => { first(); look = (look + 1) % SCENES.length; render(); track('estreno_style', { look: SCENES[look].slug }); });
   wa.addEventListener('click', () => track('estreno_cta', { via: 'whatsapp', rubro: rubro.id, look: SCENES[look].slug }));
   ct.addEventListener('click', () => track('estreno_cta', { via: 'contacto', rubro: rubro.id, look: SCENES[look].slug }));
+
+  // Foto propia: se muestra desde el dispositivo, sin subirla a ninguna parte
+  const pIn = $('[data-est-photo]', root), pBox = pIn.closest('.est__photo'), pClear = $('[data-est-photo-clear]', root), pLabel = $('[data-est-photo-l]', root);
+  pIn.addEventListener('change', () => {
+    const f = pIn.files?.[0];
+    if (!f || !f.type.startsWith('image/')) return;
+    if (photo) URL.revokeObjectURL(photo);
+    photo = URL.createObjectURL(f);
+    pBox.classList.add('has-photo'); pBox.style.setProperty('--thumb', `url("${photo}")`);
+    pLabel.textContent = 'Cambiar la foto'; pClear.hidden = false;
+    first(); render(); track('estreno_photo', { rubro: rubro.id });
+  });
+  pClear.addEventListener('click', () => {
+    if (photo) URL.revokeObjectURL(photo);
+    photo = null; pIn.value = '';
+    pBox.classList.remove('has-photo'); pLabel.textContent = 'Usar una foto de mi lugar'; pClear.hidden = true;
+    render();
+  });
+
+  // Descargar o compartir la portada como imagen (en celular abre el menú para compartir, por ejemplo a WhatsApp)
+  const share = $('[data-est-share]', root), shareL = $('[data-est-share-l]', root);
+  const probe = typeof File === 'function' ? new File([''], 'p.jpg', { type: 'image/jpeg' }) : null;
+  const canShare = !!(probe && navigator.canShare?.({ files: [probe] }) && matchMedia('(pointer: coarse)').matches);
+  if (canShare) shareL.textContent = 'Compartir mi portada';
+  const load = (src) => new Promise((ok, ko) => { const im = new Image(); im.onload = () => ok(im); im.onerror = ko; im.src = src; });
+  share.addEventListener('click', async () => {
+    first();
+    share.setAttribute('aria-busy', 'true'); const was = shareL.textContent; shareL.textContent = 'Preparando…';
+    try {
+      const sc = SCENES[look], own = form.nombre.value.trim(), name = own || rubro.demo;
+      const [{ exportPortada }, img] = await Promise.all([import('./estreno-export.js'), load(photo || sc.image)]);
+      const blob = await exportPortada({ scene: sc, rubro, name, lugar: form.lugar.value.trim(), img, own: !!photo, url: `www.${domain(name)}` });
+      const file = new File([blob], `portada-${domain(name).replace('.cl', '')}.jpg`, { type: 'image/jpeg' });
+      if (canShare) {
+        await navigator.share({ files: [file], title: 'Mi portada de prueba', text: `Así se vería ${name}. Hecha con «Su estreno» de Red Vaeru: ${location.origin}/#estreno` }).catch(() => {});
+      } else {
+        const a = document.createElement('a');
+        a.href = URL.createObjectURL(blob); a.download = file.name;
+        document.body.append(a); a.click(); a.remove();
+        setTimeout(() => URL.revokeObjectURL(a.href), 4000);
+      }
+      track('estreno_share', { via: canShare ? 'compartir' : 'descarga', rubro: rubro.id, look: sc.slug, foto: !!photo });
+    } catch { /* si falla, el visitante puede volver a intentarlo */ }
+    share.removeAttribute('aria-busy'); shareL.textContent = was;
+  });
 
   render();
   // La demostración empieza cuando la sección entra en pantalla

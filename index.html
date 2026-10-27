@@ -146,6 +146,11 @@
         <form class="est__form" data-est-form action="/contacto/" onsubmit="return false">
           <label class="est__fld"><span>Nombre de su negocio</span><input name="nombre" maxlength="40" autocomplete="organization" placeholder="Cabañas Pewen Azul" /></label>
           <label class="est__fld"><span>Dónde está</span><input name="lugar" maxlength="32" autocomplete="address-level2" placeholder="Pucón, Samaná…" /></label>
+          <div class="est__photo">
+            <label class="est__photo-btn"><input type="file" accept="image/*" data-est-photo /><span class="est__photo-ico" aria-hidden="true"></span><span data-est-photo-l>Usar una foto de mi lugar</span></label>
+            <button type="button" class="est__photo-clear" data-est-photo-clear hidden>Quitar foto</button>
+            <small>La foto se queda en su dispositivo: no la recibimos ni la guardamos.</small>
+          </div>
           <fieldset class="est__rubros"><legend>Rubro</legend><label><input type="radio" name="rubro" value="cabanas" checked /><span>Cabañas</span></label><label><input type="radio" name="rubro" value="hotel" /><span>Hotel u hostal</span></label><label><input type="radio" name="rubro" value="glamping" /><span>Glamping</span></label><label><input type="radio" name="rubro" value="termas" /><span>Termas</span></label><label><input type="radio" name="rubro" value="restaurante" /><span>Restaurante</span></label><label><input type="radio" name="rubro" value="cafe" /><span>Café</span></label><label><input type="radio" name="rubro" value="vina" /><span>Viña</span></label><label><input type="radio" name="rubro" value="tours" /><span>Tours</span></label><label><input type="radio" name="rubro" value="playa" /><span>Villa de playa</span></label><label><input type="radio" name="rubro" value="otro" /><span>Otro negocio</span></label></fieldset>
           <div class="est__style"><span>Estilo de <a href="/trabajos/" data-est-ref><b data-est-look>Cabañas Lago Azul</b></a></span><button type="button" data-est-next>Probar otro estilo</button></div>
         </form>
@@ -156,6 +161,7 @@
         <div class="est__ctas">
           <a class="btn btn--accent" href="https://wa.me/56952289117?text=Hola%2C%20vengo%20del%20sitio%20de%20Red%20Vaeru." target="_blank" rel="noopener" data-from="estreno" data-est-wa data-magnetic>Quiero mi portada <span aria-hidden="true">↗</span></a>
           <a class="btn btn--line" href="/contacto/" data-est-ct data-magnetic>Contar mi proyecto <span aria-hidden="true">→</span></a>
+          <button class="btn btn--line est__share" type="button" data-est-share><span data-est-share-l>Descargar mi portada</span> <span aria-hidden="true">↓</span></button>
         </div>
         <p class="est__note">Prueba hecha en su navegador, con fotos de nuestras muestras. Su portada real lleva sus fotos y su historia, y se la mostramos antes de cobrar. Respondemos en menos de 24 horas hábiles.</p>
       </div>
