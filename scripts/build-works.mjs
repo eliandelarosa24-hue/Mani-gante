@@ -125,11 +125,11 @@ function casePage(s, i) {
       <div class="cs-duo">
         <div class="cs-film__frame" data-reveal="clip">
           <span class="cs-film__bar" aria-hidden="true"><i></i><i></i><i></i><em>redvaeru.netlify.app${s.sample}</em></span>
-          <video data-src="${s.site.d}" muted loop playsinline preload="none" poster="${s.site.d}.jpg" aria-label="Recorrido en video por el sitio de ${esc(s.name)} en computador"></video>
+          <video data-src="${s.site.d}" muted loop playsinline preload="none" data-poster="${s.site.d}.jpg" aria-label="Recorrido en video por el sitio de ${esc(s.name)} en computador"></video>
         </div>
         <div class="cs-phone" data-duo-phone>
           <span class="cs-phone__notch" aria-hidden="true"></span>
-          <video data-src="${s.site.m}" muted loop playsinline preload="none" poster="${s.site.m}.jpg" aria-label="El mismo sitio en celular"></video>
+          <video data-src="${s.site.m}" muted loop playsinline preload="none" data-poster="${s.site.m}.jpg" aria-label="El mismo sitio en celular"></video>
         </div>
       </div>
       <ul class="cs-feats" data-reveal="stagger">${s.features.map((f, k) => `<li><span>0${k + 1}</span>${esc(f)}</li>`).join('')}</ul>

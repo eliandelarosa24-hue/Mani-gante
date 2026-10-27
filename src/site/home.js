@@ -253,7 +253,7 @@ function light() {
         trigger: s, start: 'top 85%', end: 'bottom 15%',
         onToggle: (st) => {
           if (st.isActive) {
-            if (!v.dataset.ready) { v.dataset.ready = '1'; v.innerHTML = `<source src="${v.dataset.msrc}.webm" type="video/webm"><source src="${v.dataset.msrc}.mp4" type="video/mp4">`; v.load(); }
+            if (!v.dataset.ready) { v.dataset.ready = '1'; v.poster = v.dataset.poster; v.innerHTML = `<source src="${v.dataset.msrc}.webm" type="video/webm"><source src="${v.dataset.msrc}.mp4" type="video/mp4">`; v.load(); }
             v.play().catch(() => {});
           } else v.pause();
         },
@@ -270,6 +270,7 @@ function rest() {
     new IntersectionObserver(([e], o) => {
       if (!e.isIntersecting) return;
       o.disconnect();
+      if (v.dataset.poster) v.poster = v.dataset.poster;
       v.innerHTML = `<source src="${v.dataset.src}.webm" type="video/webm"><source src="${v.dataset.src}.mp4" type="video/mp4">`;
       v.load(); v.play().catch(() => {});
     }, { rootMargin: '200px' }).observe(v);

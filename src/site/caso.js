@@ -20,6 +20,7 @@ const start = () => {
     new IntersectionObserver(([e], o) => {
       if (!e.isIntersecting) return;
       o.disconnect();
+      if (v.dataset.poster) v.poster = v.dataset.poster;
       v.innerHTML = `<source src="${v.dataset.src}.webm" type="video/webm"><source src="${v.dataset.src}.mp4" type="video/mp4">`;
       v.load(); v.play().catch(() => {});
     }, { rootMargin: '300px' }).observe(v);

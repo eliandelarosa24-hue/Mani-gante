@@ -15,7 +15,7 @@ export function scenesMarkup() {
   return SCENES.map((s, i) => `
       <article class="scene" data-scene data-slug="${s.slug}" style="--accent:${s.accent}" aria-labelledby="sc-${s.slug}">
         <picture><source media="(min-width: 821px)" srcset="${s.image}" /><img class="scene__img" src="/img/escenas/${s.slug}-900.webp" alt="" width="1920" height="1080" ${i ? 'loading="lazy"' : 'fetchpriority="high"'} decoding="async" /></picture>
-        <a class="scene__phone" href="${s.sample}" tabindex="-1" aria-hidden="true"><video data-msrc="${s.site.m}" muted loop playsinline preload="none" poster="${s.site.m}.jpg"></video></a>
+        <a class="scene__phone" href="${s.sample}" tabindex="-1" aria-hidden="true"><video data-msrc="${s.site.m}" muted loop playsinline preload="none" data-poster="${s.site.m}.jpg"></video></a>
         <div class="scene__in">
           <p class="scene__kicker" data-scene-fade><span>Nº ${s.n} / ${String(SCENES.length).padStart(2, '0')} · Ficción</span><span>${esc(s.kind)}</span><span>${esc(s.town)} · ${s.coords}</span></p>
           <h2 class="scene__title" id="sc-${s.slug}"><span class="sr">${esc(s.name)}: </span>${titleHtml(s, 'wtitle', s.title)}</h2>
@@ -56,8 +56,8 @@ export function realMarkup() {
   return REAL.map((r, i) => `
         <li class="doc__it">
           <div class="doc__duo">
-            <a class="doc__screen" href="${r.url}" target="_blank" rel="noopener" data-cursor="Abrir ↗" aria-label="Abrir el sitio de ${esc(r.name)} (se abre en otra pestaña)"><span class="doc__bar" aria-hidden="true"><i></i><i></i><i></i><em>${esc(new URL(r.url).host)}</em></span><video data-src="${r.site.d}" muted loop playsinline preload="none" poster="${r.site.d}.jpg" aria-hidden="true"></video></a>
-            <span class="doc__phone" aria-hidden="true"><span class="doc__notch"></span><video data-src="${r.site.m}" muted loop playsinline preload="none" poster="${r.site.m}.jpg"></video></span>
+            <a class="doc__screen" href="${r.url}" target="_blank" rel="noopener" data-cursor="Abrir ↗" aria-label="Abrir el sitio de ${esc(r.name)} (se abre en otra pestaña)"><span class="doc__bar" aria-hidden="true"><i></i><i></i><i></i><em>${esc(new URL(r.url).host)}</em></span><video data-src="${r.site.d}" muted loop playsinline preload="none" data-poster="${r.site.d}.jpg" aria-hidden="true"></video></a>
+            <span class="doc__phone" aria-hidden="true"><span class="doc__notch"></span><video data-src="${r.site.m}" muted loop playsinline preload="none" data-poster="${r.site.m}.jpg"></video></span>
           </div>
           <div class="doc__third">
             <p class="doc__k"><span>Nº ${String(i + 1).padStart(2, '0')} / ${String(REAL.length).padStart(2, '0')} · Documental</span><span>${esc(r.town)} · ${r.coords}</span></p>
