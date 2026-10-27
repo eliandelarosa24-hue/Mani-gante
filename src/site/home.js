@@ -228,6 +228,56 @@ function cinema() {
   }));
 }
 
+// ---------- Ver la función ----------
+// La portada se recorre sola: cada obra, su sitio funcionando y el corte. Cualquier gesto del visitante la detiene.
+function autoplay() {
+  const btn = $('[data-play]');
+  const lenis = getLenis();
+  if (!btn) return;
+  if (reduced || !lenis) { btn.remove(); return; }
+  $('[data-play-t]', btn).textContent = html.classList.contains('is-cinema') ? '2 min' : '1 min';
+  const pill = document.createElement('button');
+  pill.type = 'button'; pill.className = 'play-pill';
+  pill.innerHTML = '<span class="rec" aria-hidden="true"></span><span data-play-n>Reproduciendo</span><b>Detener</b>';
+  document.body.append(pill);
+  const label = $('[data-play-n]', pill);
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - (-2 * t + 2) ** 3 / 2);
+  let playing = false, timer = 0;
+  const wait = (ms) => new Promise((r) => { timer = setTimeout(r, ms); });
+  const go = (y, d) => new Promise((r) => lenis.scrollTo(y, { duration: d, easing: ease, force: true, onComplete: r }));
+  const stop = () => {
+    if (!playing) return;
+    playing = false; clearTimeout(timer);
+    lenis.stop(); lenis.start();
+    html.classList.remove('is-playing');
+  };
+  const run = async () => {
+    playing = true; html.classList.add('is-playing');
+    track('reel_autoplay', { action: 'start' });
+    const reel = $('[data-reel]'), N = SCENES.length, scenes = $$('[data-scene]');
+    const top = reel.offsetTop, len = reel.offsetHeight - innerHeight, at = (x) => top + len * x / (N - 1 + 0.78);
+    for (let i = 0; i < N && playing; i++) {
+      label.textContent = `Reproduciendo · ${SCENES[i].n} / ${String(N).padStart(2, '0')}`;
+      if (html.classList.contains('is-cinema')) {
+        await go(at(i + 0.12), i ? 1.8 : 2.4); if (!playing) break;
+        await wait(2600); if (!playing) break;
+        await go(at(i + 0.56), 2.2); if (!playing) break;
+        await wait(3400);
+      } else {
+        await go(scenes[i], 1.6); if (!playing) break;
+        await wait(4200);
+      }
+    }
+    if (playing) { await go($('.inter'), 2); track('reel_autoplay', { action: 'end' }); stop(); }
+  };
+  btn.addEventListener('click', () => (playing ? stop() : run()));
+  pill.addEventListener('click', () => { track('reel_autoplay', { action: 'stop' }); stop(); });
+  // El visitante retoma el control con la rueda, el dedo o el teclado
+  addEventListener('wheel', stop, { passive: true });
+  addEventListener('touchstart', (e) => { if (!e.target.closest('.play, .play-pill')) stop(); }, { passive: true });
+  addEventListener('keydown', (e) => { if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Home', 'End', 'Escape'].includes(e.key)) stop(); });
+}
+
 // ---------- índice de escenas (celular) ----------
 // Un botón «Escenas» acompaña la función y abre la lista de las diez obras para saltar a cualquiera
 function sceneIndex(scenes) {
@@ -352,6 +402,7 @@ const start = () => {
   dust();
   if (html.classList.contains('is-cinema')) cinema(); else light();
   rest();
+  autoplay();
   ScrollTrigger.refresh();
 };
 (document.fonts?.ready || Promise.resolve()).then(start);

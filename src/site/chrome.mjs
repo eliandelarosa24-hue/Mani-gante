@@ -38,13 +38,16 @@ function head() {
   <link rel="preload" href="/fonts/rv/display-n.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/src/site/base.css" />
   <script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/muestras/*"}}]},"eagerness":"moderate"}]}</script>
-  <script>try{document.documentElement.classList.add('js');if(sessionStorage.getItem('rv-seen'))document.documentElement.classList.add('seen')}catch(e){}</script>
+  <script>try{document.documentElement.classList.add('js');if(sessionStorage.getItem('rv-seen'))document.documentElement.classList.add('seen')}catch(e){}
+  addEventListener('pagereveal',function(e){if(!e.viewTransition||matchMedia('(prefers-reduced-motion: reduce)').matches)return;var h=document.documentElement;h.classList.add('vt-telon');e.viewTransition.finished.finally(function(){h.classList.remove('vt-telon')})});</script>
+  <link rel="expect" href="#telon" blocking="render" />
   <!--ANALYTICS-->`;
 }
 
 function header(active = '') {
   const links = NAV.map(([k, href, label], i) => `<a href="${href}"${k === active ? ' aria-current="page"' : ''} data-n="0${i + 1}">${label}</a>`).join('');
-  return `<a class="skip" href="#contenido">Saltar al contenido</a>
+  return `<div class="telon" id="telon" aria-hidden="true">${emblem('telon__mark')}</div>
+  <a class="skip" href="#contenido">Saltar al contenido</a>
   <header class="hd" data-hd>
     <a class="hd__brand" href="/" aria-label="Red Vaeru, inicio">${emblem('hd__mark')}<span class="hd__word">Red Vaeru</span></a>
     <nav class="hd__nav" aria-label="Principal">${links}</nav>

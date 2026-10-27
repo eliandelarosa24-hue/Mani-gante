@@ -274,13 +274,20 @@ body::after { content: ''; position: fixed; inset: -50%; z-index: 250; pointer-e
 
 /* ---------- transiciones entre páginas ---------- */
 @view-transition { navigation: auto; }
-::view-transition-group(root) { animation-duration: 1s; }
-::view-transition-old(root) { animation: 0.8s var(--ease-io) both vt-out; }
-::view-transition-new(root) { animation: 1s var(--ease-io) both vt-in; }
-@keyframes vt-out { to { transform: translateY(-8vh) scale(0.98); filter: brightness(0.35); opacity: 0; } }
-/* Entre una página y otra cae un telón vino */
+/* Cambio de página como en el cine: destello del proyector, cae el telón vino con el emblema, pausa y sube sobre la nueva página */
+::view-transition-group(root) { animation-duration: 1.2s; }
+::view-transition-old(root) { animation: 1.2s linear both vt-out; }
+::view-transition-new(root) { animation: 1.2s var(--ease-io) both vt-in; }
 ::view-transition-image-pair(root) { background: radial-gradient(110% 80% at 50% 45%, #6a1827, var(--wine-night) 75%); }
-@keyframes vt-in { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes vt-out { 0% { filter: brightness(1); } 7% { filter: brightness(1.9) contrast(1.12) saturate(0.8); } 16% { filter: brightness(1.05); } 36%, 100% { filter: brightness(0.45); transform: translateY(5vh); opacity: 0; } }
+@keyframes vt-in { 0%, 52% { opacity: 0; transform: scale(1.035); } 100% { opacity: 1; transform: none; } }
+.telon { position: fixed; inset: 0; z-index: 290; display: none; place-items: center; background: radial-gradient(110% 80% at 50% 45%, #6a1827, var(--wine-night) 75%); transform: translateY(-100%); pointer-events: none; }
+.telon::after { content: ''; position: absolute; left: 0; right: 0; bottom: 0; height: 2px; background: linear-gradient(90deg, transparent, rgba(var(--warm), 0.5), transparent); }
+.telon__mark { width: 64px; height: 64px; color: var(--bone); opacity: 0.92; }
+.vt-telon .telon { display: grid; view-transition-name: telon; }
+::view-transition-group(telon) { z-index: 20; animation: none; }
+::view-transition-new(telon) { animation: telon 1.2s var(--ease-io) both; }
+@keyframes telon { 0% { transform: translateY(0); } 34%, 56% { transform: translateY(100%); } 100% { transform: translateY(0); } }
 ::view-transition-group(cabecera) { animation: none; z-index: 10; }
 ::view-transition-old(cabecera), ::view-transition-new(cabecera) { animation: none; }
 .curtain { position: fixed; inset: 0; z-index: 280; pointer-events: none; visibility: hidden; }
