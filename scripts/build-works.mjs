@@ -5,6 +5,7 @@ import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { SCENES, REAL } from '../src/site/scenes.js';
 import { esc, strip, titleHtml } from '../src/site/markup.mjs';
+import { TOUR } from '../src/samples/tour.js';
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..');
 const vt = (slug) => `view-transition-name:obra-${slug}`;
@@ -132,7 +133,27 @@ function casePage(s, i) {
           <video data-src="${s.site.m}" muted loop playsinline preload="none" data-poster="${s.site.m}.jpg" aria-label="El mismo sitio en celular"></video>
         </div>
       </div>
-      <ul class="cs-feats" data-reveal="stagger">${s.features.map((f, k) => `<li><span>0${k + 1}</span>${esc(f)}</li>`).join('')}</ul>
+    </section>
+
+    <section class="cs-tour" aria-labelledby="recorrido">
+      <div class="cs-tour__head">
+        <p class="eyebrow" data-reveal="fade">Recorrido guiado</p>
+        <h2 id="recorrido" class="h2" data-reveal="lines">Tres decisiones, <em>de cerca.</em></h2>
+      </div>
+      <ol class="cs-tour__list">${s.features.map((f, k) => {
+        const t = TOUR[s.slug]?.[k] || { at: '', note: '' }, img = `/img/recorrido/${s.slug}-${k + 1}`;
+        return `
+        <li class="cs-tour__it">
+          <figure class="cs-tour__shot" data-reveal="clip"><img src="${img}.webp" srcset="${img}-640.webp 640w, ${img}.webp 1200w" sizes="(max-width: 860px) 100vw, 58vw" alt="Captura del sitio de ${esc(s.name)}: ${esc(f)}" loading="lazy" width="1200" height="750" /></figure>
+          <div class="cs-tour__txt" data-reveal="fade">
+            <b>0${k + 1}</b>
+            <h3>${esc(f)}</h3>
+            <p>${esc(t.note)}</p>
+            <a href="${s.sample}${t.at ? `#${t.at}` : ''}">Verlo en el sitio <span aria-hidden="true">↗</span></a>
+          </div>
+        </li>`;
+      }).join('')}
+      </ol>
       <div class="cs-ctas">
         <a class="btn btn--solid" href="${s.sample}" data-cursor="Entrar" data-magnetic>Entrar al sitio <span aria-hidden="true">↗</span></a>
         <a class="btn btn--line" href="/contacto/?obra=${s.slug}" data-magnetic>Quiero algo así para mi negocio</a>

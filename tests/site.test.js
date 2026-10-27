@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { SCENES, REAL } from '../src/site/scenes.js';
+import { TOUR } from '../src/samples/tour.js';
 import { latY, scenesMarkup, railMarkup, voiceMarkup } from '../src/site/markup.mjs';
 
 test('la función va del paralelo 19 Norte al 41 Sur, sin saltos hacia el norte', () => {
@@ -56,4 +57,14 @@ test('el testimonio es real, con nombre y negocio, y «Su estreno» tiene sus ti
   const css = readFileSync('src/site/estreno-fonts.css', 'utf8');
   for (const s of SCENES) for (const f of s.faces) assert.match(css, new RegExp(`'${f.family} Estreno'`), `falta ${f.family} para Su estreno`);
   for (const m of css.matchAll(/url\((\/fonts\/estreno\/[^)]+)\)/g)) assert.ok(existsSync(`public${m[1]}`), `falta ${m[1]}`);
+});
+
+test('cada caso tiene su recorrido guiado: tres capturas reales y una nota por función', () => {
+  for (const s of SCENES) {
+    assert.equal(TOUR[s.slug]?.length, s.features.length, `${s.slug}: el recorrido no calza con sus funciones`);
+    TOUR[s.slug].forEach((t, k) => {
+      assert.ok(t.note.length > 40, `${s.slug} ${k + 1}: falta la nota`);
+      for (const f of [`${s.slug}-${k + 1}.webp`, `${s.slug}-${k + 1}-640.webp`]) assert.ok(existsSync(`public/img/recorrido/${f}`), `falta ${f}`);
+    });
+  }
 });
