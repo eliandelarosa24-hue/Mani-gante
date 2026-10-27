@@ -16,6 +16,7 @@ test('cada obra tiene foto, su sitio en video (computador y celular), caso, tipo
   for (const s of SCENES) {
     assert.ok(existsSync(`public${s.image}`), `falta ${s.image}`);
     for (const v of [s.site.d, s.site.m]) for (const ext of ['mp4', 'webm', 'jpg']) assert.ok(existsSync(`public${v}.${ext}`), `falta ${v}.${ext}`);
+    assert.ok(existsSync(`public${s.site.m}-thumb.webp`), `falta la miniatura de ${s.slug}`);
     for (const g of s.gallery) assert.ok(existsSync(`public${g}`), `falta ${g}`);
     assert.ok(s.concept && s.reto && s.idea && s.palette?.length && s.fonts?.length, `${s.slug} sin caso completo`);
     assert.match(s.coords, /^\d+°\d{2}′ [NS] \d+°\d{2}′ O$/);
