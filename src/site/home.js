@@ -274,6 +274,20 @@ function rest() {
       v.load(); v.play().catch(() => {});
     }, { rootMargin: '200px' }).observe(v);
   });
+  // Testimonio: cada palabra pasa de penumbra a luz mientras se baja
+  const vq = $('[data-voice] p');
+  if (vq && !reduced) {
+    const e = (w) => w.replace(/[&<>]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;' })[c]);
+    vq.innerHTML = vq.textContent.split(/(\s+)/).map((w) => (/^\s+$/.test(w) ? w : `<span class="vw">${e(w)}</span>`)).join('');
+    gsap.fromTo($$('.vw', vq), { opacity: 0.14 }, { opacity: 1, stagger: 0.1, ease: 'none', scrollTrigger: { trigger: vq, start: 'top 82%', end: 'bottom 48%', scrub: 0.6 } });
+  }
+  // «Su estreno» y sus tipografías se descargan solo al acercarse al final
+  const est = $('[data-estreno]');
+  if (est) new IntersectionObserver(([e], o) => {
+    if (!e.isIntersecting) return;
+    o.disconnect();
+    import('./estreno.js').then((m) => { m.estreno(est); html.classList.add('has-estreno'); });
+  }, { rootMargin: '900px' }).observe(est);
 }
 
 const tl = intro();

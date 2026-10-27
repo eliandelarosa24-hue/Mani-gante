@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { readdirSync, existsSync, statSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { chromeParts, emblem } from './src/site/chrome.mjs';
-import { scenesMarkup, ticksMarkup, realMarkup, railMarkup, latMapMarkup } from './src/site/markup.mjs';
+import { scenesMarkup, ticksMarkup, realMarkup, voiceMarkup, railMarkup, latMapMarkup } from './src/site/markup.mjs';
 
 // URL pública: Netlify la entrega en el build (URL). Con dominio propio, defina SITE_URL.
 const SITE_URL = (process.env.SITE_URL || process.env.URL || 'https://redvaeru.netlify.app').replace(/\/$/, '');
@@ -41,7 +41,8 @@ function inject(html) {
     .replace('<!--RV:TICKS-->', () => ticksMarkup())
     .replace('<!--RV:RAIL-->', () => railMarkup())
     .replace('<!--RV:LATMAP-->', () => latMapMarkup())
-    .replace('<!--RV:REAL-->', () => realMarkup());
+    .replace('<!--RV:REAL-->', () => realMarkup())
+    .replace('<!--RV:VOICE-->', () => voiceMarkup());
 }
 
 function site() {

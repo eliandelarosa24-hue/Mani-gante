@@ -110,6 +110,7 @@
         <p class="eyebrow" data-reveal="fade">Documental</p>
         <h2 id="documental" class="doc__title" data-reveal="lines">De vuelta en<br /><em>La Araucanía.</em></h2>
       </header>
+      <!--RV:VOICE-->
       <ol class="doc__list"><!--RV:REAL-->
       </ol>
     </section>
@@ -136,11 +137,24 @@
     <section class="soon" aria-labelledby="proximamente">
       <p class="soon__k" data-reveal="fade">Próximamente</p>
       <h2 id="proximamente" class="soon__title" data-reveal="lines">su lugar.</h2>
-      <div class="soon__ctas" data-reveal="fade">
-        <a class="btn btn--accent" href="https://wa.me/56952289117?text=Hola%2C%20vengo%20del%20sitio%20de%20Red%20Vaeru." target="_blank" rel="noopener" data-from="proximamente" data-magnetic>Escribirnos por WhatsApp <span aria-hidden="true">↗</span></a>
-        <a class="btn btn--line" href="/contacto/" data-magnetic>Contar su proyecto <span aria-hidden="true">→</span></a>
+      <div class="est" data-estreno>
+        <p class="est__lead">Escriba el nombre de su negocio y véalo en cartelera: su portada, en computador y en celular.</p>
+        <form class="est__form" data-est-form action="/contacto/" onsubmit="return false">
+          <label class="est__fld"><span>Nombre de su negocio</span><input name="nombre" maxlength="40" autocomplete="organization" placeholder="Cabañas Pewen Azul" /></label>
+          <label class="est__fld"><span>Dónde está</span><input name="lugar" maxlength="32" autocomplete="address-level2" placeholder="Pucón, Samaná…" /></label>
+          <fieldset class="est__rubros"><legend>Rubro</legend><label><input type="radio" name="rubro" value="cabanas" checked /><span>Cabañas</span></label><label><input type="radio" name="rubro" value="hotel" /><span>Hotel u hostal</span></label><label><input type="radio" name="rubro" value="glamping" /><span>Glamping</span></label><label><input type="radio" name="rubro" value="termas" /><span>Termas</span></label><label><input type="radio" name="rubro" value="restaurante" /><span>Restaurante</span></label><label><input type="radio" name="rubro" value="cafe" /><span>Café</span></label><label><input type="radio" name="rubro" value="vina" /><span>Viña</span></label><label><input type="radio" name="rubro" value="tours" /><span>Tours</span></label><label><input type="radio" name="rubro" value="playa" /><span>Villa de playa</span></label><label><input type="radio" name="rubro" value="otro" /><span>Otro negocio</span></label></fieldset>
+          <div class="est__style"><span>Estilo de <a href="/trabajos/" data-est-ref><b data-est-look>Cabañas Lago Azul</b></a></span><button type="button" data-est-next>Probar otro estilo</button></div>
+        </form>
+        <div class="est__screens" aria-hidden="true">
+          <div class="est__browser"><span class="est__bar"><i></i><i></i><i></i><em data-est-url>www.sunegocio.cl</em></span><div class="est__vp" data-est-d></div></div>
+          <div class="est__phone"><span class="est__notch"></span><div class="est__vp" data-est-m></div></div>
+        </div>
+        <div class="est__ctas">
+          <a class="btn btn--accent" href="https://wa.me/56952289117?text=Hola%2C%20vengo%20del%20sitio%20de%20Red%20Vaeru." target="_blank" rel="noopener" data-from="estreno" data-est-wa data-magnetic>Quiero mi portada <span aria-hidden="true">↗</span></a>
+          <a class="btn btn--line" href="/contacto/" data-est-ct data-magnetic>Contar mi proyecto <span aria-hidden="true">→</span></a>
+        </div>
+        <p class="est__note">Prueba hecha en su navegador, con fotos de nuestras muestras. Su portada real lleva sus fotos y su historia, y se la mostramos antes de cobrar. Respondemos en menos de 24 horas hábiles.</p>
       </div>
-      <p class="soon__note" data-reveal="fade">Respondemos en menos de 24 horas hábiles.</p>
     </section>
   </main>
 

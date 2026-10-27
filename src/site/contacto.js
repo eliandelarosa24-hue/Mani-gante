@@ -20,14 +20,17 @@ const paintSlug = (touched = false) => {
 };
 $$('[data-slug-part]', form).forEach((el) => el.addEventListener('input', () => paintSlug(true)));
 
-// Viene desde un caso ("Quiero algo así"): deja la obra anotada
-const obra = new URLSearchParams(location.search).get('obra');
-const ref = SCENES.find((s) => s.slug === obra);
-if (ref) {
-  form.obra.value = ref.name;
-  form.mensaje.value = `Me gustó la muestra de ${ref.name} y quiero algo así para mi negocio. `;
-}
-paintSlug();
+// Viene desde un caso ("Quiero algo así") o desde «Su estreno» (portada de prueba): deja todo anotado
+const q = new URLSearchParams(location.search);
+const ref = SCENES.find((s) => s.slug === (q.get('obra') || q.get('estilo')));
+if (ref) form.obra.value = ref.name;
+if (q.has('estilo')) {
+  const neg = q.get('negocio'), lugar = q.get('lugar'), nombre = q.get('nombre_negocio');
+  if (neg && [...form.negocio.options].some((o) => o.value === neg)) form.negocio.value = neg;
+  if (lugar) form.lugar.value = lugar.slice(0, 60);
+  form.mensaje.value = `Probé «Su estreno»${nombre ? ` con el nombre ${nombre.slice(0, 60)}` : ''}${ref ? ` y me gustó el estilo de ${ref.name}` : ''}. `;
+} else if (ref) form.mensaje.value = `Me gustó la muestra de ${ref.name} y quiero algo así para mi negocio. `;
+paintSlug(q.has('estilo'));
 
 form.addEventListener('submit', async (e) => {
   e.preventDefault();

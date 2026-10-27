@@ -55,15 +55,29 @@ export function ticksMarkup() {
 export function realMarkup() {
   return REAL.map((r, i) => `
         <li class="doc__it">
-          <a class="doc__screen" href="${r.url}" target="_blank" rel="noopener" data-cursor="Abrir ↗" aria-label="Abrir el sitio de ${esc(r.name)} (se abre en otra pestaña)">${r.video ? `<video data-src="${r.video}" muted loop playsinline preload="none" poster="${r.video}.jpg" aria-hidden="true"></video>` : `<img src="${r.image}" alt="" loading="lazy" width="1000" height="672" />`}</a>
+          <div class="doc__duo">
+            <a class="doc__screen" href="${r.url}" target="_blank" rel="noopener" data-cursor="Abrir ↗" aria-label="Abrir el sitio de ${esc(r.name)} (se abre en otra pestaña)"><span class="doc__bar" aria-hidden="true"><i></i><i></i><i></i><em>${esc(new URL(r.url).host)}</em></span><video data-src="${r.site.d}" muted loop playsinline preload="none" poster="${r.site.d}.jpg" aria-hidden="true"></video></a>
+            <span class="doc__phone" aria-hidden="true"><span class="doc__notch"></span><video data-src="${r.site.m}" muted loop playsinline preload="none" poster="${r.site.m}.jpg"></video></span>
+          </div>
           <div class="doc__third">
             <p class="doc__k"><span>Nº ${String(i + 1).padStart(2, '0')} / ${String(REAL.length).padStart(2, '0')} · Documental</span><span>${esc(r.town)} · ${r.coords}</span></p>
             <h3 class="doc__name">${esc(r.name)}</h3>
             <p class="doc__meta">${esc(r.kind)} · ${esc(r.label)} · En el aire</p>
-            ${r.quote ? `<blockquote class="doc__quote"><p>«${esc(r.quote)}»</p><footer>${esc(r.by)}</footer></blockquote>` : `<p class="doc__note">${esc(r.note || '')}</p>`}
+            <p class="doc__note">${esc(r.note || '')}</p>
             <a class="doc__url" href="${r.url}" target="_blank" rel="noopener">${esc(new URL(r.url).host)} <span aria-hidden="true">↗</span></a>
           </div>
         </li>`).join('');
+}
+
+// Testimonio real, a toda pantalla: cada palabra se enciende al bajar
+export function voiceMarkup() {
+  const r = REAL.find((x) => x.quote);
+  if (!r) return '';
+  return `<figure class="voice">
+        <p class="voice__k"><span>Testimonio</span><span>${esc(r.label)} · ${esc(r.town)}</span></p>
+        <blockquote class="voice__q" data-voice><p>${esc(r.quote)}</p></blockquote>
+        <figcaption class="voice__by"><b>${esc(r.by)}</b><span>${esc(r.role)}</span><a href="${r.url}" target="_blank" rel="noopener">${esc(new URL(r.url).host)} <span aria-hidden="true">↗</span></a></figcaption>
+      </figure>`;
 }
 
 // Mapa de latitudes del Estudio: lugares agrupados cuando quedan muy cerca en la escala
