@@ -144,8 +144,8 @@ body::after { content: ''; position: fixed; inset: -50%; z-index: 250; pointer-e
 .ft__kicker { font: 500 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 .ft__big { display: inline-flex; align-items: baseline; gap: 0.18em; margin: 18px 0 0; font: 300 var(--fs-mega)/0.86 var(--f-display); font-stretch: 66%; letter-spacing: -0.03em; }
 .fine .ft__big .ch { font-weight: 240; font-stretch: 62.5%; will-change: auto; }
-.ft__big span { background: linear-gradient(var(--fl), var(--fl)) 0 92% / 0 0.06em no-repeat; transition: background-size 1s var(--ease); }
-.ft__big:hover span { background-size: 100% 0.06em; }
+.ft__big > span { background: linear-gradient(var(--fl), var(--fl)) 0 92% / 0 0.06em no-repeat; transition: background-size 1s var(--ease); }
+.ft__big:hover > span { background-size: 100% 0.06em; }
 .ft__big i { font-style: normal; font-size: 0.5em; transition: transform 0.8s var(--ease); }
 .ft__big:hover i { transform: translateX(0.2em) rotate(-45deg); }
 .ft__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 32px; margin-top: clamp(64px, 9vw, 140px); padding-top: 32px; border-top: 1px solid var(--line); }
