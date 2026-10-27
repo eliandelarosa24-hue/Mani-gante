@@ -16,6 +16,9 @@
   --fl: #e2492c;
   --fl-deep: #b3341c;
   --scene-accent: var(--fl);
+  /* Luz cálida de lámpara (Servicios y precios) y superficie de tarjeta */
+  --warm: 255, 196, 140;
+  --card: #12100e;
 
   /* Tipografía */
   --f-display: 'Display', 'Times New Roman', serif;
@@ -142,6 +145,10 @@ body::after { content: ''; position: fixed; inset: -50%; z-index: 250; pointer-e
 /* ---------- pie ---------- */
 .ft { position: relative; padding: var(--sec) var(--gut) 28px; background: var(--ink); color: var(--bone); border-top: 1px solid var(--line); }
 .ft__kicker { font: 500 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+/* Lámpara: una luz cálida sigue al puntero sobre las tarjetas de precios */
+[data-lamp] { --mx: 50%; --my: 0%; --lit: 0; position: relative; overflow: hidden; isolation: isolate; }
+[data-lamp]::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: radial-gradient(420px circle at var(--mx) var(--my), rgba(var(--warm), 0.1), transparent 65%); opacity: var(--lit); transition: opacity 0.6s; }
+[data-lamp]:hover { --lit: 1; }
 .ft__big { display: inline-flex; align-items: baseline; gap: 0.18em; margin: 18px 0 0; font: 300 var(--fs-mega)/0.86 var(--f-display); font-stretch: 66%; letter-spacing: -0.03em; }
 .fine .ft__big .ch { font-weight: 240; font-stretch: 62.5%; will-change: auto; }
 .ft__big > span { background: linear-gradient(var(--fl), var(--fl)) 0 92% / 0 0.06em no-repeat; transition: background-size 1s var(--ease); }

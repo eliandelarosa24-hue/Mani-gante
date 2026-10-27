@@ -216,6 +216,12 @@ export function boot({ smooth = true } = {}) {
         cur.classList.toggle('is-hover', !!hov && !lab);
       });
     }
+    // Tarjetas con lámpara: la luz cálida cae donde está el puntero
+    $$('[data-lamp]').forEach((el) => el.addEventListener('pointermove', (e) => {
+      const r = el.getBoundingClientRect();
+      el.style.setProperty('--mx', `${e.clientX - r.left}px`);
+      el.style.setProperty('--my', `${e.clientY - r.top}px`);
+    }));
     $$('[data-magnetic]').forEach((el) => {
       const xTo = gsap.quickTo(el, 'x', { duration: 0.5, ease: 'power3' }), yTo = gsap.quickTo(el, 'y', { duration: 0.5, ease: 'power3' });
       el.addEventListener('pointermove', (e) => { const r = el.getBoundingClientRect(); xTo((e.clientX - r.left - r.width / 2) * 0.28); yTo((e.clientY - r.top - r.height / 2) * 0.36); });

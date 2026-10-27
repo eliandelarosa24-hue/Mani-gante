@@ -20,5 +20,12 @@ const start = () => {
     gsap.from('.lat__pt', { opacity: 0, x: -14, duration: 1, stagger: 0.07, ease: 'expo.out', scrollTrigger: { trigger: '[data-lat-map]', start: 'top 75%' } });
   }
   reveal();
+  // MANI-GANTE funcionando: los videos se descargan al acercarse
+  $$('video[data-src]').forEach((v) => new IntersectionObserver(([e], o) => {
+    if (!e.isIntersecting) return;
+    o.disconnect();
+    v.innerHTML = `<source src="${v.dataset.src}.webm" type="video/webm"><source src="${v.dataset.src}.mp4" type="video/mp4">`;
+    v.load(); v.play().catch(() => {});
+  }, { rootMargin: '300px' }).observe(v));
 };
 (document.fonts?.ready || Promise.resolve()).then(start);

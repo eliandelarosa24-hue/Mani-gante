@@ -274,6 +274,16 @@ function rest() {
       v.load(); v.play().catch(() => {});
     }, { rootMargin: '200px' }).observe(v);
   });
+  // Intermedio: la cola de proyección cuenta 3, 2, 1 mientras se baja hacia el documental
+  const inter = $('[data-inter]');
+  if (inter && !reduced) {
+    const sweep = $('.inter__sweep', inter), n = $('[data-inter-n]', inter);
+    ScrollTrigger.create({ trigger: inter, start: 'top bottom', end: 'bottom top', onUpdate: (st) => {
+      const k = st.progress * 3;
+      sweep.style.setProperty('--sw', `${((k % 1) * 360).toFixed(1)}deg`);
+      n.textContent = String(Math.max(1, 3 - Math.floor(k)));
+    } });
+  }
   // Testimonio: cada palabra pasa de penumbra a luz mientras se baja
   const vq = $('[data-voice] p');
   if (vq && !reduced) {

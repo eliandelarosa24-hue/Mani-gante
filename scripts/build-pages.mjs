@@ -115,8 +115,9 @@ function servicePage(p) {
         <p class="lede" data-reveal="fade">${hasLaunch ? 'Precio de lanzamiento mientras queden cupos.' : 'Valores referenciales.'} El precio fijo llega por escrito en la propuesta.</p>
       </div>
       <div class="tiers" data-reveal="stagger">
-        ${tiers.map(([tid, t], i) => `<article class="tier">
-          <h3>${esc(t.label)}${i === featured ? ' <span style="color:var(--fl);font:400 11px var(--f-mono);letter-spacing:.14em;text-transform:uppercase;white-space:nowrap">· recomendado</span>' : ''}</h3>
+        ${tiers.map(([tid, t], i) => `<article class="tier${i === featured ? ' tier--featured' : ''}" data-lamp>
+          <p class="tier__k"><span>Opción ${String(i + 1).padStart(2, '0')}</span>${i === featured ? '<b>Recomendado</b>' : ''}</p>
+          <h3>${esc(t.label)}</h3>
           <p class="tier__price">desde <strong>${formatCLP(priceOf(t).min)}${monthly(t) ? '<small>/mes</small>' : ''}</strong>${priceOf(t) !== t ? `<s class="tier__was">Precio normal desde ${formatCLP(t.min)}</s>` : ''}</p>
           <p class="tier__time">Plazo: ${esc(t.weeks)}</p>
           <ul>${(p.tiers[tid] || []).map((x) => `<li>${esc(x)}</li>`).join('')}</ul>
