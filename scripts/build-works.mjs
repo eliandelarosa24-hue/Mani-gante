@@ -46,7 +46,7 @@ function index() {
             <span class="wk__n">${s.n}</span>
             ${titleHtml(s, 'wk__name', esc(s.name))}
             <span class="wk__meta"><span>${esc(s.kind)}</span><span>${esc(s.place)}</span></span>
-            <span class="wk__thumb" aria-hidden="true"><img src="${s.image}" alt="" loading="lazy" width="640" height="420" style="${vt(s.slug)}" /></span>
+            <span class="wk__thumb" aria-hidden="true"><img src="${s.site.m}.jpg" alt="" loading="lazy" width="390" height="844" /></span>
           </a>
         </li>`).join('');
   const real = REAL.map((r) => `

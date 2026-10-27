@@ -170,7 +170,8 @@ function cinema() {
 
   // El scroll del bloque del cine se reparte entre las escenas: cada una se sostiene y luego corta
   // Cada obra tiene tres tiempos: el lugar (foto y titular), la pantalla (su sitio funcionando) y el corte.
-  let pos = 0, last = 0;
+  // Declarado antes de los ScrollTrigger: si la página abre más abajo (recarga o #estreno), onUpdate corre de inmediato
+  let pos = 0, last = 0, openK = 0;
   const HOLD = 0.8, TAIL = 0.78;
   const ramp = (t, a, b) => gsap.utils.clamp(0, 1, (t - a) / (b - a));
   const smooth = (x) => x * x * (3 - 2 * x);
@@ -203,7 +204,6 @@ function cinema() {
   });
 
   // Antes del cine: la portada se oscurece; después: el proyector se apaga
-  let openK = 0;
   ScrollTrigger.create({ trigger: '[data-open]', start: 'top top', end: 'bottom top', onUpdate: (st) => { openK = st.progress; gl.dim(0.38 + 0.62 * openK); } });
   gl.dim(0.38);
   ScrollTrigger.create({ trigger: reel, start: 'top 60%', end: 'bottom 40%', toggleClass: { targets: html, className: 'in-reel' } });
@@ -213,7 +213,7 @@ function cinema() {
     onLeave: () => { gl.visible(false); ambience('sala'); },
     onEnterBack: () => gl.visible(true),
   });
-  show(0);
+  if (active < 0) show(0);
 
   addEventListener('pointermove', (e) => gl.pointer(e.clientX / innerWidth, 1 - e.clientY / innerHeight), { passive: true });
   document.addEventListener('visibilitychange', () => (document.hidden ? gl.stop() : gl.start()));
