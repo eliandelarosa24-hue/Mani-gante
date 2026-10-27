@@ -99,6 +99,47 @@
       </div>
     </section>
 
+    <section class="sec sec--line calc" id="calculadora" aria-labelledby="calc-t" data-calc>
+      <div class="sec__head sec__head--split">
+        <h2 id="calc-t" class="h2" data-reveal="lines">¿Cuánto le cuestan <em>las comisiones?</em></h2>
+        <p class="lede" data-reveal="fade">Ponga sus números y vea en cuánto tiempo se pagaría su sitio. El cálculo se hace en su pantalla y no se guarda.</p>
+      </div>
+      <div class="calc__grid">
+        <form class="calc__form" onsubmit="return false" aria-label="Datos para el cálculo">
+          <fieldset class="calc__chips"><legend>Plataforma</legend>
+            <label><input type="radio" name="plat" value="booking" checked /><span>Booking</span></label>
+            <label><input type="radio" name="plat" value="airbnb" /><span>Airbnb</span></label>
+            <label><input type="radio" name="plat" value="otra" /><span>Otra</span></label>
+          </fieldset>
+          <label class="calc__fld"><span>Tarifa promedio por noche</span><span class="calc__money"><b>$</b><input name="tarifa" type="text" inputmode="numeric" value="60.000" autocomplete="off" /></span></label>
+          <label class="calc__fld"><span>Noches que vende por plataformas al mes <output data-o="noches">20</output></span><input name="noches" type="range" min="1" max="120" value="20" /></label>
+          <label class="calc__fld"><span>Comisión de la plataforma <output data-o="pct">15%</output></span><input name="pct" type="range" min="3" max="30" value="15" /></label>
+          <label class="calc__fld"><span>Parte que cree que podría reservar directo <output data-o="directo">30%</output></span><input name="directo" type="range" min="5" max="80" step="5" value="30" /></label>
+          <fieldset class="calc__chips"><legend>Plan</legend>
+            <label><input type="radio" name="plan" value="esencial" /><span>Esencial</span></label>
+            <label><input type="radio" name="plan" value="completo" checked /><span>Completo</span></label>
+            <label><input type="radio" name="plan" value="firma" /><span>Firma</span></label>
+          </fieldset>
+          <p class="calc__help" data-calc-help>Booking suele cobrar entre 15% y 18% según el contrato. Ajuste el porcentaje a su caso.</p>
+        </form>
+        <div class="calc__out" data-lamp aria-live="polite">
+          <p class="calc__k">Hoy paga en comisiones</p>
+          <p class="calc__big"><span data-r="anual">$0</span><small>al año</small></p>
+          <div class="calc__bars" aria-hidden="true">
+            <p><span>Comisiones al año</span><i style="--w:1" data-bar="com"></i></p>
+            <p><span>Su sitio, <b data-r="planName">Completo</b></span><i style="--w:.2" data-bar="plan"></i></p>
+          </div>
+          <dl class="calc__rows">
+            <div><dt>Si <b data-r="dirPct">30%</b> reservara directo, ahorraría</dt><dd data-r="ahorro">$0 al año</dd></div>
+            <div><dt>Plan <b data-r="planName2">Completo</b>, precio de lanzamiento desde</dt><dd data-r="plan">$0</dd></div>
+          </dl>
+          <p class="calc__pay"><span>Su sitio se pagaría en</span><strong data-r="meses">0 meses</strong></p>
+          <p class="calc__note">Cálculo referencial con sus propios números. No incluye impuestos ni la mantención mensual opcional.</p>
+          <a class="btn btn--accent" href="https://wa.me/56952289117" target="_blank" rel="noopener" data-from="calculadora" data-calc-wa data-magnetic>Quiero dejar de pagar tanto <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+
     <section class="sec sec--line" aria-labelledby="despues">
       <div class="sec__head sec__head--split">
         <h2 id="despues" class="h2" data-reveal="lines">Después del <em>estreno.</em></h2>

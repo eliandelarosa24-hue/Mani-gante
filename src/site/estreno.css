@@ -34,6 +34,8 @@
 .est__photo-clear { min-height: 36px; padding: 0 12px; font-size: 13px; color: var(--muted); border-bottom: 1px solid var(--line-2); }
 .est__photo-clear:hover { color: var(--bone); }
 .est__note { grid-area: note; font-size: 13px; line-height: 1.5; color: var(--muted); max-width: 30em; }
+.est__note a { color: var(--bone); border-bottom: 1px solid var(--line-2); }
+.est__note a:hover { border-color: var(--bone); }
 
 /* Pantallas */
 .est__screens { grid-area: screens; position: relative; padding: 0 clamp(36px, 6vw, 96px) clamp(30px, 4vw, 60px) 0; }
