@@ -42,7 +42,7 @@ const groupsOf = (slug) => Object.entries(GROUPS).filter(([, l]) => l.includes(s
 function index() {
   const rows = SCENES.map((s) => `
         <li class="wk" data-wk data-groups="${groupsOf(s.slug).join('|')}" style="--accent:${s.accent}">
-          <a class="wk__a" href="${s.case}" data-cursor="Ver caso" data-img="${s.image}">
+          <a class="wk__a" href="${s.case}" data-cursor="Ver caso" data-site="${s.site.d}" data-url="redvaeru.netlify.app${s.sample}">
             <span class="wk__n">${s.n}</span>
             ${titleHtml(s, 'wk__name', esc(s.name))}
             <span class="wk__meta"><span>${esc(s.kind)}</span><span>${esc(s.place)}</span></span>
@@ -75,7 +75,7 @@ function index() {
       <ol class="wk-rows">${rows}
       </ol>
       <p class="wk-note">Muestras de concepto: negocios, nombres y reseñas ficticios, creados para mostrar cómo trabajamos.</p>
-      <div class="wk-float" aria-hidden="true"><img alt="" /></div>
+      <div class="wk-float" aria-hidden="true"><span class="wk-float__bar"><i></i><i></i><i></i><em></em></span><video muted loop playsinline preload="none"></video></div>
     </section>
     <section class="live-sec" aria-labelledby="en-el-aire">
       <p class="eyebrow">En el aire</p>
@@ -122,9 +122,15 @@ function casePage(s, i) {
     </section>
 
     <section class="cs-film" aria-label="El sitio en movimiento">
-      <div class="cs-film__frame" data-reveal="clip">
-        <span class="cs-film__bar" aria-hidden="true"><i></i><i></i><i></i><em>redvaeru.netlify.app${s.sample}</em></span>
-        <video data-src="${s.video}" muted loop playsinline preload="none" poster="${s.video}.jpg" aria-label="Recorrido en video por el sitio de ${esc(s.name)}"></video>
+      <div class="cs-duo">
+        <div class="cs-film__frame" data-reveal="clip">
+          <span class="cs-film__bar" aria-hidden="true"><i></i><i></i><i></i><em>redvaeru.netlify.app${s.sample}</em></span>
+          <video data-src="${s.site.d}" muted loop playsinline preload="none" poster="${s.site.d}.jpg" aria-label="Recorrido en video por el sitio de ${esc(s.name)} en computador"></video>
+        </div>
+        <div class="cs-phone" data-duo-phone>
+          <span class="cs-phone__notch" aria-hidden="true"></span>
+          <video data-src="${s.site.m}" muted loop playsinline preload="none" poster="${s.site.m}.jpg" aria-label="El mismo sitio en celular"></video>
+        </div>
       </div>
       <ul class="cs-feats" data-reveal="stagger">${s.features.map((f, k) => `<li><span>0${k + 1}</span>${esc(f)}</li>`).join('')}</ul>
       <div class="cs-ctas">

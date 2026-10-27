@@ -1,8 +1,8 @@
 # Red Vaeru · Proyectamos lugares
 
 Sitio de Red Vaeru, estudio de diseño web para la hospitalidad entre el Caribe y el sur de Chile («Conectando culturas»). El sitio es una sala de cine:
-- **Inicio:** una función que proyecta las diez muestras de concepto por latitud, del paralelo 19 Norte (Samaná) al 41 Sur (Frutillar). Cada titular va en la tipografía real de su sitio. Siguen un intermedio, el documental con los clientes reales, los créditos y «Próximamente: su lugar».
-- **Páginas:** Trabajos (un caso por obra), Servicios y planes (la única página clara y la única con precios), Estudio y Contacto.
+- **Inicio:** una función que proyecta las diez muestras de concepto por latitud, del paralelo 19 Norte (Samaná) al 41 Sur (Frutillar). Cada titular va en la tipografía real de su sitio y, al seguir bajando, aparece su sitio funcionando en un navegador y un celular (en el teléfono, el celular va dentro de cada escena). Siguen un intermedio, el documental con los clientes reales, los créditos y «Próximamente: su lugar».
+- **Páginas:** Trabajos (al pasar el cursor por una obra se ve su sitio funcionando; un caso por obra, con el sitio en computador y celular), Servicios y planes (la única con precios: el mismo negro mate, con una lámpara cálida que se enciende), Estudio y Contacto.
 - **Vaeru IA**, el asistente que cotiza y responde dudas.
 - **Sonido ambiente** sintetizado por lugar, apagado por defecto.
 
@@ -31,6 +31,7 @@ Sitio de Red Vaeru, estudio de diseño web para la hospitalidad entre el Caribe 
 | `netlify/functions/agent.mjs` | Modo IA opcional de Vaeru IA en `/api/agent`, con límite de uso por IP |
 | `netlify/functions/lead.mjs` | Envía cada lead a Google Sheets en `/api/lead` |
 | `src/samples/` | Las 10 muestras de concepto: contenido, casos (`cases.js`) y diseños a medida (`custom/`) |
+| `public/video/sitio/` | Cada muestra grabada funcionando: `<obra>-d` (computador, 1440 px) y `<obra>-m` (celular, 390 px), en WebM, MP4 y póster JPG. Si cambia una muestra, hay que volver a grabar su video |
 | `public/brand/` | Emblema en vector (`emblema.svg`, `gobo.svg`) e íconos |
 | `public/__forms.html` | Registro de los formularios `cotizacion` y `diagnostico` para Netlify |
 | `docs/` | Análisis, plan para conseguir clientes, tarifario, investigación y registro de mejoras |

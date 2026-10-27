@@ -12,7 +12,7 @@ precision highp float;
 varying vec2 vUv;
 uniform sampler2D uA, uB;
 uniform vec2 uRes, uSizeA, uSizeB, uPointer;
-uniform float uMix, uTime, uVel, uDim, uSeed;
+uniform float uMix, uTime, uVel, uDim, uSeed, uBlur, uZoom;
 uniform vec3 uGlow;
 
 float hash(vec2 p){ return fract(sin(dot(p, vec2(127.1, 311.7))) * 43758.5453); }
@@ -30,8 +30,10 @@ vec2 cover(vec2 uv, vec2 size, float zoom, vec2 drift){
   return (uv - 0.5) * s / zoom + 0.5 + drift;
 }
 
+// Muestra con separación de color y desenfoque de foco (sesgo de mipmap: el proyector cambia de foco)
 vec3 sample3(sampler2D t, vec2 uv, float split){
-  return vec3(texture2D(t, uv + vec2(0.0, split)).r, texture2D(t, uv).g, texture2D(t, uv - vec2(0.0, split)).b);
+  float b = uBlur * 4.5;
+  return vec3(texture2D(t, uv + vec2(0.0, split), b).r, texture2D(t, uv, b).g, texture2D(t, uv - vec2(0.0, split), b).b);
 }
 
 void main(){
@@ -49,7 +51,7 @@ void main(){
   float split = uVel * 0.003 + edge * 0.0035;
 
   // A se aleja y sube mientras se va; B llega desde un leve acercamiento
-  vec2 uvA = cover(uv + vec2(0.0, -m * 0.06) + edge * vec2(0.0, 0.03) * (n - 0.5), uSizeA, 1.04 + m * 0.08 + breathe, drift);
+  vec2 uvA = cover(uv + vec2(0.0, -m * 0.06) + edge * vec2(0.0, 0.03) * (n - 0.5), uSizeA, 1.04 + m * 0.08 + breathe + uZoom * 0.1, drift);
   vec2 uvB = cover(uv + vec2(0.0, (1.0 - m) * 0.05) - edge * vec2(0.0, 0.03) * (n - 0.5), uSizeB, 1.16 - m * 0.12 + breathe, drift);
   vec3 a = sample3(uA, uvA, split);
   vec3 b = sample3(uB, uvB, split);
@@ -98,7 +100,7 @@ export function createCinema(canvas, { onFirstFrame } = {}) {
   gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
   const U = {};
-  for (const n of ['uA', 'uB', 'uRes', 'uSizeA', 'uSizeB', 'uPointer', 'uMix', 'uTime', 'uVel', 'uDim', 'uSeed', 'uGlow']) U[n] = gl.getUniformLocation(prog, n);
+  for (const n of ['uA', 'uB', 'uRes', 'uSizeA', 'uSizeB', 'uPointer', 'uMix', 'uTime', 'uVel', 'uDim', 'uSeed', 'uGlow', 'uBlur', 'uZoom']) U[n] = gl.getUniformLocation(prog, n);
   gl.uniform1i(U.uA, 0);
   gl.uniform1i(U.uB, 1);
 
@@ -131,7 +133,7 @@ export function createCinema(canvas, { onFirstFrame } = {}) {
     return entry;
   }
 
-  let urls = [], glows = [], pos = 0, vel = 0, dim = 1, pointer = [0.5, 0.5], target = [0.5, 0.5];
+  let urls = [], glows = [], pos = 0, vel = 0, dim = 1, blur = 0, zoom = 0, pointer = [0.5, 0.5], target = [0.5, 0.5];
   let dirty = true, raf = 0, running = false, visible = true, first = true;
   const t0 = performance.now();
 
@@ -163,6 +165,8 @@ export function createCinema(canvas, { onFirstFrame } = {}) {
     gl.uniform1f(U.uTime, (now - t0) / 1000);
     gl.uniform1f(U.uVel, Math.min(1, Math.abs(vel)));
     gl.uniform1f(U.uDim, dim);
+    gl.uniform1f(U.uBlur, blur);
+    gl.uniform1f(U.uZoom, zoom);
     gl.uniform1f(U.uSeed, i * 3.17);
     gl.uniform2f(U.uPointer, pointer[0], pointer[1]);
     const g = glows[j] || [1, 0.8, 0.6];
@@ -183,6 +187,7 @@ export function createCinema(canvas, { onFirstFrame } = {}) {
     set(p, v = 0) { pos = p; vel = v; dirty = true; },
     pointer(x, y) { target = [x, y]; },
     dim(d) { dim = d; },
+    blur(b, z = 0) { blur = b; zoom = z; },
     visible(v) { visible = v; },
     start() { if (!running) { running = true; raf = requestAnimationFrame(frame); } },
     stop() { running = false; cancelAnimationFrame(raf); },

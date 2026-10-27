@@ -53,7 +53,11 @@
 
   <div class="intro" data-intro aria-hidden="true">
     <div class="intro__center">
-      <!--RV:EMBLEM:intro__mark-->
+      <div class="intro__leader">
+        <span class="intro__sweep"></span>
+        <svg class="intro__ring" viewBox="0 0 200 200" fill="none"><circle cx="100" cy="100" r="98" /><circle cx="100" cy="100" r="82" /><path d="M100 0V200M0 100H200" /></svg>
+        <!--RV:EMBLEM:intro__mark-->
+      </div>
       <p class="intro__words"><span class="intro__line"><span data-intro-line>Red Vaeru</span></span><span class="intro__line"><span data-intro-line>Conectando culturas</span></span></p>
     </div>
     <p class="intro__count"><span data-intro-count>000</span></p>
@@ -63,6 +67,8 @@
 
   <main id="contenido">
     <section class="open" data-open>
+      <span class="open__beam" aria-hidden="true"></span>
+      <canvas class="open__dust" data-dust aria-hidden="true"></canvas>
       <p class="open__kicker" data-open-fade><span>Red Vaeru presenta</span><span>Del paralelo 19 Norte al 41 Sur</span></p>
       <h1 class="open__title" data-open-title>Proyectamos <em>lugares.</em></h1>
       <div class="open__foot">
@@ -75,7 +81,13 @@
       <div class="reel__stage">
         <!--RV:SCENES-->
         <span class="cue" aria-hidden="true"></span>
-        <div class="peek" aria-hidden="true"><span class="peek__bar"><i></i><i></i><i></i><em data-peek-url></em></span><video muted loop playsinline preload="none" data-peek-video></video></div>
+        <div class="stage" aria-hidden="true" data-stage>
+          <div class="stage__devices">
+            <a class="stage__browser" href="/trabajos/" tabindex="-1" data-cursor="Entrar al sitio" data-stage-link><span class="stage__bar"><i></i><i></i><i></i><em data-stage-url></em></span><video muted loop playsinline preload="none" data-stage-d></video></a>
+            <div class="stage__phone"><span class="stage__notch"></span><video muted loop playsinline preload="none" data-stage-m></video></div>
+          </div>
+          <p class="stage__cap"><span>El sitio, funcionando</span><b data-stage-name></b><a href="/trabajos/" tabindex="-1" data-stage-link>Entrar al sitio <span aria-hidden="true">↗</span></a></p>
+        </div>
         <p class="reel__sub" aria-hidden="true" data-reel-sub></p>
         <nav class="rail" aria-label="Obras por latitud"><span class="rail__line" aria-hidden="true"></span><span class="rail__now" data-lat-now aria-hidden="true">19°19′ N</span><!--RV:RAIL--></nav>
         <div class="reel__ui">

@@ -4,6 +4,12 @@
 .intro { position: fixed; inset: 0; z-index: 240; display: grid; place-items: center; background: var(--ink); visibility: hidden; clip-path: inset(0 0 0 0); }
 .js:not(.seen) .intro { visibility: visible; }
 .intro__center { display: grid; justify-items: center; gap: 26px; }
+/* Cola de proyección: el círculo con cruz y el barrido de las películas antes de empezar */
+.intro__leader { display: grid; place-items: center; width: clamp(190px, 19vw, 260px); aspect-ratio: 1; }
+.intro__leader > * { grid-area: 1 / 1; }
+.intro__sweep { width: 100%; height: 100%; border-radius: 50%; background: conic-gradient(rgba(236, 229, 216, 0.09) var(--sw, 0deg), transparent 0); }
+.intro__ring { width: 100%; height: 100%; stroke: rgba(236, 229, 216, 0.16); stroke-width: 0.8; }
+.intro__ring path { stroke: rgba(236, 229, 216, 0.08); }
 .intro__mark { width: clamp(84px, 9vw, 120px); height: auto; color: var(--bone); }
 .intro__words { display: grid; justify-items: center; gap: 6px; text-align: center; }
 .intro__line { display: block; overflow: hidden; }
@@ -19,7 +25,13 @@
 .pg--home main { position: relative; z-index: 1; }
 
 /* ---------- apertura ---------- */
-.open { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto auto; padding: calc(var(--hd-h) + 28px) var(--gut) 36px; }
+.open { position: relative; isolation: isolate; min-height: 100svh; display: grid; grid-template-rows: 1fr auto auto; padding: calc(var(--hd-h) + 28px) var(--gut) 36px; }
+/* El haz del proyector: un cono de luz que nace sobre el público y cae hacia la pantalla, con polvo flotando */
+.open__beam { position: absolute; inset: 0 0 -10%; z-index: -1; pointer-events: none; background: conic-gradient(from 0deg at 50% -16%, transparent 0deg 148deg, rgba(255, 236, 208, 0.07) 160deg, rgba(255, 236, 208, 0.19) 180deg, rgba(255, 236, 208, 0.07) 200deg, transparent 212deg 360deg); filter: blur(26px); mix-blend-mode: screen; opacity: 0; }
+.js .open__beam { animation: beam 3s 0.3s var(--ease) forwards; }
+.js.seen .open__beam { animation-delay: 0s; }
+@keyframes beam { 0% { opacity: 0; } 6% { opacity: 0.8; } 9% { opacity: 0.2; } 16% { opacity: 1; } 100% { opacity: 1; } }
+.open__dust { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: screen; }
 .open__kicker { display: flex; flex-wrap: wrap; gap: 8px 28px; align-self: start; font: 400 var(--fs-micro)/1.3 var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 .open__kicker span + span::before { content: '·'; margin-right: 28px; opacity: 0.5; }
 .open__title { margin: 0 0 clamp(28px, 4vw, 56px); font: 300 var(--fs-mega)/0.84 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.035em; max-width: 12ch; }
@@ -35,7 +47,7 @@
 
 /* ---------- sala de cine ---------- */
 .reel { position: relative; }
-.is-cinema .reel { height: calc((var(--n) - 0.4) * 92vh + 100vh); }
+.is-cinema .reel { height: calc((var(--n) - 0.22) * 150vh + 100vh); }
 .reel__stage { position: relative; }
 .is-cinema .reel__stage { position: sticky; top: 0; height: 100vh; overflow: hidden; }
 .scene { position: relative; color: var(--bone); }
@@ -175,11 +187,34 @@
 
 .in-reel .fab { transform: translateY(160%); }
 
-/* Vista previa del sitio en movimiento al pasar por «Entrar al sitio» */
-.peek { display: none; }
-.is-cinema .peek { position: absolute; z-index: 4; right: calc(var(--gut) + 40px); bottom: 190px; display: block; width: clamp(300px, 30vw, 460px); overflow: hidden; border-radius: 6px; background: var(--ink-2); box-shadow: 0 0 0 1px var(--line-2), 0 40px 100px -30px #000; pointer-events: none; opacity: 0; transform: translateY(16px) scale(0.96); transform-origin: 80% 100%; transition: opacity 0.5s var(--ease), transform 0.8s var(--ease); }
-.peek.is-on { opacity: 1; transform: none; }
-.peek__bar { display: flex; align-items: center; gap: 5px; height: 26px; padding: 0 10px; border-bottom: 1px solid var(--line); }
-.peek__bar i { width: 7px; height: 7px; border-radius: 50%; background: var(--line-2); }
-.peek__bar em { margin-left: 8px; font: 400 10px var(--f-mono); font-style: normal; letter-spacing: 0.06em; color: var(--muted); }
-.peek video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; }
+/* «La pantalla»: después del lugar, su sitio funcionando en computador y celular */
+.stage { display: none; }
+.is-cinema .stage { position: absolute; inset: 0; z-index: 2; display: grid; place-items: center; pointer-events: none; --in: 0; }
+.stage__devices { position: relative; width: min(60vw, calc((100vh - 290px) * 1.6)); aspect-ratio: 16 / 10; margin-top: -10px; }
+.stage__browser { position: absolute; inset: 0; display: block; overflow: hidden; border-radius: 10px; background: #111; box-shadow: 0 0 0 1px rgba(236, 229, 216, 0.16), 0 60px 140px -40px rgba(0, 0, 0, 0.9); clip-path: inset(calc(50% - var(--in) * 50%) calc(50% - var(--in) * 50%) round 10px); transform: perspective(1600px) rotateX(calc((1 - var(--in)) * 8deg)) translateY(calc((1 - var(--in)) * 40px)); }
+.stage__bar { display: flex; align-items: center; gap: 6px; height: 30px; padding: 0 14px; background: #161412; border-bottom: 1px solid rgba(236, 229, 216, 0.08); }
+.stage__bar i { width: 9px; height: 9px; border-radius: 50%; background: rgba(236, 229, 216, 0.18); }
+.stage__bar em { margin: 0 auto; padding: 3px 18px; border-radius: 6px; background: rgba(236, 229, 216, 0.06); font: 400 11px var(--f-mono); font-style: normal; letter-spacing: 0.04em; color: var(--muted); }
+.stage__browser video { display: block; width: 100%; height: calc(100% - 30px); object-fit: cover; object-position: top; background: #0f0e0d; }
+.stage__phone { position: absolute; right: -7%; bottom: -9%; width: 21%; aspect-ratio: 390 / 844; overflow: hidden; border-radius: 26px; background: #0b0a09; box-shadow: 0 0 0 5px #1b1917, 0 0 0 6px rgba(236, 229, 216, 0.14), 0 50px 90px -30px rgba(0, 0, 0, 0.95); opacity: clamp(0, calc(var(--in) * 2 - 0.6), 1); transform: translateY(calc((1 - var(--in)) * 120px)) rotate(calc((1 - var(--in)) * 6deg)); }
+.stage__notch { position: absolute; z-index: 1; top: 7px; left: 50%; width: 30%; height: 13px; margin-left: -15%; border-radius: 10px; background: #0b0a09; }
+.stage__phone video { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }
+.stage__cap { position: absolute; left: var(--gut); bottom: 128px; display: grid; gap: 6px; opacity: var(--in); transform: translateY(calc((1 - var(--in)) * 16px)); }
+.stage__cap span { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.stage__cap b { font: 300 clamp(26px, 2.4vw, 38px)/1 var(--f-display); font-stretch: 70%; color: var(--bone); }
+.stage__cap a { justify-self: start; margin-top: 8px; font: 500 13px var(--f-text); color: var(--bone); border-bottom: 1px solid var(--line-2); padding-bottom: 3px; transition: border-color 0.4s; }
+.stage__cap a:hover { border-color: var(--bone); }
+.is-cinema .stage.is-live .stage__browser, .is-cinema .stage.is-live .stage__cap { pointer-events: auto; }
+.is-cinema .scene.is-hidden { visibility: hidden; }
+.is-cinema .scene__in { opacity: calc(1 - var(--out, 0)); transform: translateY(calc(var(--out, 0) * -36px)); filter: blur(calc(var(--out, 0) * 6px)); }
+.is-cinema .scene.is-staged .scene__ctas { opacity: 1; }
+
+/* Celular: el sitio en un celular dentro de la escena */
+.scene__phone { display: none; }
+.is-light .scene__phone { position: absolute; z-index: 1; right: var(--gut); bottom: 118px; display: block; width: min(38vw, 200px); aspect-ratio: 390 / 844; overflow: hidden; border-radius: 22px; background: #0b0a09; box-shadow: 0 0 0 4px #1b1917, 0 0 0 5px rgba(236, 229, 216, 0.16), 0 30px 60px -20px #000; transform: rotate(3deg); }
+.is-light .scene__phone video { width: 100%; height: 100%; object-fit: cover; object-position: top; }
+@media (max-width: 820px) {
+  .is-light .scene__title { align-self: start; margin-top: 4vh; }
+  .is-light .scene__foot { max-width: calc(100% - min(38vw, 200px) - 20px); }
+  .is-light .scene__ctas { flex-direction: column; align-items: flex-start; }
+}

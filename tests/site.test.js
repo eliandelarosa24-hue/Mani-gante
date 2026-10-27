@@ -11,10 +11,10 @@ test('la función va del paralelo 19 Norte al 41 Sur, sin saltos hacia el norte'
   assert.ok(latY(19.3) < latY(0) && latY(0) < latY(-39) && latY(-41.1) <= 1);
 });
 
-test('cada obra tiene foto, video, caso, tipografía y paleta reales', () => {
+test('cada obra tiene foto, su sitio en video (computador y celular), caso, tipografía y paleta reales', () => {
   for (const s of SCENES) {
     assert.ok(existsSync(`public${s.image}`), `falta ${s.image}`);
-    assert.ok(existsSync(`public${s.video}.mp4`), `falta el video de ${s.slug}`);
+    for (const v of [s.site.d, s.site.m]) for (const ext of ['mp4', 'webm', 'jpg']) assert.ok(existsSync(`public${v}.${ext}`), `falta ${v}.${ext}`);
     for (const g of s.gallery) assert.ok(existsSync(`public${g}`), `falta ${g}`);
     assert.ok(s.concept && s.reto && s.idea && s.palette?.length && s.fonts?.length, `${s.slug} sin caso completo`);
     assert.match(s.coords, /^\d+°\d{2}′ [NS] \d+°\d{2}′ O$/);

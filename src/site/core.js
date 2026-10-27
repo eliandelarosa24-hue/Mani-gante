@@ -223,6 +223,33 @@ export function boot({ smooth = true } = {}) {
     });
   }
 
+  // "Conversemos" respira con el puntero: cada letra engrosa y se ensancha según lo cerca que pase
+  const big = $('.ft__big span');
+  if (big && fine && !reduced) {
+    big.closest('a').setAttribute('aria-label', big.textContent.trim());
+    const chars = splitChars(big).map((el) => ({ el, w: 240, s: 62.5 }));
+    let px = -1e4, py = -1e4, on = false, raf = 0;
+    const loop = () => {
+      let moving = false;
+      const R = Math.max(220, innerWidth * 0.28);
+      for (const c of chars) {
+        const r = c.el.getBoundingClientRect();
+        const d = Math.hypot(px - (r.left + r.width / 2), py - (r.top + r.height / 2));
+        const k = Math.max(0, 1 - d / R), e = k * k * (3 - 2 * k);
+        const tw = 240 + 260 * e, ts = 62.5 + 12.5 * e;
+        c.w += (tw - c.w) * 0.14; c.s += (ts - c.s) * 0.14;
+        if (Math.abs(tw - c.w) > 0.5) moving = true;
+        c.el.style.fontWeight = c.w.toFixed(0);
+        c.el.style.fontStretch = c.s.toFixed(1) + '%';
+      }
+      raf = on || moving ? requestAnimationFrame(loop) : 0;
+    };
+    const ft = $('[data-ft]');
+    ft.addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; if (!raf) raf = requestAnimationFrame(loop); }, { passive: true });
+    ft.addEventListener('pointerenter', () => { on = true; });
+    ft.addEventListener('pointerleave', () => { on = false; px = py = -1e4; if (!raf) raf = requestAnimationFrame(loop); });
+  }
+
   // Relojes de las dos orillas y año
   const clocks = $$('[data-clock]');
   const tick = () => clocks.forEach((el) => { el.textContent = new Intl.DateTimeFormat('es-CL', { timeZone: el.dataset.clock, hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).format(new Date()); });

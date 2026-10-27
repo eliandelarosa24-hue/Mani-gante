@@ -1,4 +1,4 @@
-// Caso de una obra: portada con el titular en su tipografía, la idea, el sitio en movimiento,
+// Caso de una obra: portada con el titular en su tipografía, la idea, el sitio en movimiento (computador y celular),
 // identidad (paleta y tipografías), fotos y paso a la obra siguiente.
 import './pages.css';
 import './scene-fonts.css';
@@ -15,6 +15,7 @@ const start = () => {
     gsap.to('.cs-hero__media img', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.cs-hero', start: 'top top', end: 'bottom top', scrub: true } });
   }
   reveal();
+  if (!reduced) gsap.fromTo('[data-duo-phone]', { yPercent: 16 }, { yPercent: -10, ease: 'none', scrollTrigger: { trigger: '.cs-duo', start: 'top bottom', end: 'bottom top', scrub: true } });
   $$('video[data-src]').forEach((v) => {
     new IntersectionObserver(([e], o) => {
       if (!e.isIntersecting) return;

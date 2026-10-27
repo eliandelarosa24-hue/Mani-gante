@@ -94,7 +94,7 @@ export const SCENES = BASE.map((s, i) => ({
   ...s,
   n: String(i + 1).padStart(2, '0'),
   image: `/muestras/${s.slug}/img/${s.img}.webp`,
-  video: `/video/muestra-${s.slug}`,
+  site: { d: `/video/sitio/${s.slug}-d`, m: `/video/sitio/${s.slug}-m` },
   sample: `/muestras/${s.slug}/`,
   case: `/trabajos/${s.slug}/`,
   ...CASES[s.slug],
