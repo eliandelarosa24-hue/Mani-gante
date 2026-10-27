@@ -1,9 +1,11 @@
 # Red Vaeru · Proyectamos lugares
 
 Sitio de Red Vaeru, estudio de diseño web para la hospitalidad entre el Caribe y el sur de Chile («Conectando culturas»). El sitio es una sala de cine:
-- **Inicio:** una función que proyecta las diez muestras de concepto por latitud, del paralelo 19 Norte (Samaná) al 41 Sur (Frutillar). Cada titular va en la tipografía real de su sitio y, al seguir bajando, aparece su sitio funcionando en un navegador y un celular (en el teléfono, el celular va dentro de cada escena). Siguen un intermedio, el documental con los clientes reales, los créditos y «Próximamente: su lugar».
-- **Páginas:** Trabajos (al pasar el cursor por una obra se ve su sitio funcionando; un caso por obra, con el sitio en computador y celular), Servicios y planes (la única con precios: el mismo negro mate, con una lámpara cálida que se enciende), Estudio y Contacto.
-- **Vaeru IA**, el asistente que cotiza y responde dudas.
+- **Inicio:** una función que proyecta las diez muestras de concepto por latitud, del paralelo 19 Norte (Samaná) al 41 Sur (Frutillar). Cada titular va en la tipografía real de su sitio y, al seguir bajando, aparece su sitio funcionando en un navegador y un celular (en el teléfono, el celular va dentro de cada escena). Siguen un intermedio, el documental con los clientes reales y el testimonio de Nicole, los créditos y «Próximamente: su lugar». El botón «Ver la función» la recorre sola; en celular, «Escenas» permite saltar a cualquier obra.
+- **Su estreno** (final de la portada): el visitante escribe el nombre de su negocio, elige rubro y, si quiere, una foto suya (no sale de su dispositivo), y ve su portada en computador y celular con el estilo de una muestra. Puede descargarla o compartirla por WhatsApp.
+- **Páginas:** Trabajos (al pasar el cursor por una obra se ve su sitio funcionando; cada caso con el sitio en computador y celular y un recorrido guiado de tres decisiones, con capturas en `public/img/recorrido/` y notas en `src/samples/tour.js`), Servicios y planes (precios, lámpara cálida y calculadora de comisiones), Estudio y Contacto.
+- **Vaeru IA**, el asistente que cotiza y responde dudas; el botón flotante ofrece WhatsApp (con un mensaje según la página) o Vaeru IA.
+- **Paleta:** negro mate y un solo acento rojo vino Carmenere (`--fl` para textos y detalles, `--fl-deep` para botones y fondos); el telón entre páginas es vino.
 - **Sonido ambiente** sintetizado por lugar, apagado por defecto.
 
 ## Estructura
