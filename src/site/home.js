@@ -50,7 +50,7 @@ function opening(tl) {
   if (!title || reduced) return;
   const lines = splitLines(title);
   // El titular entra como una imagen que el proyectista pone en foco
-  tl.from(lines, { yPercent: 115, rotate: 3, duration: 1.5, stagger: 0.09 }, html.classList.contains('seen') ? 0.1 : '-=0.55')
+  tl.from(lines, { yPercent: 160, rotate: 3, duration: 1.5, stagger: 0.09 }, html.classList.contains('seen') ? 0.1 : '-=0.55')
     .fromTo(title, { filter: 'blur(16px)', opacity: 0.4 }, { filter: 'blur(0px)', opacity: 1, duration: 2.2, ease: 'power2.out', clearProps: 'filter,opacity' }, '<')
     .from('[data-open-fade]', { y: 26, opacity: 0, duration: 1.2, stagger: 0.08 }, '-=1.15');
 }

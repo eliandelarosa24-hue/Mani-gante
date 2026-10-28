@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
 import { PAGES } from '../src/services-content.js';
-import { SERVICES, LAUNCH, launchLeft, CAMPAIGN } from '../src/pricing.js';
+import { SERVICES, LAUNCH, launchLeft, CAMPAIGN, priceOf, formatCLP } from '../src/pricing.js';
 
 test('cada página de servicio apunta a un servicio real y describe todas sus opciones', () => {
   for (const p of PAGES) {
@@ -18,7 +18,8 @@ test('cada página de servicio apunta a un servicio real y describe todas sus op
 test('el generador crea páginas con precios, datos estructurados y el script compartido', () => {
   execFileSync('node', ['scripts/build-pages.mjs']);
   const html = readFileSync('servicios/paginas-web-alojamientos/index.html', 'utf8');
-  assert.match(html, /\$49\.000/);
+  // El precio vigente sale del tarifario: si cambia allí, la página debe mostrarlo
+  assert.ok(html.includes(formatCLP(priceOf(SERVICES.web_alojamiento.tiers.esencial).min)));
   assert.match(html, /"@type":"FAQPage"/);
   assert.match(html, /src="\/src\/site\/page\.js"/);
   assert.match(readFileSync('privacidad/index.html', 'utf8'), /Ley 21\.719/);

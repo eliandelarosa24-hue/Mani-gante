@@ -2,6 +2,10 @@
 import { test, before, after } from 'node:test';
 import assert from 'node:assert/strict';
 import http from 'node:http';
+import { SERVICES, priceOf } from '../src/pricing.js';
+
+// Lo que debe sumar «Completo + reservas» según el tarifario vigente
+const S = SERVICES.web_alojamiento, MIN = priceOf(S.tiers.completo).min + S.addons.reservas.min;
 
 let server, calls = [];
 before(async () => {
@@ -18,7 +22,7 @@ before(async () => {
       usage: { input_tokens: 10, output_tokens: 10 },
       content: toolTurn
         ? [{ type: 'thinking', thinking: '', signature: 'sig' }, { type: 'tool_use', id: 'tu_1', name: 'calcular_presupuesto', input: { items: [{ service: 'web_alojamiento', tier: 'completo', addons: [{ id: 'reservas' }] }] } }]
-        : [{ type: 'text', text: 'Le estimo entre $179.000 y $309.000.' }],
+        : [{ type: 'text', text: 'Le estimo desde $154.000.' }],
     }));
   });
   await new Promise((r) => server.listen(0, '127.0.0.1', r));
@@ -36,8 +40,8 @@ const call = async (body) => {
 test('ejecuta la herramienta y devuelve respuesta con estimación', async () => {
   const { status, data } = await call({ messages: [{ role: 'user', content: 'Quiero un sitio para mis cabañas con reservas' }] });
   assert.equal(status, 200);
-  assert.match(data.reply, /179\.000/);
-  assert.equal(data.estimate.oneTime.min, 179000);
+  assert.match(data.reply, /154\.000/);
+  assert.equal(data.estimate.oneTime.min, MIN);
   assert.equal(calls.length, 2);
   const second = calls[1].json;
   assert.equal(second.messages.at(-2).content[0].type, 'thinking'); // turno del asistente sin modificar

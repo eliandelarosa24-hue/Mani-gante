@@ -112,7 +112,7 @@ export function reveal(root = document) {
   if (reduced) return;
   $$('[data-reveal="lines"]', root).forEach((el) => {
     const lines = splitLines(el);
-    gsap.from(lines, { yPercent: 115, rotate: 2, duration: 1.3, stagger: 0.07, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
+    gsap.from(lines, { yPercent: 160, rotate: 2, duration: 1.3, stagger: 0.07, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
   // Mientras entran, sin transiciones CSS propias (si no, el "hover" de la tarjeta frena la animación a medio
   // camino); al terminar se limpia todo, así el hover vuelve a funcionar.
