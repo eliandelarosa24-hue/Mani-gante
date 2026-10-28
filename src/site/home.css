@@ -127,13 +127,13 @@
 .inter__leader svg { width: 100%; height: 100%; stroke: rgba(236, 229, 216, 0.08); stroke-width: 0.5; }
 .inter__leader b { font: 200 min(52vh, 54vw)/1 var(--f-display); font-stretch: 62.5%; color: rgba(236, 229, 216, 0.04); }
 .inter { isolation: isolate; overflow: hidden; }
-.inter { position: relative; z-index: 2; min-height: 100svh; display: grid; place-content: center; justify-items: center; gap: 26px; padding: var(--sec) var(--gut); text-align: center; background: radial-gradient(60% 50% at 50% 42%, rgba(236, 229, 216, 0.07), transparent 70%), var(--ink); }
+.inter { position: relative; z-index: 2; min-height: 100svh; display: grid; place-content: center; justify-items: center; gap: 26px; padding: var(--sec) var(--gut); text-align: center; background: radial-gradient(65% 55% at 50% 45%, rgba(106, 24, 39, 0.55), rgba(43, 10, 17, 0.3) 48%, transparent 78%), var(--ink); }
 .inter__k { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); }
 .inter__title { font: 200 clamp(56px, 10vw, 190px)/0.9 var(--f-display); font-stretch: 62.5%; letter-spacing: 0.12em; text-transform: uppercase; }
 .inter__text { max-width: 30em; font-size: var(--fs-lead); line-height: 1.45; color: var(--bone-2); }
 
 /* ---------- documental ---------- */
-.doc { position: relative; z-index: 2; padding: 0 var(--gut) var(--sec); background: var(--ink); }
+.doc { position: relative; z-index: 2; padding: 0 var(--gut) var(--sec); background: radial-gradient(70% 22% at 12% 9%, rgba(106, 24, 39, 0.38), transparent 70%), radial-gradient(60% 20% at 92% 45%, rgba(74, 16, 25, 0.45), transparent 70%), radial-gradient(70% 22% at 20% 85%, rgba(106, 24, 39, 0.3), transparent 70%), linear-gradient(180deg, var(--ink), var(--wine-950) 50%, var(--ink)); }
 .doc__head { display: grid; gap: 22px; padding-bottom: clamp(48px, 7vw, 110px); }
 .doc__title { font: 300 var(--fs-h2)/0.9 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.03em; }
 .doc__title em { color: var(--bone); }
@@ -174,7 +174,7 @@
 .doc__url:hover { color: var(--bone); }
 
 /* ---------- créditos ---------- */
-.credits { position: relative; z-index: 2; padding: var(--sec) var(--gut); background: var(--ink); overflow: hidden; }
+.credits { position: relative; z-index: 2; padding: var(--sec) var(--gut); background: radial-gradient(60% 55% at 50% 42%, rgba(74, 16, 25, 0.6), rgba(43, 10, 17, 0.25) 50%, transparent 78%), var(--ink); overflow: hidden; }
 .credits__roll { display: grid; justify-items: center; gap: 14px; text-align: center; }
 .credits__mark { width: 56px; height: 56px; color: var(--bone); margin-bottom: 10px; }
 .credits__title { font: 300 clamp(48px, 7vw, 120px)/0.9 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.02em; }
@@ -186,7 +186,7 @@
 .credits__oath { margin-top: 56px; font: 400 12px var(--f-mono); letter-spacing: 0.1em; color: var(--bone-2); }
 
 /* ---------- próximamente ---------- */
-.soon { position: relative; z-index: 2; display: grid; justify-items: center; gap: 24px; padding: calc(var(--sec) * 0.7) var(--gut) var(--sec); text-align: center; background: radial-gradient(80% 52% at 50% 0%, rgba(150, 35, 54, 0.55), rgba(150, 35, 54, 0.14) 55%, transparent 82%), radial-gradient(55% 45% at 85% 100%, rgba(150, 35, 54, 0.2), transparent 70%), var(--ink); }
+.soon { position: relative; z-index: 2; display: grid; justify-items: center; gap: 24px; padding: calc(var(--sec) * 0.7) var(--gut) var(--sec); text-align: center; background: radial-gradient(85% 50% at 50% 0%, rgba(106, 24, 39, 0.7), rgba(74, 16, 25, 0.25) 55%, transparent 82%), radial-gradient(60% 45% at 85% 100%, rgba(106, 24, 39, 0.35), transparent 70%), linear-gradient(180deg, var(--wine-950), var(--ink) 40%, var(--ink) 70%, var(--wine-950)); }
 .soon__k { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
 .soon__title { font: 300 clamp(80px, 15vw, 280px)/0.82 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.04em; font-style: italic; }
 .js:not(.has-estreno) .est__screens { visibility: hidden; }

@@ -45,8 +45,9 @@ function index() {
         <li class="wk" data-wk data-groups="${groupsOf(s.slug).join('|')}" style="--accent:${s.accent}">
           <a class="wk__a" href="${s.case}" data-cursor="Ver caso" data-site="${s.site.d}" data-url="redvaeru.netlify.app${s.sample}">
             <span class="wk__n">${s.n}</span>
-            ${titleHtml(s, 'wk__name', esc(s.name))}
+            <span class="wk__name">${esc(s.name)}</span>
             <span class="wk__meta"><span>${esc(s.kind)}</span><span>${esc(s.place)}</span></span>
+            <span class="wk__go" aria-hidden="true">→</span>
             <span class="wk__thumb" aria-hidden="true"><img src="${s.site.m}-thumb.webp" alt="" loading="lazy" width="240" height="519" /></span>
           </a>
         </li>`).join('');

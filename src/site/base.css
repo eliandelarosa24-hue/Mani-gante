@@ -16,6 +16,11 @@
   --fl: #dc6b77;
   --fl-deep: #962336;
   --wine-night: #2b0a11;
+  /* Vino profundo para fondos: se mezcla con el negro en degradados, nunca vivo */
+  --wine-950: #16070a;
+  --wine-900: #2b0a11;
+  --wine-800: #4a1019;
+  --wine-700: #6a1827;
   --scene-accent: var(--fl);
   /* Luz cálida de lámpara (Servicios y precios) y superficie de tarjeta */
   --warm: 255, 196, 140;
@@ -52,7 +57,7 @@ html { -webkit-text-size-adjust: 100%; text-size-adjust: 100%; background: var(-
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }
 .lenis.lenis-stopped { overflow: hidden; }
-body { margin: 0; background: var(--ink); color: var(--bone); font: 400 var(--fs-body)/1.6 var(--f-text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; text-rendering: optimizeLegibility; font-feature-settings: 'kern', 'liga', 'calt'; }
+body { margin: 0; background: transparent; color: var(--bone); font: 400 var(--fs-body)/1.6 var(--f-text); -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; overflow-x: clip; text-rendering: optimizeLegibility; font-feature-settings: 'kern', 'liga', 'calt'; }
 img, video, svg { display: block; max-width: 100%; }
 img, video { height: auto; }
 a { color: inherit; text-decoration: none; }
@@ -147,7 +152,14 @@ body::after { content: ''; position: fixed; inset: -50%; z-index: 250; pointer-e
 .menu-open { overflow: hidden; }
 
 /* ---------- pie ---------- */
-.ft { position: relative; padding: var(--sec) var(--gut) 28px; background: var(--ink); color: var(--bone); border-top: 1px solid var(--line); }
+.ft { position: relative; padding: var(--sec) var(--gut) 28px; background: radial-gradient(90% 70% at 15% 105%, rgba(106, 24, 39, 0.55), transparent 70%), radial-gradient(60% 60% at 95% 100%, rgba(74, 16, 25, 0.5), transparent 70%), linear-gradient(180deg, var(--ink) 0%, var(--wine-950) 55%, var(--wine-900) 100%); color: var(--bone); border-top: 1px solid var(--line); }
+/* Luz vino de fondo: dos resplandores profundos que se desplazan al bajar y se funden con el negro */
+.ambient { position: fixed; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.ambient i { position: absolute; border-radius: 50%; will-change: transform; }
+.ambient__a { right: -32vmax; top: -38vmax; width: 95vmax; height: 95vmax; background: radial-gradient(circle, rgba(106, 24, 39, 0.5), rgba(74, 16, 25, 0.22) 38%, transparent 68%); }
+.ambient__b { left: -38vmax; bottom: -46vmax; width: 90vmax; height: 90vmax; background: radial-gradient(circle, rgba(150, 35, 54, 0.26), rgba(74, 16, 25, 0.18) 42%, transparent 68%); }
+.ambient__c { left: 28%; top: 30%; width: 70vmax; height: 70vmax; background: radial-gradient(circle, rgba(74, 16, 25, 0.28), transparent 65%); animation: ambient 26s ease-in-out infinite alternate; }
+@keyframes ambient { from { translate: -12vmax -6vmax; scale: 0.9; } to { translate: 10vmax 12vmax; scale: 1.15; } }
 .ft__kicker { font: 500 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 /* Lámpara: una luz cálida sigue al puntero sobre las tarjetas de precios */
 [data-lamp] { --mx: 50%; --my: 0%; --lit: 0; position: relative; overflow: hidden; isolation: isolate; }

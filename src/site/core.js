@@ -184,6 +184,21 @@ export function boot({ smooth = true } = {}) {
   addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  // Luz vino de fondo: los resplandores viajan en sentidos opuestos mientras se baja por la página
+  const amb = $('.ambient');
+  if (amb && !reduced) {
+    const [ga, gb] = $$('i', amb);
+    let queued = false;
+    const glow = () => {
+      queued = false;
+      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight), k = Math.min(1, scrollY / max);
+      ga.style.transform = `translate3d(${(-k * 18).toFixed(2)}vw, ${(k * 70).toFixed(2)}vh, 0)`;
+      gb.style.transform = `translate3d(${(k * 22).toFixed(2)}vw, ${(-k * 60).toFixed(2)}vh, 0)`;
+    };
+    addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(glow); } }, { passive: true });
+    glow();
+  }
+
   // Menú a pantalla completa
   const btn = $('[data-menu-btn]'), menu = $('[data-menu]');
   const setMenu = (open) => {

@@ -105,7 +105,8 @@ function footer() {
 }
 
 function overlays() {
-  return `<div class="curtain" aria-hidden="true"><div class="curtain__panel">${emblem('curtain__mark')}</div></div>
+  return `<div class="ambient" aria-hidden="true"><i class="ambient__a"></i><i class="ambient__b"></i><i class="ambient__c"></i></div>
+  <div class="curtain" aria-hidden="true"><div class="curtain__panel">${emblem('curtain__mark')}</div></div>
   <div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__ring"><em></em></span></div>
   <div class="fab" data-fab>
     <div class="fab__menu" id="fab-menu" data-fab-menu hidden>
