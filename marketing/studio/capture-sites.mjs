@@ -127,6 +127,23 @@ const CLIPS = {
     url: 'https://redvaeru.netlify.app/', seconds: 10, settle: 6000,
     plan: [[0, 0], [3, 0], [10, 2200]],
   },
+  // Sitio nuevo de Red Vaeru (la función de cine), para los 5 videos de seguidores.
+  'rv-apertura': {
+    url: 'https://redvaeru.netlify.app/', seconds: 8, settle: 200,
+    plan: [[0, 0], [8, 0]],
+  },
+  'rv-funcion': {
+    url: 'https://redvaeru.netlify.app/', seconds: 26, settle: 6000,
+    plan: [[0, 0], [1.5, 0], [24.5, 9340], [26, 9340]],
+  },
+  'rv-documental': {
+    url: 'https://redvaeru.netlify.app/', seconds: 16, settle: 6000, prescroll: true,
+    plan: [[0, 9340], [2.5, 9340], [5, 10184], [7.5, 10184], [12, 11600], [14, 12814], [16, 12814]],
+  },
+  'rv-estreno': {
+    url: 'https://redvaeru.netlify.app/', seconds: 8, settle: 6000, prescroll: true,
+    plan: [[0, 13826], [8, 13826]],
+  },
 };
 
 async function resolveY(page, target) {
