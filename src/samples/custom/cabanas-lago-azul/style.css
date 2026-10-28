@@ -357,6 +357,7 @@ a { color: inherit; }
 .avail { display: grid; grid-template-columns: 1fr 360px; gap: 30px; align-items: start; }
 .matrix { overflow-x: auto; border-top: 1px solid var(--fg); user-select: none; -webkit-user-select: none; scrollbar-width: thin; }
 .mx { display: grid; grid-template-columns: 150px repeat(28, minmax(28px, 1fr)); min-width: 980px; }
+.mx__row { display: contents; }
 .mx__h { padding: 10px 0 8px; text-align: center; font: 500 10px var(--mono); color: var(--fg-2); border-bottom: 1px solid var(--rule); }
 .mx__h b { display: block; font: 400 15px var(--serif); color: var(--fg); }
 .mx__h.we { background: rgba(var(--fg-rgb), 0.05); }

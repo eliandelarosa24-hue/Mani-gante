@@ -1,4 +1,5 @@
 // Termas Rayenko · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { POOLS, BLOCKS, PRICES, EXTRAS, CABINS, AIR, HIGH, MONTHS, SEASONS, REVIEWS, FAQ, WATER, MENU, DRINKS, PRODUCERS, WHY, GUIDES } from './data.js';
 import { initSteam } from './steam.js';

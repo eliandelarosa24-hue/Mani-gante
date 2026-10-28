@@ -1,4 +1,5 @@
 // Estudio Haber · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { RECEIPTS, YEAR, MONTHS, PLANS, EXTRA_WORKER, EXTRA_DOCS, CASES, COMMUNES, TEAM, NOTES, FAQ } from './data.js';
 import { DAY, keyOf, dow, isHoliday, isBusiness, nextBusiness, utc, weekday, fmtDay, monthName, todayCL, eventsOf, upcoming, nextF29 } from './tax.js';
@@ -83,7 +84,7 @@ $$('a', drawer).forEach((a) => a.addEventListener('click', () => burger.click())
     W = stage.clientWidth; H = stage.clientHeight;
     N = Math.max(6, Math.min(RECEIPTS.length, Math.floor((H - 260) / 26), W < 700 ? 8 : 18));
     const list = RECEIPTS.slice(0, N);
-    rowsEl.innerHTML = list.map((r) => { const s = split(r); return `<div class="ledger__r" role="row"><span>${r.d.slice(0, 3)}${mm}</span><span>${r.who}</span><span><i class="doc doc--${r.t}">${r.t}</i></span><span>${clp(s.net)}</span><span class="${s.iva ? '' : 'zero'}">${s.iva ? clp(s.iva) : '—'}</span><span>${clp(r.total)}</span></div>`; }).join('');
+    rowsEl.innerHTML = list.map((r) => { const s = split(r); return `<div class="ledger__r" role="row"><span role="cell">${r.d.slice(0, 3)}${mm}</span><span role="cell">${r.who}</span><span role="cell"><i class="doc doc--${r.t}">${r.t}</i></span><span role="cell">${clp(s.net)}</span><span role="cell" class="${s.iva ? '' : 'zero'}">${s.iva ? clp(s.iva) : '—'}</span><span role="cell">${clp(r.total)}</span></div>`; }).join('');
     box.innerHTML = list.map((r, i) => `<div class="rc rc--${r.t}" data-i="${i}"><b>${r.who}</b><span class="t">${r.t === 'F' ? 'Factura electrónica' : 'Boleta electrónica'} N° ${String(Math.floor(hash(r.who) * 90000) + 1000)}<br />${r.d.slice(0, 3)}${mm}-${PERIOD_Y}</span>${r.what}<span class="tot"><span>Total</span><span>${clp(r.total)}</span></span><span class="bar"></span></div>`).join('');
     const rw = W < 700 ? 112 : W < 860 ? 128 : 158;
     items = $$('.rc', box).map((el, i) => {

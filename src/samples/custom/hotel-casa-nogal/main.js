@@ -1,4 +1,5 @@
 // Casa Nogal · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { CATS, ROOMS, LEDGER, MENU, POSTCARDS, RAIN, TEMP, MONTHS, RITUALS, GUESTBOOK } from './data.js';
 import { initGlass } from './rain.js';

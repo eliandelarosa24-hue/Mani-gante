@@ -55,7 +55,7 @@ export const SERVICES = {
     },
     addons: {
       reservas: { label: 'Integración de motor de reservas o calendario', min: 30000, max: 60000 },
-      checkin: { label: 'Check-in online para huéspedes', min: 25000, max: 45000 },
+      checkin: { label: 'Check-in en línea para huéspedes', min: 25000, max: 45000 },
       guia: { label: 'Guía local / blog del destino', min: 20000, max: 35000 },
       idioma: { label: 'Idioma adicional (por idioma)', min: 20000, max: 35000, perUnit: true },
       seo: { label: 'Ficha de Google y posicionamiento local (ya incluida en Completo y Firma)', min: 25000, max: 45000 },

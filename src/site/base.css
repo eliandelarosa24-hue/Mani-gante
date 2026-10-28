@@ -27,9 +27,9 @@
   --card: #12100e;
 
   /* Tipografía */
-  --f-display: 'Display', 'Times New Roman', serif;
-  --f-text: 'Host Grotesk Variable', system-ui, sans-serif;
-  --f-mono: 'Fragment Mono', ui-monospace, monospace;
+  --f-display: 'Display', 'Display Respaldo', 'Display Respaldo Android', serif;
+  --f-text: 'Host Grotesk Variable', 'Texto Respaldo', system-ui, sans-serif;
+  --f-mono: 'Fragment Mono', 'Mono Respaldo', ui-monospace, monospace;
   --fs-mega: clamp(64px, 13vw, 248px);
   --fs-hero: clamp(52px, 9.4vw, 180px);
   --fs-h2: clamp(40px, 6.2vw, 116px);
@@ -180,6 +180,13 @@ body::after { content: ''; position: fixed; inset: -50%; z-index: 250; pointer-e
 .ft__clocks b { font: 500 15px var(--f-mono); color: var(--bone); font-variant-numeric: tabular-nums; }
 .ft__base { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px 32px; margin-top: 56px; font-size: 12px; color: var(--muted); }
 .ft__base > span:first-child { display: inline-flex; align-items: center; gap: 10px; }
+/* En pantallas táctiles, los enlaces del pie y la ruta de navegación se tocan con holgura sin cambiar cómo se ven */
+@media (pointer: coarse) {
+  .ft__col { gap: 0; }
+  .ft__col a, .ft__ai { padding: 8px 0; }
+  .ft__base a { padding: 12px 0; margin: -12px 0; }
+  .crumbs a { padding: 12px 0; margin: -12px 0; }
+}
 .ft__mark { width: 22px; height: 22px; color: var(--bone); }
 
 /* ---------- cursor ---------- */

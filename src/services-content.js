@@ -17,7 +17,7 @@ export const PAGES = [
       ['Menos comisión', 'En cada reserva directa no paga la comisión de las plataformas, que suele partir en 15%.'],
       ['Huésped propio', 'Guarda el contacto y puede invitarlo de vuelta la próxima temporada.'],
       ['Se ve bien en el celular', 'Diseñado primero para el teléfono, donde muchos viajeros buscan y reservan.'],
-      ['Aparece en Google', 'Textos y datos preparados para búsquedas como "cabañas en Pucón".'],
+      ['Aparece en Google', 'Textos y datos preparados para búsquedas como «cabañas en Pucón».'],
     ],
     tiers: { esencial: ['Dominio de regalo y hosting el primer año', 'Logo de regalo si aún no tiene', 'Una página con su alojamiento, fotos, ubicación y contacto', 'Botón de WhatsApp y formulario', 'Conexión segura y textos para Google', 'Una ronda de revisión'], completo: ['Todo lo de Esencial', 'Varias secciones: unidades, servicios, entorno y contacto', 'Galería por espacios y mapa', 'Reservas por WhatsApp o enlace a su sistema', 'Ficha de Google configurada y guía para editar'], firma: ['Todo lo de Completo', 'Concepto y diseño a medida, como las muestras', 'Animaciones e interacción propias de su lugar', 'Motor de reservas o calendario integrado', 'Segundo idioma, precios en USD y estrategia de lanzamiento'] },
     faq: [

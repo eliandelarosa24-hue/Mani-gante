@@ -1,4 +1,5 @@
 // Pucón Aventura · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { initRoute } from './route.js';
 import { initQuiz, TOURS } from './quiz.js';

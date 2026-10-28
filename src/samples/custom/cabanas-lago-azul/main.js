@@ -1,4 +1,5 @@
 // Lago Azul · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { CABINS, VOICES, FILM } from './data.js';
 import { planSVG, ensureHatch } from './plan.js';
@@ -365,17 +366,20 @@ const mx = $('[data-matrix]');
 const sel = { id: null, a: null, b: null };
 (function matrix() {
   const months = [...new Set(Array.from({ length: DAYS }, (_, i) => fmt(i, { month: 'long' })))];
-  let html = `<div class="mx"><div class="mx__h month">${months.join(' · ')}</div>`;
+  // Filas con display: contents: la grilla CSS no cambia y los lectores de pantalla leen casa por casa
+  let html = `<div class="mx"><div class="mx__row" role="row"><div class="mx__h month" role="columnheader">${months.join(' · ')}</div>`;
   for (let i = 0; i < DAYS; i++) {
     const wd = dayDate(i).getUTCDay(), we = wd === 5 || wd === 6;
-    html += `<div class="mx__h ${we ? 'we' : ''} ${i === 0 ? 'is-today' : ''}">${fmt(i, { weekday: 'narrow' })}<b>${dayDate(i).getUTCDate()}</b></div>`;
+    html += `<div class="mx__h ${we ? 'we' : ''} ${i === 0 ? 'is-today' : ''}" role="columnheader">${fmt(i, { weekday: 'narrow' })}<b>${dayDate(i).getUTCDate()}</b></div>`;
   }
+  html += '</div>';
   CABINS.forEach((c) => {
-    html += `<div class="mx__name" data-row="${c.id}" role="rowheader">${c.n}<small>${c.paxTxt}p</small></div>`;
+    html += `<div class="mx__row" role="row"><div class="mx__name" data-row="${c.id}" role="rowheader">${c.n}<small>${c.paxTxt}p</small></div>`;
     for (let i = 0; i < DAYS; i++) {
       const wd = dayDate(i).getUTCDay(), we = wd === 5 || wd === 6, busy = BUSY[c.id].has(i);
       html += `<div class="mx__c ${we ? 'we' : ''} ${busy ? 'busy' : ''}" data-c="${c.id}" data-d="${i}" role="gridcell" aria-label="${c.n}, ${fmt(i, { weekday: 'long', day: 'numeric', month: 'long' })}: ${busy ? 'ocupada' : 'libre'}"></div>`;
     }
+    html += '</div>';
   });
   mx.innerHTML = html + '</div>';
   mx.insertAdjacentHTML('afterend', '<p class="mx__legend"><span><i class="l-free"></i>Libre</span><span><i class="l-busy"></i>Ocupada</span><span><i class="l-sel"></i>Su selección</span><span><i class="l-we"></i>Viernes y sábado</span></p>');

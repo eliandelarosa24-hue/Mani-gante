@@ -164,7 +164,7 @@ h2.big em { font-style: italic; color: var(--bordo); }
 .ledger__stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 20px 0 0; padding-top: 16px; border-top: 2px solid var(--ink); }
 .ledger__stats dt { font: 400 11px var(--type); letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-2); }
 .ledger__stats dd { margin: 0; font: 400 46px/1 var(--display); color: var(--bordo); font-variant-numeric: tabular-nums; }
-.ledger__stats small { font: 400 12px var(--type); color: var(--ink-2); }
+.ledger__stats .ledger__unit { font: 400 12px var(--type); color: var(--ink-2); }
 .stair { position: relative; margin: clamp(80px, 9vw, 140px) calc(var(--pad) * -1) 0; }
 .stair__ph { height: min(78vh, 760px); background-size: cover; background-position: center; cursor: zoom-in; }
 .stair figcaption { position: absolute; left: var(--pad); bottom: var(--pad); max-width: 440px; padding: 22px 26px; background: rgba(239,231,218,0.94); font: 400 15px/1.6 var(--sans); color: var(--ink-2); box-shadow: 0 20px 40px -20px rgba(0,0,0,0.4); }

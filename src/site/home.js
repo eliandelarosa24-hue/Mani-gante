@@ -34,6 +34,12 @@ function intro() {
       .from('[data-intro-line]', { yPercent: 120, duration: 1, stagger: 0.08 }, 0.3)
       .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut' }, 1.75)
       .set(loader, { display: 'none' });
+    // Quien ya quiere entrar no espera: un toque, una tecla o la rueda pasan directo al telón
+    const EV = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
+    const off = () => EV.forEach((e) => removeEventListener(e, skip));
+    const skip = () => { off(); if (tl.time() < 1.75) tl.seek(1.75); };
+    EV.forEach((e) => addEventListener(e, skip, { passive: true }));
+    tl.call(off, null, 1.75);
   } else loader?.remove();
   return tl;
 }

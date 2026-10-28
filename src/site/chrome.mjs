@@ -36,6 +36,7 @@ function head() {
   <link rel="apple-touch-icon" href="/brand/emblema-512.png" />
   <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="preload" href="/fonts/rv/display-n.woff2" as="font" type="font/woff2" crossorigin />
+  <link rel="preload" href="/fonts/rv/display-i.woff2" as="font" type="font/woff2" crossorigin />
   <link rel="stylesheet" href="/src/site/base.css" />
   <script type="speculationrules">{"prerender":[{"where":{"and":[{"href_matches":"/*"},{"not":{"href_matches":"/muestras/*"}}]},"eagerness":"moderate"}]}</script>
   <script>try{document.documentElement.classList.add('js');if(sessionStorage.getItem('rv-seen'))document.documentElement.classList.add('seen')}catch(e){}
@@ -99,7 +100,7 @@ function footer() {
     <div class="ft__base">
       <span>${emblem('ft__mark')} Red Vaeru · Conectando culturas</span>
       <span>© <span data-year>2026</span> Red Vaeru · Dirección: Jorge Vásquez</span>
-      <a href="/privacidad">Privacidad</a>
+      <a href="/privacidad/">Privacidad</a>
     </div>
   </footer>`;
 }
@@ -113,7 +114,7 @@ function overlays() {
       <a class="fab__opt" href="${waLink()}" target="_blank" rel="noopener" data-from="flotante" data-fab-wa><span class="fab__ico" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.3Z"/></svg></span><span><b>WhatsApp</b><small>Le responde una persona del estudio</small></span></a>
       <button class="fab__opt" type="button" data-open-agent data-source="flotante"><span class="fab__ico" aria-hidden="true">${emblem('fab__glyph')}</span><span><b>Vaeru IA</b><small>Cotiza y responde al instante</small></span></button>
     </div>
-    <button class="fab__btn" type="button" data-fab-btn aria-expanded="false" aria-controls="fab-menu">${emblem('fab__mark')}<span>Escríbanos</span></button>
+    <button class="fab__btn" type="button" data-fab-btn aria-expanded="false" aria-controls="fab-menu" aria-label="Escríbanos">${emblem('fab__mark')}<span>Escríbanos</span></button>
   </div>
   <div class="drawer" data-drawer aria-hidden="true">
     <div class="drawer__backdrop" data-close-agent></div>

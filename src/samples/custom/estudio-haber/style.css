@@ -1,7 +1,7 @@
 /* Estudio Haber · identidad: papel de libro contable, tinta verde, timbre rojo, papel calco azul */
 :root {
   --paper: #f3eee2; --paper-2: #ebe4d3; --paper-3: #e2d9c3; --white: #fbf9f3;
-  --ink: #15241d; --ink-2: #44514a; --ink-3: #6f7a72;
+  --ink: #15241d; --ink-2: #44514a; --ink-3: #626d65;
   --green: #1f5a45; --green-d: #123a2c; --green-l: #8fc9ad;
   --stamp: #b8432f; --stamp-l: #e0745e; --carbon: #2c3e78; --kraft: #c9a878; --kraft-d: #a9875a;
   --rule: rgba(44, 62, 120, 0.13); --margin: rgba(184, 67, 47, 0.42);

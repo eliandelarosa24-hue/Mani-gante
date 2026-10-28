@@ -349,7 +349,7 @@ a { color: inherit; }
   .days { grid-template-columns: repeat(4, 1fr); }
 }
 @media (max-width: 900px) {
-  .profile, .test__grid, .pack, .book, .faq__grid { grid-template-columns: 1fr; }
+  .profile, .test__grid, .pack, .book, .faq__grid { grid-template-columns: minmax(0, 1fr); }
   .readout { border-left: 0; border-top: 1px solid var(--line); padding: 22px; }
   .readout__stage p { min-height: 0; }
   .guarantees, .seis__levels { grid-template-columns: 1fr 1fr; }

@@ -1,4 +1,5 @@
 // Domos Cielo Austral · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { initTrace } from './trace.js';
 

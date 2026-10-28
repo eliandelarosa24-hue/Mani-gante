@@ -19,11 +19,26 @@ let lenis = null;
 export const getLenis = () => lenis;
 
 // ---------- utilidades de texto ----------
+// El texto tal como se lee: los <br> cuentan como espacio ("Cada lugar,<br>su propia web" no se pega)
+const readText = (el) => {
+  const c = el.cloneNode(true);
+  c.querySelectorAll('br').forEach((b) => b.replaceWith(' '));
+  return c.textContent.replace(/\s+/g, ' ').trim();
+};
+// Letras sueltas se leen mal en algunos lectores: el titular, enlace o botón que las contiene lleva el texto
+// completo como aria-label (si ya tiene uno, se respeta); fuera de ellos, una copia oculta para lectores.
+function labelSplit(el, label, parts) {
+  parts.forEach((p) => p.nodeType === 1 && p.setAttribute('aria-hidden', 'true'));
+  const host = el.closest('h1, h2, h3, h4, h5, h6, a, button');
+  if (host) { if (!host.hasAttribute('aria-label')) host.setAttribute('aria-label', readText(host)); }
+  else { const sr = document.createElement('span'); sr.className = 'sr'; sr.textContent = label; el.append(sr); }
+}
+
 // Divide un elemento en líneas reales (respetando <em>, <br> y <i>) para animarlas línea por línea.
+// Entre líneas queda un espacio, así el texto del titular se lee entero (buscadores y copiar/pegar).
 export function splitLines(el) {
   if (el.dataset.splitDone) return $$('.ln > span', el);
   el.dataset.splitDone = '1';
-  const label = el.textContent.replace(/\s+/g, ' ').trim();
   const tokens = [];
   const walk = (node, wrap) => {
     for (const n of [...node.childNodes]) {
@@ -53,15 +68,15 @@ export function splitLines(el) {
     lines[lines.length - 1].push(node);
   }
   el.innerHTML = '';
-  el.setAttribute('aria-label', label);
-  for (const ln of lines) {
-    const line = document.createElement('span'); line.className = 'ln'; line.setAttribute('aria-hidden', 'true');
+  lines.forEach((ln, i) => {
+    const line = document.createElement('span'); line.className = 'ln';
     const inner = document.createElement('span');
     while (ln.length && ln[ln.length - 1].nodeType === 3) ln.pop();
     ln.forEach((t) => inner.append(t));
     line.append(inner);
+    if (i) el.append(' ');
     el.append(line);
-  }
+  });
   void probe;
   return $$('.ln > span', el);
 }
@@ -70,7 +85,7 @@ export function splitLines(el) {
 export function splitChars(el) {
   if (el.dataset.charsDone) return $$('.ch', el);
   el.dataset.charsDone = '1';
-  const label = el.textContent.replace(/\s+/g, ' ').trim();
+  const label = readText(el);
   const walk = (node) => {
     for (const n of [...node.childNodes]) {
       if (n.nodeType === 3) {
@@ -83,12 +98,12 @@ export function splitChars(el) {
           frag.append(w);
         }
         n.replaceWith(frag);
-      } else if (n.nodeType === 1 && n.nodeName !== 'BR') walk(n);
+      } else if (n.nodeName === 'BR') n.before(' ');
+      else if (n.nodeType === 1) walk(n);
     }
   };
   walk(el);
-  el.setAttribute('aria-label', label);
-  for (const c of el.children) c.setAttribute('aria-hidden', 'true');
+  labelSplit(el, label, [...el.children]);
   return $$('.ch', el);
 }
 
@@ -99,8 +114,12 @@ export function reveal(root = document) {
     const lines = splitLines(el);
     gsap.from(lines, { yPercent: 115, rotate: 2, duration: 1.3, stagger: 0.07, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
+  // Mientras entran, sin transiciones CSS propias (si no, el "hover" de la tarjeta frena la animación a medio
+  // camino); al terminar se limpia todo, así el hover vuelve a funcionar.
+  const settle = { clearProps: 'transform,translate,rotate,scale,opacity,transition' };
   $$('[data-reveal="fade"]', root).forEach((el) => {
-    gsap.from(el, { y: 36, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 92%' } });
+    gsap.set(el, { transition: 'none' });
+    gsap.from(el, { y: 36, opacity: 0, duration: 1.2, ease: 'expo.out', ...settle, scrollTrigger: { trigger: el, start: 'top 92%' } });
   });
   $$('[data-reveal="clip"]', root).forEach((el) => {
     gsap.fromTo(el, { clipPath: 'inset(18% 8% 18% 8%)' }, { clipPath: 'inset(0% 0% 0% 0%)', ease: 'none', scrollTrigger: { trigger: el, start: 'top 95%', end: 'top 35%', scrub: true } });
@@ -108,7 +127,8 @@ export function reveal(root = document) {
     if (img) gsap.fromTo(img, { scale: 1.25 }, { scale: 1, ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });
   });
   $$('[data-reveal="stagger"]', root).forEach((el) => {
-    gsap.from(el.children, { y: 40, opacity: 0, duration: 1.1, stagger: 0.06, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
+    gsap.set(el.children, { transition: 'none' });
+    gsap.from(el.children, { y: 40, opacity: 0, duration: 1.1, stagger: 0.06, ease: 'expo.out', ...settle, scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
   $$('[data-parallax]', root).forEach((el) => {
     gsap.to(el, { yPercent: -(+el.dataset.parallax || 12), ease: 'none', scrollTrigger: { trigger: el, start: 'top bottom', end: 'bottom top', scrub: true } });

@@ -1,4 +1,5 @@
 // Villa Coral Samaná · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { VILLAS, TRIPS, MENU, CLIMATE, MONTHS, REVIEWS, RATES } from './data.js';
 import { initWhales, toggleSong } from './whale.js';
@@ -78,7 +79,7 @@ $$('.hero__title > span:first-child').forEach((s, i) => { const w = document.cre
 // La frase pintada del hero entra letra por letra, como un letrero que se ilumina
 (function paint() {
   const em = $('[data-paint]'); if (!em) return;
-  em.setAttribute('aria-label', em.textContent);
+  const h1 = em.closest('h1'); if (h1) h1.setAttribute('aria-label', h1.textContent.replace(/\s+/g, ' ').trim());
   let i = 0;
   // Letras agrupadas por palabra para que nunca se corte una palabra al cambiar de línea
   em.innerHTML = em.textContent.split(' ').map((w) => `<span class="wd" aria-hidden="true">${[...w].map((c) => `<span class="ch" style="--i:${i++}">${c}</span>`).join('')}</span>`).join(' ');

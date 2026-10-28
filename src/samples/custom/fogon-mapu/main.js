@@ -1,4 +1,5 @@
 // Fogón Mapu · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { initBook } from './book.js';
 import { initPlan } from './plan.js';

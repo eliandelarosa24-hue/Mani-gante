@@ -404,7 +404,7 @@ blockquote { margin: 0 0 24px; font: 300 italic clamp(22px, 2.2vw, 30px)/1.35 va
   .farmers { grid-template-columns: repeat(2, 1fr); }
 }
 @media (max-width: 900px) {
-  .cocina__grid, .temporadas__grid, .viaje__grid, .mesa__grid, .donde__grid, .pit { grid-template-columns: 1fr; }
+  .cocina__grid, .temporadas__grid, .viaje__grid, .mesa__grid, .donde__grid, .pit { grid-template-columns: minmax(0, 1fr); }
   .kultrun { order: -1; }
   .viaje__map { top: 70px; z-index: 2; padding: 10px 0; background: var(--coal); }
   .viaje__map svg { max-height: 30vh; }

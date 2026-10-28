@@ -23,7 +23,7 @@ export const CASES = {
     fonts: ['Bodoni Moda', 'Hanken Grotesk', 'La Belle Aurore'],
   },
   'estudio-haber': {
-    concept: 'De la caja de zapatos al balance',
+    concept: 'Un libro contable que se ordena solo',
     reto: 'Los estudios contables suelen depender del boca a boca. Quien busca contador en Google elige al que se ve más confiable.',
     idea: 'Las boletas desordenadas vuelan y se ordenan solas en el libro contable. Calendario tributario vivo, calculadoras con tira impresa y diagnóstico de régimen: un sitio útil que trae visitas todos los meses.',
     palette: [['Papel', '#f3eee2'], ['Tinta', '#15241d'], ['Verde libro', '#1f5a45'], ['Timbre', '#b8432f'], ['Calco', '#2c3e78']],
@@ -65,7 +65,7 @@ export const CASES = {
     fonts: ['Archivo', 'JetBrains Mono'],
   },
   'kuchen-haus-frutillar': {
-    concept: 'La receta de la abuela Ilse',
+    concept: 'Una receta de familia, paso a paso',
     reto: 'En temporada la vitrina se vacía y en invierno faltan clientes. La pastelería necesita vender por encargo todo el año, no solo atender el mesón.',
     idea: 'Una vitrina del día recién horneada, un kuchen que se arma a gusto y la receta de la abuela paso a paso, con la tradición alemana de Frutillar como argumento frente a la cafetería de al lado.',
     palette: [['Crema', '#fbf4e8'], ['Frambuesa', '#c2475a'], ['Mantequilla', '#f2c46b'], ['Azul', '#2f5d9e'], ['Musgo', '#6b8f71']],

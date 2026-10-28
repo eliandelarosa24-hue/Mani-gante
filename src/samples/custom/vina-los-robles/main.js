@@ -1,4 +1,5 @@
 // Viña Los Robles · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { initGlass } from './glass.js';
 import { initVine } from './vine.js';
@@ -97,7 +98,7 @@ function renderCal() {
     const dt = new Date(view.getFullYear(), view.getMonth(), d), ok = open(dt);
     const few = ok && hash(dt.toDateString()) > 0.7;
     const isSel = sel && dt.getTime() === sel.getTime();
-    html += `<button type="button" data-d="${d}" ${ok ? '' : 'disabled'} class="${ok ? (few ? 'few' : 'ok') : ''}${vend(dt) && ok ? ' vend' : ''}" aria-selected="${!!isSel}" aria-label="${dt.toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'long' })}${few ? ', pocos cupos' : ''}">${d}</button>`;
+    html += `<button type="button" data-d="${d}" ${ok ? '' : 'disabled'} class="${ok ? (few ? 'few' : 'ok') : ''}${vend(dt) && ok ? ' vend' : ''}" aria-pressed="${!!isSel}" aria-label="${dt.toLocaleDateString('es-CL', { weekday: 'long', day: 'numeric', month: 'long' })}${few ? ', pocos cupos' : ''}">${d}</button>`;
   }
   $('[data-cal-days]').innerHTML = html;
   $('[data-cal-prev]').disabled = view <= new Date(today.getFullYear(), today.getMonth(), 1);

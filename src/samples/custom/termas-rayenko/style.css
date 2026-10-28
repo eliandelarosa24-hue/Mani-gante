@@ -1,7 +1,7 @@
 /* Termas Rayenko · identidad: noche de bosque, piedra volcánica, vapor, agua turquesa lechosa y faroles ámbar */
 :root {
   --night: #0e1412; --night-2: #141c19; --night-3: #1b2622; --stone: #2a3430;
-  --steam: #eef1ec; --steam-2: rgba(238, 241, 236, 0.72); --steam-3: rgba(238, 241, 236, 0.5); --line: rgba(238, 241, 236, 0.14);
+  --steam: #eef1ec; --steam-2: rgba(238, 241, 236, 0.72); --steam-3: rgba(238, 241, 236, 0.55); --line: rgba(238, 241, 236, 0.14);
   --jade: #8ec9c0; --jade-d: #4f8f87; --amber: #e8a35a; --ember: #d9673c; --cold: #6ea3c6; --moss: #7d8c63;
   --serif: 'Instrument Serif', Georgia, serif; --sans: 'Hanken Grotesk', system-ui, sans-serif; --mono: 'Spline Sans Mono', ui-monospace, monospace;
   --ease: cubic-bezier(0.22, 1, 0.36, 1); --gut: clamp(18px, 4vw, 60px);

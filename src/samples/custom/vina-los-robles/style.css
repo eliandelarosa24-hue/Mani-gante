@@ -11,7 +11,7 @@
   --gold: #c9a66b;
   --gold-2: #a8844a;
   --oak: #8b5e3c;
-  --leaf: #5d6b3a;
+  --leaf: #536033;
   --display: 'Cormorant Garamond', Georgia, serif;
   --body: 'Jost', system-ui, sans-serif;
   --ease: cubic-bezier(0.22, 1, 0.36, 1);
@@ -238,7 +238,7 @@ em { font-style: italic; }
 .wines { display: grid; gap: 0; margin: 0; padding: 0; list-style: none; }
 .wines button { display: grid; grid-template-columns: 1fr auto; gap: 2px 12px; width: 100%; padding: 16px 0; border: 0; border-top: 1px solid rgba(201,166,107,0.22); background: none; color: var(--cream); text-align: left; cursor: pointer; transition: padding 0.4s var(--ease), color 0.3s; }
 .wines button:hover { padding-left: 8px; }
-.wines button[aria-selected="true"] { padding-left: 14px; color: var(--gold); box-shadow: inset 2px 0 0 var(--gold); }
+.wines button[aria-pressed="true"] { padding-left: 14px; color: var(--gold); box-shadow: inset 2px 0 0 var(--gold); }
 .wines b { font: 400 22px/1.15 var(--display); }
 .wines small { grid-column: 1; font: 400 11px var(--body); letter-spacing: 0.16em; text-transform: uppercase; opacity: 0.6; }
 .wines span { grid-row: 1 / span 2; grid-column: 2; align-self: center; font: 400 18px var(--display); }
@@ -281,7 +281,7 @@ em { font-style: italic; }
 .cal__days button.few::after { background: #c98a2b; }
 .cal__days button.vend { box-shadow: inset 0 0 0 1px rgba(109,31,58,0.35); }
 .cal__days button:not(:disabled):hover { background: var(--cream); }
-.cal__days button[aria-selected="true"] { background: var(--wine); color: var(--cream); }
+.cal__days button[aria-pressed="true"] { background: var(--wine); color: var(--cream); }
 .cal__legend { display: flex; flex-wrap: wrap; gap: 14px; margin: 14px 0 0; font-size: 12px; color: var(--muted); }
 .cal__legend i { display: inline-block; width: 8px; height: 8px; margin-right: 4px; border-radius: 50%; }
 .cal__legend .ok { background: var(--leaf); } .cal__legend .few { background: #c98a2b; } .cal__legend .vend { box-shadow: inset 0 0 0 1px var(--wine); }

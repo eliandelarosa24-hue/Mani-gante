@@ -1,4 +1,5 @@
 // Kuchen Haus · comportamiento a medida
+import '../panels.js';
 import './style.css';
 import { initBuilder } from './builder.js';
 

@@ -40,7 +40,7 @@ export function planSVG(c, { labels = true, idPrefix = '' } = {}) {
   const room = (sp, i, kind) => {
     const [x, y, w, h] = sp.r;
     return `<g class="sp" data-sp="${kind}${i}">
-      <rect class="${kind === 'e' ? 'ext' : 'room'}" x="${x}" y="${y}" width="${w}" height="${h}" tabindex="${labels ? 0 : -1}" aria-label="${sp.n}"/>
+      <rect class="${kind === 'e' ? 'ext' : 'room'}" x="${x}" y="${y}" width="${w}" height="${h}"${labels ? ` tabindex="0" role="img" aria-label="${sp.n}"` : ''}/>
       ${furniture(sp.f, sp.r, labels)}
       ${labels ? `<text x="${x + w / 2}" y="${y + 9}">${sp.l}</text>` : ''}
     </g>`;
@@ -48,7 +48,7 @@ export function planSVG(c, { labels = true, idPrefix = '' } = {}) {
   const lakeX = 226;
   let wave = `M${lakeX} 8`;
   for (let yy = 8; yy < 144; yy += 8) wave += ` q5 4 0 8`;
-  return `<svg class="plan" viewBox="0 0 248 150" role="img" aria-label="Plano de la cabaña ${c.n}" ${idPrefix ? `id="${idPrefix}${c.id}"` : ''}>
+  return `<svg class="plan" viewBox="0 0 248 150" role="${labels ? 'group' : 'img'}" aria-label="Plano de la cabaña ${c.n}" ${idPrefix ? `id="${idPrefix}${c.id}"` : ''}>
     <path d="${wave}" fill="none" stroke="#3d6b7d" stroke-width="0.8"/>
     <path d="${wave.replace(`M${lakeX}`, `M${lakeX + 7}`)}" fill="none" stroke="#3d6b7d" stroke-width="0.6" opacity=".55"/>
     ${labels ? `<text x="${lakeX + 14}" y="78" class="lake" transform="rotate(90 ${lakeX + 14} 78)">Lago</text>` : ''}

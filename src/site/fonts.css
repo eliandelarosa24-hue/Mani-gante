@@ -4,3 +4,11 @@
 @import '@fontsource/fragment-mono/latin-400.css';
 @font-face { font-family: 'Display'; font-style: normal; font-weight: 200 500; font-stretch: 62.5% 75%; font-display: swap; src: url('/fonts/rv/display-n.woff2') format('woff2'); }
 @font-face { font-family: 'Display'; font-style: italic; font-weight: 200 500; font-stretch: 62.5% 75%; font-display: swap; src: url('/fonts/rv/display-i.woff2') format('woff2'); }
+/* Respaldo con medidas ajustadas mientras cargan las propias: el texto ocupa casi lo mismo y la página no salta
+   (Times en computador y iPhone, Noto Serif en Android; Arial/Roboto para el texto; una mono del sistema para datos). */
+@font-face { font-family: 'Display Respaldo'; src: local('Times New Roman'), local('TimesNewRomanPSMT'), local('Liberation Serif'), local('Tinos'); size-adjust: 90.8%; ascent-override: 117.8%; descent-override: 31.9%; line-gap-override: 0%; }
+@font-face { font-family: 'Display Respaldo'; font-style: italic; src: local('Times New Roman Italic'), local('TimesNewRomanPS-ItalicMT'), local('Liberation Serif Italic'), local('Tinos Italic'); size-adjust: 88.8%; ascent-override: 120.5%; descent-override: 32.7%; line-gap-override: 0%; }
+@font-face { font-family: 'Display Respaldo Android'; src: local('Noto Serif'), local('NotoSerif'), local('Droid Serif'); size-adjust: 70%; ascent-override: 152.9%; descent-override: 41.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Display Respaldo Android'; font-style: italic; src: local('Noto Serif Italic'), local('NotoSerif-Italic'); size-adjust: 70%; ascent-override: 152.9%; descent-override: 41.4%; line-gap-override: 0%; }
+@font-face { font-family: 'Texto Respaldo'; src: local('Arial'), local('ArialMT'), local('Helvetica Neue'), local('Helvetica'), local('Roboto'), local('Liberation Sans'); size-adjust: 102.9%; ascent-override: 99.1%; descent-override: 31.1%; line-gap-override: 0%; }
+@font-face { font-family: 'Mono Respaldo'; src: local('Menlo'), local('Courier New'), local('Roboto Mono'), local('Droid Sans Mono'), local('DejaVu Sans Mono'), local('Liberation Mono'); size-adjust: 102.8%; ascent-override: 92.4%; descent-override: 24.3%; line-gap-override: 0%; }

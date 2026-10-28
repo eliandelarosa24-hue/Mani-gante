@@ -63,12 +63,12 @@
 .is-cinema .scene .ch, .is-cinema .scene [data-scene-fade] { opacity: 0; }
 .scene__foot { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 24px 40px; }
 .scene__concept { display: grid; gap: 6px; max-width: 34em; }
-.scene__concept b { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
-.scene__concept span { font: 300 clamp(22px, 2.1vw, 34px)/1.15 var(--f-display); font-stretch: 75%; letter-spacing: -0.01em; color: var(--bone); }
+.scene__concept b { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--bone-2); text-shadow: 0 1px 14px rgba(0, 0, 0, 0.7); }
+.scene__concept span { font: 300 clamp(22px, 2.1vw, 34px)/1.15 var(--f-display); font-stretch: 75%; letter-spacing: -0.01em; color: var(--bone); text-shadow: 0 1px 18px rgba(0, 0, 0, 0.55); }
 .scene__concept small { font-size: 12px; color: var(--muted); }
 .scene__ctas { display: flex; flex-wrap: wrap; gap: 10px; }
 .scene__cta { display: inline-flex; align-items: center; gap: 10px; min-height: 50px; padding: 0 22px; border-radius: 999px; background: var(--bone); color: var(--ink); font: 500 14px var(--f-text); transition: background 0.4s, color 0.4s; }
-.scene__cta:hover { background: var(--accent); color: var(--ink); }
+.scene__cta:hover { background: var(--bone); background: oklch(from var(--accent) max(l, 0.8) min(c, 0.14) h); color: var(--ink); }
 .scene__cta--ghost { background: transparent; color: var(--bone); box-shadow: inset 0 0 0 1px rgba(236, 229, 216, 0.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
 .scene__cta--ghost:hover { background: var(--bone); color: var(--ink); }
 
@@ -92,7 +92,7 @@
 /* Modo liviano: escenas a pantalla completa con su foto */
 .is-light .scene { min-height: 100svh; overflow: hidden; isolation: isolate; }
 .is-light .scene__img { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; }
-.is-light .scene::after { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(12, 11, 10, 0.55) 0%, rgba(12, 11, 10, 0.15) 35%, rgba(12, 11, 10, 0.25) 60%, rgba(12, 11, 10, 0.88) 100%); }
+.is-light .scene::after { content: ''; position: absolute; inset: 0; z-index: 0; background: linear-gradient(180deg, rgba(12, 11, 10, 0.55) 0%, rgba(12, 11, 10, 0.15) 35%, rgba(12, 11, 10, 0.38) 58%, rgba(12, 11, 10, 0.9) 100%); }
 .is-light .scene__in { min-height: 100svh; padding-bottom: 88px; }
 
 /* ---------- riel de latitud, marcas de cambio y subtítulos ---------- */
@@ -151,8 +151,8 @@
 .doc__screen video { display: block; width: 100%; aspect-ratio: 16 / 10; object-fit: cover; object-position: top; transition: transform 1.6s var(--ease); }
 .doc__screen:hover video { transform: scale(1.025); }
 .doc__phone { position: absolute; right: calc(clamp(0px, 5vw, 80px) * -1); bottom: -9%; width: 21%; aspect-ratio: 390 / 844; overflow: hidden; border-radius: clamp(16px, 2vw, 30px); background: #0b0a09; box-shadow: 0 0 0 clamp(3px, 0.4vw, 6px) #1b1917, 0 0 0 calc(clamp(3px, 0.4vw, 6px) + 1px) var(--line-2), 0 40px 80px -30px #000; }
-.doc__phone video { width: 100%; height: 100%; object-fit: cover; object-position: top; }
-.doc__notch { position: absolute; z-index: 1; top: 2.6%; left: 50%; width: 30%; height: 2.4%; transform: translateX(-50%); border-radius: 99px; background: #0b0a09; }
+.doc__phone video { position: absolute; left: 0; right: 0; bottom: 0; top: 6.5%; width: 100%; height: 93.5%; object-fit: cover; object-position: top; }
+.doc__notch { position: absolute; z-index: 1; top: 2%; left: 50%; width: 30%; height: 2.4%; transform: translateX(-50%); border-radius: 99px; background: #0b0a09; }
 /* El testimonio de Nicole: grande, y cada palabra se enciende al bajar */
 .voice { display: grid; gap: clamp(26px, 3.4vw, 48px); padding: clamp(20px, 4vw, 60px) 0 clamp(96px, 13vw, 210px); }
 .voice__k { display: flex; flex-wrap: wrap; gap: 6px 28px; font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); }
@@ -192,6 +192,8 @@
 .js:not(.has-estreno) .est__screens { visibility: hidden; }
 .est:not(:has(.ep)) .est__vp { background: #111; }
 .pg--home .ft__cta { display: none; }
+.pg--home .ft { padding-top: clamp(48px, 6vw, 80px); }
+.pg--home .ft__grid { margin-top: 0; }
 .pg--home .ft { padding-top: 56px; }
 
 @media (max-width: 960px) {

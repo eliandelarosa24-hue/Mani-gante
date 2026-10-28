@@ -17,7 +17,7 @@ export const WINES = [
 export function initWines({ onAdd }) {
   const list = $('[data-wines]'), svg = $('[data-wheel]');
   if (!list) return;
-  list.innerHTML = WINES.map((w) => `<li><button type="button" role="option" aria-selected="false" data-w="${w.id}"><b>${w.name}</b><small>${w.type} · ${w.pts}</small><span>${clp(w.price)}</span></button></li>`).join('');
+  list.innerHTML = WINES.map((w) => `<li><button type="button" aria-pressed="false" data-w="${w.id}"><b>${w.name}</b><small>${w.type} · ${w.pts}</small><span>${clp(w.price)}</span></button></li>`).join('');
   const R0 = 64, RMAX = 190, n = SECTORS.length;
   const arc = (i, r) => {
     const a0 = (i / n) * Math.PI * 2 - Math.PI / 2 + 0.012, a1 = ((i + 1) / n) * Math.PI * 2 - Math.PI / 2 - 0.012;
@@ -32,7 +32,7 @@ export function initWines({ onAdd }) {
 
   function show(id) {
     const w = WINES.find((x) => x.id === id);
-    $$('[data-w]', list).forEach((b) => b.setAttribute('aria-selected', String(b.dataset.w === id)));
+    $$('[data-w]', list).forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.w === id)));
     $('[data-w-type]').textContent = w.type; $('[data-w-name]').textContent = w.name; $('[data-w-pts]').textContent = w.pts;
     $('[data-w-notes]').textContent = w.notes; $('[data-w-pair]').textContent = w.pair; $('[data-w-price]').textContent = clp(w.price);
     $('[data-w-add]').dataset.id = id;
