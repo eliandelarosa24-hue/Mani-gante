@@ -89,7 +89,7 @@ function footer() {
       </div>
       <div class="ft__col">
         <p class="ft__label">Servicios</p>
-        <a href="/servicios/paginas-web-alojamientos/">Web para alojamientos</a><a href="/servicios/paginas-web-restaurantes/">Web para restaurantes</a><a href="/servicios/asesoria-turistica/">Asesoría turística</a><a href="/servicios/capacitacion-servicio-al-cliente/">Capacitación</a>
+        <a href="/servicios/paginas-web-alojamientos/">Web para alojamientos</a><a href="/servicios/paginas-web-restaurantes/">Web para restaurantes</a><a href="/servicios/automatizacion-ia-turismo/">Agentes de IA</a><a href="/servicios/redes-sociales-turismo/">Redes sociales</a>
       </div>
       <div class="ft__col ft__clocks" aria-label="Hora actual en Chile y República Dominicana">
         <p class="ft__label">Dos orillas</p>

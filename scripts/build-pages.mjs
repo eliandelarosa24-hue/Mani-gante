@@ -1,6 +1,6 @@
 // Genera las páginas por servicio y la política de privacidad a partir de src/services-content.js.
 // Se ejecuta antes de `vite` y `vite build` (predev / prebuild). Las páginas generadas no se versionan.
-import { mkdirSync, writeFileSync, rmSync } from 'node:fs';
+import { mkdirSync, writeFileSync, rmSync, readdirSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { PAGES } from '../src/services-content.js';
@@ -43,8 +43,6 @@ const footer = `<!--RV:FOOTER-->
 const IMG = {
   'paginas-web-alojamientos': '/muestras/cabanas-lago-azul/img/cab-muelle.webp',
   'paginas-web-restaurantes': '/muestras/fogon-mapu/img/tiempo-3.webp',
-  'asesoria-turistica': '/muestras/estudio-haber/img/reunion.webp',
-  'capacitacion-servicio-al-cliente': '/muestras/hotel-casa-nogal/img/llaves.webp',
   'automatizacion-ia-turismo': '/muestras/domos-cielo-austral/img/g4.webp',
   'redes-sociales-turismo': '/muestras/villa-coral-samana/img/pescadores.webp',
 };
@@ -208,7 +206,8 @@ function simplePage({ title, path, eyebrow, h1, text, noindex, cls = '' }) {
   ${footer}`;
 }
 
-for (const p of PAGES) rmSync(join(root, 'servicios', p.slug), { recursive: true, force: true });
+// Se regeneran todas las páginas de servicio; las carpetas de servicios que ya no existen también se borran
+for (const d of readdirSync(join(root, 'servicios'), { withFileTypes: true })) if (d.isDirectory()) rmSync(join(root, 'servicios', d.name), { recursive: true, force: true });
 mkdirSync(join(root, 'gracias'), { recursive: true });
 writeFileSync(join(root, 'gracias', 'index.html'), simplePage({ title: 'Mensaje recibido · Red Vaeru', path: '/gracias', eyebrow: 'Gracias', h1: 'Mensaje <em>recibido.</em>', text: 'Su mensaje llegó a Red Vaeru. Le respondemos por WhatsApp o correo en menos de 24 horas hábiles con los siguientes pasos.', noindex: true }));
 writeFileSync(join(root, '404.html'), simplePage({ title: 'Página no encontrada · Red Vaeru', path: '/404', eyebrow: 'Error 404', h1: 'Esta sala está <em>a oscuras.</em>', text: 'La página que busca no existe o cambió de lugar.', noindex: true, cls: 'is-404' }));

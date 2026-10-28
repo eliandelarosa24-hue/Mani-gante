@@ -27,6 +27,19 @@
     Permissions-Policy = "camera=(), microphone=(), geolocation=()"
     Strict-Transport-Security = "max-age=31536000"
 
+# Servicios que ya no se ofrecen: sus páginas llevan a Servicios
+[[redirects]]
+  from = "/servicios/asesoria-turistica/*"
+  to = "/servicios/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/servicios/capacitacion-servicio-al-cliente/*"
+  to = "/servicios/"
+  status = 301
+  force = true
+
 # La galería de muestras vive ahora en Trabajos
 [[redirects]]
   from = "/muestras"

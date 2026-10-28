@@ -11,17 +11,17 @@ test('estima un sitio completo con extras e idiomas', () => {
   assert.equal(e.monthly.max, 0);
 });
 
-test('separa montos mensuales y cobra participantes extra', () => {
+test('separa montos mensuales de los pagos únicos', () => {
   const e = estimate({ items: [
     { service: 'redes', tier: 'pro', addons: ['ads'] },
-    { service: 'capacitacion', tier: 'taller', participants: 20 },
+    { service: 'automatizacion', tier: 'agente' },
   ] });
-  assert.ok(e.monthly.min > 0);
-  assert.ok(e.lines.some((l) => l.label.startsWith('5 participantes')));
+  assert.equal(e.monthly.min, SERVICES.redes.tiers.pro.min + SERVICES.redes.addons.ads.min);
+  assert.equal(e.oneTime.min, SERVICES.automatizacion.tiers.agente.min);
 });
 
 test('ignora entradas inválidas sin romperse', () => {
-  const e = estimate({ items: [{ service: 'x', tier: 'y' }, { service: 'asesoria', tier: 'nope' }, null] });
+  const e = estimate({ items: [{ service: 'x', tier: 'y' }, { service: 'redes', tier: 'nope' }, null] });
   assert.equal(e.lines.length, 0);
   assert.equal(e.errors.length, 3);
   assert.equal(estimate(undefined).lines.length, 0);
@@ -43,6 +43,9 @@ test('usa el precio de lanzamiento mientras quedan cupos', () => {
 });
 
 test('precios desde y catálogo para el agente', () => {
-  assert.equal(fromPrice('asesoria'), SERVICES.asesoria.tiers.diagnostico.min);
-  assert.match(catalogText(), /service="capacitacion"/);
+  assert.equal(fromPrice('automatizacion'), SERVICES.automatizacion.tiers.sheets.min);
+  assert.match(catalogText(), /service="automatizacion"/);
+  // Asesoría y capacitación ya no se ofrecen
+  assert.ok(!('asesoria' in SERVICES) && !('capacitacion' in SERVICES));
+  assert.doesNotMatch(catalogText(), /asesor|capacitaci/i);
 });

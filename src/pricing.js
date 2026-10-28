@@ -94,36 +94,6 @@ export const SERVICES = {
       ads: { label: 'Gestión de publicidad pagada (sin incluir inversión)', min: 19000, max: 35000, monthly: true },
     },
   },
-  asesoria: {
-    name: 'Asesoría turística',
-    short: 'Asesoría',
-    for: 'Diagnóstico, canales de venta, tarifas, producto y experiencia del huésped',
-    tiers: {
-      diagnostico: { label: 'Diagnóstico digital (sesión de 90 min + informe)', min: 25000, max: 39000, weeks: '1 semana' },
-      plan: { label: 'Plan de canal directo y plataformas (4 sesiones)', min: 89000, max: 129000, weeks: '4 semanas' },
-      mensual: { label: 'Acompañamiento mensual', min: 59000, max: 89000, weeks: 'mes a mes', monthly: true },
-      proyecto: { label: 'Formulación de proyecto o producto turístico', min: 160000, max: 280000, weeks: '4 a 8 semanas' },
-    },
-    addons: {
-      terreno: { label: 'Visita en terreno (Araucanía)', min: 25000, max: 40000 },
-    },
-  },
-  capacitacion: {
-    name: 'Capacitación en servicio al cliente',
-    short: 'Capacitación',
-    for: 'Equipos de recepción, sala, limpieza y atención turística',
-    tiers: {
-      taller: { label: 'Taller de 4 horas (hasta 15 personas)', min: 110000, max: 160000, weeks: 'a coordinar' },
-      programa: { label: 'Programa de 3 módulos (12 horas)', min: 260000, max: 390000, weeks: '3 a 6 semanas' },
-      online: { label: 'Taller online en vivo (hasta 25 personas)', min: 79000, max: 119000, weeks: 'a coordinar' },
-    },
-    addons: {
-      manual: { label: 'Manual de estándares de servicio para su negocio', min: 59000, max: 99000 },
-      mystery: { label: 'Cliente incógnito (evaluación previa)', min: 39000, max: 65000 },
-    },
-    // Personas adicionales sobre el cupo base del taller
-    extraPerson: { min: 5000, max: 8000, base: { taller: 15, programa: 15, online: 25 } },
-  },
   automatizacion: {
     name: 'Automatización e IA para turismo',
     short: 'IA y automatización',
@@ -168,7 +138,7 @@ const round = (n) => Math.round(n / 1000) * 1000;
 
 /**
  * Calcula un presupuesto estimado y determinista.
- * @param {{items: Array<{service: string, tier: string, addons?: Array<string|{id:string, qty:number}>, participants?: number}>, urgent?: boolean}} input
+ * @param {{items: Array<{service: string, tier: string, addons?: Array<string|{id:string, qty:number}>}>, urgent?: boolean}} input
  */
 export function estimate(input) {
   const items = Array.isArray(input?.items) ? input.items : [];
@@ -198,15 +168,6 @@ export function estimate(input) {
       const q = ad.perUnit ? qty : 1;
       add(ad.perUnit && q > 1 ? `${ad.label} × ${q}` : ad.label, ad.min * q, ad.max * q, !!(monthly || ad.monthly));
     }
-
-    if (item.service === 'capacitacion' && s.extraPerson) {
-      const base = s.extraPerson.base[item.tier] ?? 15;
-      const p = Math.max(0, Math.min(200, Number(item.participants) || 0));
-      if (p > base) {
-        const extra = p - base;
-        add(`${extra} participantes adicionales`, extra * s.extraPerson.min, extra * s.extraPerson.max, false);
-      }
-    }
   }
 
   if (input?.urgent && oneMax > 0) {
@@ -228,7 +189,6 @@ export function estimate(input) {
       TAX_NOTE,
       'El precio final y fijo llega por escrito en la propuesta, antes de pagar nada.',
       HOSTING_NOTE,
-      'Capacitaciones fuera de la Araucanía: traslado y viáticos se cotizan aparte.',
       'Proyectos fuera de Chile se cotizan en USD.',
     ],
   };
@@ -247,7 +207,6 @@ export function catalogText() {
     for (const [aid, a] of Object.entries(s.addons)) {
       out.push(`  - addon="${aid}": ${a.label}: ${formatCLP(a.min)} a ${formatCLP(a.max)}${a.monthly ? ' al mes' : ''}${a.perUnit ? ' (admite qty)' : ''}`);
     }
-    if (s.extraPerson) out.push(`  - participantes sobre el cupo: ${formatCLP(s.extraPerson.min)} a ${formatCLP(s.extraPerson.max)} por persona (usar "participants")`);
   }
   return out.join('\n');
 }

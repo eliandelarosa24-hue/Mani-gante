@@ -14,19 +14,18 @@ const wa = (text) => `https://wa.me/${WHATSAPP}?text=${encodeURIComponent(text)}
 const START_CHIPS = [
   { label: 'Sitio para mi alojamiento', service: 'web_alojamiento' },
   { label: 'Sitio para mi restaurante', service: 'web_restaurante' },
-  { label: 'Asesoría turística', service: 'asesoria' },
-  { label: 'Capacitar a mi equipo', service: 'capacitacion' },
   { label: 'Redes sociales', service: 'redes' },
   { label: 'Agente de IA y automatización', service: 'automatizacion' },
   { label: 'Tengo una duda', faq: true },
 ];
 
 const FAQ = [
+  { k: /capacita|taller|curso|servicio al cliente|asesor[ií]a(?! contable)|consultor[ií]a/i, a: 'Por ahora no ofrecemos asesorías ni capacitaciones: nos dedicamos a sitios web, agentes de IA y redes sociales para negocios turísticos. Si quiere, le cuento qué incluye cada uno.' },
   { k: /plazo|tiempo|cu[aá]nto (se )?demora|cu[aá]ndo|semanas/i, a: 'Un sitio Esencial toma de 1 a 2 semanas, uno Completo de 3 a 4 y uno Firma de 5 a 8. El plazo corre desde que recibimos los textos y fotos de su negocio.' },
   { k: /dominio|hosting|\.cl|servidor/i, a: 'Todos nuestros sitios incluyen dominio de regalo el primer año (.com u otras extensiones; el .cl se inscribe aparte en NIC Chile) y hosting con certificado de seguridad el primer año, todo a su nombre. Desde el segundo año, la renovación se cotiza aparte o va incluida en la mantención mensual.' },
   { k: /pag(o|ar)|cuotas|transferencia|factura|boleta|iva|impuesto/i, a: 'Primero ve la portada de su sitio. Si le gusta, firmamos el contrato, paga el 50% para continuar y el resto al publicar, por transferencia. Se paga en pesos chilenos (en USD fuera de Chile) y emitimos boleta o factura.' },
   { k: /caribe|dominican|extranjero|fuera de chile|usd|d[oó]lar/i, a: 'Sí, trabajamos de forma remota con negocios de República Dominicana y el resto del Caribe. Esos proyectos se cotizan en USD.' },
-  { k: /presencial|online|regi[oó]n|viaj/i, a: 'Las capacitaciones son presenciales en la Araucanía (en otras regiones el traslado se cotiza aparte) u online en vivo para hasta 25 personas.' },
+  { k: /presencial|online|regi[oó]n|viaj/i, a: 'Trabajamos a distancia con negocios de todo Chile y del Caribe, por videollamada y WhatsApp. Si está en La Araucanía, también podemos reunirnos en persona.' },
   { k: /cambiar|editar|actualizar|yo mismo/i, a: 'Sí. Desde el plan Completo le dejamos una guía para cambiar textos y fotos. Si prefiere no preocuparse, la mantención mensual parte en ' + formatCLP(SERVICES.mantencion.tiers.cuidado.min) + '.' },
   { k: /qui[eé]n|jorge|equipo|agencia/i, a: 'Red Vaeru es un estudio pequeño de diseño web para la hospitalidad, entre el Caribe y el sur de Chile. Lo dirige Jorge Vásquez, dominicano radicado en La Araucanía y estudiante de Ingeniería en Turismo. Usted habla siempre con quien hace el trabajo.' },
   { k: /booking|airbnb|comisi[oó]n|plataforma/i, a: 'Las plataformas suelen cobrar desde 15% por reserva. Un sitio propio con WhatsApp y reserva directa le devuelve ese margen y la relación con el huésped.' },
@@ -58,8 +57,6 @@ const SAMPLE_FOR = [
 
 const KEYWORDS = [
   { k: /restaurant|carta|men[uú]|cafeter|bar\b|comida|cocina/i, s: 'web_restaurante' },
-  { k: /capacita|taller|curso|servicio al cliente|atenci[oó]n|equipo|personal/i, s: 'capacitacion' },
-  { k: /asesor|consult|diagn[oó]stico|estrategia|tarifa|proyecto tur/i, s: 'asesoria' },
   { k: /agente|inteligencia artificial|\bia\b|automatiz|google sheets|planilla|excel|chatbot|bot\b/i, s: 'automatizacion' },
   { k: /redes|instagram|facebook|publicaci|social/i, s: 'redes' },
   { k: /mantenci|soporte/i, s: 'mantencion' },
@@ -366,10 +363,6 @@ export class Chat {
 
   // ---------- modo guiado ----------
   guidedText(text) {
-    if (this.guided?.step === 'participants') {
-      const n = parseInt(text.replace(/\D/g, ''), 10);
-      if (n > 0) return this.finishGuided({ participants: n });
-    }
     if (/^tengo una duda$|^duda$|^pregunta$/i.test(text)) return this.faqMenu();
     if (/agendar|llamada|reuni[oó]n|videollamada/i.test(text)) return this.schedule();
     const like = SAMPLE_FOR.find((x) => x.k.test(text));
@@ -447,19 +440,13 @@ export class Chat {
   }
 
   afterAddons() {
-    const g = this.guided;
-    if (g.service === 'capacitacion') {
-      g.step = 'participants';
-      this.bot('¿Cuántas personas participarían en total?');
-      return this.setChips([8, 15, 25, 40].map((n) => ({ label: `${n} personas`, on: () => { this.user(`${n} personas`); this.finishGuided({ participants: n }); } })));
-    }
-    this.finishGuided({});
+    this.finishGuided();
   }
 
-  finishGuided({ participants }) {
+  finishGuided() {
     const g = this.guided;
     const s = SERVICES[g.service];
-    this.cart.push({ service: g.service, tier: g.tier, addons: [...g.addons], participants });
+    this.cart.push({ service: g.service, tier: g.tier, addons: [...g.addons] });
     const est = estimate({ items: this.cart });
     const multi = this.cart.length > 1;
     this.bot(multi
