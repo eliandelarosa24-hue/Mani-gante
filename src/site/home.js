@@ -1,7 +1,7 @@
 // Portada: las obras como cine. En computador, un proyector WebGL a pantalla completa pasa de una obra
 // a la siguiente con el scroll; en celular (o con "reducir movimiento"), escenas a pantalla completa
 // que se revelan al entrar, sin WebGL.
-import { boot, reveal, splitChars, splitLines, getLenis, $, $$, gsap, ScrollTrigger, reduced, fine, small, track } from './core.js';
+import { boot, reveal, splitChars, splitLines, projectorLight, getLenis, $, $$, gsap, ScrollTrigger, reduced, fine, small, track } from './core.js';
 import { createCinema } from './cinema-gl.js';
 import { ambience, shutter } from './sound.js';
 import { SCENES } from './scenes.js';
@@ -15,9 +15,13 @@ const cinemaMode = fine && !reduced && !small() && !!window.WebGLRenderingContex
 html.classList.add(cinemaMode ? 'is-cinema' : 'is-light');
 
 // ---------- entrada ----------
+// Con «ahorro de datos» o una conexión lenta, la cuenta regresiva se omite y la portada aparece de inmediato
+const net = navigator.connection;
+const slow = !!(net?.saveData || /(^|-)(2g|3g)$/.test(net?.effectiveType || ''));
+
 function intro() {
   const loader = $('[data-intro]');
-  const seen = html.classList.contains('seen') || reduced;
+  const seen = html.classList.contains('seen') || reduced || slow;
   const tl = gsap.timeline({ defaults: { ease: 'expo.out' } });
   if (loader && !seen) {
     const count = $('[data-intro-count]', loader);
@@ -37,9 +41,11 @@ function intro() {
     // Quien ya quiere entrar no espera: un toque, una tecla o la rueda pasan directo al telón
     const EV = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
     const off = () => EV.forEach((e) => removeEventListener(e, skip));
-    const skip = () => { off(); if (tl.time() < 1.75) tl.seek(1.75); };
+    const skip = () => { off(); if (tl.time() < 1.75) { tl.seek(1.75); tl.timeScale(1); } };
     EV.forEach((e) => addEventListener(e, skip, { passive: true }));
     tl.call(off, null, 1.75);
+    // En celular la cuenta regresiva corre más rápido; la apertura vuelve a su ritmo
+    if (small()) { tl.timeScale(1.6); tl.call(() => tl.timeScale(1), null, 1.75); }
   } else loader?.remove();
   return tl;
 }
@@ -50,8 +56,11 @@ function opening(tl) {
   if (!title || reduced) return;
   const lines = splitLines(title);
   // El titular entra como una imagen que el proyectista pone en foco
-  tl.from(lines, { yPercent: 160, rotate: 3, duration: 1.5, stagger: 0.09 }, html.classList.contains('seen') ? 0.1 : '-=0.55')
-    .fromTo(title, { filter: 'blur(16px)', opacity: 0.4 }, { filter: 'blur(0px)', opacity: 1, duration: 2.2, ease: 'power2.out', clearProps: 'filter,opacity' }, '<')
+  // En celular, sin desenfoque: es lo más caro de pintar y retrasa el titular
+  const focus = small() ? { from: { opacity: 0.4 }, to: { opacity: 1, duration: 1.6 } } : { from: { filter: 'blur(16px)', opacity: 0.4 }, to: { filter: 'blur(0px)', opacity: 1, duration: 2.2 } };
+  tl.from(lines, { yPercent: 160, rotate: 3, duration: 1.5, stagger: 0.09 }, tl.getChildren().length ? '-=0.55' : 0.1)
+    .fromTo(title, focus.from, { ...focus.to, ease: 'power2.out', clearProps: 'filter,opacity' }, '<')
+    .add(projectorLight(title, { duration: 2.1 }), '<0.15')
     .from('[data-open-fade]', { y: 26, opacity: 0, duration: 1.2, stagger: 0.08 }, '-=1.15');
 }
 
@@ -404,6 +413,8 @@ function rest() {
 
 const tl = intro();
 const start = () => {
+  // Las tipografías de cada muestra se piden después de la apertura: así no compiten con el titular al cargar
+  import('./scene-fonts.css');
   opening(tl);
   dust();
   if (html.classList.contains('is-cinema')) cinema(); else light();
@@ -411,4 +422,9 @@ const start = () => {
   autoplay();
   ScrollTrigger.refresh();
 };
-(document.fonts?.ready || Promise.resolve()).then(start);
+// La apertura espera solo la tipografía del titular (para cortar bien sus líneas); cada vez que terminan de
+// llegar otras tipografías, se recalculan las posiciones del scroll
+const fonts = document.fonts;
+const titleFonts = fonts ? Promise.all(['300 1em Display', 'italic 300 1em Display'].map((f) => fonts.load(f))).catch(() => {}) : Promise.resolve();
+Promise.race([titleFonts, new Promise((ok) => setTimeout(ok, 2500))]).then(start);
+fonts?.addEventListener('loadingdone', () => ScrollTrigger.refresh());

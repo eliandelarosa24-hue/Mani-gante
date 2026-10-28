@@ -1,5 +1,5 @@
 // Piezas comunes de todas las páginas del estudio (cabecera, menú, pie y capas). Vite las inserta donde
-// cada página escribe <!--RV:HEAD-->, <!--RV:HEADER:activo-->, <!--RV:FOOTER--> y <!--RV:OVERLAYS-->.
+// cada página escribe <!--RV:HEAD-->, <!--RV:HEADER:activo-->, <!--RV:FOOTER-->, <!--RV:OVERLAYS--> y <!--RV:REVIEW-->.
 export const CONTACT = {
   wa: '56952289117',
   waLabel: '+56 9 5228 9117',
@@ -105,6 +105,26 @@ function footer() {
   </footer>`;
 }
 
+// Revisión gratis: el visitante pega el enlace de su web, Instagram o Booking y lo envía por WhatsApp
+function review() {
+  return `<section class="sec sec--line rev" id="revision" aria-labelledby="rev-t">
+      <div class="rev__in" data-lamp>
+        <div class="rev__copy">
+          <p class="eyebrow" data-reveal="fade">Revisión gratis · 15 minutos</p>
+          <h2 id="rev-t" class="h2" data-reveal="lines">¿Ya tiene web, Instagram o Booking? <em>Lo revisamos gratis.</em></h2>
+          <p class="lede" data-reveal="fade">Pegue el enlace y en menos de 24 horas hábiles le respondemos por WhatsApp con tres mejoras concretas para recibir más reservas directas. Sin costo y sin compromiso.</p>
+        </div>
+        <form class="rev__form" data-review novalidate data-reveal="fade">
+          <label class="rev__fld"><span>Enlace de su web, Instagram o Booking</span><input name="enlace" type="text" inputmode="url" autocomplete="url" autocapitalize="off" spellcheck="false" placeholder="www.sunegocio.cl o @sunegocio" maxlength="200" required aria-describedby="rev-err" /></label>
+          <label class="rev__fld"><span>Nombre del negocio <em>(opcional)</em></span><input name="negocio" type="text" autocomplete="organization" placeholder="Cabañas del Lago" maxlength="80" /></label>
+          <p class="rev__err" id="rev-err" data-review-err role="alert" hidden>Pegue el enlace o el @ de su negocio para poder revisarlo.</p>
+          <button class="btn btn--accent rev__go" type="submit" data-magnetic><span class="rev__wa" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.2 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.8-1.2.2-.6.2-1.1.1-1.2l-.4-.3Z"/></svg></span>Pedir mi revisión gratis</button>
+          <p class="rev__note">Se abre WhatsApp con su mensaje listo. ¿Prefiere correo? <a href="mailto:${CONTACT.mail}?subject=Revisi%C3%B3n%20gratis" data-review-mail>Escríbanos aquí</a>.</p>
+        </form>
+      </div>
+    </section>`;
+}
+
 function overlays() {
   return `<div class="ambient" aria-hidden="true"><i class="ambient__a"></i><i class="ambient__b"></i><i class="ambient__c"></i></div>
   <div class="curtain" aria-hidden="true"><div class="curtain__panel">${emblem('curtain__mark')}</div></div>
@@ -122,4 +142,4 @@ function overlays() {
   </div>`;
 }
 
-export const chromeParts = { head, header, footer, overlays };
+export const chromeParts = { head, header, footer, overlays, review };

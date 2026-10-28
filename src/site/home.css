@@ -43,7 +43,8 @@
 .open__cue-line::after { content: ''; position: absolute; left: 0; top: -40%; width: 1px; height: 40%; background: var(--bone); animation: cue 2.2s var(--ease-io) infinite; }
 @keyframes cue { to { top: 100%; } }
 /* Celular: la apertura usa, oscurecida, la misma foto con que abre la función (ya descargada para la primera escena) */
-.is-light .open { background: linear-gradient(180deg, rgba(12, 11, 10, 0.72), rgba(12, 11, 10, 0.55) 40%, rgba(12, 11, 10, 0.94) 82%), url('/img/escenas/villa-coral-samana-900.webp') center / cover, var(--ink); }
+/* En celular la foto llega en AVIF (más liviana); el navegador que no lo entiende usa la primera línea */
+.is-light .open { background: linear-gradient(180deg, rgba(12, 11, 10, 0.72), rgba(12, 11, 10, 0.55) 40%, rgba(12, 11, 10, 0.94) 82%), url('/img/escenas/villa-coral-samana-900.webp') center / cover, #0c0b0a; background: linear-gradient(180deg, rgba(12, 11, 10, 0.72), rgba(12, 11, 10, 0.55) 40%, rgba(12, 11, 10, 0.94) 82%), image-set(url('/img/escenas/villa-coral-samana-900.avif') type('image/avif'), url('/img/escenas/villa-coral-samana-900.webp') type('image/webp')) center / cover, #0c0b0a; }
 
 /* ---------- sala de cine ---------- */
 .reel { position: relative; }

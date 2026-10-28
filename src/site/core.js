@@ -107,12 +107,26 @@ export function splitChars(el) {
   return $$('.ch', el);
 }
 
+// ---------- luz de proyector ----------
+// El titular entra en penumbra y un haz cálido lo cruza de izquierda a derecha, dejándolo encendido.
+// Al terminar se quita la máscara, así el titular queda como cualquier otro texto.
+export function projectorLight(el, vars = {}) {
+  if (reduced || !el) return null;
+  el.classList.add('beam');
+  el.style.setProperty('--p', '-25%');
+  return gsap.to(el, {
+    '--p': '130%', duration: 1.9, ease: 'power2.inOut', ...vars,
+    onComplete: () => { el.classList.remove('beam'); el.style.removeProperty('--p'); },
+  });
+}
+
 // ---------- apariciones ----------
 export function reveal(root = document) {
   if (reduced) return;
   $$('[data-reveal="lines"]', root).forEach((el) => {
     const lines = splitLines(el);
     gsap.from(lines, { yPercent: 160, rotate: 2, duration: 1.3, stagger: 0.07, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
+    if (/^H[12]$/.test(el.nodeName)) projectorLight(el, { delay: 0.12, scrollTrigger: { trigger: el, start: 'top 88%' } });
   });
   // Mientras entran, sin transiciones CSS propias (si no, el "hover" de la tarjeta frena la animación a medio
   // camino); al terminar se limpia todo, así el hover vuelve a funcionar.
@@ -217,6 +231,35 @@ export function boot({ smooth = true } = {}) {
     };
     addEventListener('scroll', () => { if (!queued) { queued = true; requestAnimationFrame(glow); } }, { passive: true });
     glow();
+  }
+
+  // Revisión gratis: arma el mensaje con el enlace del visitante y lo abre en WhatsApp o en su correo
+  const rev = $('[data-review]');
+  if (rev) {
+    const err = $('[data-review-err]', rev), mail = $('[data-review-mail]', rev);
+    const msg = () => {
+      const enlace = rev.enlace.value.trim(), negocio = rev.negocio.value.trim();
+      return `Hola Red Vaeru, quiero la revisión gratis de mi presencia en línea.\nEnlace: ${enlace}${negocio ? `\nNegocio: ${negocio}` : ''}`;
+    };
+    const valid = () => {
+      const ok = rev.enlace.value.trim().length >= 3;
+      err.hidden = ok;
+      rev.enlace.toggleAttribute('aria-invalid', !ok);
+      if (!ok) rev.enlace.focus();
+      return ok;
+    };
+    rev.enlace.addEventListener('input', () => { if (!err.hidden && rev.enlace.value.trim().length >= 3) { err.hidden = true; rev.enlace.removeAttribute('aria-invalid'); } });
+    rev.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (!valid()) return;
+      track('review_request', { via: 'whatsapp', page: location.pathname });
+      window.open(`https://wa.me/56952289117?text=${encodeURIComponent(msg())}`, '_blank', 'noopener');
+    });
+    mail.addEventListener('click', (e) => {
+      if (!valid()) { e.preventDefault(); return; }
+      track('review_request', { via: 'correo', page: location.pathname });
+      mail.href = `mailto:redvaeru@gmail.com?subject=${encodeURIComponent('Revisión gratis')}&body=${encodeURIComponent(msg())}`;
+    });
   }
 
   // Menú a pantalla completa

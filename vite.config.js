@@ -36,6 +36,7 @@ function inject(html) {
     .replace(/<!--RV:HEADER(?::([a-z]+))?-->/g, (_, active) => chromeParts.header(active))
     .replace(/<!--RV:FOOTER-->/g, chromeParts.footer())
     .replace(/<!--RV:OVERLAYS-->/g, chromeParts.overlays())
+    .replace(/<!--RV:REVIEW-->/g, chromeParts.review())
     .replace(/<!--RV:EMBLEM:([a-z_-]+)-->/g, (_, cls) => emblem(cls))
     .replace('<!--RV:SCENES-->', () => scenesMarkup())
     .replace('<!--RV:TICKS-->', () => ticksMarkup())
