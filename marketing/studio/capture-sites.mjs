@@ -153,6 +153,24 @@ const CLIPS = {
     url: 'http://localhost:4173/servicios/', seconds: 11, settle: 4000, prescroll: true,
     plan: [[0, 7662], [1.5, 7662], [10, 8240], [11, 8240]],
   },
+  // Serie Seguidores, video 4: la calculadora de comisiones del sitio nuevo, llenándose en vivo.
+  'sv-calc': {
+    url: 'http://localhost:4173/servicios/', seconds: 17, settle: 4000, prescroll: true,
+    // Los precios de los planes aún no están confirmados: el video muestra solo comisiones y ahorro.
+    css: '#calculadora .calc__rows > div:nth-child(2), #calculadora .calc__pay, #calculadora .calc__bars p:nth-child(2) { visibility: hidden }',
+    // Tiempos al ritmo de la voz del video 4: tarifa, noches, comisión; después el total y el ahorro.
+    plan: [[0, 2780], [1, 2780], [1.9, 3010], [12.8, 3010], [14.2, 3600], [17, 3600]],
+    // Parte en blanco (tarifa vacía, controles al mínimo) y se llena en cámara.
+    types: [{ sel: '#calculadora input[name=tarifa]', t: 0, dur: 2, text: '' }, { sel: '#calculadora input[name=tarifa]', t: 2.1, dur: 1, text: '60.000' }],
+    sliders: [
+      { sel: '#calculadora input[name=noches]', from: 1, to: 1, t0: 0, t1: 3.3 },
+      { sel: '#calculadora input[name=pct]', from: 3, to: 3, t0: 0, t1: 4.7 },
+      { sel: '#calculadora input[name=directo]', from: 5, to: 5, t0: 0, t1: 10.8 },
+      { sel: '#calculadora input[name=noches]', from: 1, to: 20, t0: 3.4, t1: 4.6 },
+      { sel: '#calculadora input[name=pct]', from: 3, to: 15, t0: 4.8, t1: 6.2 },
+      { sel: '#calculadora input[name=directo]', from: 5, to: 30, t0: 10.9, t1: 12.3 },
+    ],
+  },
   'sv-revision': {
     url: 'http://localhost:4173/servicios/', seconds: 11, settle: 4000, prescroll: true,
     plan: [[0, 8540], [1.5, 8640], [11, 8640]],
@@ -185,6 +203,7 @@ async function capture(id, cfg, browser) {
   await page.clock.install();
   await page.goto(cfg.url, { waitUntil: 'networkidle', timeout: 90000 });
   await page.clock.runFor(cfg.settle || 3500);
+  if (cfg.css) await page.addStyleTag({ content: cfg.css });
   await page.waitForTimeout(800);
 
   // Páginas que cargan contenido al bajar: se recorren antes de medir posiciones.
@@ -232,12 +251,12 @@ async function capture(id, cfg, browser) {
     for (const s of cfg.sliders || []) {
       if (t < s.t0 || t > s.t1 + 1 / FPS) continue;
       const k = ease(Math.min(1, (t - s.t0) / (s.t1 - s.t0)));
-      await page.evaluate(({ name, v }) => {
-        const el = document.querySelector(`[data-ota] input[name="${name}"]`);
+      await page.evaluate(({ name, sel, v }) => {
+        const el = document.querySelector(sel || `[data-ota] input[name="${name}"]`);
         if (!el) return;
         el.value = String(v);
         el.dispatchEvent(new Event('input', { bubbles: true }));
-      }, { name: s.name, v: s.from + (s.to - s.from) * k });
+      }, { name: s.name, sel: s.sel, v: Math.round(s.from + (s.to - s.from) * k) });
     }
     await page.clock.runFor(1000 / FPS);
     await page.screenshot({ path: join(dir, String(f).padStart(4, '0') + '.jpg'), type: 'jpeg', quality: 92 });

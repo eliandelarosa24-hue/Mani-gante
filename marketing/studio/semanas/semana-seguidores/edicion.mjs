@@ -106,4 +106,35 @@ export const EDITS = {
     ],
     cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Lugares reales', 'Webs que se sienten de verdad', 'Del Caribe al sur de Chile'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
   },
+  // «Haga esta cuenta conmigo»: la calculadora real se llena al ritmo de la voz; dato que se guarda y se comparte.
+  V04E: {
+    file: 'V04_cuanto-le-cuestan-las-comisiones', slug: 'V04', coverAt: 1.0, musicVol: 0.3,
+    hi: ['booking', 'millones', 'comisiones', 'directo', 'ahorraria', 'gratis', 'sur', '@redvaeru'],
+    shots: [
+      H(0, 'rv-funcion', 12.5, '¿Tiene cabañas<br>en <em>Booking?</em> 🏡', 124),
+      { at: 'Haga', clip: 'sv-calc', from: 0, speed: 1, trans: 'zoom', push: 0.02, cam: [{ x: 540, y: 1168, z: 1.02 }] },
+      // El total, de cerca y con el subtítulo arriba para no taparlo.
+      { at: 'Son', clip: 'sv-calc', from: 6.6, speed: 1, trans: 'zoom', push: 0.02, capY: 560, cam: [{ x: 500, y: 1720, z: 1.36 }] },
+      { at: 'se', clip: 'sv-calc', from: 14.6, speed: 1, trans: 'zoom', push: 0.02, cam: [{ x: 540, y: 820, z: 1.3 }] },
+      { at: 'Haga#2', clip: 'sv-calc', from: 0, speed: 0.8, trans: 'whip', push: 0.03, cam: [{ x: 540, y: 900, z: 1.04 }] },
+      B('Y#2', 'rv-funcion', { from: 12.4, speed: 0.75, trans: 'whip', ...FULL, z: 1.06 }),
+      H('Guarde', 'sv-calc', 16, '📌 Guárdelo<br>y haga <em>su cuenta</em>', 118),
+      { at: 'síganos', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      HIT('Booking', { sfx: 'impact', shake: 12, vol: 0.5 }),
+      TAG('sesenta', '🌙 $60.000 la noche', { y: 300, rot: -3, size: 54, until: 'Veinte' }),
+      TAG('Veinte', '📅 20 noches al mes', { y: 300, rot: 3, size: 54, until: 'Quince' }),
+      TAG('Quince', '💸 15 % de comisión', { y: 300, rot: -3, size: 54, until: 'Son' }),
+      HIT('millones', { sfx: 'impact', shake: 18, vol: 0.6 }),
+      TAG('solo', '😬 Solo en comisiones', { y: 330, tone: 'gold', size: 60, until: 'Si' }),
+      TAG('treinta', '🔁 30 % reserva directo', { y: 300, rot: 3, size: 52, until: 'se' }),
+      TAG('seiscientos', '💰 +$648.000 al año', { y: 300, tone: 'gold', size: 64, sfx: 'ding' }),
+      TAG('gratis', '🧮 Calculadora gratis', { y: 300, tone: 'gold', size: 56 }),
+      TAG('sur', '🌲 La plata se queda en el sur', { y: 330, tone: 'gold', size: 52 }),
+      HIT('Guarde', { sfx: 'click', shake: 6, vol: 0.8 }),
+      ...END('síganos'),
+    ],
+    cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Calculadora gratis', 'Reservas directas', 'Hecho en La Araucanía'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
+  },
 };
