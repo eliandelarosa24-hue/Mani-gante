@@ -144,6 +144,23 @@ const CLIPS = {
     url: 'https://redvaeru.netlify.app/', seconds: 8, settle: 6000, prescroll: true,
     plan: [[0, 13826], [8, 13826]],
   },
+  // Sitio nuevo servido en local (rama del rediseño), con «Revisión gratis» antes de su publicación.
+  'sv-trailer': {
+    url: 'http://localhost:4173/servicios/', seconds: 9, settle: 4000, prescroll: true,
+    plan: [[0, 5100], [2, 5189], [9, 5189]],
+  },
+  'sv-rodaje': {
+    url: 'http://localhost:4173/servicios/', seconds: 11, settle: 4000, prescroll: true,
+    plan: [[0, 7662], [1.5, 7662], [10, 8240], [11, 8240]],
+  },
+  'sv-revision': {
+    url: 'http://localhost:4173/servicios/', seconds: 11, settle: 4000, prescroll: true,
+    plan: [[0, 8540], [1.5, 8640], [11, 8640]],
+    types: [
+      { sel: '#revision input[name=enlace]', t: 2.5, dur: 2.6, text: '@cabanasdelbosque' },
+      { sel: '#revision input[name=negocio]', t: 5.6, dur: 2.2, text: 'Cabañas del Bosque' },
+    ],
+  },
 };
 
 async function resolveY(page, target) {
@@ -199,6 +216,18 @@ async function capture(id, cfg, browser) {
         const r = await page.evaluate((sel) => { const el = document.querySelector(sel); if (!el) return null; const b = el.getBoundingClientRect(); el.click(); return { x: b.left + b.width / 2, y: b.top + b.height / 2 }; }, a.click);
         taps.push({ t: a.t, sel: a.click, ...r });
       }
+    }
+    // Escritura en campos de texto, letra por letra (type: { sel, text, dur }).
+    for (const a of cfg.types || []) {
+      if (t < a.t || t > a.t + a.dur + 1 / FPS) continue;
+      const n = Math.min(a.text.length, Math.ceil(((t - a.t) / a.dur) * a.text.length));
+      await page.evaluate(({ sel, v }) => {
+        const el = document.querySelector(sel);
+        if (!el) return;
+        el.focus({ preventScroll: true });
+        el.value = v;
+        el.dispatchEvent(new Event('input', { bubbles: true }));
+      }, { sel: a.sel, v: a.text.slice(0, n) });
     }
     for (const s of cfg.sliders || []) {
       if (t < s.t0 || t > s.t1 + 1 / FPS) continue;

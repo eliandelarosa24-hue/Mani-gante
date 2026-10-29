@@ -2,4 +2,5 @@
 const VOZ_FIJA = { voice: 'F', voiceId: 'hpp4J3VqNfWAUOO0d1Us', settings: { stability: 0.32, style: 0.5, speed: 1.06 } };
 export const SCRIPTS = {
   V01E: { ...VOZ_FIJA, max: 34, sub: '¿Y si una página web se viera como una película? Esto es Red Vaeru. Proyectamos lugares, del Caribe al sur de Chile. Villas frente al mar. Viñas. Cocina mapuche. Termas, volcanes y cielos. Diez son ficción, para mostrar cómo pensamos. Y tres ya están en el aire, con clientes reales. Si le gustan los lugares bien contados, síganos. La próxima función ya viene.' },
+  V02E: { voice: 'F', note: 'Generada en el conector de ElevenLabs con Red Vaeru F · Camila', sub: 'En el cine, primero ve el tráiler. ¿Y por qué una página web se paga antes de verla? En Red Vaeru es al revés. Primero, el tráiler: diseñamos la portada de su sitio, con sus fotos y su historia. Si no le convence, no paga nada. Si le gusta, recién ahí firmamos. ¿Ya tiene web, Instagram o Booking? Se lo revisamos gratis, y le mandamos tres mejoras concretas. Síganos en arroba Red Vaeru.' },
 };
