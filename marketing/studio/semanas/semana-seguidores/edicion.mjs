@@ -137,4 +137,28 @@ export const EDITS = {
     ],
     cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Calculadora gratis', 'Reservas directas', 'Hecho en La Araucanía'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
   },
+  // «Escribo el nombre…»: la demo «Su estreno» en vivo, y el llamado a comentar nombre + ciudad (cada comentario es un prospecto).
+  V05E: {
+    file: 'V05_proximamente-su-lugar', slug: 'V05', coverAt: 1.0, musicVol: 0.32,
+    hi: ['negocio', 'pewen', 'azul', 'celular', 'completa', 'gratis', 'comente', 'portada', '@redvaeru'],
+    shots: [
+      H(0, 'sv-estreno', 0.5, '¿Cómo se vería<br><em>su web?</em> 👀', 128),
+      { at: 'Mire', clip: 'sv-estreno', from: 2.05, speed: 1, trans: 'zoom', push: 0.02, cam: [{ x: 540, y: 1168, z: 1.02 }, { at: 'Escribo', x: 540, y: 1000, z: 1.12, dur: 0.8 }, { at: 'ahí', x: 540, y: 700, z: 1.28, dur: 0.6 }, { at: 'Pruébelo', x: 540, y: 1168, z: 1.04, dur: 0.6 }] },
+      H('O#2', 'sv-estreno', 11.8, '💬 Comente el nombre<br>de su negocio <em>y su ciudad</em>', 96),
+      { at: 'Síganos', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      TAG('Escribo', '⌨️ En vivo · nombre de ejemplo', { y: 300, rot: -3, size: 46, until: 'ahí' }),
+      HIT('ahí', { sfx: 'ding', shake: 8, vol: 0.55 }),
+      TAG('computador', '💻 + 📱', { y: 300, tone: 'gold', size: 64, until: 'Otro' }),
+      TAG('Este', '🎨 Estilo 2', { y: 300, rot: 3, size: 56, until: 'este#2' }), TAG('este#2', '🎨 Estilo 3', { y: 300, rot: -3, size: 56, until: 'recorre' }),
+      { at: 'recorre', tap: { x: 321, y: 945 }, sfx: 'click', vol: 0.8 },
+      TAG('recorre', '🖐️ La página completa', { y: 300, tone: 'gold', size: 54, until: 'Pruébelo' }),
+      TAG('gratis', '🆓 Pruébelo gratis en el sitio', { y: 300, rot: -3, size: 50 }),
+      HIT('O#2', { sfx: 'impact', shake: 10, vol: 0.5 }),
+      TAG('mando', '📩 Le mandamos su portada', { y: 330, tone: 'gold', size: 54 }),
+      ...END('Síganos'),
+    ],
+    cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Su portada antes de pagar', 'Pruébelo en el sitio', 'Comente y se la mandamos'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
+  },
 };

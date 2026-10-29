@@ -171,6 +171,16 @@ const CLIPS = {
       { sel: '#calculadora input[name=directo]', from: 5, to: 30, t0: 10.9, t1: 12.3 },
     ],
   },
+  // Serie Seguidores, video 5: «Su estreno» en la portada del sitio nuevo, al ritmo de la voz.
+  'sv-estreno': {
+    url: 'http://localhost:4173/', seconds: 19, settle: 4000, prescroll: true,
+    plan: [[0, 13826], [2, 13826], [3, 14060], [15, 14060], [16, 14700], [19, 14700]],
+    types: [
+      { sel: '#estreno input[name=nombre]', t: 3.9, dur: 1.5, text: 'Cabañas Pewen Azul' },
+      { sel: '#estreno input[name=lugar]', t: 5.6, dur: 0.5, text: 'Pucón' },
+    ],
+    actions: [{ t: 10.9, click: '[data-est-next]' }, { t: 11.55, click: '[data-est-next]' }, { t: 12.4, click: '[data-est-tour]' }],
+  },
   'sv-revision': {
     url: 'http://localhost:4173/servicios/', seconds: 11, settle: 4000, prescroll: true,
     plan: [[0, 8540], [1.5, 8640], [11, 8640]],
