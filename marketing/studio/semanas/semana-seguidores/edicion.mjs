@@ -169,13 +169,13 @@ export const EDITS = {
     file: 'V06_un-solo-tronco', slug: 'V06', coverAt: 1.0, musicVol: 0.34,
     hi: ['palmera', 'araucaria', 'tronco', 'jorge', 'recibir', 'cuidar', 'plantillas', 'whatsapp', '@redvaeru'],
     shots: [
-      { at: 0, clip: 'sv-estudio', from: 0.3, speed: 0.3, trans: 'zoom', push: 0.02, cam: [{ x: 540, y: 520, z: 1.6 }, { at: 'araucaria', x: 540, y: 760, z: 1.6, dur: 0.6 }, { at: 'logo', x: 540, y: 1000, z: 1.05, dur: 0.8 }] },
+      { at: 0, clip: 'sv-estudio', from: 0.3, speed: 0.3, trans: 'zoom', push: 0.02, cam: [{ x: 540, y: 560, z: 1.32 }, { at: 'araucaria', x: 540, y: 820, z: 1.32, dur: 0.6 }, { at: 'logo', x: 540, y: 1000, z: 1.05, dur: 0.8 }] },
       { at: 'Detrás', clip: 'sv-estudio', from: 4.0, speed: 0.5, trans: 'whip', push: 0.03, cam: [{ x: 540, y: 1100, z: 1.12 }] },
-      { at: 'Caribe', clip: 'sv-estudio', from: 8.0, speed: 0.45, trans: 'whip', push: 0.02, cam: [{ x: 540, y: 950, z: 1.3 }, { at: 'sur#2', x: 540, y: 1600, z: 1.3, dur: 0.6 }] },
+      { at: 'Caribe', clip: 'sv-estudio', from: 8.0, speed: 0.45, trans: 'whip', push: 0.02, cam: [{ x: 540, y: 1000, z: 1.12 }, { at: 'sur#2', x: 540, y: 1500, z: 1.12, dur: 0.6 }] },
       H('plantillas', 'sv-estudio', 0.5, 'Cero <em>plantillas.</em> ✂️', 130),
       B('cabaña', 'miah', { from: 0.3, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
       B('villa', 'villa-coral-samana', { from: 3.2, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
-      { at: 'quien', clip: 'sv-estudio', from: 13.2, speed: 1, trans: 'zoom', push: 0.03, cam: [{ x: 540, y: 800, z: 1.15 }] },
+      { at: 'quien', clip: 'sv-estudio', from: 13.2, speed: 1, trans: 'zoom', push: 0.02, cam: [{ x: 540, y: 900, z: 1.03 }] },
       { at: 'Síganos', type: 'cta', capY: 1700 },
     ],
     fx: [
