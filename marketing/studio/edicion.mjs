@@ -399,9 +399,10 @@ for (const id of ids) {
   const sfx = P.fx.filter((f) => f.sfx).map((f) => ({ file: join(SFX, `${f.sfx}.mp3`), t: Math.max(0, f.t + (f.sfxDt ?? 0)), vol: f.vol ?? 0.7 }));
   P.shots.filter((s) => s.trans === 'whip' || s.trans === 'zoom').forEach((s) => sfx.push({ file: join(SFX, 'whoosh.mp3'), t: Math.max(0, s.t0 - 0.12), vol: 0.55 }));
   const inputs = ['-i', join(BASE, 'voz', `${id}.mp3`), '-stream_loop', '-1', '-i', join(SFX, e.music ?? 'music.mp3'), ...sfx.flatMap((x) => ['-i', x.file])];
-  let fc = `[1:a]adelay=${Math.round((J.offset ?? 0.3) * 1000)}:all=1,apad,atrim=0:${P.total},aresample=48000,asplit=2[v][vk];`;
-  fc += `[2:a]atrim=0:${P.total},aresample=48000,volume=${e.musicVol ?? 0.5},afade=t=in:d=0.6,afade=t=out:st=${P.total - 1.2}:d=1.2[m0];[m0][vk]sidechaincompress=threshold=0.03:ratio=8:attack=20:release=300[m];`;
-  sfx.forEach((x, i) => { fc += `[${i + 3}:a]adelay=${Math.round(x.t * 1000)}:all=1,volume=${x.vol},aresample=48000[s${i}];`; });
+  // La voz manda: se normaliza (las voces del conector llegan ~5 dB bajo la música) y se comprime un poco para que se entienda en el celular.
+  let fc = `[1:a]aresample=48000,highpass=f=80,loudnorm=I=-16:TP=-1.5:LRA=7,acompressor=threshold=0.08:ratio=3:attack=5:release=120:makeup=2,adelay=${Math.round((J.offset ?? 0.3) * 1000)}:all=1,apad,atrim=0:${P.total},asplit=2[v][vk];`;
+  fc += `[2:a]atrim=0:${P.total},aresample=48000,volume=${(e.musicVol ?? 0.5) * 0.7},afade=t=in:d=0.6,afade=t=out:st=${P.total - 1.2}:d=1.2[m0];[m0][vk]sidechaincompress=threshold=0.02:ratio=12:attack=15:release=350[m];`;
+  sfx.forEach((x, i) => { fc += `[${i + 3}:a]adelay=${Math.round(x.t * 1000)}:all=1,volume=${x.vol * 0.5},aresample=48000[s${i}];`; });
   fc += `[v][m]${sfx.map((_, i) => `[s${i}]`).join('')}amix=inputs=${2 + sfx.length}:normalize=0:duration=first,loudnorm=I=-14:TP=-1.5:LRA=11[au]`;
   const out = join(VID, `${e.file}.mp4`);
   execFileSync('ffmpeg', ['-nostdin', '-y', '-loglevel', 'error', '-framerate', String(FPS), '-i', join(dir, 'f', '%05d.jpg'), ...inputs, '-filter_complex', fc,
