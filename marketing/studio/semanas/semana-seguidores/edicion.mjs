@@ -291,7 +291,7 @@ export const EDITS = {
       B('Treinta#3', 'pucon-aventura', { from: 3.4, speed: 0.8, trans: 'whip', ...FULL, z: 1.06 }),
       B('Cuarenta', 'kuchen-haus-frutillar', { from: 3.4, speed: 0.8, trans: 'whip', ...FULL, z: 1.06 }),
       B('Diez', 'rv-funcion', { from: 7.5, speed: 1.6, trans: 'zoom', ...FULL, z: 1.04 }),
-      { at: 'cada', clip: 'sv-estudio', from: 9.5, speed: 0.6, trans: 'whip', push: 0.02, cam: [{ x: 540, y: 1300, z: 1.2 }] },
+      { at: 'cada', clip: 'sv-estudio', from: 9.5, speed: 0.6, trans: 'whip', push: 0.02, cam: [{ x: 540, y: 1250, z: 1.04 }] },
       H('Y#8', 'rv-estreno', 2, '¿Y el suyo,<br><em>dónde está?</em> 📍', 120),
       { at: 'Síganos', type: 'cta', capY: 1700 },
     ],
