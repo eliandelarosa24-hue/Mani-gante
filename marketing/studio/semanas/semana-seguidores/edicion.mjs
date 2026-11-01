@@ -13,7 +13,7 @@ const ST = (n) => `marketing/studio/out/semana-seguidores/stills/${n}.jpg`;
 
 export const EDITS = {
   V01E: {
-    file: 'V01_proyectamos-lugares', slug: 'V01', coverAt: 1.2, musicVol: 0.34,
+    file: 'V01_proyectamos-lugares', slug: 'V01', coverAt: 1.2, musicVol: 0.2,
     hi: ['película', 'lugares', 'ficción', 'reales', 'síganos', 'función'],
     shots: [
       { at: 0, type: 'kinetic', bg: { clip: 'rv-funcion', t: 8 } },
@@ -73,7 +73,7 @@ export const EDITS = {
   },
   // Juego «¿Cuál es la real?»: pide comentar un número (conversación) y premia ver hasta el final (la respuesta).
   V03E: {
-    file: 'V03_cual-es-la-real', slug: 'V03', coverAt: 1.4, musicVol: 0.32,
+    file: 'V03_cual-es-la-real', slug: 'V03', coverAt: 1.4, musicVol: 0.2,
     hi: ['real', 'inventamos', 'reales', 'inventados', 'número', '@redvaeru'],
     shots: [
       { at: 0, type: 'stack', bg: ST('termas-rayenko_h'), trans: 'zoom', cards: [
@@ -282,7 +282,7 @@ export const EDITS = {
   },
   // 10 · Cinemático: del paralelo 19 al 41; pide comentar la ciudad (comentarios + guardados de viajeros).
   V10E: {
-    file: 'V10_del-19-al-41', slug: 'V10', coverAt: 0.6, musicVol: 0.42,
+    file: 'V10_del-19-al-41', slug: 'V10', coverAt: 0.6, musicVol: 0.24,
     hi: ['norte', 'caribe', 'vinas', 'fogon', 'volcan', 'lago', 'lugar', 'suyo', 'comentarios', '@redvaeru'],
     shots: [
       B(0, 'villa-coral-samana', { from: 3.2, speed: 0.8, trans: 'zoom', ...FULL, z: 1.06 }),
