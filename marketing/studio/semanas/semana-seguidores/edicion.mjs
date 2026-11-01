@@ -7,6 +7,8 @@ const FULL = { y: 1168, z: 1.02 };
 // Fotogramas fijos de los sitios (sacados de out/clips) para las tarjetas.
 // Número del juego, abajo para no tapar los títulos de cada sitio.
 const N = (at, n, label, until) => ({ ...NUM(at, n, label, until), sticker: { kind: 'num', text: String(n), label, x: 380, y: 1230 } });
+// Imágenes de las muestras de concepto del sitio.
+const M = (slug, f) => `public/muestras/${slug}/img/${f}`;
 const ST = (n) => `marketing/studio/out/semana-seguidores/stills/${n}.jpg`;
 
 export const EDITS = {
@@ -160,5 +162,151 @@ export const EDITS = {
       ...END('Síganos'),
     ],
     cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Su portada antes de pagar', 'Pruébelo en el sitio', 'Comente y se la mandamos'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
+  },
+  // ── Segunda tanda: Reels 6 a 10 (para completar 10 en el perfil) ──
+  // 6 · La marca: palmera + araucaria, el director y su forma de trabajar (confianza; también lo comparten dominicanos en Chile).
+  V06E: {
+    file: 'V06_un-solo-tronco', slug: 'V06', coverAt: 1.0, musicVol: 0.34,
+    hi: ['palmera', 'araucaria', 'tronco', 'jorge', 'recibir', 'cuidar', 'plantillas', 'whatsapp', '@redvaeru'],
+    shots: [
+      { at: 0, clip: 'sv-estudio', from: 0.3, speed: 0.3, trans: 'zoom', push: 0.02, cam: [{ x: 540, y: 520, z: 1.6 }, { at: 'araucaria', x: 540, y: 760, z: 1.6, dur: 0.6 }, { at: 'logo', x: 540, y: 1000, z: 1.05, dur: 0.8 }] },
+      { at: 'Detrás', clip: 'sv-estudio', from: 4.0, speed: 0.5, trans: 'whip', push: 0.03, cam: [{ x: 540, y: 1100, z: 1.12 }] },
+      { at: 'Caribe', clip: 'sv-estudio', from: 8.0, speed: 0.45, trans: 'whip', push: 0.02, cam: [{ x: 540, y: 950, z: 1.3 }, { at: 'sur#2', x: 540, y: 1600, z: 1.3, dur: 0.6 }] },
+      H('plantillas', 'sv-estudio', 0.5, 'Cero <em>plantillas.</em> ✂️', 130),
+      B('cabaña', 'miah', { from: 0.3, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
+      B('villa', 'villa-coral-samana', { from: 3.2, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
+      { at: 'quien', clip: 'sv-estudio', from: 13.2, speed: 1, trans: 'zoom', push: 0.03, cam: [{ x: 540, y: 800, z: 1.15 }] },
+      { at: 'Síganos', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      TAG('palmera', '🌴 República Dominicana', { y: 300, rot: -3, size: 54, until: 'araucaria' }),
+      TAG('araucaria', '🌲 La Araucanía', { y: 300, rot: 3, size: 54, until: 'logo' }),
+      HIT('tronco', { sfx: 'ding', shake: 8, vol: 0.5 }),
+      TAG('tronco', 'Un solo tronco, dos raíces', { y: 300, tone: 'gold', size: 52 }),
+      TAG('dominicano', '🇩🇴 → 🇨🇱', { y: 300, size: 64, until: 'Ingeniería' }),
+      TAG('Ingeniería', '🎓 Ingeniería en Turismo', { y: 300, rot: -3, size: 50 }),
+      TAG('recibir', '🌴 Recibir', { y: 300, rot: -3, size: 56, until: 'cuidar' }),
+      TAG('cuidar', '🌲 Cuidar', { y: 300, rot: 3, size: 56 }),
+      HIT('plantillas', { sfx: 'impact', shake: 12, vol: 0.5 }),
+      TAG('Curacautín', '🌲 Curacautín · caso real', { y: 300, rot: -3, size: 48 }),
+      TAG('Samaná', '🌴 Samaná · muestra de concepto', { y: 300, rot: 3, size: 46 }),
+      TAG('WhatsApp', '💬 Directo con quien diseña', { y: 300, tone: 'gold', size: 50 }),
+      ...END('Síganos'),
+    ],
+    cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Del Caribe al sur de Chile', 'Sin plantillas', 'Directo con quien diseña'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
+  },
+  // 7 · Caso real: el viaje de un huésped a medianoche por la web de Cabañas Miah y Noah.
+  V07E: {
+    file: 'V07_son-las-23', slug: 'V07', coverAt: 0.8, musicVol: 0.3,
+    hi: ['23:00', 'noche', 'miah', 'noah', 'espacio', 'guia', 'whatsapp', 'comision', 'duerme', '@redvaeru'],
+    shots: [
+      H(0, 'miah-funciones', 12, 'Son las <em>23:00</em> 🌙', 150),
+      B('Alguien', 'miah-funciones', { from: 11.6, speed: 0.4, trans: 'zoom', ...FULL, z: 1.08 }),
+      B('Encuentra', 'miah', { from: 0, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
+      B('Mira', 'miah-galeria', { from: 2.4, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
+      B('Revisa', 'miah-guia', { from: 3, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
+      { at: 'Y#2', clip: 'miah', from: 4.6, speed: 0.6, trans: 'zoom', push: 0.03, cam: [{ x: 540, y: 1650, z: 1.3 }] },
+      B('Eso', 'rv-documental', { from: 4.6, speed: 0.8, trans: 'whip', ...FULL, z: 1.04 }),
+      { at: 'Síganos', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      HIT('noche', { sfx: 'ding', shake: 6, vol: 0.45 }),
+      TAG('Santiago', '📍 Santiago → 🌲 el sur', { y: 300, rot: -3, size: 50 }),
+      HIT('Miah', { sfx: 'impact', shake: 10, vol: 0.45 }),
+      TAG('Miah', '✅ Cliente real · Curacautín', { y: 300, tone: 'gold', size: 50 }),
+      TAG('living', '🛋️ Living', { y: 300, rot: -3, size: 58, until: 'dormitorios' }), TAG('dormitorios', '🛏️ Dormitorios', { y: 300, rot: 3, size: 58, until: 'terraza' }), TAG('terraza', '🌿 Terraza', { y: 300, rot: -3, size: 58, until: 'Revisa' }),
+      TAG('termas', '♨️ Termas', { y: 300, rot: 3, size: 58, until: 'volcanes' }), TAG('volcanes', '🌋 Volcanes', { y: 300, rot: -3, size: 58, until: 'Corralco' }), TAG('Corralco', '⛷️ Corralco', { y: 300, rot: 3, size: 58, until: 'Y#2' }),
+      TAG('comisión', '💬 Directo · 0 % comisión', { y: 300, tone: 'gold', size: 52 }),
+      TAG('duerme', '😴 Trabaja mientras usted duerme', { y: 330, rot: -2, size: 46 }),
+      ...END('Síganos'),
+    ],
+    cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Caso real en Curacautín', 'Reserva directa', 'Web en 4 idiomas'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
+  },
+  // 8 · Educativo para guardar: 3 errores; cierra con la revisión gratis (comentarios = prospectos).
+  V08E: {
+    file: 'V08_tres-errores', slug: 'V08', coverAt: 1.0, musicVol: 0.3,
+    hi: ['errores', 'reservas', 'booking', 'instagram', 'vitrina', 'orden', 'mezcladas', 'reservar', 'whatsapp', 'gratis', '@redvaeru'],
+    shots: [
+      H(0, 'sv-revision', 1, '3 errores que le<br>cuestan <em>reservas</em> ⚠️', 112),
+      { at: 'Uno', type: 'kinetic', bg: { clip: 'rv-funcion', t: 12.5 }, per: 4 },
+      H('Si', 'rv-funcion', 20, 'Sin web propia,<br><em>sin vitrina.</em> 🪟', 112),
+      { at: 'Dos', type: 'stack', bg: M('cabanas-lago-azul', 'niebla.webp'), trans: 'whip', label: 'Ejemplo ilustrativo', cards: ['cab-arrayan', 'int-living', 'kayak', 'int-dormitorio', 'quincho', 'tinaja'].map((f, i) => ({ src: M('cabanas-lago-azul', `${f}.webp`), x: [300, 760, 420, 700, 330, 640][i], y: [640, 700, 980, 1060, 1320, 1360][i], w: 420, h: 360, rot: [-9, 7, -4, 11, -12, 5][i] })) },
+      B('El', 'miah-galeria', { from: 2.4, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
+      { at: 'Tres#2', type: 'kinetic', bg: { clip: 'rv-funcion', t: 8 }, per: 4 },
+      { at: 'Un', clip: 'miah', from: 4.8, speed: 0.6, trans: 'zoom', push: 0.03, cam: [{ x: 540, y: 1650, z: 1.3 }] },
+      H('Cuántos', 'sv-revision', 4, '¿Cuántos tiene<br><em>usted?</em> 🤔', 124),
+      B('Comente', 'sv-revision', { from: 0.5, speed: 1, trans: 'zoom', ...FULL, z: 1.04 }),
+      { at: 'Síganos', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      HIT('errores', { sfx: 'impact', shake: 12, vol: 0.5 }),
+      NUM('Uno', 1, 'Solo Booking o Instagram', 'Dos'),
+      HIT('vitrina', { sfx: 'impact', shake: 10, vol: 0.45 }),
+      NUM('Dos', 2, 'Fotos sin orden', 'Tres#2'),
+      TAG('Dos', '❌ Fotos mezcladas', { y: 1640, rot: -3, size: 50, until: 'El' }),
+      TAG('El', '✅ Por espacio', { y: 520, tone: 'gold', size: 54 }),
+      NUM('Tres#2', 3, 'No saben cómo reservar', 'Cuántos'),
+      TAG('WhatsApp', '💬 Un botón claro', { y: 520, tone: 'gold', size: 52, until: 'likes' }),
+      TAG('likes', '👍 ≠ 💰', { y: 520, rot: 4, size: 70 }),
+      HIT('Cuántos', { sfx: 'ding', shake: 8, vol: 0.55 }),
+      TAG('gratis', '🎁 Revisión gratis', { y: 300, tone: 'gold', size: 56 }),
+      ...END('Síganos'),
+    ],
+    cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Revisión gratis de su web', 'Ideas para reservar directo', 'Sin letra chica'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
+  },
+  // 9 · Restaurantes (segmento nuevo): Fogón Mapu, muestra de concepto; pide enviarlo al dueño (envíos = alcance).
+  V09E: {
+    file: 'V09_restaurante-a-lena', slug: 'V09', coverAt: 1.0, musicVol: 0.32,
+    hi: ['restaurante', 'lena', 'kultrun', 'mapa', 'mesa', 'historia', 'contarla', '@redvaeru'],
+    shots: [
+      H(0, 'sv-fogon', 1, '¿Su restaurante<br>huele a <em>leña?</em> 🔥', 118),
+      B('Esto', 'sv-fogon', { from: 0.3, speed: 1, trans: 'zoom', ...FULL, z: 1.04 }),
+      B('carta', 'sv-fogon', { from: 3.6, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
+      B('menú', 'sv-fogon', { from: 8.6, speed: 1, trans: 'whip', ...FULL, z: 1.04 }),
+      { at: 'Y#2', clip: 'sv-fogon', from: 14.2, speed: 1, trans: 'zoom', push: 0.02, cam: [{ x: 540, y: 1250, z: 1.25 }] },
+      H('Su#2', 'sv-fogon', 1.5, 'Su cocina tiene<br>una <em>historia.</em>', 120),
+      { at: 'Envíeselo', type: 'stack', bg: M('fogon-mapu', 'salon.webp'), trans: 'whip', label: 'Muestra de concepto · negocio ficticio diseñado por Red Vaeru', cards: [{ src: M('fogon-mapu', 'chef.webp'), y: 760 }, { src: M('fogon-mapu', 'tiempo-2.webp'), y: 900 }, { src: M('fogon-mapu', 'tiempo-5.webp'), y: 1040 }] },
+      { at: 'síganos', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      HIT('leña', { sfx: 'impact', shake: 10, vol: 0.5 }),
+      TAG('concepto', '🎭 Muestra de concepto', { y: 300, rot: -3, size: 50 }),
+      TAG('kultrún', '🥁 La carta gira', { y: 300, tone: 'gold', size: 54, until: 'menú' }),
+      TAG('mapa', '🗺️ 8 tiempos, 1 mapa', { y: 300, rot: 3, size: 54, until: 'Y#2' }),
+      { at: 'toque', tap: { x: 305, y: 1380 }, sfx: 'click', vol: 0.8 },
+      TAG('mesa', '🍽️ Reserva en un toque', { y: 300, tone: 'gold', size: 54 }),
+      TAG('Envíeselo', '📤 Envíeselo a su restaurante favorito', { y: 300, rot: -2, size: 42 }),
+      ...END('síganos'),
+    ],
+    cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Webs para restaurantes', 'Carta y reservas', 'Su historia, bien contada'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
+  },
+  // 10 · Cinemático: del paralelo 19 al 41; pide comentar la ciudad (comentarios + guardados de viajeros).
+  V10E: {
+    file: 'V10_del-19-al-41', slug: 'V10', coverAt: 0.6, musicVol: 0.42,
+    hi: ['norte', 'caribe', 'vinas', 'fogon', 'volcan', 'lago', 'lugar', 'suyo', 'comentarios', '@redvaeru'],
+    shots: [
+      B(0, 'villa-coral-samana', { from: 3.2, speed: 0.8, trans: 'zoom', ...FULL, z: 1.06 }),
+      B('Treinta', 'vina-los-robles', { from: 3.2, speed: 0.8, trans: 'whip', ...FULL, z: 1.06 }),
+      B('Treinta#2', 'fogon-mapu', { from: 3.4, speed: 0.8, trans: 'whip', ...FULL, z: 1.06 }),
+      B('Treinta#3', 'pucon-aventura', { from: 3.4, speed: 0.8, trans: 'whip', ...FULL, z: 1.06 }),
+      B('Cuarenta', 'kuchen-haus-frutillar', { from: 3.4, speed: 0.8, trans: 'whip', ...FULL, z: 1.06 }),
+      B('Diez', 'rv-funcion', { from: 7.5, speed: 1.6, trans: 'zoom', ...FULL, z: 1.04 }),
+      { at: 'cada', clip: 'sv-estudio', from: 9.5, speed: 0.6, trans: 'whip', push: 0.02, cam: [{ x: 540, y: 1300, z: 1.2 }] },
+      H('Y#8', 'rv-estreno', 2, '¿Y el suyo,<br><em>dónde está?</em> 📍', 120),
+      { at: 'Síganos', type: 'cta', capY: 1700 },
+    ],
+    fx: [
+      TAG(0, '19° N · Samaná 🇩🇴', { y: 300, tone: 'gold', size: 60, until: 'Treinta' }),
+      TAG('Treinta', '34° S · Colchagua 🍷', { y: 300, tone: 'gold', size: 60, until: 'Treinta#2' }),
+      TAG('Treinta#2', '38° S · Temuco 🔥', { y: 300, tone: 'gold', size: 60, until: 'Treinta#3' }),
+      TAG('Treinta#3', '39° S · Pucón 🌋', { y: 300, tone: 'gold', size: 60, until: 'Cuarenta' }),
+      TAG('Cuarenta', '41° S · Frutillar 🍰', { y: 300, tone: 'gold', size: 60, until: 'Diez' }),
+      TAG('Diez', '🎬 Muestras de concepto en lugares reales', { y: 300, rot: -2, size: 40 }),
+      TAG('lugar', '📍 Cada sitio nace de su lugar', { y: 300, rot: 2, size: 46 }),
+      HIT('Y#8', { sfx: 'ding', shake: 8, vol: 0.5 }),
+      TAG('Escríbalo', '💬 Comente su ciudad', { y: 1640, rot: -3, size: 50 }),
+      ...END('Síganos'),
+    ],
+    cta: { title: 'Síganos en <em>@redvaeru</em>', checks: ['Del paralelo 19 al 41', 'Lugares bien contados', 'Webs para la hospitalidad'], button: 'Seguir @redvaeru 🎬', note: 'redvaeru.netlify.app · Diseño web para la hospitalidad' },
   },
 };

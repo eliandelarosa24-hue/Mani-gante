@@ -103,5 +103,76 @@ pieces.push({
   ${handle(C.gold2).replace('bottom:250px', 'bottom:150px')}`,
 });
 
+// ── Segunda tanda (Reels 6 a 10): otras cinco ideas, sin repetir imágenes de la primera ──
+import { readFileSync } from 'node:fs';
+const EMB = readFileSync(new URL('./emblema.svg', import.meta.url), 'utf8').replace(/^[\s\S]*?<\/style>/, '').replace(/<\/svg>\s*$/, '').replace('stroke-width="2.6"', 'stroke-width="3.2"');
+const BR = (n) => asset(`marketing/studio/out/broll/${n}.jpg`);
+const MU = (slug, f) => asset(`public/muestras/${slug}/img/${f}`);
+
+// V06 · Un solo tronco: el emblema partido en dos cielos, Caribe arriba y bosque del sur abajo.
+pieces.push({
+  file: 'portadas/V06_un-solo-tronco.png', w: W, h: H, cls: '', css,
+  html: `<div style="position:absolute;left:0;right:0;top:0;height:960px;background:linear-gradient(180deg,#0b5f6b,#1f8f8a 70%,#e8c27a)"></div>
+  <div style="position:absolute;left:0;right:0;top:960px;bottom:0;background:linear-gradient(180deg,#1d3b2c,#0d1a13)"></div>
+  <div style="position:absolute;left:0;right:0;top:956px;height:8px;background:${C.cream}"></div>
+  <div style="position:absolute;left:50%;top:960px;transform:translate(-50%,-50%);width:760px;height:760px;color:${C.cream};filter:drop-shadow(0 20px 40px rgba(0,0,0,.45))"><svg viewBox="0 0 120 120" width="760" height="760">${EMB}</svg></div>
+  <div style="position:absolute;left:70px;top:270px;font:800 34px Manrope;letter-spacing:.28em;color:#fff">🇩🇴 EL CARIBE</div>
+  <div style="position:absolute;right:70px;top:1590px;font:800 34px Manrope;letter-spacing:.28em;color:${C.gold2}">LA ARAUCANÍA 🇨🇱</div>
+  <div class="ser" style="position:absolute;left:0;right:0;top:1380px;text-align:center;font-size:96px;color:${C.cream};text-shadow:0 6px 30px rgba(0,0,0,.6)">Un solo tronco,<br><em>dos raíces.</em></div>
+  ${handle().replace('bottom:250px', 'bottom:150px')}`,
+});
+
+// V07 · Son las 23:00: noche, reloj gigante y la cabaña real iluminada dentro de un celular.
+pieces.push({
+  file: 'portadas/V07_son-las-23.png', w: W, h: H, cls: '', css,
+  html: `<div style="position:absolute;inset:0;background:radial-gradient(70% 45% at 50% 30%,#1b2a4a,#070b16 70%)"></div>
+  ${Array.from({ length: 70 }, (_, i) => `<i style="position:absolute;left:${(i * 137) % 1080}px;top:${(i * 263) % 900}px;width:${i % 5 ? 3 : 5}px;height:${i % 5 ? 3 : 5}px;border-radius:50%;background:#fff;opacity:${0.3 + (i % 4) * 0.15}"></i>`).join('')}
+  <div class="mono" style="position:absolute;left:0;right:0;top:250px;text-align:center;font:700 250px 'Courier New',monospace;letter-spacing:-.02em;color:#ffd27a;text-shadow:0 0 50px rgba(255,190,90,.55)">23:00</div>
+  <div style="position:absolute;left:300px;top:560px;width:480px;height:880px;border-radius:64px;background:#050608;padding:16px;box-shadow:0 0 0 3px #2b3550,0 40px 120px rgba(255,200,120,.25)"><div style="width:100%;height:100%;border-radius:50px;overflow:hidden;position:relative"><img src="${BR('miah-exterior-cielo')}" style="width:100%;height:100%;object-fit:cover"><div style="position:absolute;left:24px;right:24px;bottom:30px;background:#25d366;color:#05210f;border-radius:20px;padding:18px;font:800 30px Manrope;text-align:center">Reservar por WhatsApp</div></div></div>
+  <div style="position:absolute;left:0;right:0;top:1490px;text-align:center;font:600 42px Manrope;color:${C.cream}">Su web <span style="color:#ffd27a">trabaja</span> mientras usted duerme</div>
+  <div style="position:absolute;left:0;right:0;top:1560px;text-align:center;font:500 30px Manrope;color:rgba(242,235,223,.7)">Caso real · Cabañas Miah y Noah, Curacautín</div>
+  ${handle('#ffd27a').replace('bottom:250px', 'bottom:150px')}`,
+});
+
+// V08 · 3 errores: señalética de advertencia, tres tarjetas tachadas.
+const errs = ['Depender solo de Booking o Instagram', 'Fotos sin orden', 'Que no sepan cómo reservar'];
+pieces.push({
+  file: 'portadas/V08_tres-errores.png', w: W, h: H, cls: '', css,
+  html: `<div style="position:absolute;inset:0;background:#f2c230"></div>
+  <div style="position:absolute;left:0;right:0;top:0;height:120px;background:repeating-linear-gradient(-45deg,#111 0 40px,#f2c230 40px 80px)"></div>
+  <div style="position:absolute;left:0;right:0;bottom:0;height:120px;background:repeating-linear-gradient(-45deg,#111 0 40px,#f2c230 40px 80px)"></div>
+  <div style="position:absolute;left:70px;top:260px;font:800 150px Manrope;line-height:.9;letter-spacing:-.04em;color:#111">3 ERRORES</div>
+  <div style="position:absolute;left:74px;top:410px;font:700 54px Manrope;color:#111">que le cuestan <span style="background:#111;color:#f2c230;padding:0 14px">reservas</span></div>
+  ${errs.map((e, i) => `<div style="position:absolute;left:70px;right:70px;top:${560 + i * 290}px;height:250px;background:#111;border-radius:28px;display:flex;align-items:center;gap:36px;padding:0 44px;transform:rotate(${[-1.5, 1, -1][i]}deg)"><span style="font:800 140px Manrope;color:#f2c230">${i + 1}</span><span style="font:700 50px Manrope;line-height:1.1;color:#fff">${e}</span><span style="margin-left:auto;font:800 110px Manrope;color:#ff4d3d">✕</span></div>`).join('')}
+  <div style="position:absolute;left:0;right:0;bottom:160px;text-align:center;font:800 34px Manrope;letter-spacing:.22em;color:#111">@REDVAERU · ¿CUÁNTOS TIENE USTED?</div>`,
+});
+
+// V09 · Restaurante a leña: el plato bajo el humo y el kultrún dibujado como sello.
+pieces.push({
+  file: 'portadas/V09_restaurante-a-lena.png', w: W, h: H, cls: '', css,
+  html: `<img src="${MU('fogon-mapu', 'tiempo-3.webp')}" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover">
+  <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(10,4,2,.85),rgba(10,4,2,.2) 40%,rgba(10,4,2,.9) 78%)"></div>
+  <div style="position:absolute;inset:0;background:radial-gradient(60% 40% at 50% 100%,rgba(255,120,40,.35),transparent 70%)"></div>
+  <div class="ser" style="position:absolute;left:70px;top:270px;font-size:128px;color:${C.cream}">¿Su restaurante<br>huele a <em style="color:#ff9a4a">leña?</em></div>
+  <svg style="position:absolute;right:70px;top:1180px" width="260" height="260" viewBox="0 0 100 100"><circle cx="50" cy="50" r="46" fill="#e9d6b4" stroke="#7a2a12" stroke-width="3"/><path d="M18 18L82 82M82 18L18 82" stroke="#7a2a12" stroke-width="3"/><circle cx="50" cy="22" r="5" fill="#9b2c14"/><circle cx="78" cy="50" r="6" fill="#9b2c14"/><path d="M22 46a7 7 0 1 0 6 10a6 6 0 1 1-6-10z" fill="#9b2c14"/><path d="M46 78l4-8 4 8z" fill="#9b2c14"/></svg>
+  <div style="position:absolute;left:70px;top:1480px;font:700 46px Manrope;color:${C.cream}">Webs que <span style="color:#ff9a4a">cuentan su cocina</span></div>
+  <div style="position:absolute;left:70px;top:1550px;font:500 28px Manrope;color:rgba(242,235,223,.7)">Fogón Mapu · muestra de concepto (negocio ficticio)</div>
+  ${handle('#ff9a4a')}`,
+});
+
+// V10 · Del 19 al 41: una regla de latitud vertical, sin fotos.
+const lats = [['19° N', 'Samaná', 0], ['34° S', 'Colchagua', 0.42], ['38° S', 'Temuco', 0.62], ['39° S', 'Pucón', 0.72], ['41° S', 'Frutillar', 0.92]];
+pieces.push({
+  file: 'portadas/V10_del-19-al-41.png', w: W, h: H, cls: '', css,
+  html: `<div style="position:absolute;inset:0;background:linear-gradient(180deg,#0e2235,#0a1119 60%,#1a0f0a)"></div>
+  <div class="ser" style="position:absolute;left:70px;top:250px;font-size:116px;color:${C.cream}">Del paralelo<br><em>19 al 41.</em></div>
+  <div style="position:absolute;left:330px;top:620px;width:6px;height:900px;background:linear-gradient(${C.gold2},${C.gold})"></div>
+  ${Array.from({ length: 31 }, (_, i) => `<div style="position:absolute;left:${i % 5 ? 312 : 296}px;top:${620 + i * 30}px;width:${i % 5 ? 24 : 40}px;height:3px;background:${C.gold}88"></div>`).join('')}
+  <div style="position:absolute;left:250px;top:${620 + 0.18 * 900}px;font:800 24px Manrope;letter-spacing:.3em;color:#ff6b6b">— ECUADOR</div>
+  ${lats.map(([l, n, k]) => `<div style="position:absolute;left:310px;top:${620 + k * 900 - 22}px;width:46px;height:46px;border-radius:50%;background:${C.gold2};box-shadow:0 0 30px ${C.gold2}"></div><div style="position:absolute;left:110px;top:${620 + k * 900 - 20}px;font:700 34px Manrope;color:${C.gold2}">${l}</div><div class="ser" style="position:absolute;left:400px;top:${620 + k * 900 - 40}px;font-size:70px;color:${C.cream}">${n}</div>`).join('')}
+  <div style="position:absolute;left:0;right:0;top:1580px;text-align:center;font:700 40px Manrope;color:${C.cream}">¿Y el suyo, <span style="color:${C.gold2}">dónde está?</span> 📍</div>
+  ${handle(C.gold2).replace('bottom:250px', 'bottom:150px')}`,
+});
+
 await render(pieces);
 await done();

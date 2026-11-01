@@ -103,3 +103,89 @@ O más fácil: comente el NOMBRE de su negocio y su CIUDAD 👇 y le mandamos su
 4. Envíe esa imagen con el mensaje: «¡Aquí está su estreno! ¿Le armamos la de verdad, con sus fotos?».
 
 Después, anote a esa persona en la planilla como prospecto.
+
+---
+
+# Segunda tanda · Reels 6 a 10 (para llegar a 10 en el perfil)
+
+Cada uno cumple una función distinta, para que el perfil se vea variado y no repetido. Están la marca, un caso real, un video educativo, el segmento de restaurantes y uno cinematográfico.
+
+| Día | Hora | Video | Tarea ante el algoritmo |
+|---|---|---|---|
+| Domingo 8 nov | 20:00 | V06 Un solo tronco, dos raíces | Confianza en la marca y envíos (orgullo dominicano y del sur) |
+| Lunes 9 nov | 21:30 | V07 Son las 23:00 | Caso real y retención (se publica de noche, como la historia) |
+| Martes 10 nov | 12:30 | V08 3 errores que le cuestan reservas | Guardados y comentarios que se vuelven prospectos |
+| Jueves 12 nov | 12:00 | V09 ¿Su restaurante huele a leña? | Segmento restaurantes y envíos |
+| Sábado 14 nov | 19:30 | V10 Del paralelo 19 al 41 | Comentarios y guardados de viajeros |
+
+## V06 · Un solo tronco, dos raíces
+```
+Una palmera del Caribe 🌴 y una araucaria del sur 🌲. Un solo tronco.
+
+Red Vaeru lo dirige Jorge Vásquez: dominicano, vive en La Araucanía y estudia Ingeniería en Turismo.
+Del Caribe aprendió a recibir. Del sur, a cuidar lo que se tiene.
+
+Por eso no usamos plantillas: cada sitio nace de su lugar.
+Y quien diseña su sitio es quien le contesta el WhatsApp. 💬
+
+¿Usted también tiene dos orillas? Cuéntenos de dónde es 👇
+
+#RepúblicaDominicana #Araucanía #dominicanosenchile #emprendedores #diseñoweb
+```
+
+## V07 · Son las 23:00
+```
+Son las 23:00. Alguien en Santiago busca dónde pasar enero en el sur 🌙
+
+Encuentra Cabañas Miah y Noah, en Curacautín. Ve las fotos por espacio, revisa la guía de la zona (termas, volcanes, Corralco) y les escribe directo por WhatsApp. Sin comisión.
+
+Eso hace una web propia: trabaja mientras usted duerme. 😴
+
+(Web real de nuestro cliente Cabañas Miah y Noah.)
+
+#Curacautín #cabañas #Araucanía #turismochile #reservasdirectas
+```
+Si puede, etiquete la cuenta de Cabañas Miah y Noah, con su permiso.
+
+## V08 · 3 errores que le cuestan reservas
+```
+3 errores que le están costando reservas ⚠️
+
+1️⃣ Depender solo de Booking o Instagram: si cambian las reglas, se queda sin vitrina
+2️⃣ Fotos sin orden: el huésped quiere ver el baño, la cocina, la vista
+3️⃣ Que no sepan cómo reservar: un botón claro de WhatsApp vale más que mil likes
+
+¿Cuántos tiene usted? Comente su número 👇 y le revisamos su web gratis.
+
+📌 Guárdelo para revisarlo con calma.
+
+#cabañas #hostales #turismochile #Araucanía #reservasdirectas
+```
+A quien comente su número, respóndale «¿Me pasa su enlace? Se lo reviso gratis» y anótelo en la planilla.
+
+## V09 · ¿Su restaurante huele a leña?
+```
+¿Y si la web de su restaurante oliera a leña? 🔥
+
+La carta gira como el kultrún, el menú de 8 tiempos se recorre en un mapa y la mesa se reserva en un toque.
+Su cocina tiene una historia. Su web debería contarla.
+
+(Fogón Mapu es una muestra de concepto: un restaurante ficticio diseñado por Red Vaeru.)
+
+📤 Envíeselo al dueño de su restaurante favorito.
+
+#restaurantes #Temuco #cocinamapuche #Araucanía #gastronomíachilena
+```
+
+## V10 · Del paralelo 19 al 41
+```
+19° N Samaná 🇩🇴 · 34° S Colchagua 🍷 · 38° S Temuco 🔥 · 39° S Pucón 🌋 · 41° S Frutillar 🍰
+
+Diez lugares, una misma idea: cada sitio nace de su lugar.
+
+¿Y el suyo, dónde está? Escriba su ciudad en los comentarios 📍
+
+(Son muestras de concepto: negocios ficticios en lugares reales.)
+
+#viajarporchile #RepúblicaDominicana #Araucanía #turismo #lugaresbonitos
+```

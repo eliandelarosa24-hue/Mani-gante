@@ -181,6 +181,15 @@ const CLIPS = {
     ],
     actions: [{ t: 10.9, click: '[data-est-next]' }, { t: 11.55, click: '[data-est-next]' }, { t: 12.4, click: '[data-est-tour]' }],
   },
+  // Serie Seguidores, segunda tanda (Reels 6 a 10).
+  'sv-estudio': {
+    url: 'http://localhost:4173/estudio/', seconds: 17, settle: 4000, prescroll: true,
+    plan: [[0, 1569], [3, 1569], [3.8, 0], [7, 0], [7.8, 2530], [12, 2530], [12.8, 5550], [17, 5550]],
+  },
+  'sv-fogon': {
+    url: 'http://localhost:4173/muestras/fogon-mapu/', seconds: 17, settle: 4500, prescroll: true,
+    plan: [[0, 86], [2.5, 86], [3.3, 2366], [7.5, 2366], [8.3, 3724], [9, 3724], [13, 4800], [13.8, 86], [17, 86]],
+  },
   'sv-revision': {
     url: 'http://localhost:4173/servicios/', seconds: 11, settle: 4000, prescroll: true,
     plan: [[0, 8540], [1.5, 8640], [11, 8640]],
