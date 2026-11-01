@@ -274,7 +274,7 @@ export const EDITS = {
       TAG('kultrún', '🥁 La carta gira', { y: 300, tone: 'gold', size: 54, until: 'menú' }),
       TAG('mapa', '🗺️ 8 tiempos, 1 mapa', { y: 300, rot: 3, size: 54, until: 'Y#2' }),
       { at: 'toque', tap: { x: 305, y: 1380 }, sfx: 'click', vol: 0.8 },
-      TAG('mesa', '🍽️ Reserva en un toque', { y: 300, tone: 'gold', size: 54 }),
+      TAG('mesa', '🍽️ Reserva en un toque', { y: 300, tone: 'gold', size: 54, until: 'Su#2' }),
       TAG('Envíeselo', '📤 Envíeselo a su restaurante favorito', { y: 300, rot: -2, size: 42 }),
       ...END('síganos'),
     ],
