@@ -19,7 +19,6 @@
   <meta name="twitter:card" content="summary_large_image" />
   <meta name="twitter:image" content="__SITE_URL__/og.jpg" />
   <link rel="preload" as="image" href="/muestras/villa-coral-samana/img/hero.webp" media="(min-width: 821px)" fetchpriority="high" />
-  <link rel="preload" as="image" href="/img/escenas/villa-coral-samana-900.avif" type="image/avif" media="(max-width: 820px)" />
   <!--RV:HEAD-->
   <link rel="stylesheet" href="/src/site/home.css" />
   <script type="application/ld+json">
@@ -66,11 +65,22 @@
   <canvas class="cinema" data-cinema aria-hidden="true"></canvas>
 
   <main id="contenido">
+    <div class="open-run" data-open-run>
     <section class="open" data-open>
+      <span class="open__veil" aria-hidden="true" data-veil></span>
       <span class="open__beam" aria-hidden="true"></span>
       <canvas class="open__dust" data-dust aria-hidden="true"></canvas>
+      <span class="open__rings" aria-hidden="true" data-rings></span>
+      <!-- Túnel: las obras salen del fondo del proyector y pasan junto al titular (home.js) -->
+      <div class="open__space">
+        <div class="open__depth">
+          <div class="tunnel" aria-hidden="true">
+        <!--RV:TUNNEL-->
+          </div>
+          <h1 class="open__title" data-open-title data-split-done="1" aria-label="Proyectamos lugares."><span class="ln"><span class="open__a" data-open-a>Proyectamos</span></span> <span class="ln"><span><em class="open__word" data-open-word>lugares.</em></span></span></h1>
+        </div>
+      </div>
       <p class="open__kicker" data-open-fade><span>Red Vaeru presenta</span><span>Del paralelo 19 Norte al 41 Sur</span></p>
-      <h1 class="open__title" data-open-title>Proyectamos <em>lugares.</em></h1>
       <div class="open__foot">
         <p class="open__sub" data-open-fade>Somos un estudio de diseño web para la hospitalidad, entre el Caribe y el sur de Chile. Esta es nuestra función: diez muestras de concepto y los sitios que ya están en el aire.</p>
         <div class="open__acts" data-open-fade>
@@ -79,6 +89,7 @@
         </div>
       </div>
     </section>
+    </div>
 
     <section class="reel" data-reel aria-label="La función: diez muestras de concepto, del Caribe al sur de Chile" style="--n:10">
       <div class="reel__stage">

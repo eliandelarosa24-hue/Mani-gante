@@ -11,6 +11,28 @@ export const titleStyle = (s) => [
 ].filter(Boolean).join(';');
 export const titleHtml = (s, cls = 'wtitle', text = s.title) => `<span class="${cls}" style="${titleStyle(s)}">${text.replace(/<em>/g, `<em style="${s.em}">`)}</span>`;
 
+// Túnel de la portada: las obras vuelan desde el fondo del proyector hacia quien mira (lo anima home.js).
+// Cada tarjeta lleva la palabra que toma el titular cuando pasa: «Proyectamos cabañas.», «Proyectamos termas.»…
+const TUNNEL = [
+  ['miah', 'refugios.'], ['villa-coral-samana', 'villas.'], ['termas-rayenko', 'termas.'], ['poetas', 'hostales.'],
+  ['vina-los-robles', 'viñas.'], ['domos-cielo-austral', 'domos.'], ['cabanas-lago-azul', 'cabañas.'], ['manigante', 'dulces.'],
+  ['fogon-mapu', 'cocinas.'], ['hotel-casa-nogal', 'hoteles.'], ['pucon-aventura', 'aventuras.'], ['kuchen-haus-frutillar', 'cafés.'],
+  ['estudio-haber', 'oficios.'],
+];
+export function tunnelMarkup() {
+  return TUNNEL.map(([slug, word]) => {
+    const s = SCENES.find((x) => x.slug === slug), r = REAL.find((x) => x.slug === slug);
+    const w = s || r;
+    const href = s ? s.case : r.url, ext = r ? ' target="_blank" rel="noopener"' : '';
+    const kick = s ? `Nº ${s.n} · Muestra` : r.label;
+    return `<a class="tn" href="${href}"${ext} tabindex="-1" style="--acc:${s ? s.accent : '#e8c9a0'}" data-word="${word}" data-cursor="${s ? 'Ver el caso' : 'Abrir ↗'}">
+          <picture><source type="image/avif" data-srcset="/img/tunel/${slug}.avif" /><img data-src="/img/tunel/${slug}.webp" alt="" width="400" height="500" decoding="async" /></picture>
+          <span class="tn__k">${esc(kick)}</span>
+          <span class="tn__t"><b>${esc(w.name)}</b><small>${esc(s ? s.town : r.town)}</small></span>
+        </a>`;
+  }).join('\n        ');
+}
+
 export function scenesMarkup() {
   return SCENES.map((s, i) => `
       <article class="scene" data-scene data-slug="${s.slug}" style="--accent:${s.accent}" aria-labelledby="sc-${s.slug}">

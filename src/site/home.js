@@ -13,6 +13,7 @@ boot();
 const html = document.documentElement;
 const cinemaMode = fine && !reduced && !small() && !!window.WebGLRenderingContext;
 html.classList.add(cinemaMode ? 'is-cinema' : 'is-light');
+if (!reduced && $('.tn')) html.classList.add('has-tunnel');
 
 // ---------- entrada ----------
 // Con «ahorro de datos» o una conexión lenta, la cuenta regresiva se omite y la portada aparece de inmediato
@@ -51,7 +52,7 @@ function intro() {
 }
 
 // ---------- apertura ----------
-function opening(tl) {
+function opening(tl, tn) {
   const title = $('[data-open-title]');
   if (!title || reduced) return;
   const lines = splitLines(title);
@@ -61,7 +62,111 @@ function opening(tl) {
   tl.from(lines, { yPercent: 160, rotate: 3, duration: 1.5, stagger: 0.09 }, tl.getChildren().length ? '-=0.55' : 0.1)
     .fromTo(title, focus.from, { ...focus.to, ease: 'power2.out', clearProps: 'filter,opacity' }, '<')
     .add(projectorLight(title, { duration: 2.1 }), '<0.15')
+    .add(() => tn?.boot(), '<0.35')
     .from('[data-open-fade]', { y: 26, opacity: 0, duration: 1.2, stagger: 0.08 }, '-=1.15');
+}
+
+// ---------- túnel de obras ----------
+// Las obras salen del fondo del proyector y vuelan hacia quien mira mientras la portada queda fija. Al llegar,
+// las primeras se asoman a lo lejos; el scroll hace el resto. El titular cambia su palabra por la de la obra que
+// pasa («Proyectamos termas.») y su tipografía variable se ensancha con el viaje y bajo el puntero.
+function tunnel() {
+  const open = $('[data-open]'), title = $('[data-open-title]'), word = $('[data-open-word]');
+  const cards = open ? $$('.tn', open) : [];
+  if (!title || !word || !cards.length || reduced) return null;
+  const veil = $('[data-veil]', open), rings = $('[data-rings]', open), fades = $$('[data-open-fade]', open);
+
+  // Las fotos se piden después del titular, para no competir con él al cargar
+  cards.forEach((c) => { const src = $('source', c), img = $('img', c); if (src) src.srcset = src.dataset.srcset; img.src = img.dataset.src; });
+
+  const N = cards.length, SPAN = 0.55, BOOT = 0.12;
+  const items = cards.map((el, i) => {
+    const a = i * 137.5 * (Math.PI / 180);
+    return { el, start: (i / N) * (1 - SPAN), cos: Math.cos(a), sin: Math.sin(a), fx: 0.28 + (i % 3) * 0.08, fy: 0.26 + (i % 2) * 0.09, rot: (i % 2 ? -1 : 1) * (3 + (i % 5) * 2), word: el.dataset.word, o: -1, f: -1 };
+  });
+  let W = innerWidth, H = innerHeight, mob = W < 768, dirty = true;
+  addEventListener('resize', () => { W = innerWidth; H = innerHeight; mob = W < 768; dirty = true; });
+
+  const st8 = { boot: 0 };
+  let scroll = 0, shown = 0, px = 0, py = 0, tx = 0, ty = 0, pointer = false;
+  const clamp = gsap.utils.clamp(0, 1);
+  const lerp = (a, b, t) => a + (b - a) * t;
+  // Cada obra aparece lejos, se sostiene y se apaga al pasar junto a la cámara; mientras está lejos, la cubre
+  // una niebla oscura (así el titular se lee bien al llegar y se siente la profundidad)
+  const fade = (t) => (t < 0.3 ? t / 0.3 : t > 0.82 ? Math.max(0, 1 - (t - 0.82) / 0.16) : 1);
+  const fog = (t) => { const k = clamp(t / 0.5); return 0.7 * (1 - k * k * (3 - 2 * k)); };
+
+  // El tramo lo da el contenedor alto de la portada (CSS sticky), sin pin de GSAP
+  ScrollTrigger.create({
+    trigger: $('[data-open-run]') || open, start: 'top top', end: 'bottom bottom',
+    onUpdate: (st) => { scroll = st.progress; dirty = true; },
+  });
+  if (fine && !small()) addEventListener('pointermove', (e) => { tx = (e.clientX / W - 0.5) * 2; ty = (e.clientY / H - 0.5) * 2; pointer = true; dirty = true; }, { passive: true });
+
+  // Letras del titular que responden al puntero (computador)
+  const spell = (w) => [...w].map((c) => '<span class="ch">' + c + '</span>').join('');
+  let chars = [];
+  const collect = () => { chars = fine ? $$('.ch', title).map((el) => ({ el, w: 0, s: 0 })) : []; };
+  if (fine) { splitChars($('[data-open-a]', title)); word.innerHTML = spell(word.textContent); collect(); }
+
+  // La palabra del titular entra letra por letra desde abajo, dentro de la máscara de su línea
+  let current = word.textContent;
+  const setWord = (w) => {
+    if (w === current) return;
+    current = w;
+    word.innerHTML = spell(w);
+    gsap.fromTo(word.children, { yPercent: 115, rotate: 5 }, { yPercent: 0, rotate: 0, duration: 0.6, stagger: 0.018, ease: 'expo.out', overwrite: true });
+    collect();
+  };
+
+  gsap.set(title, { x: 0, y: 0, xPercent: -50, yPercent: -50 });
+  const render = () => {
+    // Suavizado por tiempo, no por cuadro: igual en una pantalla de 60 o de 120 Hz
+    const r = gsap.ticker.deltaRatio(60), ks = 1 - 0.8 ** r, kp = 1 - 0.94 ** r;
+    shown += (scroll - shown) * ks;
+    px += (tx - px) * kp; py += (ty - py) * kp;
+    const settling = Math.abs(scroll - shown) > 0.0004 || Math.abs(tx - px) > 0.002 || Math.abs(ty - py) > 0.002;
+    if (!dirty && !settling) return;
+    dirty = false;
+    const P = Math.min(1, st8.boot * BOOT + shown * (1 - BOOT));
+    const far = mob ? -1200 : -1700, near = mob ? 350 : 500, pan = mob ? 20 : 45;
+    let lead = -1;
+    for (let i = 0; i < N; i++) {
+      const c = items[i], t = clamp((P - c.start) / SPAN), o = fade(t);
+      if (t >= 0.6 && t < 0.97) lead = i;
+      if (o < 0.005) { if (c.o !== 0) { c.el.style.visibility = 'hidden'; c.el.style.opacity = '0'; c.o = 0; } continue; }
+      const x = c.cos * W * c.fx - px * pan, y = c.sin * H * c.fy - py * pan, z = lerp(far, near, t);
+      c.el.style.transform = 'translate3d(' + x.toFixed(1) + 'px, ' + y.toFixed(1) + 'px, ' + z.toFixed(1) + 'px) rotateZ(' + c.rot + 'deg)';
+      if (c.o !== o) { c.el.style.opacity = o.toFixed(3); c.el.style.visibility = 'visible'; c.o = o; }
+      const f = fog(t);
+      if (Math.abs(f - c.f) > 0.01) { c.el.style.setProperty('--fog', f.toFixed(2)); c.f = f; }
+    }
+    // Titular: se acerca con el viaje, se ensancha a mitad de camino y se apaga al final
+    const q = clamp((P - BOOT) / (1 - BOOT)), bell = Math.sin(Math.PI * q);
+    const scale = P < 0.5 ? lerp(0.94, 1, P / 0.5) : lerp(1, 1.32, (P - 0.5) / 0.5);
+    gsap.set(title, { scale, opacity: 1 - clamp((P - 0.86) / 0.12) });
+    title.style.setProperty('--wg', (300 + 110 * bell).toFixed(0));
+    title.style.setProperty('--ws', (62.5 + 12.5 * bell).toFixed(2) + '%');
+    setWord(lead >= 0 && P < 0.9 ? items[lead].word : 'lugares.');
+    const out = 1 - clamp((P - BOOT - 0.01) / 0.07);
+    fades.forEach((f) => (f.style.opacity = out.toFixed(3)));
+    rings?.style.setProperty('--rs', (1 + P * 0.9).toFixed(3));
+    if (veil) veil.style.opacity = (1 - clamp((P - 0.84) / 0.14)).toFixed(3);
+    // Puntero sobre el titular: cada letra engrosa y se ensancha según lo cerca que pase
+    if (pointer && chars.length) {
+      const R = Math.max(200, W * 0.2), mx = (tx / 2 + 0.5) * W, my = (ty / 2 + 0.5) * H;
+      for (const c of chars) {
+        const r = c.el.getBoundingClientRect();
+        const k = Math.max(0, 1 - Math.hypot(mx - (r.left + r.width / 2), my - (r.top + r.height / 2)) / R), e = k * k * (3 - 2 * k);
+        c.w += (190 * e - c.w) * 0.18; c.s += (12 * e - c.s) * 0.18;
+        if (Math.abs(190 * e - c.w) > 0.5) dirty = true;
+        c.el.style.setProperty('--pw', c.w.toFixed(0));
+        c.el.style.setProperty('--ps', c.s.toFixed(2) + '%');
+      }
+    }
+  };
+  gsap.ticker.add(render);
+  return { boot: () => gsap.to(st8, { boot: 1, duration: 2.8, ease: 'power2.out', onUpdate: () => { dirty = true; } }) };
 }
 
 // ---------- polvo en el haz ----------
@@ -415,7 +520,7 @@ const tl = intro();
 const start = () => {
   // Las tipografías de cada muestra se piden después de la apertura: así no compiten con el titular al cargar
   import('./scene-fonts.css');
-  opening(tl);
+  opening(tl, tunnel());
   dust();
   if (html.classList.contains('is-cinema')) cinema(); else light();
   rest();

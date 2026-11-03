@@ -25,17 +25,55 @@
 .pg--home main { position: relative; z-index: 1; }
 
 /* ---------- apertura ---------- */
-.open { position: relative; isolation: isolate; min-height: 100svh; display: grid; grid-template-rows: 1fr auto auto; padding: calc(var(--hd-h) + 28px) var(--gut) 36px; }
+.open { position: relative; isolation: isolate; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; padding: calc(var(--hd-h) + 28px) var(--gut) 36px; overflow: hidden; }
 /* El haz del proyector: un cono de luz que nace sobre el público y cae hacia la pantalla, con polvo flotando */
 .open__beam { position: absolute; inset: 0 0 -10%; z-index: -1; pointer-events: none; background: conic-gradient(from 0deg at 50% -16%, transparent 0deg 148deg, rgba(255, 236, 208, 0.07) 160deg, rgba(255, 236, 208, 0.19) 180deg, rgba(255, 236, 208, 0.07) 200deg, transparent 212deg 360deg); filter: blur(26px); mix-blend-mode: screen; opacity: 0; }
 .js .open__beam { animation: beam 3s 0.3s var(--ease) forwards; }
 .js.seen .open__beam { animation-delay: 0s; }
 @keyframes beam { 0% { opacity: 0; } 6% { opacity: 0.8; } 9% { opacity: 0.2; } 16% { opacity: 1; } 100% { opacity: 1; } }
 .open__dust { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; mix-blend-mode: screen; }
-.open__kicker { display: flex; flex-wrap: wrap; gap: 8px 28px; align-self: start; font: 400 var(--fs-micro)/1.3 var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
+.open__kicker { position: relative; z-index: 2; display: flex; flex-wrap: wrap; gap: 8px 28px; align-self: start; font: 400 var(--fs-micro)/1.3 var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); }
 .open__kicker span + span::before { content: '·'; margin-right: 28px; opacity: 0.5; }
-.open__title { margin: 0 0 clamp(28px, 4vw, 56px); font: 300 var(--fs-mega)/0.84 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.035em; max-width: 12ch; }
-.open__title em { font-weight: 300; color: var(--bone); }
+/* Con el túnel, la portada queda fija (sticky) mientras se recorre su tramo: no se mueve en el DOM como con un pin */
+.has-tunnel .open-run { height: calc(100svh + 180vh); }
+.has-tunnel .open { position: sticky; top: 0; height: 100svh; }
+@media (max-width: 767px) { .has-tunnel .open-run { height: calc(100svh + 160vh); } }
+.open__foot { position: relative; z-index: 2; }
+/* El titular vive dentro del mismo espacio 3D que las obras: las que vienen lejos pasan detrás y las cercanas, delante.
+   Peso y ancho salen de la tipografía variable: --wg y --ws los mueve el viaje; --pw y --ps, el puntero sobre cada letra */
+.open__space { position: absolute; inset: 0; z-index: 1; overflow: hidden; perspective: 1200px; pointer-events: none; }
+.open__depth, .tunnel { position: absolute; inset: 0; transform-style: preserve-3d; }
+.open__title { position: absolute; left: 50%; top: 47%; width: max-content; max-width: 94vw; margin: 0; text-align: center; transform: translate(-50%, -50%); font: 300 var(--fs-mega)/0.84 var(--f-display); font-weight: var(--wg, 300); font-stretch: var(--ws, 62.5%); letter-spacing: -0.035em; text-shadow: 0 4px 24px rgba(12, 11, 10, 0.7), 0 10px 60px rgba(12, 11, 10, 0.6); }
+.open__title em { font-weight: inherit; color: var(--bone); }
+.open__title .ln { padding: 0 0.04em; }
+.open__title .ch { font-weight: calc(var(--wg, 300) + var(--pw, 0)); font-stretch: calc(var(--ws, 62.5%) + var(--ps, 0%)); will-change: auto; }
+.open__veil { position: absolute; inset: 0; z-index: -2; pointer-events: none; opacity: 0; background: radial-gradient(70% 60% at 50% 44%, rgba(122, 22, 40, 0.3), transparent 72%), radial-gradient(120% 90% at 50% 120%, rgba(60, 10, 22, 0.55), transparent 60%), #0c0b0a; }
+.has-tunnel .open__veil { opacity: 1; }
+.open__rings { position: absolute; left: 50%; top: 47%; z-index: -1; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity 1.4s var(--ease); }
+.has-tunnel .open__rings { opacity: 1; }
+.open__rings::before, .open__rings::after { content: ''; position: absolute; left: 50%; top: 50%; border-radius: 50%; transform: translate(-50%, -50%) scale(var(--rs, 1)); }
+.open__rings::before { width: 48vmin; height: 48vmin; border: 1px solid rgba(236, 229, 216, 0.07); }
+.open__rings::after { width: 78vmin; height: 78vmin; border: 1px dashed rgba(236, 229, 216, 0.06); transform: translate(-50%, -50%) scale(calc(var(--rs, 1) * 0.92 + 0.08)); }
+/* Las obras del túnel */
+.tn { --cw: clamp(170px, 17vw, 262px); position: absolute; left: 50%; top: 47%; width: var(--cw); aspect-ratio: 4 / 5; margin: calc(var(--cw) * -0.625) 0 0 calc(var(--cw) * -0.5); overflow: hidden; border-radius: 14px; background: #171412; box-shadow: 0 40px 70px -24px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(236, 229, 216, 0.14); opacity: 0; visibility: hidden; pointer-events: auto; will-change: transform, opacity; transition: box-shadow 0.5s var(--ease); }
+.tn:hover { box-shadow: 0 40px 70px -24px rgba(0, 0, 0, 0.85), 0 0 0 1.5px var(--acc); }
+.tn picture, .tn img { display: block; width: 100%; height: 100%; }
+.tn img { object-fit: cover; transition: transform 0.8s var(--ease); }
+.tn:hover img { transform: scale(1.08); }
+.tn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8, 7, 6, 0.88), rgba(8, 7, 6, 0.1) 46%, transparent 70%, rgba(8, 7, 6, 0.35)); pointer-events: none; }
+.tn::before { content: ''; position: absolute; inset: 0; z-index: 2; background: #0c0b0a; opacity: var(--fog, 0); pointer-events: none; }
+.tn__k, .tn__t { position: absolute; z-index: 1; left: 12px; right: 12px; }
+.tn__k { top: 11px; font: 400 9.5px var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255, 255, 255, 0.78); }
+.tn__t { bottom: 12px; display: grid; gap: 4px; }
+.tn__t b { font: 300 clamp(17px, 1.45vw, 22px)/1 var(--f-display); font-stretch: 68%; color: #fff; }
+.tn__t small { font: 400 9.5px var(--f-mono); letter-spacing: 0.14em; text-transform: uppercase; color: var(--acc); }
+@media (max-width: 767px) {
+  .tn { --cw: clamp(118px, 34vw, 160px); border-radius: 11px; }
+  .tn__k { left: 9px; top: 8px; font-size: 8px; }
+  .tn__t { left: 9px; right: 9px; bottom: 9px; }
+  .tn__t b { font-size: 15px; }
+  .tn__t small { font-size: 8px; }
+}
 .open__foot { display: grid; grid-template-columns: minmax(0, 32em) auto; justify-content: space-between; align-items: end; gap: 24px; padding-top: 22px; border-top: 1px solid var(--line); }
 .open__sub { font-size: var(--fs-lead); line-height: 1.42; color: var(--bone-2); }
 .open__cue { display: inline-flex; align-items: center; gap: 14px; font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: var(--muted); white-space: nowrap; }
