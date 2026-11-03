@@ -105,3 +105,30 @@ test("SmartStock: si el dato vence, el sabor queda 'por confirmar' (nunca un dis
   // limpieza: un resumen sin sabores no altera el catálogo de las demás pruebas
   expect((await request.post("/api/disponibilidad", signed(feedOf([])))).status()).toBe(200);
 });
+test("SmartStock apartados: firma propia obligatoria, sin datos personales, y una reserva descuenta bolsitas hasta el próximo envío", async ({ request }) => {
+  test.setTimeout(90_000);
+  const secret = "test-feed-secret", path = "/api/smartstock/apartados";
+  const hdr = (s = secret, ctx = "holds.GET " + path, ts = Date.now()) => ({ "x-smartstock-timestamp": String(ts), "x-smartstock-signature": createHmac("sha256", s).update(ts + "." + ctx).digest("hex"), "x-forwarded-for": "8.8.8." + Math.floor(Math.random() * 200) });
+  expect((await request.get(path, { headers: hdr("otra") })).status()).toBe(401);
+  // la firma del envío de disponibilidad no sirve para leer apartados
+  expect((await request.get(path, { headers: hdr(secret, "{}") })).status()).toBe(401);
+  // SmartStock dice: 3 bolsitas de cappuccino
+  expect((await request.post("/api/disponibilidad", signed(feedOf([{ flavor: "cappuccino", status: "available", units: 3 }])))).status()).toBe(200);
+  const day = await nextDay(request);
+  const r = await request.post("/api/reserve", { data: { name: "Chiqui Prueba", date: day.iso, time: day.slots[0].time, items: [{ id: "cappuccino", qty: 2 }], notes: "nota privada" }, headers: { "x-forwarded-for": "9.9.9.9" } });
+  expect(r.status()).toBe(200);
+  const code = (await r.json()).reservation.code;
+  const holds = await (await request.get(path, { headers: hdr() })).json();
+  const mine = holds.items.find((i) => i.code === code);
+  expect(mine.lines).toEqual([{ siteId: "cappuccino", qty: 2, price: expect.any(Number) }]);
+  const raw = JSON.stringify(holds);
+  for (const leak of ["Chiqui", "nota privada", "meetingPoint", "payment", "name"]) expect(raw).not.toContain(leak);
+  await new Promise((res) => setTimeout(res, 16_000));
+  const cap = (await (await request.get("/api/stock")).json()).catalog.find((f) => f.id === "cappuccino");
+  expect(cap.units).toBe(1); // 3 − 2 apartadas
+  // SmartStock ya contó la reserva (holdsAsOf posterior): la web deja de descontarla por su cuenta
+  expect((await request.post("/api/disponibilidad", signed({ ...feedOf([{ flavor: "cappuccino", status: "available", units: 1 }]), holdsAsOf: new Date().toISOString() }))).status()).toBe(200);
+  await new Promise((res) => setTimeout(res, 16_000));
+  expect((await (await request.get("/api/stock")).json()).catalog.find((f) => f.id === "cappuccino").units).toBe(1);
+  expect((await request.post("/api/disponibilidad", signed(feedOf([])))).status()).toBe(200);
+});

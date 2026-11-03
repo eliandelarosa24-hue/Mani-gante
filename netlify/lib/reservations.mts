@@ -1,11 +1,12 @@
 // Servicio único de reservas: lo usan /api/reserve (formulario) y el agente IA.
 import { buildReservation, reservableDays, RESERVATION_RULES, formatCLP } from "../../js/catalog.mjs";
 import { ReserveInput, zodMessage } from "./schemas.mts";
-import { getLiveCatalog } from "./catalog-live.mts";
+import { getLiveCatalog, invalidateStockCache } from "./catalog-live.mts";
 import { getCampus } from "./settings.mts";
 import { stores } from "./store.mts";
 import { notifyOwner } from "./notify.mts";
 import { track } from "./analytics.mts";
+import { recordHoldDelta, loadFeed } from "./smartstock-feed.mts";
 
 export type Status = "pendiente" | "pagada" | "entregada" | "no-show" | "cancelada";
 export interface IndexEntry { code: string; time: string; status: Status; name: string; bags: number; total: number }
@@ -58,6 +59,8 @@ export async function createReservation(raw: unknown, origin: string) {
   await store.set(`res/${input.date}/${r.code}`, r);
   idx.push({ code: r.code, time: r.time, status: "pendiente", name: r.name, bags: r.bags, total: r.total });
   await store.set(indexKey(input.date), idx);
+  // Si SmartStock maneja la disponibilidad, aparta estas bolsitas hasta el próximo envío.
+  if (await loadFeed()) { await recordHoldDelta(r).catch(() => {}); invalidateStockCache(); }
 
   const summary = `${r.code} · ${r.name} · ${r.dateLabel} ${r.time} · ${r.meetingPoint} · ${r.bags} bolsas · ${formatCLP(r.total)}`;
   const [notified] = await Promise.all([

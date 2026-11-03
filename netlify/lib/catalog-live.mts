@@ -3,7 +3,7 @@
 import { FLAVORS, JAPANESE, STOCK_API_URL, CATALOG_VERSION, mergeRemoteStock } from "../../js/catalog.mjs";
 import { stores } from "./store.mts";
 import { getOverrides, getLots } from "./settings.mts";
-import { loadFeed, applyFeed } from "./smartstock-feed.mts";
+import { loadFeed, applyFeed, loadDelta, deltaFor } from "./smartstock-feed.mts";
 
 const TTL_MS = 60_000;
 const LOW_STOCK = 5; // bolsas restantes para mostrar "Últimas unidades"
@@ -36,7 +36,7 @@ async function build() {
   } else source = "google-sheets";
 
   const base = cached ? mergeRemoteStock(cached.rows as any[]) : FLAVORS;
-  const [overrides, lots, feed] = await Promise.all([getOverrides().catch(() => ({})), getLots().catch(() => []), loadFeed()]);
+  const [overrides, lots, feed, delta] = await Promise.all([getOverrides().catch(() => ({})), getLots().catch(() => []), loadFeed(), loadDelta()]);
   const remaining: Record<string, number> = {};
   for (const l of lots) remaining[l.flavorId] = (remaining[l.flavorId] || 0) + Math.max(0, l.bags - l.sold);
 
@@ -46,7 +46,7 @@ async function build() {
     const left = remaining[f.id];
     const low = typeof left === "number" && left > 0 && left <= LOW_STOCK;
     // SmartStock (si envía datos) manda sobre la planilla para los sabores que maneja; el ajuste manual del admin sigue al final.
-    const synced = applyFeed({ ...f, low }, feed);
+    const synced = applyFeed({ ...f, low }, feed, Date.now(), deltaFor(f.id, feed, delta));
     return { ...synced, available: typeof o === "boolean" ? o : synced.available, overridden: typeof o === "boolean" };
   };
   return {
