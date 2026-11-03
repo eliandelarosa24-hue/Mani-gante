@@ -13,7 +13,7 @@ export default defineConfig({
     command: "node tests/serve.mjs . 8799",
     url: "http://localhost:8799/",
     reuseExistingServer: false,
-    env: { ADMIN_TOKEN: "test-admin-token-123", STOCK_WEBHOOK_SECRET: "test-hook" },
+    env: { ADMIN_TOKEN: "test-admin-token-123", STOCK_WEBHOOK_SECRET: "test-hook", SMARTSTOCK_FEED_SECRET: "test-feed-secret" },
   },
   projects: [
     { name: "desktop", use: { ...devices["Desktop Chrome"], viewport: { width: 1440, height: 900 } } },

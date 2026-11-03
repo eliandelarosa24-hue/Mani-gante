@@ -73,3 +73,35 @@ test("API v4.5: el ticket informa su estado (sin datos personales) y la ficha de
   expect(html).toContain("Escaneaste tu bolsa");
   expect(html).toContain("Tip de la casa");
 });
+
+// ---------- SmartStock → web comercial (datos ficticios) ----------
+import { createHmac } from "node:crypto";
+function signed(feed, { secret = "test-feed-secret", ts = Date.now() } = {}) {
+  const body = JSON.stringify(feed);
+  return { data: body, headers: { "content-type": "application/json", "x-smartstock-timestamp": String(ts), "x-smartstock-signature": createHmac("sha256", secret).update(ts + "." + body).digest("hex"), "x-forwarded-for": "7.7.7." + Math.floor(Math.random() * 200) } };
+}
+const feedOf = (items, ms = 6 * 3600_000) => ({ version: 1, generatedAt: new Date().toISOString(), validUntil: new Date(Date.now() + ms).toISOString(), items });
+test("SmartStock: rechaza firma falsa, firma vieja y campos privados; acepta el resumen válido", async ({ request }) => {
+  const feed = feedOf([{ flavor: "coco", status: "out_of_stock", units: 0 }]);
+  expect((await request.post("/api/disponibilidad", signed(feed, { secret: "otra" }))).status()).toBe(401);
+  expect((await request.post("/api/disponibilidad", signed(feed, { ts: Date.now() - 10 * 60_000 }))).status()).toBe(401);
+  expect((await request.post("/api/disponibilidad", signed({ ...feed, cash: 100000 }))).status()).toBe(422);
+  expect((await request.post("/api/disponibilidad", signed(feedOf([{ flavor: "coco", status: "available", cost: 3200 }])))).status()).toBe(422);
+  const ok = await request.post("/api/disponibilidad", signed(feed));
+  expect(ok.status()).toBe(200);
+  await new Promise((r) => setTimeout(r, 16_000)); // caché del stock (15 s)
+  const stock = await (await request.get("/api/stock")).json();
+  const coco = stock.catalog.find((f) => f.id === "coco");
+  expect(coco.available).toBe(false);
+  expect(coco.stockSource).toBe("smartstock");
+  expect(JSON.stringify(stock)).not.toContain("test-feed-secret");
+});
+test("SmartStock: si el dato vence, el sabor queda 'por confirmar' (nunca un disponible viejo)", async ({ request }) => {
+  expect((await request.post("/api/disponibilidad", signed(feedOf([{ flavor: "frutilla", status: "out_of_stock", units: 0 }], 2000)))).status()).toBe(200);
+  await new Promise((r) => setTimeout(r, 16_500));
+  const frutilla = (await (await request.get("/api/stock")).json()).catalog.find((f) => f.id === "frutilla");
+  expect(frutilla.unconfirmed).toBe(true);
+  expect(frutilla.stockSource).toBe("smartstock-vencido");
+  // limpieza: un resumen sin sabores no altera el catálogo de las demás pruebas
+  expect((await request.post("/api/disponibilidad", signed(feedOf([])))).status()).toBe(200);
+});

@@ -3,6 +3,7 @@
 import { FLAVORS, JAPANESE, STOCK_API_URL, CATALOG_VERSION, mergeRemoteStock } from "../../js/catalog.mjs";
 import { stores } from "./store.mts";
 import { getOverrides, getLots } from "./settings.mts";
+import { loadFeed, applyFeed } from "./smartstock-feed.mts";
 
 const TTL_MS = 60_000;
 const LOW_STOCK = 5; // bolsas restantes para mostrar "Últimas unidades"
@@ -35,7 +36,7 @@ async function build() {
   } else source = "google-sheets";
 
   const base = cached ? mergeRemoteStock(cached.rows as any[]) : FLAVORS;
-  const [overrides, lots] = await Promise.all([getOverrides().catch(() => ({})), getLots().catch(() => [])]);
+  const [overrides, lots, feed] = await Promise.all([getOverrides().catch(() => ({})), getLots().catch(() => []), loadFeed()]);
   const remaining: Record<string, number> = {};
   for (const l of lots) remaining[l.flavorId] = (remaining[l.flavorId] || 0) + Math.max(0, l.bags - l.sold);
 
@@ -44,7 +45,9 @@ async function build() {
     // "Últimas unidades": cuando el inventario por lotes del admin dice que quedan 5 o menos
     const left = remaining[f.id];
     const low = typeof left === "number" && left > 0 && left <= LOW_STOCK;
-    return { ...f, available: typeof o === "boolean" ? o : f.available, overridden: typeof o === "boolean", low };
+    // SmartStock (si envía datos) manda sobre la planilla para los sabores que maneja; el ajuste manual del admin sigue al final.
+    const synced = applyFeed({ ...f, low }, feed);
+    return { ...synced, available: typeof o === "boolean" ? o : synced.available, overridden: typeof o === "boolean" };
   };
   return {
     catalog: base.map(apply),
@@ -55,6 +58,8 @@ async function build() {
     lotsRemaining: remaining, // solo lo usa el admin
   };
 }
+
+export function invalidateStockCache() { memo = null; }
 
 export async function getLiveCatalog() {
   if (memo && Date.now() - memo.at < 15_000) return memo.data;

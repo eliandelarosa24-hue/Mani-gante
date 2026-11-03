@@ -1353,6 +1353,8 @@ html.lenis { scroll-behavior: auto; }
 .card-state.low { color: var(--color-accent); }
 .card-state.edition { color: var(--gold-ink); }
 .card-state.out { color: var(--subtle); }
+.card-state.unconfirmed { color: var(--gold-ink); }
+.card-state.unconfirmed i { box-shadow: none; }
 .card-state.out i { box-shadow: none; opacity: .6; }
 .badge.edition { background: var(--foil); color: #0d0b09; }
 .add-btn.ghost { white-space: normal; line-height: 1.1; text-align: left; font-size: .72rem; padding-block: 6px; min-height: 44px; }

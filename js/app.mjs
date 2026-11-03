@@ -61,6 +61,8 @@ const gridJp = $("#gridJp");
 
 // Estado de stock con palabras de la casa: en circulación · últimas unidades · se acabó esta semana
 function stockState(f) {
+  // SmartStock no envió un dato vigente: nunca mostramos un "disponible" viejo
+  if (f.unconfirmed) return { cls: "unconfirmed", text: "Disponibilidad por confirmar · te confirmamos por WhatsApp" };
   if (!f.available) return { cls: "out", text: "Se acabó esta semana" };
   if (isWeeklyEdition(f)) return { cls: "edition", text: "Solo esta semana · cuando se acabe, se acabó" };
   if (f.low) return { cls: "low", text: "Últimas unidades" };
