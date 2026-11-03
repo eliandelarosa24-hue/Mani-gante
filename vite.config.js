@@ -2,7 +2,7 @@ import { defineConfig } from 'vite';
 import { readdirSync, existsSync, statSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { chromeParts, emblem } from './src/site/chrome.mjs';
-import { scenesMarkup, ticksMarkup, realMarkup, voiceMarkup, railMarkup, latMapMarkup, tunnelMarkup } from './src/site/markup.mjs';
+import { realMarkup, voiceMarkup, latMapMarkup, tunnelMarkup, ringMarkup } from './src/site/markup.mjs';
 
 // URL pública: Netlify la entrega en el build (URL). Con dominio propio, defina SITE_URL.
 const SITE_URL = (process.env.SITE_URL || process.env.URL || 'https://redvaeru.netlify.app').replace(/\/$/, '');
@@ -38,10 +38,8 @@ function inject(html) {
     .replace(/<!--RV:OVERLAYS-->/g, chromeParts.overlays())
     .replace(/<!--RV:REVIEW-->/g, chromeParts.review())
     .replace(/<!--RV:EMBLEM:([a-z_-]+)-->/g, (_, cls) => emblem(cls))
-    .replace('<!--RV:SCENES-->', () => scenesMarkup())
     .replace('<!--RV:TUNNEL-->', () => tunnelMarkup())
-    .replace('<!--RV:TICKS-->', () => ticksMarkup())
-    .replace('<!--RV:RAIL-->', () => railMarkup())
+    .replace('<!--RV:RING-->', () => ringMarkup())
     .replace('<!--RV:LATMAP-->', () => latMapMarkup())
     .replace('<!--RV:REAL-->', () => realMarkup())
     .replace('<!--RV:VOICE-->', () => voiceMarkup());

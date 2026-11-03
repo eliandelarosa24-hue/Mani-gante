@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, readFileSync } from 'node:fs';
 import { SCENES, REAL } from '../src/site/scenes.js';
 import { TOUR } from '../src/samples/tour.js';
-import { latY, scenesMarkup, railMarkup, voiceMarkup } from '../src/site/markup.mjs';
+import { latY, voiceMarkup, ringMarkup, BRANDS } from '../src/site/markup.mjs';
 
 test('la función va del paralelo 19 Norte al 41 Sur, sin saltos hacia el norte', () => {
   for (let i = 1; i < SCENES.length; i++) assert.ok(SCENES[i].lat <= SCENES[i - 1].lat + 0.02, `${SCENES[i].slug} rompe el orden de latitud`);
@@ -27,11 +27,17 @@ test('cada obra tiene foto, su sitio en video (computador y celular), caso, tipo
   }
 });
 
-test('las muestras se presentan como ficción y nunca con precios', () => {
-  const html = scenesMarkup();
-  assert.equal((html.match(/negocio ficticio/g) || []).length, SCENES.length);
+test('la vitrina muestra las trece marcas con su logo y su sitio, las muestras como concepto y sin precios', () => {
+  const html = ringMarkup();
+  assert.equal(BRANDS.length, SCENES.length + REAL.length);
+  assert.equal((html.match(/class="rw"/g) || []).length, BRANDS.length);
+  assert.equal((html.match(/data-ri=/g) || []).length, BRANDS.length);
   assert.doesNotMatch(html, /\$\d/);
-  assert.equal((railMarkup().match(/rail__dot/g) || []).length, SCENES.length);
+  for (const b of BRANDS) {
+    assert.ok(existsSync(`public/img/marcas/${b.slug}.webp`), `falta el logo de ${b.slug}`);
+    for (const k of ['d', 'm']) for (const ext of ['avif', 'webp']) assert.ok(existsSync(`public/img/vitrina/${b.slug}-${k}.${ext}`), `falta la ventana ${b.slug}-${k}.${ext}`);
+    assert.equal(b.label, SCENES.some((s) => s.slug === b.slug) ? 'Muestra de concepto' : REAL.find((r) => r.slug === b.slug).label);
+  }
 });
 
 test('el generador de Trabajos crea el índice y un caso por obra', () => {

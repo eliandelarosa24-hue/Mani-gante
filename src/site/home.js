@@ -1,19 +1,15 @@
-// Portada: las obras como cine. En computador, un proyector WebGL a pantalla completa pasa de una obra
-// a la siguiente con el scroll; en celular (o con "reducir movimiento"), escenas a pantalla completa
-// que se revelan al entrar, sin WebGL.
+// Portada: las obras salen del proyector en un túnel 3D junto al titular y, más abajo, giran en una vitrina
+// limpia, marca por marca, con su sitio funcionando y el botón para visitarlo.
 import { boot, reveal, splitChars, splitLines, projectorLight, getLenis, $, $$, gsap, ScrollTrigger, reduced, fine, small, track } from './core.js';
-import { createCinema } from './cinema-gl.js';
-import { ambience, shutter } from './sound.js';
-import { SCENES } from './scenes.js';
-import { latY } from './markup.mjs';
+import { ambience } from './sound.js';
 
 const SOUND = { 'termas-rayenko': 'agua', 'villa-coral-samana': 'mar', 'domos-cielo-austral': 'noche', 'hotel-casa-nogal': 'lluvia', 'pucon-aventura': 'viento', 'fogon-mapu': 'fuego', 'cabanas-lago-azul': 'agua', 'vina-los-robles': 'viento', 'kuchen-haus-frutillar': 'fuego', 'estudio-haber': 'sala' };
 
 boot();
 const html = document.documentElement;
-const cinemaMode = fine && !reduced && !small() && !!window.WebGLRenderingContext;
-html.classList.add(cinemaMode ? 'is-cinema' : 'is-light');
+// Túnel y vitrina ocupan su propio tramo de scroll (CSS sticky); con «reducir movimiento», no
 if (!reduced && $('.tn')) html.classList.add('has-tunnel');
+if (!reduced && $('[data-ring]')) html.classList.add('has-ring');
 
 // ---------- entrada ----------
 // Con «ahorro de datos» o una conexión lenta, la cuenta regresiva se omite y la portada aparece de inmediato
@@ -74,7 +70,7 @@ function tunnel() {
   const open = $('[data-open]'), title = $('[data-open-title]'), word = $('[data-open-word]');
   const cards = open ? $$('.tn', open) : [];
   if (!title || !word || !cards.length || reduced) return null;
-  const veil = $('[data-veil]', open), rings = $('[data-rings]', open), fades = $$('[data-open-fade]', open);
+  const rings = $('[data-rings]', open), fades = [...$$('[data-open-fade]', open), $('.open__foot', open)].filter(Boolean);
 
   // Las fotos se piden después del titular, para no competir con él al cargar
   cards.forEach((c) => { const src = $('source', c), img = $('img', c); if (src) src.srcset = src.dataset.srcset; img.src = img.dataset.src; });
@@ -151,7 +147,6 @@ function tunnel() {
     const out = 1 - clamp((P - BOOT - 0.01) / 0.07);
     fades.forEach((f) => (f.style.opacity = out.toFixed(3)));
     rings?.style.setProperty('--rs', (1 + P * 0.9).toFixed(3));
-    if (veil) veil.style.opacity = (1 - clamp((P - 0.84) / 0.14)).toFixed(3);
     // Puntero sobre el titular: cada letra engrosa y se ensancha según lo cerca que pase
     if (pointer && chars.length) {
       const R = Math.max(200, W * 0.2), mx = (tx / 2 + 0.5) * W, my = (ty / 2 + 0.5) * H;
@@ -220,142 +215,129 @@ function dust() {
   }).observe(open);
 }
 
-// ---------- escenas (compartido) ----------
-function paintTitle(el) {
-  if (!el || el.dataset.ready) return;
-  el.dataset.ready = '1';
-  splitChars(el);
-  // Titulares con degradado recortado al texto (lava, Vía Láctea): el degradado pasa a cada letra
-  el.querySelectorAll('em').forEach((em) => {
-    if (!/background-clip/.test(em.getAttribute('style') || '')) return;
-    const bg = em.style.backgroundImage;
-    em.querySelectorAll('.ch').forEach((c) => Object.assign(c.style, { backgroundImage: bg, webkitBackgroundClip: 'text', backgroundClip: 'text', color: 'transparent', webkitTextFillColor: 'transparent' }));
-    Object.assign(em.style, { backgroundImage: 'none', color: 'inherit' });
-  });
-}
+// ---------- vitrina de marcas ----------
+// Trece ventanas en un anillo 3D. El scroll lo hace girar: cada marca se detiene un momento al frente, con su
+// sitio funcionando, su logo y los botones para visitarlo. El índice de logos salta a cualquiera.
+function ring() {
+  const sec = $('[data-ring]');
+  if (!sec) return null;
+  const data = JSON.parse($('[data-ring-data]', sec).textContent);
+  const wheel = $('[data-wheel]', sec), wins = $$('[data-rw]', sec), dots = $$('[data-ri]', sec), run = $('[data-ring-run]');
+  const now = $('[data-ring-now]', sec), logo = $('.ring__logo', now), num = $('[data-ring-n]', sec);
+  const label = $('[data-ring-label]', now), kind = $('[data-ring-kind]', now), visit = $('[data-ring-visit]', now), of = $('[data-ring-of]', now);
+  const more = $('[data-ring-more]', now), moreL = $('[data-ring-more-l]', now);
+  const N = wins.length, STEP = 360 / N, HOLD = 0.32;
+  const phone = matchMedia('(max-width: 767px)');
+  const clamp = gsap.utils.clamp(0, 1);
 
-// ---------- modo cine (computador) ----------
-function cinema() {
-  const reel = $('[data-reel]'), canvas = $('[data-cinema]');
-  if (!reel || !canvas) return;
-  const gl = createCinema(canvas, { onFirstFrame: () => html.classList.add('gl-ready') });
-  if (!gl) { html.classList.replace('is-cinema', 'is-light'); return light(); }
-  gl.setScenes(SCENES);
-  gl.start();
+  // Las capturas de cada sitio se piden al acercarse a la vitrina
+  new IntersectionObserver(([e], o) => {
+    if (!e.isIntersecting) return;
+    o.disconnect();
+    wins.forEach((w) => { $$('source', w).forEach((src) => (src.srcset = src.dataset.srcset)); const im = $('img', w); im.src = im.dataset.src; });
+  }, { rootMargin: '900px' }).observe(sec);
 
-  const scenes = $$('[data-scene]', reel);
-  const ticks = $$('[data-tick]');
-  const counter = $('[data-reel-n]'), fill = $('[data-reel-fill]'), tc = $('[data-timecode]');
-  const now = $('[data-lat-now]'), rail = $('.rail'), cue = $('.cue'), sub = $('[data-reel-sub]');
-  const fmtLat = (lat) => { const a = Math.abs(lat), d = Math.floor(a), m = Math.round((a - d) * 60); return Math.abs(lat) < 0.2 ? '0° · Ecuador' : `${d}°${String(m === 60 ? 59 : m).padStart(2, '0')}′ ${lat > 0 ? 'N' : 'S'}`; };
-  const N = scenes.length;
-  scenes.forEach((s) => paintTitle($('.wtitle', s)));
-  let active = -1;
+  // Un solo video: el del sitio que queda al frente, cuando se detiene
+  const video = document.createElement('video');
+  Object.assign(video, { muted: true, loop: true, playsInline: true, preload: 'none' });
+  video.setAttribute('muted', ''); video.setAttribute('playsinline', '');
+  let videoFor = -1, settle = 0;
+  const playFront = (k) => {
+    clearTimeout(settle);
+    video.classList.remove('is-on');
+    settle = setTimeout(() => {
+      const base = phone.matches ? data[k].video.m : data[k].video.d;
+      if (videoFor !== k || video.dataset.base !== base) {
+        videoFor = k; video.dataset.base = base; video.poster = base + '.jpg';
+        video.innerHTML = '<source src="' + base + '.webm" type="video/webm"><source src="' + base + '.mp4" type="video/mp4">';
+        $('.rw__screen', wins[k]).append(video);
+        video.load();
+      }
+      video.play().then(() => video.classList.add('is-on')).catch(() => {});
+    }, 420);
+  };
 
-  // Escenario de pantallas: navegador y celular con el sitio de la obra; los videos se cargan un poco antes
-  const stageEl = $('[data-stage]'), vd = $('[data-stage-d]'), vm = $('[data-stage-m]'), su = $('[data-stage-url]'), sn = $('[data-stage-name]');
-  let staged = -1, playing = false;
-  const srcs = (v, base) => { v.poster = base + '.jpg'; v.innerHTML = `<source src="${base}.webm" type="video/webm"><source src="${base}.mp4" type="video/mp4">`; v.load(); };
-  const links = $$('[data-stage-link]');
-  const stage = (i, k, out) => {
-    if (staged !== i) {
-      staged = i;
-      srcs(vd, SCENES[i].site.d); srcs(vm, SCENES[i].site.m);
-      su.textContent = `redvaeru.netlify.app${SCENES[i].sample}`;
-      sn.textContent = SCENES[i].name;
-      links.forEach((a) => (a.href = SCENES[i].sample));
+  // La marca al frente: logo, rubro, lugar y enlaces
+  let front = -1;
+  const setFront = (k) => {
+    if (k === front) return;
+    const first = front < 0;
+    front = k;
+    const b = data[k];
+    dots.forEach((d, j) => (j === k ? d.setAttribute('aria-current', 'true') : d.removeAttribute('aria-current')));
+    num.textContent = String(k + 1).padStart(2, '0');
+    const fill = () => {
+      logo.src = '/img/marcas/' + b.slug + '.webp'; logo.alt = b.name;
+      const im = $('img', dots[k]), w = +im.getAttribute('width'), h = +im.getAttribute('height'), ratio = w / h, area = phone.matches ? 5200 : 9400;
+      logo.width = w; logo.height = h;
+      logo.style.setProperty('--lh', Math.min(phone.matches ? 46 : 58, Math.sqrt(area / ratio)).toFixed(1) + 'px');
+      label.textContent = b.label; kind.textContent = b.kind + ' · ' + b.town;
+      visit.href = b.visit; of.textContent = ' de ' + b.name + ' (se abre en otra pestaña)';
+      more.href = b.more; moreL.textContent = b.moreLabel;
+    };
+    if (first || reduced) fill();
+    else { now.classList.add('is-swap'); setTimeout(() => { fill(); now.classList.remove('is-swap'); }, 220); }
+    ambience(SOUND[b.slug]);
+    // En celular, el índice se desliza para dejar el logo activo al centro (sin mover el resto de la página)
+    if (phone.matches) { const bar = dots[k].closest('.ring__index'), li = dots[k].parentElement; bar.scrollTo({ left: li.offsetLeft - (bar.clientWidth - li.offsetWidth) / 2, behavior: first ? 'auto' : 'smooth' }); }
+    playFront(k);
+  };
+
+  // Giro: posición continua (0 = primera marca al frente)
+  let target = 0, pos = 0, dirty = true;
+  const paint = () => {
+    wheel.style.setProperty('--rot', (-pos * STEP).toFixed(2) + 'deg');
+    for (let i = 0; i < N; i++) {
+      let d = ((i - pos) * STEP) % 360;
+      if (d > 180) d -= 360; else if (d < -180) d += 360;
+      const a = Math.abs(d);
+      wins[i].style.setProperty('--fog', Math.min(0.82, a / 75).toFixed(2));
+      wins[i].style.visibility = a > 110 ? 'hidden' : '';
     }
-    stageEl.style.setProperty('--in', k.toFixed(3));
-    stageEl.classList.toggle('is-live', k > 0.6);
-    const sc = scenes[i]; if (sc) { sc.style.setProperty('--out', out.toFixed(3)); sc.classList.toggle('is-hidden', out > 0.95); }
-    const on = k > 0.02;
-    if (on && !playing) { playing = true; vd.play().catch(() => {}); vm.play().catch(() => {}); }
-    if (!on && playing) { playing = false; vd.pause(); vm.pause(); }
+    const k = Math.round(pos);
+    if (Math.abs(pos - k) < 0.18) setFront(((k % N) + N) % N);
+    else { clearTimeout(settle); video.classList.remove('is-on'); }
   };
-
-  const show = (i) => {
-    if (i === active) return;
-    const prev = active; active = i;
-    scenes.forEach((s, k) => { s.classList.toggle('is-active', k === i); if (k !== i) s.style.setProperty('--out', 0); });
-    ticks.forEach((t, k) => t.setAttribute('aria-current', String(k === i)));
-    if (counter) counter.textContent = String(i + 1).padStart(2, '0');
-    const s = scenes[i];
-    html.style.setProperty('--scene-accent', SCENES[i].accent);
-    if (prev >= 0) { gsap.to($$('.ch', scenes[prev]), { yPercent: -110, opacity: 0, duration: 0.5, stagger: 0.008, ease: 'power3.in', overwrite: true }); gsap.to($$('[data-scene-fade]', scenes[prev]), { opacity: 0, y: -14, duration: 0.4, overwrite: true }); }
-    gsap.fromTo($$('.ch', s), { yPercent: 110, opacity: 0, rotate: 4 }, { yPercent: 0, opacity: 1, rotate: 0, duration: 1.15, stagger: 0.018, ease: 'expo.out', delay: prev >= 0 ? 0.25 : 0, overwrite: true });
-    gsap.fromTo($$('[data-scene-fade]', s), { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: 1, stagger: 0.06, ease: 'expo.out', delay: prev >= 0 ? 0.45 : 0.2, overwrite: true });
-    ambience(SOUND[SCENES[i].slug]);
-    if (prev >= 0) shutter();
-  };
-
-  // El scroll del bloque del cine se reparte entre las escenas: cada una se sostiene y luego corta
-  // Cada obra tiene tres tiempos: el lugar (foto y titular), la pantalla (su sitio funcionando) y el corte.
-  // Declarado antes de los ScrollTrigger: si la página abre más abajo (recarga o #estreno), onUpdate corre de inmediato
-  let pos = 0, last = 0, openK = 0;
-  const HOLD = 0.8, TAIL = 0.78;
-  const ramp = (t, a, b) => gsap.utils.clamp(0, 1, (t - a) / (b - a));
-  const smooth = (x) => x * x * (3 - 2 * x);
-  ScrollTrigger.create({
-    trigger: reel, start: 'top top', end: 'bottom bottom',
-    onUpdate: (st) => {
-      const p = st.progress * (N - 1 + TAIL);
-      const i = Math.min(N - 1, Math.floor(p)), t = p - i;
-      const m = i >= N - 1 ? 0 : gsap.utils.clamp(0, 1, (t - HOLD) / (1 - HOLD));
-      const eased = smooth(m);
-      pos = i + eased;
-      // La pantalla: entra entre 0,30 y 0,42; se va entre 0,66 y 0,76
-      const k = smooth(ramp(t, 0.32, 0.44)) * (1 - smooth(ramp(t, 0.66, 0.76)));
-      // El titular se va antes de que lleguen las pantallas y no vuelve: tras ellas queda solo el lugar, y luego el corte
-      const out = i >= N - 1 ? smooth(ramp(t, 0.24, 0.32)) * (1 - smooth(ramp(t, 0.7, 0.78))) : smooth(ramp(t, 0.24, 0.32));
-      stage(i, k, out);
-      gl.set(pos, (pos - last) * 18);
-      gl.blur(k * 0.9, k);
-      gl.dim(0.38 + 0.62 * openK - k * 0.42);
-      last = pos;
-      show(Math.min(N - 1, Math.round(pos)));
-      // Latitud que rueda entre una obra y la siguiente, marcas de cambio de rollo y cruce del ecuador
-      const la = SCENES[i].lat, lb = SCENES[Math.min(N - 1, i + 1)].lat, lat = la + (lb - la) * eased;
-      if (now) { now.textContent = fmtLat(lat); rail.style.setProperty('--now', (latY(lat) * 100).toFixed(2) + '%'); }
-      if (cue) cue.classList.toggle('is-on', i < N - 1 && ((t > 0.7 && t < 0.73) || (t > 0.75 && t < 0.78)));
-      if (sub) { const eq = i === 0 && m > 0.08 && m < 0.92; sub.textContent = eq ? '— Cruzamos la línea del ecuador.' : ''; sub.classList.toggle('is-on', eq); }
-      if (fill) fill.style.transform = `scaleX(${st.progress})`;
-      if (tc) { const secs = st.progress * 600; tc.textContent = `00:${String(Math.floor(secs / 60)).padStart(2, '0')}:${String(Math.floor(secs % 60)).padStart(2, '0')}:${String(Math.floor((secs * 24) % 24)).padStart(2, '0')}`; }
-    },
-  });
-
-  // Antes del cine: la portada se oscurece; después: el proyector se apaga
-  ScrollTrigger.create({ trigger: '[data-open]', start: 'top top', end: 'bottom top', onUpdate: (st) => { openK = st.progress; gl.dim(0.38 + 0.62 * openK); } });
-  gl.dim(0.38);
-  ScrollTrigger.create({ trigger: reel, start: 'top 60%', end: 'bottom 40%', toggleClass: { targets: html, className: 'in-reel' } });
-  ScrollTrigger.create({
-    trigger: reel, start: 'bottom bottom', end: 'bottom top',
-    onUpdate: (st) => gl.dim(1 - st.progress),
-    onLeave: () => { gl.visible(false); ambience('sala'); },
-    onEnterBack: () => gl.visible(true),
-  });
-  if (active < 0) show(0);
-
-  addEventListener('pointermove', (e) => gl.pointer(e.clientX / innerWidth, 1 - e.clientY / innerHeight), { passive: true });
-  document.addEventListener('visibilitychange', () => (document.hidden ? gl.stop() : gl.start()));
-
-  // Línea de tiempo: saltar a una obra
-  ticks.forEach((t, k) => t.addEventListener('click', () => {
-    const st = ScrollTrigger.getAll().find((x) => x.trigger === reel);
-    const y = st.start + ((k + 0.12) / (N - 1 + TAIL)) * (st.end - st.start);
+  if (reduced) { paint(); setFront(0); }
+  else {
+    const smooth = (x) => x * x * (3 - 2 * x);
+    ScrollTrigger.create({
+      trigger: run, start: 'top top', end: 'bottom bottom',
+      onUpdate: (st) => {
+        const u = st.progress * (N - 1), i = Math.min(N - 1, Math.floor(u));
+        target = i + smooth(clamp((u - i - HOLD) / (1 - HOLD)));
+        dirty = true;
+      },
+    });
+    ScrollTrigger.create({ trigger: run, start: 'top 60%', end: 'bottom 40%', toggleClass: { targets: html, className: 'in-reel' } });
+    gsap.ticker.add(() => {
+      const k = 1 - 0.84 ** gsap.ticker.deltaRatio(60);
+      if (!dirty && Math.abs(target - pos) < 0.0005) return;
+      pos += (target - pos) * k;
+      if (Math.abs(target - pos) < 0.0005) { pos = target; dirty = false; }
+      paint();
+    });
+  }
+  // Índice de logos: salta a cualquier marca
+  const at = (k) => { const top = run.getBoundingClientRect().top + scrollY; return top + (run.offsetHeight - innerHeight) * (k / (N - 1)); };
+  dots.forEach((d, k) => d.addEventListener('click', () => {
+    track('vitrina_salto', { marca: data[k].slug });
+    if (reduced) { pos = k; paint(); return; }
     const lenis = getLenis();
-    lenis ? lenis.scrollTo(y, { duration: 1.6 }) : scrollTo({ top: y, behavior: 'smooth' });
-    track('reel_jump', { work: SCENES[k].slug });
+    lenis ? lenis.scrollTo(at(k), { duration: 1.2 }) : scrollTo({ top: at(k), behavior: 'smooth' });
   }));
+  visit.addEventListener('click', () => track('vitrina_visitar', { marca: data[front].slug }));
+  return { N, at, name: (k) => data[k].name };
 }
 
 // ---------- Ver la función ----------
 // La portada se recorre sola: cada obra, su sitio funcionando y el corte. Cualquier gesto del visitante la detiene.
-function autoplay() {
+function autoplay(vitrina) {
   const btn = $('[data-play]');
   const lenis = getLenis();
   if (!btn) return;
   if (reduced || !lenis) { btn.remove(); return; }
-  $('[data-play-t]', btn).textContent = html.classList.contains('is-cinema') ? '2 min' : '1 min';
+  $('[data-play-t]', btn).textContent = '1 min';
   const pill = document.createElement('button');
   pill.type = 'button'; pill.className = 'play-pill';
   pill.innerHTML = '<span class="rec" aria-hidden="true"></span><span data-play-n>Reproduciendo</span><b>Detener</b>';
@@ -374,19 +356,14 @@ function autoplay() {
   const run = async () => {
     playing = true; html.classList.add('is-playing');
     track('reel_autoplay', { action: 'start' });
-    const reel = $('[data-reel]'), N = SCENES.length, scenes = $$('[data-scene]');
-    const top = reel.offsetTop, len = reel.offsetHeight - innerHeight, at = (x) => top + len * x / (N - 1 + 0.78);
-    for (let i = 0; i < N && playing; i++) {
-      label.textContent = `Reproduciendo · ${SCENES[i].n} / ${String(N).padStart(2, '0')}`;
-      if (html.classList.contains('is-cinema')) {
-        await go(at(i + 0.12), i ? 1.8 : 2.4); if (!playing) break;
-        await wait(2600); if (!playing) break;
-        await go(at(i + 0.56), 2.2); if (!playing) break;
-        await wait(3400);
-      } else {
-        await go(scenes[i], 1.6); if (!playing) break;
-        await wait(4200);
-      }
+    const top = (el) => el.getBoundingClientRect().top + scrollY;
+    const tunnelRun = $('[data-open-run]');
+    label.textContent = 'Reproduciendo · el túnel';
+    if (tunnelRun) { await go(top(tunnelRun) + tunnelRun.offsetHeight - innerHeight, 7); if (!playing) return; }
+    for (let k = 0; vitrina && k < vitrina.N && playing; k++) {
+      label.textContent = `Reproduciendo · ${String(k + 1).padStart(2, '0')} / ${vitrina.N}`;
+      await go(vitrina.at(k), k ? 1.4 : 1.8); if (!playing) break;
+      await wait(2600);
     }
     if (playing) { await go($('.inter'), 2); track('reel_autoplay', { action: 'end' }); stop(); }
   };
@@ -396,85 +373,6 @@ function autoplay() {
   addEventListener('wheel', stop, { passive: true });
   addEventListener('touchstart', (e) => { if (!e.target.closest('.play, .play-pill')) stop(); }, { passive: true });
   addEventListener('keydown', (e) => { if (['ArrowDown', 'ArrowUp', 'PageDown', 'PageUp', ' ', 'Home', 'End', 'Escape'].includes(e.key)) stop(); });
-}
-
-// ---------- índice de escenas (celular) ----------
-// Un botón «Escenas» acompaña la función y abre la lista de las diez obras para saltar a cualquiera
-function sceneIndex(scenes) {
-  const box = document.createElement('div');
-  box.className = 'sx';
-  box.innerHTML = `<button class="sx__btn" type="button" aria-expanded="false" aria-controls="sx-list"><span class="sx__dot" aria-hidden="true"></span>Escenas <b data-sx-n>01</b><small>/ ${String(SCENES.length).padStart(2, '0')}</small></button>
-    <div class="sx__sheet" id="sx-list" role="dialog" aria-modal="true" aria-label="Escenas de la función" hidden>
-      <div class="sx__backdrop" data-sx-close></div>
-      <div class="sx__panel">
-        <p class="sx__head"><span>La función</span><button type="button" data-sx-close aria-label="Cerrar escenas">Cerrar</button></p>
-        <ol class="sx__list">${SCENES.map((s, i) => `<li><a href="#sc-${s.slug}" data-sx-go="${i}" style="--accent:${s.accent}"><span class="sx__n">${s.n}</span><span class="sx__name">${s.name}</span><span class="sx__kind">${s.kind} · ${s.town}</span></a></li>`).join('')}</ol>
-      </div>
-    </div>`;
-  document.body.append(box);
-  const btn = $('.sx__btn', box), sheet = $('.sx__sheet', box), num = $('[data-sx-n]', box), links = $$('[data-sx-go]', box);
-  let current = 0;
-  const open = (on) => {
-    sheet.hidden = !on;
-    btn.setAttribute('aria-expanded', String(on));
-    html.classList.toggle('sx-open', on);
-    const lenis = getLenis();
-    if (on) { lenis?.stop(); links[current]?.focus({ preventScroll: true }); } else { lenis?.start(); btn.focus({ preventScroll: true }); }
-  };
-  btn.addEventListener('click', () => { open(sheet.hidden); track('scene_index', { open: true }); });
-  $$('[data-sx-close]', box).forEach((b) => b.addEventListener('click', () => open(false)));
-  sheet.addEventListener('keydown', (e) => { if (e.key === 'Escape') open(false); });
-  links.forEach((a) => a.addEventListener('click', (e) => {
-    e.preventDefault();
-    const k = +a.dataset.sxGo;
-    open(false);
-    const lenis = getLenis(), target = scenes[k];
-    lenis ? lenis.scrollTo(target, { duration: 1.2 }) : target.scrollIntoView({ behavior: 'smooth' });
-    track('reel_jump', { work: SCENES[k].slug, from: 'indice' });
-  }));
-  // Visible solo mientras se recorre la función; marca la escena en curso
-  ScrollTrigger.create({ trigger: '[data-reel]', start: 'top 70%', end: 'bottom 30%', toggleClass: { targets: html, className: 'in-reel' } });
-  scenes.forEach((s, k) => ScrollTrigger.create({ trigger: s, start: 'top 50%', end: 'bottom 50%', onToggle: (st) => {
-    if (!st.isActive) return;
-    current = k;
-    num.textContent = SCENES[k].n;
-    links.forEach((a, j) => a.toggleAttribute('aria-current', j === k));
-  } }));
-}
-
-// ---------- modo liviano (celular) ----------
-function light() {
-  const scenes = $$('[data-scene]');
-  scenes.forEach((s) => paintTitle($('.wtitle', s)));
-  sceneIndex(scenes);
-  if (reduced) { scenes.forEach((s) => s.classList.add('is-active')); return; }
-  scenes.forEach((s) => {
-    const img = $('.scene__img', s);
-    gsap.fromTo(img, { clipPath: 'inset(12% 10% 12% 10%)', scale: 1.18 }, { clipPath: 'inset(0% 0% 0% 0%)', scale: 1, ease: 'none', scrollTrigger: { trigger: s, start: 'top bottom', end: 'top 20%', scrub: true } });
-    ScrollTrigger.create({
-      trigger: s, start: 'top 55%', once: true,
-      onEnter: () => {
-        s.classList.add('is-active');
-        gsap.fromTo($$('.ch', s), { yPercent: 110, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 1, stagger: 0.015, ease: 'expo.out' });
-        gsap.fromTo($$('[data-scene-fade]', s), { opacity: 0, y: 16 }, { opacity: 1, y: 0, duration: 0.9, stagger: 0.06, ease: 'expo.out', delay: 0.2 });
-      },
-    });
-    ScrollTrigger.create({ trigger: s, start: 'top 50%', end: 'bottom 50%', onToggle: (st) => st.isActive && ambience(SOUND[s.dataset.slug]) });
-    // El sitio en celular: se carga al acercarse y solo corre mientras la escena está en pantalla
-    const v = $('.scene__phone video', s);
-    if (v) {
-      gsap.from(v.parentElement, { yPercent: 30, rotate: 10, opacity: 0, duration: 1.2, ease: 'expo.out', scrollTrigger: { trigger: s, start: 'top 45%' } });
-      ScrollTrigger.create({
-        trigger: s, start: 'top 85%', end: 'bottom 15%',
-        onToggle: (st) => {
-          if (st.isActive) {
-            if (!v.dataset.ready) { v.dataset.ready = '1'; v.poster = v.dataset.poster; v.innerHTML = `<source src="${v.dataset.msrc}.webm" type="video/webm"><source src="${v.dataset.msrc}.mp4" type="video/mp4">`; v.load(); }
-            v.play().catch(() => {});
-          } else v.pause();
-        },
-      });
-    }
-  });
 }
 
 // ---------- obras en el aire y cierre ----------
@@ -518,13 +416,11 @@ function rest() {
 
 const tl = intro();
 const start = () => {
-  // Las tipografías de cada muestra se piden después de la apertura: así no compiten con el titular al cargar
-  import('./scene-fonts.css');
   opening(tl, tunnel());
   dust();
-  if (html.classList.contains('is-cinema')) cinema(); else light();
+  const vitrina = ring();
   rest();
-  autoplay();
+  autoplay(vitrina);
   ScrollTrigger.refresh();
 };
 // La apertura espera solo la tipografía del titular (para cortar bien sus líneas); cada vez que terminan de

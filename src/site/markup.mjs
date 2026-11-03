@@ -33,25 +33,6 @@ export function tunnelMarkup() {
   }).join('\n        ');
 }
 
-export function scenesMarkup() {
-  return SCENES.map((s, i) => `
-      <article class="scene" data-scene data-slug="${s.slug}" style="--accent:${s.accent}" aria-labelledby="sc-${s.slug}">
-        <picture><source media="(min-width: 821px)" srcset="${s.image}" /><source type="image/avif" srcset="/img/escenas/${s.slug}-900.avif" /><img class="scene__img" src="/img/escenas/${s.slug}-900.webp" alt="" width="1920" height="1080" loading="lazy" decoding="async" /></picture>
-        <a class="scene__phone" href="${s.sample}" tabindex="-1" aria-hidden="true"><video data-msrc="${s.site.m}" muted loop playsinline preload="none" data-poster="${s.site.m}.jpg"></video></a>
-        <div class="scene__in">
-          <p class="scene__kicker" data-scene-fade><span>Nº ${s.n} / ${String(SCENES.length).padStart(2, '0')} · Ficción</span><span>${esc(s.kind)}</span><span>${esc(s.town)} · ${s.coords}</span></p>
-          <h2 class="scene__title" id="sc-${s.slug}"><span class="sr">${esc(s.name)}: </span>${titleHtml(s, 'wtitle', s.title)}</h2>
-          <div class="scene__foot" data-scene-fade>
-            <p class="scene__concept"><b>${esc(s.name)} · muestra de concepto · negocio ficticio</b><span>${esc(s.concept)}</span></p>
-            <div class="scene__ctas">
-              <a class="scene__cta" href="${s.case}" data-cursor="Ver caso">Ver el caso<span class="sr"> de ${esc(s.name)}</span> <span aria-hidden="true">→</span></a>
-              <a class="scene__cta scene__cta--ghost" href="${s.sample}">Entrar al sitio<span class="sr"> de ${esc(s.name)}</span> <span aria-hidden="true">↗</span></a>
-            </div>
-          </div>
-        </div>
-      </article>`).join('');
-}
-
 // Riel de latitud: escala quebrada (el Caribe y el centro de Chile comprimidos; La Araucanía, amplia)
 const STOPS = [[19.4, 0], [0, 0.1], [-34, 0.19], [-38.5, 0.27], [-40, 0.84], [-41.3, 1]];
 export function latY(lat) {
@@ -61,17 +42,48 @@ export function latY(lat) {
   }
   return lat > 0 ? 0 : 1;
 }
-export function railMarkup() {
-  const seen = {};
-  const dots = SCENES.map((s) => {
-    const y = latY(s.lat), key = y.toFixed(2), off = (seen[key] = (seen[key] ?? -1) + 1);
-    return `<button type="button" class="rail__dot" data-tick style="--y:${(y * 100).toFixed(2)}%;--x:${off * -14}px" aria-label="Ir a ${esc(s.name)}, ${s.coords}"><i style="--c:${s.accent}"></i></button>`;
-  }).join('');
-  return `<span class="rail__end">19° N</span><span class="rail__eq" style="--y:${(latY(0) * 100).toFixed(2)}%"><b>0°</b></span><span class="rail__cut" style="--y:${(latY(-17) * 100).toFixed(2)}%" aria-hidden="true">//</span>${dots}<span class="rail__end rail__end--s">41° S</span>`;
-}
+// Vitrina de la portada: las trece marcas en un anillo que gira con el scroll (lo anima home.js). Cada ventana
+// muestra su sitio; al frente, su logo, «Visitar el sitio» y el caso. Las muestras se presentan como lo que son.
+const RING = ['miah', 'villa-coral-samana', 'termas-rayenko', 'poetas', 'vina-los-robles', 'domos-cielo-austral', 'manigante',
+  'cabanas-lago-azul', 'fogon-mapu', 'hotel-casa-nogal', 'pucon-aventura', 'kuchen-haus-frutillar', 'estudio-haber'];
+// Tamaño de cada logo (/img/marcas, sacados de su propio sitio y pasados a un solo color)
+const LOGO = { 'cabanas-lago-azul': [437, 74], 'domos-cielo-austral': [698, 108], 'estudio-haber': [685, 98], 'fogon-mapu': [609, 108], 'hotel-casa-nogal': [376, 117], 'kuchen-haus-frutillar': [496, 150], manigante: [443, 42], miah: [305, 43], poetas: [189, 115], 'pucon-aventura': [425, 102], 'termas-rayenko': [375, 107], 'villa-coral-samana': [648, 114], 'vina-los-robles': [744, 126] };
+export const BRANDS = RING.map((slug) => {
+  const s = SCENES.find((x) => x.slug === slug), r = REAL.find((x) => x.slug === slug);
+  const [w, h] = LOGO[slug];
+  return s
+    ? { slug, name: s.name, label: 'Muestra de concepto', kind: s.kind, town: s.town, visit: s.sample, ext: false, host: `redvaeru.netlify.app${s.sample}`, more: s.case, moreLabel: 'Ver el caso', video: s.site, w, h }
+    : { slug, name: r.name, label: r.label, kind: r.kind, town: r.town, visit: r.url, ext: true, host: new URL(r.url).host, more: '#documental', moreLabel: 'Ver el documental', video: r.site, w, h };
+});
+const logo = (b, cls, alt) => `<img class="${cls}" src="/img/marcas/${b.slug}.webp" alt="${alt}" width="${b.w}" height="${b.h}" loading="lazy" decoding="async" />`;
+const visit = (b) => `href="${b.visit}" target="_blank" rel="noopener"`;
 
-export function ticksMarkup() {
-  return SCENES.map((s, i) => `<button type="button" class="tick" data-tick aria-current="${i === 0}" aria-label="Ir a ${esc(s.name)}"><span>${s.n}</span><i style="background:${s.accent}"></i></button>`).join('');
+export function ringMarkup() {
+  const b = BRANDS[0], n = String(BRANDS.length).padStart(2, '0');
+  const wins = BRANDS.map((x, i) => `<figure class="rw" style="--i:${i}" data-rw>
+            <span class="rw__bar"><i></i><i></i><i></i><em>${esc(x.host)}</em></span>
+            <span class="rw__screen"><picture><source media="(max-width: 767px)" type="image/avif" data-srcset="/img/vitrina/${x.slug}-m.avif" /><source media="(max-width: 767px)" data-srcset="/img/vitrina/${x.slug}-m.webp" /><source type="image/avif" data-srcset="/img/vitrina/${x.slug}-d.avif" /><img data-src="/img/vitrina/${x.slug}-d.webp" alt="" width="720" height="450" decoding="async" /></picture></span>
+          </figure>`).join('\n          ');
+  const dots = BRANDS.map((x, i) => `<li><button type="button" class="ri" data-ri="${i}"${i ? '' : ' aria-current="true"'}>${logo(x, 'ri__logo', '')}<span class="sr">${esc(x.name)}</span></button></li>`).join('');
+  const data = BRANDS.map(({ slug, name, label, kind, town, visit: v, ext, more, moreLabel, video }) => ({ slug, name, label, kind, town, visit: v, ext, more, moreLabel, video }));
+  return `<header class="ring__head">
+        <p class="eyebrow">La vitrina</p>
+        <h2 id="vitrina" class="ring__title">Trece marcas, <em>una vitrina.</em></h2>
+        <p class="ring__sub">Diez muestras de concepto y tres sitios reales en el aire. Cada una, con su sitio funcionando.</p>
+        <p class="ring__count" aria-hidden="true"><b data-ring-n>01</b> / ${n}</p>
+      </header>
+      <div class="ring__stage" aria-hidden="true">
+        <div class="ring__wheel" data-wheel>
+          ${wins}
+        </div>
+      </div>
+      <div class="ring__now" data-ring-now>
+        ${logo(b, 'ring__logo', esc(b.name)).replace('loading="lazy" ', '')}
+        <p class="ring__meta"><span data-ring-label>${esc(b.label)}</span> · <span data-ring-kind>${esc(b.kind)} · ${esc(b.town)}</span></p>
+        <p class="ring__acts"><a class="btn btn--accent" ${visit(b)} data-ring-visit data-magnetic>Visitar el sitio<span class="sr" data-ring-of> de ${esc(b.name)} (se abre en otra pestaña)</span> <span aria-hidden="true">↗</span></a><a class="btn btn--line" href="${b.more}" data-ring-more><span data-ring-more-l>${b.moreLabel}</span> <span aria-hidden="true">→</span></a></p>
+      </div>
+      <nav class="ring__index" aria-label="Las trece marcas de la vitrina"><ol>${dots}</ol></nav>
+      <script type="application/json" data-ring-data>${JSON.stringify(data).replace(/</g, '\\u003c')}</script>`;
 }
 
 export function realMarkup() {
