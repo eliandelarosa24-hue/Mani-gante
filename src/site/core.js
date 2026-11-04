@@ -110,14 +110,21 @@ export function splitChars(el) {
 // ---------- luz de proyector ----------
 // El titular entra en penumbra y un haz cálido lo cruza de izquierda a derecha, dejándolo encendido.
 // Al terminar se quita la máscara, así el titular queda como cualquier otro texto.
+// Una franja de luz cálida cruza el titular. Se desliza con transform: la mueve la tarjeta gráfica,
+// sin volver a pintar el texto en cada cuadro (antes era una máscara que repintaba todo el titular).
 export function projectorLight(el, vars = {}) {
   if (reduced || !el) return null;
+  const band = document.createElement('span');
+  band.className = 'beam-band';
+  band.setAttribute('aria-hidden', 'true');
   el.classList.add('beam');
-  el.style.setProperty('--p', '-25%');
-  return gsap.to(el, {
-    '--p': '130%', duration: 1.9, ease: 'power2.inOut', ...vars,
-    onComplete: () => { el.classList.remove('beam'); el.style.removeProperty('--p'); },
-  });
+  el.append(band);
+  // Entra y sale con opacidad, para no asomarse cortada en los bordes del titular
+  const { duration = 1.9, ...rest } = vars;
+  return gsap.timeline({ ...rest, onComplete: () => { band.remove(); el.classList.remove('beam'); } })
+    .fromTo(band, { xPercent: -130 }, { xPercent: 730, duration, ease: 'power2.inOut' }, 0)
+    .fromTo(band, { opacity: 0 }, { opacity: 1, duration: duration * 0.3, ease: 'none' }, 0)
+    .to(band, { opacity: 0, duration: duration * 0.3, ease: 'none' }, duration * 0.7);
 }
 
 // ---------- apariciones ----------
@@ -222,10 +229,15 @@ export function boot({ smooth = true } = {}) {
   const amb = $('.ambient');
   if (amb && !reduced) {
     const [ga, gb] = $$('i', amb);
-    let queued = false;
+    let queued = false, max = 1;
+    // El alto de la página se mide solo cuando cambia (leerlo en cada cuadro obligaba a recomponer la página)
+    const measure = () => { max = Math.max(1, document.documentElement.scrollHeight - innerHeight); };
+    measure();
+    addEventListener('resize', measure);
+    ScrollTrigger.addEventListener('refresh', measure);
     const glow = () => {
       queued = false;
-      const max = Math.max(1, document.documentElement.scrollHeight - innerHeight), k = Math.min(1, scrollY / max);
+      const k = Math.min(1, scrollY / max);
       ga.style.transform = `translate3d(${(-k * 18).toFixed(2)}vw, ${(k * 70).toFixed(2)}vh, 0)`;
       gb.style.transform = `translate3d(${(k * 22).toFixed(2)}vw, ${(-k * 60).toFixed(2)}vh, 0)`;
     };

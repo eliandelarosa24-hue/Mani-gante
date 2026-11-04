@@ -61,7 +61,7 @@ const visit = (b) => `href="${b.visit}" target="_blank" rel="noopener"`;
 export function ringMarkup() {
   const b = BRANDS[0], n = String(BRANDS.length).padStart(2, '0');
   const wins = BRANDS.map((x, i) => `<figure class="rw" style="--i:${i}" data-rw>
-            <span class="rw__bar"><i></i><i></i><i></i><em>${esc(x.host)}</em></span>
+            <span class="rw__bar"><i></i><i></i><i></i><em data-host="${esc(x.host)}"></em></span>
             <span class="rw__screen"><picture><source media="(max-width: 767px)" type="image/avif" data-srcset="/img/vitrina/${x.slug}-m.avif" /><source media="(max-width: 767px)" data-srcset="/img/vitrina/${x.slug}-m.webp" /><source type="image/avif" data-srcset="/img/vitrina/${x.slug}-d.avif" /><img data-src="/img/vitrina/${x.slug}-d.webp" alt="" width="720" height="450" decoding="async" /></picture></span>
           </figure>`).join('\n          ');
   const dots = BRANDS.map((x, i) => `<li><button type="button" class="ri" data-ri="${i}"${i ? '' : ' aria-current="true"'}>${logo(x, 'ri__logo', '')}<span class="sr">${esc(x.name)}</span></button></li>`).join('');

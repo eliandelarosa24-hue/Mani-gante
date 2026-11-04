@@ -39,16 +39,16 @@
    Peso y ancho salen de la tipografía variable: --wg y --ws los mueve el viaje; --pw y --ps, el puntero sobre cada letra */
 .open__space { position: absolute; inset: 0; z-index: 1; overflow: hidden; perspective: 1200px; pointer-events: none; }
 .open__depth, .tunnel { position: absolute; inset: 0; transform-style: preserve-3d; }
-.open__title { position: absolute; left: 50%; top: 47%; width: max-content; max-width: 94vw; margin: 0; text-align: center; transform: translate(-50%, -50%); font: 300 calc(var(--fs-mega) * var(--tk, 1))/0.84 var(--f-display); font-weight: var(--wg, 300); font-stretch: var(--ws, 62.5%); letter-spacing: -0.035em; text-shadow: 0 4px 24px rgba(12, 11, 10, 0.7), 0 10px 60px rgba(12, 11, 10, 0.6); }
+.open__title { position: absolute; left: 50%; top: 47%; width: max-content; max-width: 94vw; margin: 0; text-align: center; transform: translate(-50%, -50%); font: 300 calc(var(--fs-mega) * var(--tk, 1))/0.84 var(--f-display); font-weight: var(--wg, 300); font-stretch: var(--ws, 62.5%); letter-spacing: -0.035em; text-shadow: 0 4px 22px rgba(12, 11, 10, 0.75); will-change: transform, opacity; }
 .open__title em { font-weight: inherit; color: var(--bone); }
 .open__title .ln { padding: 0 0.04em; }
 .open__title .ch { font-weight: calc(var(--wg, 300) + var(--pw, 0)); font-stretch: calc(var(--ws, 62.5%) + var(--ps, 0%)); will-change: auto; }
 .open__veil { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: linear-gradient(180deg, transparent 74%, #0c0b0a), radial-gradient(70% 60% at 50% 44%, rgba(122, 22, 40, 0.3), transparent 72%), radial-gradient(120% 90% at 50% 120%, rgba(60, 10, 22, 0.55), transparent 60%), #0c0b0a; }
-.open__rings { position: absolute; left: 50%; top: 47%; z-index: -1; width: 0; height: 0; pointer-events: none; opacity: 0; transition: opacity 1.4s var(--ease); }
+.open__rings { position: absolute; left: 50%; top: 47%; z-index: -1; width: 0; height: 0; pointer-events: none; opacity: 0; transform-origin: 0 0; will-change: transform; transition: opacity 1.4s var(--ease); }
 .has-tunnel .open__rings { opacity: 1; }
-.open__rings::before, .open__rings::after { content: ''; position: absolute; left: 50%; top: 50%; border-radius: 50%; transform: translate(-50%, -50%) scale(var(--rs, 1)); }
+.open__rings::before, .open__rings::after { content: ''; position: absolute; left: 50%; top: 50%; border-radius: 50%; transform: translate(-50%, -50%); }
 .open__rings::before { width: 48vmin; height: 48vmin; border: 1px solid rgba(236, 229, 216, 0.07); }
-.open__rings::after { width: 78vmin; height: 78vmin; border: 1px dashed rgba(236, 229, 216, 0.06); transform: translate(-50%, -50%) scale(calc(var(--rs, 1) * 0.92 + 0.08)); }
+.open__rings::after { width: 78vmin; height: 78vmin; border: 1px dashed rgba(236, 229, 216, 0.06); }
 /* Las obras del túnel */
 .tn { --cw: clamp(170px, 17vw, 262px); position: absolute; left: 50%; top: 47%; width: var(--cw); aspect-ratio: 4 / 5; margin: calc(var(--cw) * -0.625) 0 0 calc(var(--cw) * -0.5); overflow: hidden; border-radius: 14px; background: #171412; box-shadow: 0 40px 70px -24px rgba(0, 0, 0, 0.85), 0 0 0 1px rgba(236, 229, 216, 0.14); opacity: 0; visibility: hidden; pointer-events: auto; will-change: transform, opacity; transition: box-shadow 0.5s var(--ease); }
 .tn:hover { box-shadow: 0 40px 70px -24px rgba(0, 0, 0, 0.85), 0 0 0 1.5px var(--acc); }
@@ -56,7 +56,6 @@
 .tn img { object-fit: cover; transition: transform 0.8s var(--ease); }
 .tn:hover img { transform: scale(1.08); }
 .tn::after { content: ''; position: absolute; inset: 0; background: linear-gradient(0deg, rgba(8, 7, 6, 0.88), rgba(8, 7, 6, 0.1) 46%, transparent 70%, rgba(8, 7, 6, 0.35)); pointer-events: none; }
-.tn::before { content: ''; position: absolute; inset: 0; z-index: 2; background: #0c0b0a; opacity: var(--fog, 0); pointer-events: none; }
 .tn__k, .tn__t { position: absolute; z-index: 1; left: 12px; right: 12px; }
 .tn__k { top: 11px; font: 400 9.5px var(--f-mono); letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255, 255, 255, 0.78); }
 .tn__t { bottom: 12px; display: grid; gap: 4px; }
@@ -97,9 +96,9 @@
 }
 .ring__wheel { position: absolute; left: 50%; top: 50%; width: 0; height: 0; transform-style: preserve-3d; transform: translateZ(calc(var(--r) * -1)) rotateY(var(--rot, 0deg)); }
 .rw { position: absolute; left: calc(var(--w) * -0.5); top: calc(var(--w) * -0.33); width: var(--w); margin: 0; overflow: hidden; border-radius: 10px; background: #141210; box-shadow: 0 0 0 1px rgba(236, 229, 216, 0.14), 0 40px 80px -30px rgba(0, 0, 0, 0.9); transform: rotateY(calc(var(--i) * 360deg / var(--n))) translateZ(var(--r)); backface-visibility: hidden; -webkit-backface-visibility: hidden; will-change: opacity; }
-.rw::after { content: ''; position: absolute; inset: 0; z-index: 2; background: #0c0b0a; opacity: var(--fog, 0); pointer-events: none; }
 .rw__bar { display: flex; align-items: center; gap: 5px; height: 26px; padding: 0 12px; background: #1a1714; border-bottom: 1px solid rgba(236, 229, 216, 0.08); }
 .rw__bar i { flex: none; width: 8px; height: 8px; border-radius: 50%; background: rgba(236, 229, 216, 0.16); }
+.rw__bar em::before { content: attr(data-host); }
 .rw__bar em { margin: 0 auto; padding: 2px 12px; overflow: hidden; border-radius: 5px; background: rgba(236, 229, 216, 0.06); font: 400 10px var(--f-mono); font-style: normal; letter-spacing: 0.04em; color: rgba(236, 229, 216, 0.6); white-space: nowrap; text-overflow: ellipsis; max-width: 70%; }
 .rw__screen { position: relative; display: block; aspect-ratio: 16 / 10; background: #0f0e0d; }
 .rw__screen picture, .rw__screen img, .rw__screen video { position: absolute; inset: 0; display: block; width: 100%; height: 100%; object-fit: cover; object-position: top; }

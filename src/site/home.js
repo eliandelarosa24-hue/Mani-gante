@@ -33,7 +33,7 @@ function intro() {
       .to('.intro__sweep, .intro__ring', { opacity: 0, scale: 1.15, duration: 0.6, ease: 'power2.in' }, 1.45)
       .to(o, { v: 100, duration: 1.5, ease: 'power2.inOut', onUpdate: () => { if (count) count.textContent = String(Math.round(o.v)).padStart(3, '0'); } }, 0)
       .from('[data-intro-line]', { yPercent: 120, duration: 1, stagger: 0.08 }, 0.3)
-      .to(loader, { clipPath: 'inset(0 0 100% 0)', duration: 1.1, ease: 'expo.inOut' }, 1.75)
+      .to(loader, { yPercent: -100, duration: 0.8, ease: 'expo.inOut' }, 1.75)
       .set(loader, { display: 'none' });
     // Quien ya quiere entrar no espera: un toque, una tecla o la rueda pasan directo al telón
     const EV = ['pointerdown', 'keydown', 'wheel', 'touchstart'];
@@ -41,8 +41,8 @@ function intro() {
     const skip = () => { off(); if (tl.time() < 1.75) { tl.seek(1.75); tl.timeScale(1); } };
     EV.forEach((e) => addEventListener(e, skip, { passive: true }));
     tl.call(off, null, 1.75);
-    // En celular la cuenta regresiva corre más rápido; la apertura vuelve a su ritmo
-    if (small()) { tl.timeScale(1.6); tl.call(() => tl.timeScale(1), null, 1.75); }
+    // La cuenta regresiva es breve (más aún en celular); la apertura vuelve a su ritmo
+    tl.timeScale(small() ? 2 : 1.6); tl.call(() => tl.timeScale(1), null, 1.75);
   } else loader?.remove();
   return tl;
 }
@@ -52,11 +52,9 @@ function opening(tl, tn) {
   const title = $('[data-open-title]');
   if (!title || reduced) return;
   const lines = splitLines(title);
-  // El titular entra como una imagen que el proyectista pone en foco
-  // En celular, sin desenfoque: es lo más caro de pintar y retrasa el titular
-  const focus = small() ? { from: { opacity: 0.4 }, to: { opacity: 1, duration: 1.6 } } : { from: { filter: 'blur(16px)', opacity: 0.4 }, to: { filter: 'blur(0px)', opacity: 1, duration: 2.2 } };
+  // El titular sube desde su línea y se enciende (solo opacidad: sin desenfoque, que repinta todo en cada cuadro)
   tl.from(lines, { yPercent: 160, rotate: 3, duration: 1.5, stagger: 0.09 }, tl.getChildren().length ? '-=0.55' : 0.1)
-    .fromTo(title, focus.from, { ...focus.to, ease: 'power2.out', clearProps: 'filter,opacity' }, '<')
+    .fromTo(title, { opacity: 0.4 }, { opacity: 1, duration: 1.6, ease: 'power2.out', clearProps: 'opacity' }, '<')
     .add(projectorLight(title, { duration: 2.1 }), '<0.15')
     .add(() => tn?.boot(), '<0.35')
     .from('[data-open-fade]', { y: 26, opacity: 0, duration: 1.2, stagger: 0.08 }, '-=1.15');
@@ -87,10 +85,11 @@ function tunnel() {
   let scroll = 0, shown = 0, px = 0, py = 0, tx = 0, ty = 0, pointer = false;
   const clamp = gsap.utils.clamp(0, 1);
   const lerp = (a, b, t) => a + (b - a) * t;
-  // Cada obra aparece lejos, se sostiene y se apaga al pasar junto a la cámara; mientras está lejos, la cubre
-  // una niebla oscura (así el titular se lee bien al llegar y se siente la profundidad)
+  // Cada obra aparece lejos, se sostiene y se apaga al pasar junto a la cámara. Mientras está lejos se ve más
+  // tenue (niebla): va dentro de su opacidad, que la tarjeta gráfica cambia sin repintar la foto
   const fade = (t) => (t < 0.3 ? t / 0.3 : t > 0.82 ? Math.max(0, 1 - (t - 0.82) / 0.16) : 1);
   const fog = (t) => { const k = clamp(t / 0.5); return 0.7 * (1 - k * k * (3 - 2 * k)); };
+  const seen = { scale: -1, op: -1, step: -1, out: -1, rs: -1 };
 
   // El tramo lo da el contenedor alto de la portada (CSS sticky), sin pin de GSAP
   ScrollTrigger.create({
@@ -128,36 +127,42 @@ function tunnel() {
     const far = mob ? -1200 : -1700, near = mob ? 350 : 500, pan = mob ? 20 : 45;
     let lead = -1;
     for (let i = 0; i < N; i++) {
-      const c = items[i], t = clamp((P - c.start) / SPAN), o = fade(t);
+      const c = items[i], t = clamp((P - c.start) / SPAN), o = Math.round(fade(t) * (1 - fog(t)) * 100) / 100;
       if (t >= 0.6 && t < 0.97) lead = i;
-      if (o < 0.005) { if (c.o !== 0) { c.el.style.visibility = 'hidden'; c.el.style.opacity = '0'; c.o = 0; } continue; }
+      if (o < 0.01) { if (c.o !== 0) { c.el.style.visibility = 'hidden'; c.el.style.opacity = '0'; c.o = 0; } continue; }
       const x = c.cos * W * c.fx - px * pan, y = c.sin * H * c.fy - py * pan, z = lerp(far, near, t);
       c.el.style.transform = 'translate3d(' + x.toFixed(1) + 'px, ' + y.toFixed(1) + 'px, ' + z.toFixed(1) + 'px) rotateZ(' + c.rot + 'deg)';
-      if (c.o !== o) { c.el.style.opacity = o.toFixed(3); c.el.style.visibility = 'visible'; c.o = o; }
-      const f = fog(t);
-      if (Math.abs(f - c.f) > 0.01) { c.el.style.setProperty('--fog', f.toFixed(2)); c.f = f; }
+      if (c.o !== o) { c.el.style.opacity = o; if (c.o <= 0) c.el.style.visibility = 'visible'; c.o = o; }
     }
     // Titular: se acerca con el viaje, se ensancha a mitad de camino y se apaga al final
-    const q = clamp((P - BOOT) / (1 - BOOT)), bell = Math.sin(Math.PI * q);
-    const scale = P < 0.5 ? lerp(0.94, 1, P / 0.5) : lerp(1, 1.32, (P - 0.5) / 0.5);
-    gsap.set(title, { scale, opacity: 1 - clamp((P - 0.86) / 0.12) });
-    title.style.setProperty('--wg', (300 + 110 * bell).toFixed(0));
-    title.style.setProperty('--ws', (62.5 + 12.5 * bell).toFixed(2) + '%');
+    // La tipografía variable cambia por escalones (ocho a lo largo del viaje), no en cada cuadro: cada cambio
+    // de peso o ancho obliga a recomponer el titular
+    const q = clamp((P - BOOT) / (1 - BOOT)), step = Math.round(Math.sin(Math.PI * q) * 8) / 8;
+    const scale = Math.round((P < 0.5 ? lerp(0.94, 1, P / 0.5) : lerp(1, 1.32, (P - 0.5) / 0.5)) * 500) / 500;
+    const op = Math.round((1 - clamp((P - 0.86) / 0.12)) * 100) / 100;
+    if (scale !== seen.scale || op !== seen.op) { gsap.set(title, { scale, opacity: op }); seen.scale = scale; seen.op = op; }
+    if (step !== seen.step) {
+      seen.step = step;
+      title.style.setProperty('--wg', String(Math.round(300 + 110 * step)));
+      title.style.setProperty('--ws', (62.5 + 12.5 * step).toFixed(2) + '%');
+    }
     setWord(lead >= 0 && P < 0.9 ? items[lead].word : 'lugares.');
-    const out = 1 - clamp((P - BOOT - 0.01) / 0.07);
-    fades.forEach((f) => (f.style.opacity = out.toFixed(3)));
-    rings?.style.setProperty('--rs', (1 + P * 0.9).toFixed(3));
+    const out = Math.round((1 - clamp((P - BOOT - 0.01) / 0.07)) * 50) / 50;
+    if (out !== seen.out) { seen.out = out; fades.forEach((f) => (f.style.opacity = out)); }
+    const rs = Math.round((1 + P * 0.9) * 200) / 200;
+    if (rings && rs !== seen.rs) { seen.rs = rs; rings.style.transform = 'scale(' + rs + ')'; }
     // Puntero sobre el titular: cada letra engrosa y se ensancha según lo cerca que pase
-    if (pointer && chars.length) {
+    if (pointer && chars.length && Math.abs(scroll - shown) < 0.002) {
       const R = Math.max(200, W * 0.2), mx = (tx / 2 + 0.5) * W, my = (ty / 2 + 0.5) * H;
-      for (const c of chars) {
-        const r = c.el.getBoundingClientRect();
+      const rects = chars.map((c) => c.el.getBoundingClientRect());
+      chars.forEach((c, i) => {
+        const r = rects[i];
         const k = Math.max(0, 1 - Math.hypot(mx - (r.left + r.width / 2), my - (r.top + r.height / 2)) / R), e = k * k * (3 - 2 * k);
         c.w += (190 * e - c.w) * 0.18; c.s += (12 * e - c.s) * 0.18;
-        if (Math.abs(190 * e - c.w) > 0.5) dirty = true;
-        c.el.style.setProperty('--pw', c.w.toFixed(0));
-        c.el.style.setProperty('--ps', c.s.toFixed(2) + '%');
-      }
+        if (Math.abs(190 * e - c.w) > 1) dirty = true;
+        const w = Math.round(c.w / 10) * 10, st = Math.round(c.s);
+        if (w !== c.qw || st !== c.qs) { c.qw = w; c.qs = st; c.el.style.setProperty('--pw', String(w)); c.el.style.setProperty('--ps', st + '%'); }
+      });
     }
   };
   gsap.ticker.add(render);
@@ -191,9 +196,15 @@ function dust() {
   const cv = $('[data-dust]');
   if (!cv || reduced) return;
   const ctx = cv.getContext('2d'), open = cv.parentElement;
-  const dpr = Math.min(devicePixelRatio || 1, 1.5);
+  const dpr = small() ? 1 : Math.min(devicePixelRatio || 1, 1.25);
   const R = Math.random;
-  const motes = Array.from({ length: small() ? 40 : 120 }, () => {
+  // La mota (halo y centro) se dibuja una sola vez; después solo se estampa con su opacidad
+  const sprite = document.createElement('canvas'), SZ = 64;
+  sprite.width = sprite.height = SZ;
+  const sc = sprite.getContext('2d'), grad = sc.createRadialGradient(SZ / 2, SZ / 2, 0, SZ / 2, SZ / 2, SZ / 2);
+  grad.addColorStop(0, 'rgba(255,246,232,1)'); grad.addColorStop(0.28, 'rgba(255,244,228,0.9)'); grad.addColorStop(0.32, 'rgba(255,238,214,0.14)'); grad.addColorStop(1, 'rgba(255,238,214,0)');
+  sc.fillStyle = grad; sc.fillRect(0, 0, SZ, SZ);
+  const motes = Array.from({ length: small() ? 26 : 70 }, () => {
     const far = R() < 0.12;
     const bvx = (R() - 0.5) * 0.00008, bvy = (R() - 0.55) * 0.00016;
     return { x: R(), y: R(), r: far ? 3 + R() * 4 : 0.6 + R() ** 2.5 * 1.7, a: far ? 0.16 : 1, bvx, bvy, vx: bvx, vy: bvy, p: R() * 6.28, s: 0.4 + R() * 1.2 };
@@ -207,7 +218,11 @@ function dust() {
     if (mx >= 0) { pvx = x - mx; pvy = y - my; }
     mx = x; my = y;
   }, { passive: true });
+  let odd = false;
+  const half = small();
   const frame = (t) => {
+    raf = requestAnimationFrame(frame);
+    if (half && (odd = !odd)) return; // en celular, la mitad de los cuadros basta para el polvo
     ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     ctx.clearRect(0, 0, w, h);
     for (const m of motes) {
@@ -219,14 +234,12 @@ function dust() {
       if (m.x < -0.03) m.x = 1.03; else if (m.x > 1.03) m.x = -0.03;
       const a = (0.08 + beam(m.x, m.y) * 0.92) * (0.45 + 0.55 * Math.sin(t * 0.001 * m.s + m.p)) * m.a;
       if (a < 0.01) continue;
-      const x = m.x * w, y = m.y * h;
-      ctx.fillStyle = `rgba(255,238,214,${(a * 0.14).toFixed(3)})`;
-      ctx.beginPath(); ctx.arc(x, y, m.r * 3.2, 0, 6.2832); ctx.fill();
-      ctx.fillStyle = `rgba(255,244,228,${a.toFixed(3)})`;
-      ctx.beginPath(); ctx.arc(x, y, m.r, 0, 6.2832); ctx.fill();
+      const s = m.r * 6.4;
+      ctx.globalAlpha = a;
+      ctx.drawImage(sprite, m.x * w - s / 2, m.y * h - s / 2, s, s);
     }
+    ctx.globalAlpha = 1;
     pvx *= 0.9; pvy *= 0.9;
-    raf = requestAnimationFrame(frame);
   };
   size();
   addEventListener('resize', size);
@@ -307,19 +320,24 @@ function ring() {
 
   // Giro: posición continua (0 = primera marca al frente)
   let target = 0, pos = 0, dirty = true;
-  const paint = () => {
-    wheel.style.setProperty('--rot', (-pos * STEP).toFixed(2) + 'deg');
+  // Radio del anillo en píxeles (el mismo cálculo que el CSS), para girar con un transform directo
+  let radius = 0;
+  const measure = () => { radius = wins[0].offsetWidth * (phone.matches ? 2.5 : 2.42); };
+  measure();
+  addEventListener('resize', () => { measure(); paint(); });
+  const shade = new Array(N).fill(-1);
+  function paint() {
+    wheel.style.transform = 'translateZ(' + (-radius).toFixed(1) + 'px) rotateY(' + (-pos * STEP).toFixed(2) + 'deg)';
     for (let i = 0; i < N; i++) {
       let d = ((i - pos) * STEP) % 360;
       if (d > 180) d -= 360; else if (d < -180) d += 360;
-      const a = Math.abs(d);
-      wins[i].style.setProperty('--fog', Math.min(0.82, a / 75).toFixed(2));
-      wins[i].style.visibility = a > 110 ? 'hidden' : '';
+      const a = Math.abs(d), o = a > 110 ? 0 : Math.round((1 - Math.min(0.82, a / 75)) * 50) / 50;
+      if (o !== shade[i]) { wins[i].style.opacity = o; wins[i].style.visibility = o ? '' : 'hidden'; shade[i] = o; }
     }
     const k = Math.round(pos);
     if (Math.abs(pos - k) < 0.18) setFront(((k % N) + N) % N);
     else { clearTimeout(settle); video.classList.remove('is-on'); }
-  };
+  }
   if (reduced) { paint(); setFront(0); }
   else {
     const smooth = (x) => x * x * (3 - 2 * x);
@@ -440,15 +458,22 @@ const tl = intro();
 const start = () => {
   fitOpen();
   opening(tl, tunnel());
-  dust();
-  const vitrina = ring();
-  rest();
-  autoplay(vitrina);
-  ScrollTrigger.refresh();
+  // Lo que está más abajo (vitrina, apariciones, Ver la función) se prepara cuando el navegador queda libre,
+  // para no competir con la entrada; el polvo empieza un momento después
+  const later = window.requestIdleCallback || ((fn) => setTimeout(fn, 600));
+  later(() => {
+    const vitrina = ring();
+    rest();
+    autoplay(vitrina);
+    ScrollTrigger.refresh();
+  }, { timeout: 1500 });
+  setTimeout(dust, 900);
 };
 // La apertura espera solo la tipografía del titular (para cortar bien sus líneas); cada vez que terminan de
 // llegar otras tipografías, se recalculan las posiciones del scroll
 const fonts = document.fonts;
 const titleFonts = fonts ? Promise.all(['300 1em Display', 'italic 300 1em Display'].map((f) => fonts.load(f))).catch(() => {}) : Promise.resolve();
 Promise.race([titleFonts, new Promise((ok) => setTimeout(ok, 2500))]).then(start);
-fonts?.addEventListener('loadingdone', () => ScrollTrigger.refresh());
+// (agrupado: varias tipografías que llegan juntas provocan un solo recálculo)
+let refreshT = 0;
+fonts?.addEventListener('loadingdone', () => { clearTimeout(refreshT); refreshT = setTimeout(() => ScrollTrigger.refresh(), 400); });
