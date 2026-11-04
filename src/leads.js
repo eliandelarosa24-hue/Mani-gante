@@ -16,9 +16,11 @@ export async function submitLead(form, data, source = form) {
     ok = res.ok;
   } catch { ok = false; }
   if (!ok) {
-    // Si Netlify Forms no está disponible, basta con que Google Sheets lo haya recibido.
+    // Si Netlify Forms no está disponible, basta con que Google Sheets lo haya recibido
+    // (si la planilla no está configurada, no cuenta: así se activa el respaldo y el mensaje no se pierde).
     const res = await sheets;
-    ok = !!res && res.ok && (await res.clone().json().catch(() => ({}))).ok === true;
+    const j = res && res.ok ? await res.clone().json().catch(() => ({})) : {};
+    ok = j.ok === true && j.sheets !== 'not_configured';
   }
   if (ok) track('lead_submitted', { source });
   return ok;

@@ -68,7 +68,7 @@ export function ringMarkup() {
   const data = BRANDS.map(({ slug, name, label, kind, town, visit: v, ext, more, moreLabel, video }) => ({ slug, name, label, kind, town, visit: v, ext, more, moreLabel, video }));
   return `<header class="ring__head">
         <p class="eyebrow">La vitrina</p>
-        <h2 id="vitrina" class="ring__title">Trece marcas, <em>una vitrina.</em></h2>
+        <h2 id="vitrina" class="ring__title">Trece lugares, <em>una vitrina.</em></h2>
         <p class="ring__sub">Diez muestras de concepto y tres sitios reales en el aire. Cada una, con su sitio funcionando.</p>
         <p class="ring__count" aria-hidden="true"><b data-ring-n>01</b> / ${n}</p>
       </header>

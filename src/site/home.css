@@ -177,7 +177,8 @@
 .inter { isolation: isolate; overflow: hidden; }
 .inter { position: relative; z-index: 2; min-height: 100svh; display: grid; place-content: center; justify-items: center; gap: 26px; padding: var(--sec) var(--gut); text-align: center; background: radial-gradient(65% 55% at 50% 45%, rgba(106, 24, 39, 0.55), rgba(43, 10, 17, 0.3) 48%, transparent 78%), var(--ink); }
 .inter__k { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.24em; text-transform: uppercase; color: var(--muted); }
-.inter__title { font: 200 clamp(40px, 12vw, 190px)/0.9 var(--f-display); font-stretch: 62.5%; letter-spacing: 0.1em; text-transform: uppercase; }
+.inter__title { font: 200 clamp(44px, 8.4vw, 150px)/0.92 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.02em; }
+.inter__title em { font-style: italic; color: var(--bone); }
 .inter__text { max-width: 30em; font-size: var(--fs-lead); line-height: 1.45; color: var(--bone-2); }
 
 /* ---------- documental ---------- */
@@ -236,7 +237,8 @@
 /* ---------- próximamente ---------- */
 .soon { position: relative; z-index: 2; display: grid; justify-items: center; gap: 24px; padding: calc(var(--sec) * 0.7) var(--gut) var(--sec); text-align: center; background: radial-gradient(85% 50% at 50% 0%, rgba(106, 24, 39, 0.7), rgba(74, 16, 25, 0.25) 55%, transparent 82%), radial-gradient(60% 45% at 85% 100%, rgba(106, 24, 39, 0.35), transparent 70%), linear-gradient(180deg, var(--wine-950), var(--ink) 40%, var(--ink) 70%, var(--wine-950)); }
 .soon__k { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); }
-.soon__title { font: 300 clamp(80px, 15vw, 280px)/0.82 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.04em; font-style: italic; }
+.soon__title { font: 300 clamp(46px, 10vw, 190px)/0.86 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.035em; }
+.soon__title em { font-style: italic; }
 .js:not(.has-estreno) .est__screens { visibility: hidden; }
 .est:not(:has(.ep)) .est__vp { background: #111; }
 .pg--home .ft__cta { display: none; }

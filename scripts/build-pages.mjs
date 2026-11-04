@@ -51,6 +51,7 @@ function servicePage(p) {
   const s = SERVICES[p.service];
   const monthly = (t) => s.monthly || t.monthly;
   const tiers = Object.entries(s.tiers);
+  const COUNT = { 2: 'Dos', 3: 'Tres', 4: 'Cuatro' };
   const low = Math.min(...tiers.map(([, t]) => priceOf(t).min));
   const jsonld = {
     '@context': 'https://schema.org',
@@ -109,7 +110,7 @@ function servicePage(p) {
 
     <section class="sec sec--line">
       <div class="sec__head sec__head--split">
-        <h2 class="h2" data-reveal="lines">Elija el alcance. <em>Lo ajustamos a su medida.</em></h2>
+        <h2 class="h2" data-reveal="lines">${COUNT[tiers.length] || tiers.length} opciones, <em>a su medida.</em></h2>
         <p class="lede" data-reveal="fade">${hasLaunch ? 'Precio de lanzamiento mientras queden cupos.' : 'Valores referenciales.'} El precio fijo llega por escrito en la propuesta.</p>
       </div>
       <div class="tiers" data-reveal="stagger">
@@ -209,7 +210,7 @@ function simplePage({ title, path, eyebrow, h1, text, noindex, cls = '' }) {
 // Se regeneran todas las páginas de servicio; las carpetas de servicios que ya no existen también se borran
 for (const d of readdirSync(join(root, 'servicios'), { withFileTypes: true })) if (d.isDirectory()) rmSync(join(root, 'servicios', d.name), { recursive: true, force: true });
 mkdirSync(join(root, 'gracias'), { recursive: true });
-writeFileSync(join(root, 'gracias', 'index.html'), simplePage({ title: 'Mensaje recibido · Red Vaeru', path: '/gracias', eyebrow: 'Gracias', h1: 'Mensaje <em>recibido.</em>', text: 'Su mensaje llegó a Red Vaeru. Le respondemos por WhatsApp o correo en menos de 24 horas hábiles con los siguientes pasos.', noindex: true }));
+writeFileSync(join(root, 'gracias', 'index.html'), simplePage({ title: 'Gracias · Red Vaeru', path: '/gracias', eyebrow: 'Contacto', h1: 'Gracias.<br><em>Ya recibimos su mensaje.</em>', text: 'Su mensaje llegó a Red Vaeru. Le respondemos por WhatsApp o correo en menos de 24 horas hábiles con los siguientes pasos.', noindex: true }));
 writeFileSync(join(root, '404.html'), simplePage({ title: 'Página no encontrada · Red Vaeru', path: '/404', eyebrow: 'Error 404', h1: 'Esta sala está <em>a oscuras.</em>', text: 'La página que busca no existe o cambió de lugar.', noindex: true, cls: 'is-404' }));
 for (const p of PAGES) {
   const file = join(root, 'servicios', p.slug, 'index.html');
