@@ -340,6 +340,8 @@ body::after { content: ''; position: fixed; inset: -50%; z-index: 250; pointer-e
   .fab__btn > span { display: none; }
   .fab__btn { padding: 6px; }
   .lead__row { grid-template-columns: 1fr; }
+  /* «Conversemos» del pie cabe entero desde 320 px */
+  .ft__big { font-size: clamp(46px, 15.5vw, 64px); }
 }
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after { animation-duration: 0.01ms !important; animation-iteration-count: 1 !important; transition-duration: 0.01ms !important; }

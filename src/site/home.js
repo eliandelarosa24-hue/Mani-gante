@@ -164,6 +164,27 @@ function tunnel() {
   return { boot: () => gsap.to(st8, { boot: 1, duration: 2.8, ease: 'power2.out', onUpdate: () => { dirty = true; } }) };
 }
 
+// ---------- el titular en su espacio ----------
+// En pantallas bajas (celular chico o acostado) el titular se centra entre el antetítulo y el pie, y se achica
+// si no cabe, para que nunca lo tape el texto de presentación
+function fitOpen() {
+  const open = $('[data-open]'), title = $('[data-open-title]');
+  if (!open || !title) return;
+  const kicker = $('.open__kicker', open), foot = $('.open__foot', open);
+  const fit = () => {
+    title.style.setProperty('--tk', 1);
+    const o = open.getBoundingClientRect().top, kr = kicker.getBoundingClientRect();
+    const k = (kr.height ? kr.bottom : $('.hd')?.getBoundingClientRect().bottom || 0) - o + 12;
+    const f = foot.getBoundingClientRect().top - o - 12;
+    const h = title.offsetHeight;
+    if (h > f - k) title.style.setProperty('--tk', Math.max(0.55, (f - k) / h).toFixed(3));
+    title.style.top = ((k + f) / 2).toFixed(1) + 'px';
+  };
+  fit();
+  let t = 0;
+  addEventListener('resize', () => { clearTimeout(t); t = setTimeout(fit, 150); });
+}
+
 // ---------- polvo en el haz ----------
 // Motas que flotan en la luz del proyector: brillan dentro del haz y el puntero las revuelve como una mano en la luz
 function dust() {
@@ -278,8 +299,9 @@ function ring() {
     if (first || reduced) fill();
     else { now.classList.add('is-swap'); setTimeout(() => { fill(); now.classList.remove('is-swap'); }, 220); }
     ambience(SOUND[b.slug]);
-    // En celular, el índice se desliza para dejar el logo activo al centro (sin mover el resto de la página)
-    if (phone.matches) { const bar = dots[k].closest('.ring__index'), li = dots[k].parentElement; bar.scrollTo({ left: li.offsetLeft - (bar.clientWidth - li.offsetWidth) / 2, behavior: first ? 'auto' : 'smooth' }); }
+    // Si los logos no caben, el índice se desliza para dejar el activo al centro (sin mover el resto de la página)
+    const bar = dots[k].closest('.ring__index'), li = dots[k].parentElement;
+    if (bar.scrollWidth > bar.clientWidth + 2) bar.scrollTo({ left: li.offsetLeft - (bar.clientWidth - li.offsetWidth) / 2, behavior: first ? 'auto' : 'smooth' });
     playFront(k);
   };
 
@@ -416,6 +438,7 @@ function rest() {
 
 const tl = intro();
 const start = () => {
+  fitOpen();
   opening(tl, tunnel());
   dust();
   const vitrina = ring();
