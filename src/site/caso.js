@@ -3,13 +3,13 @@
 import './pages.css';
 import './scene-fonts.css';
 import './spec-fonts.css';
-import { boot, reveal, splitChars, $, $$, gsap, reduced } from './core.js';
+import { boot, reveal, $, $$, gsap, reduced } from './core.js';
 
 boot();
 const start = () => {
   const t = $('.cs-hero__wt');
   if (t && !reduced) {
-    gsap.from(splitChars(t), { yPercent: 110, opacity: 0, duration: 1.3, stagger: 0.02, ease: 'expo.out', delay: 0.15 });
+    gsap.from(t, { y: 22, opacity: 0, duration: 1.2, ease: 'power3.out', delay: 0.15, clearProps: 'transform,opacity' });
     gsap.from('[data-fade-in]', { y: 20, opacity: 0, duration: 1.1, stagger: 0.08, ease: 'expo.out', delay: 0.35 });
     gsap.fromTo('.cs-hero__media img', { scale: 1.12 }, { scale: 1, duration: 2.4, ease: 'expo.out' });
     gsap.to('.cs-hero__media img', { yPercent: 12, ease: 'none', scrollTrigger: { trigger: '.cs-hero', start: 'top top', end: 'bottom top', scrub: true } });

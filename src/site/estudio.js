@@ -1,12 +1,12 @@
 // Estudio: el director como crédito de película (sin rostro), el emblema que se dibuja y las latitudes.
 import './pages.css';
-import { boot, reveal, splitChars, $, $$, gsap, reduced } from './core.js';
+import { boot, reveal, $, $$, gsap, reduced } from './core.js';
 
 boot();
 const start = () => {
   if (!reduced) {
-    // "Exposición": el nombre aparece como una lámpara que se enciende
-    gsap.fromTo(splitChars($('[data-dir-title]')), { opacity: 0, filter: 'blur(12px)', yPercent: 30 }, { opacity: 1, filter: 'blur(0px)', yPercent: 0, duration: 1.4, stagger: 0.035, ease: 'power3.out', delay: 0.2 });
+    // El nombre aparece entero, con un fundido suave
+    gsap.from('[data-dir-title]', { opacity: 0, y: 18, duration: 1.2, ease: 'power3.out', delay: 0.2, clearProps: 'transform,opacity' });
     gsap.from('[data-dir-fade]', { opacity: 0, y: 16, duration: 1.2, stagger: 0.15, ease: 'expo.out', delay: 0.5 });
     const mark = $('.roots__mark');
     if (mark) {

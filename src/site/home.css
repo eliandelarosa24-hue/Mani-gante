@@ -35,16 +35,12 @@
 .has-tunnel .open { position: sticky; top: 0; height: 100svh; }
 @media (max-width: 767px) { .has-tunnel .open-run { height: calc(100svh + 160vh); } }
 .open__foot { position: relative; z-index: 2; }
-/* El titular vive dentro del mismo espacio 3D que las obras: las que vienen lejos pasan detrás y las cercanas, delante.
-   Peso y ancho salen de la tipografía variable: --wg y --ws los mueve el viaje; --pw y --ps, el puntero sobre cada letra */
+/* Las obras vuelan en su espacio 3D; el titular va encima, con su letra fija (solo crece y se apaga con el viaje) */
 .open__space { position: absolute; inset: 0; z-index: 1; overflow: hidden; perspective: 1200px; pointer-events: none; }
 .open__depth, .tunnel { position: absolute; inset: 0; transform-style: preserve-3d; }
-.open__title { position: absolute; z-index: 1; left: 50%; top: 47%; pointer-events: none; width: max-content; max-width: 94vw; margin: 0; text-align: center; transform: translate(-50%, -50%); font: 300 calc(var(--fs-mega) * var(--tk, 1))/0.84 var(--f-display); font-weight: var(--wg, 300); font-stretch: var(--ws, 62.5%); letter-spacing: -0.035em; text-shadow: 0 1px 3px rgba(12, 11, 10, 0.6), 0 4px 22px rgba(12, 11, 10, 0.8); will-change: transform, opacity; }
+.open__title { position: absolute; z-index: 1; left: 50%; top: 47%; pointer-events: none; width: max-content; max-width: 94vw; margin: 0; text-align: center; transform: translate(-50%, -50%); font: 300 calc(var(--fs-mega) * var(--tk, 1))/0.84 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.035em; text-shadow: 0 1px 3px rgba(12, 11, 10, 0.6), 0 4px 22px rgba(12, 11, 10, 0.8); will-change: transform, opacity; }
 .open__title em { font-weight: inherit; color: var(--bone); }
-/* El ancho y el peso de la letra cambian por escalones con el viaje: la transición los suaviza para que el titular no salte */
-.has-tunnel .open__title, .has-tunnel .open__title .ch { transition: font-weight 0.5s var(--ease), font-stretch 0.5s var(--ease); }
 .open__title .ln { padding: 0 0.04em; }
-.open__title .ch { font-weight: calc(var(--wg, 300) + var(--pw, 0)); font-stretch: calc(var(--ws, 62.5%) + var(--ps, 0%)); will-change: auto; }
 .open__veil { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: linear-gradient(180deg, transparent 74%, #0c0b0a), radial-gradient(70% 60% at 50% 44%, rgba(122, 22, 40, 0.3), transparent 72%), radial-gradient(120% 90% at 50% 120%, rgba(60, 10, 22, 0.55), transparent 60%), #0c0b0a; }
 .open__rings { position: absolute; left: 50%; top: 47%; z-index: -1; width: 0; height: 0; pointer-events: none; opacity: 0; transform-origin: 0 0; will-change: transform; transition: opacity 1.4s var(--ease); }
 .has-tunnel .open__rings { opacity: 1; }
@@ -251,12 +247,9 @@
 .credits__roll { display: grid; justify-items: center; gap: 14px; text-align: center; }
 .credits__mark { width: 56px; height: 56px; color: var(--bone); margin-bottom: 10px; }
 .credits__title { font: 300 clamp(48px, 7vw, 120px)/0.9 var(--f-display); font-stretch: 62.5%; letter-spacing: -0.02em; }
-.credits__motto { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 40px; }
-.credits__list { display: grid; gap: 16px; width: min(760px, 100%); }
-.credits__list div { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: baseline; }
-.credits__list dt { text-align: right; font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.2em; text-transform: uppercase; color: var(--muted); }
-.credits__list dd { margin: 0; text-align: left; font-size: 18px; line-height: 1.4; color: var(--bone); }
-.credits__oath { margin-top: 56px; font: 400 12px var(--f-mono); letter-spacing: 0.1em; color: var(--bone-2); }
+.credits__motto { font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.3em; text-transform: uppercase; color: var(--muted); margin-bottom: 26px; }
+.credits__by { font-size: var(--fs-lead); line-height: 1.45; color: var(--bone); }
+.credits__oath { max-width: 30em; margin-top: 10px; font-size: 14px; line-height: 1.5; color: var(--muted); }
 
 /* ---------- próximamente ---------- */
 .soon { position: relative; z-index: 2; display: grid; justify-items: center; gap: 24px; padding: calc(var(--sec) * 0.7) var(--gut) var(--sec); text-align: center; background: radial-gradient(85% 50% at 50% 0%, rgba(106, 24, 39, 0.7), rgba(74, 16, 25, 0.25) 55%, transparent 82%), radial-gradient(60% 45% at 85% 100%, rgba(106, 24, 39, 0.35), transparent 70%), linear-gradient(180deg, var(--wine-950), var(--ink) 40%, var(--ink) 70%, var(--wine-950)); }
@@ -276,8 +269,6 @@
   .doc__duo { margin: 0 0 clamp(40px, 12vw, 90px); }
   .doc__phone, .doc__it:nth-child(even) .doc__phone { left: auto; right: 10px; bottom: -16%; width: 28%; }
   .voice__by a { margin-left: 0; }
-  .credits__list div { grid-template-columns: 1fr; gap: 4px; }
-  .credits__list dt, .credits__list dd { text-align: center; }
   .open__foot { grid-template-columns: 1fr; }
 }
 @media (max-width: 560px) {

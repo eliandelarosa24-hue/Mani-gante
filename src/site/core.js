@@ -107,33 +107,13 @@ export function splitChars(el) {
   return $$('.ch', el);
 }
 
-// ---------- luz de proyector ----------
-// El titular entra en penumbra y un haz cálido lo cruza de izquierda a derecha, dejándolo encendido.
-// Al terminar se quita la máscara, así el titular queda como cualquier otro texto.
-// Una franja de luz cálida cruza el titular. Se desliza con transform: la mueve la tarjeta gráfica,
-// sin volver a pintar el texto en cada cuadro (antes era una máscara que repintaba todo el titular).
-export function projectorLight(el, vars = {}) {
-  if (reduced || !el) return null;
-  const band = document.createElement('span');
-  band.className = 'beam-band';
-  band.setAttribute('aria-hidden', 'true');
-  el.classList.add('beam');
-  el.append(band);
-  // Entra y sale con opacidad, para no asomarse cortada en los bordes del titular
-  const { duration = 1.9, ...rest } = vars;
-  return gsap.timeline({ ...rest, onComplete: () => { band.remove(); el.classList.remove('beam'); } })
-    .fromTo(band, { xPercent: -130 }, { xPercent: 730, duration, ease: 'power2.inOut' }, 0)
-    .fromTo(band, { opacity: 0 }, { opacity: 1, duration: duration * 0.3, ease: 'none' }, 0)
-    .to(band, { opacity: 0, duration: duration * 0.3, ease: 'none' }, duration * 0.7);
-}
-
 // ---------- apariciones ----------
 export function reveal(root = document) {
   if (reduced) return;
+  // Los títulos aparecen enteros: un fundido con una leve subida. Sin dividirlos en líneas ni letras (así no se
+  // cortan a medio camino ni pierden el espaciado entre letras) y sin franjas de luz encima
   $$('[data-reveal="lines"]', root).forEach((el) => {
-    const lines = splitLines(el);
-    gsap.from(lines, { yPercent: 160, rotate: 2, duration: 1.3, stagger: 0.07, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 88%' } });
-    if (/^H[12]$/.test(el.nodeName)) projectorLight(el, { delay: 0.12, scrollTrigger: { trigger: el, start: 'top 88%' } });
+    gsap.from(el, { y: 22, opacity: 0, duration: 1.1, ease: 'power3.out', clearProps: 'transform,opacity', scrollTrigger: { trigger: el, start: 'top 90%' } });
   });
   // Mientras entran, sin transiciones CSS propias (si no, el "hover" de la tarjeta frena la animación a medio
   // camino); al terminar se limpia todo, así el hover vuelve a funcionar.

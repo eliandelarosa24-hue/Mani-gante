@@ -1,6 +1,6 @@
 // Portada: las obras salen del proyector en un túnel 3D junto al titular y, más abajo, giran en una vitrina
 // limpia, marca por marca, con su sitio funcionando y el botón para visitarlo.
-import { boot, reveal, splitChars, splitLines, projectorLight, getLenis, $, $$, gsap, ScrollTrigger, reduced, fine, small, track } from './core.js';
+import { boot, reveal, getLenis, $, $$, gsap, ScrollTrigger, reduced, fine, small, track } from './core.js';
 import { ambience } from './sound.js';
 
 const SOUND = { 'termas-rayenko': 'agua', 'villa-coral-samana': 'mar', 'domos-cielo-austral': 'noche', 'hotel-casa-nogal': 'lluvia', 'pucon-aventura': 'viento', 'fogon-mapu': 'fuego', 'cabanas-lago-azul': 'agua', 'vina-los-robles': 'viento', 'kuchen-haus-frutillar': 'fuego', 'estudio-haber': 'sala' };
@@ -51,19 +51,16 @@ function intro() {
 function opening(tl, tn) {
   const title = $('[data-open-title]');
   if (!title || reduced) return;
-  const lines = splitLines(title);
-  // El titular sube desde su línea y se enciende (solo opacidad: sin desenfoque, que repinta todo en cada cuadro)
-  tl.from(lines, { yPercent: 160, rotate: 3, duration: 1.5, stagger: 0.09 }, tl.getChildren().length ? '-=0.55' : 0.1)
-    .fromTo(title, { opacity: 0.4 }, { opacity: 1, duration: 1.6, ease: 'power2.out', clearProps: 'opacity' }, '<')
-    .add(projectorLight(title, { duration: 2.1 }), '<0.15')
-    .add(() => tn?.boot(), '<0.35')
-    .from('[data-open-fade]', { y: 26, opacity: 0, duration: 1.2, stagger: 0.08 }, '-=1.15');
+  // El titular aparece entero: un fundido con una leve subida (sin dividirlo en líneas ni pasarle luces encima)
+  tl.fromTo(title, { opacity: 0, y: 24 }, { opacity: 1, y: 0, duration: 1.4, ease: 'power3.out', clearProps: 'opacity' }, tl.getChildren().length ? '-=0.55' : 0.1)
+    .add(() => tn?.boot(), '<0.5')
+    .from('[data-open-fade]', { y: 26, opacity: 0, duration: 1.2, stagger: 0.08 }, '-=0.9');
 }
 
 // ---------- túnel de obras ----------
 // Las obras salen del fondo del proyector y vuelan hacia quien mira mientras la portada queda fija. Al llegar,
 // las primeras se asoman a lo lejos; el scroll hace el resto. El titular cambia su palabra por la de la obra que
-// pasa («Proyectamos termas.») y su tipografía variable se ensancha con el viaje y bajo el puntero.
+// pasa («Proyectamos termas.»): la palabra se apaga y se enciende entera, sin cambiar el grosor de la letra.
 function tunnel() {
   const open = $('[data-open]'), title = $('[data-open-title]'), word = $('[data-open-word]');
   const cards = open ? $$('.tn', open) : [];
@@ -82,46 +79,37 @@ function tunnel() {
   addEventListener('resize', () => { W = innerWidth; H = innerHeight; mob = W < 768; dirty = true; });
 
   const st8 = { boot: 0 };
-  let scroll = 0, shown = 0, lastP = 0, px = 0, py = 0, tx = 0, ty = 0, pointer = false;
+  let scroll = 0, shown = 0, px = 0, py = 0, tx = 0, ty = 0;
   const clamp = gsap.utils.clamp(0, 1);
   const lerp = (a, b, t) => a + (b - a) * t;
   // Cada obra aparece lejos, se sostiene y se apaga al pasar junto a la cámara. Mientras está lejos se ve más
   // tenue (niebla): va dentro de su opacidad, que la tarjeta gráfica cambia sin repintar la foto
   const fade = (t) => (t < 0.3 ? t / 0.3 : t > 0.82 ? Math.max(0, 1 - (t - 0.82) / 0.16) : 1);
   const fog = (t) => { const k = clamp(t / 0.5); return 0.7 * (1 - k * k * (3 - 2 * k)); };
-  const seen = { scale: -1, op: -1, step: -1, out: -1, rs: -1 };
+  // (la opacidad del titular parte en 1, como en el CSS: así no se pisa con su aparición)
+  const seen = { scale: -1, op: 1, out: -1, rs: -1 };
 
   // El tramo lo da el contenedor alto de la portada (CSS sticky), sin pin de GSAP
   ScrollTrigger.create({
     trigger: $('[data-open-run]') || open, start: 'top top', end: 'bottom bottom',
     onUpdate: (st) => { scroll = st.progress; dirty = true; },
   });
-  if (fine && !small()) addEventListener('pointermove', (e) => { tx = (e.clientX / W - 0.5) * 2; ty = (e.clientY / H - 0.5) * 2; pointer = true; dirty = true; }, { passive: true });
+  // Con mouse, las obras se desplazan apenas según el puntero (el titular no se mueve)
+  if (fine && !small()) addEventListener('pointermove', (e) => { tx = (e.clientX / W - 0.5) * 2; ty = (e.clientY / H - 0.5) * 2; dirty = true; }, { passive: true });
 
-  // Letras del titular que responden al puntero (computador)
-  const spell = (w) => [...w].map((c) => '<span class="ch">' + c + '</span>').join('');
-  let chars = [];
-  const collect = () => { chars = fine ? $$('.ch', title).map((el) => ({ el, w: 0, s: 0 })) : []; };
-  if (fine) { splitChars($('[data-open-a]', title)); word.innerHTML = spell(word.textContent); collect(); }
-
-  // La palabra del titular cambia por la de la obra que pasa, pero nunca más rápido de lo que se alcanza a leer:
-  // la anterior sale entera, la nueva entra letra por letra y se sostiene un momento antes del siguiente cambio.
-  // Si el scroll va rápido se saltan las intermedias y queda la última; al subir, las letras entran desde arriba
-  let current = word.textContent, want = current, last = -1e9, dir = 1, wordOut = null, wordIn = null;
+  // La palabra del titular cambia por la de la obra que pasa: se apaga entera, cambia y se enciende entera, a un
+  // ritmo que se alcanza a leer. Si el scroll va rápido se saltan las intermedias y queda la última
+  let current = word.textContent, want = current, last = -1e9, fadeTw = null;
   const HOLD = 1.1;
   const swap = () => {
     if (want === current || gsap.ticker.time - last < HOLD) return;
     last = gsap.ticker.time; current = want;
-    const next = want, d = dir;
-    wordOut?.kill(); wordIn?.kill();
-    const enter = () => {
-      word.innerHTML = spell(next);
-      collect();
-      wordIn = gsap.fromTo(word.children, { yPercent: 105 * d, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.5, stagger: 0.016, ease: 'expo.out' });
-    };
-    const old = [...word.children];
-    if (old.length) wordOut = gsap.to(old, { yPercent: -105 * d, opacity: 0, duration: 0.2, stagger: 0.006, ease: 'power2.in', onComplete: enter });
-    else enter();
+    const next = want;
+    fadeTw?.kill();
+    fadeTw = gsap.to(word, { opacity: 0, duration: 0.22, ease: 'power1.in', onComplete: () => {
+      word.textContent = next;
+      fadeTw = gsap.to(word, { opacity: 1, duration: 0.4, ease: 'power1.out' });
+    } });
   };
 
   gsap.set(title, { x: 0, y: 0, xPercent: -50, yPercent: -50 });
@@ -135,7 +123,6 @@ function tunnel() {
     if (!dirty && !settling) return;
     dirty = false;
     const P = Math.min(1, st8.boot * BOOT + shown * (1 - BOOT));
-    if (Math.abs(P - lastP) > 0.0005) { dir = P > lastP ? 1 : -1; lastP = P; }
     const far = mob ? -1200 : -1700, near = mob ? 350 : 500, pan = mob ? 20 : 45;
     let lead = -1;
     for (let i = 0; i < N; i++) {
@@ -146,36 +133,16 @@ function tunnel() {
       c.el.style.transform = 'translate3d(' + x.toFixed(1) + 'px, ' + y.toFixed(1) + 'px, ' + z.toFixed(1) + 'px) rotateZ(' + c.rot + 'deg)';
       if (c.o !== o) { c.el.style.opacity = o; if (c.o <= 0) c.el.style.visibility = 'visible'; c.o = o; }
     }
-    // Titular: se acerca con el viaje, se ensancha a mitad de camino y se apaga al final
-    // La tipografía variable cambia por escalones (ocho a lo largo del viaje), no en cada cuadro: cada cambio
-    // de peso o ancho obliga a recomponer el titular
-    const q = clamp((P - BOOT) / (1 - BOOT)), step = Math.round(Math.sin(Math.PI * q) * 8) / 8;
+    // Titular: se acerca con el viaje y se apaga al final
     const scale = Math.round((P < 0.5 ? lerp(0.94, 1, P / 0.5) : lerp(1, 1.32, (P - 0.5) / 0.5)) * 500) / 500;
     const op = Math.round((1 - clamp((P - 0.86) / 0.12)) * 100) / 100;
-    if (scale !== seen.scale || op !== seen.op) { gsap.set(title, { scale, opacity: op }); seen.scale = scale; seen.op = op; }
-    if (step !== seen.step) {
-      seen.step = step;
-      title.style.setProperty('--wg', String(Math.round(300 + 110 * step)));
-      title.style.setProperty('--ws', (62.5 + 12.5 * step).toFixed(2) + '%');
-    }
+    if (scale !== seen.scale) { gsap.set(title, { scale }); seen.scale = scale; }
+    if (op !== seen.op) { gsap.set(title, { opacity: op }); seen.op = op; }
     want = lead >= 0 && P < 0.9 ? items[lead].word : 'lugares.';
     const out = Math.round((1 - clamp((P - BOOT - 0.01) / 0.07)) * 50) / 50;
     if (out !== seen.out) { seen.out = out; fades.forEach((f) => (f.style.opacity = out)); }
     const rs = Math.round((1 + P * 0.9) * 200) / 200;
     if (rings && rs !== seen.rs) { seen.rs = rs; rings.style.transform = 'scale(' + rs + ')'; }
-    // Puntero sobre el titular: cada letra engrosa y se ensancha según lo cerca que pase
-    if (pointer && chars.length && Math.abs(scroll - shown) < 0.002) {
-      const R = Math.max(200, W * 0.2), mx = (tx / 2 + 0.5) * W, my = (ty / 2 + 0.5) * H;
-      const rects = chars.map((c) => c.el.getBoundingClientRect());
-      chars.forEach((c, i) => {
-        const r = rects[i];
-        const k = Math.max(0, 1 - Math.hypot(mx - (r.left + r.width / 2), my - (r.top + r.height / 2)) / R), e = k * k * (3 - 2 * k);
-        c.w += (190 * e - c.w) * 0.18; c.s += (12 * e - c.s) * 0.18;
-        if (Math.abs(190 * e - c.w) > 1) dirty = true;
-        const w = Math.round(c.w / 10) * 10, st = Math.round(c.s);
-        if (w !== c.qw || st !== c.qs) { c.qw = w; c.qs = st; c.el.style.setProperty('--pw', String(w)); c.el.style.setProperty('--ps', st + '%'); }
-      });
-    }
   };
   gsap.ticker.add(render);
   return { boot: () => gsap.to(st8, { boot: 1, duration: 2.8, ease: 'power2.out', onUpdate: () => { dirty = true; } }) };
