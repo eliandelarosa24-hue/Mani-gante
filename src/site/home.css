@@ -39,8 +39,10 @@
    Peso y ancho salen de la tipografía variable: --wg y --ws los mueve el viaje; --pw y --ps, el puntero sobre cada letra */
 .open__space { position: absolute; inset: 0; z-index: 1; overflow: hidden; perspective: 1200px; pointer-events: none; }
 .open__depth, .tunnel { position: absolute; inset: 0; transform-style: preserve-3d; }
-.open__title { position: absolute; left: 50%; top: 47%; width: max-content; max-width: 94vw; margin: 0; text-align: center; transform: translate(-50%, -50%); font: 300 calc(var(--fs-mega) * var(--tk, 1))/0.84 var(--f-display); font-weight: var(--wg, 300); font-stretch: var(--ws, 62.5%); letter-spacing: -0.035em; text-shadow: 0 4px 22px rgba(12, 11, 10, 0.75); will-change: transform, opacity; }
+.open__title { position: absolute; z-index: 1; left: 50%; top: 47%; pointer-events: none; width: max-content; max-width: 94vw; margin: 0; text-align: center; transform: translate(-50%, -50%); font: 300 calc(var(--fs-mega) * var(--tk, 1))/0.84 var(--f-display); font-weight: var(--wg, 300); font-stretch: var(--ws, 62.5%); letter-spacing: -0.035em; text-shadow: 0 1px 3px rgba(12, 11, 10, 0.6), 0 4px 22px rgba(12, 11, 10, 0.8); will-change: transform, opacity; }
 .open__title em { font-weight: inherit; color: var(--bone); }
+/* El ancho y el peso de la letra cambian por escalones con el viaje: la transición los suaviza para que el titular no salte */
+.has-tunnel .open__title, .has-tunnel .open__title .ch { transition: font-weight 0.5s var(--ease), font-stretch 0.5s var(--ease); }
 .open__title .ln { padding: 0 0.04em; }
 .open__title .ch { font-weight: calc(var(--wg, 300) + var(--pw, 0)); font-stretch: calc(var(--ws, 62.5%) + var(--ps, 0%)); will-change: auto; }
 .open__veil { position: absolute; inset: 0; z-index: -2; pointer-events: none; background: linear-gradient(180deg, transparent 74%, #0c0b0a), radial-gradient(70% 60% at 50% 44%, rgba(122, 22, 40, 0.3), transparent 72%), radial-gradient(120% 90% at 50% 120%, rgba(60, 10, 22, 0.55), transparent 60%), #0c0b0a; }
@@ -81,16 +83,37 @@
    Un anillo de ventanas: cada una muestra el sitio de una marca. Con el scroll, el anillo gira y la del frente
    presenta su logo, «Visitar el sitio» y su caso. Fondo liso y limpio: sin fotos a pantalla completa. */
 .ring { --n: 13; --w: min(clamp(300px, 34vw, 500px), 60vh); --r: calc(var(--w) * 2.42); position: relative; isolation: isolate; display: grid; grid-template-columns: minmax(0, 1fr); grid-template-rows: auto 1fr auto auto; min-height: 100svh; padding: calc(var(--hd-h) + 18px) var(--gut) 22px; overflow: hidden; overflow: clip; background: radial-gradient(60% 45% at 50% 52%, rgba(236, 229, 216, 0.05), transparent 70%), #0c0b0a; }
-.has-ring .ring-run { height: calc(100svh + 12 * 34vh); }
-.has-ring .ring { position: sticky; top: 0; height: 100svh; }
+.has-ring .ring { height: 100svh; }
 .ring__head { position: relative; z-index: 2; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: end; gap: 6px 24px; }
 .ring__head .eyebrow { grid-column: 1 / -1; }
 .ring__title { margin: 0; font: 300 clamp(36px, 4.4vw, 72px)/0.9 var(--f-display); font-stretch: 66%; letter-spacing: -0.025em; }
 .ring__sub { grid-column: 1; max-width: 36em; margin-top: 8px; font-size: 15px; line-height: 1.5; color: var(--muted); }
-.ring__count { grid-column: 2; grid-row: 2 / 4; align-self: end; font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.ring__count { grid-column: 2; grid-row: 2 / 4; align-self: end; display: grid; grid-template-columns: auto auto; align-items: center; justify-content: end; gap: 6px 4px; font: 400 var(--fs-micro) var(--f-mono); letter-spacing: 0.16em; color: var(--muted); font-variant-numeric: tabular-nums; }
 .ring__count b { font-weight: 400; color: var(--bone); }
-/* El anillo */
-.ring__stage { position: relative; z-index: 1; perspective: 2200px; perspective-origin: 50% 46%; container-type: size; }
+/* Avance automático: la barra se llena y pasa a la siguiente marca; se detiene con el botón, al pasar el puntero,
+   con el foco del teclado o fuera de la pantalla */
+.ring__pause { display: none; place-items: center; width: 34px; height: 34px; margin: -8px -9px -8px 0; border-radius: 50%; color: var(--bone); transition: background 0.3s var(--ease); }
+.ring__pause:hover { background: rgba(236, 229, 216, 0.1); }
+.ring__ic-play, .ring__pause[aria-pressed='true'] .ring__ic-pause { display: none; }
+.ring__pause[aria-pressed='true'] .ring__ic-play { display: block; }
+.ring__timer { display: none; grid-column: 1 / -1; height: 2px; overflow: hidden; border-radius: 2px; background: rgba(236, 229, 216, 0.14); }
+.ring__timer i { display: block; height: 100%; background: var(--bone); transform: scaleX(0); transform-origin: 0 50%; }
+.has-ring .ring__pause { display: grid; }
+.has-ring .ring__timer { display: block; }
+.ring.is-auto .ring__timer i { animation: ring-timer var(--auto, 4.2s) linear forwards; }
+.ring.is-held .ring__timer i, .is-playing .ring__timer i { animation-play-state: paused; }
+@keyframes ring-timer { to { transform: scaleX(1); } }
+/* El anillo: se arrastra o desliza de lado; el gesto vertical queda para la página */
+.ring__view { position: relative; z-index: 1; min-height: 0; }
+.ring__stage { position: absolute; inset: 0; perspective: 2200px; perspective-origin: 50% 46%; container-type: size; touch-action: pan-y; cursor: grab; -webkit-user-select: none; user-select: none; }
+.ring__stage img { -webkit-user-drag: none; }
+.ring.is-drag .ring__stage { cursor: grabbing; }
+.ring__arrow { position: absolute; top: 50%; z-index: 3; display: none; place-items: center; width: 48px; height: 48px; margin-top: -24px; border-radius: 50%; color: var(--bone); background: rgba(12, 11, 10, 0.62); box-shadow: inset 0 0 0 1px rgba(236, 229, 216, 0.22); transition: background 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+.js .ring__arrow { display: grid; }
+.ring__arrow:hover { background: rgba(236, 229, 216, 0.12); box-shadow: inset 0 0 0 1px rgba(236, 229, 216, 0.5); }
+.ring__arrow--prev { left: 0; }
+.ring__arrow--next { right: 0; }
+.ring__arrow--next svg { transform: scaleX(-1); }
 @supports (width: 1cqh) {
   .ring__wheel { --w: min(clamp(300px, 34vw, 520px), calc(150cqh - 42px)); --r: calc(var(--w) * 2.42); }
 }
@@ -125,11 +148,11 @@
   .ring { --w: min(44vw, 21vh); --r: calc(var(--w) * 2.5); padding-bottom: 14px; }
   @supports (width: 1cqh) { .ring__wheel { --w: min(46vw, 43cqh); --r: calc(var(--w) * 2.5); } }
   .ring__title { font-size: clamp(30px, 8.6vw, 44px); }
-  .has-ring .ring-run { height: calc(100svh + 12 * 30vh); }
   .ring__head { grid-template-columns: 1fr auto; }
   .ring__sub { display: none; }
   .ring__count { grid-row: 2; }
   .ring__stage { perspective: 1100px; }
+  .ring__arrow { width: 44px; height: 44px; margin-top: -22px; }
   .rw { top: calc(var(--w) * -1.08); border-radius: 18px; box-shadow: 0 0 0 4px #1b1917, 0 0 0 5px rgba(236, 229, 216, 0.14), 0 30px 60px -24px rgba(0, 0, 0, 0.9); }
   .rw__bar { display: none; }
   .rw__screen { aspect-ratio: 390 / 844; }
@@ -160,7 +183,8 @@
   .ring__head { grid-area: head; }
   .ring__head .eyebrow, .ring__sub { display: none; }
   .ring__title { font-size: clamp(26px, 7vh, 36px); }
-  .ring__stage { grid-area: stage; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); }
+  .ring__view { grid-area: stage; }
+  .ring__stage { overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); mask-image: linear-gradient(90deg, transparent, #000 14%, #000 86%, transparent); }
   .ring__now { grid-area: now; align-self: center; justify-items: start; gap: 8px; padding-top: 0; text-align: left; }
   .ring__acts { justify-content: flex-start; }
   .ring__acts .btn { min-height: 44px; padding: 0 16px; font-size: 13.5px; }

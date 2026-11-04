@@ -82,7 +82,7 @@ function tunnel() {
   addEventListener('resize', () => { W = innerWidth; H = innerHeight; mob = W < 768; dirty = true; });
 
   const st8 = { boot: 0 };
-  let scroll = 0, shown = 0, px = 0, py = 0, tx = 0, ty = 0, pointer = false;
+  let scroll = 0, shown = 0, lastP = 0, px = 0, py = 0, tx = 0, ty = 0, pointer = false;
   const clamp = gsap.utils.clamp(0, 1);
   const lerp = (a, b, t) => a + (b - a) * t;
   // Cada obra aparece lejos, se sostiene y se apaga al pasar junto a la cámara. Mientras está lejos se ve más
@@ -104,14 +104,24 @@ function tunnel() {
   const collect = () => { chars = fine ? $$('.ch', title).map((el) => ({ el, w: 0, s: 0 })) : []; };
   if (fine) { splitChars($('[data-open-a]', title)); word.innerHTML = spell(word.textContent); collect(); }
 
-  // La palabra del titular entra letra por letra desde abajo, dentro de la máscara de su línea
-  let current = word.textContent;
-  const setWord = (w) => {
-    if (w === current) return;
-    current = w;
-    word.innerHTML = spell(w);
-    gsap.fromTo(word.children, { yPercent: 115, rotate: 5 }, { yPercent: 0, rotate: 0, duration: 0.6, stagger: 0.018, ease: 'expo.out', overwrite: true });
-    collect();
+  // La palabra del titular cambia por la de la obra que pasa, pero nunca más rápido de lo que se alcanza a leer:
+  // la anterior sale entera, la nueva entra letra por letra y se sostiene un momento antes del siguiente cambio.
+  // Si el scroll va rápido se saltan las intermedias y queda la última; al subir, las letras entran desde arriba
+  let current = word.textContent, want = current, last = -1e9, dir = 1, wordOut = null, wordIn = null;
+  const HOLD = 1.1;
+  const swap = () => {
+    if (want === current || gsap.ticker.time - last < HOLD) return;
+    last = gsap.ticker.time; current = want;
+    const next = want, d = dir;
+    wordOut?.kill(); wordIn?.kill();
+    const enter = () => {
+      word.innerHTML = spell(next);
+      collect();
+      wordIn = gsap.fromTo(word.children, { yPercent: 105 * d, opacity: 0 }, { yPercent: 0, opacity: 1, duration: 0.5, stagger: 0.016, ease: 'expo.out' });
+    };
+    const old = [...word.children];
+    if (old.length) wordOut = gsap.to(old, { yPercent: -105 * d, opacity: 0, duration: 0.2, stagger: 0.006, ease: 'power2.in', onComplete: enter });
+    else enter();
   };
 
   gsap.set(title, { x: 0, y: 0, xPercent: -50, yPercent: -50 });
@@ -121,9 +131,11 @@ function tunnel() {
     shown += (scroll - shown) * ks;
     px += (tx - px) * kp; py += (ty - py) * kp;
     const settling = Math.abs(scroll - shown) > 0.0004 || Math.abs(tx - px) > 0.002 || Math.abs(ty - py) > 0.002;
+    swap();
     if (!dirty && !settling) return;
     dirty = false;
     const P = Math.min(1, st8.boot * BOOT + shown * (1 - BOOT));
+    if (Math.abs(P - lastP) > 0.0005) { dir = P > lastP ? 1 : -1; lastP = P; }
     const far = mob ? -1200 : -1700, near = mob ? 350 : 500, pan = mob ? 20 : 45;
     let lead = -1;
     for (let i = 0; i < N; i++) {
@@ -146,7 +158,7 @@ function tunnel() {
       title.style.setProperty('--wg', String(Math.round(300 + 110 * step)));
       title.style.setProperty('--ws', (62.5 + 12.5 * step).toFixed(2) + '%');
     }
-    setWord(lead >= 0 && P < 0.9 ? items[lead].word : 'lugares.');
+    want = lead >= 0 && P < 0.9 ? items[lead].word : 'lugares.';
     const out = Math.round((1 - clamp((P - BOOT - 0.01) / 0.07)) * 50) / 50;
     if (out !== seen.out) { seen.out = out; fades.forEach((f) => (f.style.opacity = out)); }
     const rs = Math.round((1 + P * 0.9) * 200) / 200;
@@ -250,19 +262,21 @@ function dust() {
 }
 
 // ---------- vitrina de marcas ----------
-// Trece ventanas en un anillo 3D. El scroll lo hace girar: cada marca se detiene un momento al frente, con su
-// sitio funcionando, su logo y los botones para visitarlo. El índice de logos salta a cualquiera.
+// Trece ventanas en un anillo 3D que avanza solo, marca por marca, con su sitio funcionando, su logo y los botones
+// para visitarlo. Se toma el control deslizando de lado (dedo, mouse o trackpad), con las flechas, el teclado o el
+// índice de logos; el scroll vertical no lo mueve: la página sigue bajando directo.
 function ring() {
   const sec = $('[data-ring]');
   if (!sec) return null;
   const data = JSON.parse($('[data-ring-data]', sec).textContent);
-  const wheel = $('[data-wheel]', sec), wins = $$('[data-rw]', sec), dots = $$('[data-ri]', sec), run = $('[data-ring-run]');
+  const view = $('.ring__view', sec), stage = $('.ring__stage', sec), wheel = $('[data-wheel]', sec), wins = $$('[data-rw]', sec), dots = $$('[data-ri]', sec);
   const now = $('[data-ring-now]', sec), logo = $('.ring__logo', now), num = $('[data-ring-n]', sec);
   const label = $('[data-ring-label]', now), kind = $('[data-ring-kind]', now), visit = $('[data-ring-visit]', now), of = $('[data-ring-of]', now);
   const more = $('[data-ring-more]', now), moreL = $('[data-ring-more-l]', now);
-  const N = wins.length, STEP = 360 / N, HOLD = 0.32;
+  const pauseBtn = $('[data-ring-pause]', sec), pauseL = $('[data-ring-pause-l]', sec), timer = $('[data-ring-timer]', sec);
+  const N = wins.length, STEP = 360 / N, AUTO = 4.2, AFTER = 7;
   const phone = matchMedia('(max-width: 767px)');
-  const clamp = gsap.utils.clamp(0, 1);
+  const norm = (k) => ((k % N) + N) % N;
 
   // Las capturas de cada sitio se piden al acercarse a la vitrina
   new IntersectionObserver(([e], o) => {
@@ -271,7 +285,9 @@ function ring() {
     wins.forEach((w) => { $$('source', w).forEach((src) => (src.srcset = src.dataset.srcset)); const im = $('img', w); im.src = im.dataset.src; });
   }, { rootMargin: '900px' }).observe(sec);
 
-  // Un solo video: el del sitio que queda al frente, cuando se detiene
+  // Un solo video: el del sitio que queda al frente, cuando se detiene. En celular, mientras la vitrina avanza
+  // sola, basta la captura (no se descarga un video por marca); el video aparece cuando el visitante elige una
+  let how = 'auto';
   const video = document.createElement('video');
   Object.assign(video, { muted: true, loop: true, playsInline: true, preload: 'none' });
   video.setAttribute('muted', ''); video.setAttribute('playsinline', '');
@@ -279,6 +295,7 @@ function ring() {
   const playFront = (k) => {
     clearTimeout(settle);
     video.classList.remove('is-on');
+    if (slow || (phone.matches && how === 'auto')) return;
     settle = setTimeout(() => {
       const base = phone.matches ? data[k].video.m : data[k].video.d;
       if (videoFor !== k || video.dataset.base !== base) {
@@ -318,9 +335,8 @@ function ring() {
     playFront(k);
   };
 
-  // Giro: posición continua (0 = primera marca al frente)
-  let target = 0, pos = 0, dirty = true;
-  // Radio del anillo en píxeles (el mismo cálculo que el CSS), para girar con un transform directo
+  // Giro: posición continua (0 = primera marca al frente; sigue contando al dar la vuelta)
+  let target = 0, pos = 0, soft = 0.84;
   let radius = 0;
   const measure = () => { radius = wins[0].offsetWidth * (phone.matches ? 2.5 : 2.42); };
   measure();
@@ -335,39 +351,133 @@ function ring() {
       if (o !== shade[i]) { wins[i].style.opacity = o; wins[i].style.visibility = o ? '' : 'hidden'; shade[i] = o; }
     }
     const k = Math.round(pos);
-    if (Math.abs(pos - k) < 0.18) setFront(((k % N) + N) % N);
+    if (Math.abs(pos - k) < 0.18) setFront(norm(k));
     else { clearTimeout(settle); video.classList.remove('is-on'); }
   }
-  if (reduced) { paint(); setFront(0); }
-  else {
-    const smooth = (x) => x * x * (3 - 2 * x);
-    ScrollTrigger.create({
-      trigger: run, start: 'top top', end: 'bottom bottom',
-      onUpdate: (st) => {
-        const u = st.progress * (N - 1), i = Math.min(N - 1, Math.floor(u));
-        target = i + smooth(clamp((u - i - HOLD) / (1 - HOLD)));
-        dirty = true;
-      },
+  // Al avanzar solo, el giro es más pausado que cuando lo pide el visitante
+  const move = (t, by) => {
+    target = t; how = by; soft = by === 'auto' ? 0.9 : 0.84;
+    if (reduced) { pos = target; paint(); }
+    if (by === 'user') rest(AFTER);
+  };
+  const step = (d, by = 'user') => move(Math.round(target) + d, by);
+  // A una marca por el camino más corto
+  const go = (k, by = 'user') => { const c = Math.round(target), d = norm(k - norm(c)); move(c + (d > N / 2 ? d - N : d), by); };
+  paint();
+
+  // Arrastre de lado (dedo o mouse). El navegador se queda con el gesto vertical (touch-action: pan-y)
+  const drag = { id: -1, on: false, x0: 0, p0: 0, lx: 0, lt: 0, vx: 0 };
+  const unit = () => wins[0].offsetWidth * (phone.matches ? 1.6 : 0.9);
+  stage.addEventListener('pointerdown', (e) => {
+    if (e.button !== 0 || drag.id !== -1) return;
+    if (e.pointerType === 'mouse') e.preventDefault();
+    Object.assign(drag, { id: e.pointerId, on: false, x0: e.clientX, p0: pos, lx: e.clientX, lt: e.timeStamp, vx: 0 });
+  });
+  addEventListener('pointermove', (e) => {
+    if (e.pointerId !== drag.id) return;
+    const dx = e.clientX - drag.x0;
+    if (!drag.on) {
+      if (Math.abs(dx) < 8) return;
+      drag.on = true; drag.x0 = e.clientX; drag.p0 = pos;
+      sec.classList.add('is-drag'); hold();
+      try { stage.setPointerCapture(e.pointerId); } catch { /* el puntero ya se soltó */ }
+      return;
+    }
+    const dt = Math.max(1, e.timeStamp - drag.lt);
+    drag.vx = drag.vx * 0.5 + ((e.clientX - drag.lx) / dt) * 0.5; drag.lx = e.clientX; drag.lt = e.timeStamp;
+    pos = target = drag.p0 - dx / unit();
+    paint();
+  }, { passive: true });
+  const release = (e) => {
+    if (e.pointerId !== drag.id) return;
+    drag.id = -1;
+    if (drag.on) {
+      drag.on = false; sec.classList.remove('is-drag');
+      // Al soltar, sigue un poco con el impulso del gesto y se acomoda en la marca más cercana; un gesto corto
+      // igual pasa a la siguiente en su dirección
+      const moved = pos - drag.p0, fling = Math.max(-0.6, Math.min(0.6, (-drag.vx * 200) / unit()));
+      let t = Math.round(pos + fling);
+      if (t === Math.round(drag.p0) && Math.abs(moved) > 0.12) t += Math.sign(moved);
+      move(t, 'user');
+      hold();
+      track('vitrina_deslizar', {});
+      return;
+    }
+    if (e.type !== 'pointerup') return;
+    // Toque sin arrastre: una ventana de costado pasa al frente; la del frente abre su sitio
+    const w = e.target.closest?.('.rw'), i = w ? wins.indexOf(w) : -1;
+    if (i < 0) return;
+    if (i === front && Math.abs(pos - Math.round(pos)) < 0.05) { track('vitrina_visitar', { marca: data[i].slug, desde: 'ventana' }); window.open(data[i].visit, '_blank', 'noopener'); }
+    else go(i);
+  };
+  addEventListener('pointerup', release);
+  addEventListener('pointercancel', release);
+
+  // Trackpad o rueda de lado: una marca por gesto. La rueda vertical sigue bajando la página
+  let wAcc = 0, wAt = -1e9;
+  sec.addEventListener('wheel', (e) => {
+    if (Math.abs(e.deltaX) < 2 || Math.abs(e.deltaX) <= Math.abs(e.deltaY) * 1.2) return;
+    e.preventDefault(); e.stopPropagation();
+    if (e.timeStamp - wAt < 480) return;
+    wAcc += e.deltaX;
+    if (Math.abs(wAcc) > 60) { step(Math.sign(wAcc)); wAcc = 0; wAt = e.timeStamp; }
+  }, { passive: false });
+
+  // Flechas, teclado e índice de logos
+  $('[data-ring-prev]', sec).addEventListener('click', () => step(-1));
+  $('[data-ring-next]', sec).addEventListener('click', () => step(1));
+  sec.addEventListener('keydown', (e) => {
+    if (e.key !== 'ArrowLeft' && e.key !== 'ArrowRight') return;
+    e.preventDefault();
+    step(e.key === 'ArrowRight' ? 1 : -1);
+  });
+  dots.forEach((d, k) => d.addEventListener('click', () => { track('vitrina_salto', { marca: data[k].slug }); go(k); }));
+  visit.addEventListener('click', () => track('vitrina_visitar', { marca: data[front].slug }));
+
+  // Avance automático: lo marca la barra de tiempo (al llenarse, pasa a la siguiente). Se sostiene con la pausa,
+  // el puntero encima, el foco del teclado, el arrastre o fuera de la pantalla; tras un gesto, espera un poco más
+  let paused = false, inView = false, hover = false, focus = false;
+  const hold = () => sec.classList.toggle('is-held', paused || !inView || hover || focus || drag.on || document.hidden);
+  const rest = (secs = AUTO) => {
+    if (reduced) return;
+    sec.style.setProperty('--auto', secs + 's');
+    sec.classList.remove('is-auto');
+    void timer.offsetWidth;
+    sec.classList.add('is-auto');
+  };
+  if (!reduced) {
+    timer.addEventListener('animationend', () => { step(1, 'auto'); rest(); });
+    pauseBtn.addEventListener('click', () => {
+      paused = !paused;
+      pauseBtn.setAttribute('aria-pressed', String(paused));
+      pauseL.textContent = paused ? 'Reanudar la vitrina' : 'Pausar la vitrina';
+      if (!paused) rest();
+      hold();
     });
-    ScrollTrigger.create({ trigger: run, start: 'top 60%', end: 'bottom 40%', toggleClass: { targets: html, className: 'in-reel' } });
+    new IntersectionObserver(([e]) => {
+      const was = inView;
+      inView = e.intersectionRatio >= 0.45;
+      if (inView && !was) rest();
+      hold();
+    }, { threshold: [0, 0.45, 1] }).observe(sec);
+    for (const el of [view, now]) {
+      el.addEventListener('pointerenter', (e) => { if (e.pointerType === 'mouse') { hover = true; hold(); } });
+      el.addEventListener('pointerleave', (e) => { if (e.pointerType === 'mouse') { hover = false; hold(); } });
+    }
+    sec.addEventListener('focusin', (e) => { focus = e.target.matches(':focus-visible'); hold(); });
+    sec.addEventListener('focusout', (e) => { if (!sec.contains(e.relatedTarget)) { focus = false; hold(); } });
+    document.addEventListener('visibilitychange', hold);
+    hold();
     gsap.ticker.add(() => {
-      const k = 1 - 0.84 ** gsap.ticker.deltaRatio(60);
-      if (!dirty && Math.abs(target - pos) < 0.0005) return;
-      pos += (target - pos) * k;
-      if (Math.abs(target - pos) < 0.0005) { pos = target; dirty = false; }
+      if (drag.on || pos === target) return;
+      pos += (target - pos) * (1 - soft ** gsap.ticker.deltaRatio(60));
+      if (Math.abs(target - pos) < 0.0005) pos = target;
       paint();
     });
   }
-  // Índice de logos: salta a cualquier marca
-  const at = (k) => { const top = run.getBoundingClientRect().top + scrollY; return top + (run.offsetHeight - innerHeight) * (k / (N - 1)); };
-  dots.forEach((d, k) => d.addEventListener('click', () => {
-    track('vitrina_salto', { marca: data[k].slug });
-    if (reduced) { pos = k; paint(); return; }
-    const lenis = getLenis();
-    lenis ? lenis.scrollTo(at(k), { duration: 1.2 }) : scrollTo({ top: at(k), behavior: 'smooth' });
-  }));
-  visit.addEventListener('click', () => track('vitrina_visitar', { marca: data[front].slug }));
-  return { N, at, name: (k) => data[k].name };
+  // Mientras se ve la vitrina, el botón flotante se aparta
+  ScrollTrigger.create({ trigger: sec, start: 'top 60%', end: 'bottom 40%', toggleClass: { targets: html, className: 'in-reel' } });
+  return { N, sec, go: (k) => go(k, 'show'), name: (k) => data[k].name };
 }
 
 // ---------- Ver la función ----------
@@ -400,10 +510,12 @@ function autoplay(vitrina) {
     const tunnelRun = $('[data-open-run]');
     label.textContent = 'Reproduciendo · el túnel';
     if (tunnelRun) { await go(top(tunnelRun) + tunnelRun.offsetHeight - innerHeight, 7); if (!playing) return; }
+    // La vitrina gira marca por marca con la página quieta
+    if (vitrina) { await go(top(vitrina.sec), 1.8); if (!playing) return; }
     for (let k = 0; vitrina && k < vitrina.N && playing; k++) {
       label.textContent = `Reproduciendo · ${String(k + 1).padStart(2, '0')} / ${vitrina.N}`;
-      await go(vitrina.at(k), k ? 1.4 : 1.8); if (!playing) break;
-      await wait(2600);
+      vitrina.go(k);
+      await wait(k ? 2900 : 1800);
     }
     if (playing) { await go($('.inter'), 2); track('reel_autoplay', { action: 'end' }); stop(); }
   };

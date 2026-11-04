@@ -63,19 +63,23 @@ export function ringMarkup() {
   const wins = BRANDS.map((x, i) => `<figure class="rw" style="--i:${i}" data-rw>
             <span class="rw__bar"><i></i><i></i><i></i><em data-host="${esc(x.host)}"></em></span>
             <span class="rw__screen"><picture><source media="(max-width: 767px)" type="image/avif" data-srcset="/img/vitrina/${x.slug}-m.avif" /><source media="(max-width: 767px)" data-srcset="/img/vitrina/${x.slug}-m.webp" /><source type="image/avif" data-srcset="/img/vitrina/${x.slug}-d.avif" /><img data-src="/img/vitrina/${x.slug}-d.webp" alt="" width="720" height="450" decoding="async" /></picture></span>
-          </figure>`).join('\n          ');
+          </figure>`).join('\n            ');
   const dots = BRANDS.map((x, i) => `<li><button type="button" class="ri" data-ri="${i}"${i ? '' : ' aria-current="true"'}>${logo(x, 'ri__logo', '')}<span class="sr">${esc(x.name)}</span></button></li>`).join('');
   const data = BRANDS.map(({ slug, name, label, kind, town, visit: v, ext, more, moreLabel, video }) => ({ slug, name, label, kind, town, visit: v, ext, more, moreLabel, video }));
   return `<header class="ring__head">
         <p class="eyebrow">La vitrina</p>
         <h2 id="vitrina" class="ring__title">Trece lugares, <em>una vitrina.</em></h2>
         <p class="ring__sub">Diez muestras de concepto y tres sitios reales en el aire. Cada una, con su sitio funcionando.</p>
-        <p class="ring__count" aria-hidden="true"><b data-ring-n>01</b> / ${n}</p>
+        <div class="ring__count"><span aria-hidden="true"><b data-ring-n>01</b> / ${n}</span><button type="button" class="ring__pause" data-ring-pause aria-pressed="false"><svg class="ring__ic-pause" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5.5v13M16 5.5v13" stroke="currentColor" stroke-width="2" stroke-linecap="round" /></svg><svg class="ring__ic-play" viewBox="0 0 24 24" width="16" height="16" aria-hidden="true"><path d="M8 5.8v12.4L18 12z" fill="currentColor" /></svg><span class="sr" data-ring-pause-l>Pausar la vitrina</span></button><span class="ring__timer" aria-hidden="true"><i data-ring-timer></i></span></div>
       </header>
-      <div class="ring__stage" aria-hidden="true">
-        <div class="ring__wheel" data-wheel>
-          ${wins}
+      <div class="ring__view">
+        <div class="ring__stage" aria-hidden="true">
+          <div class="ring__wheel" data-wheel>
+            ${wins}
+          </div>
         </div>
+        <button type="button" class="ring__arrow ring__arrow--prev" data-ring-prev aria-label="Marca anterior"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5" /></svg></button>
+        <button type="button" class="ring__arrow ring__arrow--next" data-ring-next aria-label="Marca siguiente"><svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 5.5 8 12l6.5 6.5" /></svg></button>
       </div>
       <div class="ring__now" data-ring-now>
         ${logo(b, 'ring__logo', esc(b.name)).replace('loading="lazy" ', '')}
